@@ -1,4 +1,4 @@
-# claim-tax-refund-frontend
+# claim tax refund frontend
 
 [![Build Status](https://travis-ci.org/hmrc/claim-tax-refund-frontend.svg)](https://travis-ci.org/hmrc/claim-tax-refund-frontend) [ ![Download](https://api.bintray.com/packages/hmrc/releases/claim-tax-refund-frontend/images/download.svg) ](https://bintray.com/hmrc/releases/claim-tax-refund-frontend/_latestVersion)
 
