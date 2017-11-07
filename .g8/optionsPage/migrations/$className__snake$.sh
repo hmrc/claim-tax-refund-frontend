@@ -24,7 +24,7 @@ awk '/class/ {\
      print;\
      print "  def $className;format="decap"$: Option[String] = cacheMap.getEntry[String]($className$Id.toString)";\
      print "";\
-     next }1' ../app/uk/gov/hmrc/claimtaxrefundfrontend/utils/UserAnswers.scala > tmp && mv tmp ../app/uk/gov/hmrc/claimtaxrefundfrontend/utils/UserAnswers.scala
+     next }1' ../app/utils/UserAnswers.scala > tmp && mv tmp ../app/utils/UserAnswers.scala
 
 echo "Adding helper method to CheckYourAnswersHelper"
 awk '/class/ {\
@@ -33,7 +33,7 @@ awk '/class/ {\
      print "  def $className;format="decap"$: Option[AnswerRow] = userAnswers.$className;format="decap"$ map {";\
      print "    x => AnswerRow(\"$className;format="decap"$.checkYourAnswersLabel\", s\"$className;format="decap"$.\$x\", true, routes.$className$Controller.onPageLoad(CheckMode).url)";\
      print "  }";\
-     next }1' ../app/uk/gov/hmrc/claimtaxrefundfrontend/utils/CheckYourAnswersHelper.scala > tmp && mv tmp ../app/uk/gov/hmrc/claimtaxrefundfrontend/utils/CheckYourAnswersHelper.scala
+     next }1' ../app/utils/CheckYourAnswersHelper.scala > tmp && mv tmp ../app/utils/CheckYourAnswersHelper.scala
 
 echo "Moving test files from generated-test/ to test/"
 rsync -avm --include='*.scala' -f 'hide,! */' ../generated-test/ ../test/
