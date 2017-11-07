@@ -1,0 +1,84 @@
+start_now = Start now
+
+#4xx errors
+error.pageNotFound.title = Page not found
+error.pageNotFound.heading = Page not found
+error.pageNotFound.message1 = Check the address is correct.
+error.pageNotFound.subheading1 = If you typed the web address
+error.pageNotFound.message2 = Check the address and make sure you typed it correctly.
+error.pageNotFound.message3 = If you would like to continue your application offline you can contact us on Telephone: 0300 123 4494.
+error.pageNotFound.message4 = Opening times 8:00am to 4:00pm, Monday to Friday
+
+error.internalError.title = Service unavailable
+error.internalError.heading = Service unavailable
+error.internalError.message1 = Sorry, there is a technical problem and you cannot use the service at the moment. Please try again later.
+error.internalError.message2 = If you would like to continue your application offline you can contact us on Telephone: 0300 123 4494.
+error.internalError.message3 = Opening times 8:00am to 4:00pm, Monday to Friday
+
+###
+# These keys are duplicates of failed_to_submit keys
+error.failedSubmission.title = We are experiencing technical problems
+error.failedSubmission.heading = We are experiencing technical problems
+error.failedSubmission.message1 = Something has gone wrong with this service. We have not received your application. Please try again later.
+error.failedSubmission.message2 = If you would like to continue your application offline you can contact us on Telephone: 0300 123 4494
+error.failedSubmission.message3 = Opening times 8:00am to 4:00pm, Monday to Friday
+# These keys are duplicates of failed_to_submit keys
+###
+
+#shutter page
+error.shutter.title = Service unavailable
+error.shutter.heading = Service unavailable
+error.shutter.message1 = You will be able to use the service later
+error.shutter.message2 = Contact us if you have any questions
+error.shutter.message3 = Telephone: 0300 123 4494
+error.shutter.message4 = Opening times 8:00am to 4:00pm, Monday to Friday
+
+checkYourAnswers.title = Check your answers before sending your application
+checkYourAnswers.heading = Check your answers before sending your application
+checkYourAnswers.guidance = guidance
+checkYourAnswers.capacity_section = About you
+checkYourAnswers.agent_section = Your details
+checkYourAnswers.confirm = Confirm and send
+
+confirmation.title = Application received
+confirmation.heading = Application received
+confirmation.whatHappensNext = What happens next
+confirmation.guidance1 = We will contact you within 5 working days to tell you whether your application has been accepted.
+confirmation.guidance2 = guidanceLine2
+confirmation.contactUs = Contact us if you have any questions
+confirmation.contactTelephone = Telephone: 0300 123 4494
+confirmation.openingHours = Opening times: Monday to Friday, 8:00am to 4:00pm
+confirmation.gov.uk.linkText = Go to GOV.UK
+confirmation.survey.linkText = Help us improve this service by filling in a short survey
+confirmation.print = Print this page
+
+error.boolean = Please give an answer
+error.required = Please enter a value
+error.summary.title = There’s been a problem
+error.summary.text = Check the following
+
+failed_to_submit.title = We are experiencing technical problems
+failed_to_submit.heading = We are experiencing technical problems
+failed_to_submit.guidance1 = Something has gone wrong with this service. We have not received your application. Please try again later.
+failed_to_submit.guidance2 = If you would like to continue your application offline you can contact us on Telephone: 0300 123 4494
+failed_to_submit.guidance3 = Opening times 8:00am to 4:00pm, Monday to Friday
+
+index.title = Claim a tax refund
+index.heading = Claim a tax refund
+index.guidance = Welcome to your new frontend. Please see the README file for a guide to getting started.
+
+session_expired.title = You will have to start again
+session_expired.heading = You will have to start again
+session_expired.guidance = For your security, we cleared your details because you did not do anything for 15 minutes. Start again to
+session_expired.link = claim a tax refund
+
+site.back = Back
+site.delete = Remove
+site.edit = Change
+site.hidden-delete = Delete {0}
+site.hidden-edit = Change {0}
+site.no = No
+site.yes = Yes
+site.save_and_continue = Continue
+site.service_name = Claim a tax refund
+site.textarea.char_limit = (Limit is {0} characters)

@@ -1,0 +1,51 @@
+@*
+ * Copyright 2017 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import config.FrontendAppConfig
+
+@(appConfig: FrontendAppConfig)(implicit request: Request[_], messages: Messages)
+
+@main_template(
+    title = messages("confirmation.title"),
+    appConfig = appConfig,
+    bodyClasses = None,
+    sidebarLinks = Some(views.html.confirmation_sidebar())) {
+
+    <div class="govuk-box-highlight">
+        @components.heading("confirmation.heading", "heading-xlarge")
+    </div>
+
+    <h2 class="heading-medium">@messages("confirmation.whatHappensNext")</h2>
+
+    <p>@messages("confirmation.guidance1")</p>
+
+    <p>@messages("confirmation.guidance2")</p>
+
+    <h2 class="heading-medium">@messages("confirmation.contactUs")</h2>
+
+    <p>@messages("confirmation.contactTelephone")</p>
+
+    <p>@messages("confirmation.openingHours")</p>
+
+    <div>
+        <p><a id="survey-link" href="@appConfig.feedbackSurveyUrl">@messages("confirmation.survey.linkText")</a></p>
+    </div>
+
+    <div>
+       <p><a id="gov-uk-link" href="https://www.gov.uk">@messages("confirmation.gov.uk.linkText")</a></p>
+    </div>
+
+}
