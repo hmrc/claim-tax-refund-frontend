@@ -82,3 +82,6 @@ site.yes = Yes
 site.save_and_continue = Continue
 site.service_name = Claim a tax refund
 site.textarea.char_limit = (Limit is {0} characters)
+fullName.title = fullName
+fullName.heading = fullName
+fullName.checkYourAnswersLabel = fullName

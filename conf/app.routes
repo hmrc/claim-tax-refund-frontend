@@ -13,3 +13,8 @@ GET        /check-your-answers                          controllers.CheckYourAns
 GET        /confirmation                                controllers.ConfirmationController.onPageLoad
 
 GET        /application-not-received                    controllers.FailedToSubmitController.onPageLoad
+
+GET        /fullName               controllers.FullNameController.onPageLoad(mode: Mode = NormalMode)
+POST       /fullName               controllers.FullNameController.onSubmit(mode: Mode = NormalMode)
+GET        /changeFullName               controllers.FullNameController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeFullName               controllers.FullNameController.onSubmit(mode: Mode = CheckMode)
