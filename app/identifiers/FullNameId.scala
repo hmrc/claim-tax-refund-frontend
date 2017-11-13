@@ -14,14 +14,8 @@
  * limitations under the License.
  */
 
-package utils
+package identifiers
 
-import uk.gov.hmrc.http.cache.client.CacheMap
-import identifiers._
-import models._
-
-class UserAnswers(val cacheMap: CacheMap) {
-  def fullName: Option[String] = cacheMap.getEntry[String](FullNameId.toString)
-
-
+case object FullNameId extends Identifier {
+  override def toString: String = "fullName"
 }

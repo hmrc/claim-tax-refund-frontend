@@ -19,5 +19,9 @@ package utils
 
 class CheckYourAnswersHelper(userAnswers: UserAnswers) {
 
+  def fullName: Option[AnswerRow] = userAnswers.fullName map {
+    x => AnswerRow("fullName.checkYourAnswersLabel", s"$x", false, routes.FullNameController.onPageLoad(CheckMode).url)
+  }
+
 
 }
