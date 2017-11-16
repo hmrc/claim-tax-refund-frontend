@@ -1,12 +1,13 @@
 @import config.FrontendAppConfig
 @import uk.gov.hmrc.play.views.html._
 @import controllers.routes._
-@import forms.$className$Form
+@import forms.$className;format="cap"$Form
+@import models.$className$
 @import models.Mode
 @import utils.FormHelpers
 @import viewmodels.InputViewModel
 
-@(appConfig: FrontendAppConfig, form: Form[String], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @main_template(
     title = messages("$className;format="decap"$.title"),
@@ -15,20 +16,17 @@
 
     @helpers.form(action = $className$Controller.onSubmit(mode), 'autoComplete -> "off") {
 
-        @components.back_link()
-
         @components.error_summary(form.errors)
 
         @components.heading("$className;format="decap"$.heading")
 
         @components.input_radio(
-            viewModel = InputViewModel[String]("value", form),
+            viewModel = InputViewModel("value", form),
             legend = messages("$className;format="decap"$.heading"),
             legendClass = Some("visually-hidden"),
-            inputs = $className$Form.options
+            inputs = $className$Form.options.toSeq
         )
 
         @components.submit_button()
     }
 }
-@import config.FrontendAppConfig

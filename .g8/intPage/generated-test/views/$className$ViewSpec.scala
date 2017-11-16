@@ -13,14 +13,12 @@ class $className$ViewSpec extends IntViewBehaviours {
 
   def createView = () => $className;format="decap"$(frontendAppConfig, $className$Form(), NormalMode)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[Int]) => $className;format="decap"$(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[_]) => $className;format="decap"$(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
   val form = $className$Form()
 
   "$className$ view" must {
     behave like normalPage(createView, messageKeyPrefix)
-
-    behave like pageWithBackLink(createView)
 
     behave like intPage(createViewUsingForm, messageKeyPrefix, routes.$className$Controller.onSubmit(NormalMode).url)
   }

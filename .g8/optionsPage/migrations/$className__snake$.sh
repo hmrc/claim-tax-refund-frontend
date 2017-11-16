@@ -22,7 +22,7 @@ echo "$className;format="decap"$.checkYourAnswersLabel = $className;format="deca
 echo "Adding helper line into UserAnswers"
 awk '/class/ {\
      print;\
-     print "  def $className;format="decap"$: Option[String] = cacheMap.getEntry[String]($className$Id.toString)";\
+     print "  def $className;format="decap"$: Option[$className$] = cacheMap.getEntry[$className$]($className$Id.toString)";\
      print "";\
      next }1' ../app/utils/UserAnswers.scala > tmp && mv tmp ../app/utils/UserAnswers.scala
 

@@ -16,14 +16,15 @@ import views.html.$className;format="decap"$
 
 import scala.concurrent.Future
 
-class $className;format="cap"$Controller @Inject()(appConfig: FrontendAppConfig,
+class $className$Controller @Inject()(appConfig: FrontendAppConfig,
                                                   override val messagesApi: MessagesApi,
                                                   dataCacheConnector: DataCacheConnector,
                                                   navigator: Navigator,
+                                                  authenticate: AuthAction,
                                                   getData: DataRetrievalAction,
                                                   requireData: DataRequiredAction) extends FrontendController with I18nSupport {
 
-  def onPageLoad(mode: Mode) = (getData andThen requireData) {
+  def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.$className;format="decap"$ match {
         case None => $className$Form()
@@ -32,13 +33,13 @@ class $className;format="cap"$Controller @Inject()(appConfig: FrontendAppConfig,
       Ok($className;format="decap"$(appConfig, preparedForm, mode))
   }
 
-  def onSubmit(mode: Mode) = (getData andThen requireData).async {
+  def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
       $className$Form().bindFromRequest().fold(
-        (formWithErrors: Form[$className$]) =>
+        (formWithErrors: Form[_]) =>
           Future.successful(BadRequest($className;format="decap"$(appConfig, formWithErrors, mode))),
         (value) =>
-          dataCacheConnector.save[$className$](request.sessionId, $className$Id.toString, value).map(cacheMap =>
+          dataCacheConnector.save[$className$](request.externalId, $className$Id.toString, value).map(cacheMap =>
             Redirect(navigator.nextPage($className$Id, mode)(new UserAnswers(cacheMap))))
       )
   }
