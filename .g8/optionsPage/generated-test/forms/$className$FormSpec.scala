@@ -1,6 +1,7 @@
 package forms
 
 import forms.behaviours.FormBehaviours
+import models.$className$
 
 class $className$FormSpec extends FormBehaviours {
 
@@ -11,8 +12,9 @@ class $className$FormSpec extends FormBehaviours {
   val form = $className$Form()
 
   "$className$ form" must {
-    behave like questionForm[String]($className$Form.options.head.value)
 
-    behave like formWithOptionField("value", $className$Form.options.map{x => x.value}:_*)
+    behave like questionForm[$className$]($className$.values.head)
+
+    behave like formWithOptionField("value", $className$Form.options.toSeq.map(_.value): _*)
   }
 }
