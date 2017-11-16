@@ -4,26 +4,29 @@ import play.api.data.Form
 import play.api.data.Forms._
 import play.api.data.format.Formatter
 import utils.RadioOption
+import models.$className$
 
 object $className$Form extends FormErrorHelper {
 
-  def $className$Formatter = new Formatter[String] {
-    def bind(key: String, data: Map[String, String]) = data.get(key) match {
-      case Some(s) if optionIsValid(s) => Right(s)
-      case None => produceError(key, "error.required")
-      case _ => produceError(key, "error.unknown")
-    }
+  def apply(): Form[$className$] =
+    Form(single("value" -> of($className;format="decap"$Formatter)))
 
-    def unbind(key: String, value: String) = Map(key -> value)
+  def options = $className$.values.map {
+    value =>
+      RadioOption("$className;format="decap"$", value.toString)
   }
 
-  def apply(): Form[String] = 
-    Form(single("value" -> of($className$Formatter)))
+  private def $className;format="decap"$Formatter = new Formatter[$className$] {
 
-  def options = Seq(
-    RadioOption("$className;format="decap"$", "option1"),
-    RadioOption("$className;format="decap"$", "option2")
-  )
+    def bind(key: String, data: Map[String, String]) = data.get(key) match {
+      case Some(s) => $className$.withName(s)
+        .map(Right.apply)
+        .getOrElse(produceError(key, "error.unknown"))
+      case None => produceError(key, "error.required")
+    }
 
-  def optionIsValid(value: String) = options.exists(o => o.value == value)
+    def unbind(key: String, value: $className$) = Map(key -> value.toString)
+  }
+
+  private def optionIsValid(value: String) = options.exists(o => o.value == value)
 }
