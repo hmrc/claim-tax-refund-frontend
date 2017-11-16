@@ -3,6 +3,7 @@ package views
 import play.api.data.Form
 import forms.$className$Form
 import models.NormalMode
+import models.$className$
 import views.behaviours.ViewBehaviours
 import views.html.$className;format="decap"$
 
@@ -12,12 +13,10 @@ class $className$ViewSpec extends ViewBehaviours {
 
   def createView = () => $className;format="decap"$(frontendAppConfig, $className$Form(), NormalMode)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) => $className;format="decap"$(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[_]) => $className;format="decap"$(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
   "$className$ view" must {
     behave like normalPage(createView, messageKeyPrefix)
-
-    behave like pageWithBackLink(createView)
   }
 
   "$className$ view" when {
