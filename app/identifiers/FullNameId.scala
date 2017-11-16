@@ -14,15 +14,8 @@
  * limitations under the License.
  */
 
-package utils
+package identifiers
 
-import controllers.routes
-import models.CheckMode
-import viewmodels.{AnswerRow, RepeaterAnswerRow, RepeaterAnswerSection}
-
-class CheckYourAnswersHelper(userAnswers: UserAnswers) {
-
-  def fullName: Option[AnswerRow] = userAnswers.fullName map {
-    x => AnswerRow("fullName.checkYourAnswersLabel", s"$x", false, routes.FullNameController.onPageLoad(CheckMode).url)
-  }
+case object FullNameId extends Identifier {
+  override def toString: String = "fullName"
 }
