@@ -46,3 +46,7 @@ unauthorised.heading = You can’t access this service with this account
 fullName.title = fullName
 fullName.heading = fullName
 fullName.checkYourAnswersLabel = fullName
+
+nationalInsuranceNumber.title = nationalInsuranceNumber
+nationalInsuranceNumber.heading = nationalInsuranceNumber
+nationalInsuranceNumber.checkYourAnswersLabel = nationalInsuranceNumber
