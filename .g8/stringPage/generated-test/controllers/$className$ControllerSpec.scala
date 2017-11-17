@@ -1,7 +1,7 @@
 package controllers
 
 import play.api.data.Form
-import play.api.libs.json.JsNumber
+import play.api.libs.json.JsString
 import uk.gov.hmrc.http.cache.client.CacheMap
 import utils.FakeNavigator
 import connectors.FakeDataCacheConnector
