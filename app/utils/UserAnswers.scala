@@ -21,4 +21,6 @@ import identifiers._
 import models._
 
 class UserAnswers(val cacheMap: CacheMap) {
+  def fullName: Option[String] = cacheMap.getEntry[String](FullNameId.toString)
+
 }
