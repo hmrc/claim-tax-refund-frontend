@@ -6,6 +6,8 @@ date.day = Day
 date.month = Month
 date.year = Year
 
+global.and = and
+
 error.boolean = Please give an answer
 error.invalid_date = Give a correct date
 error.date.day_blank = Enter a day
@@ -21,9 +23,30 @@ error.required = Please enter a value
 error.summary.title = There’s been a problem
 error.summary.text = Check the following
 
-index.title = claim-tax-refund-frontend
-index.heading = claim-tax-refund-frontend
+index.title = Claim a tax refund
+index.heading = Claim a tax refund
 index.guidance = Welcome to your new frontend. Please see the README file for a guide to getting started.
+index.useForm.title = Use this form to claim a tax refund if you:
+index.useForm.item1 = are employed
+index.useForm.item2 = had too much tax taken from your pay
+index.useForm.item3 = want to claim for any of the 4 years previous tax years
+index.beforeYouStart.heading = Before you start
+index.beforeYouStart.title = To complete this claim you will need;
+index.beforeYouStart.item1 = your employer's PAYE reference number - this is on your
+index.beforeYouStart.p60Title = P60
+index.beforeYouStart.p60Link = https://www.gov.uk/paye-forms-p45-p60-p11d/p60
+index.beforeYouStart.item2 = details of any
+index.beforeYouStart.taxableBenefitsLink = https://www.gov.uk/income-tax/taxfree-and-taxable-state-benefits
+index.beforeYouStart.taxableBenefitsTitle = taxable benefits
+index.beforeYouStart.taxableIncomeLink = https://www.gov.uk/income-tax
+index.beforeYouStart.taxableIncomeTitle = taxable income
+index.beforeYouStart.item2.2 = you received
+index.beforeYouStart.line2 = You can't claim online for someone else.
+index.beforeYouStart.line3 = You can track this form in your
+index.beforeYouStart.personalTaxAccountLink = https://www.gov.uk/personal-tax-account
+index.beforeYouStart.personalTaxAccountTitle = personal tax account
+
+
 
 session_expired.title = For your security, this service has been reset
 session_expired.heading = For your security, this service has been reset
