@@ -16,7 +16,7 @@
 
 @import config.FrontendAppConfig
 
-@(appConfig: FrontendAppConfig)(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, call: Call)(implicit request: Request[_], messages: Messages)
 
 @main_template(
     title = messages("index.title"),
@@ -25,5 +25,37 @@
 
     <h1 class="heading-xlarge">@messages("index.heading")</h1>
 
+    <p>@messages("index.useForm.title")
+    <ul class="list list-bullet">
+        <li>@messages("index.useForm.item1")</li>
+        <li>@messages("index.useForm.item2")</li>
+        <li>@messages("index.useForm.item3")</li>
+    </ul>
+    </p>
+
     <p>@messages("index.guidance")</p>
+
+    <div class="form-field">
+        <a href="@call" id="start-now" class="button button--get-started" role="button">@messages("start_now")</a>
+    </div>
+
+    <h2>@messages("index.beforeYouStart.heading")</h2>
+    <p>@messages("index.beforeYouStart.title")
+    <ul>
+        <li>@messages("index.beforeYouStart.item1")
+            <a href=@messages("index.beforeYouStart.p60Link") id="p60-link">@messages("index.beforeYouStart.p60Title")
+            </a>
+        </li>
+        <li>@messages("index.beforeYouStart.item2")
+            <a href=@messages("index.beforeYouStart.taxableBenefitsLink") id="taxable-benefits-link">@messages("index.beforeYouStart.taxableBenefitsTitle")</a>
+            @messages("global.and")
+            <a href=@messages("index.beforeYouStart.taxableIncomeLink") id="taxable-income-link">@messages("index.beforeYouStart.taxableIncomeTitle")</a>
+            @messages("index.beforeYouStart.item2.2")
+        </li>
+    </ul>
+    </p>
+    <p>@messages("index.beforeYouStart.line2")</p>
+    <p>@messages("index.beforeYouStart.line3")
+        <a href=@messages("index.beforeYouStart.personalTaxAccountLink") id="personal-tax-account-link">@messages("index.beforeYouStart.personalTaxAccountTitle")</a>
+    </p>
 }
