@@ -16,15 +16,25 @@
 
 package views
 
+import controllers.routes
+import models.NormalMode
 import views.behaviours.ViewBehaviours
 import views.html.index
 
 class IndexViewSpec extends ViewBehaviours {
 
-  def view = () => index(frontendAppConfig)(fakeRequest, messages)
+  def view = () => index(frontendAppConfig, call)(fakeRequest, messages)
+
+  val call = routes.FullNameController.onPageLoad(NormalMode)
 
   "Index view" must {
 
     behave like normalPage(view, "index", "guidance")
+  }
+
+  "link should direct the user to capacity registered page" in {
+    val doc = asDocument(view())
+    //assertContainsText(doc, "apply for the National Minimum Wage social care compliance scheme.")
+    doc.getElementById("start-now").attr("href") must include("/fullName")
   }
 }
