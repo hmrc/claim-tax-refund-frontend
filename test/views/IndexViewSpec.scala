@@ -16,15 +16,61 @@
 
 package views
 
+import controllers.routes
+import models.NormalMode
 import views.behaviours.ViewBehaviours
 import views.html.index
 
 class IndexViewSpec extends ViewBehaviours {
 
-  def view = () => index(frontendAppConfig)(fakeRequest, messages)
+  def view = () => index(frontendAppConfig, call)(fakeRequest, messages)
+
+  val call = routes.FullNameController.onPageLoad(NormalMode)
 
   "Index view" must {
 
     behave like normalPage(view, "index", "guidance")
+  }
+
+  "link should direct the user to full name page" in {
+    val doc = asDocument(view())
+    doc.getElementById("start-now").attr("href") must include("/fullName")
+  }
+
+  "Page should have title and heading Claim a tax refund" in {
+    val doc = asDocument(view())
+    assertContainsText(doc, messagesApi("index.title"))
+    assertContainsText(doc, messagesApi("index.heading"))
+  }
+
+  "Page should contain all use form content" in {
+    val doc = asDocument(view())
+    assertContainsText(doc, messagesApi("index.useForm.title"))
+    assertContainsText(doc, messagesApi("index.useForm.item1"))
+    assertContainsText(doc, messagesApi("index.useForm.item2"))
+    assertContainsText(doc, messagesApi("index.useForm.item3"))
+  }
+
+  "Page should contain before you start content" in {
+    val doc = asDocument(view())
+    assertContainsText(doc, messagesApi("index.beforeYouStart.heading"))
+    assertContainsText(doc, messagesApi("index.beforeYouStart.title"))
+    assertContainsText(doc, messagesApi("index.beforeYouStart.item1"))
+    assertContainsText(doc, messagesApi("index.beforeYouStart.p60Title"))
+    assertContainsText(doc, messagesApi("index.beforeYouStart.item2"))
+    assertContainsText(doc, messagesApi("index.beforeYouStart.taxableBenefitsTitle"))
+    assertContainsText(doc, messagesApi("index.beforeYouStart.taxableIncomeTitle"))
+    assertContainsText(doc, messagesApi("index.beforeYouStart.item2.2"))
+    assertContainsText(doc, messagesApi("index.beforeYouStart.line2"))
+    assertContainsText(doc, messagesApi("index.beforeYouStart.line3"))
+    assertContainsText(doc, messagesApi("index.beforeYouStart.personalTaxAccountTitle"))
+  }
+
+  "Page links should link to correct locations" in {
+    val doc = asDocument(view())
+    doc.getElementById("p60-link").attr("href") must include(messagesApi("index.beforeYouStart.p60Link"))
+    doc.getElementById("taxable-benefits-link").attr("href") must include(messagesApi("index.beforeYouStart.taxableBenefitsLink"))
+    doc.getElementById("taxable-income-link").attr("href") must include(messagesApi("index.beforeYouStart.taxableIncomeLink"))
+    doc.getElementById("personal-tax-account-link").attr("href") must include(messagesApi("index.beforeYouStart.personalTaxAccountLink"))
   }
 }
