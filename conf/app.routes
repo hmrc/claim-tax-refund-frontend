@@ -21,3 +21,8 @@ GET        /nationalInsuranceNumber               controllers.NationalInsuranceN
 POST       /nationalInsuranceNumber               controllers.NationalInsuranceNumberController.onSubmit(mode: Mode = NormalMode)
 GET        /changeNationalInsuranceNumber                        controllers.NationalInsuranceNumberController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeNationalInsuranceNumber                        controllers.NationalInsuranceNumberController.onSubmit(mode: Mode = CheckMode)
+
+GET        /isTheAddressInTheUK                       controllers.IsTheAddressInTheUKController.onPageLoad(mode: Mode = NormalMode)
+POST       /isTheAddressInTheUK                       controllers.IsTheAddressInTheUKController.onSubmit(mode: Mode = NormalMode)
+GET        /changeIsTheAddressInTheUK                       controllers.IsTheAddressInTheUKController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeIsTheAddressInTheUK                       controllers.IsTheAddressInTheUKController.onSubmit(mode: Mode = CheckMode)

@@ -50,3 +50,7 @@ fullName.checkYourAnswersLabel = fullName
 nationalInsuranceNumber.title = nationalInsuranceNumber
 nationalInsuranceNumber.heading = nationalInsuranceNumber
 nationalInsuranceNumber.checkYourAnswersLabel = nationalInsuranceNumber
+
+isTheAddressInTheUK.title = isTheAddressInTheUK
+isTheAddressInTheUK.heading = isTheAddressInTheUK
+isTheAddressInTheUK.checkYourAnswersLabel = isTheAddressInTheUK
