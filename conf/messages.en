@@ -7,6 +7,7 @@ date.month = Month
 date.year = Year
 
 global.and = and
+global.start_now = Start Now
 
 error.boolean = Please give an answer
 error.invalid_date = Give a correct date
