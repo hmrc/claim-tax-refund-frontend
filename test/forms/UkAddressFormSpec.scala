@@ -22,15 +22,22 @@ import models.UkAddress
 class UkAddressFormSpec extends FormBehaviours {
 
   val validData: Map[String, String] = Map(
-    "field1" -> "value 1",
-    "field2" -> "value 2"
+    "addressLine1" -> "line 1",
+    "addressLine2" -> "line 2",
+    "addressLine3" -> "line 3",
+    "addressLine4" -> "line 4",
+    "addressLine5" -> "line 5",
+    "postcode" -> "postcode"
   )
 
   val form = UkAddressForm()
 
   "UkAddress form" must {
-    behave like questionForm(UkAddress("value 1", "value 2"))
+    behave like questionForm(UkAddress("line 1", "line 2", Some("line 3"), Some("line 4"), Some("line 5"), "postcode"))
 
-    behave like formWithMandatoryTextFields("field1", "field2")
+    behave like formWithMandatoryTextFields("addressLine1", "addressLine2", "postcode")
+
+    behave like formWithOptionalTextFields("addressLine3", "addressLine4", "addressLine5")
+
   }
 }

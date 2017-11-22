@@ -37,6 +37,9 @@ class UkAddressViewSpec extends QuestionViewBehaviours[UkAddress] {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    behave like pageWithTextFields(createViewUsingForm, messageKeyPrefix, routes.UkAddressController.onSubmit(NormalMode).url, "field1", "field2")
+    behave like pageWithBackLink(createView)
+
+    behave like pageWithTextFields(createViewUsingForm, messageKeyPrefix, routes.UkAddressController.onSubmit(NormalMode)
+      .url, "addressLine1", "addressLine2", "addressLine3", "addressLine4", "addressLine5", "postcode")
   }
 }
