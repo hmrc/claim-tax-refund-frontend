@@ -36,7 +36,7 @@ class InternationalAddressControllerSpec extends ControllerSpecBase {
     new InternationalAddressController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl)
 
-  def viewAsString(form: Form[_] = InternationalAddressForm()) = internationalAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
+  def viewAsString(form: Form[InternationalAddress] = InternationalAddressForm()) = internationalAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
 
   "InternationalAddress Controller" must {
 
