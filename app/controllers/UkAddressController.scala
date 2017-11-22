@@ -52,7 +52,7 @@ class UkAddressController @Inject()(appConfig: FrontendAppConfig,
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
       UkAddressForm().bindFromRequest().fold(
-        (formWithErrors: Form[_]) =>
+        (formWithErrors: Form[UkAddress]) =>
           Future.successful(BadRequest(ukAddress(appConfig, formWithErrors, mode))),
         (value) =>
           dataCacheConnector.save[UkAddress](request.externalId, UkAddressId.toString, value).map(cacheMap =>

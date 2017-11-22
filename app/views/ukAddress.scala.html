@@ -21,7 +21,7 @@
 @import models.{Mode, UkAddress}
 @import viewmodels.InputViewModel
 
-@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, form: Form[UkAddress], mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @main_template(
     title = messages("ukAddress.title"),
@@ -36,9 +36,17 @@
 
         @components.heading("ukAddress.heading")
 
-        @components.input_text(InputViewModel("field1", form), label = messages("ukAddress.field1"))
+        @components.input_text(InputViewModel[UkAddress]("addressLine1", form), label = messages("global.addressLine1"))
 
-        @components.input_text(InputViewModel("field2", form), label = messages("ukAddress.field2"))
+        @components.input_text(InputViewModel[UkAddress]("addressLine2", form), label = messages("global.addressLine2"))
+
+        @components.input_text(InputViewModel[UkAddress]("addressLine3", form), label = messages("global.addressLine3"))
+
+        @components.input_text(InputViewModel[UkAddress]("addressLine4", form), label = messages("global.addressLine4"))
+
+        @components.input_text(InputViewModel[UkAddress]("addressLine5", form), label = messages("global.addressLine5"))
+
+        @components.input_text(InputViewModel[UkAddress]("postcode", form), label = messages("global.postcode"))
 
         @components.submit_button()
     }

@@ -36,7 +36,7 @@ class UkAddressControllerSpec extends ControllerSpecBase {
     new UkAddressController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl)
 
-  def viewAsString(form: Form[_] = UkAddressForm()) = ukAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
+  def viewAsString(form: Form[UkAddress] = UkAddressForm()) = ukAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
 
   "UkAddress Controller" must {
 
