@@ -26,3 +26,8 @@ GET        /isTheAddressInTheUK                       controllers.IsTheAddressIn
 POST       /isTheAddressInTheUK                       controllers.IsTheAddressInTheUKController.onSubmit(mode: Mode = NormalMode)
 GET        /changeIsTheAddressInTheUK                       controllers.IsTheAddressInTheUKController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeIsTheAddressInTheUK                       controllers.IsTheAddressInTheUKController.onSubmit(mode: Mode = CheckMode)
+
+GET        /ukAddress                       controllers.UkAddressController.onPageLoad(mode: Mode = NormalMode)
+POST       /ukAddress                       controllers.UkAddressController.onSubmit(mode: Mode = NormalMode)
+GET        /changeUkAddress                       controllers.UkAddressController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeUkAddress                       controllers.UkAddressController.onSubmit(mode: Mode = CheckMode)
