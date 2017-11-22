@@ -47,7 +47,7 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         val answers = mock[UserAnswers]
         when(answers.isTheAddressInTheUK) thenReturn Some(true)
         navigator.nextPage(IsTheAddressInTheUKId, NormalMode)
-        answers mustBe routes.UkAddressController.onPageLoad(NormalMode)
+        (answers) mustBe routes.UkAddressController.onPageLoad(NormalMode)
 
       }
 

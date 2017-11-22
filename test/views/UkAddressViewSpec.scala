@@ -29,7 +29,7 @@ class UkAddressViewSpec extends QuestionViewBehaviours[UkAddress] {
 
   def createView = () => ukAddress(frontendAppConfig, UkAddressForm(), NormalMode)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[_]) => ukAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[UkAddress]) => ukAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
   override val form = UkAddressForm()
 

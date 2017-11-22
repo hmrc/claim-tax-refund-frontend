@@ -28,12 +28,19 @@ class Navigator @Inject()() {
 
   private val routeMap: Map[Identifier, UserAnswers => Call] = Map(
     FullNameId -> (_ => routes.NationalInsuranceNumberController.onPageLoad(NormalMode)),
-    NationalInsuranceNumberId -> (_ => routes.IsTheAddressInTheUKController.onPageLoad(NormalMode))
+    NationalInsuranceNumberId -> (_ => routes.IsTheAddressInTheUKController.onPageLoad(NormalMode)),
+    IsTheAddressInTheUKId -> isAddressInUkRoute
   )
 
   private val editRouteMap: Map[Identifier, UserAnswers => Call] = Map(
 
   )
+
+  private def isAddressInUkRoute(userAnswers: UserAnswers) = userAnswers.isTheAddressInTheUK match {
+    case Some(true) => routes.UkAddressController.onPageLoad(NormalMode)
+    case Some(false) => routes.SessionExpiredController.onPageLoad()
+    case None => routes.SessionExpiredController.onPageLoad()
+  }
 
   def nextPage(id: Identifier, mode: Mode): UserAnswers => Call = mode match {
     case NormalMode =>
