@@ -38,6 +38,10 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
       "go to Nino from FullName" in {
         navigator.nextPage(FullNameId, NormalMode)(mock[UserAnswers]) mustBe routes.NationalInsuranceNumberController.onPageLoad(NormalMode)
       }
+
+      "go to isTheAddressInTheUK from Nino" in {
+        navigator.nextPage(NationalInsuranceNumberId, NormalMode)(mock[UserAnswers]) mustBe routes.IsTheAddressInTheUKController.onPageLoad(NormalMode)
+      }
     }
 
     "in Check mode" must {
