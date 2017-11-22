@@ -48,16 +48,16 @@ class InternationalAddressControllerSpec extends ControllerSpecBase {
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      val validData = Map(InternationalAddressId.toString -> Json.toJson(InternationalAddress("value 1", "value 2")))
+      val validData = Map(InternationalAddressId.toString -> Json.toJson(InternationalAddress("line 1", "line 2", None, "country")))
       val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validData)))
 
       val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)
 
-      contentAsString(result) mustBe viewAsString(InternationalAddressForm().fill(InternationalAddress("value 1", "value 2")))
+      contentAsString(result) mustBe viewAsString(InternationalAddressForm().fill(InternationalAddress("line 1", "line 2", None, "country")))
     }
 
     "redirect to the next page when valid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("field1", "value 1"), ("field2", "value 2"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("addressLine1", "Address Line 1"), ("addressLine2", "Address Line 2"), ("addressLine3", "Address Line 3"), ("country", "Country"))
 
       val result = controller().onSubmit(NormalMode)(postRequest)
 

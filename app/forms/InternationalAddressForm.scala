@@ -24,8 +24,10 @@ object InternationalAddressForm {
 
   def apply(): Form[InternationalAddress] = Form(
     mapping(
-      "field1" -> nonEmptyText,
-      "field2" -> nonEmptyText
+      "addressLine1" -> nonEmptyText,
+      "addressLine2" -> nonEmptyText,
+      "addressLine3" -> optional(text),
+      "country" -> nonEmptyText
     )(InternationalAddress.apply)(InternationalAddress.unapply)
   )
 }

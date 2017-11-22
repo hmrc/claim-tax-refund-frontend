@@ -22,14 +22,16 @@ import models.InternationalAddress
 class InternationalAddressFormSpec extends FormBehaviours {
 
   val validData: Map[String, String] = Map(
-    "field1" -> "value 1",
-    "field2" -> "value 2"
+    "addressLine1" -> "line 1",
+    "addressLine2" -> "line 2",
+    "addressLine3" -> "line 3",
+    "country" -> "country"
   )
 
   val form = InternationalAddressForm()
 
   "InternationalAddress form" must {
-    behave like questionForm(InternationalAddress("value 1", "value 2"))
+    behave like questionForm(InternationalAddress("line 1", "line 2", None, "country"))
 
     behave like formWithMandatoryTextFields("field1", "field2")
   }
