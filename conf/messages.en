@@ -26,7 +26,6 @@ error.summary.text = Check the following
 
 index.title = Claim a tax refund
 index.heading = Claim a tax refund
-index.guidance = Welcome to your new frontend. Please see the README file for a guide to getting started.
 index.useForm.title = Use this form to claim a tax refund if you:
 index.useForm.item1 = are employed
 index.useForm.item2 = had too much tax taken from your pay
@@ -47,8 +46,6 @@ index.beforeYouStart.line3 = You can track this form in your
 index.beforeYouStart.personalTaxAccountLink = https://www.gov.uk/personal-tax-account
 index.beforeYouStart.personalTaxAccountTitle = personal tax account
 
-
-
 session_expired.title = For your security, this service has been reset
 session_expired.heading = For your security, this service has been reset
 session_expired.guidance = The details you have given have been deleted because you did not continue the service for 1 hour.
@@ -61,7 +58,7 @@ site.hidden-edit = Change {0}
 site.no = No
 site.yes = Yes
 site.save_and_continue = Save and continue
-site.service_name = claim-tax-refund-frontend
+site.service_name = Claim a tax refund
 site.textarea.char_limit = (Limit is {0} characters)
 
 unauthorised.title = You can’t access this service with this account
@@ -79,8 +76,8 @@ isTheAddressInTheUK.title = isTheAddressInTheUK
 isTheAddressInTheUK.heading = isTheAddressInTheUK
 isTheAddressInTheUK.checkYourAnswersLabel = isTheAddressInTheUK
 
-internationalAddress.title = internationalAddress
-internationalAddress.heading = internationalAddress
-internationalAddress.field1 = Field 1
-internationalAddress.field2 = Field 2
-internationalAddress.checkYourAnswersLabel = internationalAddress
+ukAddress.title = ukAddress
+ukAddress.heading = ukAddress
+ukAddress.field1 = Field 1
+ukAddress.field2 = Field 2
+ukAddress.checkYourAnswersLabel = ukAddress

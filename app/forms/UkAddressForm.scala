@@ -14,14 +14,22 @@
  * limitations under the License.
  */
 
-package viewmodels
+package forms
 
 import play.api.data.Form
-import utils.FormHelpers
+import play.api.data.Forms._
+import models.UkAddress
 
-import scala.language.existentials
+object UkAddressForm {
 
-case class InputViewModel[A](id: String, form: Form[A]) extends InputViewModelBase {
-  def errorKey = FormHelpers.getErrorByKey(form, id)
-  def value = Some(form.data.getOrElse(id, ""))
+  def apply(): Form[UkAddress] = Form(
+    mapping(
+      "addressLine1" -> nonEmptyText,
+      "addressLine2" -> nonEmptyText,
+      "addressLine3" -> optional(text),
+      "addressLine4" -> optional(text),
+      "addressLine5" -> optional(text),
+      "postcode" -> nonEmptyText
+    )(UkAddress.apply)(UkAddress.unapply)
+  )
 }
