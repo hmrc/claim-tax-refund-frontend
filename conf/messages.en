@@ -47,8 +47,6 @@ index.beforeYouStart.line3 = You can track this form in your
 index.beforeYouStart.personalTaxAccountLink = https://www.gov.uk/personal-tax-account
 index.beforeYouStart.personalTaxAccountTitle = personal tax account
 
-
-
 session_expired.title = For your security, this service has been reset
 session_expired.heading = For your security, this service has been reset
 session_expired.guidance = The details you have given have been deleted because you did not continue the service for 1 hour.
@@ -61,7 +59,7 @@ site.hidden-edit = Change {0}
 site.no = No
 site.yes = Yes
 site.save_and_continue = Save and continue
-site.service_name = claim-tax-refund-frontend
+site.service_name = Claim a tax refund
 site.textarea.char_limit = (Limit is {0} characters)
 
 unauthorised.title = You can’t access this service with this account
