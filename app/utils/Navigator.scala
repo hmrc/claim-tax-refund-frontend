@@ -39,7 +39,7 @@ class Navigator @Inject()() {
   //TODO: Add international address route to false
   private def isAddressInUkRoute(userAnswers: UserAnswers) = userAnswers.isTheAddressInTheUK match {
     case Some(true) => routes.UkAddressController.onPageLoad(NormalMode)
-    case Some(false) => routes.SessionExpiredController.onPageLoad()
+    case Some(false) => routes.InternationalAddressController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
 

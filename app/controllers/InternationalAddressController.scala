@@ -52,7 +52,7 @@ class InternationalAddressController @Inject()(appConfig: FrontendAppConfig,
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
       InternationalAddressForm().bindFromRequest().fold(
-        (formWithErrors: Form[_]) =>
+        (formWithErrors: Form[InternationalAddress]) =>
           Future.successful(BadRequest(internationalAddress(appConfig, formWithErrors, mode))),
         (value) =>
           dataCacheConnector.save[InternationalAddress](request.externalId, InternationalAddressId.toString, value).map(cacheMap =>

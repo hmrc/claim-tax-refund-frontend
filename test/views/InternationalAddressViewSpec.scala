@@ -29,7 +29,7 @@ class InternationalAddressViewSpec extends QuestionViewBehaviours[InternationalA
 
   def createView = () => internationalAddress(frontendAppConfig, InternationalAddressForm(), NormalMode)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[_]) => internationalAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[InternationalAddress]) => internationalAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
   override val form = InternationalAddressForm()
 
