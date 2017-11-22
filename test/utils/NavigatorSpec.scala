@@ -34,6 +34,10 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         case object UnknownIdentifier extends Identifier
         navigator.nextPage(UnknownIdentifier, NormalMode)(mock[UserAnswers]) mustBe routes.IndexController.onPageLoad()
       }
+
+      "go to Nino from FullName" in {
+        navigator.nextPage(FullNameId, NormalMode)(mock[UserAnswers]) mustBe routes.NationalInsuranceNumberController.onPageLoad(NormalMode)
+      }
     }
 
     "in Check mode" must {
