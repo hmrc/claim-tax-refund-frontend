@@ -22,6 +22,10 @@ import viewmodels.{AnswerRow, RepeaterAnswerRow, RepeaterAnswerSection}
 
 class CheckYourAnswersHelper(userAnswers: UserAnswers) {
 
+  def ukAddress: Option[AnswerRow] = userAnswers.ukAddress map {
+    x => AnswerRow("ukAddress.checkYourAnswersLabel", s"${x.addressLine1} ${x.addressLine2}", false, routes.UkAddressController.onPageLoad(CheckMode).url)
+  }
+
   def internationalAddress: Option[AnswerRow] = userAnswers.internationalAddress map {
     x => AnswerRow("internationalAddress.checkYourAnswersLabel", s"${x.field1} ${x.field2}", false, routes.InternationalAddressController.onPageLoad(CheckMode).url)
   }

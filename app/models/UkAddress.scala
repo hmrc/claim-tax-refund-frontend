@@ -14,14 +14,16 @@
  * limitations under the License.
  */
 
-package viewmodels
+package models
 
-import play.api.data.Form
-import utils.FormHelpers
+import play.api.libs.json._
 
-import scala.language.existentials
-
-case class InputViewModel[A](id: String, form: Form[A]) extends InputViewModelBase {
-  def errorKey = FormHelpers.getErrorByKey(form, id)
-  def value = Some(form.data.getOrElse(id, ""))
+case class UkAddress (addressLine1: String,
+                      addressLine2: String,
+                      addressLine3: Option[String],
+                      addressLine4: Option[String],
+                      addressLine5: Option[String],
+                      postcode: String)
+object UkAddress {
+  implicit val format = Json.format[UkAddress]
 }
