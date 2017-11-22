@@ -14,19 +14,16 @@
  * limitations under the License.
  */
 
-package utils
+package models
 
-import uk.gov.hmrc.http.cache.client.CacheMap
-import identifiers._
-import models._
+import play.api.libs.json._
 
-class UserAnswers(val cacheMap: CacheMap) {
-  def ukAddress: Option[UkAddress] = cacheMap.getEntry[UkAddress](UkAddressId.toString)
-
-  def isTheAddressInTheUK: Option[Boolean] = cacheMap.getEntry[Boolean](IsTheAddressInTheUKId.toString)
-
-  def nationalInsuranceNumber: Option[String] = cacheMap.getEntry[String](NationalInsuranceNumberId.toString)
-
-  def fullName: Option[String] = cacheMap.getEntry[String](FullNameId.toString)
-
+case class UkAddress (addressLine1: String,
+                      addressLine2: String,
+                      addressLine3: Option[String],
+                      addressLine4: Option[String],
+                      addressLine5: Option[String],
+                      postcode: String)
+object UkAddress {
+  implicit val format = Json.format[UkAddress]
 }
