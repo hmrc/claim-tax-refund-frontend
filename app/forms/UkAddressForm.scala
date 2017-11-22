@@ -24,8 +24,12 @@ object UkAddressForm {
 
   def apply(): Form[UkAddress] = Form(
     mapping(
-      "field1" -> nonEmptyText,
-      "field2" -> nonEmptyText
+      "addressLine1" -> nonEmptyText,
+      "addressLine2" -> nonEmptyText,
+      "addressLine3" -> optional(text),
+      "addressLine4" -> optional(text),
+      "addressLine5" -> optional(text),
+      "postcode" -> nonEmptyText
     )(UkAddress.apply)(UkAddress.unapply)
   )
 }
