@@ -14,19 +14,23 @@
  * limitations under the License.
  */
 
-package utils
+package forms
 
-import uk.gov.hmrc.http.cache.client.CacheMap
-import identifiers._
-import models._
+import forms.behaviours.FormBehaviours
+import models.InternationalAddress
 
-class UserAnswers(val cacheMap: CacheMap) {
-  def internationalAddress: Option[InternationalAddress] = cacheMap.getEntry[InternationalAddress](InternationalAddressId.toString)
+class InternationalAddressFormSpec extends FormBehaviours {
 
-  def isTheAddressInTheUK: Option[Boolean] = cacheMap.getEntry[Boolean](IsTheAddressInTheUKId.toString)
+  val validData: Map[String, String] = Map(
+    "field1" -> "value 1",
+    "field2" -> "value 2"
+  )
 
-  def nationalInsuranceNumber: Option[String] = cacheMap.getEntry[String](NationalInsuranceNumberId.toString)
+  val form = InternationalAddressForm()
 
-  def fullName: Option[String] = cacheMap.getEntry[String](FullNameId.toString)
+  "InternationalAddress form" must {
+    behave like questionForm(InternationalAddress("value 1", "value 2"))
 
+    behave like formWithMandatoryTextFields("field1", "field2")
+  }
 }

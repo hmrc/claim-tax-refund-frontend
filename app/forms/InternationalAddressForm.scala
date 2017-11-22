@@ -14,19 +14,18 @@
  * limitations under the License.
  */
 
-package utils
+package forms
 
-import uk.gov.hmrc.http.cache.client.CacheMap
-import identifiers._
-import models._
+import play.api.data.Form
+import play.api.data.Forms._
+import models.InternationalAddress
 
-class UserAnswers(val cacheMap: CacheMap) {
-  def internationalAddress: Option[InternationalAddress] = cacheMap.getEntry[InternationalAddress](InternationalAddressId.toString)
+object InternationalAddressForm {
 
-  def isTheAddressInTheUK: Option[Boolean] = cacheMap.getEntry[Boolean](IsTheAddressInTheUKId.toString)
-
-  def nationalInsuranceNumber: Option[String] = cacheMap.getEntry[String](NationalInsuranceNumberId.toString)
-
-  def fullName: Option[String] = cacheMap.getEntry[String](FullNameId.toString)
-
+  def apply(): Form[InternationalAddress] = Form(
+    mapping(
+      "field1" -> nonEmptyText,
+      "field2" -> nonEmptyText
+    )(InternationalAddress.apply)(InternationalAddress.unapply)
+  )
 }
