@@ -9,6 +9,15 @@ date.year = Year
 global.and = and
 global.start_now = Start Now
 
+global.addressLine1 = Address Line 1
+global.addressLine2 = Address Line 2
+global.addressLine3 = Address Line 3
+global.addressLine4 = Address Line 4
+global.addressLine5 = Address Line 5
+global.country = Country
+global.postcode = Postcode
+
+
 error.boolean = Please give an answer
 error.invalid_date = Give a correct date
 error.date.day_blank = Enter a day
@@ -77,7 +86,6 @@ isTheAddressInTheUK.heading = isTheAddressInTheUK
 isTheAddressInTheUK.checkYourAnswersLabel = isTheAddressInTheUK
 
 ukAddress.title = ukAddress
-ukAddress.heading = ukAddress
-ukAddress.field1 = Field 1
-ukAddress.field2 = Field 2
-ukAddress.checkYourAnswersLabel = ukAddress
+ukAddress.heading = UK Address
+
+internationalAddress.heading = International Address
