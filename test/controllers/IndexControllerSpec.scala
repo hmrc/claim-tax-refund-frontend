@@ -17,13 +17,13 @@
 package controllers
 
 import models.NormalMode
-import play.api.mvc.Call
+import play.api.mvc.{Call, Request}
 import play.api.test.Helpers._
 import views.html.index
 
 class IndexControllerSpec extends ControllerSpecBase {
 
-  val call : Call = routes.FullNameController.onPageLoad(NormalMode)
+  def call(implicit request: Request[_]) : Call = routes.FullNameController.onPageLoad(NormalMode)
 
   "Index Controller" must {
     "return 200 for a GET" in {
@@ -33,7 +33,7 @@ class IndexControllerSpec extends ControllerSpecBase {
 
    "return the correct view for a GET" in {
       val result = new IndexController(frontendAppConfig, messagesApi).onPageLoad()(fakeRequest)
-      contentAsString(result) mustBe index(frontendAppConfig, call)(fakeRequest, messages).toString
+      contentAsString(result) mustBe index(frontendAppConfig, call(fakeRequest))(fakeRequest, messages).toString
    }
   }
 }
