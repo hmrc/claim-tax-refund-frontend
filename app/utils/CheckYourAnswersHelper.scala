@@ -26,6 +26,10 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
     x => AnswerRow("ukAddress.checkYourAnswersLabel", s"${x.addressLine1} ${x.addressLine2}", false, routes.UkAddressController.onPageLoad(CheckMode).url)
   }
 
+  def internationalAddress: Option[AnswerRow] = userAnswers.internationalAddress map {
+    x => AnswerRow("internationalAddress.checkYourAnswersLabel", s"${x.addressLine1} ${x.addressLine2} ${x.addressLine3} ${x.country}", false, routes.InternationalAddressController.onPageLoad(CheckMode).url)
+  }
+
   def isTheAddressInTheUK: Option[AnswerRow] = userAnswers.isTheAddressInTheUK map {
     x => AnswerRow("isTheAddressInTheUK.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.IsTheAddressInTheUKController.onPageLoad(CheckMode).url)
   }
