@@ -78,3 +78,9 @@ nationalInsuranceNumber.checkYourAnswersLabel = nationalInsuranceNumber
 isTheAddressInTheUK.title = isTheAddressInTheUK
 isTheAddressInTheUK.heading = isTheAddressInTheUK
 isTheAddressInTheUK.checkYourAnswersLabel = isTheAddressInTheUK
+
+ukAddress.title = ukAddress
+ukAddress.heading = ukAddress
+ukAddress.field1 = Field 1
+ukAddress.field2 = Field 2
+ukAddress.checkYourAnswersLabel = ukAddress
