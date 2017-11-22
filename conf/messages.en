@@ -26,7 +26,6 @@ error.summary.text = Check the following
 
 index.title = Claim a tax refund
 index.heading = Claim a tax refund
-index.guidance = Welcome to your new frontend. Please see the README file for a guide to getting started.
 index.useForm.title = Use this form to claim a tax refund if you:
 index.useForm.item1 = are employed
 index.useForm.item2 = had too much tax taken from your pay

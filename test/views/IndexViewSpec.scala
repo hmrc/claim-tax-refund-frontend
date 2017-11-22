@@ -29,7 +29,7 @@ class IndexViewSpec extends ViewBehaviours {
 
   "Index view" must {
 
-    behave like normalPage(view, "index", "guidance")
+    behave like normalPage(view, "index")
   }
 
   "link should direct the user to full name page" in {
