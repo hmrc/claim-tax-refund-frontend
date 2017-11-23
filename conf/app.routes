@@ -36,3 +36,8 @@ GET        /internationalAddress                       controllers.International
 POST       /internationalAddress                       controllers.InternationalAddressController.onSubmit(mode: Mode = NormalMode)
 GET        /changeInternationalAddress                       controllers.InternationalAddressController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeInternationalAddress                       controllers.InternationalAddressController.onSubmit(mode: Mode = CheckMode)
+
+GET        /telephoneNumber               controllers.TelephoneNumberController.onPageLoad(mode: Mode = NormalMode)
+POST       /telephoneNumber               controllers.TelephoneNumberController.onSubmit(mode: Mode = NormalMode)
+GET        /changeTelephoneNumber                        controllers.TelephoneNumberController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeTelephoneNumber                        controllers.TelephoneNumberController.onSubmit(mode: Mode = CheckMode)
