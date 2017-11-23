@@ -34,7 +34,7 @@ class IndexViewSpec extends ViewBehaviours {
 
   "link should direct the user to full name page" in {
     val doc = asDocument(view())
-    doc.getElementById("start-now").attr("href") must include("/fullName")
+    doc.getElementById("start-now").attr("href") must include("/enter-your-full-name")
   }
 
   "Page should have title and heading Claim a tax refund" in {
