@@ -42,6 +42,9 @@ class FrontendAppConfig @Inject() (override val configuration: Configuration) ex
   lazy val loginContinueUrl = loadConfig("urls.loginContinue")
 
   lazy val languageTranslationEnabled = configuration.getBoolean("microservice.services.features.welsh-translation").getOrElse(true)
+
+  lazy val ninoRegex = loadConfig("microservice.services.validation.nino-regex")
+
   def languageMap: Map[String, Lang] = Map(
     "english" -> Lang("en"),
     "cymraeg" -> Lang("cy"))
