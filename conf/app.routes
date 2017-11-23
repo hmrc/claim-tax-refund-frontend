@@ -12,10 +12,10 @@ GET        /check-your-answers                          controllers.CheckYourAns
 
 GET        /unauthorised                                controllers.UnauthorisedController.onPageLoad
 
-GET        /fullName               controllers.FullNameController.onPageLoad(mode: Mode = NormalMode)
-POST       /fullName               controllers.FullNameController.onSubmit(mode: Mode = NormalMode)
-GET        /changeFullName                        controllers.FullNameController.onPageLoad(mode: Mode = CheckMode)
-POST       /changeFullName                        controllers.FullNameController.onSubmit(mode: Mode = CheckMode)
+GET        /enter-your-full-name                        controllers.FullNameController.onPageLoad(mode: Mode = NormalMode)
+POST       /enter-your-full-name                        controllers.FullNameController.onSubmit(mode: Mode = NormalMode)
+GET        /change-your-full-name                       controllers.FullNameController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-your-full-name                       controllers.FullNameController.onSubmit(mode: Mode = CheckMode)
 
 GET        /nationalInsuranceNumber               controllers.NationalInsuranceNumberController.onPageLoad(mode: Mode = NormalMode)
 POST       /nationalInsuranceNumber               controllers.NationalInsuranceNumberController.onSubmit(mode: Mode = NormalMode)
