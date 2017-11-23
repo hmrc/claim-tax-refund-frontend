@@ -37,6 +37,6 @@ class InternationalAddressViewSpec extends QuestionViewBehaviours[InternationalA
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    behave like pageWithTextFields(createViewUsingForm, messageKeyPrefix, routes.InternationalAddressController.onSubmit(NormalMode).url, "addressLine1", "addressLine2", "addressLine3", "country")
+    behave like pageWithTextFields(createViewUsingForm, messageKeyPrefix, routes.InternationalAddressController.onSubmit(NormalMode).url, "addressLine1", "addressLine2", "addressLine3", "addressLine4","addressLine5","country")
   }
 }
