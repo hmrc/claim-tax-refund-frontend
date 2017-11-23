@@ -25,6 +25,8 @@ class InternationalAddressFormSpec extends FormBehaviours {
     "addressLine1" -> "line 1",
     "addressLine2" -> "line 2",
     "addressLine3" -> "line 3",
+    "addressLine4" -> "line 4",
+    "addressLine5" -> "line 5",
     "country" -> "country"
   )
 

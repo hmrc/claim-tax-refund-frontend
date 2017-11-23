@@ -27,6 +27,8 @@ object InternationalAddressForm {
       "addressLine1" -> nonEmptyText,
       "addressLine2" -> nonEmptyText,
       "addressLine3" -> optional(text),
+      "addressLine4" -> optional(text),
+      "addressLine5" -> optional(text),
       "country" -> nonEmptyText
     )(InternationalAddress.apply)(InternationalAddress.unapply)
   )
