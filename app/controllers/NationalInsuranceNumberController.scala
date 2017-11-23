@@ -44,15 +44,15 @@ class NationalInsuranceNumberController @Inject()(
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.nationalInsuranceNumber match {
-        case None => NationalInsuranceNumberForm()
-        case Some(value) => NationalInsuranceNumberForm().fill(value)
+        case None => NationalInsuranceNumberForm(appConfig.ninoRegex)
+        case Some(value) => NationalInsuranceNumberForm(appConfig.ninoRegex).fill(value)
       }
       Ok(nationalInsuranceNumber(appConfig, preparedForm, mode))
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      NationalInsuranceNumberForm().bindFromRequest().fold(
+      NationalInsuranceNumberForm(appConfig.ninoRegex).bindFromRequest().fold(
         (formWithErrors: Form[_]) =>
           Future.successful(BadRequest(nationalInsuranceNumber(appConfig, formWithErrors, mode))),
         (value) =>
