@@ -26,12 +26,12 @@ import views.html.nationalInsuranceNumber
 class NationalInsuranceNumberViewSpec extends StringViewBehaviours {
 
   val messageKeyPrefix = "nationalInsuranceNumber"
+  val testRegex = """^((?!BG)(?!GB)(?!NK)(?!KN)(?!TN)(?!NT)(?!ZZ)(?:[A-CEGHJ-PR-TW-Z][A-CEGHJ-NPR-TW-Z])(?:\d){6}([A-D]|\s)?)|(\d{2})([a-zA-Z])(\d{5})([a-zA-Z])$"""
+  val form = NationalInsuranceNumberForm(testRegex)
 
-  def createView = () => nationalInsuranceNumber(frontendAppConfig, NationalInsuranceNumberForm(), NormalMode)(fakeRequest, messages)
+  def createView = () => nationalInsuranceNumber(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[String]) => nationalInsuranceNumber(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
-
-  val form = NationalInsuranceNumberForm()
 
   "NationalInsuranceNumber view" must {
     behave like normalPage(createView, messageKeyPrefix)
