@@ -31,9 +31,10 @@ class InternationalAddressFormSpec extends FormBehaviours {
   val form = InternationalAddressForm()
 
   "InternationalAddress form" must {
-    behave like questionForm(InternationalAddress("line 1", "line 2", Some("line 3"), "country"))
+    behave like questionForm(InternationalAddress("line 1", "line 2", Some("line 3"), Some("line 4"), Some("line 5"), "country"))
 
     behave like formWithMandatoryTextFields("addressLine1", "addressLine2", "country")
 
-    behave like formWithOptionalTextFields("addressLine3")  }
+    behave like formWithOptionalTextFields("addressLine3", "addressLine4", "addressLine5")
+  }
 }
