@@ -89,3 +89,7 @@ ukAddress.title = ukAddress
 ukAddress.heading = UK Address
 
 internationalAddress.heading = International Address
+
+telephoneNumber.title = telephoneNumber
+telephoneNumber.heading = telephoneNumber
+telephoneNumber.checkYourAnswersLabel = telephoneNumber
