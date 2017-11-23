@@ -80,6 +80,8 @@ fullName.checkYourAnswersLabel = fullName
 nationalInsuranceNumber.title = nationalInsuranceNumber
 nationalInsuranceNumber.heading = nationalInsuranceNumber
 nationalInsuranceNumber.checkYourAnswersLabel = nationalInsuranceNumber
+nationalInsuranceNumber.blank = nationalInsuranceNumber
+nationalInsuranceNumber.invalid = nationalInsuranceNumber
 
 isTheAddressInTheUK.title = isTheAddressInTheUK
 isTheAddressInTheUK.heading = isTheAddressInTheUK

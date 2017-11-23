@@ -22,12 +22,16 @@ import play.api.data.format.Formatter
 
 object NationalInsuranceNumberForm extends FormErrorHelper {
 
-  def nationalInsuranceNumberFormatter(errorKeyBlank: String) = new Formatter[String] {
+  def nationalInsuranceNumberFormatter(regex: String) = new Formatter[String] {
+
+    val errorKeyBlank = "nationalInsuranceNumber.blank"
+    val errorKeyInvalid = "nationalInsuranceNumber.invalid"
 
     def bind(key: String, data: Map[String, String]) = {
       data.get(key) match {
         case None => produceError(key, errorKeyBlank)
         case Some("") => produceError(key, errorKeyBlank)
+        case Some(s) if !s.matches(regex) => produceError(key, errorKeyInvalid)
         case Some(s) => Right(s)
       }
     }
@@ -35,6 +39,6 @@ object NationalInsuranceNumberForm extends FormErrorHelper {
     def unbind(key: String, value: String) = Map(key -> value)
   }
 
-  def apply(errorKeyBlank: String = "error.required"): Form[String] =
-    Form(single("value" -> of(nationalInsuranceNumberFormatter(errorKeyBlank))))
+  def apply(regex: String):
+  Form[String] = Form(single("value" -> of(nationalInsuranceNumberFormatter(regex))))
 }

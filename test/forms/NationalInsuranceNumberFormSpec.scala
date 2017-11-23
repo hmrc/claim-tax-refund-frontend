@@ -18,23 +18,36 @@ package forms
 
 class NationalInsuranceNumberFormSpec extends FormSpec {
 
-  val errorKeyBlank = "blank"
+  val errorKeyBlank = "nationalInsuranceNumber.blank"
+  val errorKeyInvalid = "nationalInsuranceNumber.invalid"
+  val testRegex = """^((?!BG)(?!GB)(?!NK)(?!KN)(?!TN)(?!NT)(?!ZZ)(?:[A-CEGHJ-PR-TW-Z][A-CEGHJ-NPR-TW-Z])(?:\d){6}([A-D]|\s)?)|(\d{2})([a-zA-Z])(\d{5})([a-zA-Z])$"""
 
   "NationalInsuranceNumber Form" must {
 
-    "bind a string" in {
-      val form = NationalInsuranceNumberForm(errorKeyBlank).bind(Map("value" -> "answer"))
-      form.get shouldBe "answer"
+    "bind a string when the standard national insurance number is valid" in {
+      val validNino = "AB123456A"
+      val form = NationalInsuranceNumberForm(testRegex).bind(Map("value" -> validNino))
+      form.get shouldBe "AB123456A"
+    }
+
+    "bind a string when the temporary national insurance number is valid" in {
+      val form = NationalInsuranceNumberForm(testRegex).bind(Map("value" -> "89A12345A"))
+      form.get shouldBe "89A12345A"
+    }
+
+    "fail to bind an invalid national insurance number" in {
+      val expectedError = error("value", errorKeyInvalid)
+      checkForError(NationalInsuranceNumberForm(testRegex), Map("value" -> "invalid"), expectedError)
     }
 
     "fail to bind a blank value" in {
       val expectedError = error("value", errorKeyBlank)
-      checkForError(NationalInsuranceNumberForm(errorKeyBlank), Map("value" -> ""), expectedError)
+      checkForError(NationalInsuranceNumberForm(testRegex), Map("value" -> ""), expectedError)
     }
 
     "fail to bind when value is omitted" in {
       val expectedError = error("value", errorKeyBlank)
-      checkForError(NationalInsuranceNumberForm(errorKeyBlank), emptyForm, expectedError)
+      checkForError(NationalInsuranceNumberForm(testRegex), emptyForm, expectedError)
     }
   }
 }
