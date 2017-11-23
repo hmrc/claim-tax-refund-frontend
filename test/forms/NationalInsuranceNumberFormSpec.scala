@@ -19,12 +19,23 @@ package forms
 class NationalInsuranceNumberFormSpec extends FormSpec {
 
   val errorKeyBlank = "blank"
+  val errorKeyInvalid = "nationalInsuranceNumber.invalid"
 
   "NationalInsuranceNumber Form" must {
 
-    "bind a string" in {
-      val form = NationalInsuranceNumberForm(errorKeyBlank).bind(Map("value" -> "answer"))
-      form.get shouldBe "answer"
+    "bind a string when the standard national insurance number is valid" in {
+      val form = NationalInsuranceNumberForm(errorKeyBlank).bind(Map("value" -> "AB123456A"))
+      form.get shouldBe "AB123456A"
+    }
+
+    "bind a string when the temporary national insurance number is valid" in {
+      val form = NationalInsuranceNumberForm(errorKeyBlank).bind(Map("value" -> "89A12345A"))
+      form.get shouldBe "89A12345A"
+    }
+
+    "fail to bind an invalid national insurance number" in {
+      val expectedError = error("value", errorKeyInvalid)
+      checkForError(NationalInsuranceNumberForm(errorKeyInvalid), Map("value" -> "invalid"), expectedError)
     }
 
     "fail to bind a blank value" in {

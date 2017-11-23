@@ -30,15 +30,19 @@ import views.html.nationalInsuranceNumber
 
 class NationalInsuranceNumberControllerSpec extends ControllerSpecBase {
 
-  def onwardRoute = routes.IndexController.onPageLoad()
+  def onwardRoute = routes.IsTheAddressInTheUKController.onPageLoad(NormalMode)
+  val testRegex = """^((?!BG)(?!GB)(?!NK)(?!KN)(?!TN)(?!NT)(?!ZZ)(?:[A-CEGHJ-PR-TW-Z][A-CEGHJ-NPR-TW-Z])(?:\d){6}([A-D]|\s)?)|(\d{2})([a-zA-Z])(\d{5})([a-zA-Z])$"""
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new NationalInsuranceNumberController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl)
 
-  def viewAsString(form: Form[_] = NationalInsuranceNumberForm()) = nationalInsuranceNumber(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
+  private val defaultForm = NationalInsuranceNumberForm(testRegex)
 
-  val testAnswer = "answer"
+  def viewAsString(form: Form[_] = defaultForm) =
+    nationalInsuranceNumber(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
+
+  val testAnswer = "AB123456A"
 
   "NationalInsuranceNumber Controller" must {
 
@@ -55,7 +59,7 @@ class NationalInsuranceNumberControllerSpec extends ControllerSpecBase {
 
       val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)
 
-      contentAsString(result) mustBe viewAsString(NationalInsuranceNumberForm().fill(testAnswer))
+      contentAsString(result) mustBe viewAsString(defaultForm.fill(testAnswer))
     }
 
     "redirect to the next page when valid data is submitted" in {
@@ -68,8 +72,8 @@ class NationalInsuranceNumberControllerSpec extends ControllerSpecBase {
     }
 
     "return a Bad Request and errors when invalid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", ""))
-      val boundForm = NationalInsuranceNumberForm().bind(Map("value" -> ""))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid"))
+      val boundForm = defaultForm.bind(Map("value" -> "invalid"))
 
       val result = controller().onSubmit(NormalMode)(postRequest)
 
