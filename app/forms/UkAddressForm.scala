@@ -16,20 +16,21 @@
 
 package forms
 
-import play.api.data.Form
-import play.api.data.Forms._
 import models.UkAddress
+import play.api.data.Form
+import play.api.data.Forms.{mapping, of, optional}
 
-object UkAddressForm {
+object UkAddressForm extends FormErrorHelper with FormatterMaxLength{
 
-  def apply(): Form[UkAddress] = Form(
-    mapping(
-      "addressLine1" -> nonEmptyText,
-      "addressLine2" -> nonEmptyText,
-      "addressLine3" -> optional(text),
-      "addressLine4" -> optional(text),
-      "addressLine5" -> optional(text),
-      "postcode" -> nonEmptyText
-    )(UkAddress.apply)(UkAddress.unapply)
-  )
+  def apply(addressMaxLength: Int, postcodeLength: Int): Form[UkAddress] = {
+    Form(
+      mapping(
+        "addressLine1" -> of(formatterMaxLength("global.addressLine1", addressMaxLength)),
+        "addressLine2" -> of(formatterMaxLength("global.addressLine2", addressMaxLength)),
+        "addressLine3" -> optional(of(formatterMaxLength("global.addressLine3", addressMaxLength))),
+        "addressLine4" -> optional(of(formatterMaxLength("global.addressLine4", addressMaxLength))),
+        "addressLine5" -> optional(of(formatterMaxLength("global.addressLine5", addressMaxLength))),
+        "postcode" -> of(formatterMaxLength("global.postcode", postcodeLength))
+      )(UkAddress.apply)(UkAddress.unapply))
+  }
 }
