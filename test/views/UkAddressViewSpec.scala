@@ -27,11 +27,14 @@ class UkAddressViewSpec extends QuestionViewBehaviours[UkAddress] {
 
   val messageKeyPrefix = "ukAddress"
 
-  def createView = () => ukAddress(frontendAppConfig, UkAddressForm(), NormalMode)(fakeRequest, messages)
+  val addressLineMaxLength = 35
+  val postcodeMaxLength = 10
+
+  def createView = () => ukAddress(frontendAppConfig, UkAddressForm(addressLineMaxLength, postcodeMaxLength), NormalMode)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[UkAddress]) => ukAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
-  override val form = UkAddressForm()
+  override val form = UkAddressForm(addressLineMaxLength, postcodeMaxLength)
 
   "UkAddress view" must {
 

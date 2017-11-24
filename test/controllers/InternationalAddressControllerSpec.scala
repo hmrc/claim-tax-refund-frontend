@@ -36,7 +36,11 @@ class InternationalAddressControllerSpec extends ControllerSpecBase {
     new InternationalAddressController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl)
 
-  def viewAsString(form: Form[InternationalAddress] = InternationalAddressForm()) = internationalAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
+  val addressLineMaxLength = 35
+  val countryMaxLength = 20
+
+  def viewAsString(form: Form[InternationalAddress] = InternationalAddressForm(addressLineMaxLength, countryMaxLength)) =
+    internationalAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
 
   "InternationalAddress Controller" must {
 
@@ -53,11 +57,18 @@ class InternationalAddressControllerSpec extends ControllerSpecBase {
 
       val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)
 
-      contentAsString(result) mustBe viewAsString(InternationalAddressForm().fill(InternationalAddress("line 1", "line 2", None, None, None, "country")))
+      contentAsString(result) mustBe viewAsString(InternationalAddressForm(addressLineMaxLength, countryMaxLength)
+        .fill(InternationalAddress("line 1", "line 2", None, None, None, "country")))
     }
 
     "redirect to the next page when valid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("addressLine1", "Address Line 1"), ("addressLine2", "Address Line 2"), ("addressLine3", "Address Line 3"), ("addressLine4", "Address Line 4"), ("addressLine5", "Address Line 5"), ("country", "Country"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(
+        ("addressLine1", "Address Line 1"),
+        ("addressLine2", "Address Line 2"),
+        ("addressLine3", "Address Line 3"),
+        ("addressLine4", "Address Line 4"),
+        ("addressLine5", "Address Line 5"),
+        ("country", "Country"))
 
       val result = controller().onSubmit(NormalMode)(postRequest)
 
@@ -67,7 +78,7 @@ class InternationalAddressControllerSpec extends ControllerSpecBase {
 
     "return a Bad Request and errors when invalid data is submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
-      val boundForm = InternationalAddressForm().bind(Map("value" -> "invalid value"))
+      val boundForm = InternationalAddressForm(addressLineMaxLength, countryMaxLength).bind(Map("value" -> "invalid value"))
 
       val result = controller().onSubmit(NormalMode)(postRequest)
 
