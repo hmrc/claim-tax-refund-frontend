@@ -43,15 +43,15 @@ class InternationalAddressController @Inject()(appConfig: FrontendAppConfig,
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.internationalAddress match {
-        case None => InternationalAddressForm()
-        case Some(value) => InternationalAddressForm().fill(value)
+        case None => InternationalAddressForm(appConfig.addressLineMaxLength, appConfig.countryMaxLength)
+        case Some(value) => InternationalAddressForm(appConfig.addressLineMaxLength, appConfig.countryMaxLength).fill(value)
       }
       Ok(internationalAddress(appConfig, preparedForm, mode))
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      InternationalAddressForm().bindFromRequest().fold(
+      InternationalAddressForm(appConfig.addressLineMaxLength, appConfig.countryMaxLength).bindFromRequest().fold(
         (formWithErrors: Form[InternationalAddress]) =>
           Future.successful(BadRequest(internationalAddress(appConfig, formWithErrors, mode))),
         (value) =>

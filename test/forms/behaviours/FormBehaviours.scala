@@ -18,6 +18,7 @@ package forms.behaviours
 
 import play.api.data.Form
 import forms.FormSpec
+import models.MaxLengthField
 
 trait FormBehaviours extends FormSpec {
 
@@ -38,6 +39,34 @@ trait FormBehaviours extends FormSpec {
         val data = validData - field
         val boundForm = form.bind(data)
         boundForm.errors.isEmpty shouldBe true
+      }
+    }
+  }
+
+  def formWithMaxLengthTextFields(fields: MaxLengthField*) = {
+    for (field <- fields) {
+      s"fail to bind when ${field.fieldName} has more characters than ${field.maxLength}" in {
+        val invalid = "A" * (field.maxLength + 1)
+        val validFields = validData - field.fieldName
+        val data = validFields ++ Map(field.fieldName -> invalid)
+        val expectedError = error(field.fieldName, field.errorMessageKey)
+        checkForError(form, data, expectedError)
+      }
+    }
+  }
+
+  def formWithMandatoryTextFieldsAndCustomKey(fields: (String, String)*) = {
+    for (field <- fields) {
+      s"fail to bind when ${field._1} is omitted" in {
+        val data = validData - field._1
+        val expectedError = error(field._1, field._2)
+        checkForError(form, data, expectedError)
+      }
+
+      s"fail to bind when ${field._1} is blank" in {
+        val data = validData + (field._1 -> "")
+        val expectedError = error(field._1, field._2)
+        checkForError(form, data, expectedError)
       }
     }
   }

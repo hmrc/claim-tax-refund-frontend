@@ -24,7 +24,7 @@ import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import connectors.DataCacheConnector
 import controllers.actions._
 import config.FrontendAppConfig
-import forms.UkAddressForm
+import forms._
 import identifiers.UkAddressId
 import models.{Mode, UkAddress}
 import utils.{Navigator, UserAnswers}
@@ -43,15 +43,15 @@ class UkAddressController @Inject()(appConfig: FrontendAppConfig,
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.ukAddress match {
-        case None => UkAddressForm()
-        case Some(value) => UkAddressForm().fill(value)
+        case None => UkAddressForm(appConfig.addressLineMaxLength, appConfig.postcodeMaxLength)
+        case Some(value) => UkAddressForm(appConfig.addressLineMaxLength, appConfig.countryMaxLength).fill(value)
       }
       Ok(ukAddress(appConfig, preparedForm, mode))
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      UkAddressForm().bindFromRequest().fold(
+      UkAddressForm(appConfig.addressLineMaxLength, appConfig.postcodeMaxLength).bindFromRequest().fold(
         (formWithErrors: Form[UkAddress]) =>
           Future.successful(BadRequest(ukAddress(appConfig, formWithErrors, mode))),
         (value) =>
