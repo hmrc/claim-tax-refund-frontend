@@ -16,13 +16,25 @@
 
 package forms
 
+import config.FrontendAppConfig
 import forms.behaviours.FormBehaviours
 import models.{InternationalAddress, MaxLengthField}
+import org.scalatest.mockito.MockitoSugar
+import play.api.data.Form
+import org.mockito.Mockito._
 
-class InternationalAddressFormSpec extends FormBehaviours {
+class InternationalAddressFormSpec extends FormBehaviours with MockitoSugar {
 
   val addressLineMaxLength = 35
   val countryMaxLength = 10
+
+  def appConfig: FrontendAppConfig = {
+    val instance = mock[FrontendAppConfig]
+    when(instance.addressLineMaxLength) thenReturn addressLineMaxLength
+    when(instance.countryMaxLength) thenReturn countryMaxLength
+    instance
+  }
+
   val addressLine1Blank = "global.addressLine1.blank"
   val addressLine1TooLong = "global.addressLine1.tooLong"
   val addressLine2Blank = "global.addressLine2.blank"
@@ -42,7 +54,7 @@ class InternationalAddressFormSpec extends FormBehaviours {
     "country" -> "country"
   )
 
-  val form = InternationalAddressForm(addressLineMaxLength, countryMaxLength)
+  override val form: Form[_] = new InternationalAddressForm(appConfig)()
 
   "International Address form" must {
     behave like questionForm(InternationalAddress("value 1", "value 2", Some("value 3"), Some("value 4"), Some("value 5"), "country"))
