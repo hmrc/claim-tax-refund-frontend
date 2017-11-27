@@ -16,20 +16,25 @@
 
 package forms
 
+import com.google.inject.Inject
+import config.FrontendAppConfig
 import play.api.data.Form
 import play.api.data.Forms._
 import models.InternationalAddress
 
-object InternationalAddressForm extends FormErrorHelper with FormatterMaxLength{
+class InternationalAddressForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with FormatterMaxLength{
 
-  def apply(addressMaxLength: Int, countryLength: Int): Form[InternationalAddress] = {
+  private val maxLength = appConfig.addressLineMaxLength
+  private val countryLength = appConfig.countryMaxLength
+
+  def apply(): Form[InternationalAddress] = {
     Form(
       mapping(
-        "addressLine1" -> of(formatterMaxLength("global.addressLine1", addressMaxLength)),
-        "addressLine2" -> of(formatterMaxLength("global.addressLine2", addressMaxLength)),
-        "addressLine3" -> optional(of(formatterMaxLength("global.addressLine3", addressMaxLength))),
-        "addressLine4" -> optional(of(formatterMaxLength("global.addressLine4", addressMaxLength))),
-        "addressLine5" -> optional(of(formatterMaxLength("global.addressLine5", addressMaxLength))),
+        "addressLine1" -> of(formatterMaxLength("global.addressLine1", maxLength)),
+        "addressLine2" -> of(formatterMaxLength("global.addressLine2", maxLength)),
+        "addressLine3" -> optional(of(formatterMaxLength("global.addressLine3", maxLength))),
+        "addressLine4" -> optional(of(formatterMaxLength("global.addressLine4", maxLength))),
+        "addressLine5" -> optional(of(formatterMaxLength("global.addressLine5", maxLength))),
         "country" -> of(formatterMaxLength("global.country", countryLength))
       )(InternationalAddress.apply)(InternationalAddress.unapply))
   }
