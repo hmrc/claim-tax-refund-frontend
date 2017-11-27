@@ -16,6 +16,7 @@
 
 package controllers
 
+import config.FrontendAppConfig
 import play.api.data.Form
 import play.api.libs.json.Json
 import uk.gov.hmrc.http.cache.client.CacheMap
@@ -25,7 +26,8 @@ import controllers.actions._
 import play.api.test.Helpers._
 import forms.InternationalAddressForm
 import identifiers.InternationalAddressId
-import models.{NormalMode, InternationalAddress}
+import models.{InternationalAddress, NormalMode}
+import org.scalatest.mockito.MockitoSugar
 import views.html.internationalAddress
 
 class InternationalAddressControllerSpec extends ControllerSpecBase {
@@ -34,12 +36,14 @@ class InternationalAddressControllerSpec extends ControllerSpecBase {
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new InternationalAddressController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl)
+      dataRetrievalAction, new DataRequiredActionImpl, new InternationalAddressForm(frontendAppConfig))
 
   val addressLineMaxLength = 35
   val countryMaxLength = 20
 
-  def viewAsString(form: Form[InternationalAddress] = InternationalAddressForm(addressLineMaxLength, countryMaxLength)) =
+  val form = new InternationalAddressForm(frontendAppConfig)()
+
+  def viewAsString(form: Form[InternationalAddress] = form) =
     internationalAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
 
   "InternationalAddress Controller" must {
@@ -57,7 +61,7 @@ class InternationalAddressControllerSpec extends ControllerSpecBase {
 
       val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)
 
-      contentAsString(result) mustBe viewAsString(InternationalAddressForm(addressLineMaxLength, countryMaxLength)
+      contentAsString(result) mustBe viewAsString(form
         .fill(InternationalAddress("line 1", "line 2", None, None, None, "country")))
     }
 
@@ -78,7 +82,7 @@ class InternationalAddressControllerSpec extends ControllerSpecBase {
 
     "return a Bad Request and errors when invalid data is submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
-      val boundForm = InternationalAddressForm(addressLineMaxLength, countryMaxLength).bind(Map("value" -> "invalid value"))
+      val boundForm = form.bind(Map("value" -> "invalid value"))
 
       val result = controller().onSubmit(NormalMode)(postRequest)
 
