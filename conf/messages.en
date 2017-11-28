@@ -2,22 +2,6 @@ checkYourAnswers.title = Check Your Answers
 checkYourAnswers.heading = Check Your Answers
 checkYourAnswers.guidance = Guidance for check your answers
 
-date.day = Day
-date.month = Month
-date.year = Year
-
-global.and = and
-global.start_now = Start Now
-
-global.addressLine1 = Address Line 1
-global.addressLine2 = Address Line 2
-global.addressLine3 = Address Line 3
-global.addressLine4 = Address Line 4
-global.addressLine5 = Address Line 5
-global.country = Country
-global.postcode = Postcode
-
-
 error.boolean = Please give an answer
 error.invalid_date = Give a correct date
 error.date.day_blank = Enter a day
@@ -32,6 +16,39 @@ error.number = Please enter a valid number
 error.required = Please enter a value
 error.summary.title = There is a problem
 error.summary.text = Check the following
+
+date.day = Day
+date.month = Month
+date.year = Year
+
+global.and = and
+global.start_now = Start Now
+
+global.addressLine1 = Address Line 1
+global.addressLine1.blank = Enter an address line 1
+global.addressLine1.tooLong = Address line 1 can only be up to 35 characters
+
+global.addressLine2 = Address Line 2
+global.addressLine2.blank = Enter an address line 2
+global.addressLine2.tooLong = Address line 2 can only be up to 35 characters
+
+global.addressLine3 = Address Line 3
+global.addressLine3.tooLong = Address line 3 can only be up to 35 characters
+
+global.addressLine4 = Address Line 4
+global.addressLine4.tooLong = Address line 4 can only be up to 35 characters
+
+global.addressLine5 = Address Line 5
+global.addressLine5.blank = Enter an address line 5
+global.addressLine5.tooLong = Address line 5 can only be up to 35 characters
+
+global.country = Country
+global.country.blank = Enter a country
+global.country.tooLong = Country can only be up to 35 characters
+
+global.postcode = Postcode
+global.postcode.blank = Enter a postcode
+global.postcode.invalid = Enter a valid postcode
 
 index.title = Claim a tax refund
 index.heading = Claim a tax refund
