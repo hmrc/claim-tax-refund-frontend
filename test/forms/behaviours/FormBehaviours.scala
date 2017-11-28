@@ -49,23 +49,23 @@ trait FormBehaviours extends FormSpec {
         val invalid = "A" * (field.maxLength + 1)
         val validFields = validData - field.fieldName
         val data = validFields ++ Map(field.fieldName -> invalid)
-        val expectedError = error(field.fieldName, field.errorMessageKey)
+        val expectedError = error(field.fieldName, field.errorMessageKey, field.maxLength)
         checkForError(form, data, expectedError)
       }
     }
   }
 
   def formWithMandatoryTextFieldsAndCustomKey(fields: (String, String)*) = {
-    for (field <- fields) {
-      s"fail to bind when ${field._1} is omitted" in {
-        val data = validData - field._1
-        val expectedError = error(field._1, field._2)
+    for ((key, errorMessage) <- fields) {
+      s"fail to bind when $key is omitted" in {
+        val data = validData - key + (key -> "")
+        val expectedError = error(key, errorMessage)
         checkForError(form, data, expectedError)
       }
 
-      s"fail to bind when ${field._1} is blank" in {
-        val data = validData + (field._1 -> "")
-        val expectedError = error(field._1, field._2)
+      s"fail to bind when $key is blank" in {
+        val data = validData + (key -> "")
+        val expectedError = error(key, errorMessage)
         checkForError(form, data, expectedError)
       }
     }

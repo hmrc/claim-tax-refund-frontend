@@ -16,18 +16,16 @@
 
 package controllers
 
-import config.FrontendAppConfig
-import play.api.data.Form
-import play.api.libs.json.Json
-import uk.gov.hmrc.http.cache.client.CacheMap
-import utils.FakeNavigator
 import connectors.FakeDataCacheConnector
 import controllers.actions._
-import play.api.test.Helpers._
 import forms.InternationalAddressForm
 import identifiers.InternationalAddressId
 import models.{InternationalAddress, NormalMode}
-import org.scalatest.mockito.MockitoSugar
+import play.api.data.Form
+import play.api.libs.json.Json
+import play.api.test.Helpers._
+import uk.gov.hmrc.http.cache.client.CacheMap
+import utils.FakeNavigator
 import views.html.internationalAddress
 
 class InternationalAddressControllerSpec extends ControllerSpecBase {
