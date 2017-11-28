@@ -18,9 +18,40 @@ package forms
 
 class TelephoneNumberFormSpec extends FormSpec {
 
-  val errorKeyBlank = "blank"
+  val errorKeyBlank = "telephoneNumber.blank"
+  val errorKeyInvalid = "telephoneNumber.invalid"
+  val testRegex = """^\+?[0-9\s\(\)]{1,20}$"""
 
   "TelephoneNumber Form" must {
+
+    "bind a string when the standard telephone number is valid" in {
+      val validNum = "0191 111 1111"
+      val form = TelephoneNumberForm(testRegex).bind(Map("value" -> validNum))
+      form.get shouldBe "0191 111 1111"
+    }
+
+    "bind a string when the standard telephone number is valid with brackets" in {
+      val validNum = "(0191) 111 1111"
+      val form = TelephoneNumberForm(testRegex).bind(Map("value" -> validNum))
+      form.get shouldBe "(0191) 111 1111"
+    }
+
+    "bind a string when the standard telephone number is valid with Int code" in {
+      val validNum = "+44191 111 1111"
+      val form = TelephoneNumberForm(testRegex).bind(Map("value" -> validNum))
+      form.get shouldBe "+44191 111 1111"
+    }
+
+    "bind a string when the international telephone number is valid" in {
+      val validNum = "+14155552671"
+      val form = TelephoneNumberForm(testRegex).bind(Map("value" -> validNum))
+      form.get shouldBe "+14155552671"
+    }
+
+    "fail to bind an invalid telephone number" in {
+      val expectedError = error("value", errorKeyInvalid)
+      checkForError(TelephoneNumberForm(testRegex), Map("value" -> "invalid"), expectedError)
+    }
 
     "bind a string" in {
       val form = TelephoneNumberForm(errorKeyBlank).bind(Map("value" -> "answer"))

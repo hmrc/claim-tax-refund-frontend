@@ -38,7 +38,8 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase {
 
   def viewAsString(form: Form[_] = TelephoneNumberForm()) = telephoneNumber(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
 
-  val testAnswer = "answer"
+  val testRegex = """^\+?[0-9\s\(\)]{1,20}$"""
+  val testAnswer = "0191 111 1111"
 
   "TelephoneNumber Controller" must {
 
