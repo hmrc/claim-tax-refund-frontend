@@ -20,10 +20,11 @@ import play.api.data.{Form, FormError}
 import uk.gov.hmrc.play.test.UnitSpec
 
 trait FormSpec extends UnitSpec {
+
   def checkForError(form: Form[_], data: Map[String, String], expectedErrors: Seq[FormError]) = {
     form.bind(data).fold(
       formWithErrors => {
-        for (error <- formWithErrors.errors) expectedErrors should contain(FormError(error.key, error.message))
+        for (error <- expectedErrors) formWithErrors.errors should contain(error)
         formWithErrors.errors.size shouldBe expectedErrors.size
       },
       form => {
@@ -32,7 +33,7 @@ trait FormSpec extends UnitSpec {
     )
   }
 
-  def error(key: String, value: String) = Seq(FormError(key, value))
+  def error(key: String, value: String, args: Any*) = Seq(FormError(key, value, args))
 
   lazy val emptyForm = Map[String, String]()
 
