@@ -24,7 +24,7 @@ import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import connectors.DataCacheConnector
 import controllers.actions._
 import config.FrontendAppConfig
-import forms._
+import forms.UkAddressForm
 import identifiers.UkAddressId
 import models.{Mode, UkAddress}
 import utils.{Navigator, UserAnswers}
