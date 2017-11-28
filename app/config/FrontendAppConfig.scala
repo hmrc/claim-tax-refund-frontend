@@ -44,6 +44,7 @@ class FrontendAppConfig @Inject() (override val configuration: Configuration) ex
 
   lazy val languageTranslationEnabled = configuration.getBoolean("microservice.services.features.welsh-translation").getOrElse(true)
 
+  lazy val fullNameLength = loadConfigInt("microservice.services.validation.full-name-length")
   lazy val ninoRegex = loadConfig("microservice.services.validation.nino-regex")
   lazy val addressLineMaxLength = loadConfigInt("microservice.services.validation.address-line-length")
   lazy val postcodeMaxLength = loadConfigInt("microservice.services.validation.postcode-length")

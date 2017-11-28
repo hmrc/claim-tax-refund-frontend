@@ -39,20 +39,23 @@ class FullNameController @Inject()(
                                         navigator: Navigator,
                                         authenticate: AuthAction,
                                         getData: DataRetrievalAction,
-                                        requireData: DataRequiredAction) extends FrontendController with I18nSupport {
+                                        requireData: DataRequiredAction,
+                                        formBuilder: FullNameForm) extends FrontendController with I18nSupport {
+
+  private val form: Form[String] = formBuilder()
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData) {
     implicit request =>
       val preparedForm = request.userAnswers.flatMap(x => x.fullName) match {
-        case None => FullNameForm()
-        case Some(value) => FullNameForm().fill(value)
+        case None => form
+        case Some(value) => form.fill(value)
       }
       Ok(fullName(appConfig, preparedForm, mode))
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData).async {
     implicit request =>
-      FullNameForm().bindFromRequest().fold(
+      form.bindFromRequest().fold(
         (formWithErrors: Form[_]) =>
           Future.successful(BadRequest(fullName(appConfig, formWithErrors, mode))),
         (value) =>
