@@ -38,20 +38,23 @@ class InternationalAddressController @Inject()(appConfig: FrontendAppConfig,
                                                   navigator: Navigator,
                                                   authenticate: AuthAction,
                                                   getData: DataRetrievalAction,
-                                                  requireData: DataRequiredAction) extends FrontendController with I18nSupport {
+                                                  requireData: DataRequiredAction,
+                                                  formBuilder: InternationalAddressForm) extends FrontendController with I18nSupport {
+
+  private val form: Form[InternationalAddress] = formBuilder()
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.internationalAddress match {
-        case None => InternationalAddressForm()
-        case Some(value) => InternationalAddressForm().fill(value)
+        case None => form
+        case Some(value) => form.fill(value)
       }
       Ok(internationalAddress(appConfig, preparedForm, mode))
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      InternationalAddressForm().bindFromRequest().fold(
+      form.bindFromRequest().fold(
         (formWithErrors: Form[InternationalAddress]) =>
           Future.successful(BadRequest(internationalAddress(appConfig, formWithErrors, mode))),
         (value) =>

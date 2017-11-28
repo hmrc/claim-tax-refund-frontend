@@ -30,13 +30,19 @@ import views.html.ukAddress
 
 class UkAddressControllerSpec extends ControllerSpecBase {
 
+  val addressLineMaxLength = 35
+  val postcodeMaxLength = 10
+
   def onwardRoute = routes.IndexController.onPageLoad()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new UkAddressController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl)
+      dataRetrievalAction, new DataRequiredActionImpl, new UkAddressForm(frontendAppConfig))
 
-  def viewAsString(form: Form[UkAddress] = UkAddressForm()) = ukAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
+  val form = new UkAddressForm(frontendAppConfig)()
+
+  def viewAsString(form: Form[UkAddress] = form) =
+    ukAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
 
   "UkAddress Controller" must {
 
@@ -53,7 +59,8 @@ class UkAddressControllerSpec extends ControllerSpecBase {
 
       val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)
 
-      contentAsString(result) mustBe viewAsString(UkAddressForm().fill(UkAddress("line 1", "line 2", None, None, None, "postcode")))
+      contentAsString(result) mustBe viewAsString(form
+        .fill(UkAddress("line 1", "line 2", None, None, None, "postcode")))
     }
 
     "redirect to the next page when valid data is submitted" in {
@@ -67,7 +74,7 @@ class UkAddressControllerSpec extends ControllerSpecBase {
 
     "return a Bad Request and errors when invalid data is submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
-      val boundForm = UkAddressForm().bind(Map("value" -> "invalid value"))
+      val boundForm = form.bind(Map("value" -> "invalid value"))
 
       val result = controller().onSubmit(NormalMode)(postRequest)
 

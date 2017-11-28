@@ -26,6 +26,7 @@ import controllers.routes
 class FrontendAppConfig @Inject() (override val configuration: Configuration) extends AppName with BaseUrl {
 
   private def loadConfig(key: String) = configuration.getString(key).getOrElse(throw new Exception(s"Missing configuration key: $key"))
+  private def loadConfigInt(key: String) = configuration.getInt(key).getOrElse(throw new Exception(s"Missing configuration key: $key"))
 
   private lazy val contactHost = configuration.getString("contact-frontend.host").getOrElse("")
   private val contactFormServiceIdentifier = "claimtaxrefundfrontend"
@@ -44,6 +45,9 @@ class FrontendAppConfig @Inject() (override val configuration: Configuration) ex
   lazy val languageTranslationEnabled = configuration.getBoolean("microservice.services.features.welsh-translation").getOrElse(true)
 
   lazy val ninoRegex = loadConfig("microservice.services.validation.nino-regex")
+  lazy val addressLineMaxLength = loadConfigInt("microservice.services.validation.address-line-length")
+  lazy val postcodeMaxLength = loadConfigInt("microservice.services.validation.postcode-length")
+  lazy val countryMaxLength = loadConfigInt("microservice.services.validation.country-length")
 
   def languageMap: Map[String, Lang] = Map(
     "english" -> Lang("en"),
