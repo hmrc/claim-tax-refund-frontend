@@ -22,12 +22,16 @@ import play.api.data.format.Formatter
 
 object TelephoneNumberForm extends FormErrorHelper {
 
-  def telephoneNumberFormatter(errorKeyBlank: String) = new Formatter[String] {
+  def telephoneNumberFormatter(regex: String) = new Formatter[String] {
+
+    val errorKeyBlank = "telephoneNumber.blank"
+    val errorKeyInvalid = "telephoneNumber.invalid"
 
     def bind(key: String, data: Map[String, String]) = {
       data.get(key) match {
         case None => produceError(key, errorKeyBlank)
         case Some("") => produceError(key, errorKeyBlank)
+        case Some(s) if !s.matches(regex) => produceError(key, errorKeyInvalid)
         case Some(s) => Right(s)
       }
     }
@@ -35,6 +39,6 @@ object TelephoneNumberForm extends FormErrorHelper {
     def unbind(key: String, value: String) = Map(key -> value)
   }
 
-  def apply(errorKeyBlank: String = "error.required"): Form[String] =
-    Form(single("value" -> of(telephoneNumberFormatter(errorKeyBlank))))
+  def apply(regex: String): Form[String] =
+    Form(single("value" -> of(telephoneNumberFormatter(regex))))
 }

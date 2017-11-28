@@ -26,12 +26,13 @@ import views.html.telephoneNumber
 class TelephoneNumberViewSpec extends StringViewBehaviours {
 
   val messageKeyPrefix = "telephoneNumber"
+  val testRegex = """^\+?[0-9\s\(\)]{1,20}$"""
 
-  def createView = () => telephoneNumber(frontendAppConfig, TelephoneNumberForm(), NormalMode)(fakeRequest, messages)
+  def createView = () => telephoneNumber(frontendAppConfig, TelephoneNumberForm(testRegex), NormalMode)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[String]) => telephoneNumber(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
-  val form = TelephoneNumberForm()
+  val form = TelephoneNumberForm(testRegex)
 
   "TelephoneNumber view" must {
     behave like normalPage(createView, messageKeyPrefix)
