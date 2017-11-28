@@ -1,7 +1,8 @@
 
 # Claim a tax refund frontend
+This project uses an existing HMRC digital form as a template for conversion to a Scala web application using code scaffolds
 
-## Adding a page using Leg Up
+## Adding a page using g8Scaffold
 
 The steps to add a new page are as follows:
 
