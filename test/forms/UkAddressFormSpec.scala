@@ -16,13 +16,25 @@
 
 package forms
 
+import config.FrontendAppConfig
 import forms.behaviours.FormBehaviours
 import models.{MaxLengthField, UkAddress}
+import org.mockito.Mockito.when
+import org.scalatest.mockito.MockitoSugar
+import play.api.data.Form
 
-class UkAddressFormSpec extends FormBehaviours {
+class UkAddressFormSpec extends FormBehaviours with MockitoSugar {
 
   val addressLineMaxLength = 35
   val postcodeMaxLength = 10
+
+  def appConfig: FrontendAppConfig = {
+    val instance = mock[FrontendAppConfig]
+    when(instance.addressLineMaxLength) thenReturn addressLineMaxLength
+    when(instance.postcodeMaxLength) thenReturn postcodeMaxLength
+    instance
+  }
+
   val addressLine1Blank = "global.addressLine1.blank"
   val addressLine1TooLong = "global.addressLine1.tooLong"
   val addressLine2Blank = "global.addressLine2.blank"
@@ -42,7 +54,7 @@ class UkAddressFormSpec extends FormBehaviours {
     "postcode" -> "postcode"
   )
 
-  val form = UkAddressForm(addressLineMaxLength, postcodeMaxLength)
+  override val form: Form[_] = new UkAddressForm(appConfig)()
 
   "UkAddress form" must {
     behave like questionForm(UkAddress("line 1", "line 2", Some("line 3"), Some("line 4"), Some("line 5"), "postcode"))
