@@ -34,11 +34,14 @@ class FullNameControllerSpec extends ControllerSpecBase {
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new FullNameController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl)
+      dataRetrievalAction, new DataRequiredActionImpl, new FullNameForm(frontendAppConfig))
 
-  def viewAsString(form: Form[_] = FullNameForm()) = fullName(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
-
+  val maxLength = 35
   val testAnswer = "answer"
+
+  val form = new FullNameForm(frontendAppConfig)()
+
+  def viewAsString(form: Form[String] = form) = fullName(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
 
   "FullName Controller" must {
 
@@ -55,7 +58,7 @@ class FullNameControllerSpec extends ControllerSpecBase {
 
       val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)
 
-      contentAsString(result) mustBe viewAsString(FullNameForm().fill(testAnswer))
+      contentAsString(result) mustBe viewAsString(form.fill(testAnswer))
     }
 
     "redirect to the next page when valid data is submitted" in {
@@ -70,7 +73,7 @@ class FullNameControllerSpec extends ControllerSpecBase {
     "return a Bad Request and errors when invalid data is submitted" in {
 
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", ""))
-      val boundForm = FullNameForm().bind(Map("value" -> ""))
+      val boundForm = form.bind(Map("value" -> ""))
 
       val result = controller().onSubmit(NormalMode)(postRequest)
 

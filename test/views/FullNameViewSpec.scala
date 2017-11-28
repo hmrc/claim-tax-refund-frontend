@@ -16,22 +16,27 @@
 
 package views
 
+import config.FrontendAppConfig
 import play.api.data.Form
 import controllers.routes
 import forms.FullNameForm
 import models.NormalMode
+import org.scalatest.mockito.MockitoSugar
 import views.behaviours.StringViewBehaviours
 import views.html.fullName
 
-class FullNameViewSpec extends StringViewBehaviours {
+class FullNameViewSpec extends StringViewBehaviours with MockitoSugar{
 
+  val maxLength = 35
   val messageKeyPrefix = "fullName"
 
-  def createView = () => fullName(frontendAppConfig, FullNameForm(), NormalMode)(fakeRequest, messages)
+  val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
+
+  override val form: Form[String] = new FullNameForm(appConfig)()
+
+  def createView = () => fullName(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[String]) => fullName(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
-
-  val form = FullNameForm()
 
   "FullName view" must {
     behave like normalPage(createView, messageKeyPrefix)

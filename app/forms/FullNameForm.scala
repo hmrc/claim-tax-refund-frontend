@@ -16,25 +16,17 @@
 
 package forms
 
-import play.api.data.{Form, FormError}
+import com.google.inject.Inject
+import config.FrontendAppConfig
+import play.api.data.Form
 import play.api.data.Forms._
-import play.api.data.format.Formatter
 
-object FullNameForm extends FormErrorHelper {
+class FullNameForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 
-  def fullNameFormatter(errorKeyBlank: String) = new Formatter[String] {
+  private val fullNameMaxLength = appConfig.fullNameLength
 
-    def bind(key: String, data: Map[String, String]) = {
-      data.get(key) match {
-        case None => produceError(key, errorKeyBlank)
-        case Some("") => produceError(key, errorKeyBlank)
-        case Some(s) => Right(s)
-      }
-    }
+  private val fullNameBlankKey = "fullName.blank"
+  private val fullNameTooLongKey = "fullName.tooLong"
 
-    def unbind(key: String, value: String) = Map(key -> value)
-  }
-
-  def apply(errorKeyBlank: String = "error.required"): Form[String] =
-    Form(single("value" -> of(fullNameFormatter(errorKeyBlank))))
+  def apply(): Form[String] = Form(text.verifying(nonEmpty(fullNameBlankKey), maxLength(fullNameMaxLength, fullNameTooLongKey)))
 }
