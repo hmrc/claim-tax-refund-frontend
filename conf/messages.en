@@ -30,7 +30,7 @@ error.integer = Give an answer in whole numbers
 error.non_numeric = Give a value using only numbers
 error.number = Please enter a valid number
 error.required = Please enter a value
-error.summary.title = There’s been a problem
+error.summary.title = There is a problem
 error.summary.text = Check the following
 
 index.title = Claim a tax refund
@@ -55,9 +55,9 @@ index.beforeYouStart.line3 = You can track this form in your
 index.beforeYouStart.personalTaxAccountLink = https://www.gov.uk/personal-tax-account
 index.beforeYouStart.personalTaxAccountTitle = personal tax account
 
-session_expired.title = For your security, this service has been reset
-session_expired.heading = For your security, this service has been reset
-session_expired.guidance = The details you have given have been deleted because you did not continue the service for 1 hour.
+session_expired.title = You will have to start again
+session_expired.heading = You will have to start again
+session_expired.guidance = For your security, we cleared your details because you did not do anything for 15 minutes. Start again to claim a tax refund.
 
 site.back = Back
 site.delete = Remove
@@ -73,25 +73,37 @@ site.textarea.char_limit = (Limit is {0} characters)
 unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account
 
-fullName.title = fullName
-fullName.heading = fullName
-fullName.checkYourAnswersLabel = fullName
+fullName.title = What is your full name?
+fullName.heading = What is your full name?
+fullName.checkYourAnswersLabel = Your full name
+fullname.blank = Enter your full name
+fullname.invalid = Enter a valid full name
 
-nationalInsuranceNumber.title = nationalInsuranceNumber
-nationalInsuranceNumber.heading = nationalInsuranceNumber
-nationalInsuranceNumber.checkYourAnswersLabel = nationalInsuranceNumber
-nationalInsuranceNumber.blank = nationalInsuranceNumber
-nationalInsuranceNumber.invalid = nationalInsuranceNumber
+nationalInsuranceNumber.title = Enter your National insurance number
+nationalInsuranceNumber.heading = What is your National Insurance number?
+nationalInsuranceNumber.checkYourAnswersLabel = Your National insurance number
+nationalInsuranceNumber.blank = Enter your National Insurance number
+nationalInsuranceNumber.invalid = Enter a valid National Insurance number
 
-isTheAddressInTheUK.title = isTheAddressInTheUK
-isTheAddressInTheUK.heading = isTheAddressInTheUK
-isTheAddressInTheUK.checkYourAnswersLabel = isTheAddressInTheUK
+isTheAddressInTheUK.title = Is your address in the UK?
+isTheAddressInTheUK.heading = Is your address in the UK?
+isTheAddressInTheUK.checkYourAnswersLabel = Is your address in the UK?
+isTheAddressInTheUK.blank = Select yes if your address is in the UK
 
-ukAddress.title = ukAddress
-ukAddress.heading = UK Address
+ukAddress.title = What is your address?
+ukAddress.heading = What is your address?
+ukAddress.checkYourAnswersLabel = Your address
+ukAddress.postcode.invalid = Enter a valid postcode
+ukAddress.postcode.blank = Enter your postcode
 
-internationalAddress.heading = International Address
+internationalAddress.title = What is your address?
+internationalAddress.heading = What is your address?
+ukAddress.checkYourAnswersLabel = Your address
+internationalAddress.country.blank = Enter the country
+internationalAddress.country.tooLong = Enter a valid country
 
-telephoneNumber.title = telephoneNumber
-telephoneNumber.heading = telephoneNumber
-telephoneNumber.checkYourAnswersLabel = telephoneNumber
+telephoneNumber.title = What is your telephone number?
+telephoneNumber.heading = What is your telephone number?
+telephoneNumber.checkYourAnswersLabel = Your telephone number
+telephoneNumber.blank = Enter your telephone number
+telephoneNumber.invalid = Enter a valid telephone number
