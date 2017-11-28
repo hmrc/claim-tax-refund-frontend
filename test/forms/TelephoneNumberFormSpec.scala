@@ -54,18 +54,18 @@ class TelephoneNumberFormSpec extends FormSpec {
     }
 
     "bind a string" in {
-      val form = TelephoneNumberForm(errorKeyBlank).bind(Map("value" -> "answer"))
-      form.get shouldBe "answer"
+      val form = TelephoneNumberForm(testRegex).bind(Map("value" -> "0191 111 1111"))
+      form.get shouldBe "0191 111 1111"
     }
 
     "fail to bind a blank value" in {
       val expectedError = error("value", errorKeyBlank)
-      checkForError(TelephoneNumberForm(errorKeyBlank), Map("value" -> ""), expectedError)
+      checkForError(TelephoneNumberForm(testRegex), Map("value" -> ""), expectedError)
     }
 
     "fail to bind when value is omitted" in {
       val expectedError = error("value", errorKeyBlank)
-      checkForError(TelephoneNumberForm(errorKeyBlank), emptyForm, expectedError)
+      checkForError(TelephoneNumberForm(testRegex), emptyForm, expectedError)
     }
   }
 }

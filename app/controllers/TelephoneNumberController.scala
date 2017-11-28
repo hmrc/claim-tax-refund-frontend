@@ -44,15 +44,15 @@ class TelephoneNumberController @Inject()(
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.telephoneNumber match {
-        case None => TelephoneNumberForm()
-        case Some(value) => TelephoneNumberForm().fill(value)
+        case None => TelephoneNumberForm(appConfig.telephoneRegex)
+        case Some(value) => TelephoneNumberForm(appConfig.telephoneRegex).fill(value)
       }
       Ok(telephoneNumber(appConfig, preparedForm, mode))
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      TelephoneNumberForm().bindFromRequest().fold(
+      TelephoneNumberForm(appConfig.telephoneRegex).bindFromRequest().fold(
         (formWithErrors: Form[_]) =>
           Future.successful(BadRequest(telephoneNumber(appConfig, formWithErrors, mode))),
         (value) =>
