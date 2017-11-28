@@ -17,8 +17,19 @@
 package forms
 
 import play.api.data.format.Formatter
+import play.api.data.validation.{Constraint, Invalid, Valid}
 
 trait FormatterMaxLength extends FormErrorHelper {
+
+  protected def maxLengthError: String = "error.maxLength"
+
+  def maxLengthConstraint(maxLength: Int): Constraint[String] =
+    Constraint {
+      case str if str.length > maxLength =>
+        Invalid(maxLengthError)
+      case _ =>
+        Valid
+    }
 
   def formatterMaxLength(key: String, maxLength: Int) = new Formatter[String] {
 
