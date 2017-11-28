@@ -16,22 +16,29 @@
 
 package views
 
+import config.FrontendAppConfig
 import play.api.data.Form
 import controllers.routes
 import forms.UkAddressForm
 import models.{NormalMode, UkAddress}
+import org.scalatest.mockito.MockitoSugar
 import views.behaviours.QuestionViewBehaviours
 import views.html.ukAddress
 
-class UkAddressViewSpec extends QuestionViewBehaviours[UkAddress] {
+class UkAddressViewSpec extends QuestionViewBehaviours[UkAddress] with MockitoSugar {
+
+  val addressLineMaxLength = 35
+  val postcodeMaxLength = 10
 
   val messageKeyPrefix = "ukAddress"
 
-  def createView = () => ukAddress(frontendAppConfig, UkAddressForm(), NormalMode)(fakeRequest, messages)
+  val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
+
+  override val form: Form[UkAddress] = new UkAddressForm(appConfig)()
+
+  def createView = () => ukAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[UkAddress]) => ukAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
-
-  override val form = UkAddressForm()
 
   "UkAddress view" must {
 

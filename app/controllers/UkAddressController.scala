@@ -38,20 +38,23 @@ class UkAddressController @Inject()(appConfig: FrontendAppConfig,
                                                   navigator: Navigator,
                                                   authenticate: AuthAction,
                                                   getData: DataRetrievalAction,
-                                                  requireData: DataRequiredAction) extends FrontendController with I18nSupport {
+                                                  requireData: DataRequiredAction,
+                                                  formBuilder: UkAddressForm) extends FrontendController with I18nSupport {
+
+  private val form: Form[UkAddress] = formBuilder()
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.ukAddress match {
-        case None => UkAddressForm()
-        case Some(value) => UkAddressForm().fill(value)
+        case None => form
+        case Some(value) => form.fill(value)
       }
       Ok(ukAddress(appConfig, preparedForm, mode))
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      UkAddressForm().bindFromRequest().fold(
+      form.bindFromRequest().fold(
         (formWithErrors: Form[UkAddress]) =>
           Future.successful(BadRequest(ukAddress(appConfig, formWithErrors, mode))),
         (value) =>

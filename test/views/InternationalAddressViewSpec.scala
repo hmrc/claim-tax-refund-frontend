@@ -16,27 +16,38 @@
 
 package views
 
+import config.FrontendAppConfig
 import play.api.data.Form
 import controllers.routes
 import forms.InternationalAddressForm
-import models.{NormalMode, InternationalAddress}
+import models.{InternationalAddress, NormalMode}
+import org.scalatest.mockito.MockitoSugar
 import views.behaviours.QuestionViewBehaviours
 import views.html.internationalAddress
 
-class InternationalAddressViewSpec extends QuestionViewBehaviours[InternationalAddress] {
+class InternationalAddressViewSpec extends QuestionViewBehaviours[InternationalAddress] with MockitoSugar{
+
+  val addressLineMaxLength = 35
+  val countryMaxLength = 20
 
   val messageKeyPrefix = "internationalAddress"
 
-  def createView = () => internationalAddress(frontendAppConfig, InternationalAddressForm(), NormalMode)(fakeRequest, messages)
+  val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
+
+  override val form: Form[InternationalAddress] = new InternationalAddressForm(appConfig)()
+
+  def createView = () =>
+    internationalAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[InternationalAddress]) => internationalAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
-
-  override val form = InternationalAddressForm()
 
   "InternationalAddress view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    behave like pageWithTextFields(createViewUsingForm, messageKeyPrefix, routes.InternationalAddressController.onSubmit(NormalMode).url, "addressLine1", "addressLine2", "addressLine3", "addressLine4","addressLine5","country")
+    behave like pageWithBackLink(createView)
+
+    behave like pageWithTextFields(createViewUsingForm, messageKeyPrefix,
+      routes.InternationalAddressController.onSubmit(NormalMode).url, "addressLine1", "addressLine2", "addressLine3", "addressLine4","addressLine5","country")
   }
 }
