@@ -18,7 +18,7 @@ global.country = Country
 global.postcode = Postcode
 
 
-error.boolean = Enter a date
+error.boolean = Please give an answer
 error.invalid_date = Give a correct date
 error.date.day_blank = Enter a day
 error.date.day_invalid = Give a correct day using numbers 1 to 31
