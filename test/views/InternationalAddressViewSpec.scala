@@ -41,11 +41,11 @@ class InternationalAddressViewSpec extends QuestionViewBehaviours[InternationalA
 
   def createViewUsingForm = (form: Form[InternationalAddress]) => internationalAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
-
-
   "InternationalAddress view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
+
+    behave like pageWithBackLink(createView)
 
     behave like pageWithTextFields(createViewUsingForm, messageKeyPrefix,
       routes.InternationalAddressController.onSubmit(NormalMode).url, "addressLine1", "addressLine2", "addressLine3", "addressLine4","addressLine5","country")
