@@ -93,8 +93,8 @@ unauthorised.heading = You can’t access this service with this account
 fullName.title = What is your full name?
 fullName.heading = What is your full name?
 fullName.checkYourAnswersLabel = Your full name
-fullname.blank = Enter your full name
-fullname.invalid = Enter a valid full name
+fullName.blank = Enter your full name
+fullName.tooLong = Enter a valid full name
 
 nationalInsuranceNumber.title = Enter your National insurance number
 nationalInsuranceNumber.heading = What is your National Insurance number?
