@@ -28,5 +28,7 @@ class FullNameForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHel
   private val fullNameBlankKey = "fullName.blank"
   private val fullNameTooLongKey = "fullName.tooLong"
 
-  def apply(): Form[String] = Form(text.verifying(nonEmpty(fullNameBlankKey), maxLength(fullNameMaxLength, fullNameTooLongKey)))
+  def apply(): Form[String] = Form(
+    "value" -> text.verifying(nonEmpty(fullNameBlankKey), maxLength(fullNameMaxLength, fullNameTooLongKey))
+  )
 }
