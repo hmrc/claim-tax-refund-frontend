@@ -25,8 +25,9 @@ import play.api.data.Form
 
 class FullNameFormSpec extends FormBehaviours with MockitoSugar {
 
-  val errorKeyBlank = "fullName.blank"
-  val maxLength = 35
+  private val errorKeyBlank = "fullName.blank"
+  private val errorKeyTooLong = "fullName.tooLong"
+  private val maxLength = 35
 
   def appConfig: FrontendAppConfig = {
         val instance = mock[FrontendAppConfig]
@@ -40,7 +41,7 @@ class FullNameFormSpec extends FormBehaviours with MockitoSugar {
 
   "FullName Form" must {
 
-    behave like formWithMaxLengthTextFields(MaxLengthField("value", errorKeyBlank, maxLength))
+    behave like formWithMaxLengthTextFields(MaxLengthField("value", errorKeyTooLong, maxLength))
 
     behave like formWithMandatoryTextFieldsAndCustomKey(("value", errorKeyBlank))
   }
