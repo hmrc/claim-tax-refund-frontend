@@ -1,24 +1,29 @@
 package forms
 
-class $className$FormSpec extends FormSpec {
+import config.FrontendAppConfig
+import forms.behaviours.FormBehaviours
+import models.MaxLengthField
+import org.scalatest.mockito.MockitoSugar
+import org.mockito.Mockito._
+import play.api.data.Form
+
+class $className$FormSpec extends FormSpec with MockitoSugar {
 
   val errorKeyBlank = "blank"
 
+  def appConfig: FrontendAppConfig = {
+    val instance = mock[FrontendAppConfig]
+    instance
+  }
+
+  val validData: Map[String, String] = Map("value" -> "test answer")
+
+  override val form: Form[_] = new FullNameForm(appConfig)()
+
   "$className$ Form" must {
 
-    "bind a string" in {
-      val form = $className$Form(errorKeyBlank).bind(Map("value" -> "answer"))
-      form.get shouldBe "answer"
-    }
+    behave like questionForm(String("value"))
 
-    "fail to bind a blank value" in {
-      val expectedError = error("value", errorKeyBlank)
-      checkForError($className$Form(errorKeyBlank), Map("value" -> ""), expectedError)
-    }
-
-    "fail to bind when value is omitted" in {
-      val expectedError = error("value", errorKeyBlank)
-      checkForError($className$Form(errorKeyBlank), emptyForm, expectedError)
-    }
+    behave like formWithMandatoryTextFieldsAndCustomKey(("value", errorKeyBlank))
   }
 }
