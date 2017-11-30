@@ -18,6 +18,8 @@ echo "$className;format="decap"$.heading = $className;format="decap"$" >> ../con
 echo "$className;format="decap"$.field1 = Field 1" >> ../conf/messages.en
 echo "$className;format="decap"$.field2 = Field 2" >> ../conf/messages.en
 echo "$className;format="decap"$.checkYourAnswersLabel = $className;format="decap"$" >> ../conf/messages.en
+echo "$className;format="decap"$.field1.blank = $className;format="decap"$ field 1 blank" >> ../conf/messages.en
+echo "$className;format="decap"$.field2.blank = $className;format="decap"$ field 2 blank" >> ../conf/messages.en
 
 echo "Adding helper line into UserAnswers"
 awk '/class/ {\
