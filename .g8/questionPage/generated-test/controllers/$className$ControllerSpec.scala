@@ -18,9 +18,11 @@ class $className$ControllerSpec extends ControllerSpecBase {
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new $className$Controller(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl)
+      dataRetrievalAction, new DataRequiredActionImpl, new $className$Form(frontendAppConfig))
 
-  def viewAsString(form: Form[_] = $className$Form()) = $className;format="decap"$(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
+  val form = new $className$Form(frontendAppConfig)()
+
+  def viewAsString(form: Form[_] = form) = $className;format="decap"$(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
 
   "$className$ Controller" must {
 
@@ -51,7 +53,7 @@ class $className$ControllerSpec extends ControllerSpecBase {
 
     "return a Bad Request and errors when invalid data is submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
-      val boundForm = $className$Form().bind(Map("value" -> "invalid value"))
+      val boundForm = form.bind(Map("value" -> "invalid value"))
 
       val result = controller().onSubmit(NormalMode)(postRequest)
 

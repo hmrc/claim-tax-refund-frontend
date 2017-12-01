@@ -1,17 +1,23 @@
 package views
 
+import config.FrontendAppConfig
 import play.api.data.Form
 import controllers.routes
 import forms.$className$Form
 import models.NormalMode
+import org.scalatest.mockito.MockitoSugar
 import views.behaviours.StringViewBehaviours
 import views.html.$className;format="decap"$
 
-class $className$ViewSpec extends StringViewBehaviours {
+class $className$ViewSpec extends StringViewBehaviours with MockitoSugar {
 
   val messageKeyPrefix = "$className;format="decap"$"
 
-  def createView = () => $className;format="decap"$(frontendAppConfig, $className$Form(), NormalMode)(fakeRequest, messages)
+  val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
+
+  override val form: Form[String] = new $className$Form(appConfig)()
+
+  def createView = () => $className;format="decap"$(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[String]) => $className;format="decap"$(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
