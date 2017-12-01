@@ -35,7 +35,7 @@
 
         @components.heading("nationalInsuranceNumber.heading")
 
-        @components.input_text(InputViewModel("value", form), label = messages("nationalInsuranceNumber.heading"), labelClass=Some("visually-hidden"))
+        @components.input_text(InputViewModel("value", form), label = messages("nationalInsuranceNumber.heading"), labelClass=Some("visually-hidden"), hintLine1 = Some(messages("nationalInsuranceNumber.hintLine1")), hintLine2 = Some(messages("nationalInsuranceNumber.hintLine2")))
 
         @components.submit_button()
     }
