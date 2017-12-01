@@ -38,6 +38,7 @@ class NationalInsuranceNumberViewSpec extends StringViewBehaviours {
 
     behave like pageWithBackLink(createView)
 
-    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.NationalInsuranceNumberController.onSubmit(NormalMode).url)
+    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.NationalInsuranceNumberController.onSubmit(NormalMode).url,
+      Some(s"$messageKeyPrefix.hintLine1"), Some(s"$messageKeyPrefix.hintLine2"))
   }
 }

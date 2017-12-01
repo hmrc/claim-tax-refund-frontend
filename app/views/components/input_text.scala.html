@@ -20,15 +20,19 @@
 viewModel: InputViewModelBase,
 label: String,
 inputClass: Option[String] = None,
-hint: Option[String] = None,
+hintLine1: Option[String] = None,
+hintLine2: Option[String] = None,
 labelClass: Option[String] = None
 )(implicit messages: Messages)
 
 <div class="form-field @if(viewModel.errorKey.nonEmpty){form-field--error}">
     <label class="form-label" for="@{viewModel.id}">
         <span class="bold @if(labelClass.nonEmpty){@labelClass}">@label</span>
-        @if(hint.nonEmpty){
-        <span class="form-hint">@hint</span>
+        @if(hintLine1.nonEmpty){
+        <span class="form-hint">@hintLine1</span>
+        }
+        @if(hintLine2.nonEmpty){
+        <span id="hint-line-2" class="form-hint">@hintLine2</span>
         }
         @if(viewModel.errorKey.nonEmpty){
         <span class="error-notification" id="error-message-@{viewModel.id}-input">@messages(viewModel.errorKey)</span>
