@@ -4,12 +4,17 @@ import play.api.data.Form
 import play.api.data.Forms._
 import models.$className$
 
-object $className$Form {
+class $className$Form @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 
-  def apply(): Form[$className$] = Form(
-    mapping(
-      "field1" -> nonEmptyText,
-      "field2" -> nonEmptyText
-    )($className$.apply)($className$.unapply)
-  )
+  private val field1BlankKey = "error.required"
+  private val field2BlankKey = "error.required"
+
+  def apply(): Form[$className$] = {
+    Form(
+      mapping(
+        "field1" -> text.verifying(nonEmpty(field1BlankKey)),
+        "field2" -> text.verifying(nonEmpty(field2BlankKey))
+      )($className$.apply)($className$.unapply)
+    )
+  }
 }
