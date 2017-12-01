@@ -124,3 +124,7 @@ telephoneNumber.heading = What is your telephone number?
 telephoneNumber.checkYourAnswersLabel = Your telephone number
 telephoneNumber.blank = Enter your telephone number
 telephoneNumber.invalid = Enter a valid telephone number
+
+uniqueTaxpayerReference.title = uniqueTaxpayerReference
+uniqueTaxpayerReference.heading = uniqueTaxpayerReference
+uniqueTaxpayerReference.checkYourAnswersLabel = uniqueTaxpayerReference

@@ -41,3 +41,8 @@ GET        /telephoneNumber               controllers.TelephoneNumberController.
 POST       /telephoneNumber               controllers.TelephoneNumberController.onSubmit(mode: Mode = NormalMode)
 GET        /changeTelephoneNumber                        controllers.TelephoneNumberController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeTelephoneNumber                        controllers.TelephoneNumberController.onSubmit(mode: Mode = CheckMode)
+
+GET        /uniqueTaxpayerReference               controllers.UniqueTaxpayerReferenceController.onPageLoad(mode: Mode = NormalMode)
+POST       /uniqueTaxpayerReference               controllers.UniqueTaxpayerReferenceController.onSubmit(mode: Mode = NormalMode)
+GET        /changeUniqueTaxpayerReference                        controllers.UniqueTaxpayerReferenceController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeUniqueTaxpayerReference                        controllers.UniqueTaxpayerReferenceController.onSubmit(mode: Mode = CheckMode)
