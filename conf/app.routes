@@ -41,3 +41,8 @@ GET        /telephoneNumber               controllers.TelephoneNumberController.
 POST       /telephoneNumber               controllers.TelephoneNumberController.onSubmit(mode: Mode = NormalMode)
 GET        /changeTelephoneNumber                        controllers.TelephoneNumberController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeTelephoneNumber                        controllers.TelephoneNumberController.onSubmit(mode: Mode = CheckMode)
+
+GET        /areYouSelfAssessed                       controllers.AreYouSelfAssessedController.onPageLoad(mode: Mode = NormalMode)
+POST       /areYouSelfAssessed                       controllers.AreYouSelfAssessedController.onSubmit(mode: Mode = NormalMode)
+GET        /changeAreYouSelfAssessed                       controllers.AreYouSelfAssessedController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeAreYouSelfAssessed                       controllers.AreYouSelfAssessedController.onSubmit(mode: Mode = CheckMode)

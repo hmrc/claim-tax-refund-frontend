@@ -126,3 +126,7 @@ telephoneNumber.heading = What is your telephone number?
 telephoneNumber.checkYourAnswersLabel = Your telephone number
 telephoneNumber.blank = Enter your telephone number
 telephoneNumber.invalid = Enter a valid telephone number
+
+areYouSelfAssessed.title = areYouSelfAssessed
+areYouSelfAssessed.heading = areYouSelfAssessed
+areYouSelfAssessed.checkYourAnswersLabel = areYouSelfAssessed
