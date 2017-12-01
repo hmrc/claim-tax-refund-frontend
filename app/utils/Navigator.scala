@@ -31,7 +31,8 @@ class Navigator @Inject()() {
     NationalInsuranceNumberId -> (_ => routes.IsTheAddressInTheUKController.onPageLoad(NormalMode)),
     IsTheAddressInTheUKId -> isAddressInUkRoute,
     UkAddressId -> (_ =>  routes.TelephoneNumberController.onPageLoad(NormalMode)),
-    InternationalAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode))
+    InternationalAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
+    TelephoneNumberId -> (_ => routes.AreYouSelfAssessedController.onPageLoad(NormalMode))
   )
 
   private val editRouteMap: Map[Identifier, UserAnswers => Call] = Map(
