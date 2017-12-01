@@ -40,18 +40,20 @@ class AreYouSelfAssessedController @Inject()(appConfig: FrontendAppConfig,
                                          getData: DataRetrievalAction,
                                          requireData: DataRequiredAction) extends FrontendController with I18nSupport {
 
+  private val key : String = "areYouSelfAssessed.blank"
+
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.areYouSelfAssessed match {
-        case None => BooleanForm()
-        case Some(value) => BooleanForm().fill(value)
+        case None => BooleanForm(key)
+        case Some(value) => BooleanForm(key).fill(value)
       }
       Ok(areYouSelfAssessed(appConfig, preparedForm, mode))
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      BooleanForm().bindFromRequest().fold(
+      BooleanForm(key).bindFromRequest().fold(
         (formWithErrors: Form[_]) =>
           Future.successful(BadRequest(areYouSelfAssessed(appConfig, formWithErrors, mode))),
         (value) =>
