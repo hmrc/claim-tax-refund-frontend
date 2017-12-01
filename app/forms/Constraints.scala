@@ -47,6 +47,14 @@ trait Constraints {
         Valid
     }
 
+  def regexValidation(regexString: String, errorMessage: String = "error.invalid"): Constraint[String] =
+    Constraint {
+      case str if !str.matches(regexString) =>
+        Invalid(errorMessage, regexString)
+      case _ =>
+        Valid
+    }
+
   def opt[A](implicit f: Formatter[A]): Formatter[Option[A]] =
     new Formatter[Option[A]] {
 
