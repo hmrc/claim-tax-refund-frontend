@@ -25,7 +25,7 @@ class ConstraintsSpec extends WordSpec with MustMatchers with EitherValues with 
 
     "return Valid when all constraints pass" in {
 
-      val result = firstError(maxLength(10), nonEmpty())("foo")
+      val result = firstError(maxLength(10), nonEmpty(), regexValidation("""^\w+$"""))("foo")
       result mustEqual Valid
     }
 
@@ -45,6 +45,19 @@ class ConstraintsSpec extends WordSpec with MustMatchers with EitherValues with 
 
       val result = firstError(maxLength(-1), nonEmpty())("")
       result mustEqual Invalid("error.maxLength", -1)
+    }
+  }
+
+  "regex" must {
+
+    "return Valid for matching regex" in {
+      val result = regexValidation("""^\w+$""")("foo")
+      result mustEqual Valid
+    }
+
+    "return Invalid for none matching regex" in {
+      val result = regexValidation("""^[abc]$""")("foo")
+      result mustEqual Invalid("error.invalid", """^[abc]$""")
     }
   }
 
