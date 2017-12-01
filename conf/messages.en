@@ -127,6 +127,7 @@ telephoneNumber.checkYourAnswersLabel = Your telephone number
 telephoneNumber.blank = Enter your telephone number
 telephoneNumber.invalid = Enter a valid telephone number
 
-areYouSelfAssessed.title = areYouSelfAssessed
-areYouSelfAssessed.heading = areYouSelfAssessed
-areYouSelfAssessed.checkYourAnswersLabel = areYouSelfAssessed
+areYouSelfAssessed.title = Do you send an annual Self Assessment tax return?
+areYouSelfAssessed.heading = Do you send an annual Self Assessment tax return?
+areYouSelfAssessed.checkYourAnswersLabel = Do you send an annual Self Assessment tax return?
+areYouSelfAssessed.blank = Select yes if you send an annual Self Assessment tax return
