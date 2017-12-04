@@ -27,9 +27,10 @@ import views.html.uniqueTaxpayerReference
 
 class UniqueTaxpayerReferenceViewSpec extends StringViewBehaviours with MockitoSugar {
 
-  val messageKeyPrefix = "uniqueTaxpayerReference"
+  private val messageKeyPrefix = "uniqueTaxpayerReference"
+  private val testRegex = """^[0-9kK]{10}$"""
 
-  val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
+  private val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
   override val form: Form[String] = new UniqueTaxpayerReferenceForm(appConfig)()
 

@@ -25,21 +25,23 @@ import play.api.data.Form
 
 class UniqueTaxpayerReferenceFormSpec extends FormBehaviours with MockitoSugar {
 
-  val errorKeyBlank = "uniqueTaxpayerReference.blank"
+  private val testRegex = """^[0-9kK]{10}$"""
+  private val errorKeyInvalid = "uniqueTaxpayerReference.invalid"
 
   def appConfig: FrontendAppConfig = {
     val instance = mock[FrontendAppConfig]
+    when(instance.utrRegex) thenReturn testRegex
     instance
   }
 
-  val validData: Map[String, String] = Map("value" -> "test answer")
+  val validData: Map[String, String] = Map("value" -> "1234567890")
 
   override val form: Form[_] = new UniqueTaxpayerReferenceForm(appConfig)()
 
   "UniqueTaxpayerReference Form" must {
 
-    behave like questionForm("test answer")
+    behave like questionForm("1234567890")
 
-    behave like formWithMandatoryTextFieldsAndCustomKey(("value", errorKeyBlank))
+    behave like formWithMandatoryTextFieldsAndCustomKey(("value", errorKeyInvalid))
   }
 }
