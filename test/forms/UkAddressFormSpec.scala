@@ -26,12 +26,12 @@ import play.api.data.Form
 class UkAddressFormSpec extends FormBehaviours with MockitoSugar {
 
   val addressLineMaxLength = 35
-  val postcodeMaxLength = 10
+  val postcodeRegex = """([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z]))))\s?[0-9][A-Za-z]{2})"""
 
   def appConfig: FrontendAppConfig = {
     val instance = mock[FrontendAppConfig]
     when(instance.addressLineMaxLength) thenReturn addressLineMaxLength
-    when(instance.postcodeMaxLength) thenReturn postcodeMaxLength
+    when(instance.postcodeRegex) thenReturn postcodeRegex
     instance
   }
 
@@ -42,8 +42,7 @@ class UkAddressFormSpec extends FormBehaviours with MockitoSugar {
   val addressLine3TooLong = "global.addressLine3.tooLong"
   val addressLine4TooLong = "global.addressLine4.tooLong"
   val addressLine5TooLong = "global.addressLine5.tooLong"
-  val postcodeBlank = "global.postcode.blank"
-  val postcodeTooLong = "global.postcode.tooLong"
+  val postcodeInvalid = "ukAddress.postcode.invalid"
 
   val validData: Map[String, String] = Map(
     "addressLine1" -> "line 1",
@@ -51,18 +50,18 @@ class UkAddressFormSpec extends FormBehaviours with MockitoSugar {
     "addressLine3" -> "line 3",
     "addressLine4" -> "line 4",
     "addressLine5" -> "line 5",
-    "postcode" -> "postcode"
+    "postcode" -> "NE1 7RF"
   )
 
   override val form: Form[_] = new UkAddressForm(appConfig)()
 
   "UkAddress form" must {
-    behave like questionForm(UkAddress("line 1", "line 2", Some("line 3"), Some("line 4"), Some("line 5"), "postcode"))
+    behave like questionForm(UkAddress("line 1", "line 2", Some("line 3"), Some("line 4"), Some("line 5"), "NE1 7RF"))
 
     behave like formWithMandatoryTextFieldsAndCustomKey(
       ("addressLine1", addressLine1Blank),
       ("addressLine2", addressLine2Blank),
-      ("postcode", postcodeBlank))
+      ("postcode", postcodeInvalid))
 
     behave like formWithOptionalTextFields("addressLine3", "addressLine4", "addressLine5")
 
@@ -71,7 +70,6 @@ class UkAddressFormSpec extends FormBehaviours with MockitoSugar {
       MaxLengthField("addressLine2", addressLine2TooLong, addressLineMaxLength),
       MaxLengthField("addressLine3", addressLine3TooLong, addressLineMaxLength),
       MaxLengthField("addressLine4", addressLine4TooLong, addressLineMaxLength),
-      MaxLengthField("addressLine5", addressLine5TooLong, addressLineMaxLength),
-      MaxLengthField("postcode", postcodeTooLong , postcodeMaxLength))
+      MaxLengthField("addressLine5", addressLine5TooLong, addressLineMaxLength))
   }
 }

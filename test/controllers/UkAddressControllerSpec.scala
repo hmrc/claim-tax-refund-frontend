@@ -54,17 +54,17 @@ class UkAddressControllerSpec extends ControllerSpecBase {
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      val validData = Map(UkAddressId.toString -> Json.toJson(UkAddress("line 1", "line 2", None, None, None, "postcode")))
+      val validData = Map(UkAddressId.toString -> Json.toJson(UkAddress("line 1", "line 2", None, None, None, "NE1 7RF")))
       val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validData)))
 
       val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)
 
       contentAsString(result) mustBe viewAsString(form
-        .fill(UkAddress("line 1", "line 2", None, None, None, "postcode")))
+        .fill(UkAddress("line 1", "line 2", None, None, None, "NE1 7RF")))
     }
 
     "redirect to the next page when valid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("addressLine1", "line 1"),("addressLine2", "line 2") , ("postcode", "postcode"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("addressLine1", "line 1"),("addressLine2", "line 2") , ("postcode", "NE2 7RF"))
 
       val result = controller().onSubmit(NormalMode)(postRequest)
 
@@ -90,7 +90,7 @@ class UkAddressControllerSpec extends ControllerSpecBase {
     }
 
     "redirect to Session Expired for a POST if no existing data is found" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("addressLine1", "line 1"), ("addressLine2", "line 2"), ("postcode", "postcode"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("addressLine1", "line 1"), ("addressLine2", "line 2"), ("postcode", "NE1 6RF"))
       val result = controller(dontGetAnyData).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
