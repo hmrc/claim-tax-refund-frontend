@@ -24,7 +24,10 @@ import play.api.data.format.Formatter
 
 class UniqueTaxpayerReferenceForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 
-  private val uniqueTaxpayerReferenceBlankKey = "uniqueTaxpayerReference.blank"
+  private val utrRegex = appConfig.utrRegex
+  private val errorKeyInvalid = "uniqueTaxpayerReference.invalid"
 
-  def apply(): Form[String] = Form("value" -> text.verifying(nonEmpty(uniqueTaxpayerReferenceBlankKey)))
+  def apply(): Form[String] = Form(
+    "value" -> text.verifying(regexValidation(utrRegex, errorKeyInvalid))
+  )
 }

@@ -36,7 +36,8 @@ class UniqueTaxpayerReferenceControllerSpec extends ControllerSpecBase {
     new UniqueTaxpayerReferenceController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, new UniqueTaxpayerReferenceForm(frontendAppConfig))
 
-  val testAnswer = "answer"
+  val testRegex = """^[0-9kK]{10}$"""
+  val testAnswer = "1234567890"
   val form = new UniqueTaxpayerReferenceForm(frontendAppConfig)()
 
   def viewAsString(form: Form[_] = form) = uniqueTaxpayerReference(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
