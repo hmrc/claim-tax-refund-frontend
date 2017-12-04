@@ -35,7 +35,7 @@
 
         @components.heading("uniqueTaxpayerReference.heading")
 
-        @components.input_text(InputViewModel("value", form), label = messages("uniqueTaxpayerReference.heading"), labelClass=Some("visually-hidden"))
+        @components.input_text(InputViewModel("value", form), label = messages("uniqueTaxpayerReference.heading"), labelClass=Some("visually-hidden"), hintLine1 = Some(messages("uniqueTaxpayerReference.hintLine1")), hintLine2 = Some(messages("uniqueTaxpayerReference.hintLine2")))
 
         @components.submit_button()
     }
