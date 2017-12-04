@@ -40,6 +40,8 @@ class TelephoneNumberFormSpec extends FormBehaviours with MockitoSugar {
 
   "TelephoneNumber Form" must {
 
+    behave like questionForm("01963 123456")
+
     behave like formWithMandatoryTextFieldsAndCustomKey(("value", errorKeyInvalid))
   }
 }
