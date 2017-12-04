@@ -46,3 +46,8 @@ GET        /areYouSelfAssessed                       controllers.AreYouSelfAsses
 POST       /areYouSelfAssessed                       controllers.AreYouSelfAssessedController.onSubmit(mode: Mode = NormalMode)
 GET        /changeAreYouSelfAssessed                       controllers.AreYouSelfAssessedController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeAreYouSelfAssessed                       controllers.AreYouSelfAssessedController.onSubmit(mode: Mode = CheckMode)
+
+GET        /uniqueTaxpayerReference               controllers.UniqueTaxpayerReferenceController.onPageLoad(mode: Mode = NormalMode)
+POST       /uniqueTaxpayerReference               controllers.UniqueTaxpayerReferenceController.onSubmit(mode: Mode = NormalMode)
+GET        /changeUniqueTaxpayerReference                        controllers.UniqueTaxpayerReferenceController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeUniqueTaxpayerReference                        controllers.UniqueTaxpayerReferenceController.onSubmit(mode: Mode = CheckMode)

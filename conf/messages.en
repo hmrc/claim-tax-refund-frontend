@@ -117,7 +117,7 @@ ukAddress.postcode.blank = Enter your postcode
 
 internationalAddress.title = What is your address?
 internationalAddress.heading = What is your address?
-ukAddress.checkYourAnswersLabel = Your address
+internationalAddress.checkYourAnswersLabel = Your address
 internationalAddress.country.blank = Enter the country
 internationalAddress.country.tooLong = Enter a valid country
 
@@ -131,3 +131,11 @@ areYouSelfAssessed.title = Do you send an annual Self Assessment tax return?
 areYouSelfAssessed.heading = Do you send an annual Self Assessment tax return?
 areYouSelfAssessed.checkYourAnswersLabel = Do you send an annual Self Assessment tax return?
 areYouSelfAssessed.blank = Select yes if you send an annual Self Assessment tax return
+
+uniqueTaxpayerReference.title = What is your Unique Taxpayer Reference number?
+uniqueTaxpayerReference.heading = What is your Unique Taxpayer Reference number?
+uniqueTaxpayerReference.checkYourAnswersLabel = Your Unique Taxpayer Reference number
+uniqueTaxpayerReference.blank = Enter your Unique Taxpayer Reference number
+uniqueTaxpayerReference.invalid = Enter a valid Unique Taxpayer Reference number
+uniqueTaxpayerReference.hintLine1 = This is a 10 digit number, like 1234567890.
+uniqueTaxpayerReference.hintLine2 = You can find this on your tax return, statement of accounts or any other self-assessment calculations.
