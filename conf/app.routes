@@ -51,3 +51,8 @@ GET        /uniqueTaxpayerReference               controllers.UniqueTaxpayerRefe
 POST       /uniqueTaxpayerReference               controllers.UniqueTaxpayerReferenceController.onSubmit(mode: Mode = NormalMode)
 GET        /changeUniqueTaxpayerReference                        controllers.UniqueTaxpayerReferenceController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeUniqueTaxpayerReference                        controllers.UniqueTaxpayerReferenceController.onSubmit(mode: Mode = CheckMode)
+
+GET        /payAsYouEarn               controllers.PayAsYouEarnController.onPageLoad(mode: Mode = NormalMode)
+POST       /payAsYouEarn               controllers.PayAsYouEarnController.onSubmit(mode: Mode = NormalMode)
+GET        /changePayAsYouEarn                        controllers.PayAsYouEarnController.onPageLoad(mode: Mode = CheckMode)
+POST       /changePayAsYouEarn                        controllers.PayAsYouEarnController.onSubmit(mode: Mode = CheckMode)
