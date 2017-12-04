@@ -36,7 +36,8 @@ class PayAsYouEarnControllerSpec extends ControllerSpecBase {
     new PayAsYouEarnController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, new PayAsYouEarnForm(frontendAppConfig))
 
-  val testAnswer = "answer"
+  val testRegex = """^[0-9]{3}\/[A-Z]{1,2}[0-9]{0,8}$"""
+  val testAnswer = "123/AB123"
   val form = new PayAsYouEarnForm(frontendAppConfig)()
 
   def viewAsString(form: Form[_] = form) = payAsYouEarn(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString

@@ -23,7 +23,10 @@ import play.api.data.Forms._
 
 class PayAsYouEarnForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 
-  private val payAsYouEarnBlankKey = "payAsYouEarn.invalid"
+  private val payeRegex = appConfig.payeRegex
+  private val errorKeyInvalid = "payAsYouEarn.invalid"
 
-  def apply(): Form[String] = Form("value" -> text.verifying(nonEmpty(payAsYouEarnBlankKey)))
+  def apply(): Form[String] = Form(
+    "value" -> text.verifying(regexValidation(payeRegex, errorKeyInvalid))
+  )
 }

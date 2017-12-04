@@ -28,6 +28,7 @@ import views.html.payAsYouEarn
 class PayAsYouEarnViewSpec extends StringViewBehaviours with MockitoSugar {
 
   val messageKeyPrefix = "payAsYouEarn"
+  val testRegex = """^[0-9]{3}\/[A-Z]{1,2}[0-9]{0,8}$"""
 
   val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
