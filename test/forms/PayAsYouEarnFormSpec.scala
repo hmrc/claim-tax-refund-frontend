@@ -25,19 +25,23 @@ import play.api.data.Form
 
 class PayAsYouEarnFormSpec extends FormBehaviours with MockitoSugar {
 
-  val errorKeyBlank = "payAsYouEarn.invalid"
+  private val testRegex = """^[0-9]{3}\/[A-Z]{1,2}[0-9]{0,8}$"""
+  private val errorKeyInvalid = "payAsYouEarn.invalid"
 
   def appConfig: FrontendAppConfig = {
     val instance = mock[FrontendAppConfig]
+    when(instance.payeRegex) thenReturn testRegex
     instance
   }
 
-  val validData: Map[String, String] = Map("value" -> "test answer")
+  val validData: Map[String, String] = Map("value" -> """123/AB123""")
 
   override val form: Form[_] = new PayAsYouEarnForm(appConfig)()
 
   "PayAsYouEarn Form" must {
 
-    behave like formWithMandatoryTextFieldsAndCustomKey(("value", errorKeyBlank))
+    behave like questionForm("""123/AB123""")
+
+    behave like formWithMandatoryTextFieldsAndCustomKey(("value", errorKeyInvalid))
   }
 }
