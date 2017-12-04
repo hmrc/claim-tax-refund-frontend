@@ -1,8 +1,9 @@
 package forms
 
-import play.api.data.{Form, FormError}
+import com.google.inject.Inject
+import config.FrontendAppConfig
+import play.api.data.Form
 import play.api.data.Forms._
-import play.api.data.format.Formatter
 
 class $className$Form @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 

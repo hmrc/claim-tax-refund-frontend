@@ -39,7 +39,7 @@ class $className$ControllerSpec extends ControllerSpecBase {
 
       val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)
 
-      contentAsString(result) mustBe viewAsString($className$Form().fill($className$("value 1", "value 2")))
+      contentAsString(result) mustBe viewAsString(form.fill($className$("value 1", "value 2")))
     }
 
     "redirect to the next page when valid data is submitted" in {

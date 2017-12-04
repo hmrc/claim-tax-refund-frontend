@@ -7,9 +7,9 @@ import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito._
 import play.api.data.Form
 
-class $className$FormSpec extends FormSpec with MockitoSugar {
+class $className$FormSpec extends FormBehaviours with MockitoSugar {
 
-  val errorKeyBlank = "blank"
+  val errorKeyBlank = "error.required"
 
   def appConfig: FrontendAppConfig = {
     val instance = mock[FrontendAppConfig]
@@ -18,11 +18,9 @@ class $className$FormSpec extends FormSpec with MockitoSugar {
 
   val validData: Map[String, String] = Map("value" -> "test answer")
 
-  override val form: Form[_] = new FullNameForm(appConfig)()
+  override val form: Form[_] = new $className$Form(appConfig)()
 
   "$className$ Form" must {
-
-    behave like questionForm(String("value"))
 
     behave like formWithMandatoryTextFieldsAndCustomKey(("value", errorKeyBlank))
   }

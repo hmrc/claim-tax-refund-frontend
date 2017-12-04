@@ -21,8 +21,6 @@ class $className$ViewSpec extends QuestionViewBehaviours[$className$] with Mocki
 
   def createViewUsingForm = (form: Form[$className$]) => $className;format="decap"$(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
-  override val form = $className$Form()
-
   "$className$ view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
