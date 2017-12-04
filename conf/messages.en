@@ -113,7 +113,6 @@ ukAddress.title = What is your address?
 ukAddress.heading = What is your address?
 ukAddress.checkYourAnswersLabel = Your address
 ukAddress.postcode.invalid = Enter a valid postcode
-ukAddress.postcode.blank = Enter your postcode
 
 internationalAddress.title = What is your address?
 internationalAddress.heading = What is your address?
