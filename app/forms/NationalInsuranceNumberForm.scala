@@ -16,29 +16,18 @@
 
 package forms
 
+import com.google.inject.Inject
+import config.FrontendAppConfig
 import play.api.data.{Form, FormError}
 import play.api.data.Forms._
 import play.api.data.format.Formatter
 
-object NationalInsuranceNumberForm extends FormErrorHelper {
+class NationalInsuranceNumberForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 
-  def nationalInsuranceNumberFormatter(regex: String) = new Formatter[String] {
+  private val nationalNumberRegex = appConfig.ninoRegex
+  private val errorKeyInvalid = "nationalInsuranceNumber.invalid"
 
-    val errorKeyBlank = "nationalInsuranceNumber.blank"
-    val errorKeyInvalid = "nationalInsuranceNumber.invalid"
-
-    def bind(key: String, data: Map[String, String]) = {
-      data.get(key) match {
-        case None => produceError(key, errorKeyBlank)
-        case Some("") => produceError(key, errorKeyBlank)
-        case Some(s) if !s.matches(regex) => produceError(key, errorKeyInvalid)
-        case Some(s) => Right(s)
-      }
-    }
-
-    def unbind(key: String, value: String) = Map(key -> value)
-  }
-
-  def apply(regex: String):
-  Form[String] = Form(single("value" -> of(nationalInsuranceNumberFormatter(regex))))
+  def apply(): Form[String] = Form(
+    "value" -> text.verifying(regexValidation(nationalNumberRegex, errorKeyInvalid))
+  )
 }
