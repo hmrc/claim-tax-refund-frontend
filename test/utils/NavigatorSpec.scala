@@ -68,6 +68,14 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
       "go to AreYouSelfAssessed from TelephoneNumber" in {
         navigator.nextPage(TelephoneNumberId, NormalMode)(mock[UserAnswers]) mustBe routes.AreYouSelfAssessedController.onPageLoad(NormalMode)
       }
+
+      "go to UniqueTaxpayerReference from AreYouSelfAssessed when Yes is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.areYouSelfAssessed) thenReturn Some(true)
+        navigator.nextPage(UniqueTaxpayerReferenceId, NormalMode)(answers) mustBe routes.UniqueTaxpayerReferenceController.onPageLoad(NormalMode)
+      }
+
+      //TODO false path for AreYouSelfAssessed
     }
 
     "in Check mode" must {
