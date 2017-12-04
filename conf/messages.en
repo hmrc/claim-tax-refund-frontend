@@ -136,3 +136,11 @@ uniqueTaxpayerReference.checkYourAnswersLabel = Your Unique Taxpayer Reference n
 uniqueTaxpayerReference.invalid = Enter a valid Unique Taxpayer Reference number
 uniqueTaxpayerReference.hintLine1 = This is a 10 digit number, like 1234567890.
 uniqueTaxpayerReference.hintLine2 = You can find this on your tax return, statement of accounts or any other self-assessment calculations.
+
+payAsYouEarn.title = What is your Pay As You Earn reference number?
+payAsYouEarn.heading = What is your Pay As You Earn reference number?
+payAsYouEarn.checkYourAnswersLabel = Your Pay As You Earn reference number
+payAsYouEarn.blank = Enter your Pay As You Earn reference number
+payAsYouEarn.invalid = Enter a valid Pay As You Earn reference number
+payAsYouEarn.hintLine1 = This is a 3 digit tax office number followed by a forward slash and your tax office employer reference, like 123/AB456.
+payAsYouEarn.hintLine2 = You can find this on your payslip or P60.
