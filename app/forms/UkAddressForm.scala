@@ -25,7 +25,7 @@ import play.api.data.Forms.{mapping, optional, text}
 class UkAddressForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 
   private val maxLengthInt = appConfig.addressLineMaxLength
-  private val postcodeMaxLength = appConfig.postcodeMaxLength
+  private val postcodeRegex = appConfig.postcodeRegex
 
   private val addressLine1KeyBlank = "global.addressLine1.blank"
   private val addressLine1KeyTooLong = "global.addressLine1.tooLong"
@@ -34,8 +34,7 @@ class UkAddressForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHe
   private val addressLine3KeyTooLong = "global.addressLine3.tooLong"
   private val addressLine4KeyTooLong = "global.addressLine4.tooLong"
   private val addressLine5KeyTooLong = "global.addressLine5.tooLong"
-  private val postcodeKeyBlank = "global.postcode.blank"
-  private val postcodeTooLong = "global.postcode.tooLong"
+  private val postcodeKeyInvalid = "ukAddress.postcode.invalid"
 
   def apply(): Form[UkAddress] = {
     Form(
@@ -45,7 +44,7 @@ class UkAddressForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHe
         "addressLine3" -> optional(text.verifying(maxLength(maxLengthInt, addressLine3KeyTooLong))),
         "addressLine4" -> optional(text.verifying(maxLength(maxLengthInt, addressLine4KeyTooLong))),
         "addressLine5" -> optional(text.verifying(maxLength(maxLengthInt, addressLine5KeyTooLong))),
-        "postcode"      -> text.verifying(nonEmpty(postcodeKeyBlank), maxLength(postcodeMaxLength, postcodeTooLong))
+        "postcode"     -> text.verifying(regexValidation(postcodeRegex, postcodeKeyInvalid))
       )(UkAddress.apply)(UkAddress.unapply))
   }
 }
