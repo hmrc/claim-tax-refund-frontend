@@ -39,20 +39,23 @@ class NationalInsuranceNumberController @Inject()(
                                         navigator: Navigator,
                                         authenticate: AuthAction,
                                         getData: DataRetrievalAction,
-                                        requireData: DataRequiredAction) extends FrontendController with I18nSupport {
+                                        requireData: DataRequiredAction,
+                                        formBuilder: NationalInsuranceNumberForm) extends FrontendController with I18nSupport {
+
+  private val form: Form[String] = formBuilder()
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.nationalInsuranceNumber match {
-        case None => NationalInsuranceNumberForm(appConfig.ninoRegex)
-        case Some(value) => NationalInsuranceNumberForm(appConfig.ninoRegex).fill(value)
+        case None => form
+        case Some(value) => form.fill(value)
       }
       Ok(nationalInsuranceNumber(appConfig, preparedForm, mode))
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      NationalInsuranceNumberForm(appConfig.ninoRegex).bindFromRequest().fold(
+      form.bindFromRequest().fold(
         (formWithErrors: Form[_]) =>
           Future.successful(BadRequest(nationalInsuranceNumber(appConfig, formWithErrors, mode))),
         (value) =>
