@@ -16,25 +16,18 @@
 
 package forms
 
+import com.google.inject.Inject
+import config.FrontendAppConfig
 import play.api.data.{Form, FormError}
 import play.api.data.Forms._
 import play.api.data.format.Formatter
 
-object TelephoneNumberForm extends FormErrorHelper {
+class TelephoneNumberForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 
-  def telephoneNumberFormatter(errorKeyBlank: String) = new Formatter[String] {
+  private val telephoneRegex = appConfig.telephoneRegex
+  private val errorKeyInvalid = "telephoneNumber.invalid"
 
-    def bind(key: String, data: Map[String, String]) = {
-      data.get(key) match {
-        case None => produceError(key, errorKeyBlank)
-        case Some("") => produceError(key, errorKeyBlank)
-        case Some(s) => Right(s)
-      }
-    }
-
-    def unbind(key: String, value: String) = Map(key -> value)
-  }
-
-  def apply(errorKeyBlank: String = "error.required"): Form[String] =
-    Form(single("value" -> of(telephoneNumberFormatter(errorKeyBlank))))
+  def apply(): Form[String] = Form(
+    "value" -> text.verifying(regexValidation(telephoneRegex, errorKeyInvalid))
+  )
 }

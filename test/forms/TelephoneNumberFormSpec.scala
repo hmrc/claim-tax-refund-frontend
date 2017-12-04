@@ -16,25 +16,30 @@
 
 package forms
 
-class TelephoneNumberFormSpec extends FormSpec {
+import config.FrontendAppConfig
+import forms.behaviours.FormBehaviours
+import models.MaxLengthField
+import org.scalatest.mockito.MockitoSugar
+import org.mockito.Mockito._
+import play.api.data.Form
 
-  val errorKeyBlank = "blank"
+class TelephoneNumberFormSpec extends FormBehaviours with MockitoSugar {
+
+  private val errorKeyInvalid = "telephoneNumber.invalid"
+  private val testRegex = """^\+?[0-9\s\(\)]{1,20}$"""
+
+  def appConfig: FrontendAppConfig = {
+    val instance = mock[FrontendAppConfig]
+    when(instance.telephoneRegex) thenReturn testRegex
+    instance
+  }
+
+  val validData: Map[String, String] = Map("value" -> "01963 123456")
+
+  override val form: Form[_] = new TelephoneNumberForm(appConfig)()
 
   "TelephoneNumber Form" must {
 
-    "bind a string" in {
-      val form = TelephoneNumberForm(errorKeyBlank).bind(Map("value" -> "answer"))
-      form.get shouldBe "answer"
-    }
-
-    "fail to bind a blank value" in {
-      val expectedError = error("value", errorKeyBlank)
-      checkForError(TelephoneNumberForm(errorKeyBlank), Map("value" -> ""), expectedError)
-    }
-
-    "fail to bind when value is omitted" in {
-      val expectedError = error("value", errorKeyBlank)
-      checkForError(TelephoneNumberForm(errorKeyBlank), emptyForm, expectedError)
-    }
+    behave like formWithMandatoryTextFieldsAndCustomKey(("value", errorKeyInvalid))
   }
 }
