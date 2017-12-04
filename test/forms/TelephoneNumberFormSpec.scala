@@ -16,56 +16,30 @@
 
 package forms
 
-class TelephoneNumberFormSpec extends FormSpec {
+import config.FrontendAppConfig
+import forms.behaviours.FormBehaviours
+import models.MaxLengthField
+import org.scalatest.mockito.MockitoSugar
+import org.mockito.Mockito._
+import play.api.data.Form
 
-  val errorKeyBlank = "telephoneNumber.blank"
-  val errorKeyInvalid = "telephoneNumber.invalid"
-  val testRegex = """^\+?[0-9\s\(\)]{1,20}$"""
+class TelephoneNumberFormSpec extends FormBehaviours with MockitoSugar {
+
+  private val errorKeyInvalid = "telephoneNumber.invalid"
+  private val testRegex = """^\+?[0-9\s\(\)]{1,20}$"""
+
+  def appConfig: FrontendAppConfig = {
+    val instance = mock[FrontendAppConfig]
+    when(instance.telephoneRegex) thenReturn testRegex
+    instance
+  }
+
+  val validData: Map[String, String] = Map("value" -> "01963 123456")
+
+  override val form: Form[_] = new TelephoneNumberForm(appConfig)()
 
   "TelephoneNumber Form" must {
 
-    "bind a string when the standard telephone number is valid" in {
-      val validNum = "0191 111 1111"
-      val form = TelephoneNumberForm(testRegex).bind(Map("value" -> validNum))
-      form.get shouldBe "0191 111 1111"
-    }
-
-    "bind a string when the standard telephone number is valid with brackets" in {
-      val validNum = "(0191) 111 1111"
-      val form = TelephoneNumberForm(testRegex).bind(Map("value" -> validNum))
-      form.get shouldBe "(0191) 111 1111"
-    }
-
-    "bind a string when the standard telephone number is valid with Int code" in {
-      val validNum = "+44191 111 1111"
-      val form = TelephoneNumberForm(testRegex).bind(Map("value" -> validNum))
-      form.get shouldBe "+44191 111 1111"
-    }
-
-    "bind a string when the international telephone number is valid" in {
-      val validNum = "+14155552671"
-      val form = TelephoneNumberForm(testRegex).bind(Map("value" -> validNum))
-      form.get shouldBe "+14155552671"
-    }
-
-    "fail to bind an invalid telephone number" in {
-      val expectedError = error("value", errorKeyInvalid)
-      checkForError(TelephoneNumberForm(testRegex), Map("value" -> "invalid"), expectedError)
-    }
-
-    "bind a string" in {
-      val form = TelephoneNumberForm(testRegex).bind(Map("value" -> "0191 111 1111"))
-      form.get shouldBe "0191 111 1111"
-    }
-
-    "fail to bind a blank value" in {
-      val expectedError = error("value", errorKeyBlank)
-      checkForError(TelephoneNumberForm(testRegex), Map("value" -> ""), expectedError)
-    }
-
-    "fail to bind when value is omitted" in {
-      val expectedError = error("value", errorKeyBlank)
-      checkForError(TelephoneNumberForm(testRegex), emptyForm, expectedError)
-    }
+    behave like formWithMandatoryTextFieldsAndCustomKey(("value", errorKeyInvalid))
   }
 }

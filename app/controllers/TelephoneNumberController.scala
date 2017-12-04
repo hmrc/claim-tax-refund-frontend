@@ -39,20 +39,23 @@ class TelephoneNumberController @Inject()(
                                         navigator: Navigator,
                                         authenticate: AuthAction,
                                         getData: DataRetrievalAction,
-                                        requireData: DataRequiredAction) extends FrontendController with I18nSupport {
+                                        requireData: DataRequiredAction,
+                                        formBuilder: TelephoneNumberForm) extends FrontendController with I18nSupport {
+
+private val form: Form[String] = formBuilder()
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.telephoneNumber match {
-        case None => TelephoneNumberForm(appConfig.telephoneRegex)
-        case Some(value) => TelephoneNumberForm(appConfig.telephoneRegex).fill(value)
+        case None => form
+        case Some(value) => form.fill(value)
       }
       Ok(telephoneNumber(appConfig, preparedForm, mode))
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      TelephoneNumberForm(appConfig.telephoneRegex).bindFromRequest().fold(
+      form.bindFromRequest().fold(
         (formWithErrors: Form[_]) =>
           Future.successful(BadRequest(telephoneNumber(appConfig, formWithErrors, mode))),
         (value) =>

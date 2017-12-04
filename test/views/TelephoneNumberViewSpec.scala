@@ -16,23 +16,27 @@
 
 package views
 
+import config.FrontendAppConfig
 import play.api.data.Form
 import controllers.routes
 import forms.TelephoneNumberForm
 import models.NormalMode
+import org.scalatest.mockito.MockitoSugar
 import views.behaviours.StringViewBehaviours
 import views.html.telephoneNumber
 
-class TelephoneNumberViewSpec extends StringViewBehaviours {
+class TelephoneNumberViewSpec extends StringViewBehaviours with MockitoSugar {
 
-  val messageKeyPrefix = "telephoneNumber"
-  val testRegex = """^\+?[0-9\s\(\)]{1,20}$"""
+  private val messageKeyPrefix = "telephoneNumber"
+  private val testRegex = """^\+?[0-9\s\(\)]{1,20}$"""
 
-  def createView = () => telephoneNumber(frontendAppConfig, TelephoneNumberForm(testRegex), NormalMode)(fakeRequest, messages)
+  private val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
+
+  override val form: Form[String] = new TelephoneNumberForm(appConfig)()
+
+  def createView = () => telephoneNumber(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[String]) => telephoneNumber(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
-
-  val form = TelephoneNumberForm(testRegex)
 
   "TelephoneNumber view" must {
     behave like normalPage(createView, messageKeyPrefix)
