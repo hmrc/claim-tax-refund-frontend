@@ -16,38 +16,31 @@
 
 package forms
 
-class NationalInsuranceNumberFormSpec extends FormSpec {
+import config.FrontendAppConfig
+import forms.behaviours.FormBehaviours
+import org.mockito.Mockito.when
+import org.scalatest.mockito.MockitoSugar
+import play.api.data.Form
 
-  val errorKeyBlank = "nationalInsuranceNumber.blank"
-  val errorKeyInvalid = "nationalInsuranceNumber.invalid"
-  val testRegex = """^((?!BG)(?!GB)(?!NK)(?!KN)(?!TN)(?!NT)(?!ZZ)(?:[A-CEGHJ-PR-TW-Z][A-CEGHJ-NPR-TW-Z])(?:\d){6}([A-D]|\s)?)|(\d{2})([a-zA-Z])(\d{5})([a-zA-Z])$"""
+class NationalInsuranceNumberFormSpec extends FormBehaviours with MockitoSugar {
+
+  private val errorKeyInvalid = "nationalInsuranceNumber.invalid"
+  private val testRegex = """^((?!BG)(?!GB)(?!NK)(?!KN)(?!TN)(?!NT)(?!ZZ)(?:[A-CEGHJ-PR-TW-Z][A-CEGHJ-NPR-TW-Z])(?:\d){6}([A-D]|\s)?)|(\d{2})([a-zA-Z])(\d{5})([a-zA-Z])$"""
+
+  def appConfig: FrontendAppConfig = {
+    val instance = mock[FrontendAppConfig]
+    when(instance.ninoRegex) thenReturn testRegex
+    instance
+  }
+
+  val validData: Map[String, String] = Map("value" -> "AB123456A")
+
+  override val form: Form[_] = new NationalInsuranceNumberForm(appConfig)()
 
   "NationalInsuranceNumber Form" must {
 
-    "bind a string when the standard national insurance number is valid" in {
-      val validNino = "AB123456A"
-      val form = NationalInsuranceNumberForm(testRegex).bind(Map("value" -> validNino))
-      form.get shouldBe "AB123456A"
-    }
+    behave like questionForm("AB123456A")
 
-    "bind a string when the temporary national insurance number is valid" in {
-      val form = NationalInsuranceNumberForm(testRegex).bind(Map("value" -> "89A12345A"))
-      form.get shouldBe "89A12345A"
-    }
-
-    "fail to bind an invalid national insurance number" in {
-      val expectedError = error("value", errorKeyInvalid)
-      checkForError(NationalInsuranceNumberForm(testRegex), Map("value" -> "invalid"), expectedError)
-    }
-
-    "fail to bind a blank value" in {
-      val expectedError = error("value", errorKeyBlank)
-      checkForError(NationalInsuranceNumberForm(testRegex), Map("value" -> ""), expectedError)
-    }
-
-    "fail to bind when value is omitted" in {
-      val expectedError = error("value", errorKeyBlank)
-      checkForError(NationalInsuranceNumberForm(testRegex), emptyForm, expectedError)
-    }
+    behave like formWithMandatoryTextFieldsAndCustomKey(("value", errorKeyInvalid))
   }
 }
