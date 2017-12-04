@@ -57,7 +57,7 @@ class ConstraintsSpec extends WordSpec with MustMatchers with EitherValues with 
 
     "return Invalid for none matching regex" in {
       val result = regexValidation("""^[abc]$""")("foo")
-      result mustEqual Invalid("error.invalid", """^[abc]$""")
+      result mustEqual Invalid("error.invalid")
     }
   }
 

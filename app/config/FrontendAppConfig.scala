@@ -50,6 +50,8 @@ class FrontendAppConfig @Inject() (override val configuration: Configuration) ex
   lazy val postcodeMaxLength = loadConfigInt("microservice.services.validation.postcode-length")
   lazy val countryMaxLength = loadConfigInt("microservice.services.validation.country-length")
 
+  lazy val telephoneRegex = loadConfig("microservice.services.validation.telephone-regex")
+
   def languageMap: Map[String, Lang] = Map(
     "english" -> Lang("en"),
     "cymraeg" -> Lang("cy"))

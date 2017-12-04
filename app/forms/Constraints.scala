@@ -50,7 +50,7 @@ trait Constraints {
   def regexValidation(regexString: String, errorMessage: String = "error.invalid"): Constraint[String] =
     Constraint {
       case str if !str.matches(regexString) =>
-        Invalid(errorMessage, regexString)
+        Invalid(errorMessage)
       case _ =>
         Valid
     }
