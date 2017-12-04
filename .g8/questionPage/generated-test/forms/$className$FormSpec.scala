@@ -1,5 +1,6 @@
 package forms
 
+import config.FrontendAppConfig
 import forms.behaviours.FormBehaviours
 import models.$className$
 import org.scalatest.mockito.MockitoSugar
@@ -18,7 +19,7 @@ class $className$FormSpec extends FormBehaviours with MockitoSugar {
     "field2" -> "value 2"
   )
 
-  override val form: Form[_] = $className$Form(appConfig)()
+  override val form: Form[_] = new $className$Form(appConfig)()
 
   "$className$ form" must {
     behave like questionForm($className$("value 1", "value 2"))
