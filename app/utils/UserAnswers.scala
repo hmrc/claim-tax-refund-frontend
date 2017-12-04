@@ -21,6 +21,8 @@ import identifiers._
 import models._
 
 class UserAnswers(val cacheMap: CacheMap) {
+  def payAsYouEarn: Option[String] = cacheMap.getEntry[String](PayAsYouEarnId.toString)
+
   def uniqueTaxpayerReference: Option[String] = cacheMap.getEntry[String](UniqueTaxpayerReferenceId.toString)
 
   def areYouSelfAssessed: Option[Boolean] = cacheMap.getEntry[Boolean](AreYouSelfAssessedId.toString)
