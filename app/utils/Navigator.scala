@@ -32,17 +32,24 @@ class Navigator @Inject()() {
     IsTheAddressInTheUKId -> isAddressInUkRoute,
     UkAddressId -> (_ =>  routes.TelephoneNumberController.onPageLoad(NormalMode)),
     InternationalAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
-    TelephoneNumberId -> (_ => routes.AreYouSelfAssessedController.onPageLoad(NormalMode))
+    TelephoneNumberId -> (_ => routes.AreYouSelfAssessedController.onPageLoad(NormalMode)),
+    AreYouSelfAssessedId -> isSelfAssessmentRoute
   )
 
   private val editRouteMap: Map[Identifier, UserAnswers => Call] = Map(
 
   )
 
-  //TODO: Add international address route to false
   private def isAddressInUkRoute(userAnswers: UserAnswers) = userAnswers.isTheAddressInTheUK match {
     case Some(true) => routes.UkAddressController.onPageLoad(NormalMode)
     case Some(false) => routes.InternationalAddressController.onPageLoad(NormalMode)
+    case None => routes.SessionExpiredController.onPageLoad()
+  }
+
+  //TODO false path for areYouSelfAssessed
+  private def isSelfAssessmentRoute(userAnswers: UserAnswers) = userAnswers.areYouSelfAssessed match {
+    case Some(true) => routes.UniqueTaxpayerReferenceController.onPageLoad(NormalMode)
+    case Some(false) => ???
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
