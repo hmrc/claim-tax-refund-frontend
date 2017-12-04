@@ -34,12 +34,14 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase {
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new TelephoneNumberController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl)
-
-  def viewAsString(form: Form[_] = TelephoneNumberForm(testRegex)) = telephoneNumber(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
+      dataRetrievalAction, new DataRequiredActionImpl, new TelephoneNumberForm(frontendAppConfig))
 
   val testRegex = """^\+?[0-9\s\(\)]{1,20}$"""
   val testAnswer = "0191 111 1111"
+
+  val form = new TelephoneNumberForm(frontendAppConfig)()
+
+  def viewAsString(form: Form[_] = form) = telephoneNumber(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
 
   "TelephoneNumber Controller" must {
 
@@ -56,7 +58,7 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase {
 
       val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)
 
-      contentAsString(result) mustBe viewAsString(TelephoneNumberForm(testRegex).fill(testAnswer))
+      contentAsString(result) mustBe viewAsString(form.fill(testAnswer))
     }
 
     "redirect to the next page when valid data is submitted" in {
@@ -70,7 +72,7 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase {
 
     "return a Bad Request and errors when invalid data is submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", ""))
-      val boundForm = TelephoneNumberForm(testRegex).bind(Map("value" -> ""))
+      val boundForm = form.bind(Map("value" -> ""))
 
       val result = controller().onSubmit(NormalMode)(postRequest)
 

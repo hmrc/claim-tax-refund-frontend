@@ -124,5 +124,4 @@ internationalAddress.country.tooLong = Enter a valid country
 telephoneNumber.title = What is your telephone number?
 telephoneNumber.heading = What is your telephone number?
 telephoneNumber.checkYourAnswersLabel = Your telephone number
-telephoneNumber.blank = Enter your telephone number
 telephoneNumber.invalid = Enter a valid telephone number
