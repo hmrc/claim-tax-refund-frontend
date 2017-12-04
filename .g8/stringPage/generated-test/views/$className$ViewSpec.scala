@@ -21,8 +21,6 @@ class $className$ViewSpec extends StringViewBehaviours with MockitoSugar {
 
   def createViewUsingForm = (form: Form[String]) => $className;format="decap"$(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
-  val form = $className$Form()
-
   "$className$ view" must {
     behave like normalPage(createView, messageKeyPrefix)
 
