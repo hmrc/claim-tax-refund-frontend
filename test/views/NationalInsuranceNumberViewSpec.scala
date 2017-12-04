@@ -16,18 +16,23 @@
 
 package views
 
+import config.FrontendAppConfig
 import play.api.data.Form
 import controllers.routes
 import forms.NationalInsuranceNumberForm
 import models.NormalMode
+import org.scalatest.mockito.MockitoSugar
 import views.behaviours.StringViewBehaviours
 import views.html.nationalInsuranceNumber
 
-class NationalInsuranceNumberViewSpec extends StringViewBehaviours {
+class NationalInsuranceNumberViewSpec extends StringViewBehaviours with MockitoSugar{
 
   val messageKeyPrefix = "nationalInsuranceNumber"
   val testRegex = """^((?!BG)(?!GB)(?!NK)(?!KN)(?!TN)(?!NT)(?!ZZ)(?:[A-CEGHJ-PR-TW-Z][A-CEGHJ-NPR-TW-Z])(?:\d){6}([A-D]|\s)?)|(\d{2})([a-zA-Z])(\d{5})([a-zA-Z])$"""
-  val form = NationalInsuranceNumberForm(testRegex)
+
+  private val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
+
+  override val form: Form[String] = new NationalInsuranceNumberForm(appConfig)()
 
   def createView = () => nationalInsuranceNumber(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
