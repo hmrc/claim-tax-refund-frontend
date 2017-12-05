@@ -18,7 +18,7 @@ package forms
 
 import config.FrontendAppConfig
 import forms.behaviours.FormBehaviours
-import models.{MaxLengthField, UkAddress}
+import models.{MandatoryField, MaxLengthField, UkAddress}
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
@@ -58,10 +58,10 @@ class UkAddressFormSpec extends FormBehaviours with MockitoSugar {
   "UkAddress form" must {
     behave like questionForm(UkAddress("line 1", "line 2", Some("line 3"), Some("line 4"), Some("line 5"), "NE1 7RF"))
 
-    behave like formWithMandatoryTextFieldsAndCustomKey(
-      ("addressLine1", addressLine1Blank),
-      ("addressLine2", addressLine2Blank),
-      ("postcode", postcodeInvalid))
+    behave like formWithMandatoryTextFields(
+      MandatoryField("addressLine1", addressLine1Blank),
+      MandatoryField("addressLine2", addressLine2Blank),
+      MandatoryField("postcode", postcodeInvalid))
 
     behave like formWithOptionalTextFields("addressLine3", "addressLine4", "addressLine5")
 
