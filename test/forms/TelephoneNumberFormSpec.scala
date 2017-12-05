@@ -18,7 +18,7 @@ package forms
 
 import config.FrontendAppConfig
 import forms.behaviours.FormBehaviours
-import models.MaxLengthField
+import models.{MandatoryField, MaxLengthField}
 import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito._
 import play.api.data.Form
@@ -42,6 +42,6 @@ class TelephoneNumberFormSpec extends FormBehaviours with MockitoSugar {
 
     behave like questionForm("01963 123456")
 
-    behave like formWithMandatoryTextFieldsAndCustomKey(("value", errorKeyInvalid))
+    behave like formWithMandatoryTextFields(MandatoryField("value", errorKeyInvalid))
   }
 }

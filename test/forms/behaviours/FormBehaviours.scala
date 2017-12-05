@@ -18,7 +18,7 @@ package forms.behaviours
 
 import play.api.data.Form
 import forms.FormSpec
-import models.MaxLengthField
+import models.{MandatoryField, MaxLengthField}
 
 trait FormBehaviours extends FormSpec {
 
@@ -47,41 +47,24 @@ trait FormBehaviours extends FormSpec {
     for (field <- fields) {
       s"fail to bind when ${field.fieldName} has more characters than ${field.maxLength}" in {
         val invalid = "A" * (field.maxLength + 1)
-        val validFields = validData - field.fieldName
-        val data = validFields ++ Map(field.fieldName -> invalid)
+        val data = validData + (field.fieldName -> invalid)
         val expectedError = error(field.fieldName, field.errorMessageKey, field.maxLength)
         checkForError(form, data, expectedError)
       }
     }
   }
 
-  def formWithMandatoryTextFieldsAndCustomKey(fields: (String, String)*) = {
-    for ((key, errorMessage) <- fields) {
-      s"fail to bind when $key is omitted" in {
-        val data = validData - key + (key -> "")
-        val expectedError = error(key, errorMessage)
-        checkForError(form, data, expectedError)
-      }
-
-      s"fail to bind when $key is blank" in {
-        val data = validData + (key -> "")
-        val expectedError = error(key, errorMessage)
-        checkForError(form, data, expectedError)
-      }
-    }
-  }
-
-  def formWithMandatoryTextFields(fields: String*) = {
+  def formWithMandatoryTextFields(fields: MandatoryField*) = {
     for (field <- fields) {
-      s"fail to bind when $field is omitted" in {
-        val data = validData - field
-        val expectedError = error(field, "error.required")
+      s"fail to bind when ${field.fieldName} is omitted" in {
+        val data = validData + (field.fieldName -> "")
+        val expectedError = error(field.fieldName, field.errorMessageKey)
         checkForError(form, data, expectedError)
       }
 
-      s"fail to bind when $field is blank" in {
-        val data = validData + (field -> "")
-        val expectedError = error(field, "error.required")
+      s"fail to bind when ${field.fieldName} is blank" in {
+        val data = validData + (field.fieldName -> "")
+        val expectedError = error(field.fieldName, field.errorMessageKey)
         checkForError(form, data, expectedError)
       }
     }

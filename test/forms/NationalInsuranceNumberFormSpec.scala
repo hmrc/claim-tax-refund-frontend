@@ -18,6 +18,7 @@ package forms
 
 import config.FrontendAppConfig
 import forms.behaviours.FormBehaviours
+import models.MandatoryField
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
@@ -41,6 +42,6 @@ class NationalInsuranceNumberFormSpec extends FormBehaviours with MockitoSugar {
 
     behave like questionForm("AB123456A")
 
-    behave like formWithMandatoryTextFieldsAndCustomKey(("value", errorKeyInvalid))
+    behave like formWithMandatoryTextFields(MandatoryField("value", errorKeyInvalid))
   }
 }
