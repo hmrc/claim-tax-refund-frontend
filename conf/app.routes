@@ -56,3 +56,8 @@ GET        /payAsYouEarn               controllers.PayAsYouEarnController.onPage
 POST       /payAsYouEarn               controllers.PayAsYouEarnController.onSubmit(mode: Mode = NormalMode)
 GET        /changePayAsYouEarn                        controllers.PayAsYouEarnController.onPageLoad(mode: Mode = CheckMode)
 POST       /changePayAsYouEarn                        controllers.PayAsYouEarnController.onSubmit(mode: Mode = CheckMode)
+
+GET        /selfAssessmentClaim                       controllers.SelfAssessmentClaimController.onPageLoad(mode: Mode = NormalMode)
+POST       /selfAssessmentClaim                       controllers.SelfAssessmentClaimController.onSubmit(mode: Mode = NormalMode)
+GET        /changeSelfAssessmentClaim                       controllers.SelfAssessmentClaimController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeSelfAssessmentClaim                       controllers.SelfAssessmentClaimController.onSubmit(mode: Mode = CheckMode)

@@ -80,6 +80,11 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         when(answers.areYouSelfAssessed) thenReturn Some(true)
         navigator.nextPage(AreYouSelfAssessedId, NormalMode)(answers) mustBe routes.UniqueTaxpayerReferenceController.onPageLoad(NormalMode)
       }
+
+      "go to SelfAssessmentClaim page from UTRNumber" in {
+        navigator.nextPage(UniqueTaxpayerReferenceId, NormalMode)(mock[UserAnswers]) mustBe routes.SelfAssessmentClaimController.onPageLoad(NormalMode)
+
+      }
     }
 
     "in Check mode" must {
