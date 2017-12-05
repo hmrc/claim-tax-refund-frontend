@@ -2,7 +2,7 @@ package forms
 
 import config.FrontendAppConfig
 import forms.behaviours.FormBehaviours
-import models.MaxLengthField
+import models.MandatoryField
 import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito._
 import play.api.data.Form
@@ -22,6 +22,8 @@ class $className$FormSpec extends FormBehaviours with MockitoSugar {
 
   "$className$ Form" must {
 
-    behave like formWithMandatoryTextFieldsAndCustomKey(("value", errorKeyBlank))
+    behave like formWithMandatoryTextFields(
+      MandatoryField("value", errorKeyBlank)
+    )
   }
 }
