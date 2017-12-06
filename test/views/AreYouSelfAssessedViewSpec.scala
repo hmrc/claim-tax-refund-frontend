@@ -35,6 +35,8 @@ class AreYouSelfAssessedViewSpec extends YesNoViewBehaviours {
 
     behave like normalPage(createView, messageKeyPrefix)
 
+    behave like pageWithBackLink(createView)
+
     behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.AreYouSelfAssessedController.onSubmit(NormalMode).url)
   }
 }
