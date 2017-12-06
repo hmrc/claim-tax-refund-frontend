@@ -22,6 +22,10 @@ import viewmodels.{AnswerRow, RepeaterAnswerRow, RepeaterAnswerSection}
 
 class CheckYourAnswersHelper(userAnswers: UserAnswers) {
 
+  def selectTaxYear: Option[AnswerRow] = userAnswers.selectTaxYear map {
+    x => AnswerRow("selectTaxYear.checkYourAnswersLabel", s"selectTaxYear.$x", true, routes.SelectTaxYearController.onPageLoad(CheckMode).url)
+  }
+
   def payAsYouEarn: Option[AnswerRow] = userAnswers.payAsYouEarn map {
     x => AnswerRow("payAsYouEarn.checkYourAnswersLabel", s"$x", false, routes.PayAsYouEarnController.onPageLoad(CheckMode).url)
   }
