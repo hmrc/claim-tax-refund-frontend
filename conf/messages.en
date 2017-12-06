@@ -127,8 +127,8 @@ telephoneNumber.invalid = Enter a valid telephone number
 
 typeOfClaim.title = What kind of tax refund do you want to claim?
 typeOfClaim.heading = What kind of tax refund do you want to claim?
-typeOfClaim.option1 = Self assessment
-typeOfClaim.option2 = Pay As You Earn
+typeOfClaim.optionSA = Self assessment
+typeOfClaim.optionPAYE = Pay As You Earn
 typeOfClaim.checkYourAnswersLabel = Type of refund you want to claim
 typeOfClaim.blank = Select the type of refund you want to claim
 
