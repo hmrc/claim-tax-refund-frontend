@@ -22,8 +22,8 @@ import viewmodels.{AnswerRow, RepeaterAnswerRow, RepeaterAnswerSection}
 
 class CheckYourAnswersHelper(userAnswers: UserAnswers) {
 
-  def selfAssessmentClaim: Option[AnswerRow] = userAnswers.selfAssessmentClaim map {
-    x => AnswerRow("selfAssessmentClaim.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.SelfAssessmentClaimController.onPageLoad(CheckMode).url)
+  def isSelfAssessmentClaim: Option[AnswerRow] = userAnswers.isSelfAssessmentClaim map {
+    x => AnswerRow("isSelfAssessmentClaim.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.IsisSelfAssessmentClaimController.onPageLoad(CheckMode).url)
   }
 
   def payAsYouEarn: Option[AnswerRow] = userAnswers.payAsYouEarn map {

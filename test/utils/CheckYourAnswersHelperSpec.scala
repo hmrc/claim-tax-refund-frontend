@@ -101,16 +101,16 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
 
   "Self Assessed" must {
     s"have the correct label (true)" in {
-      when(answers.selfAssessmentClaim) thenReturn Some(true)
+      when(answers.isSelfAssessmentClaim) thenReturn Some(true)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.selfAssessmentClaim.get.label mustBe s"selfAssessmentClaim.checkYourAnswersLabel"
+      helper.isSelfAssessmentClaim.get.label mustBe s"isSelfAssessmentClaim.checkYourAnswersLabel"
 
     }
 
     s"have the correct label (false)" in {
-      when(answers.selfAssessmentClaim) thenReturn Some(false)
+      when(answers.isSelfAssessmentClaim) thenReturn Some(false)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.selfAssessmentClaim.get.label mustBe s"selfAssessmentClaim.checkYourAnswersLabel"
+      helper.isSelfAssessmentClaim.get.label mustBe s"isSelfAssessmentClaim.checkYourAnswersLabel"
 
     }
 

@@ -145,7 +145,7 @@ payAsYouEarn.invalid = Enter a valid Pay As You Earn reference number
 payAsYouEarn.hintLine1 = This is a 3 digit tax office number followed by a forward slash and your tax office employer reference, like 123/AB456.
 payAsYouEarn.hintLine2 = You can find this on your payslip or P60.
 
-selfAssessmentClaim.title = sACreditDebit
-selfAssessmentClaim.heading = sACreditDebit
-selfAssessmentClaim.checkYourAnswersLabel = sACreditDebit
-selfAssessmentClaim.checkYourAnswersLabel = sACreditDebit
+isSelfAssessmentClaim.title = sACreditDebit
+isSelfAssessmentClaim.heading = sACreditDebit
+isSelfAssessmentClaim.checkYourAnswersLabel = sACreditDebit
+isSelfAssessmentClaim.checkYourAnswersLabel = sACreditDebit

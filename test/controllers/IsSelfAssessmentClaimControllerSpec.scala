@@ -24,21 +24,21 @@ import connectors.FakeDataCacheConnector
 import controllers.actions._
 import play.api.test.Helpers._
 import forms.BooleanForm
-import identifiers.SelfAssessmentClaimId
+import identifiers.isSelfAssessmentClaimId
 import models.NormalMode
-import views.html.selfAssessmentClaim
+import views.html.isSelfAssessmentClaim
 
-class SelfAssessmentClaimControllerSpec extends ControllerSpecBase {
+class IsisSelfAssessmentClaimControllerSpec extends ControllerSpecBase {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new SelfAssessmentClaimController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+    new IsisSelfAssessmentClaimController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl)
 
-  def viewAsString(form: Form[_] = BooleanForm()) = selfAssessmentClaim(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = BooleanForm()) = isSelfAssessmentClaim(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
 
-  "SelfAssessmentClaim Controller" must {
+  "isSelfAssessmentClaim Controller" must {
 
     "return OK and the correct view for a GET" in {
       val result = controller().onPageLoad(NormalMode)(fakeRequest)
@@ -48,7 +48,7 @@ class SelfAssessmentClaimControllerSpec extends ControllerSpecBase {
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      val validData = Map(SelfAssessmentClaimId.toString -> JsBoolean(true))
+      val validData = Map(isSelfAssessmentClaimId.toString -> JsBoolean(true))
       val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validData)))
 
       val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)

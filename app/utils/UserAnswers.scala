@@ -21,7 +21,7 @@ import identifiers._
 import models._
 
 class UserAnswers(val cacheMap: CacheMap) {
-  def selfAssessmentClaim: Option[Boolean] = cacheMap.getEntry[Boolean](SelfAssessmentClaimId.toString)
+  def isSelfAssessmentClaim: Option[Boolean] = cacheMap.getEntry[Boolean](isSelfAssessmentClaimId.toString)
 
   def payAsYouEarn: Option[String] = cacheMap.getEntry[String](PayAsYouEarnId.toString)
 

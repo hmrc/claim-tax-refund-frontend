@@ -25,14 +25,14 @@ import connectors.DataCacheConnector
 import controllers.actions._
 import config.FrontendAppConfig
 import forms.BooleanForm
-import identifiers.SelfAssessmentClaimId
+import identifiers.isSelfAssessmentClaimId
 import models.Mode
 import utils.{Navigator, UserAnswers}
-import views.html.selfAssessmentClaim
+import views.html.isSelfAssessmentClaim
 
 import scala.concurrent.Future
 
-class SelfAssessmentClaimController @Inject()(appConfig: FrontendAppConfig,
+class IsisSelfAssessmentClaimController @Inject()(appConfig: FrontendAppConfig,
                                          override val messagesApi: MessagesApi,
                                          dataCacheConnector: DataCacheConnector,
                                          navigator: Navigator,
@@ -42,21 +42,21 @@ class SelfAssessmentClaimController @Inject()(appConfig: FrontendAppConfig,
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val preparedForm = request.userAnswers.selfAssessmentClaim match {
+      val preparedForm = request.userAnswers.isSelfAssessmentClaim match {
         case None => BooleanForm()
         case Some(value) => BooleanForm().fill(value)
       }
-      Ok(selfAssessmentClaim(appConfig, preparedForm, mode))
+      Ok(isSelfAssessmentClaim(appConfig, preparedForm, mode))
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
       BooleanForm().bindFromRequest().fold(
         (formWithErrors: Form[_]) =>
-          Future.successful(BadRequest(selfAssessmentClaim(appConfig, formWithErrors, mode))),
+          Future.successful(BadRequest(isSelfAssessmentClaim(appConfig, formWithErrors, mode))),
         (value) =>
-          dataCacheConnector.save[Boolean](request.externalId, SelfAssessmentClaimId.toString, value).map(cacheMap =>
-            Redirect(navigator.nextPage(SelfAssessmentClaimId, mode)(new UserAnswers(cacheMap))))
+          dataCacheConnector.save[Boolean](request.externalId, isSelfAssessmentClaimId.toString, value).map(cacheMap =>
+            Redirect(navigator.nextPage(isSelfAssessmentClaimId, mode)(new UserAnswers(cacheMap))))
       )
   }
 }

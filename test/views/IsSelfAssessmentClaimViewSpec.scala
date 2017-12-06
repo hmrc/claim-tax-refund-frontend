@@ -21,22 +21,22 @@ import controllers.routes
 import forms.BooleanForm
 import views.behaviours.YesNoViewBehaviours
 import models.NormalMode
-import views.html.selfAssessmentClaim
+import views.html.isSelfAssessmentClaim
 
-class SelfAssessmentClaimViewSpec extends YesNoViewBehaviours {
+class isSelfAssessmentClaimViewSpec extends YesNoViewBehaviours {
 
-  val messageKeyPrefix = "selfAssessmentClaim"
+  val messageKeyPrefix = "isSelfAssessmentClaim"
 
-  def createView = () => selfAssessmentClaim(frontendAppConfig, BooleanForm(), NormalMode)(fakeRequest, messages)
+  def createView = () => isSelfAssessmentClaim(frontendAppConfig, BooleanForm(), NormalMode)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[_]) => selfAssessmentClaim(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[_]) => isSelfAssessmentClaim(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
-  "SelfAssessmentClaim view" must {
+  "isSelfAssessmentClaim view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
     behave like pageWithBackLink(createView)
 
-    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.SelfAssessmentClaimController.onSubmit(NormalMode).url)
+    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.IsisSelfAssessmentClaimController.onSubmit(NormalMode).url)
   }
 }
