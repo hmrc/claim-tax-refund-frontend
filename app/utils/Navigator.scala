@@ -35,6 +35,7 @@ class Navigator @Inject()() {
     InternationalAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
     TelephoneNumberId -> (_ => routes.TypeOfClaimController.onPageLoad(NormalMode)),
     TypeOfClaimId -> typeOfClaim,
+    UniqueTaxpayerReferenceId -> (_ => routes.FullOrPartialClaimController.onPageLoad(NormalMode)),
     PayAsYouEarnId -> (_ => routes.SelectTaxYearController.onPageLoad(NormalMode))
   )
 
