@@ -17,6 +17,8 @@
 @import config.FrontendAppConfig
 @import uk.gov.hmrc.play.views.html._
 @import controllers.routes._
+@import forms.TypeOfClaimForm
+@import models.TypeOfClaim
 @import models.Mode
 @import utils.FormHelpers
 @import viewmodels.InputViewModel
@@ -24,22 +26,23 @@
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("areYouSelfAssessed.title"),
+    title = messages("typeOfClaim.title"),
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @helpers.form(action = AreYouSelfAssessedController.onSubmit(mode), 'autoComplete -> "off") {
+    @helpers.form(action = TypeOfClaimController.onSubmit(mode), 'autoComplete -> "off") {
 
         @components.back_link()
 
         @components.error_summary(form.errors)
 
-        @components.heading("areYouSelfAssessed.heading")
+        @components.heading("typeOfClaim.heading")
 
-        @components.input_yes_no(
-            InputViewModel("value", form),
-            label = messages("areYouSelfAssessed.heading"),
-            labelClass = Some("visually-hidden")
+        @components.input_radio(
+            viewModel = InputViewModel("value", form),
+            legend = messages("typeOfClaim.heading"),
+            legendClass = Some("visually-hidden"),
+            inputs = TypeOfClaimForm.options.toSeq
         )
 
         @components.submit_button()

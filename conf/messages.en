@@ -125,10 +125,12 @@ telephoneNumber.heading = What is your telephone number?
 telephoneNumber.checkYourAnswersLabel = Your telephone number
 telephoneNumber.invalid = Enter a valid telephone number
 
-areYouSelfAssessed.title = Do you send an annual Self Assessment tax return?
-areYouSelfAssessed.heading = Do you send an annual Self Assessment tax return?
-areYouSelfAssessed.checkYourAnswersLabel = Do you send an annual Self Assessment tax return?
-areYouSelfAssessed.blank = Select yes if you send an annual Self Assessment tax return
+typeOfClaim.title = What kind of tax refund do you want to claim?
+typeOfClaim.heading = What kind of tax refund do you want to claim?
+typeOfClaim.optionSA = Self assessment
+typeOfClaim.optionPAYE = Pay As You Earn
+typeOfClaim.checkYourAnswersLabel = Type of refund you want to claim
+typeOfClaim.blank = Select the type of refund you want to claim
 
 uniqueTaxpayerReference.title = What is your Unique Taxpayer Reference number?
 uniqueTaxpayerReference.heading = What is your Unique Taxpayer Reference number?

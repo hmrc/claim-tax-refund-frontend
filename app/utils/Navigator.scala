@@ -21,6 +21,7 @@ import javax.inject.{Inject, Singleton}
 import play.api.mvc.Call
 import controllers.routes
 import identifiers._
+import models.TypeOfClaim.{OptionPAYE, OptionSA}
 import models.{CheckMode, Mode, NormalMode}
 
 @Singleton
@@ -32,8 +33,8 @@ class Navigator @Inject()() {
     IsTheAddressInTheUKId -> isAddressInUkRoute,
     UkAddressId -> (_ =>  routes.TelephoneNumberController.onPageLoad(NormalMode)),
     InternationalAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
-    TelephoneNumberId -> (_ => routes.AreYouSelfAssessedController.onPageLoad(NormalMode)),
-    AreYouSelfAssessedId -> isSelfAssessmentRoute
+    TelephoneNumberId -> (_ => routes.TypeOfClaimController.onPageLoad(NormalMode)),
+    TypeOfClaimId -> typeOfClaim
   )
 
   private val editRouteMap: Map[Identifier, UserAnswers => Call] = Map(
@@ -46,10 +47,9 @@ class Navigator @Inject()() {
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
-  //TODO false path for areYouSelfAssessed
-  private def isSelfAssessmentRoute(userAnswers: UserAnswers) = userAnswers.areYouSelfAssessed match {
-    case Some(true) => routes.UniqueTaxpayerReferenceController.onPageLoad(NormalMode)
-    case Some(false) => routes.PayAsYouEarnController.onPageLoad(NormalMode)
+  private def typeOfClaim(userAnswers: UserAnswers) = userAnswers.typeOfClaim match {
+    case Some(OptionSA) => routes.UniqueTaxpayerReferenceController.onPageLoad(NormalMode)
+    case Some(OptionPAYE) => routes.PayAsYouEarnController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
 

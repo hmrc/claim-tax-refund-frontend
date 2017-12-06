@@ -42,10 +42,10 @@ POST       /telephoneNumber               controllers.TelephoneNumberController.
 GET        /changeTelephoneNumber                        controllers.TelephoneNumberController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeTelephoneNumber                        controllers.TelephoneNumberController.onSubmit(mode: Mode = CheckMode)
 
-GET        /areYouSelfAssessed                       controllers.AreYouSelfAssessedController.onPageLoad(mode: Mode = NormalMode)
-POST       /areYouSelfAssessed                       controllers.AreYouSelfAssessedController.onSubmit(mode: Mode = NormalMode)
-GET        /changeAreYouSelfAssessed                       controllers.AreYouSelfAssessedController.onPageLoad(mode: Mode = CheckMode)
-POST       /changeAreYouSelfAssessed                       controllers.AreYouSelfAssessedController.onSubmit(mode: Mode = CheckMode)
+GET        /typeOfClaim               controllers.TypeOfClaimController.onPageLoad(mode: Mode = NormalMode)
+POST       /typeOfClaim               controllers.TypeOfClaimController.onSubmit(mode: Mode = NormalMode)
+GET        /changeTypeOfClaim               controllers.TypeOfClaimController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeTypeOfClaim               controllers.TypeOfClaimController.onSubmit(mode: Mode = CheckMode)
 
 GET        /uniqueTaxpayerReference               controllers.UniqueTaxpayerReferenceController.onPageLoad(mode: Mode = NormalMode)
 POST       /uniqueTaxpayerReference               controllers.UniqueTaxpayerReferenceController.onSubmit(mode: Mode = NormalMode)

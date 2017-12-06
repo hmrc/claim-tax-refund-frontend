@@ -17,28 +17,29 @@
 package controllers
 
 import play.api.data.Form
-import play.api.libs.json.JsBoolean
+import play.api.libs.json.JsString
 import uk.gov.hmrc.http.cache.client.CacheMap
 import utils.FakeNavigator
 import connectors.FakeDataCacheConnector
 import controllers.actions._
 import play.api.test.Helpers._
-import forms.BooleanForm
-import identifiers.AreYouSelfAssessedId
+import forms.TypeOfClaimForm
+import identifiers.TypeOfClaimId
 import models.NormalMode
-import views.html.areYouSelfAssessed
+import models.TypeOfClaim
+import views.html.typeOfClaim
 
-class AreYouSelfAssessedControllerSpec extends ControllerSpecBase {
+class TypeOfClaimControllerSpec extends ControllerSpecBase {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new AreYouSelfAssessedController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+    new TypeOfClaimController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl)
 
-  def viewAsString(form: Form[_] = BooleanForm()) = areYouSelfAssessed(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = TypeOfClaimForm()) = typeOfClaim(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
 
-  "AreYouSelfAssessed Controller" must {
+  "TypeOfClaim Controller" must {
 
     "return OK and the correct view for a GET" in {
       val result = controller().onPageLoad(NormalMode)(fakeRequest)
@@ -48,16 +49,16 @@ class AreYouSelfAssessedControllerSpec extends ControllerSpecBase {
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      val validData = Map(AreYouSelfAssessedId.toString -> JsBoolean(true))
+      val validData = Map(TypeOfClaimId.toString -> JsString(TypeOfClaim.values.head.toString))
       val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validData)))
 
       val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)
 
-      contentAsString(result) mustBe viewAsString(BooleanForm().fill(true))
+      contentAsString(result) mustBe viewAsString(TypeOfClaimForm().fill(TypeOfClaim.values.head))
     }
 
     "redirect to the next page when valid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", TypeOfClaimForm.options.head.value))
 
       val result = controller().onSubmit(NormalMode)(postRequest)
 
@@ -66,9 +67,8 @@ class AreYouSelfAssessedControllerSpec extends ControllerSpecBase {
     }
 
     "return a Bad Request and errors when invalid data is submitted" in {
-      val key : String = "areYouSelfAssessed.blank"
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
-      val boundForm = BooleanForm(key).bind(Map("value" -> "invalid value"))
+      val boundForm = TypeOfClaimForm().bind(Map("value" -> "invalid value"))
 
       val result = controller().onSubmit(NormalMode)(postRequest)
 
@@ -84,7 +84,7 @@ class AreYouSelfAssessedControllerSpec extends ControllerSpecBase {
     }
 
     "redirect to Session Expired for a POST if no existing data is found" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", TypeOfClaimForm.options.head.value))
       val result = controller(dontGetAnyData).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
@@ -92,7 +92,3 @@ class AreYouSelfAssessedControllerSpec extends ControllerSpecBase {
     }
   }
 }
-
-
-
-

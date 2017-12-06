@@ -21,6 +21,7 @@ import org.mockito.Mockito._
 import org.scalatest.mockito.MockitoSugar
 import controllers.routes
 import identifiers._
+import models.TypeOfClaim.{OptionPAYE, OptionSA}
 import models._
 
 class NavigatorSpec extends SpecBase with MockitoSugar {
@@ -65,20 +66,21 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(InternationalAddressId, NormalMode)(answers) mustBe routes.TelephoneNumberController.onPageLoad(NormalMode)
       }
 
-      "go to AreYouSelfAssessed from TelephoneNumber" in {
-        navigator.nextPage(TelephoneNumberId, NormalMode)(mock[UserAnswers]) mustBe routes.AreYouSelfAssessedController.onPageLoad(NormalMode)
+      "go to TypeOfClaim from TelephoneNumber" in {
+        val answers = mock[UserAnswers]
+        navigator.nextPage(TelephoneNumberId, NormalMode)(answers) mustBe routes.TypeOfClaimController.onPageLoad(NormalMode)
       }
 
-      "go to UniqueTaxpayerReference from AreYouSelfAssessed when Yes is selected" in {
+      "go to UniqueTaxpayerReference from TypeOfClaim when SA is selected" in {
         val answers = mock[UserAnswers]
-        when(answers.areYouSelfAssessed) thenReturn Some(true)
-        navigator.nextPage(AreYouSelfAssessedId, NormalMode)(answers) mustBe routes.UniqueTaxpayerReferenceController.onPageLoad(NormalMode)
+        when(answers.typeOfClaim) thenReturn Some(OptionSA)
+        navigator.nextPage(TypeOfClaimId, NormalMode)(answers) mustBe routes.UniqueTaxpayerReferenceController.onPageLoad(NormalMode)
       }
 
-      "go to PayAsYouEarn from AreYouSelfAssessed when No is selected" in {
+      "go to PayAsYouEarn from TypeOfClaim when PAYE is selected" in {
         val answers = mock[UserAnswers]
-        when(answers.areYouSelfAssessed) thenReturn Some(true)
-        navigator.nextPage(AreYouSelfAssessedId, NormalMode)(answers) mustBe routes.UniqueTaxpayerReferenceController.onPageLoad(NormalMode)
+        when(answers.typeOfClaim) thenReturn Some(OptionPAYE)
+        navigator.nextPage(TypeOfClaimId, NormalMode)(answers) mustBe routes.PayAsYouEarnController.onPageLoad(NormalMode)
       }
     }
 
