@@ -83,27 +83,11 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     }
   }
 
-  "Are you self assessed (true)" must {
-    s"have the correct label" in {
-      when(answers.areYouSelfAssessed) thenReturn Some(true)
-      val helper = new CheckYourAnswersHelper(answers)
-      helper.areYouSelfAssessed.get.label mustBe s"areYouSelfAssessed.checkYourAnswersLabel"
-    }
-  }
-
   "UTR Number" must {
     s"have the correct label"in {
       when(answers.uniqueTaxpayerReference) thenReturn Some("1234567890")
       val helper = new CheckYourAnswersHelper (answers)
       helper.uniqueTaxpayerReference.get.label mustBe s"uniqueTaxpayerReference.checkYourAnswersLabel"
-    }
-  }
-
-  "Are you self assessed (false)" must {
-    s"have the correct label" in {
-      when(answers.areYouSelfAssessed) thenReturn Some(false)
-      val helper = new CheckYourAnswersHelper(answers)
-      helper.areYouSelfAssessed.get.label mustBe s"areYouSelfAssessed.checkYourAnswersLabel"
     }
   }
 
