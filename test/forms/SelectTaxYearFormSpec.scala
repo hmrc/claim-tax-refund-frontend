@@ -21,16 +21,17 @@ import models.SelectTaxYear
 
 class SelectTaxYearFormSpec extends FormBehaviours {
 
+  private val errorKeyBlank = "selectTaxYear.blank"
+
   val validData: Map[String, String] = Map(
     "value" -> SelectTaxYearForm.options.head.value
   )
-
   val form = SelectTaxYearForm()
 
   "SelectTaxYear form" must {
 
     behave like questionForm[SelectTaxYear](SelectTaxYear.values.head)
 
-    behave like formWithOptionField("value", SelectTaxYearForm.options.toSeq.map(_.value): _*)
+    behave like formWithOptionField("value", errorKeyBlank, SelectTaxYearForm.options.toSeq.map(_.value): _*)
   }
 }

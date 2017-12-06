@@ -34,11 +34,13 @@ object SelectTaxYearForm extends FormErrorHelper {
 
   private def selectTaxYearFormatter = new Formatter[SelectTaxYear] {
 
+    private val errorKeyBlank = "selectTaxYear.blank"
+
     def bind(key: String, data: Map[String, String]) = data.get(key) match {
       case Some(s) => SelectTaxYear.withName(s)
         .map(Right.apply)
         .getOrElse(produceError(key, "error.unknown"))
-      case None => produceError(key, "error.required")
+      case None => produceError(key, errorKeyBlank)
     }
 
     def unbind(key: String, value: SelectTaxYear) = Map(key -> value.toString)
