@@ -25,6 +25,8 @@ class UserAnswers(val cacheMap: CacheMap) {
 
   def uniqueTaxpayerReference: Option[String] = cacheMap.getEntry[String](UniqueTaxpayerReferenceId.toString)
 
+  def typeOfClaim: Option[TypeOfClaim] = cacheMap.getEntry[TypeOfClaim](TypeOfClaimId.toString)
+
   def telephoneNumber: Option[String] = cacheMap.getEntry[String](TelephoneNumberId.toString)
 
   def ukAddress: Option[UkAddress] = cacheMap.getEntry[UkAddress](UkAddressId.toString)
