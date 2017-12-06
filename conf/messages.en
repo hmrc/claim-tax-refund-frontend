@@ -155,3 +155,10 @@ selectTaxYear.option3 = 6 April 2015 to 5 April 2016
 selectTaxYear.option4 = 6 April 2014 to 5 April 2015
 selectTaxYear.checkYourAnswersLabel = The tax year your claim applies to
 selectTaxYear.blank = Select a tax year
+
+fullOrPartialClaim.title = How much of the amount that you overpaid do you want to claim?
+fullOrPartialClaim.heading = How much of the amount that you overpaid do you want to claim?
+fullOrPartialClaim.allAmount = All of it
+fullOrPartialClaim.someAmount = Some of it
+fullOrPartialClaim.checkYourAnswersLabel = How much of the amount that you overpaid do you want to claim?
+fullOrPartialClaim.blank = Select whether you want to claim all some of the amount you overpaid
