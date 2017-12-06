@@ -24,8 +24,10 @@ object SelectTaxYear extends Enumerable[SelectTaxYear] {
 
   case object Option1 extends WithName("option1") with SelectTaxYear
   case object Option2 extends WithName("option2") with SelectTaxYear
+  case object Option3 extends WithName("option3") with SelectTaxYear
+  case object Option4 extends WithName("option4") with SelectTaxYear
 
   lazy val values: Set[SelectTaxYear] = Set(
-    Option1, Option2
+    Option1, Option2, Option3, Option4
   )
 }
