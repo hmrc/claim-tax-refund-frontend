@@ -66,3 +66,8 @@ GET        /fullOrPartialClaim               controllers.FullOrPartialClaimContr
 POST       /fullOrPartialClaim               controllers.FullOrPartialClaimController.onSubmit(mode: Mode = NormalMode)
 GET        /changeFullOrPartialClaim               controllers.FullOrPartialClaimController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeFullOrPartialClaim               controllers.FullOrPartialClaimController.onSubmit(mode: Mode = CheckMode)
+
+GET        /selectTaxYear               controllers.SelectTaxYearController.onPageLoad(mode: Mode = NormalMode)
+POST       /selectTaxYear               controllers.SelectTaxYearController.onSubmit(mode: Mode = NormalMode)
+GET        /changeSelectTaxYear               controllers.SelectTaxYearController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeSelectTaxYear               controllers.SelectTaxYearController.onSubmit(mode: Mode = CheckMode)

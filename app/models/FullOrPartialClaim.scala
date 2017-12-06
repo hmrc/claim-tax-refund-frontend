@@ -22,10 +22,10 @@ sealed trait FullOrPartialClaim
 
 object FullOrPartialClaim extends Enumerable[FullOrPartialClaim] {
 
-  case object Option1 extends WithName("option1") with FullOrPartialClaim
-  case object Option2 extends WithName("option2") with FullOrPartialClaim
+  case object OptionAll extends WithName("allAmount") with FullOrPartialClaim
+  case object OptionSome extends WithName("someAmount") with FullOrPartialClaim
 
   lazy val values: Set[FullOrPartialClaim] = Set(
-    Option1, Option2
+    OptionAll, OptionSome
   )
 }
