@@ -82,6 +82,16 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         when(answers.typeOfClaim) thenReturn Some(OptionPAYE)
         navigator.nextPage(TypeOfClaimId, NormalMode)(answers) mustBe routes.PayAsYouEarnController.onPageLoad(NormalMode)
       }
+
+      "go to FullOrPartialClaim from UniqueTaxpayerReference" in {
+        val answers = mock[UserAnswers]
+        navigator.nextPage(UniqueTaxpayerReferenceId, NormalMode)(answers) mustBe routes.FullOrPartialClaimController.onPageLoad(NormalMode)
+      }
+
+      "go to SelectTaxYear from PayAsYouEarn" in {
+        val answers = mock[UserAnswers]
+        navigator.nextPage(PayAsYouEarnId, NormalMode)(answers) mustBe routes.SelectTaxYearController.onPageLoad(NormalMode)
+      }
     }
 
     "in Check mode" must {

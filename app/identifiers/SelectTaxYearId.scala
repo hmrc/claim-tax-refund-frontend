@@ -14,18 +14,8 @@
  * limitations under the License.
  */
 
-package models
+package identifiers
 
-import utils.{WithName, Enumerable}
-
-sealed trait FullOrPartialClaim
-
-object FullOrPartialClaim extends Enumerable[FullOrPartialClaim] {
-
-  case object OptionAll extends WithName("allAmount") with FullOrPartialClaim
-  case object OptionSome extends WithName("someAmount") with FullOrPartialClaim
-
-  lazy val values: Set[FullOrPartialClaim] = Set(
-    OptionAll, OptionSome
-  )
+case object SelectTaxYearId extends Identifier {
+  override def toString: String = "selectTaxYear"
 }

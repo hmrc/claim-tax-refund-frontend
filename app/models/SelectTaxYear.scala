@@ -18,14 +18,16 @@ package models
 
 import utils.{WithName, Enumerable}
 
-sealed trait FullOrPartialClaim
+sealed trait SelectTaxYear
 
-object FullOrPartialClaim extends Enumerable[FullOrPartialClaim] {
+object SelectTaxYear extends Enumerable[SelectTaxYear] {
 
-  case object OptionAll extends WithName("allAmount") with FullOrPartialClaim
-  case object OptionSome extends WithName("someAmount") with FullOrPartialClaim
+  case object Option1 extends WithName("option1") with SelectTaxYear
+  case object Option2 extends WithName("option2") with SelectTaxYear
+  case object Option3 extends WithName("option3") with SelectTaxYear
+  case object Option4 extends WithName("option4") with SelectTaxYear
 
-  lazy val values: Set[FullOrPartialClaim] = Set(
-    OptionAll, OptionSome
+  lazy val values: Set[SelectTaxYear] = Set(
+    Option1, Option2, Option3, Option4
   )
 }

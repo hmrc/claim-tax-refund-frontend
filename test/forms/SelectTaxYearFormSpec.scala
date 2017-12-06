@@ -14,18 +14,24 @@
  * limitations under the License.
  */
 
-package models
+package forms
 
-import utils.{WithName, Enumerable}
+import forms.behaviours.FormBehaviours
+import models.SelectTaxYear
 
-sealed trait FullOrPartialClaim
+class SelectTaxYearFormSpec extends FormBehaviours {
 
-object FullOrPartialClaim extends Enumerable[FullOrPartialClaim] {
+  private val errorKeyBlank = "selectTaxYear.blank"
 
-  case object OptionAll extends WithName("allAmount") with FullOrPartialClaim
-  case object OptionSome extends WithName("someAmount") with FullOrPartialClaim
-
-  lazy val values: Set[FullOrPartialClaim] = Set(
-    OptionAll, OptionSome
+  val validData: Map[String, String] = Map(
+    "value" -> SelectTaxYearForm.options.head.value
   )
+  val form = SelectTaxYearForm()
+
+  "SelectTaxYear form" must {
+
+    behave like questionForm[SelectTaxYear](SelectTaxYear.values.head)
+
+    behave like formWithOptionField("value", errorKeyBlank, SelectTaxYearForm.options.toSeq.map(_.value): _*)
+  }
 }
