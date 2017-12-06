@@ -25,6 +25,8 @@ class $className$ViewSpec extends QuestionViewBehaviours[$className$] with Mocki
 
     behave like normalPage(createView, messageKeyPrefix)
 
+    behave like pageWithBackLink(createView)
+
     behave like pageWithTextFields(createViewUsingForm, messageKeyPrefix, routes.$className$Controller.onSubmit(NormalMode).url, "field1", "field2")
   }
 }
