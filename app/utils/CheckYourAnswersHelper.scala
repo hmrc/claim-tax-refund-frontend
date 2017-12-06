@@ -22,6 +22,10 @@ import viewmodels.{AnswerRow, RepeaterAnswerRow, RepeaterAnswerSection}
 
 class CheckYourAnswersHelper(userAnswers: UserAnswers) {
 
+  def fullOrPartialClaim: Option[AnswerRow] = userAnswers.fullOrPartialClaim map {
+    x => AnswerRow("fullOrPartialClaim.checkYourAnswersLabel", s"fullOrPartialClaim.$x", true, routes.FullOrPartialClaimController.onPageLoad(CheckMode).url)
+  }
+
   def payAsYouEarn: Option[AnswerRow] = userAnswers.payAsYouEarn map {
     x => AnswerRow("payAsYouEarn.checkYourAnswersLabel", s"$x", false, routes.PayAsYouEarnController.onPageLoad(CheckMode).url)
   }
