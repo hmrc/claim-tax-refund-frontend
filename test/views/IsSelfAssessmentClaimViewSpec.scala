@@ -37,6 +37,6 @@ class isSelfAssessmentClaimViewSpec extends YesNoViewBehaviours {
 
     behave like pageWithBackLink(createView)
 
-    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.IsisSelfAssessmentClaimController.onSubmit(NormalMode).url)
+    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.IsSelfAssessmentClaimController.onSubmit(NormalMode).url)
   }
 }

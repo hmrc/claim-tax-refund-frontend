@@ -28,12 +28,12 @@ import identifiers.isSelfAssessmentClaimId
 import models.NormalMode
 import views.html.isSelfAssessmentClaim
 
-class IsisSelfAssessmentClaimControllerSpec extends ControllerSpecBase {
+class IsSelfAssessmentClaimControllerSpec extends ControllerSpecBase {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new IsisSelfAssessmentClaimController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+    new IsSelfAssessmentClaimController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl)
 
   def viewAsString(form: Form[_] = BooleanForm()) = isSelfAssessmentClaim(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString

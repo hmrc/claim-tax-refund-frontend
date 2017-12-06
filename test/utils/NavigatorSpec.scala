@@ -82,7 +82,7 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
       }
 
       "go to isSelfAssessmentClaim page from UTRNumber" in {
-        navigator.nextPage(UniqueTaxpayerReferenceId, NormalMode)(mock[UserAnswers]) mustBe routes.IsisSelfAssessmentClaimController.onPageLoad(NormalMode)
+        navigator.nextPage(UniqueTaxpayerReferenceId, NormalMode)(mock[UserAnswers]) mustBe routes.IsSelfAssessmentClaimController.onPageLoad(NormalMode)
 
       }
     }

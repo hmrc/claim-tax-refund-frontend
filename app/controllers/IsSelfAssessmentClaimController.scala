@@ -32,7 +32,7 @@ import views.html.isSelfAssessmentClaim
 
 import scala.concurrent.Future
 
-class IsisSelfAssessmentClaimController @Inject()(appConfig: FrontendAppConfig,
+class IsSelfAssessmentClaimController @Inject()(appConfig: FrontendAppConfig,
                                          override val messagesApi: MessagesApi,
                                          dataCacheConnector: DataCacheConnector,
                                          navigator: Navigator,
