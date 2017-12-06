@@ -38,7 +38,7 @@ object TypeOfClaimForm extends FormErrorHelper {
       case Some(s) => TypeOfClaim.withName(s)
         .map(Right.apply)
         .getOrElse(produceError(key, "error.unknown"))
-      case None => produceError(key, "error.required")
+      case None => produceError(key, "typeOfClaim.blank")
     }
 
     def unbind(key: String, value: TypeOfClaim) = Map(key -> value.toString)

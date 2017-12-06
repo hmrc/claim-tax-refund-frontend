@@ -21,6 +21,8 @@ import models.TypeOfClaim
 
 class TypeOfClaimFormSpec extends FormBehaviours {
 
+  private val errorKeyBlank = "typeOfClaim.blank"
+
   val validData: Map[String, String] = Map(
     "value" -> TypeOfClaimForm.options.head.value
   )
@@ -31,6 +33,6 @@ class TypeOfClaimFormSpec extends FormBehaviours {
 
     behave like questionForm[TypeOfClaim](TypeOfClaim.values.head)
 
-    behave like formWithOptionField("value", TypeOfClaimForm.options.toSeq.map(_.value): _*)
+    behave like formWithOptionField("value", errorKeyBlank, TypeOfClaimForm.options.toSeq.map(_.value): _*)
   }
 }

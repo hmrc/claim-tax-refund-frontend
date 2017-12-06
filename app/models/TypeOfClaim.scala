@@ -22,10 +22,10 @@ sealed trait TypeOfClaim
 
 object TypeOfClaim extends Enumerable[TypeOfClaim] {
 
-  case object Option1 extends WithName("option1") with TypeOfClaim
-  case object Option2 extends WithName("option2") with TypeOfClaim
+  case object OptionSA extends WithName("optionSA") with TypeOfClaim
+  case object OptionPAYE extends WithName("optionPAYE") with TypeOfClaim
 
   lazy val values: Set[TypeOfClaim] = Set(
-    Option1, Option2
+    OptionSA, OptionPAYE
   )
 }
