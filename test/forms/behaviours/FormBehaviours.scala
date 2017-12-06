@@ -100,7 +100,7 @@ trait FormBehaviours extends FormSpec {
     }
   }
 
-  def formWithOptionField(field: String, validValues: String*) = {
+  def formWithOptionField(field: String, errorKeyBlank: String, validValues: String*) = {
     for (validValue <- validValues) {
       s"bind when $field is set to $validValue" in {
         val data = validData + (field -> validValue)
@@ -111,7 +111,7 @@ trait FormBehaviours extends FormSpec {
 
     s"fail to bind when $field is omitted" in {
       val data = validData - field
-      val expectedError = error(field, "error.required")
+      val expectedError = error(field, errorKeyBlank)
       checkForError(form, data, expectedError)
     }
 
