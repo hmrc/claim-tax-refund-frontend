@@ -56,3 +56,8 @@ GET        /payAsYouEarn               controllers.PayAsYouEarnController.onPage
 POST       /payAsYouEarn               controllers.PayAsYouEarnController.onSubmit(mode: Mode = NormalMode)
 GET        /changePayAsYouEarn                        controllers.PayAsYouEarnController.onPageLoad(mode: Mode = CheckMode)
 POST       /changePayAsYouEarn                        controllers.PayAsYouEarnController.onSubmit(mode: Mode = CheckMode)
+
+GET        /selectTaxYear               controllers.SelectTaxYearController.onPageLoad(mode: Mode = NormalMode)
+POST       /selectTaxYear               controllers.SelectTaxYearController.onSubmit(mode: Mode = NormalMode)
+GET        /changeSelectTaxYear               controllers.SelectTaxYearController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeSelectTaxYear               controllers.SelectTaxYearController.onSubmit(mode: Mode = CheckMode)

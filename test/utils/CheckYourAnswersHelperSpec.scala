@@ -17,9 +17,10 @@
 package utils
 
 import base.SpecBase
+import models.SelectTaxYear._
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
-import models.{UkAddress, InternationalAddress}
+import models.{InternationalAddress, SelectTaxYear, UkAddress}
 
 class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
 
@@ -84,7 +85,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
   }
 
   "UTR Number" must {
-    s"have the correct label"in {
+    s"have the correct label" in {
       when(answers.uniqueTaxpayerReference) thenReturn Some("1234567890")
       val helper = new CheckYourAnswersHelper (answers)
       helper.uniqueTaxpayerReference.get.label mustBe s"uniqueTaxpayerReference.checkYourAnswersLabel"
@@ -92,10 +93,18 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
   }
 
   "PAYE Reference" must {
-    s"have the correct label"in {
+    s"have the correct label" in {
       when(answers.payAsYouEarn) thenReturn Some("ABC/123456")
       val helper = new CheckYourAnswersHelper (answers)
       helper.payAsYouEarn.get.label mustBe s"payAsYouEarn.checkYourAnswersLabel"
     }
+  }
+
+  "Select tax year" must {
+    s"have correct label" in {
+      when(answers.selectTaxYear) thenReturn Some(SelectTaxYear.Option1)
+      val helper = new CheckYourAnswersHelper (answers)
+      helper.selectTaxYear.get.label mustBe s"selectTaxYear.checkYourAnswersLabel"
+     }
   }
 }

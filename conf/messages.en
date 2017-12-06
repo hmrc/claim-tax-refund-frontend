@@ -146,3 +146,12 @@ payAsYouEarn.blank = Enter your Pay As You Earn reference number
 payAsYouEarn.invalid = Enter a valid Pay As You Earn reference number
 payAsYouEarn.hintLine1 = This is a 3 digit tax office number followed by a forward slash and your tax office employer reference, like 123/AB456.
 payAsYouEarn.hintLine2 = You can find this on your payslip or P60.
+
+selectTaxYear.title = Which tax year does your claim apply to?
+selectTaxYear.heading = Which tax year does your claim apply to?
+selectTaxYear.option1 = 6 April 2017 to 5 April 2018
+selectTaxYear.option2 = 6 April 2016 to 5 April 2017
+selectTaxYear.option3 = 6 April 2015 to 5 April 2016
+selectTaxYear.option4 = 6 April 2014 to 5 April 2015
+selectTaxYear.checkYourAnswersLabel = The tax year your claim applies to
+selectTaxYear.blank = Select a tax year
