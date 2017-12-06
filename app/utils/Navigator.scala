@@ -34,7 +34,8 @@ class Navigator @Inject()() {
     UkAddressId -> (_ =>  routes.TelephoneNumberController.onPageLoad(NormalMode)),
     InternationalAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
     TelephoneNumberId -> (_ => routes.TypeOfClaimController.onPageLoad(NormalMode)),
-    TypeOfClaimId -> typeOfClaim
+    TypeOfClaimId -> typeOfClaim,
+    PayAsYouEarnId -> (_ => routes.SelectTaxYearController.onPageLoad(NormalMode))
   )
 
   private val editRouteMap: Map[Identifier, UserAnswers => Call] = Map(
