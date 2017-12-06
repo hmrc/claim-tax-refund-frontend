@@ -21,6 +21,8 @@ import identifiers._
 import models._
 
 class UserAnswers(val cacheMap: CacheMap) {
+  def fullOrPartialClaim: Option[FullOrPartialClaim] = cacheMap.getEntry[FullOrPartialClaim](FullOrPartialClaimId.toString)
+
   def selectTaxYear: Option[SelectTaxYear] = cacheMap.getEntry[SelectTaxYear](SelectTaxYearId.toString)
 
   def payAsYouEarn: Option[String] = cacheMap.getEntry[String](PayAsYouEarnId.toString)
