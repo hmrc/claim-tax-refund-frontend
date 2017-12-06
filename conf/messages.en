@@ -125,10 +125,7 @@ telephoneNumber.heading = What is your telephone number?
 telephoneNumber.checkYourAnswersLabel = Your telephone number
 telephoneNumber.invalid = Enter a valid telephone number
 
-areYouSelfAssessed.title = Do you send an annual Self Assessment tax return?
-areYouSelfAssessed.heading = Do you send an annual Self Assessment tax return?
-areYouSelfAssessed.checkYourAnswersLabel = Do you send an annual Self Assessment tax return?
-areYouSelfAssessed.blank = Select yes if you send an annual Self Assessment tax return
+
 
 uniqueTaxpayerReference.title = What is your Unique Taxpayer Reference number?
 uniqueTaxpayerReference.heading = What is your Unique Taxpayer Reference number?
