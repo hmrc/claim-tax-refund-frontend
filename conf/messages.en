@@ -162,3 +162,12 @@ fullOrPartialClaim.allAmount = All of it
 fullOrPartialClaim.someAmount = Some of it
 fullOrPartialClaim.checkYourAnswersLabel = How much of the amount that you overpaid do you want to claim?
 fullOrPartialClaim.blank = Select whether you want to claim all some of the amount you overpaid
+
+selectTaxYear.title = Which tax year does your claim apply to?
+selectTaxYear.heading = Which tax year does your claim apply to?
+selectTaxYear.option1 = 6 April 2017 to 5 April 2018
+selectTaxYear.option2 = 6 April 2016 to 5 April 2017
+selectTaxYear.option3 = 6 April 2015 to 5 April 2016
+selectTaxYear.option4 = 6 April 2014 to 5 April 2015
+selectTaxYear.checkYourAnswersLabel = The tax year your claim applies to
+selectTaxYear.blank = Select a tax year
