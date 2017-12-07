@@ -18,7 +18,7 @@ package forms
 
 import config.FrontendAppConfig
 import forms.behaviours.FormBehaviours
-import models.{MandatoryField, MaxLengthField}
+import models.{MandatoryField, MaxLengthField, RegexField}
 import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito._
 import play.api.data.Form
@@ -26,6 +26,7 @@ import play.api.data.Form
 class TelephoneNumberFormSpec extends FormBehaviours with MockitoSugar {
 
   private val errorKeyInvalid = "telephoneNumber.invalid"
+  private val errorKeyBlank = "telephoneNumber.blank"
   private val testRegex = """^\+?[0-9\s\(\)]{1,20}$"""
 
   def appConfig: FrontendAppConfig = {
@@ -42,6 +43,8 @@ class TelephoneNumberFormSpec extends FormBehaviours with MockitoSugar {
 
     behave like questionForm("01963 123456")
 
-    behave like formWithMandatoryTextFields(MandatoryField("value", errorKeyInvalid))
+    behave like formWithMandatoryTextFields(MandatoryField("value", errorKeyBlank))
+
+    behave like formWithRegex(RegexField("value", errorKeyInvalid, testRegex))
   }
 }

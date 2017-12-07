@@ -26,8 +26,9 @@ class NationalInsuranceNumberForm @Inject() (appConfig: FrontendAppConfig) exten
 
   private val nationalNumberRegex = appConfig.ninoRegex
   private val errorKeyInvalid = "nationalInsuranceNumber.invalid"
+  private val errorKeyBlank = "nationalInsuranceNumber.blank"
 
   def apply(): Form[String] = Form(
-    "value" -> text.verifying(regexValidation(nationalNumberRegex, errorKeyInvalid))
+    "value" -> text.verifying(firstError(nonEmpty(errorKeyBlank), regexValidation(nationalNumberRegex, errorKeyInvalid)))
   )
 }
