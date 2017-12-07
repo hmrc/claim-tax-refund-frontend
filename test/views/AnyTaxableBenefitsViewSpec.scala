@@ -37,6 +37,6 @@ class AnyTaxableBenefitsViewSpec extends YesNoViewBehaviours {
 
     behave like pageWithBackLink(createView)
 
-    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.AnyTaxableBenefitsController.onSubmit(NormalMode).url)
+    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.AnyTaxableBenefitsController.onSubmit(NormalMode).url, Some(s"$messageKeyPrefix.hint"))
   }
 }
