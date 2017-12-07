@@ -21,6 +21,7 @@ import org.mockito.Mockito._
 import org.scalatest.mockito.MockitoSugar
 import controllers.routes
 import identifiers._
+import models.FullOrPartialClaim.OptionSome
 import models.TypeOfClaim.{OptionPAYE, OptionSA}
 import models._
 
@@ -91,6 +92,12 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
       "go to SelectTaxYear from PayAsYouEarn" in {
         val answers = mock[UserAnswers]
         navigator.nextPage(PayAsYouEarnId, NormalMode)(answers) mustBe routes.SelectTaxYearController.onPageLoad(NormalMode)
+      }
+
+      "go to PartialClaimAmount from TypeOfClaim when FullOrPartialClaim is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.fullOrPartialClaim) thenReturn Some(OptionSome)
+        navigator.nextPage(FullOrPartialClaimId, NormalMode)(answers) mustBe routes.PartialClaimAmountController.onPageLoad(NormalMode)
       }
     }
 

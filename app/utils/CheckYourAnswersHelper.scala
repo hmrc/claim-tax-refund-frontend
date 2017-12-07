@@ -26,6 +26,10 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
     x => AnswerRow("anyTaxableBenefits.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.AnyTaxableBenefitsController.onPageLoad(CheckMode).url)
   }
 
+  def partialClaimAmount: Option[AnswerRow] = userAnswers.partialClaimAmount map {
+    x => AnswerRow("partialClaimAmount.checkYourAnswersLabel", s"$x", false, routes.PartialClaimAmountController.onPageLoad(CheckMode).url)
+  }
+
   def fullOrPartialClaim: Option[AnswerRow] = userAnswers.fullOrPartialClaim map {
     x => AnswerRow("fullOrPartialClaim.checkYourAnswersLabel", s"fullOrPartialClaim.$x", true, routes.FullOrPartialClaimController.onPageLoad(CheckMode).url)
   }

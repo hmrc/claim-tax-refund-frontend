@@ -50,6 +50,8 @@ global.postcode = Postcode
 global.postcode.blank = Enter a postcode
 global.postcode.invalid = Enter a valid postcode
 
+global.poundSign = £
+
 index.title = Claim a tax refund
 index.heading = Claim a tax refund
 index.useForm.title = Use this form to claim a tax refund if you:
@@ -168,3 +170,10 @@ anyTaxableBenefits.heading = Did you get any taxable benefits in the tax year th
 anyTaxableBenefits.checkYourAnswersLabel = Did you get any taxable benefits in the tax year that your claim relates to?
 anyTaxableBenefits.blank = Select yes if you got any taxable benefits in the tax year that your claim relates to
 anyTaxableBenefits.hint = Taxable benefits include Jobseeker's Allowance, Incapacity Benefit and Carer's Allowance.
+
+partialClaimAmount.title = How much do you want to claim?
+partialClaimAmount.heading = How much do you want to claim?
+partialClaimAmount.checkYourAnswersLabel = Amount you want to claim
+partialClaimAmount.blank = Enter the amount you want to claim
+partialClaimAmount.invalid = Enter a valid amount you want to claim
+partialClaimAmount.hintLine1 = Enter an amount that is less than the amount you overpaid.

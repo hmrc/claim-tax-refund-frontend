@@ -22,7 +22,8 @@ label: String,
 inputClass: Option[String] = None,
 hintLine1: Option[String] = None,
 hintLine2: Option[String] = None,
-labelClass: Option[String] = None
+labelClass: Option[String] = None,
+prefix: Option[String] = None
 )(implicit messages: Messages)
 
 <div class="form-field @if(viewModel.errorKey.nonEmpty){form-field--error}">
@@ -39,6 +40,7 @@ labelClass: Option[String] = None
         }
     </label>
     <div class="form-control-wrapper">
+        @if(prefix.nonEmpty){@prefix}
         <input
                 class="form-control @inputClass"
                 type="text"

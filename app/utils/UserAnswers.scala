@@ -23,6 +23,8 @@ import models._
 class UserAnswers(val cacheMap: CacheMap) {
   def anyTaxableBenefits: Option[Boolean] = cacheMap.getEntry[Boolean](AnyTaxableBenefitsId.toString)
 
+  def partialClaimAmount: Option[String] = cacheMap.getEntry[String](PartialClaimAmountId.toString)
+
   def fullOrPartialClaim: Option[FullOrPartialClaim] = cacheMap.getEntry[FullOrPartialClaim](FullOrPartialClaimId.toString)
 
   def selectTaxYear: Option[SelectTaxYear] = cacheMap.getEntry[SelectTaxYear](SelectTaxYearId.toString)
