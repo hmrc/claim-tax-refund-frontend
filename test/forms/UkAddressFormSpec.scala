@@ -18,7 +18,7 @@ package forms
 
 import config.FrontendAppConfig
 import forms.behaviours.FormBehaviours
-import models.{MandatoryField, MaxLengthField, UkAddress}
+import models.{MandatoryField, MaxLengthField, RegexField, UkAddress}
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
@@ -43,6 +43,7 @@ class UkAddressFormSpec extends FormBehaviours with MockitoSugar {
   val addressLine4TooLong = "global.addressLine4.tooLong"
   val addressLine5TooLong = "global.addressLine5.tooLong"
   val postcodeInvalid = "ukAddress.postcode.invalid"
+  val postcodeBlank = "ukAddress.postcode.blank"
 
   val validData: Map[String, String] = Map(
     "addressLine1" -> "line 1",
@@ -61,7 +62,7 @@ class UkAddressFormSpec extends FormBehaviours with MockitoSugar {
     behave like formWithMandatoryTextFields(
       MandatoryField("addressLine1", addressLine1Blank),
       MandatoryField("addressLine2", addressLine2Blank),
-      MandatoryField("postcode", postcodeInvalid))
+      MandatoryField("postcode", postcodeBlank))
 
     behave like formWithOptionalTextFields("addressLine3", "addressLine4", "addressLine5")
 
@@ -71,5 +72,7 @@ class UkAddressFormSpec extends FormBehaviours with MockitoSugar {
       MaxLengthField("addressLine3", addressLine3TooLong, addressLineMaxLength),
       MaxLengthField("addressLine4", addressLine4TooLong, addressLineMaxLength),
       MaxLengthField("addressLine5", addressLine5TooLong, addressLineMaxLength))
+
+    behave like formWithRegex(RegexField("postcode", postcodeInvalid, postcodeRegex))
   }
 }

@@ -18,7 +18,7 @@ package forms
 
 import config.FrontendAppConfig
 import forms.behaviours.FormBehaviours
-import models.MandatoryField
+import models.{MandatoryField, RegexField}
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
@@ -26,6 +26,7 @@ import play.api.data.Form
 class NationalInsuranceNumberFormSpec extends FormBehaviours with MockitoSugar {
 
   private val errorKeyInvalid = "nationalInsuranceNumber.invalid"
+  private val errorKeyBlank = "nationalInsuranceNumber.blank"
   private val testRegex = """^((?!BG)(?!GB)(?!NK)(?!KN)(?!TN)(?!NT)(?!ZZ)(?:[A-CEGHJ-PR-TW-Z][A-CEGHJ-NPR-TW-Z])(?:\d){6}([A-D]|\s)?)|(\d{2})([a-zA-Z])(\d{5})([a-zA-Z])$"""
 
   def appConfig: FrontendAppConfig = {
@@ -42,6 +43,8 @@ class NationalInsuranceNumberFormSpec extends FormBehaviours with MockitoSugar {
 
     behave like questionForm("AB123456A")
 
-    behave like formWithMandatoryTextFields(MandatoryField("value", errorKeyInvalid))
+    behave like formWithMandatoryTextFields(MandatoryField("value", errorKeyBlank))
+
+    behave like formWithRegex(RegexField("value", errorKeyInvalid, testRegex))
   }
 }

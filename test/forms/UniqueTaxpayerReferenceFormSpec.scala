@@ -18,7 +18,7 @@ package forms
 
 import config.FrontendAppConfig
 import forms.behaviours.FormBehaviours
-import models.{MandatoryField, MaxLengthField}
+import models.{MandatoryField, MaxLengthField, RegexField}
 import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito._
 import play.api.data.Form
@@ -27,6 +27,7 @@ class UniqueTaxpayerReferenceFormSpec extends FormBehaviours with MockitoSugar {
 
   private val testRegex = """^[0-9kK]{10}$"""
   private val errorKeyInvalid = "uniqueTaxpayerReference.invalid"
+  private val errorKeyBlank = "uniqueTaxpayerReference.blank"
 
   def appConfig: FrontendAppConfig = {
     val instance = mock[FrontendAppConfig]
@@ -42,6 +43,8 @@ class UniqueTaxpayerReferenceFormSpec extends FormBehaviours with MockitoSugar {
 
     behave like questionForm("1234567890")
 
-    behave like formWithMandatoryTextFields(MandatoryField("value", errorKeyInvalid))
+    behave like formWithMandatoryTextFields(MandatoryField("value", errorKeyBlank))
+
+    behave like formWithRegex(RegexField("value", errorKeyInvalid, testRegex))
   }
 }
