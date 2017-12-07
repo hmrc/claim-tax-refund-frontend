@@ -171,3 +171,8 @@ selectTaxYear.option3 = 6 April 2015 to 5 April 2016
 selectTaxYear.option4 = 6 April 2014 to 5 April 2015
 selectTaxYear.checkYourAnswersLabel = The tax year your claim applies to
 selectTaxYear.blank = Select a tax year
+
+anyTaxableBenefits.title = anyTaxableBenefits
+anyTaxableBenefits.heading = anyTaxableBenefits
+anyTaxableBenefits.checkYourAnswersLabel = anyTaxableBenefits
+anyTaxableBenefits.blank = anyTaxableBenefits

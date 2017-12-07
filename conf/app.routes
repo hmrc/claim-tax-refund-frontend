@@ -71,3 +71,8 @@ GET        /selectTaxYear               controllers.SelectTaxYearController.onPa
 POST       /selectTaxYear               controllers.SelectTaxYearController.onSubmit(mode: Mode = NormalMode)
 GET        /changeSelectTaxYear               controllers.SelectTaxYearController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeSelectTaxYear               controllers.SelectTaxYearController.onSubmit(mode: Mode = CheckMode)
+
+GET        /anyTaxableBenefits                       controllers.AnyTaxableBenefitsController.onPageLoad(mode: Mode = NormalMode)
+POST       /anyTaxableBenefits                       controllers.AnyTaxableBenefitsController.onSubmit(mode: Mode = NormalMode)
+GET        /changeAnyTaxableBenefits                       controllers.AnyTaxableBenefitsController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeAnyTaxableBenefits                       controllers.AnyTaxableBenefitsController.onSubmit(mode: Mode = CheckMode)
