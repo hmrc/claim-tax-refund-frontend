@@ -21,6 +21,7 @@ import javax.inject.{Inject, Singleton}
 import play.api.mvc.Call
 import controllers.routes
 import identifiers._
+import models.FullOrPartialClaim.{OptionAll, OptionSome}
 import models.TypeOfClaim.{OptionPAYE, OptionSA}
 import models.{CheckMode, Mode, NormalMode}
 
@@ -36,7 +37,8 @@ class Navigator @Inject()() {
     TelephoneNumberId -> (_ => routes.TypeOfClaimController.onPageLoad(NormalMode)),
     TypeOfClaimId -> typeOfClaim,
     UniqueTaxpayerReferenceId -> (_ => routes.FullOrPartialClaimController.onPageLoad(NormalMode)),
-    PayAsYouEarnId -> (_ => routes.SelectTaxYearController.onPageLoad(NormalMode))
+    PayAsYouEarnId -> (_ => routes.SelectTaxYearController.onPageLoad(NormalMode)),
+    FullOrPartialClaimId -> fullOrPartialClaim
   )
 
   private val editRouteMap: Map[Identifier, UserAnswers => Call] = Map(
@@ -52,6 +54,12 @@ class Navigator @Inject()() {
   private def typeOfClaim(userAnswers: UserAnswers) = userAnswers.typeOfClaim match {
     case Some(OptionSA) => routes.UniqueTaxpayerReferenceController.onPageLoad(NormalMode)
     case Some(OptionPAYE) => routes.PayAsYouEarnController.onPageLoad(NormalMode)
+    case None => routes.SessionExpiredController.onPageLoad()
+  }
+
+  private def fullOrPartialClaim(userAnswers: UserAnswers) = userAnswers.fullOrPartialClaim match {
+    case Some(OptionSome) => routes.PartialClaimAmountController.onPageLoad(NormalMode)
+    case Some(OptionAll) => ???
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
