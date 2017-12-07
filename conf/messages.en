@@ -50,6 +50,8 @@ global.postcode = Postcode
 global.postcode.blank = Enter a postcode
 global.postcode.invalid = Enter a valid postcode
 
+global.poundSign = £
+
 index.title = Claim a tax refund
 index.heading = Claim a tax refund
 index.useForm.title = Use this form to claim a tax refund if you:
@@ -171,3 +173,10 @@ selectTaxYear.option3 = 6 April 2015 to 5 April 2016
 selectTaxYear.option4 = 6 April 2014 to 5 April 2015
 selectTaxYear.checkYourAnswersLabel = The tax year your claim applies to
 selectTaxYear.blank = Select a tax year
+
+partialClaimAmount.title = How much do you want to claim?
+partialClaimAmount.heading = How much do you want to claim?
+partialClaimAmount.checkYourAnswersLabel = Amount you want to claim
+partialClaimAmount.blank = Enter the amount you want to claim
+partialClaimAmount.invalid = Enter a valid amount you want to claim
+partialClaimAmount.hintLine1 = Enter an amount that is less than the amount you overpaid.
