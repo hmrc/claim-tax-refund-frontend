@@ -36,7 +36,8 @@ class Navigator @Inject()() {
     TelephoneNumberId -> (_ => routes.TypeOfClaimController.onPageLoad(NormalMode)),
     TypeOfClaimId -> typeOfClaim,
     UniqueTaxpayerReferenceId -> (_ => routes.FullOrPartialClaimController.onPageLoad(NormalMode)),
-    PayAsYouEarnId -> (_ => routes.SelectTaxYearController.onPageLoad(NormalMode))
+    PayAsYouEarnId -> (_ => routes.SelectTaxYearController.onPageLoad(NormalMode)),
+    SelectTaxYearId -> (_ => routes.AnyTaxableBenefitsController.onPageLoad(NormalMode))
   )
 
   private val editRouteMap: Map[Identifier, UserAnswers => Call] = Map(

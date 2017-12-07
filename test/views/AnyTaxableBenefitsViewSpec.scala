@@ -21,22 +21,22 @@ import controllers.routes
 import forms.BooleanForm
 import views.behaviours.YesNoViewBehaviours
 import models.NormalMode
-import views.html.isTheAddressInTheUK
+import views.html.anyTaxableBenefits
 
-class IsTheAddressInTheUKViewSpec extends YesNoViewBehaviours {
+class AnyTaxableBenefitsViewSpec extends YesNoViewBehaviours {
 
-  val messageKeyPrefix = "isTheAddressInTheUK"
+  val messageKeyPrefix = "anyTaxableBenefits"
 
-  def createView = () => isTheAddressInTheUK(frontendAppConfig, BooleanForm(), NormalMode)(fakeRequest, messages)
+  def createView = () => anyTaxableBenefits(frontendAppConfig, BooleanForm(), NormalMode)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[_]) => isTheAddressInTheUK(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[_]) => anyTaxableBenefits(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
-  "IsTheAddressInTheUK view" must {
+  "AnyTaxableBenefits view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
     behave like pageWithBackLink(createView)
 
-    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.IsTheAddressInTheUKController.onSubmit(NormalMode).url, None)
+    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.AnyTaxableBenefitsController.onSubmit(NormalMode).url, Some(s"$messageKeyPrefix.hint"))
   }
 }

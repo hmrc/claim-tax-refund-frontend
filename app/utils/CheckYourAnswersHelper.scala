@@ -22,6 +22,10 @@ import viewmodels.{AnswerRow, RepeaterAnswerRow, RepeaterAnswerSection}
 
 class CheckYourAnswersHelper(userAnswers: UserAnswers) {
 
+  def anyTaxableBenefits: Option[AnswerRow] = userAnswers.anyTaxableBenefits map {
+    x => AnswerRow("anyTaxableBenefits.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.AnyTaxableBenefitsController.onPageLoad(CheckMode).url)
+  }
+
   def fullOrPartialClaim: Option[AnswerRow] = userAnswers.fullOrPartialClaim map {
     x => AnswerRow("fullOrPartialClaim.checkYourAnswersLabel", s"fullOrPartialClaim.$x", true, routes.FullOrPartialClaimController.onPageLoad(CheckMode).url)
   }
