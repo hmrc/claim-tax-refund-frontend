@@ -31,6 +31,7 @@ trait YesNoViewBehaviours extends QuestionViewBehaviours[Boolean] {
 
     "behave like a page with a Yes/No question" when {
       "rendered" must {
+
         "contain a legend for the question" in {
           val doc = asDocument(createView(BooleanForm()))
           val legends = doc.getElementsByTag("legend")
