@@ -21,22 +21,27 @@ import controllers.routes
 import forms.BooleanForm
 import views.behaviours.YesNoViewBehaviours
 import models.NormalMode
-import views.html.isTheAddressInTheUK
+import views.html.anyBenefits
 
-class IsTheAddressInTheUKViewSpec extends YesNoViewBehaviours {
+class AnyBenefitsViewSpec extends YesNoViewBehaviours {
 
-  val messageKeyPrefix = "isTheAddressInTheUK"
+  val messageKeyPrefix = "anyBenefits"
 
-  def createView = () => isTheAddressInTheUK(frontendAppConfig, BooleanForm(), NormalMode)(fakeRequest, messages)
+  def createView = () => anyBenefits(frontendAppConfig, BooleanForm(), NormalMode)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[_]) => isTheAddressInTheUK(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[_]) => anyBenefits(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
-  "IsTheAddressInTheUK view" must {
+  "AnyBenefits view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
     behave like pageWithBackLink(createView)
 
-    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.IsTheAddressInTheUKController.onSubmit(NormalMode).url, None)
+    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.AnyBenefitsController.onSubmit(NormalMode).url, Some(s"$messageKeyPrefix.hint"))
+
+    "contains hint text" in {
+      val doc = asDocument(anyBenefits(frontendAppConfig, BooleanForm(), NormalMode)(fakeRequest, messages))
+      assertContainsText(doc, messages(s"$messageKeyPrefix.hint"))
+    }
   }
 }
