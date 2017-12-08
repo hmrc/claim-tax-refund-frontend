@@ -39,7 +39,8 @@
         @components.input_yes_no(
             InputViewModel("value", form),
             label = messages("anyBenefits.heading"),
-            labelClass = Some("visually-hidden")
+            labelClass = Some("visually-hidden"),
+            hint = Some(messages("anyBenefits.hint"))
         )
 
         @components.submit_button()
