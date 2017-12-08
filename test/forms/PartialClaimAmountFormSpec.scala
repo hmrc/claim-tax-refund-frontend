@@ -18,7 +18,7 @@ package forms
 
 import config.FrontendAppConfig
 import forms.behaviours.FormBehaviours
-import models.MandatoryField
+import models.{MandatoryField, RegexField}
 import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito._
 import play.api.data.Form
@@ -27,6 +27,7 @@ class PartialClaimAmountFormSpec extends FormBehaviours with MockitoSugar {
 
   private val testRegex = """(?=.)^\$?(([1-9][0-9]{0,2}(,[0-9]{3})*)|[0-9]+)?(\.[0-9]{1,2})?$"""
   private val errorKeyInvalid = "partialClaimAmount.invalid"
+  private val errorKeyBlank = "partialClaimAmount.blank"
 
   def appConfig: FrontendAppConfig = {
     val instance = mock[FrontendAppConfig]
@@ -42,6 +43,8 @@ class PartialClaimAmountFormSpec extends FormBehaviours with MockitoSugar {
 
     behave like questionForm("""9,999.99""")
 
-    behave like formWithMandatoryTextFields(MandatoryField("value", errorKeyInvalid))
+    behave like formWithMandatoryTextFields(MandatoryField("value", errorKeyBlank))
+
+    behave like formWithRegex(RegexField("value", errorKeyInvalid, testRegex))
   }
 }

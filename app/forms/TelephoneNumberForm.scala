@@ -26,8 +26,9 @@ class TelephoneNumberForm @Inject() (appConfig: FrontendAppConfig) extends FormE
 
   private val telephoneRegex = appConfig.telephoneRegex
   private val errorKeyInvalid = "telephoneNumber.invalid"
+  private val errorKeyBlank = "telephoneNumber.blank"
 
   def apply(): Form[String] = Form(
-    "value" -> text.verifying(regexValidation(telephoneRegex, errorKeyInvalid))
+    "value" -> text.verifying(firstError(nonEmpty(errorKeyBlank), regexValidation(telephoneRegex, errorKeyInvalid)))
   )
 }

@@ -14,20 +14,6 @@
  * limitations under the License.
  */
 
-package forms
+package models
 
-import com.google.inject.Inject
-import config.FrontendAppConfig
-import play.api.data.Form
-import play.api.data.Forms._
-
-class PartialClaimAmountForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
-
-  private val currencyRegex = appConfig.currencyRegex
-  private val errorKeyInvalid = "partialClaimAmount.invalid"
-  private val errorKeyBlank = "partialClaimAmount.blank"
-
-  def apply(): Form[String] = Form(
-    "value" -> text.verifying(firstError(nonEmpty(errorKeyBlank), regexValidation(currencyRegex, errorKeyInvalid)))
-  )
-}
+case class RegexField(fieldName: String, errorMessageKey: String = "error.required", regexString: String)

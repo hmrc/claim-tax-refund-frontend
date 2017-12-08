@@ -26,8 +26,9 @@ class UniqueTaxpayerReferenceForm @Inject() (appConfig: FrontendAppConfig) exten
 
   private val utrRegex = appConfig.utrRegex
   private val errorKeyInvalid = "uniqueTaxpayerReference.invalid"
+  private val errorKeyBlank = "uniqueTaxpayerReference.blank"
 
   def apply(): Form[String] = Form(
-    "value" -> text.verifying(regexValidation(utrRegex, errorKeyInvalid))
+    "value" -> text.verifying(firstError(nonEmpty(errorKeyBlank), regexValidation(utrRegex, errorKeyInvalid)))
   )
 }
