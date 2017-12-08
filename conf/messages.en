@@ -176,4 +176,4 @@ anyBenefits.title = Did you get any taxable benefits in the tax year that your c
 anyBenefits.heading = Did you get any taxable benefits in the tax year that your claim relates to?
 anyBenefits.checkYourAnswersLabel = Did you get any taxable benefits in the tax year that your claim relates to?
 anyBenefits.blank = Select yes if you got any taxable benefits in the tax year that your claim relates to
-anyTaxableBenefits.hint = Taxable benefits include Jobseeker's Allowance, Incapacity Benefit and Carer's Allowance.
+anyBenefits.hint = Taxable benefits include Jobseeker's Allowance, Incapacity Benefit and Carer's Allowance.
