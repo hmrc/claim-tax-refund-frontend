@@ -18,7 +18,7 @@ package forms.behaviours
 
 import play.api.data.Form
 import forms.FormSpec
-import models.{MandatoryField, MaxLengthField}
+import models.{MandatoryField, MaxLengthField, RegexField}
 
 trait FormBehaviours extends FormSpec {
 
@@ -49,6 +49,17 @@ trait FormBehaviours extends FormSpec {
         val invalid = "A" * (field.maxLength + 1)
         val data = validData + (field.fieldName -> invalid)
         val expectedError = error(field.fieldName, field.errorMessageKey, field.maxLength)
+        checkForError(form, data, expectedError)
+      }
+    }
+  }
+
+  def formWithRegex(fields: RegexField*) ={
+    for (field <- fields) {
+      s"fail regex validation ${field.regexString}" in {
+        val invalid = "."
+        val data = validData + (field.fieldName -> invalid)
+        val expectedError = error(field.fieldName, field.errorMessageKey)
         checkForError(form, data, expectedError)
       }
     }

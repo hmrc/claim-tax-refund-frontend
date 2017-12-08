@@ -35,6 +35,7 @@ class UkAddressForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHe
   private val addressLine4KeyTooLong = "global.addressLine4.tooLong"
   private val addressLine5KeyTooLong = "global.addressLine5.tooLong"
   private val postcodeKeyInvalid = "ukAddress.postcode.invalid"
+  private val postcodeKeyBlank = "ukAddress.postcode.blank"
 
   def apply(): Form[UkAddress] = {
     Form(
@@ -44,7 +45,7 @@ class UkAddressForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHe
         "addressLine3" -> optional(text.verifying(maxLength(maxLengthInt, addressLine3KeyTooLong))),
         "addressLine4" -> optional(text.verifying(maxLength(maxLengthInt, addressLine4KeyTooLong))),
         "addressLine5" -> optional(text.verifying(maxLength(maxLengthInt, addressLine5KeyTooLong))),
-        "postcode"     -> text.verifying(regexValidation(postcodeRegex, postcodeKeyInvalid))
+        "postcode"     -> text.verifying(firstError(nonEmpty(postcodeKeyBlank), regexValidation(postcodeRegex, postcodeKeyInvalid)))
       )(UkAddress.apply)(UkAddress.unapply))
   }
 }

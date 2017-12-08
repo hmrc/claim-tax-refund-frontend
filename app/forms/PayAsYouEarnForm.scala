@@ -25,8 +25,9 @@ class PayAsYouEarnForm @Inject() (appConfig: FrontendAppConfig) extends FormErro
 
   private val payeRegex = appConfig.payeRegex
   private val errorKeyInvalid = "payAsYouEarn.invalid"
+  private val errorKeyBlank = "payAsYouEarn.blank"
 
   def apply(): Form[String] = Form(
-    "value" -> text.verifying(regexValidation(payeRegex, errorKeyInvalid))
+    "value" -> text.verifying(firstError(nonEmpty(errorKeyBlank), regexValidation(payeRegex, errorKeyInvalid)))
   )
 }

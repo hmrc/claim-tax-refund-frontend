@@ -115,6 +115,7 @@ ukAddress.title = What is your address?
 ukAddress.heading = What is your address?
 ukAddress.checkYourAnswersLabel = Your address
 ukAddress.postcode.invalid = Enter a valid postcode
+ukAddress.postcode.blank = Enter a postcode
 
 internationalAddress.title = What is your address?
 internationalAddress.heading = What is your address?
@@ -126,6 +127,7 @@ telephoneNumber.title = What is your telephone number?
 telephoneNumber.heading = What is your telephone number?
 telephoneNumber.checkYourAnswersLabel = Your telephone number
 telephoneNumber.invalid = Enter a valid telephone number
+telephoneNumber.blank = Enter a telephone number
 
 typeOfClaim.title = What kind of tax refund do you want to claim?
 typeOfClaim.heading = What kind of tax refund do you want to claim?
@@ -138,6 +140,7 @@ uniqueTaxpayerReference.title = What is your Unique Taxpayer Reference number?
 uniqueTaxpayerReference.heading = What is your Unique Taxpayer Reference number?
 uniqueTaxpayerReference.checkYourAnswersLabel = Your Unique Taxpayer Reference number
 uniqueTaxpayerReference.invalid = Enter a valid Unique Taxpayer Reference number
+uniqueTaxpayerReference.blank = Enter a Unique Taxpayer Reference number
 uniqueTaxpayerReference.hintLine1 = This is a 10 digit number, like 1234567890.
 uniqueTaxpayerReference.hintLine2 = You can find this on your tax return, statement of accounts or any other self-assessment calculations.
 
