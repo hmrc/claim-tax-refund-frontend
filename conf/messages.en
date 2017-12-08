@@ -180,3 +180,8 @@ partialClaimAmount.checkYourAnswersLabel = Amount you want to claim
 partialClaimAmount.blank = Enter the amount you want to claim
 partialClaimAmount.invalid = Enter a valid amount you want to claim
 partialClaimAmount.hintLine1 = Enter an amount that is less than the amount you overpaid.
+
+anyBenefits.title = anyBenefits
+anyBenefits.heading = anyBenefits
+anyBenefits.checkYourAnswersLabel = anyBenefits
+anyBenefits.blank = anyBenefits
