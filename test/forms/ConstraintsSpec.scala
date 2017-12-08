@@ -16,7 +16,6 @@
 
 package forms
 
-import forms.mappings.Constraints
 import org.scalatest.{EitherValues, MustMatchers, OptionValues, WordSpec}
 import play.api.data.validation.{Invalid, Valid}
 

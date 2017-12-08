@@ -1,18 +1,31 @@
 package forms
 
-import javax.inject.Inject
+import play.api.data.{Form, FormError}
+import play.api.data.Forms._
+import play.api.data.format.Formatter
 
-import forms.mappings.Mappings
-import play.api.data.Form
+object $className$Form extends FormErrorHelper {
 
-class $className$Form @Inject() extends FormErrorHelper with Mappings {
+  def $className;format="decap"$Formatter(errorKeyBlank: String, errorKeyDecimal: String, errorKeyNonNumeric: String) = new Formatter[Int] {
 
-  def apply(): Form[Int] =
-    Form(
-      "value" -> int(
-        "$className;format="decap"$.error.required",
-        "$className;format="decap"$.error.wholeNumber",
-        "$className;format="decap"$.error.nonNumeric")
-          .verifying(minimumValue(0, "$className;format="decap"$.error.minimum"))
-  )
+    val intRegex = """^(\d+)\$""".r
+    val decimalRegex = """^(\d*\.\d*)\$""".r
+
+    def bind(key: String, data: Map[String, String]) = {
+      data.get(key) match {
+        case None => produceError(key, errorKeyBlank)
+        case Some("") => produceError(key, errorKeyBlank)
+        case Some(s) => s.trim.replace(",", "") match {
+          case intRegex(str) => Right(str.toInt)
+          case decimalRegex(_) => produceError(key, errorKeyDecimal)
+          case _ => produceError(key, errorKeyNonNumeric)
+        }
+      }
+    }
+
+    def unbind(key: String, value: Int) = Map(key -> value.toString)
+  }
+
+  def apply(errorKeyBlank: String = "error.required", errorKeyDecimal: String = "error.integer", errorKeyNonNumeric: String = "error.non_numeric"): Form[Int] =
+    Form(single("value" -> of($className;format="decap"$Formatter(errorKeyBlank, errorKeyDecimal, errorKeyNonNumeric))))
 }

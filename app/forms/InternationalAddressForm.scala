@@ -18,7 +18,6 @@ package forms
 
 import com.google.inject.Inject
 import config.FrontendAppConfig
-import forms.mappings.Constraints
 import play.api.data.Form
 import play.api.data.Forms._
 import models.InternationalAddress

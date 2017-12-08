@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package forms.mappings
+package forms
 
 import play.api.data.format.Formatter
 import play.api.data.validation.{Constraint, Invalid, Valid}
@@ -37,32 +37,6 @@ trait Constraints {
         Invalid(error)
       case _ =>
         Valid
-    }
-
-  protected def minimumValue[A](minimum: A, errorKey: String)(implicit ev: Ordering[A]): Constraint[A] =
-    Constraint {
-      input =>
-
-        import ev._
-
-        if (input >= minimum) {
-          Valid
-        } else {
-          Invalid(errorKey, minimum)
-        }
-    }
-
-  protected def maximumValue[A](maximum: A, errorKey: String)(implicit ev: Ordering[A]): Constraint[A] =
-    Constraint {
-      input =>
-
-        import ev._
-
-        if (input <= maximum) {
-          Valid
-        } else {
-          Invalid(errorKey, maximum)
-        }
     }
 
   def maxLength(maxLength: Int, error: String = "error.maxLength"): Constraint[String] =
