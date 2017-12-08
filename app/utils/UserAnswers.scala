@@ -21,6 +21,8 @@ import identifiers._
 import models._
 
 class UserAnswers(val cacheMap: CacheMap) {
+  def anyBenefits: Option[Boolean] = cacheMap.getEntry[Boolean](AnyBenefitsId.toString)
+
   def partialClaimAmount: Option[String] = cacheMap.getEntry[String](PartialClaimAmountId.toString)
 
   def fullOrPartialClaim: Option[FullOrPartialClaim] = cacheMap.getEntry[FullOrPartialClaim](FullOrPartialClaimId.toString)
