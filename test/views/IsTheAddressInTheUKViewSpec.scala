@@ -37,6 +37,6 @@ class IsTheAddressInTheUKViewSpec extends YesNoViewBehaviours {
 
     behave like pageWithBackLink(createView)
 
-    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.IsTheAddressInTheUKController.onSubmit(NormalMode).url)
+    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.IsTheAddressInTheUKController.onSubmit(NormalMode).url, None)
   }
 }

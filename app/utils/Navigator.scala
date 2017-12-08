@@ -38,6 +38,7 @@ class Navigator @Inject()() {
     TypeOfClaimId -> typeOfClaim,
     UniqueTaxpayerReferenceId -> (_ => routes.FullOrPartialClaimController.onPageLoad(NormalMode)),
     PayAsYouEarnId -> (_ => routes.SelectTaxYearController.onPageLoad(NormalMode)),
+    SelectTaxYearId -> (_ => routes.AnyBenefitsController.onPageLoad(NormalMode)),
     FullOrPartialClaimId -> fullOrPartialClaim
   )
 
