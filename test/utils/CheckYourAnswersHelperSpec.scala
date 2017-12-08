@@ -17,10 +17,12 @@
 package utils
 
 import base.SpecBase
+import models.FullOrPartialClaim.{OptionAll, OptionSome}
 import models.SelectTaxYear._
+import models.TypeOfClaim.{OptionPAYE, OptionSA}
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
-import models.{InternationalAddress, SelectTaxYear, UkAddress}
+import models.{InternationalAddress, UkAddress}
 
 class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
 
@@ -100,12 +102,36 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     }
   }
 
-  "Select tax year" must {
+  "Select tax year (Option 1)" must {
     s"have correct label" in {
-      when(answers.selectTaxYear) thenReturn Some(SelectTaxYear.Option1)
+      when(answers.selectTaxYear) thenReturn Some(Option1)
       val helper = new CheckYourAnswersHelper (answers)
       helper.selectTaxYear.get.label mustBe s"selectTaxYear.checkYourAnswersLabel"
      }
+  }
+
+  "Select tax year (Option 2)" must {
+    s"have correct label" in {
+      when(answers.selectTaxYear) thenReturn Some(Option2)
+      val helper = new CheckYourAnswersHelper (answers)
+      helper.selectTaxYear.get.label mustBe s"selectTaxYear.checkYourAnswersLabel"
+    }
+  }
+
+  "Select tax year (Option 3)" must {
+    s"have correct label" in {
+      when(answers.selectTaxYear) thenReturn Some(Option3)
+      val helper = new CheckYourAnswersHelper (answers)
+      helper.selectTaxYear.get.label mustBe s"selectTaxYear.checkYourAnswersLabel"
+    }
+  }
+
+  "Select tax year (Option 4)" must {
+    s"have correct label" in {
+      when(answers.selectTaxYear) thenReturn Some(Option4)
+      val helper = new CheckYourAnswersHelper (answers)
+      helper.selectTaxYear.get.label mustBe s"selectTaxYear.checkYourAnswersLabel"
+    }
   }
 
   "Is any benefits (true)" must {
@@ -121,6 +147,38 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
       when(answers.anyBenefits) thenReturn Some(false)
       val helper = new CheckYourAnswersHelper(answers)
       helper.anyBenefits.get.label mustBe s"anyBenefits.checkYourAnswersLabel"
+    }
+  }
+
+  "Is type of claim (SA)" must {
+    s"have the correct label" in {
+      when(answers.typeOfClaim) thenReturn Some(OptionSA)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.typeOfClaim.get.label mustBe s"typeOfClaim.checkYourAnswersLabel"
+    }
+  }
+
+  "Is type of claim (PAYE)" must {
+    s"have the correct label" in {
+      when(answers.typeOfClaim) thenReturn Some(OptionPAYE)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.typeOfClaim.get.label mustBe s"typeOfClaim.checkYourAnswersLabel"
+    }
+  }
+
+    "Is fullOrPartial (Some)" must {
+      s"have the correct label" in {
+        when(answers.fullOrPartialClaim) thenReturn Some(OptionSome)
+        val helper = new CheckYourAnswersHelper(answers)
+        helper.fullOrPartialClaim.get.label mustBe s"fullOrPartialClaim.checkYourAnswersLabel"
+      }
+    }
+
+  "Is fullOrPartial (All)" must {
+    s"have the correct label" in {
+      when(answers.fullOrPartialClaim) thenReturn Some(OptionAll)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.fullOrPartialClaim.get.label mustBe s"fullOrPartialClaim.checkYourAnswersLabel"
     }
   }
 }
