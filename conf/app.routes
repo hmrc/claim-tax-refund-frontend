@@ -81,3 +81,8 @@ GET        /otherIncome                       controllers.OtherIncomeController.
 POST       /otherIncome                       controllers.OtherIncomeController.onSubmit(mode: Mode = NormalMode)
 GET        /changeOtherIncome                       controllers.OtherIncomeController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeOtherIncome                       controllers.OtherIncomeController.onSubmit(mode: Mode = CheckMode)
+
+GET        /anyCarBenefits                       controllers.AnyCarBenefitsController.onPageLoad(mode: Mode = NormalMode)
+POST       /anyCarBenefits                       controllers.AnyCarBenefitsController.onSubmit(mode: Mode = NormalMode)
+GET        /changeAnyCarBenefits                       controllers.AnyCarBenefitsController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeAnyCarBenefits                       controllers.AnyCarBenefitsController.onSubmit(mode: Mode = CheckMode)
