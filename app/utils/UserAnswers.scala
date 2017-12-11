@@ -23,6 +23,14 @@ import models._
 class UserAnswers(val cacheMap: CacheMap) {
   def howMuchRentalIncome: Option[String] = cacheMap.getEntry[String](HowMuchRentalIncomeId.toString)
 
+  def anyRentalIncome: Option[Boolean] = cacheMap.getEntry[Boolean](AnyRentalIncomeId.toString)
+
+  def howMuchCarBenefits: Option[String] = cacheMap.getEntry[String](HowMuchCarBenefitsId.toString)
+
+  def anyCarBenefits: Option[Boolean] = cacheMap.getEntry[Boolean](AnyCarBenefitsId.toString)
+
+  def otherIncome: Option[Boolean] = cacheMap.getEntry[Boolean](OtherIncomeId.toString)
+
   def anyBenefits: Option[Boolean] = cacheMap.getEntry[Boolean](AnyBenefitsId.toString)
 
   def partialClaimAmount: Option[String] = cacheMap.getEntry[String](PartialClaimAmountId.toString)

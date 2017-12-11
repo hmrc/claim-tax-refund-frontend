@@ -26,6 +26,22 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
     x => AnswerRow("howMuchRentalIncome.checkYourAnswersLabel", s"$x", false, routes.HowMuchRentalIncomeController.onPageLoad(CheckMode).url)
   }
 
+  def anyRentalIncome: Option[AnswerRow] = userAnswers.anyRentalIncome map {
+    x => AnswerRow("anyRentalIncome.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.AnyRentalIncomeController.onPageLoad(CheckMode).url)
+  }
+
+  def howMuchCarBenefits: Option[AnswerRow] = userAnswers.howMuchCarBenefits map {
+    x => AnswerRow("howMuchCarBenefits.checkYourAnswersLabel", s"$x", false, routes.HowMuchCarBenefitsController.onPageLoad(CheckMode).url)
+  }
+
+  def anyCarBenefits: Option[AnswerRow] = userAnswers.anyCarBenefits map {
+    x => AnswerRow("anyCarBenefits.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.AnyCarBenefitsController.onPageLoad(CheckMode).url)
+  }
+
+  def otherIncome: Option[AnswerRow] = userAnswers.otherIncome map {
+    x => AnswerRow("otherIncome.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.OtherIncomeController.onPageLoad(CheckMode).url)
+  }
+
   def anyBenefits: Option[AnswerRow] = userAnswers.anyBenefits map {
     x => AnswerRow("anyBenefits.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.AnyBenefitsController.onPageLoad(CheckMode).url)
   }
