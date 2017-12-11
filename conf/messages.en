@@ -185,3 +185,8 @@ otherIncome.title = Did you get any other income in the tax year your claim is f
 otherIncome.heading = Did you get any other income in the tax year your claim is for?
 otherIncome.checkYourAnswersLabel = Did you get any other income in the tax year your claim is for?
 otherIncome.blank = Select yes if you got any other income in the tax year your claim is for
+
+anyCarBenefits.title = Did you get any company car or fuel benefits in the tax year your claim is for?
+anyCarBenefits.heading = Did you get any company car or fuel benefits in the tax year your claim is for?
+anyCarBenefits.checkYourAnswersLabel = Did you get any company car or fuel benefits in the tax year your claim is for?
+anyCarBenefits.blank = Select yes if you got any company car or fuel benefits in the tax year your claim is for
