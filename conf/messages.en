@@ -201,3 +201,9 @@ anyRentalIncome.title = Did you get any rental income in the tax year your claim
 anyRentalIncome.heading = Did you get any rental income in the tax year your claim is for?
 anyRentalIncome.checkYourAnswersLabel = Did you get any rental income in the tax year your claim is for?
 anyRentalIncome.blank = Select yes if you got any rental income in the tax year your claim is for
+
+howMuchRentalIncome.title = How much rental income did you get in the tax year your claim is for?
+howMuchRentalIncome.heading = How much rental income did you get in the tax year your claim is for?
+howMuchRentalIncome.checkYourAnswersLabel = Amount of rental income you got in the tax year your claim is for
+howMuchRentalIncome.blank = Enter the amount of rental income you got in the tax year your claim is for
+howMuchRentalIncome.invalid = Enter a valid amount of rental income you got in the tax year your claim is for

@@ -96,3 +96,8 @@ GET        /anyRentalIncome                       controllers.AnyRentalIncomeCon
 POST       /anyRentalIncome                       controllers.AnyRentalIncomeController.onSubmit(mode: Mode = NormalMode)
 GET        /changeAnyRentalIncome                       controllers.AnyRentalIncomeController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeAnyRentalIncome                       controllers.AnyRentalIncomeController.onSubmit(mode: Mode = CheckMode)
+
+GET        /howMuchRentalIncome               controllers.HowMuchRentalIncomeController.onPageLoad(mode: Mode = NormalMode)
+POST       /howMuchRentalIncome               controllers.HowMuchRentalIncomeController.onSubmit(mode: Mode = NormalMode)
+GET        /changeHowMuchRentalIncome                        controllers.HowMuchRentalIncomeController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeHowMuchRentalIncome                        controllers.HowMuchRentalIncomeController.onSubmit(mode: Mode = CheckMode)
