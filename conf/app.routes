@@ -91,3 +91,8 @@ GET        /howMuchCarBenefits               controllers.HowMuchCarBenefitsContr
 POST       /howMuchCarBenefits               controllers.HowMuchCarBenefitsController.onSubmit(mode: Mode = NormalMode)
 GET        /changeHowMuchCarBenefits                        controllers.HowMuchCarBenefitsController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeHowMuchCarBenefits                        controllers.HowMuchCarBenefitsController.onSubmit(mode: Mode = CheckMode)
+
+GET        /anyRentalIncome                       controllers.AnyRentalIncomeController.onPageLoad(mode: Mode = NormalMode)
+POST       /anyRentalIncome                       controllers.AnyRentalIncomeController.onSubmit(mode: Mode = NormalMode)
+GET        /changeAnyRentalIncome                       controllers.AnyRentalIncomeController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeAnyRentalIncome                       controllers.AnyRentalIncomeController.onSubmit(mode: Mode = CheckMode)
