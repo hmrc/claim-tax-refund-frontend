@@ -190,3 +190,9 @@ anyCarBenefits.title = Did you get any company car or fuel benefits in the tax y
 anyCarBenefits.heading = Did you get any company car or fuel benefits in the tax year your claim is for?
 anyCarBenefits.checkYourAnswersLabel = Did you get any company car or fuel benefits in the tax year your claim is for?
 anyCarBenefits.blank = Select yes if you got any company car or fuel benefits in the tax year your claim is for
+
+howMuchCarBenefits.title = How much did you get in company car or fuel benefits in the tax year your claim is for?
+howMuchCarBenefits.heading = How much did you get in company car or fuel benefits in the tax year your claim is for?
+howMuchCarBenefits.checkYourAnswersLabel = Amount you got in company car or fuel benefits in the tax year your claim is for
+howMuchCarBenefits.blank = Enter the amount you got in company car or fuel benefits in the tax year your claim is for
+howMuchCarBenefits.invalid = Enter a valid amount you got in company car or fuel benefits in the tax year your claim is for
