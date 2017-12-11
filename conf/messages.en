@@ -180,3 +180,8 @@ anyBenefits.heading = Did you get any taxable benefits in the tax year that your
 anyBenefits.checkYourAnswersLabel = Did you get any taxable benefits in the tax year that your claim relates to?
 anyBenefits.blank = Select yes if you got any taxable benefits in the tax year that your claim relates to
 anyBenefits.hint = Taxable benefits include Jobseeker's Allowance, Incapacity Benefit and Carer's Allowance.
+
+otherIncome.title = Did you get any other income in the tax year your claim is for?
+otherIncome.heading = Did you get any other income in the tax year your claim is for?
+otherIncome.checkYourAnswersLabel = Did you get any other income in the tax year your claim is for?
+otherIncome.blank = Select yes if you got any other income in the tax year your claim is for
