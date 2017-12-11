@@ -21,6 +21,8 @@ import identifiers._
 import models._
 
 class UserAnswers(val cacheMap: CacheMap) {
+  def anyRentalIncome: Option[Boolean] = cacheMap.getEntry[Boolean](AnyRentalIncomeId.toString)
+
   def howMuchCarBenefits: Option[String] = cacheMap.getEntry[String](HowMuchCarBenefitsId.toString)
 
   def anyCarBenefits: Option[Boolean] = cacheMap.getEntry[Boolean](AnyCarBenefitsId.toString)
