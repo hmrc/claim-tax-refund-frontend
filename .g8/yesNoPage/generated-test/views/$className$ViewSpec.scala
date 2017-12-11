@@ -11,7 +11,9 @@ class $className$ViewSpec extends YesNoViewBehaviours {
 
   val messageKeyPrefix = "$className;format="decap"$"
 
-  def createView = () => $className;format="decap"$(frontendAppConfig, BooleanForm(), NormalMode)(fakeRequest, messages)
+  override val form = new BooleanForm()()
+
+  def createView = () => $className;format="decap"$(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[_]) => $className;format="decap"$(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
