@@ -33,27 +33,29 @@ import views.html.isTheAddressInTheUK
 import scala.concurrent.Future
 
 class IsTheAddressInTheUKController @Inject()(appConfig: FrontendAppConfig,
-                                         override val messagesApi: MessagesApi,
-                                         dataCacheConnector: DataCacheConnector,
-                                         navigator: Navigator,
-                                         authenticate: AuthAction,
-                                         getData: DataRetrievalAction,
-                                         requireData: DataRequiredAction) extends FrontendController with I18nSupport {
+                                              override val messagesApi: MessagesApi,
+                                              dataCacheConnector: DataCacheConnector,
+                                              navigator: Navigator,
+                                              authenticate: AuthAction,
+                                              getData: DataRetrievalAction,
+                                              requireData: DataRequiredAction,
+                                              formProvider: BooleanForm) extends FrontendController with I18nSupport {
 
-  private val key : String = "isTheAddressInTheUK.blank"
+  private val errorKey = "isTheAddressInTheUK.blank"
+  val form: Form[Boolean] = formProvider(errorKey)
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.isTheAddressInTheUK match {
-        case None => BooleanForm(key)
-        case Some(value) => BooleanForm(key).fill(value)
+        case None => form
+        case Some(value) => form.fill(value)
       }
       Ok(isTheAddressInTheUK(appConfig, preparedForm, mode))
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      BooleanForm(key).bindFromRequest().fold(
+      form.bindFromRequest().fold(
         (formWithErrors: Form[_]) =>
           Future.successful(BadRequest(isTheAddressInTheUK(appConfig, formWithErrors, mode))),
         (value) =>
