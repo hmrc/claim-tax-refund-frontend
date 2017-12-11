@@ -39,7 +39,8 @@ class Navigator @Inject()() {
     UniqueTaxpayerReferenceId -> (_ => routes.FullOrPartialClaimController.onPageLoad(NormalMode)),
     PayAsYouEarnId -> (_ => routes.SelectTaxYearController.onPageLoad(NormalMode)),
     SelectTaxYearId -> (_ => routes.AnyBenefitsController.onPageLoad(NormalMode)),
-    FullOrPartialClaimId -> fullOrPartialClaim
+    FullOrPartialClaimId -> fullOrPartialClaim,
+    AnyBenefitsId -> anyBenefits
   )
 
   private val editRouteMap: Map[Identifier, UserAnswers => Call] = Map(
@@ -61,6 +62,12 @@ class Navigator @Inject()() {
   private def fullOrPartialClaim(userAnswers: UserAnswers) = userAnswers.fullOrPartialClaim match {
     case Some(OptionSome) => routes.PartialClaimAmountController.onPageLoad(NormalMode)
     case Some(OptionAll) => ???
+    case None => routes.SessionExpiredController.onPageLoad()
+  }
+
+  private def anyBenefits(userAnswers: UserAnswers) = userAnswers.anyBenefits match {
+    case Some(true) => ???
+    case Some(false) => routes.OtherIncomeController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
 

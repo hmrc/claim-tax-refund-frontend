@@ -36,7 +36,7 @@ class HowMuchRentalIncomeControllerSpec extends ControllerSpecBase {
     new HowMuchRentalIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, new HowMuchRentalIncomeForm(frontendAppConfig))
 
-  val testAnswer = "answer"
+  val testAnswer = "9,999.99"
   val form = new HowMuchRentalIncomeForm(frontendAppConfig)()
 
   def viewAsString(form: Form[_] = form) = howMuchRentalIncome(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString

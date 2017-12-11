@@ -77,6 +77,26 @@ POST       /anyBenefits                       controllers.AnyBenefitsController.
 GET        /changeAnyBenefits                       controllers.AnyBenefitsController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeAnyBenefits                       controllers.AnyBenefitsController.onSubmit(mode: Mode = CheckMode)
 
+GET        /otherIncome                       controllers.OtherIncomeController.onPageLoad(mode: Mode = NormalMode)
+POST       /otherIncome                       controllers.OtherIncomeController.onSubmit(mode: Mode = NormalMode)
+GET        /changeOtherIncome                       controllers.OtherIncomeController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeOtherIncome                       controllers.OtherIncomeController.onSubmit(mode: Mode = CheckMode)
+
+GET        /anyCarBenefits                       controllers.AnyCarBenefitsController.onPageLoad(mode: Mode = NormalMode)
+POST       /anyCarBenefits                       controllers.AnyCarBenefitsController.onSubmit(mode: Mode = NormalMode)
+GET        /changeAnyCarBenefits                       controllers.AnyCarBenefitsController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeAnyCarBenefits                       controllers.AnyCarBenefitsController.onSubmit(mode: Mode = CheckMode)
+
+GET        /howMuchCarBenefits               controllers.HowMuchCarBenefitsController.onPageLoad(mode: Mode = NormalMode)
+POST       /howMuchCarBenefits               controllers.HowMuchCarBenefitsController.onSubmit(mode: Mode = NormalMode)
+GET        /changeHowMuchCarBenefits                        controllers.HowMuchCarBenefitsController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeHowMuchCarBenefits                        controllers.HowMuchCarBenefitsController.onSubmit(mode: Mode = CheckMode)
+
+GET        /anyRentalIncome                       controllers.AnyRentalIncomeController.onPageLoad(mode: Mode = NormalMode)
+POST       /anyRentalIncome                       controllers.AnyRentalIncomeController.onSubmit(mode: Mode = NormalMode)
+GET        /changeAnyRentalIncome                       controllers.AnyRentalIncomeController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeAnyRentalIncome                       controllers.AnyRentalIncomeController.onSubmit(mode: Mode = CheckMode)
+
 GET        /howMuchRentalIncome               controllers.HowMuchRentalIncomeController.onPageLoad(mode: Mode = NormalMode)
 POST       /howMuchRentalIncome               controllers.HowMuchRentalIncomeController.onSubmit(mode: Mode = NormalMode)
 GET        /changeHowMuchRentalIncome                        controllers.HowMuchRentalIncomeController.onPageLoad(mode: Mode = CheckMode)

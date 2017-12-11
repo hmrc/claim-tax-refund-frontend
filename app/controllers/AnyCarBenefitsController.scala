@@ -1,3 +1,19 @@
+/*
+ * Copyright 2017 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package controllers
 
 import javax.inject.Inject
@@ -9,14 +25,14 @@ import connectors.DataCacheConnector
 import controllers.actions._
 import config.FrontendAppConfig
 import forms.BooleanForm
-import identifiers.$className$Id
+import identifiers.AnyCarBenefitsId
 import models.Mode
 import utils.{Navigator, UserAnswers}
-import views.html.$className;format="decap"$
+import views.html.anyCarBenefits
 
 import scala.concurrent.Future
 
-class $className;format="cap"$Controller @Inject()(appConfig: FrontendAppConfig,
+class AnyCarBenefitsController @Inject()(appConfig: FrontendAppConfig,
                                          override val messagesApi: MessagesApi,
                                          dataCacheConnector: DataCacheConnector,
                                          navigator: Navigator,
@@ -25,26 +41,26 @@ class $className;format="cap"$Controller @Inject()(appConfig: FrontendAppConfig,
                                          requireData: DataRequiredAction,
                                          formProvider: BooleanForm) extends FrontendController with I18nSupport {
 
-  private val errorKey = "$className;format="decap"$.blank"
+  private val errorKey = "anyCarBenefits.blank"
   val form: Form[Boolean] = formProvider(errorKey)
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val preparedForm = request.userAnswers.$className;format="decap"$ match {
+      val preparedForm = request.userAnswers.anyCarBenefits match {
         case None => form
         case Some(value) => form.fill(value)
       }
-      Ok($className;format="decap"$(appConfig, preparedForm, mode))
+      Ok(anyCarBenefits(appConfig, preparedForm, mode))
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
       form.bindFromRequest().fold(
         (formWithErrors: Form[_]) =>
-          Future.successful(BadRequest($className;format="decap"$(appConfig, formWithErrors, mode))),
+          Future.successful(BadRequest(anyCarBenefits(appConfig, formWithErrors, mode))),
         (value) =>
-          dataCacheConnector.save[Boolean](request.externalId, $className$Id.toString, value).map(cacheMap =>
-            Redirect(navigator.nextPage($className$Id, mode)(new UserAnswers(cacheMap))))
+          dataCacheConnector.save[Boolean](request.externalId, AnyCarBenefitsId.toString, value).map(cacheMap =>
+            Redirect(navigator.nextPage(AnyCarBenefitsId, mode)(new UserAnswers(cacheMap))))
       )
   }
 }

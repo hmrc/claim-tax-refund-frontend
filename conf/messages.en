@@ -181,6 +181,27 @@ anyBenefits.checkYourAnswersLabel = Did you get any taxable benefits in the tax 
 anyBenefits.blank = Select yes if you got any taxable benefits in the tax year that your claim relates to
 anyBenefits.hint = Taxable benefits include Jobseeker's Allowance, Incapacity Benefit and Carer's Allowance.
 
+otherIncome.title = Did you get any other income in the tax year your claim is for?
+otherIncome.heading = Did you get any other income in the tax year your claim is for?
+otherIncome.checkYourAnswersLabel = Did you get any other income in the tax year your claim is for?
+otherIncome.blank = Select yes if you got any other income in the tax year your claim is for
+
+anyCarBenefits.title = Did you get any company car or fuel benefits in the tax year your claim is for?
+anyCarBenefits.heading = Did you get any company car or fuel benefits in the tax year your claim is for?
+anyCarBenefits.checkYourAnswersLabel = Did you get any company car or fuel benefits in the tax year your claim is for?
+anyCarBenefits.blank = Select yes if you got any company car or fuel benefits in the tax year your claim is for
+
+howMuchCarBenefits.title = How much did you get in company car or fuel benefits in the tax year your claim is for?
+howMuchCarBenefits.heading = How much did you get in company car or fuel benefits in the tax year your claim is for?
+howMuchCarBenefits.checkYourAnswersLabel = Amount you got in company car or fuel benefits in the tax year your claim is for
+howMuchCarBenefits.blank = Enter the amount you got in company car or fuel benefits in the tax year your claim is for
+howMuchCarBenefits.invalid = Enter a valid amount you got in company car or fuel benefits in the tax year your claim is for
+
+anyRentalIncome.title = Did you get any rental income in the tax year your claim is for?
+anyRentalIncome.heading = Did you get any rental income in the tax year your claim is for?
+anyRentalIncome.checkYourAnswersLabel = Did you get any rental income in the tax year your claim is for?
+anyRentalIncome.blank = Select yes if you got any rental income in the tax year your claim is for
+
 howMuchRentalIncome.title = How much rental income did you get in the tax year your claim is for?
 howMuchRentalIncome.heading = How much rental income did you get in the tax year your claim is for?
 howMuchRentalIncome.checkYourAnswersLabel = Amount of rental income you got in the tax year your claim is for
