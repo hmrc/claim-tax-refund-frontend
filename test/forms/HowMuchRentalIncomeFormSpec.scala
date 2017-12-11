@@ -31,6 +31,7 @@ class HowMuchRentalIncomeFormSpec extends FormBehaviours with MockitoSugar {
 
   def appConfig: FrontendAppConfig = {
     val instance = mock[FrontendAppConfig]
+    when(instance.currencyRegex) thenReturn testRegex
     instance
   }
 
