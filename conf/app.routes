@@ -86,3 +86,8 @@ GET        /anyCarBenefits                       controllers.AnyCarBenefitsContr
 POST       /anyCarBenefits                       controllers.AnyCarBenefitsController.onSubmit(mode: Mode = NormalMode)
 GET        /changeAnyCarBenefits                       controllers.AnyCarBenefitsController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeAnyCarBenefits                       controllers.AnyCarBenefitsController.onSubmit(mode: Mode = CheckMode)
+
+GET        /howMuchCarBenefits               controllers.HowMuchCarBenefitsController.onPageLoad(mode: Mode = NormalMode)
+POST       /howMuchCarBenefits               controllers.HowMuchCarBenefitsController.onSubmit(mode: Mode = NormalMode)
+GET        /changeHowMuchCarBenefits                        controllers.HowMuchCarBenefitsController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeHowMuchCarBenefits                        controllers.HowMuchCarBenefitsController.onSubmit(mode: Mode = CheckMode)
