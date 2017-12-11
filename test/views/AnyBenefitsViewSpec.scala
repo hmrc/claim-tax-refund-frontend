@@ -27,7 +27,9 @@ class AnyBenefitsViewSpec extends YesNoViewBehaviours {
 
   val messageKeyPrefix = "anyBenefits"
 
-  def createView = () => anyBenefits(frontendAppConfig, BooleanForm(), NormalMode)(fakeRequest, messages)
+  override val form = new BooleanForm()()
+
+  def createView = () => anyBenefits(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[_]) => anyBenefits(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
@@ -40,7 +42,7 @@ class AnyBenefitsViewSpec extends YesNoViewBehaviours {
     behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.AnyBenefitsController.onSubmit(NormalMode).url, Some(s"$messageKeyPrefix.hint"))
 
     "contains hint text" in {
-      val doc = asDocument(anyBenefits(frontendAppConfig, BooleanForm(), NormalMode)(fakeRequest, messages))
+      val doc = asDocument(anyBenefits(frontendAppConfig, form, NormalMode)(fakeRequest, messages))
       assertContainsText(doc, messages(s"$messageKeyPrefix.hint"))
     }
   }
