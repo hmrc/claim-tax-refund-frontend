@@ -180,3 +180,9 @@ anyBenefits.heading = Did you get any taxable benefits in the tax year that your
 anyBenefits.checkYourAnswersLabel = Did you get any taxable benefits in the tax year that your claim relates to?
 anyBenefits.blank = Select yes if you got any taxable benefits in the tax year that your claim relates to
 anyBenefits.hint = Taxable benefits include Jobseeker's Allowance, Incapacity Benefit and Carer's Allowance.
+
+howMuchRentalIncome.title = How much rental income did you get in the tax year your claim is for?
+howMuchRentalIncome.heading = How much rental income did you get in the tax year your claim is for?
+howMuchRentalIncome.checkYourAnswersLabel = Amount of rental income you got in the tax year your claim is for
+howMuchRentalIncome.blank = Enter the amount of rental income you got in the tax year your claim is for
+howMuchRentalIncome.invalid = Enter a valid amount of rental income you got in the tax year your claim is for
