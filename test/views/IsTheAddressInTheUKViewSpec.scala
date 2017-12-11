@@ -27,7 +27,9 @@ class IsTheAddressInTheUKViewSpec extends YesNoViewBehaviours {
 
   val messageKeyPrefix = "isTheAddressInTheUK"
 
-  def createView = () => isTheAddressInTheUK(frontendAppConfig, BooleanForm(), NormalMode)(fakeRequest, messages)
+  override val form = new BooleanForm()()
+
+  def createView = () => isTheAddressInTheUK(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[_]) => isTheAddressInTheUK(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
