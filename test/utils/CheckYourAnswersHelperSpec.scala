@@ -181,4 +181,20 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
       helper.fullOrPartialClaim.get.label mustBe s"fullOrPartialClaim.checkYourAnswersLabel"
     }
   }
+
+  "Is other income (true)" must {
+    s"have the correct label" in {
+      when(answers.otherIncome) thenReturn Some(true)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.otherIncome.get.label mustBe s"otherIncome.checkYourAnswersLabel"
+    }
+  }
+
+  "Is other income (false)" must {
+    s"have the correct label" in {
+      when(answers.otherIncome) thenReturn Some(false)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.otherIncome.get.label mustBe s"otherIncome.checkYourAnswersLabel"
+    }
+  }
 }
