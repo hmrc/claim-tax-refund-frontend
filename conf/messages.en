@@ -217,3 +217,8 @@ howMuchBankBuildingSocietyInterest.title = howMuchBankBuildingSocietyInterest
 howMuchBankBuildingSocietyInterest.heading = howMuchBankBuildingSocietyInterest
 howMuchBankBuildingSocietyInterest.checkYourAnswersLabel = howMuchBankBuildingSocietyInterest
 howMuchBankBuildingSocietyInterest.blank = howMuchBankBuildingSocietyInterest
+
+anyMedicalBenefits.title = anyMedicalBenefits
+anyMedicalBenefits.heading = anyMedicalBenefits
+anyMedicalBenefits.checkYourAnswersLabel = anyMedicalBenefits
+anyMedicalBenefits.blank = anyMedicalBenefits
