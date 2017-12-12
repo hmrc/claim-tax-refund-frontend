@@ -106,3 +106,8 @@ GET        /anyBankBuildingSocietyInterest                       controllers.Any
 POST       /anyBankBuildingSocietyInterest                       controllers.AnyBankBuildingSocietyInterestController.onSubmit(mode: Mode = NormalMode)
 GET        /changeAnyBankBuildingSocietyInterest                       controllers.AnyBankBuildingSocietyInterestController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeAnyBankBuildingSocietyInterest                       controllers.AnyBankBuildingSocietyInterestController.onSubmit(mode: Mode = CheckMode)
+
+GET        /howMuchBankBuildingSocietyInterest               controllers.HowMuchBankBuildingSocietyInterestController.onPageLoad(mode: Mode = NormalMode)
+POST       /howMuchBankBuildingSocietyInterest               controllers.HowMuchBankBuildingSocietyInterestController.onSubmit(mode: Mode = NormalMode)
+GET        /changeHowMuchBankBuildingSocietyInterest                        controllers.HowMuchBankBuildingSocietyInterestController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeHowMuchBankBuildingSocietyInterest                        controllers.HowMuchBankBuildingSocietyInterestController.onSubmit(mode: Mode = CheckMode)
