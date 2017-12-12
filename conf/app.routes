@@ -146,3 +146,43 @@ GET        /anyOtherTaxableBenefits                       controllers.AnyOtherTa
 POST       /anyOtherTaxableBenefits                       controllers.AnyOtherTaxableBenefitsController.onSubmit(mode: Mode = NormalMode)
 GET        /changeAnyOtherTaxableBenefits                       controllers.AnyOtherTaxableBenefitsController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeAnyOtherTaxableBenefits                       controllers.AnyOtherTaxableBenefitsController.onSubmit(mode: Mode = CheckMode)
+
+GET        /howMuchJobseekersAllowance               controllers.HowMuchJobseekersAllowanceController.onPageLoad(mode: Mode = NormalMode)
+POST       /howMuchJobseekersAllowance               controllers.HowMuchJobseekersAllowanceController.onSubmit(mode: Mode = NormalMode)
+GET        /changeHowMuchJobseekersAllowance                        controllers.HowMuchJobseekersAllowanceController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeHowMuchJobseekersAllowance                        controllers.HowMuchJobseekersAllowanceController.onSubmit(mode: Mode = CheckMode)
+
+GET        /howMuchIncapacityBenefit               controllers.HowMuchIncapacityBenefitController.onPageLoad(mode: Mode = NormalMode)
+POST       /howMuchIncapacityBenefit               controllers.HowMuchIncapacityBenefitController.onSubmit(mode: Mode = NormalMode)
+GET        /changeHowMuchIncapacityBenefit                        controllers.HowMuchIncapacityBenefitController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeHowMuchIncapacityBenefit                        controllers.HowMuchIncapacityBenefitController.onSubmit(mode: Mode = CheckMode)
+
+GET        /howMuchEmploymentAndSupportAllowance               controllers.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(mode: Mode = NormalMode)
+POST       /howMuchEmploymentAndSupportAllowance               controllers.HowMuchEmploymentAndSupportAllowanceController.onSubmit(mode: Mode = NormalMode)
+GET        /changeHowMuchEmploymentAndSupportAllowance                        controllers.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeHowMuchEmploymentAndSupportAllowance                        controllers.HowMuchEmploymentAndSupportAllowanceController.onSubmit(mode: Mode = CheckMode)
+
+GET        /howMuchStatePension               controllers.HowMuchStatePensionController.onPageLoad(mode: Mode = NormalMode)
+POST       /howMuchStatePension               controllers.HowMuchStatePensionController.onSubmit(mode: Mode = NormalMode)
+GET        /changeHowMuchStatePension                        controllers.HowMuchStatePensionController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeHowMuchStatePension                        controllers.HowMuchStatePensionController.onSubmit(mode: Mode = CheckMode)
+
+GET        /anyBankBuildingSocietyInterest                       controllers.AnyBankBuildingSocietyInterestController.onPageLoad(mode: Mode = NormalMode)
+POST       /anyBankBuildingSocietyInterest                       controllers.AnyBankBuildingSocietyInterestController.onSubmit(mode: Mode = NormalMode)
+GET        /changeAnyBankBuildingSocietyInterest                       controllers.AnyBankBuildingSocietyInterestController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeAnyBankBuildingSocietyInterest                       controllers.AnyBankBuildingSocietyInterestController.onSubmit(mode: Mode = CheckMode)
+
+GET        /howMuchBankBuildingSocietyInterest               controllers.HowMuchBankBuildingSocietyInterestController.onPageLoad(mode: Mode = NormalMode)
+POST       /howMuchBankBuildingSocietyInterest               controllers.HowMuchBankBuildingSocietyInterestController.onSubmit(mode: Mode = NormalMode)
+GET        /changeHowMuchBankBuildingSocietyInterest                        controllers.HowMuchBankBuildingSocietyInterestController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeHowMuchBankBuildingSocietyInterest                        controllers.HowMuchBankBuildingSocietyInterestController.onSubmit(mode: Mode = CheckMode)
+
+GET        /anyMedicalBenefits                       controllers.AnyMedicalBenefitsController.onPageLoad(mode: Mode = NormalMode)
+POST       /anyMedicalBenefits                       controllers.AnyMedicalBenefitsController.onSubmit(mode: Mode = NormalMode)
+GET        /changeAnyMedicalBenefits                       controllers.AnyMedicalBenefitsController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeAnyMedicalBenefits                       controllers.AnyMedicalBenefitsController.onSubmit(mode: Mode = CheckMode)
+
+GET        /howMuchMedicalBenefits               controllers.HowMuchMedicalBenefitsController.onPageLoad(mode: Mode = NormalMode)
+POST       /howMuchMedicalBenefits               controllers.HowMuchMedicalBenefitsController.onSubmit(mode: Mode = NormalMode)
+GET        /changeHowMuchMedicalBenefits                        controllers.HowMuchMedicalBenefitsController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeHowMuchMedicalBenefits                        controllers.HowMuchMedicalBenefitsController.onSubmit(mode: Mode = CheckMode)

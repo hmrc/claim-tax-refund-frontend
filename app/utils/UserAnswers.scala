@@ -21,6 +21,14 @@ import identifiers._
 import models._
 
 class UserAnswers(val cacheMap: CacheMap) {
+  def howMuchStatePension: Option[String] = cacheMap.getEntry[String](HowMuchStatePensionId.toString)
+
+  def howMuchEmploymentAndSupportAllowance: Option[String] = cacheMap.getEntry[String](HowMuchEmploymentAndSupportAllowanceId.toString)
+
+  def howMuchIncapacityBenefit: Option[String] = cacheMap.getEntry[String](HowMuchIncapacityBenefitId.toString)
+
+  def howMuchJobseekersAllowance: Option[String] = cacheMap.getEntry[String](HowMuchJobseekersAllowanceId.toString)
+
   def anyOtherTaxableBenefits: Option[Boolean] = cacheMap.getEntry[Boolean](AnyOtherTaxableBenefitsId.toString)
 
   def anyStatePension: Option[Boolean] = cacheMap.getEntry[Boolean](AnyStatePensionId.toString)
