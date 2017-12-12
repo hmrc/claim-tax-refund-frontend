@@ -22,6 +22,22 @@ import viewmodels.{AnswerRow, RepeaterAnswerRow, RepeaterAnswerSection}
 
 class CheckYourAnswersHelper(userAnswers: UserAnswers) {
 
+  def howMuchStatePension: Option[AnswerRow] = userAnswers.howMuchStatePension map {
+    x => AnswerRow("howMuchStatePension.checkYourAnswersLabel", s"$x", false, routes.HowMuchStatePensionController.onPageLoad(CheckMode).url)
+  }
+
+  def howMuchEmploymentAndSupportAllowance: Option[AnswerRow] = userAnswers.howMuchEmploymentAndSupportAllowance map {
+    x => AnswerRow("howMuchEmploymentAndSupportAllowance.checkYourAnswersLabel", s"$x", false, routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(CheckMode).url)
+  }
+
+  def howMuchIncapacityBenefit: Option[AnswerRow] = userAnswers.howMuchIncapacityBenefit map {
+    x => AnswerRow("howMuchIncapacityBenefit.checkYourAnswersLabel", s"$x", false, routes.HowMuchIncapacityBenefitController.onPageLoad(CheckMode).url)
+  }
+
+  def howMuchJobseekersAllowance: Option[AnswerRow] = userAnswers.howMuchJobseekersAllowance map {
+    x => AnswerRow("howMuchJobseekersAllowance.checkYourAnswersLabel", s"$x", false, routes.HowMuchJobseekersAllowanceController.onPageLoad(CheckMode).url)
+  }
+
   def anyOtherTaxableBenefits: Option[AnswerRow] = userAnswers.anyOtherTaxableBenefits map {
     x => AnswerRow("anyOtherTaxableBenefits.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.AnyOtherTaxableBenefitsController.onPageLoad(CheckMode).url)
   }
