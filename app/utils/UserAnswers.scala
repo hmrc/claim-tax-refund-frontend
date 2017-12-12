@@ -21,6 +21,24 @@ import identifiers._
 import models._
 
 class UserAnswers(val cacheMap: CacheMap) {
+  def howMuchStatePension: Option[String] = cacheMap.getEntry[String](HowMuchStatePensionId.toString)
+
+  def howMuchEmploymentAndSupportAllowance: Option[String] = cacheMap.getEntry[String](HowMuchEmploymentAndSupportAllowanceId.toString)
+
+  def howMuchIncapacityBenefit: Option[String] = cacheMap.getEntry[String](HowMuchIncapacityBenefitId.toString)
+
+  def howMuchJobseekersAllowance: Option[String] = cacheMap.getEntry[String](HowMuchJobseekersAllowanceId.toString)
+
+  def anyOtherTaxableBenefits: Option[Boolean] = cacheMap.getEntry[Boolean](AnyOtherTaxableBenefitsId.toString)
+
+  def anyStatePension: Option[Boolean] = cacheMap.getEntry[Boolean](AnyStatePensionId.toString)
+
+  def anyEmploymentAndSupportAllowance: Option[Boolean] = cacheMap.getEntry[Boolean](AnyEmploymentAndSupportAllowanceId.toString)
+
+  def anyIncapacityBenefit: Option[Boolean] = cacheMap.getEntry[Boolean](AnyIncapacityBenefitId.toString)
+
+  def anyJobseekersAllowance: Option[Boolean] = cacheMap.getEntry[Boolean](AnyJobseekersAllowanceId.toString)
+
   def howMuchMedicalBenefits: Option[String] = cacheMap.getEntry[String](HowMuchMedicalBenefitsId.toString)
 
   def anyMedicalBenefits: Option[Boolean] = cacheMap.getEntry[Boolean](AnyMedicalBenefitsId.toString)
