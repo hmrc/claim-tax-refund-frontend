@@ -186,3 +186,8 @@ GET        /howMuchMedicalBenefits               controllers.HowMuchMedicalBenef
 POST       /howMuchMedicalBenefits               controllers.HowMuchMedicalBenefitsController.onSubmit(mode: Mode = NormalMode)
 GET        /changeHowMuchMedicalBenefits                        controllers.HowMuchMedicalBenefitsController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeHowMuchMedicalBenefits                        controllers.HowMuchMedicalBenefitsController.onSubmit(mode: Mode = CheckMode)
+
+GET        /anyOtherTaxableIncome                       controllers.AnyOtherTaxableIncomeController.onPageLoad(mode: Mode = NormalMode)
+POST       /anyOtherTaxableIncome                       controllers.AnyOtherTaxableIncomeController.onSubmit(mode: Mode = NormalMode)
+GET        /changeAnyOtherTaxableIncome                       controllers.AnyOtherTaxableIncomeController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeAnyOtherTaxableIncome                       controllers.AnyOtherTaxableIncomeController.onSubmit(mode: Mode = CheckMode)
