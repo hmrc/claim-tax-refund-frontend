@@ -208,6 +208,31 @@ howMuchRentalIncome.checkYourAnswersLabel = Amount of rental income you got in t
 howMuchRentalIncome.blank = Enter the amount of rental income you got in the tax year your claim is for
 howMuchRentalIncome.invalid = Enter a valid amount of rental income you got in the tax year your claim is for
 
+anyJobseekersAllowance.title = anyJobseekersAllowance
+anyJobseekersAllowance.heading = anyJobseekersAllowance
+anyJobseekersAllowance.checkYourAnswersLabel = anyJobseekersAllowance
+anyJobseekersAllowance.blank = anyJobseekersAllowance
+
+anyIncapacityBenefit.title = anyIncapacityBenefit
+anyIncapacityBenefit.heading = anyIncapacityBenefit
+anyIncapacityBenefit.checkYourAnswersLabel = anyIncapacityBenefit
+anyIncapacityBenefit.blank = anyIncapacityBenefit
+
+anyEmploymentAndSupportAllowance.title = anyEmploymentAndSupportAllowance
+anyEmploymentAndSupportAllowance.heading = anyEmploymentAndSupportAllowance
+anyEmploymentAndSupportAllowance.checkYourAnswersLabel = anyEmploymentAndSupportAllowance
+anyEmploymentAndSupportAllowance.blank = anyEmploymentAndSupportAllowance
+
+anyStatePension.title = anyStatePension
+anyStatePension.heading = anyStatePension
+anyStatePension.checkYourAnswersLabel = anyStatePension
+anyStatePension.blank = anyStatePension
+
+anyOtherTaxableBenefits.title = anyOtherTaxableBenefits
+anyOtherTaxableBenefits.heading = anyOtherTaxableBenefits
+anyOtherTaxableBenefits.checkYourAnswersLabel = anyOtherTaxableBenefits
+anyOtherTaxableBenefits.blank = anyOtherTaxableBenefits
+
 anyBankBuildingSocietyInterest.title = anyBankBuildingSocietyInterest
 anyBankBuildingSocietyInterest.heading = anyBankBuildingSocietyInterest
 anyBankBuildingSocietyInterest.checkYourAnswersLabel = anyBankBuildingSocietyInterest
