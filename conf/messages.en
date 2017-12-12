@@ -278,3 +278,8 @@ howMuchMedicalBenefits.heading = How much did you get in medical benefits did yo
 howMuchMedicalBenefits.checkYourAnswersLabel = Amount you got in medical benefits did you get in the tax year your claim is for
 howMuchMedicalBenefits.blank = Enter the amount you got in medical benefits in the tax year your claim is for
 howMuchMedicalBenefits.invalid = Enter a valid amount you got in medical benefits in the tax year your claim is for
+
+anyOtherTaxableIncome.title = anyOtherTaxableIncome
+anyOtherTaxableIncome.heading = anyOtherTaxableIncome
+anyOtherTaxableIncome.checkYourAnswersLabel = anyOtherTaxableIncome
+anyOtherTaxableIncome.blank = anyOtherTaxableIncome
