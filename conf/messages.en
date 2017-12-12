@@ -207,3 +207,8 @@ howMuchRentalIncome.heading = How much rental income did you get in the tax year
 howMuchRentalIncome.checkYourAnswersLabel = Amount of rental income you got in the tax year your claim is for
 howMuchRentalIncome.blank = Enter the amount of rental income you got in the tax year your claim is for
 howMuchRentalIncome.invalid = Enter a valid amount of rental income you got in the tax year your claim is for
+
+anyBankBuildingSocietyInterest.title = anyBankBuildingSocietyInterest
+anyBankBuildingSocietyInterest.heading = anyBankBuildingSocietyInterest
+anyBankBuildingSocietyInterest.checkYourAnswersLabel = anyBankBuildingSocietyInterest
+anyBankBuildingSocietyInterest.blank = anyBankBuildingSocietyInterest
