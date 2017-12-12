@@ -222,3 +222,8 @@ anyMedicalBenefits.title = anyMedicalBenefits
 anyMedicalBenefits.heading = anyMedicalBenefits
 anyMedicalBenefits.checkYourAnswersLabel = anyMedicalBenefits
 anyMedicalBenefits.blank = anyMedicalBenefits
+
+howMuchMedicalBenefits.title = howMuchMedicalBenefits
+howMuchMedicalBenefits.heading = howMuchMedicalBenefits
+howMuchMedicalBenefits.checkYourAnswersLabel = howMuchMedicalBenefits
+howMuchMedicalBenefits.blank = howMuchMedicalBenefits

@@ -116,3 +116,8 @@ GET        /anyMedicalBenefits                       controllers.AnyMedicalBenef
 POST       /anyMedicalBenefits                       controllers.AnyMedicalBenefitsController.onSubmit(mode: Mode = NormalMode)
 GET        /changeAnyMedicalBenefits                       controllers.AnyMedicalBenefitsController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeAnyMedicalBenefits                       controllers.AnyMedicalBenefitsController.onSubmit(mode: Mode = CheckMode)
+
+GET        /howMuchMedicalBenefits               controllers.HowMuchMedicalBenefitsController.onPageLoad(mode: Mode = NormalMode)
+POST       /howMuchMedicalBenefits               controllers.HowMuchMedicalBenefitsController.onSubmit(mode: Mode = NormalMode)
+GET        /changeHowMuchMedicalBenefits                        controllers.HowMuchMedicalBenefitsController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeHowMuchMedicalBenefits                        controllers.HowMuchMedicalBenefitsController.onSubmit(mode: Mode = CheckMode)
