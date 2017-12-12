@@ -25,11 +25,11 @@ global.and = and
 global.start_now = Start Now
 
 global.addressLine1 = Address Line 1
-global.addressLine1.blank = Enter an address line 1
+global.addressLine1.blank = Enter address line 1
 global.addressLine1.tooLong = Address line 1 can only be up to 35 characters
 
 global.addressLine2 = Address Line 2
-global.addressLine2.blank = Enter an address line 2
+global.addressLine2.blank = Enter address line 2
 global.addressLine2.tooLong = Address line 2 can only be up to 35 characters
 
 global.addressLine3 = Address Line 3
@@ -208,10 +208,15 @@ howMuchRentalIncome.checkYourAnswersLabel = Amount of rental income you got in t
 howMuchRentalIncome.blank = Enter the amount of rental income you got in the tax year your claim is for
 howMuchRentalIncome.invalid = Enter a valid amount of rental income you got in the tax year your claim is for
 
+anyBankBuildingSocietyInterest.title = Did you get any bank or building society interest income in the tax year your claim is for?
+anyBankBuildingSocietyInterest.heading = Did you get any bank or building society interest income in the tax year your claim is for?
+anyBankBuildingSocietyInterest.checkYourAnswersLabel = Did you get any bank or building society interest income in the tax year your claim is for?
+anyBankBuildingSocietyInterest.blank = Select yes if you got any bank or building society interest income in the tax year your claim is for
+
 anyJobseekersAllowance.title = anyJobseekersAllowance
 anyJobseekersAllowance.heading = anyJobseekersAllowance
-anyJobseekersAllowance.checkYourAnswersLabel = anyJobseekersAllowance
 anyJobseekersAllowance.blank = anyJobseekersAllowance
+anyJobseekersAllowance.checkYourAnswersLabel = anyJobseekersAllowance
 
 anyIncapacityBenefit.title = anyIncapacityBenefit
 anyIncapacityBenefit.heading = anyIncapacityBenefit
@@ -221,8 +226,8 @@ anyIncapacityBenefit.blank = anyIncapacityBenefit
 anyEmploymentAndSupportAllowance.title = anyEmploymentAndSupportAllowance
 anyEmploymentAndSupportAllowance.heading = anyEmploymentAndSupportAllowance
 anyEmploymentAndSupportAllowance.checkYourAnswersLabel = anyEmploymentAndSupportAllowance
-anyEmploymentAndSupportAllowance.blank = anyEmploymentAndSupportAllowance
 
+anyEmploymentAndSupportAllowance.blank = anyEmploymentAndSupportAllowance
 anyStatePension.title = anyStatePension
 anyStatePension.heading = anyStatePension
 anyStatePension.checkYourAnswersLabel = anyStatePension
@@ -230,8 +235,8 @@ anyStatePension.blank = anyStatePension
 
 anyOtherTaxableBenefits.title = anyOtherTaxableBenefits
 anyOtherTaxableBenefits.heading = anyOtherTaxableBenefits
-anyOtherTaxableBenefits.checkYourAnswersLabel = anyOtherTaxableBenefits
 anyOtherTaxableBenefits.blank = anyOtherTaxableBenefits
+anyOtherTaxableBenefits.checkYourAnswersLabel = anyOtherTaxableBenefits
 
 howMuchJobseekersAllowance.title = howMuchJobseekersAllowance
 howMuchJobseekersAllowance.heading = howMuchJobseekersAllowance
@@ -257,22 +262,19 @@ howMuchStatePension.checkYourAnswersLabel = howMuchStatePension
 howMuchStatePension.blank = howMuchStatePension
 howMuchStatePension.invalid = howMuchStatePension
 
-anyBankBuildingSocietyInterest.title = anyBankBuildingSocietyInterest
-anyBankBuildingSocietyInterest.heading = anyBankBuildingSocietyInterest
-anyBankBuildingSocietyInterest.checkYourAnswersLabel = anyBankBuildingSocietyInterest
-anyBankBuildingSocietyInterest.blank = anyBankBuildingSocietyInterest
+howMuchBankBuildingSocietyInterest.title = How much bank or building society interest income did you get in the tax year your claim is for?
+howMuchBankBuildingSocietyInterest.heading = How much bank or building society interest income did you get in the tax year your claim is for?
+howMuchBankBuildingSocietyInterest.checkYourAnswersLabel = Amount of bank or building society interest income you got in the tax year your claim is for
+howMuchBankBuildingSocietyInterest.blank = Enter the amount of bank or building society interest income you got in the tax year your claim is for
+howMuchBankBuildingSocietyInterest.invalid = Enter a valid amount of bank or building society interest income you got in the tax year your claim is for
 
-howMuchBankBuildingSocietyInterest.title = howMuchBankBuildingSocietyInterest
-howMuchBankBuildingSocietyInterest.heading = howMuchBankBuildingSocietyInterest
-howMuchBankBuildingSocietyInterest.checkYourAnswersLabel = howMuchBankBuildingSocietyInterest
-howMuchBankBuildingSocietyInterest.blank = howMuchBankBuildingSocietyInterest
+anyMedicalBenefits.title = Did you get any medical benefits in the tax year your claim is for?
+anyMedicalBenefits.heading = Did you get any medical benefits in the tax year your claim is for?
+anyMedicalBenefits.checkYourAnswersLabel = Did you get any medical benefits in the tax year your claim is for?
+anyMedicalBenefits.blank = Select yes if you got any medical benefits in the tax year your claim is for
 
-anyMedicalBenefits.title = anyMedicalBenefits
-anyMedicalBenefits.heading = anyMedicalBenefits
-anyMedicalBenefits.checkYourAnswersLabel = anyMedicalBenefits
-anyMedicalBenefits.blank = anyMedicalBenefits
-
-howMuchMedicalBenefits.title = howMuchMedicalBenefits
-howMuchMedicalBenefits.heading = howMuchMedicalBenefits
-howMuchMedicalBenefits.checkYourAnswersLabel = howMuchMedicalBenefits
-howMuchMedicalBenefits.blank = howMuchMedicalBenefits
+howMuchMedicalBenefits.title = How much did you get in medical benefits did you get in the tax year your claim is for?
+howMuchMedicalBenefits.heading = How much did you get in medical benefits did you get in the tax year your claim is for?
+howMuchMedicalBenefits.checkYourAnswersLabel = Amount you got in medical benefits did you get in the tax year your claim is for
+howMuchMedicalBenefits.blank = Enter the amount you got in medical benefits in the tax year your claim is for
+howMuchMedicalBenefits.invalid = Enter a valid amount you got in medical benefits in the tax year your claim is for
