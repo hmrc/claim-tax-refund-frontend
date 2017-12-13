@@ -288,3 +288,8 @@ otherBenefitsDetailsAndAmount.title = otherBenefitsDetailsAndAmount
 otherBenefitsDetailsAndAmount.heading = otherBenefitsDetailsAndAmount
 otherBenefitsDetailsAndAmount.checkYourAnswersLabel = otherBenefitsDetailsAndAmount
 otherBenefitsDetailsAndAmount.blank = otherBenefitsDetailsAndAmount
+
+otherIncomeDetailsAndAmount.title = otherIncomeDetailsAndAmount
+otherIncomeDetailsAndAmount.heading = otherIncomeDetailsAndAmount
+otherIncomeDetailsAndAmount.checkYourAnswersLabel = otherIncomeDetailsAndAmount
+otherIncomeDetailsAndAmount.blank = otherIncomeDetailsAndAmount
