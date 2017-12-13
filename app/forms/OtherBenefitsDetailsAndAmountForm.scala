@@ -24,7 +24,7 @@ import play.api.data.Forms._
 
 class OtherBenefitsDetailsAndAmountForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 
-  private val otherBenefitsDetailsAndAmountBlankKey = "error.required"
+  private val errorKeyBlank = "otherBenefitsDetailsAndAmount.blank"
 
-  def apply(): Form[String] = Form("value" -> text.verifying(nonEmpty(otherBenefitsDetailsAndAmountBlankKey)))
+  def apply(): Form[String] = Form("value" -> text.verifying(nonEmpty(errorKeyBlank)))
 }
