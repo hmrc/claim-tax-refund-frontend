@@ -49,13 +49,18 @@ class Navigator @Inject()() {
     HowMuchEmploymentAndSupportAllowanceId -> (_ => routes.AnyStatePensionController.onPageLoad(NormalMode)),
     AnyStatePensionId -> anyStatePension,
     HowMuchStatePensionId -> (_ => routes.AnyOtherTaxableBenefitsController.onPageLoad(NormalMode)),
+    AnyOtherTaxableBenefitsId -> anyOtherBenefits,
+    OtherBenefitsDetailsAndAmountId -> (_ => routes.OtherIncomeController.onPageLoad(NormalMode)),
+    OtherIncomeId -> otherTaxableIncome,
     AnyCarBenefitsId -> anyCarBenefit,
     HowMuchCarBenefitsId -> (_ => routes.AnyRentalIncomeController.onPageLoad(NormalMode)),
     AnyRentalIncomeId -> anyRental,
     HowMuchRentalIncomeId -> (_ => routes.AnyBankBuildingSocietyInterestController.onPageLoad(NormalMode)),
     AnyBankBuildingSocietyInterestId -> anyBankBuildingInterest,
     HowMuchBankBuildingSocietyInterestId -> (_ => routes.AnyMedicalBenefitsController.onPageLoad(NormalMode)),
-    AnyMedicalBenefitsId -> anyMedicalBenefit
+    AnyMedicalBenefitsId -> anyMedicalBenefit,
+    HowMuchMedicalBenefitsId -> (_=> routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)),
+    AnyOtherTaxableIncomeId -> anyOtherTaxableIncome
   )
 
   private val editRouteMap: Map[Identifier, UserAnswers => Call] = Map(
@@ -111,6 +116,18 @@ class Navigator @Inject()() {
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
+  private def anyOtherBenefits(userAnswers: UserAnswers) = userAnswers.anyOtherTaxableBenefits match {
+    case Some(true) => routes.OtherBenefitsDetailsAndAmountController.onPageLoad(NormalMode)
+    case Some(false) => routes.OtherIncomeController.onPageLoad(NormalMode)
+    case None => routes.SessionExpiredController.onPageLoad()
+  }
+
+  private def otherTaxableIncome(userAnswers: UserAnswers) = userAnswers.otherIncome match {
+    case Some(true) => routes.AnyCarBenefitsController.onPageLoad(NormalMode)
+    case Some(false) => ???
+    case None => routes.SessionExpiredController.onPageLoad()
+  }
+
   private def anyCarBenefit(userAnswers: UserAnswers) = userAnswers.anyCarBenefits match {
     case Some(true) => routes.HowMuchCarBenefitsController.onPageLoad(NormalMode)
     case Some(false) => routes.AnyRentalIncomeController.onPageLoad(NormalMode)
@@ -131,6 +148,12 @@ class Navigator @Inject()() {
 
   private def anyMedicalBenefit(userAnswers: UserAnswers) = userAnswers.anyMedicalBenefits match {
     case Some(true) => routes.HowMuchMedicalBenefitsController.onPageLoad(NormalMode)
+    case Some(false) => routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)
+    case None => routes.SessionExpiredController.onPageLoad()
+  }
+
+  private def anyOtherTaxableIncome(userAnswers: UserAnswers) = userAnswers.anyOtherTaxableIncome match {
+    case Some(true) => routes.OtherIncomeDetailsAndAmountController.onPageLoad(NormalMode)
     case Some(false) => ???
     case None => routes.SessionExpiredController.onPageLoad()
   }
