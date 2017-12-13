@@ -283,3 +283,13 @@ anyOtherTaxableIncome.title = anyOtherTaxableIncome
 anyOtherTaxableIncome.heading = anyOtherTaxableIncome
 anyOtherTaxableIncome.checkYourAnswersLabel = anyOtherTaxableIncome
 anyOtherTaxableIncome.blank = anyOtherTaxableIncome
+
+otherBenefitsDetailsAndAmount.title = otherBenefitsDetailsAndAmount
+otherBenefitsDetailsAndAmount.heading = otherBenefitsDetailsAndAmount
+otherBenefitsDetailsAndAmount.checkYourAnswersLabel = otherBenefitsDetailsAndAmount
+otherBenefitsDetailsAndAmount.blank = otherBenefitsDetailsAndAmount
+
+otherIncomeDetailsAndAmount.title = otherIncomeDetailsAndAmount
+otherIncomeDetailsAndAmount.heading = otherIncomeDetailsAndAmount
+otherIncomeDetailsAndAmount.checkYourAnswersLabel = otherIncomeDetailsAndAmount
+otherIncomeDetailsAndAmount.blank = otherIncomeDetailsAndAmount
