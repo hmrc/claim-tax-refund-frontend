@@ -284,13 +284,14 @@ anyOtherTaxableIncome.heading = Did you get any other taxable income in the tax 
 anyOtherTaxableIncome.checkYourAnswersLabel = Did you get any other taxable income in the tax year your claim is for?
 anyOtherTaxableIncome.blank = Select yes if you got any other taxable income in the tax year your claim is for
 
-otherBenefitsDetailsAndAmount.title = otherBenefitsDetailsAndAmount
-otherBenefitsDetailsAndAmount.heading = otherBenefitsDetailsAndAmount
-otherBenefitsDetailsAndAmount.checkYourAnswersLabel = otherBenefitsDetailsAndAmount
-otherBenefitsDetailsAndAmount.blank = otherBenefitsDetailsAndAmount
+otherBenefitsDetailsAndAmount.title = What other taxable benefits did you get in the tax year your claim is for?
+otherBenefitsDetailsAndAmount.heading = What other taxable benefits did you get in the tax year your claim is for?
+otherBenefitsDetailsAndAmount.checkYourAnswersLabel = Other taxable benefits you got in the tax year your claim is for
+otherBenefitsDetailsAndAmount.blank = Enter the other taxable benefits you got in the tax year your claim is for
+otherBenefitsDetailsAndAmount.hint = Enter the type of benefits and the amounts you got.
 
-otherIncomeDetailsAndAmount.title = What other taxable benefits did you get in the tax year your claim is for?
-otherIncomeDetailsAndAmount.heading = What other taxable benefits did you get in the tax year your claim is for?
-otherIncomeDetailsAndAmount.checkYourAnswersLabel = Other taxable benefits you got in the tax year your claim is for
-otherIncomeDetailsAndAmount.blank = Enter the other taxable benefits you got in the tax year your claim is for
-otherIncomeDetailsAndAmount.hint = Enter the type of benefits and the amounts you got.
+otherIncomeDetailsAndAmount.title = What other income did you get in the tax year your claim is for?
+otherIncomeDetailsAndAmount.heading = What other income did you get in the tax year your claim is for?
+otherIncomeDetailsAndAmount.checkYourAnswersLabel = Other income you got in the tax year your claim is for
+otherIncomeDetailsAndAmount.blank = Enter the other income you got in the tax year your claim is for
+otherIncomeDetailsAndAmount.hint = Enter the types of income and the amounts you got.
