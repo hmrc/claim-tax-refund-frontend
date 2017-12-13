@@ -191,3 +191,8 @@ GET        /anyOtherTaxableIncome                       controllers.AnyOtherTaxa
 POST       /anyOtherTaxableIncome                       controllers.AnyOtherTaxableIncomeController.onSubmit(mode: Mode = NormalMode)
 GET        /changeAnyOtherTaxableIncome                       controllers.AnyOtherTaxableIncomeController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeAnyOtherTaxableIncome                       controllers.AnyOtherTaxableIncomeController.onSubmit(mode: Mode = CheckMode)
+
+GET        /otherBenefitsDetailsAndAmount               controllers.OtherBenefitsDetailsAndAmountController.onPageLoad(mode: Mode = NormalMode)
+POST       /otherBenefitsDetailsAndAmount               controllers.OtherBenefitsDetailsAndAmountController.onSubmit(mode: Mode = NormalMode)
+GET        /changeOtherBenefitsDetailsAndAmount                        controllers.OtherBenefitsDetailsAndAmountController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeOtherBenefitsDetailsAndAmount                        controllers.OtherBenefitsDetailsAndAmountController.onSubmit(mode: Mode = CheckMode)
