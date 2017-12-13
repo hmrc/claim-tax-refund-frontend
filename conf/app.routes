@@ -196,3 +196,8 @@ GET        /otherBenefitsDetailsAndAmount               controllers.OtherBenefit
 POST       /otherBenefitsDetailsAndAmount               controllers.OtherBenefitsDetailsAndAmountController.onSubmit(mode: Mode = NormalMode)
 GET        /changeOtherBenefitsDetailsAndAmount                        controllers.OtherBenefitsDetailsAndAmountController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeOtherBenefitsDetailsAndAmount                        controllers.OtherBenefitsDetailsAndAmountController.onSubmit(mode: Mode = CheckMode)
+
+GET        /otherIncomeDetailsAndAmount               controllers.OtherIncomeDetailsAndAmountController.onPageLoad(mode: Mode = NormalMode)
+POST       /otherIncomeDetailsAndAmount               controllers.OtherIncomeDetailsAndAmountController.onSubmit(mode: Mode = NormalMode)
+GET        /changeOtherIncomeDetailsAndAmount                        controllers.OtherIncomeDetailsAndAmountController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeOtherIncomeDetailsAndAmount                        controllers.OtherIncomeDetailsAndAmountController.onSubmit(mode: Mode = CheckMode)

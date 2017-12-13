@@ -23,19 +23,19 @@
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("otherBenefitsDetailsAndAmount.title"),
+    title = messages("otherIncomeDetailsAndAmount.title"),
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @helpers.form(action = OtherBenefitsDetailsAndAmountController.onSubmit(mode), 'autoComplete -> "off") {
+    @helpers.form(action = OtherIncomeDetailsAndAmountController.onSubmit(mode), 'autoComplete -> "off") {
 
         @components.back_link()
 
         @components.error_summary(form.errors)
 
-        @components.heading("otherBenefitsDetailsAndAmount.heading")
+        @components.heading("otherIncomeDetailsAndAmount.heading")
 
-        @components.input_textarea(InputViewModel("value", form), label = messages("otherBenefitsDetailsAndAmount.heading"))
+        @components.input_textarea(InputViewModel("value", form), label = messages("otherIncomeDetailsAndAmount.heading"))
 
         @components.submit_button()
     }

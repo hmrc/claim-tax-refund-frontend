@@ -185,6 +185,29 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(HowMuchStatePensionId, NormalMode)(answers) mustBe routes.AnyOtherTaxableBenefitsController.onPageLoad(NormalMode)
       }
 
+      "go to OtherBenefitsDetailsAndAmount from AnyOtherTaxableBenefit when Yes is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.anyOtherTaxableBenefits) thenReturn Some(true)
+        navigator.nextPage(AnyOtherTaxableBenefitsId, NormalMode)(answers) mustBe routes.OtherBenefitsDetailsAndAmountController.onPageLoad(NormalMode)
+      }
+
+      "go to OtherIncome from AnyOtherTaxableBenefit when No is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.anyOtherTaxableBenefits) thenReturn Some(false)
+        navigator.nextPage(AnyOtherTaxableBenefitsId, NormalMode)(answers) mustBe routes.OtherIncomeController.onPageLoad(NormalMode)
+      }
+
+      "go to OtherIncome from OtherBenefitsDetailsAndAmount" in {
+        val answers = mock[UserAnswers]
+        navigator.nextPage(OtherBenefitsDetailsAndAmountId, NormalMode)(answers) mustBe routes.OtherIncomeController.onPageLoad(NormalMode)
+      }
+
+      "go to AnyCarBenefits from OtherIncome when Yes is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.otherIncome) thenReturn Some(true)
+        navigator.nextPage(OtherIncomeId, NormalMode)(answers) mustBe routes.AnyCarBenefitsController.onPageLoad(NormalMode)
+      }
+
       "go to HowMuchCarBenefits from AnyCarBenefits when Yes is selected" in {
         val answers = mock[UserAnswers]
         when(answers.anyCarBenefits) thenReturn Some(true)
@@ -240,6 +263,23 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         val answers = mock[UserAnswers]
         when(answers.anyMedicalBenefits) thenReturn Some(true)
         navigator.nextPage(AnyMedicalBenefitsId, NormalMode)(answers) mustBe routes.HowMuchMedicalBenefitsController.onPageLoad(NormalMode)
+      }
+
+      "go to AnyOtherTaxableIncome from AnyMedicalBenefits when No is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.anyMedicalBenefits) thenReturn Some(false)
+        navigator.nextPage(AnyMedicalBenefitsId, NormalMode)(answers) mustBe routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)
+      }
+
+      "go to AnyOtherTaxableIncome from HowMuchMedicalBenefits" in {
+        val answers = mock[UserAnswers]
+        navigator.nextPage(HowMuchMedicalBenefitsId, NormalMode)(answers) mustBe routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)
+      }
+
+      "go to OtherIncomeDetailsAndAmount from AnyOtherTaxableIncome when Yes is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.anyOtherTaxableIncome) thenReturn Some(true)
+        navigator.nextPage(AnyOtherTaxableIncomeId, NormalMode)(answers) mustBe routes.OtherIncomeDetailsAndAmountController.onPageLoad(NormalMode)
       }
     }
 
