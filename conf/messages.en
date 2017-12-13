@@ -290,7 +290,6 @@ otherBenefitsDetailsAndAmount.checkYourAnswersLabel = Other taxable benefits you
 otherBenefitsDetailsAndAmount.blank = Enter the other taxable benefits you got in the tax year your claim is for
 otherBenefitsDetailsAndAmount.hint = Enter the type of benefits and the amounts you got.
 
-
 otherIncomeDetailsAndAmount.title = What other income did you get in the tax year your claim is for?
 otherIncomeDetailsAndAmount.heading = What other income did you get in the tax year your claim is for?
 otherIncomeDetailsAndAmount.checkYourAnswersLabel = Other income you got in the tax year your claim is for
