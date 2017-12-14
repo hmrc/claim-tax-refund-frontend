@@ -206,3 +206,8 @@ GET        /whereToSendPayment                       controllers.WhereToSendPaym
 POST       /whereToSendPayment                       controllers.WhereToSendPaymentController.onSubmit(mode: Mode = NormalMode)
 GET        /changeWhereToSendPayment                       controllers.WhereToSendPaymentController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeWhereToSendPayment                       controllers.WhereToSendPaymentController.onSubmit(mode: Mode = CheckMode)
+
+GET        /payeeFullName               controllers.PayeeFullNameController.onPageLoad(mode: Mode = NormalMode)
+POST       /payeeFullName               controllers.PayeeFullNameController.onSubmit(mode: Mode = NormalMode)
+GET        /changePayeeFullName                        controllers.PayeeFullNameController.onPageLoad(mode: Mode = CheckMode)
+POST       /changePayeeFullName                        controllers.PayeeFullNameController.onSubmit(mode: Mode = CheckMode)

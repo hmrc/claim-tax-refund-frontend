@@ -299,3 +299,8 @@ whereToSendPayment.title = whereToSendPayment
 whereToSendPayment.heading = whereToSendPayment
 whereToSendPayment.checkYourAnswersLabel = whereToSendPayment
 whereToSendPayment.blank = whereToSendPayment
+
+payeeFullName.title = payeeFullName
+payeeFullName.heading = payeeFullName
+payeeFullName.checkYourAnswersLabel = payeeFullName
+payeeFullName.blank = payeeFullName
