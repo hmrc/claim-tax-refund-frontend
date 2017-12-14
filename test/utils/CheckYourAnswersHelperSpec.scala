@@ -197,4 +197,244 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
       helper.otherIncome.get.label mustBe s"otherIncome.checkYourAnswersLabel"
     }
   }
+
+  "Is anyJobseekersAllownance (true)" must {
+    s"have the correct label" in {
+      when(answers.anyJobseekersAllowance) thenReturn Some(true)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.anyJobseekersAllowance.get.label mustBe s"anyJobseekersAllowance.checkYourAnswersLabel"
+    }
+  }
+
+  "Is anyJobseekersAllownance (false)" must {
+    s"have the correct label" in {
+      when(answers.anyJobseekersAllowance) thenReturn Some(false)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.anyJobseekersAllowance.get.label mustBe s"anyJobseekersAllowance.checkYourAnswersLabel"
+    }
+  }
+
+  "How much jobseekers allowance" must {
+    s"have the correct label" in {
+      when(answers.howMuchJobseekersAllowance) thenReturn Some("9,999.99")
+      val helper = new CheckYourAnswersHelper (answers)
+      helper.howMuchJobseekersAllowance.get.label mustBe s"howMuchJobseekersAllowance.checkYourAnswersLabel"
+    }
+  }
+
+  "Is anyIncapacityBenefit (true)" must {
+    s"have the correct label" in {
+      when(answers.anyIncapacityBenefit) thenReturn Some(true)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.anyIncapacityBenefit.get.label mustBe s"anyIncapacityBenefit.checkYourAnswersLabel"
+    }
+  }
+
+  "Is anyIncapacityBenefit (false)" must {
+    s"have the correct label" in {
+      when(answers.anyIncapacityBenefit) thenReturn Some(false)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.anyIncapacityBenefit.get.label mustBe s"anyIncapacityBenefit.checkYourAnswersLabel"
+    }
+  }
+
+  "How much incapacity benefit" must {
+    s"have the correct label" in {
+      when(answers.howMuchIncapacityBenefit) thenReturn Some("9,999.99")
+      val helper = new CheckYourAnswersHelper (answers)
+      helper.howMuchIncapacityBenefit.get.label mustBe s"howMuchIncapacityBenefit.checkYourAnswersLabel"
+    }
+  }
+
+  "Is anyEmploymentAndSupportAllowance (true)" must {
+    s"have the correct label" in {
+      when(answers.anyEmploymentAndSupportAllowance) thenReturn Some(true)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.anyEmploymentAndSupportAllowance.get.label mustBe s"anyEmploymentAndSupportAllowance.checkYourAnswersLabel"
+    }
+  }
+
+  "Is anyEmploymentAndSupportAllowance (false)" must {
+    s"have the correct label" in {
+      when(answers.anyEmploymentAndSupportAllowance) thenReturn Some(false)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.anyEmploymentAndSupportAllowance.get.label mustBe s"anyEmploymentAndSupportAllowance.checkYourAnswersLabel"
+    }
+  }
+
+  "How much employment and support allowance" must {
+    s"have the correct label" in {
+      when(answers.howMuchEmploymentAndSupportAllowance) thenReturn Some("9,999.99")
+      val helper = new CheckYourAnswersHelper (answers)
+      helper.howMuchEmploymentAndSupportAllowance.get.label mustBe s"howMuchEmploymentAndSupportAllowance.checkYourAnswersLabel"
+    }
+  }
+
+  "Is anyStatePension (true)" must {
+    s"have the correct label" in {
+      when(answers.anyStatePension) thenReturn Some(true)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.anyStatePension.get.label mustBe s"anyStatePension.checkYourAnswersLabel"
+    }
+  }
+
+  "Is anyStatePension (false)" must {
+    s"have the correct label" in {
+      when(answers.anyStatePension) thenReturn Some(false)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.anyStatePension.get.label mustBe s"anyStatePension.checkYourAnswersLabel"
+    }
+  }
+
+  "How much state pension" must {
+    s"have the correct label" in {
+      when(answers.howMuchStatePension) thenReturn Some("9,999.99")
+      val helper = new CheckYourAnswersHelper (answers)
+      helper.howMuchStatePension.get.label mustBe s"howMuchStatePension.checkYourAnswersLabel"
+    }
+  }
+
+  "Is anyOtherTaxableBenefits (true)" must {
+    s"have the correct label" in {
+      when(answers.anyOtherTaxableBenefits) thenReturn Some(true)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.anyOtherTaxableBenefits.get.label mustBe s"anyOtherTaxableBenefits.checkYourAnswersLabel"
+    }
+  }
+
+  "Is anyOtherTaxableBenefits (false)" must {
+    s"have the correct label" in {
+      when(answers.anyOtherTaxableBenefits) thenReturn Some(false)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.anyOtherTaxableBenefits.get.label mustBe s"anyOtherTaxableBenefits.checkYourAnswersLabel"
+    }
+  }
+
+  "Other benefits details and amount" must {
+    s"have the correct label" in {
+      when(answers.otherBenefitsDetailsAndAmount) thenReturn Some("9,999.99")
+      val helper = new CheckYourAnswersHelper (answers)
+      helper.otherBenefitsDetailsAndAmount.get.label mustBe s"otherBenefitsDetailsAndAmount.checkYourAnswersLabel"
+    }
+  }
+
+  "Is anyCarBenefits (true)" must {
+    s"have the correct label" in {
+      when(answers.anyCarBenefits) thenReturn Some(true)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.anyCarBenefits.get.label mustBe s"anyCarBenefits.checkYourAnswersLabel"
+    }
+  }
+
+  "Is anyCarBenefits (false)" must {
+    s"have the correct label" in {
+      when(answers.anyCarBenefits) thenReturn Some(false)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.anyCarBenefits.get.label mustBe s"anyCarBenefits.checkYourAnswersLabel"
+    }
+  }
+
+  "How much car benefits" must {
+    s"have the correct label" in {
+      when(answers.howMuchCarBenefits) thenReturn Some("9,999.99")
+      val helper = new CheckYourAnswersHelper (answers)
+      helper.howMuchCarBenefits.get.label mustBe s"howMuchCarBenefits.checkYourAnswersLabel"
+    }
+  }
+
+  "Is anyRentalIncome (true)" must {
+    s"have the correct label" in {
+      when(answers.anyRentalIncome) thenReturn Some(true)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.anyRentalIncome.get.label mustBe s"anyRentalIncome.checkYourAnswersLabel"
+    }
+  }
+
+  "Is anyRentalIncome (false)" must {
+    s"have the correct label" in {
+      when(answers.anyRentalIncome) thenReturn Some(false)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.anyRentalIncome.get.label mustBe s"anyRentalIncome.checkYourAnswersLabel"
+    }
+  }
+
+  "How much rental income" must {
+    s"have the correct label" in {
+      when(answers.howMuchRentalIncome) thenReturn Some("9,999.99")
+      val helper = new CheckYourAnswersHelper (answers)
+      helper.howMuchRentalIncome.get.label mustBe s"howMuchRentalIncome.checkYourAnswersLabel"
+    }
+  }
+
+  "Is anyBankBuildingSocietyInterest (true)" must {
+    s"have the correct label" in {
+      when(answers.anyBankBuildingSocietyInterest) thenReturn Some(true)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.anyBankBuildingSocietyInterest.get.label mustBe s"anyBankBuildingSocietyInterest.checkYourAnswersLabel"
+    }
+  }
+
+  "Is anyBankBuildingSocietyInterest (false)" must {
+    s"have the correct label" in {
+      when(answers.anyBankBuildingSocietyInterest) thenReturn Some(false)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.anyBankBuildingSocietyInterest.get.label mustBe s"anyBankBuildingSocietyInterest.checkYourAnswersLabel"
+    }
+  }
+
+  "How much bank building society interest" must {
+    s"have the correct label" in {
+      when(answers.howMuchBankBuildingSocietyInterest) thenReturn Some("9,999.99")
+      val helper = new CheckYourAnswersHelper (answers)
+      helper.howMuchBankBuildingSocietyInterest.get.label mustBe s"howMuchBankBuildingSocietyInterest.checkYourAnswersLabel"
+    }
+  }
+
+  "Is anyMedicalBenefits (true)" must {
+    s"have the correct label" in {
+      when(answers.anyMedicalBenefits) thenReturn Some(true)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.anyMedicalBenefits.get.label mustBe s"anyMedicalBenefits.checkYourAnswersLabel"
+    }
+  }
+
+  "Is anyMedicalBenefits (false)" must {
+    s"have the correct label" in {
+      when(answers.anyMedicalBenefits) thenReturn Some(false)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.anyMedicalBenefits.get.label mustBe s"anyMedicalBenefits.checkYourAnswersLabel"
+    }
+  }
+
+  "How much medical benefits" must {
+    s"have the correct label" in {
+      when(answers.howMuchMedicalBenefits) thenReturn Some("9,999.99")
+      val helper = new CheckYourAnswersHelper (answers)
+      helper.howMuchMedicalBenefits.get.label mustBe s"howMuchMedicalBenefits.checkYourAnswersLabel"
+    }
+  }
+
+  "Is anyOtherTaxableIncome (true)" must {
+    s"have the correct label" in {
+      when(answers.anyOtherTaxableIncome) thenReturn Some(true)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.anyOtherTaxableIncome.get.label mustBe s"anyOtherTaxableIncome.checkYourAnswersLabel"
+    }
+  }
+
+  "Is anyOtherTaxableIncome (false)" must {
+    s"have the correct label" in {
+      when(answers.anyOtherTaxableIncome) thenReturn Some(false)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.anyOtherTaxableIncome.get.label mustBe s"anyOtherTaxableIncome.checkYourAnswersLabel"
+    }
+  }
+
+  "Other taxable income details and amount" must {
+    s"have the correct label" in {
+      when(answers.otherIncomeDetailsAndAmount) thenReturn Some("9,999.99")
+      val helper = new CheckYourAnswersHelper (answers)
+      helper.otherIncomeDetailsAndAmount.get.label mustBe s"otherIncomeDetailsAndAmount.checkYourAnswersLabel"
+    }
+  }
 }
