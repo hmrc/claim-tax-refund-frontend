@@ -21,6 +21,8 @@ import identifiers._
 import models._
 
 class UserAnswers(val cacheMap: CacheMap) {
+  def whereToSendPayment: Option[Boolean] = cacheMap.getEntry[Boolean](WhereToSendPaymentId.toString)
+
   def otherIncomeDetailsAndAmount: Option[String] = cacheMap.getEntry[String](OtherIncomeDetailsAndAmountId.toString)
 
   def otherBenefitsDetailsAndAmount: Option[String] = cacheMap.getEntry[String](OtherBenefitsDetailsAndAmountId.toString)
