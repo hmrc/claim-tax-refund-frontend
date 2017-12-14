@@ -422,6 +422,22 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     }
   }
 
+  "Is WhereToSendPayment (false)" must {
+    s"have the correct label" in {
+      when(answers.whereToSendPayment) thenReturn Some(false)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.whereToSendPayment.get.label mustBe s"whereToSendPayment.checkYourAnswersLabel"
+    }
+  }
+
+  "Is WhereToSendPayment (true)" must {
+    s"have the correct label" in {
+      when(answers.whereToSendPayment) thenReturn Some(true)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.whereToSendPayment.get.label mustBe s"whereToSendPayment.checkYourAnswersLabel"
+    }
+  }
+
   "Is anyOtherTaxableIncome (false)" must {
     s"have the correct label" in {
       when(answers.anyOtherTaxableIncome) thenReturn Some(false)
