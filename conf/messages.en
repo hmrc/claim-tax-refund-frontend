@@ -294,3 +294,8 @@ otherIncomeDetailsAndAmount.heading = What other taxable benefits did you get in
 otherIncomeDetailsAndAmount.checkYourAnswersLabel = Other taxable benefits you got in the tax year your claim is for
 otherIncomeDetailsAndAmount.blank = Enter the other taxable benefits you got in the tax year your claim is for
 otherIncomeDetailsAndAmount.hint = Enter the type of benefits and the amounts you got.
+
+whereToSendPayment.title = whereToSendPayment
+whereToSendPayment.heading = whereToSendPayment
+whereToSendPayment.checkYourAnswersLabel = whereToSendPayment
+whereToSendPayment.blank = whereToSendPayment
