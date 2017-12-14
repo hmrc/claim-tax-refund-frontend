@@ -304,6 +304,11 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(OtherIncomeDetailsAndAmountId, NormalMode)(answers) mustBe routes.WhereToSendPaymentController.onPageLoad(NormalMode)
       }
 
+      "go to PayeeFullName from WhereToSendPayment when Yes is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.whereToSendPayment) thenReturn Some(true)
+        navigator.nextPage(WhereToSendPaymentId, NormalMode)(answers) mustBe routes.PayeeFullNameController.onPageLoad(NormalMode)
+      }
     }
 
     "in Check mode" must {

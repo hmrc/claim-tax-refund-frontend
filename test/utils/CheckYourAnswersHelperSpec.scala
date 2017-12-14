@@ -453,4 +453,13 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
       helper.otherIncomeDetailsAndAmount.get.label mustBe s"otherIncomeDetailsAndAmount.checkYourAnswersLabel"
     }
   }
+
+  "Payee Full Name" must {
+    s"have the correct label" in {
+      when(answers.payeeFullName) thenReturn Some("Test name")
+      val helper = new CheckYourAnswersHelper (answers)
+      helper.payeeFullName.get.label mustBe s"payeeFullName.checkYourAnswersLabel"
+    }
+  }
+
 }
