@@ -309,3 +309,8 @@ agentReferenceNumber.title = agentReferenceNumber
 agentReferenceNumber.heading = agentReferenceNumber
 agentReferenceNumber.checkYourAnswersLabel = agentReferenceNumber
 agentReferenceNumber.blank = agentReferenceNumber
+
+anyAgentRef.title = anyAgentRef
+anyAgentRef.heading = anyAgentRef
+anyAgentRef.checkYourAnswersLabel = anyAgentRef
+anyAgentRef.blank = anyAgentRef
