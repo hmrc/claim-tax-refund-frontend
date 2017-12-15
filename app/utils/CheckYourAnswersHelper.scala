@@ -22,6 +22,10 @@ import viewmodels.{AnswerRow, RepeaterAnswerRow, RepeaterAnswerSection}
 
 class CheckYourAnswersHelper(userAnswers: UserAnswers) {
 
+  def agentReferenceNumber: Option[AnswerRow] = userAnswers.agentReferenceNumber map {
+    x => AnswerRow("agentReferenceNumber.checkYourAnswersLabel", s"$x", false, routes.AgentReferenceNumberController.onPageLoad(CheckMode).url)
+  }
+
   def payeeFullName: Option[AnswerRow] = userAnswers.payeeFullName map {
     x => AnswerRow("payeeFullName.checkYourAnswersLabel", s"$x", false, routes.PayeeFullNameController.onPageLoad(CheckMode).url)
   }
