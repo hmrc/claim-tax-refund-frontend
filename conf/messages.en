@@ -304,3 +304,8 @@ payeeFullName.title = payeeFullName
 payeeFullName.heading = payeeFullName
 payeeFullName.checkYourAnswersLabel = payeeFullName
 payeeFullName.blank = payeeFullName
+
+agentReferenceNumber.title = agentReferenceNumber
+agentReferenceNumber.heading = agentReferenceNumber
+agentReferenceNumber.checkYourAnswersLabel = agentReferenceNumber
+agentReferenceNumber.blank = agentReferenceNumber

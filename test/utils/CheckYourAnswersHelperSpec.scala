@@ -462,4 +462,12 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     }
   }
 
+  "Agent Reference Number" must {
+    s"have the correct label" in {
+      when(answers.agentReferenceNumber) thenReturn Some("Test number")
+      val helper = new CheckYourAnswersHelper (answers)
+      helper.agentReferenceNumber.get.label mustBe s"agentReferenceNumber.checkYourAnswersLabel"
+    }
+  }
+
 }
