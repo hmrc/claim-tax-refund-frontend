@@ -295,12 +295,22 @@ otherIncomeDetailsAndAmount.checkYourAnswersLabel = Other taxable benefits you g
 otherIncomeDetailsAndAmount.blank = Enter the other taxable benefits you got in the tax year your claim is for
 otherIncomeDetailsAndAmount.hint = Enter the type of benefits and the amounts you got.
 
-whereToSendPayment.title = whereToSendPayment
-whereToSendPayment.heading = whereToSendPayment
-whereToSendPayment.checkYourAnswersLabel = whereToSendPayment
-whereToSendPayment.blank = whereToSendPayment
+whereToSendPayment.title = Where do you want us to send any payment?
+whereToSendPayment.heading = Where do you want us to send any payment?
+whereToSendPayment.checkYourAnswersLabel = Where you want us to send any payment
+whereToSendPayment.blank = Select where you want us to send any payment
 
-payeeFullName.title = payeeFullName
-payeeFullName.heading = payeeFullName
-payeeFullName.checkYourAnswersLabel = payeeFullName
-payeeFullName.blank = payeeFullName
+payeeFullName.title = What is the full name of the person you want us to send any payment to?
+payeeFullName.heading = What is the full name of the person you want us to send any payment to?
+payeeFullName.checkYourAnswersLabel = Full name of the person you want us to send any payment to
+payeeFullName.blank = Enter the full name of the person you want us to send any payment to
+
+agentReferenceNumber.title = What is the agent reference number of the person you want us to send any payment to?
+agentReferenceNumber.heading = What is the agent reference number of the person you want us to send any payment to?
+agentReferenceNumber.checkYourAnswersLabel = Agent reference number of the person you want us to send any payment to
+agentReferenceNumber.blank = Enter the agent reference number of the person you want us to send any payment to
+
+anyAgentRef.title = Does the person you want us to send any payment to have an agent reference number?
+anyAgentRef.heading = Does the person you want us to send any payment to have an agent reference number?
+anyAgentRef.checkYourAnswersLabel = Does the person you want us to send any payment to have an agent reference number?
+anyAgentRef.blank = Select yes if the person you want us to send any payment to has an agent reference number
