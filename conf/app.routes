@@ -211,3 +211,13 @@ GET        /payeeFullName               controllers.PayeeFullNameController.onPa
 POST       /payeeFullName               controllers.PayeeFullNameController.onSubmit(mode: Mode = NormalMode)
 GET        /changePayeeFullName                        controllers.PayeeFullNameController.onPageLoad(mode: Mode = CheckMode)
 POST       /changePayeeFullName                        controllers.PayeeFullNameController.onSubmit(mode: Mode = CheckMode)
+
+GET        /agentReferenceNumber               controllers.AgentReferenceNumberController.onPageLoad(mode: Mode = NormalMode)
+POST       /agentReferenceNumber               controllers.AgentReferenceNumberController.onSubmit(mode: Mode = NormalMode)
+GET        /changeAgentReferenceNumber                        controllers.AgentReferenceNumberController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeAgentReferenceNumber                        controllers.AgentReferenceNumberController.onSubmit(mode: Mode = CheckMode)
+
+GET        /anyAgentRef                       controllers.AnyAgentRefController.onPageLoad(mode: Mode = NormalMode)
+POST       /anyAgentRef                       controllers.AnyAgentRefController.onSubmit(mode: Mode = NormalMode)
+GET        /changeAnyAgentRef                       controllers.AnyAgentRefController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeAnyAgentRef                       controllers.AnyAgentRefController.onSubmit(mode: Mode = CheckMode)
