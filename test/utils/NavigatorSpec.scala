@@ -309,6 +309,17 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         when(answers.whereToSendPayment) thenReturn Some(true)
         navigator.nextPage(WhereToSendPaymentId, NormalMode)(answers) mustBe routes.PayeeFullNameController.onPageLoad(NormalMode)
       }
+
+      "go to AnyAgentRef from PayeeFullName" in {
+        val answers = mock[UserAnswers]
+        navigator.nextPage(PayeeFullNameId, NormalMode)(answers) mustBe routes.AnyAgentRefController.onPageLoad(NormalMode)
+      }
+
+      "go to AgentReferenceNumber from AnyAgentRef when Yes is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.anyAgentRef) thenReturn Some(true)
+        navigator.nextPage(AnyAgentRefId, NormalMode)(answers) mustBe routes.AgentReferenceNumberController.onPageLoad(NormalMode)
+      }
     }
 
     "in Check mode" must {
