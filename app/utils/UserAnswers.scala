@@ -21,6 +21,14 @@ import identifiers._
 import models._
 
 class UserAnswers(val cacheMap: CacheMap) {
+  def anyAgentRef: Option[Boolean] = cacheMap.getEntry[Boolean](AnyAgentRefId.toString)
+
+  def agentReferenceNumber: Option[String] = cacheMap.getEntry[String](AgentReferenceNumberId.toString)
+
+  def payeeFullName: Option[String] = cacheMap.getEntry[String](PayeeFullNameId.toString)
+
+  def whereToSendPayment: Option[Boolean] = cacheMap.getEntry[Boolean](WhereToSendPaymentId.toString)
+
   def otherIncomeDetailsAndAmount: Option[String] = cacheMap.getEntry[String](OtherIncomeDetailsAndAmountId.toString)
 
   def otherBenefitsDetailsAndAmount: Option[String] = cacheMap.getEntry[String](OtherBenefitsDetailsAndAmountId.toString)
