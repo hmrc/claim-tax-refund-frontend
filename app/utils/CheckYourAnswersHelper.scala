@@ -22,6 +22,22 @@ import viewmodels.{AnswerRow, RepeaterAnswerRow, RepeaterAnswerSection}
 
 class CheckYourAnswersHelper(userAnswers: UserAnswers) {
 
+  def anyAgentRef: Option[AnswerRow] = userAnswers.anyAgentRef map {
+    x => AnswerRow("anyAgentRef.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.AnyAgentRefController.onPageLoad(CheckMode).url)
+  }
+
+  def agentReferenceNumber: Option[AnswerRow] = userAnswers.agentReferenceNumber map {
+    x => AnswerRow("agentReferenceNumber.checkYourAnswersLabel", s"$x", false, routes.AgentReferenceNumberController.onPageLoad(CheckMode).url)
+  }
+
+  def payeeFullName: Option[AnswerRow] = userAnswers.payeeFullName map {
+    x => AnswerRow("payeeFullName.checkYourAnswersLabel", s"$x", false, routes.PayeeFullNameController.onPageLoad(CheckMode).url)
+  }
+
+  def whereToSendPayment: Option[AnswerRow] = userAnswers.whereToSendPayment map {
+    x => AnswerRow("whereToSendPayment.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.WhereToSendPaymentController.onPageLoad(CheckMode).url)
+  }
+
   def otherIncomeDetailsAndAmount: Option[AnswerRow] = userAnswers.otherIncomeDetailsAndAmount map {
     x => AnswerRow("otherIncomeDetailsAndAmount.checkYourAnswersLabel", s"$x", false, routes.OtherIncomeDetailsAndAmountController.onPageLoad(CheckMode).url)
   }

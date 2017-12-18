@@ -422,6 +422,22 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     }
   }
 
+  "Is WhereToSendPayment (false)" must {
+    s"have the correct label" in {
+      when(answers.whereToSendPayment) thenReturn Some(false)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.whereToSendPayment.get.label mustBe s"whereToSendPayment.checkYourAnswersLabel"
+    }
+  }
+
+  "Is WhereToSendPayment (true)" must {
+    s"have the correct label" in {
+      when(answers.whereToSendPayment) thenReturn Some(true)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.whereToSendPayment.get.label mustBe s"whereToSendPayment.checkYourAnswersLabel"
+    }
+  }
+
   "Is anyOtherTaxableIncome (false)" must {
     s"have the correct label" in {
       when(answers.anyOtherTaxableIncome) thenReturn Some(false)
@@ -437,4 +453,37 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
       helper.otherIncomeDetailsAndAmount.get.label mustBe s"otherIncomeDetailsAndAmount.checkYourAnswersLabel"
     }
   }
+
+  "Payee Full Name" must {
+    s"have the correct label" in {
+      when(answers.payeeFullName) thenReturn Some("Test name")
+      val helper = new CheckYourAnswersHelper (answers)
+      helper.payeeFullName.get.label mustBe s"payeeFullName.checkYourAnswersLabel"
+    }
+  }
+
+  "Is anyAgentRef (true)" must {
+    s"have the correct label" in {
+      when(answers.anyAgentRef) thenReturn Some(true)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.anyAgentRef.get.label mustBe s"anyAgentRef.checkYourAnswersLabel"
+    }
+  }
+
+  "Is anyAgentRef (false)" must {
+    s"have the correct label" in {
+      when(answers.anyAgentRef) thenReturn Some(false)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.anyAgentRef.get.label mustBe s"anyAgentRef.checkYourAnswersLabel"
+    }
+  }
+
+  "Agent Reference Number" must {
+    s"have the correct label" in {
+      when(answers.agentReferenceNumber) thenReturn Some("Test number")
+      val helper = new CheckYourAnswersHelper (answers)
+      helper.agentReferenceNumber.get.label mustBe s"agentReferenceNumber.checkYourAnswersLabel"
+    }
+  }
+
 }

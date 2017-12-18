@@ -40,6 +40,7 @@ class Navigator @Inject()() {
     PayAsYouEarnId -> (_ => routes.SelectTaxYearController.onPageLoad(NormalMode)),
     SelectTaxYearId -> (_ => routes.AnyBenefitsController.onPageLoad(NormalMode)),
     FullOrPartialClaimId -> fullOrPartialClaim,
+    PartialClaimAmountId -> (_ => routes.WhereToSendPaymentController.onPageLoad(NormalMode)),
     AnyBenefitsId -> anyBenefits,
     AnyJobseekersAllowanceId -> anyJobseekers,
     HowMuchJobseekersAllowanceId -> (_ => routes.AnyIncapacityBenefitController.onPageLoad(NormalMode)),
@@ -60,7 +61,11 @@ class Navigator @Inject()() {
     HowMuchBankBuildingSocietyInterestId -> (_ => routes.AnyMedicalBenefitsController.onPageLoad(NormalMode)),
     AnyMedicalBenefitsId -> anyMedicalBenefit,
     HowMuchMedicalBenefitsId -> (_=> routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)),
-    AnyOtherTaxableIncomeId -> anyOtherTaxableIncome
+    AnyOtherTaxableIncomeId -> anyOtherTaxableIncome,
+    OtherIncomeDetailsAndAmountId -> (_ => routes.WhereToSendPaymentController.onPageLoad(NormalMode)),
+    WhereToSendPaymentId -> whereToSendPayment,
+    PayeeFullNameId -> (_ => routes.AnyAgentRefController.onPageLoad(NormalMode)),
+    AnyAgentRefId -> anyAgentRef
   )
 
   private val editRouteMap: Map[Identifier, UserAnswers => Call] = Map(
@@ -81,7 +86,7 @@ class Navigator @Inject()() {
 
   private def fullOrPartialClaim(userAnswers: UserAnswers) = userAnswers.fullOrPartialClaim match {
     case Some(OptionSome) => routes.PartialClaimAmountController.onPageLoad(NormalMode)
-    case Some(OptionAll) => ???
+    case Some(OptionAll) => routes.WhereToSendPaymentController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
@@ -124,7 +129,7 @@ class Navigator @Inject()() {
 
   private def otherTaxableIncome(userAnswers: UserAnswers) = userAnswers.otherIncome match {
     case Some(true) => routes.AnyCarBenefitsController.onPageLoad(NormalMode)
-    case Some(false) => ???
+    case Some(false) => routes.WhereToSendPaymentController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
@@ -154,6 +159,18 @@ class Navigator @Inject()() {
 
   private def anyOtherTaxableIncome(userAnswers: UserAnswers) = userAnswers.anyOtherTaxableIncome match {
     case Some(true) => routes.OtherIncomeDetailsAndAmountController.onPageLoad(NormalMode)
+    case Some(false) => routes.WhereToSendPaymentController.onPageLoad(NormalMode)
+    case None => routes.SessionExpiredController.onPageLoad()
+  }
+
+  private def whereToSendPayment(userAnswers: UserAnswers) = userAnswers.whereToSendPayment match {
+    case Some(true) => routes.PayeeFullNameController.onPageLoad(NormalMode)
+    case Some(false) => routes.CheckYourAnswersController.onPageLoad()
+    case None => routes.SessionExpiredController.onPageLoad()
+  }
+
+  private def anyAgentRef (userAnswers: UserAnswers) = userAnswers.anyAgentRef match {
+    case Some(true) => routes.AgentReferenceNumberController.onPageLoad(NormalMode)
     case Some(false) => ???
     case None => routes.SessionExpiredController.onPageLoad()
   }
