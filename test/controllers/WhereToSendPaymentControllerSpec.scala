@@ -17,29 +17,27 @@
 package controllers
 
 import play.api.data.Form
-import play.api.libs.json.JsBoolean
+import play.api.libs.json.JsString
 import uk.gov.hmrc.http.cache.client.CacheMap
 import utils.FakeNavigator
 import connectors.FakeDataCacheConnector
 import controllers.actions._
 import play.api.test.Helpers._
-import forms.BooleanForm
+import forms.WhereToSendPaymentForm
 import identifiers.WhereToSendPaymentId
 import models.NormalMode
+import models.WhereToSendPayment
 import views.html.whereToSendPayment
 
 class WhereToSendPaymentControllerSpec extends ControllerSpecBase {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
-  val formProvider = new BooleanForm()
-  val form = formProvider()
-
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new WhereToSendPaymentController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, formProvider)
+      dataRetrievalAction, new DataRequiredActionImpl)
 
-  def viewAsString(form: Form[_] = form) = whereToSendPayment(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = WhereToSendPaymentForm()) = whereToSendPayment(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
 
   "WhereToSendPayment Controller" must {
 
@@ -51,16 +49,16 @@ class WhereToSendPaymentControllerSpec extends ControllerSpecBase {
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      val validData = Map(WhereToSendPaymentId.toString -> JsBoolean(true))
+      val validData = Map(WhereToSendPaymentId.toString -> JsString(WhereToSendPayment.values.head.toString))
       val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validData)))
 
       val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)
 
-      contentAsString(result) mustBe viewAsString(form.fill(true))
+      contentAsString(result) mustBe viewAsString(WhereToSendPaymentForm().fill(WhereToSendPayment.values.head))
     }
 
     "redirect to the next page when valid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", WhereToSendPaymentForm.options.head.value))
 
       val result = controller().onSubmit(NormalMode)(postRequest)
 
@@ -70,7 +68,7 @@ class WhereToSendPaymentControllerSpec extends ControllerSpecBase {
 
     "return a Bad Request and errors when invalid data is submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
-      val boundForm = form.bind(Map("value" -> "invalid value"))
+      val boundForm = WhereToSendPaymentForm().bind(Map("value" -> "invalid value"))
 
       val result = controller().onSubmit(NormalMode)(postRequest)
 
@@ -86,7 +84,7 @@ class WhereToSendPaymentControllerSpec extends ControllerSpecBase {
     }
 
     "redirect to Session Expired for a POST if no existing data is found" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", WhereToSendPaymentForm.options.head.value))
       val result = controller(dontGetAnyData).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
@@ -94,7 +92,3 @@ class WhereToSendPaymentControllerSpec extends ControllerSpecBase {
     }
   }
 }
-
-
-
-
