@@ -17,6 +17,8 @@
 @import config.FrontendAppConfig
 @import uk.gov.hmrc.play.views.html._
 @import controllers.routes._
+@import forms.WhereToSendPaymentForm
+@import models.WhereToSendPayment
 @import models.Mode
 @import utils.FormHelpers
 @import viewmodels.InputViewModel
@@ -36,10 +38,11 @@
 
         @components.heading("whereToSendPayment.heading")
 
-        @components.input_yes_no(
-            InputViewModel("value", form),
-            label = messages("whereToSendPayment.heading"),
-            labelClass = Some("visually-hidden")
+        @components.input_radio(
+            viewModel = InputViewModel("value", form),
+            legend = messages("whereToSendPayment.heading"),
+            legendClass = Some("visually-hidden"),
+            inputs = WhereToSendPaymentForm.options.toSeq
         )
 
         @components.submit_button()

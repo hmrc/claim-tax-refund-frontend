@@ -20,6 +20,7 @@ import base.SpecBase
 import models.FullOrPartialClaim.{OptionAll, OptionSome}
 import models.SelectTaxYear._
 import models.TypeOfClaim.{OptionPAYE, OptionSA}
+import models.WhereToSendPayment._
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
 import models.{InternationalAddress, UkAddress}
@@ -422,22 +423,6 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     }
   }
 
-  "Is WhereToSendPayment (false)" must {
-    s"have the correct label" in {
-      when(answers.whereToSendPayment) thenReturn Some(false)
-      val helper = new CheckYourAnswersHelper(answers)
-      helper.whereToSendPayment.get.label mustBe s"whereToSendPayment.checkYourAnswersLabel"
-    }
-  }
-
-  "Is WhereToSendPayment (true)" must {
-    s"have the correct label" in {
-      when(answers.whereToSendPayment) thenReturn Some(true)
-      val helper = new CheckYourAnswersHelper(answers)
-      helper.whereToSendPayment.get.label mustBe s"whereToSendPayment.checkYourAnswersLabel"
-    }
-  }
-
   "Is anyOtherTaxableIncome (false)" must {
     s"have the correct label" in {
       when(answers.anyOtherTaxableIncome) thenReturn Some(false)
@@ -451,6 +436,22 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
       when(answers.otherIncomeDetailsAndAmount) thenReturn Some("9,999.99")
       val helper = new CheckYourAnswersHelper (answers)
       helper.otherIncomeDetailsAndAmount.get.label mustBe s"otherIncomeDetailsAndAmount.checkYourAnswersLabel"
+    }
+  }
+
+  "Is WhereToSendPayment yourself" must {
+    s"have the correct label" in {
+      when(answers.whereToSendPayment) thenReturn Some(OptionYou)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.whereToSendPayment.get.label mustBe s"whereToSendPayment.checkYourAnswersLabel"
+    }
+  }
+
+  "Is WhereToSendPayment someone else" must {
+    s"have the correct label" in {
+      when(answers.whereToSendPayment) thenReturn Some(OptionSomeoneElse)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.whereToSendPayment.get.label mustBe s"whereToSendPayment.checkYourAnswersLabel"
     }
   }
 

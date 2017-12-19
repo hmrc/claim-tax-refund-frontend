@@ -17,28 +17,47 @@
 package views
 
 import play.api.data.Form
-import controllers.routes
-import forms.BooleanForm
-import views.behaviours.YesNoViewBehaviours
+import forms.WhereToSendPaymentForm
 import models.NormalMode
+import models.WhereToSendPayment
+import views.behaviours.ViewBehaviours
 import views.html.whereToSendPayment
 
-class WhereToSendPaymentViewSpec extends YesNoViewBehaviours {
+class WhereToSendPaymentViewSpec extends ViewBehaviours {
 
   val messageKeyPrefix = "whereToSendPayment"
 
-  override val form = new BooleanForm()()
-
-  def createView = () => whereToSendPayment(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createView = () => whereToSendPayment(frontendAppConfig, WhereToSendPaymentForm(), NormalMode)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[_]) => whereToSendPayment(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
   "WhereToSendPayment view" must {
-
     behave like normalPage(createView, messageKeyPrefix)
 
     behave like pageWithBackLink(createView)
+  }
 
-    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.WhereToSendPaymentController.onSubmit(NormalMode).url)
+  "WhereToSendPayment view" when {
+    "rendered" must {
+      "contain radio buttons for the value" in {
+        val doc = asDocument(createViewUsingForm(WhereToSendPaymentForm()))
+        for (option <- WhereToSendPaymentForm.options) {
+          assertContainsRadioButton(doc, option.id, "value", option.value, false)
+        }
+      }
+    }
+
+    for(option <- WhereToSendPaymentForm.options) {
+      s"rendered with a value of '${option.value}'" must {
+        s"have the '${option.value}' radio button selected" in {
+          val doc = asDocument(createViewUsingForm(WhereToSendPaymentForm().bind(Map("value" -> s"${option.value}"))))
+          assertContainsRadioButton(doc, option.id, "value", option.value, true)
+
+          for(unselectedOption <- WhereToSendPaymentForm.options.filterNot(o => o == option)) {
+            assertContainsRadioButton(doc, unselectedOption.id, "value", unselectedOption.value, false)
+          }
+        }
+      }
+    }
   }
 }
