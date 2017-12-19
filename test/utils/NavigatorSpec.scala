@@ -23,6 +23,7 @@ import controllers.routes
 import identifiers._
 import models.FullOrPartialClaim.{OptionAll, OptionSome}
 import models.TypeOfClaim.{OptionPAYE, OptionSA}
+import models.WhereToSendPayment.OptionSomeoneElse
 import models._
 
 class NavigatorSpec extends SpecBase with MockitoSugar {
@@ -110,6 +111,25 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         val answers = mock[UserAnswers]
         navigator.nextPage(PartialClaimAmountId, NormalMode)(answers) mustBe routes.WhereToSendPaymentController.onPageLoad(NormalMode)
       }
+
+      "go to WhereToSendPayment from AnyOtherTaxableIncome when no is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.anyOtherTaxableIncome) thenReturn Some(false)
+        navigator.nextPage(AnyOtherTaxableIncomeId, NormalMode)(answers) mustBe routes.WhereToSendPaymentController.onPageLoad(NormalMode)
+      }
+
+      "go to WhereToSendPayments from OtherIncomeDetailsAndAmount" in {
+        val answers = mock[UserAnswers]
+        navigator.nextPage(OtherIncomeDetailsAndAmountId, NormalMode)(answers) mustBe routes.WhereToSendPaymentController.onPageLoad(NormalMode)
+      }
+
+      "go to PayeeFullName from WhereToSendPayment when Yes is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.whereToSendPayment) thenReturn Some(OptionSomeoneElse)
+        navigator.nextPage(WhereToSendPaymentId, NormalMode)(answers) mustBe routes.PayeeFullNameController.onPageLoad(NormalMode)
+      }
+
+      //TODO - Add "you" path to summary page
 
       "go to AnyBenefits from SelectATaxYear" in {
         val answers = mock[UserAnswers]
@@ -291,23 +311,6 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         val answers = mock[UserAnswers]
         when(answers.anyOtherTaxableIncome) thenReturn Some(true)
         navigator.nextPage(AnyOtherTaxableIncomeId, NormalMode)(answers) mustBe routes.OtherIncomeDetailsAndAmountController.onPageLoad(NormalMode)
-      }
-
-      "go to NameOfPerson from AnyOtherTaxableIncome when no is selected" in {
-        val answers = mock[UserAnswers]
-        when(answers.anyOtherTaxableIncome) thenReturn Some(false)
-        navigator.nextPage(AnyOtherTaxableIncomeId, NormalMode)(answers) mustBe routes.WhereToSendPaymentController.onPageLoad(NormalMode)
-      }
-
-      "go to WhereToSendPayments from OtherIncomeDetailsAndAmount" in {
-        val answers = mock[UserAnswers]
-        navigator.nextPage(OtherIncomeDetailsAndAmountId, NormalMode)(answers) mustBe routes.WhereToSendPaymentController.onPageLoad(NormalMode)
-      }
-
-      "go to PayeeFullName from WhereToSendPayment when Yes is selected" in {
-        val answers = mock[UserAnswers]
-        when(answers.whereToSendPayment) thenReturn Some(true)
-        navigator.nextPage(WhereToSendPaymentId, NormalMode)(answers) mustBe routes.PayeeFullNameController.onPageLoad(NormalMode)
       }
 
       "go to AnyAgentRef from PayeeFullName" in {

@@ -295,11 +295,6 @@ otherIncomeDetailsAndAmount.checkYourAnswersLabel = Other taxable benefits you g
 otherIncomeDetailsAndAmount.blank = Enter the other taxable benefits you got in the tax year your claim is for
 otherIncomeDetailsAndAmount.hint = Enter the type of benefits and the amounts you got.
 
-whereToSendPayment.title = Where do you want us to send any payment?
-whereToSendPayment.heading = Where do you want us to send any payment?
-whereToSendPayment.checkYourAnswersLabel = Where you want us to send any payment
-whereToSendPayment.blank = Select where you want us to send any payment
-
 payeeFullName.title = What is the full name of the person you want us to send any payment to?
 payeeFullName.heading = What is the full name of the person you want us to send any payment to?
 payeeFullName.checkYourAnswersLabel = Full name of the person you want us to send any payment to
@@ -319,3 +314,10 @@ isPayeeAddressInTheUK.title =Is payee address in the UK?
 isPayeeAddressInTheUK.heading = Is payee address in the UK?
 isPayeeAddressInTheUK.checkYourAnswersLabel = Is payee address in the UK?
 isPayeeAddressInTheUK.blank = Select yes if the payee address is in the UK
+
+whereToSendPayment.title = Where do you want us to send any payment?
+whereToSendPayment.heading = Where do you want us to send any payment?
+whereToSendPayment.optionYou = You
+whereToSendPayment.optionSomeoneElse = Someone else
+whereToSendPayment.checkYourAnswersLabel = Where you want us to send any payment
+whereToSendPayment.blank = Select where you want us to send any payment
