@@ -65,7 +65,8 @@ class Navigator @Inject()() {
     OtherIncomeDetailsAndAmountId -> (_ => routes.WhereToSendPaymentController.onPageLoad(NormalMode)),
     WhereToSendPaymentId -> whereToSendPayment,
     PayeeFullNameId -> (_ => routes.AnyAgentRefController.onPageLoad(NormalMode)),
-    AnyAgentRefId -> anyAgentRef
+    AnyAgentRefId -> anyAgentRef,
+    AgentReferenceNumberId -> (_=>routes.IsPayeeAddressInTheUKController.onPageLoad(NormalMode))
   )
 
   private val editRouteMap: Map[Identifier, UserAnswers => Call] = Map(
@@ -171,7 +172,7 @@ class Navigator @Inject()() {
 
   private def anyAgentRef (userAnswers: UserAnswers) = userAnswers.anyAgentRef match {
     case Some(true) => routes.AgentReferenceNumberController.onPageLoad(NormalMode)
-    case Some(false) => ???
+    case Some(false) => routes.IsPayeeAddressInTheUKController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
