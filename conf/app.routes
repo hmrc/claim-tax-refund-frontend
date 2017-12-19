@@ -221,3 +221,8 @@ GET        /anyAgentRef                       controllers.AnyAgentRefController.
 POST       /anyAgentRef                       controllers.AnyAgentRefController.onSubmit(mode: Mode = NormalMode)
 GET        /changeAnyAgentRef                       controllers.AnyAgentRefController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeAnyAgentRef                       controllers.AnyAgentRefController.onSubmit(mode: Mode = CheckMode)
+
+GET        /isAgentAddressInUK                       controllers.IsAgentAddressInUKController.onPageLoad(mode: Mode = NormalMode)
+POST       /isAgentAddressInUK                       controllers.IsAgentAddressInUKController.onSubmit(mode: Mode = NormalMode)
+GET        /changeIsAgentAddressInUK                       controllers.IsAgentAddressInUKController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeIsAgentAddressInUK                       controllers.IsAgentAddressInUKController.onSubmit(mode: Mode = CheckMode)

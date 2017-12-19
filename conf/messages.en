@@ -314,3 +314,8 @@ anyAgentRef.title = Does the person you want us to send any payment to have an a
 anyAgentRef.heading = Does the person you want us to send any payment to have an agent reference number?
 anyAgentRef.checkYourAnswersLabel = Does the person you want us to send any payment to have an agent reference number?
 anyAgentRef.blank = Select yes if the person you want us to send any payment to has an agent reference number
+
+isAgentAddressInUK.title = isAgentAddressInUK
+isAgentAddressInUK.heading = isAgentAddressInUK
+isAgentAddressInUK.checkYourAnswersLabel = isAgentAddressInUK
+isAgentAddressInUK.blank = isAgentAddressInUK
