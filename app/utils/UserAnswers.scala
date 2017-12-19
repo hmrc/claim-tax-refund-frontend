@@ -21,6 +21,8 @@ import identifiers._
 import models._
 
 class UserAnswers(val cacheMap: CacheMap) {
+  def isPayeeAddressInTheUK: Option[Boolean] = cacheMap.getEntry[Boolean](IsPayeeAddressInTheUKId.toString)
+
   def anyAgentRef: Option[Boolean] = cacheMap.getEntry[Boolean](AnyAgentRefId.toString)
 
   def agentReferenceNumber: Option[String] = cacheMap.getEntry[String](AgentReferenceNumberId.toString)
