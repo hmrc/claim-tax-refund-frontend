@@ -315,6 +315,12 @@ isPayeeAddressInTheUK.heading = Is payee address in the UK?
 isPayeeAddressInTheUK.checkYourAnswersLabel = Is payee address in the UK?
 isPayeeAddressInTheUK.blank = Select yes if the payee address is in the UK
 
+payeeUKAddress.title = payeeUKAddress
+payeeUKAddress.heading = payeeUKAddress
+payeeUKAddress.checkYourAnswersLabel = payeeUKAddress
+payeeUKAddress.postcode.invalid = Enter a valid postcode
+payeeUKAddress.postcode.blank = Enter a postcode
+
 whereToSendPayment.title = Where do you want us to send any payment?
 whereToSendPayment.heading = Where do you want us to send any payment?
 whereToSendPayment.optionYou = You
