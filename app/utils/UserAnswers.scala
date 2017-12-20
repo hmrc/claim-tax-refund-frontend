@@ -21,6 +21,8 @@ import identifiers._
 import models._
 
 class UserAnswers(val cacheMap: CacheMap) {
+  def payeeUKAddress: Option[UkAddress] = cacheMap.getEntry[UkAddress](PayeeUKAddressId.toString)
+
   def isPayeeAddressInTheUK: Option[Boolean] = cacheMap.getEntry[Boolean](IsPayeeAddressInTheUKId.toString)
 
   def whereToSendPayment: Option[WhereToSendPayment] = cacheMap.getEntry[WhereToSendPayment](WhereToSendPaymentId.toString)
