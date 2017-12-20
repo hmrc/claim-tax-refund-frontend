@@ -20,6 +20,7 @@ import base.SpecBase
 import models.FullOrPartialClaim.{OptionAll, OptionSome}
 import models.SelectTaxYear._
 import models.TypeOfClaim.{OptionPAYE, OptionSA}
+import models.WhereToSendPayment._
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
 import models.{InternationalAddress, UkAddress}
@@ -437,4 +438,82 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
       helper.otherIncomeDetailsAndAmount.get.label mustBe s"otherIncomeDetailsAndAmount.checkYourAnswersLabel"
     }
   }
+
+  "Is WhereToSendPayment yourself" must {
+    s"have the correct label" in {
+      when(answers.whereToSendPayment) thenReturn Some(OptionYou)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.whereToSendPayment.get.label mustBe s"whereToSendPayment.checkYourAnswersLabel"
+    }
+  }
+
+  "Is WhereToSendPayment someone else" must {
+    s"have the correct label" in {
+      when(answers.whereToSendPayment) thenReturn Some(OptionSomeoneElse)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.whereToSendPayment.get.label mustBe s"whereToSendPayment.checkYourAnswersLabel"
+    }
+  }
+
+  "Payee Full Name" must {
+    s"have the correct label" in {
+      when(answers.payeeFullName) thenReturn Some("Test name")
+      val helper = new CheckYourAnswersHelper (answers)
+      helper.payeeFullName.get.label mustBe s"payeeFullName.checkYourAnswersLabel"
+    }
+  }
+
+  "Is anyAgentRef (true)" must {
+    s"have the correct label" in {
+      when(answers.anyAgentRef) thenReturn Some(true)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.anyAgentRef.get.label mustBe s"anyAgentRef.checkYourAnswersLabel"
+    }
+  }
+
+  "Is anyAgentRef (false)" must {
+    s"have the correct label" in {
+      when(answers.anyAgentRef) thenReturn Some(false)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.anyAgentRef.get.label mustBe s"anyAgentRef.checkYourAnswersLabel"
+    }
+  }
+
+  "Agent Reference Number" must {
+    s"have the correct label" in {
+      when(answers.agentReferenceNumber) thenReturn Some("Test number")
+      val helper = new CheckYourAnswersHelper (answers)
+      helper.agentReferenceNumber.get.label mustBe s"agentReferenceNumber.checkYourAnswersLabel"
+    }
+  }
+  "Is isPayeeAddressInTheUK (true)" must {
+    s"have the correct label" in {
+      when(answers.isPayeeAddressInTheUK) thenReturn Some(true)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.isPayeeAddressInTheUK.get.label mustBe s"isPayeeAddressInTheUK.checkYourAnswersLabel"
+    }
+  }
+
+  "Is isPayeeAddressInTheUK (false)" must {
+    s"have the correct label" in {
+      when(answers.isPayeeAddressInTheUK) thenReturn Some(false)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.isPayeeAddressInTheUK.get.label mustBe s"isPayeeAddressInTheUK.checkYourAnswersLabel"
+    }
+  }
+
+  "Payee International Address" must {
+    s"have correct label" in {
+      when(answers.payeeInternationalAddress) thenReturn Some(InternationalAddress("line 1", "line 2", None, None, None, "country"))
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.payeeInternationalAddress.get.label mustBe s"payeeInternationalAddress.checkYourAnswersLabel"
+
+  "Payee UK Address" must {
+    s"have correct label" in {
+      when(answers.payeeUKAddress) thenReturn Some (UkAddress("line 1", "line 2", None, None, None, "AA11 1AA"))
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.payeeUKAddress.get.label mustBe s"payeeUKAddress.checkYourAnswersLabel"
+    }
+  }
+
 }

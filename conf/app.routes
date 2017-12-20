@@ -201,3 +201,39 @@ GET        /otherIncomeDetailsAndAmount               controllers.OtherIncomeDet
 POST       /otherIncomeDetailsAndAmount               controllers.OtherIncomeDetailsAndAmountController.onSubmit(mode: Mode = NormalMode)
 GET        /changeOtherIncomeDetailsAndAmount                        controllers.OtherIncomeDetailsAndAmountController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeOtherIncomeDetailsAndAmount                        controllers.OtherIncomeDetailsAndAmountController.onSubmit(mode: Mode = CheckMode)
+
+GET        /payeeFullName               controllers.PayeeFullNameController.onPageLoad(mode: Mode = NormalMode)
+POST       /payeeFullName               controllers.PayeeFullNameController.onSubmit(mode: Mode = NormalMode)
+GET        /changePayeeFullName                        controllers.PayeeFullNameController.onPageLoad(mode: Mode = CheckMode)
+POST       /changePayeeFullName                        controllers.PayeeFullNameController.onSubmit(mode: Mode = CheckMode)
+
+GET        /agentReferenceNumber               controllers.AgentReferenceNumberController.onPageLoad(mode: Mode = NormalMode)
+POST       /agentReferenceNumber               controllers.AgentReferenceNumberController.onSubmit(mode: Mode = NormalMode)
+GET        /changeAgentReferenceNumber                        controllers.AgentReferenceNumberController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeAgentReferenceNumber                        controllers.AgentReferenceNumberController.onSubmit(mode: Mode = CheckMode)
+
+GET        /anyAgentRef                       controllers.AnyAgentRefController.onPageLoad(mode: Mode = NormalMode)
+POST       /anyAgentRef                       controllers.AnyAgentRefController.onSubmit(mode: Mode = NormalMode)
+GET        /changeAnyAgentRef                       controllers.AnyAgentRefController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeAnyAgentRef                       controllers.AnyAgentRefController.onSubmit(mode: Mode = CheckMode)
+
+GET        /isPayeeAddressInTheUK                       controllers.IsPayeeAddressInTheUKController.onPageLoad(mode: Mode = NormalMode)
+POST       /isPayeeAddressInTheUK                       controllers.IsPayeeAddressInTheUKController.onSubmit(mode: Mode = NormalMode)
+GET        /changeIsPayeeAddressInTheUK                       controllers.IsPayeeAddressInTheUKController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeIsPayeeAddressInTheUK                       controllers.IsPayeeAddressInTheUKController.onSubmit(mode: Mode = CheckMode)
+
+GET        /payeeInternationalAddress                       controllers.PayeeInternationalAddressController.onPageLoad(mode: Mode = NormalMode)
+POST       /payeeInternationalAddress                       controllers.PayeeInternationalAddressController.onSubmit(mode: Mode = NormalMode)
+GET        /changePayeeInternationalAddress                       controllers.PayeeInternationalAddressController.onPageLoad(mode: Mode = CheckMode)
+POST       /changePayeeInternationalAddress                       controllers.PayeeInternationalAddressController.onSubmit(mode: Mode = CheckMode)
+
+GET        /payeeUKAddress                       controllers.PayeeUKAddressController.onPageLoad(mode: Mode = NormalMode)
+POST       /payeeUKAddress                       controllers.PayeeUKAddressController.onSubmit(mode: Mode = NormalMode)
+GET        /changePayeeUKAddress                       controllers.PayeeUKAddressController.onPageLoad(mode: Mode = CheckMode)
+POST       /changePayeeUKAddress                       controllers.PayeeUKAddressController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whereToSendPayment               controllers.WhereToSendPaymentController.onPageLoad(mode: Mode = NormalMode)
+POST       /whereToSendPayment               controllers.WhereToSendPaymentController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhereToSendPayment               controllers.WhereToSendPaymentController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhereToSendPayment               controllers.WhereToSendPaymentController.onSubmit(mode: Mode = CheckMode)
+
