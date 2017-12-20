@@ -222,6 +222,11 @@ POST       /isPayeeAddressInTheUK                       controllers.IsPayeeAddre
 GET        /changeIsPayeeAddressInTheUK                       controllers.IsPayeeAddressInTheUKController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeIsPayeeAddressInTheUK                       controllers.IsPayeeAddressInTheUKController.onSubmit(mode: Mode = CheckMode)
 
+GET        /payeeUKAddress                       controllers.PayeeUKAddressController.onPageLoad(mode: Mode = NormalMode)
+POST       /payeeUKAddress                       controllers.PayeeUKAddressController.onSubmit(mode: Mode = NormalMode)
+GET        /changePayeeUKAddress                       controllers.PayeeUKAddressController.onPageLoad(mode: Mode = CheckMode)
+POST       /changePayeeUKAddress                       controllers.PayeeUKAddressController.onSubmit(mode: Mode = CheckMode)
+
 GET        /whereToSendPayment               controllers.WhereToSendPaymentController.onPageLoad(mode: Mode = NormalMode)
 POST       /whereToSendPayment               controllers.WhereToSendPaymentController.onSubmit(mode: Mode = NormalMode)
 GET        /changeWhereToSendPayment               controllers.WhereToSendPaymentController.onPageLoad(mode: Mode = CheckMode)
