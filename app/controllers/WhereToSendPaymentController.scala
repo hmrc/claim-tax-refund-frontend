@@ -24,42 +24,40 @@ import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import connectors.DataCacheConnector
 import controllers.actions._
 import config.FrontendAppConfig
-import forms.BooleanForm
+import forms.WhereToSendPaymentForm
 import identifiers.WhereToSendPaymentId
 import models.Mode
+import models.WhereToSendPayment
 import utils.{Navigator, UserAnswers}
 import views.html.whereToSendPayment
 
 import scala.concurrent.Future
 
-class WhereToSendPaymentController @Inject()(appConfig: FrontendAppConfig,
-                                         override val messagesApi: MessagesApi,
-                                         dataCacheConnector: DataCacheConnector,
-                                         navigator: Navigator,
-                                         authenticate: AuthAction,
-                                         getData: DataRetrievalAction,
-                                         requireData: DataRequiredAction,
-                                         formProvider: BooleanForm) extends FrontendController with I18nSupport {
-
-  private val errorKey = "whereToSendPayment.blank"
-  val form: Form[Boolean] = formProvider(errorKey)
+class WhereToSendPaymentController @Inject()(
+                                        appConfig: FrontendAppConfig,
+                                        override val messagesApi: MessagesApi,
+                                        dataCacheConnector: DataCacheConnector,
+                                        navigator: Navigator,
+                                        authenticate: AuthAction,
+                                        getData: DataRetrievalAction,
+                                        requireData: DataRequiredAction) extends FrontendController with I18nSupport {
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.whereToSendPayment match {
-        case None => form
-        case Some(value) => form.fill(value)
+        case None => WhereToSendPaymentForm()
+        case Some(value) => WhereToSendPaymentForm().fill(value)
       }
       Ok(whereToSendPayment(appConfig, preparedForm, mode))
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      form.bindFromRequest().fold(
+      WhereToSendPaymentForm().bindFromRequest().fold(
         (formWithErrors: Form[_]) =>
           Future.successful(BadRequest(whereToSendPayment(appConfig, formWithErrors, mode))),
         (value) =>
-          dataCacheConnector.save[Boolean](request.externalId, WhereToSendPaymentId.toString, value).map(cacheMap =>
+          dataCacheConnector.save[WhereToSendPayment](request.externalId, WhereToSendPaymentId.toString, value).map(cacheMap =>
             Redirect(navigator.nextPage(WhereToSendPaymentId, mode)(new UserAnswers(cacheMap))))
       )
   }

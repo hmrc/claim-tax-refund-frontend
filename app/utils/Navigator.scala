@@ -23,6 +23,7 @@ import controllers.routes
 import identifiers._
 import models.FullOrPartialClaim.{OptionAll, OptionSome}
 import models.TypeOfClaim.{OptionPAYE, OptionSA}
+import models.WhereToSendPayment.{OptionSomeoneElse, OptionYou}
 import models.{CheckMode, Mode, NormalMode}
 
 @Singleton
@@ -165,8 +166,8 @@ class Navigator @Inject()() {
   }
 
   private def whereToSendPayment(userAnswers: UserAnswers) = userAnswers.whereToSendPayment match {
-    case Some(true) => routes.PayeeFullNameController.onPageLoad(NormalMode)
-    case Some(false) => routes.CheckYourAnswersController.onPageLoad()
+    case Some(OptionSomeoneElse) => routes.PayeeFullNameController.onPageLoad(NormalMode)
+    case Some(OptionYou) => routes.CheckYourAnswersController.onPageLoad()
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
