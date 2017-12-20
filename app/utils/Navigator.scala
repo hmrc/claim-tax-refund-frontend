@@ -69,7 +69,6 @@ class Navigator @Inject()() {
     AnyAgentRefId -> anyAgentRef,
     AgentReferenceNumberId -> (_=> routes.IsPayeeAddressInTheUKController.onPageLoad(NormalMode)),
     IsPayeeAddressInTheUKId -> isPayeeAddressInUkRoute
-
   )
 
   private val editRouteMap: Map[Identifier, UserAnswers => Call] = Map(
