@@ -21,8 +21,9 @@ import org.mockito.Mockito._
 import org.scalatest.mockito.MockitoSugar
 import controllers.routes
 import identifiers._
-import models.FullOrPartialClaim.OptionSome
+import models.FullOrPartialClaim.{OptionAll, OptionSome}
 import models.TypeOfClaim.{OptionPAYE, OptionSA}
+import models.WhereToSendPayment.OptionSomeoneElse
 import models._
 
 class NavigatorSpec extends SpecBase with MockitoSugar {
@@ -99,6 +100,36 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         when(answers.fullOrPartialClaim) thenReturn Some(OptionSome)
         navigator.nextPage(FullOrPartialClaimId, NormalMode)(answers) mustBe routes.PartialClaimAmountController.onPageLoad(NormalMode)
       }
+
+      "go to WhereToSendPayment from TypeOfClaim when FullClaim is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.fullOrPartialClaim) thenReturn Some(OptionAll)
+        navigator.nextPage(FullOrPartialClaimId, NormalMode)(answers) mustBe routes.WhereToSendPaymentController.onPageLoad(NormalMode)
+      }
+
+      "go to WhereToSendPayments from PartialClaimAmount" in {
+        val answers = mock[UserAnswers]
+        navigator.nextPage(PartialClaimAmountId, NormalMode)(answers) mustBe routes.WhereToSendPaymentController.onPageLoad(NormalMode)
+      }
+
+      "go to WhereToSendPayment from AnyOtherTaxableIncome when no is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.anyOtherTaxableIncome) thenReturn Some(false)
+        navigator.nextPage(AnyOtherTaxableIncomeId, NormalMode)(answers) mustBe routes.WhereToSendPaymentController.onPageLoad(NormalMode)
+      }
+
+      "go to WhereToSendPayments from OtherIncomeDetailsAndAmount" in {
+        val answers = mock[UserAnswers]
+        navigator.nextPage(OtherIncomeDetailsAndAmountId, NormalMode)(answers) mustBe routes.WhereToSendPaymentController.onPageLoad(NormalMode)
+      }
+
+      "go to PayeeFullName from WhereToSendPayment when Yes is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.whereToSendPayment) thenReturn Some(OptionSomeoneElse)
+        navigator.nextPage(WhereToSendPaymentId, NormalMode)(answers) mustBe routes.PayeeFullNameController.onPageLoad(NormalMode)
+      }
+
+      //TODO - Add "you" path to summary page
 
       "go to AnyBenefits from SelectATaxYear" in {
         val answers = mock[UserAnswers]
@@ -280,6 +311,40 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         val answers = mock[UserAnswers]
         when(answers.anyOtherTaxableIncome) thenReturn Some(true)
         navigator.nextPage(AnyOtherTaxableIncomeId, NormalMode)(answers) mustBe routes.OtherIncomeDetailsAndAmountController.onPageLoad(NormalMode)
+      }
+
+      "go to AnyAgentRef from PayeeFullName" in {
+        val answers = mock[UserAnswers]
+        navigator.nextPage(PayeeFullNameId, NormalMode)(answers) mustBe routes.AnyAgentRefController.onPageLoad(NormalMode)
+      }
+
+      "go to AgentReferenceNumber from AnyAgentRef when Yes is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.anyAgentRef) thenReturn Some(true)
+        navigator.nextPage(AnyAgentRefId, NormalMode)(answers) mustBe routes.AgentReferenceNumberController.onPageLoad(NormalMode)
+      }
+
+      "go to IsPayeeAddressInTheUK from AgentReferenceNumber" in {
+        val answers = mock[UserAnswers]
+        navigator.nextPage(AgentReferenceNumberId, NormalMode)(answers) mustBe routes.IsPayeeAddressInTheUKController.onPageLoad(NormalMode)
+      }
+
+      "go to IsPayeeAddressInTheUK from AnyAgentRef when no is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.anyAgentRef) thenReturn Some(false)
+        navigator.nextPage(AnyAgentRefId, NormalMode)(answers) mustBe routes.IsPayeeAddressInTheUKController.onPageLoad(NormalMode)
+      }
+
+      "go to PayeeInternationalAddress from IsPayeeAddressInTheUK when no is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.isPayeeAddressInTheUK) thenReturn Some(false)
+        navigator.nextPage(IsPayeeAddressInTheUKId, NormalMode)(answers) mustBe routes.PayeeInternationalAddressController.onPageLoad(NormalMode)
+      }
+
+      "go to payeeUKAddress from IsPayeeAddressInTheUK when Yes is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.isPayeeAddressInTheUK) thenReturn Some(true)
+        navigator.nextPage(IsPayeeAddressInTheUKId, NormalMode)(answers) mustBe routes.PayeeUKAddressController.onPageLoad(NormalMode)
       }
     }
 
