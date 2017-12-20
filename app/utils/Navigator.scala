@@ -180,7 +180,7 @@ class Navigator @Inject()() {
 
   private def isPayeeAddressInUkRoute(userAnswers: UserAnswers) = userAnswers.isPayeeAddressInTheUK match {
     case Some(true) => routes.PayeeUKAddressController.onPageLoad(NormalMode)
-    case Some(false) => ??? //routes.InternationalAddressController.onPageLoad(NormalMode)
+    case Some(false) => routes.PayeeInternationalAddressController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
 

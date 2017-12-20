@@ -315,6 +315,14 @@ isPayeeAddressInTheUK.heading = Is payee address in the UK?
 isPayeeAddressInTheUK.checkYourAnswersLabel = Is payee address in the UK?
 isPayeeAddressInTheUK.blank = Select yes if the payee address is in the UK
 
+payeeInternationalAddress.title = payeeInternationalAddress
+payeeInternationalAddress.heading = payeeInternationalAddress
+payeeInternationalAddress.field1 = Field 1
+payeeInternationalAddress.field2 = Field 2
+payeeInternationalAddress.checkYourAnswersLabel = payeeInternationalAddress
+payeeInternationalAddress.field1.blank = payeeInternationalAddress field 1 blank
+payeeInternationalAddress.field2.blank = payeeInternationalAddress field 2 blank
+
 payeeUKAddress.title = payeeUKAddress
 payeeUKAddress.heading = payeeUKAddress
 payeeUKAddress.checkYourAnswersLabel = payeeUKAddress
@@ -327,3 +335,4 @@ whereToSendPayment.optionYou = You
 whereToSendPayment.optionSomeoneElse = Someone else
 whereToSendPayment.checkYourAnswersLabel = Where you want us to send any payment
 whereToSendPayment.blank = Select where you want us to send any payment
+
