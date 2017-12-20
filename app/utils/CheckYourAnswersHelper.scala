@@ -24,14 +24,14 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
 
  def payeeInternationalAddress: Option[AnswerRow] = userAnswers.payeeInternationalAddress map {
     x => AnswerRow("payeeInternationalAddress.checkYourAnswersLabel", s"${x.addressLine1} ${x.addressLine2}", false, routes.PayeeInternationalAddressController.onPageLoad(CheckMode).url)
-
+ }
+  
   def payeeUKAddress: Option[AnswerRow] = userAnswers.payeeUKAddress map {
     x => AnswerRow("payeeUKAddress.checkYourAnswersLabel", s"${x.addressLine1} ${x.addressLine2}", false, routes.PayeeUKAddressController.onPageLoad(CheckMode).url)
   }
   
   def whereToSendPayment: Option[AnswerRow] = userAnswers.whereToSendPayment map {
     x => AnswerRow("whereToSendPayment.checkYourAnswersLabel", s"whereToSendPayment.$x", true, routes.WhereToSendPaymentController.onPageLoad(CheckMode).url)
-
   }
 
   def isPayeeAddressInTheUK: Option[AnswerRow] = userAnswers.isPayeeAddressInTheUK map {

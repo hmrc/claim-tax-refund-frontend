@@ -507,6 +507,8 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
       when(answers.payeeInternationalAddress) thenReturn Some(InternationalAddress("line 1", "line 2", None, None, None, "country"))
       val helper = new CheckYourAnswersHelper(answers)
       helper.payeeInternationalAddress.get.label mustBe s"payeeInternationalAddress.checkYourAnswersLabel"
+    }
+  }
 
   "Payee UK Address" must {
     s"have correct label" in {
