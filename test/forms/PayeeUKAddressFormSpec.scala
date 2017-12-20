@@ -25,8 +25,8 @@ import org.mockito.Mockito._
 
 class PayeeUKAddressFormSpec extends FormBehaviours with MockitoSugar {
 
-  val addressLineMaxLength = 35
-  val postcodeRegex = """([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z]))))\s?[0-9][A-Za-z]{2})"""
+  private val addressLineMaxLength = 35
+  private val postcodeRegex = """([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z]))))\s?[0-9][A-Za-z]{2})"""
 
   def appConfig: FrontendAppConfig = {
     val instance = mock[FrontendAppConfig]
@@ -35,15 +35,15 @@ class PayeeUKAddressFormSpec extends FormBehaviours with MockitoSugar {
     instance
   }
 
-  val addressLine1Blank = "global.addressLine1.blank"
-  val addressLine1TooLong = "global.addressLine1.tooLong"
-  val addressLine2Blank = "global.addressLine2.blank"
-  val addressLine2TooLong = "global.addressLine2.tooLong"
-  val addressLine3TooLong = "global.addressLine3.tooLong"
-  val addressLine4TooLong = "global.addressLine4.tooLong"
-  val addressLine5TooLong = "global.addressLine5.tooLong"
-  val postcodeInvalid = "ukAddress.postcode.invalid"
-  val postcodeBlank = "ukAddress.postcode.blank"
+  private val addressLine1Blank = "global.addressLine1.blank"
+  private val addressLine1TooLong = "global.addressLine1.tooLong"
+  private val addressLine2Blank = "global.addressLine2.blank"
+  private val addressLine2TooLong = "global.addressLine2.tooLong"
+  private val addressLine3TooLong = "global.addressLine3.tooLong"
+  private val addressLine4TooLong = "global.addressLine4.tooLong"
+  private val addressLine5TooLong = "global.addressLine5.tooLong"
+  private val postcodeInvalid = "ukAddress.postcode.invalid"
+  private val postcodeBlank = "ukAddress.postcode.blank"
 
   val validData: Map[String, String] = Map(
     "addressLine1" -> "line 1",
