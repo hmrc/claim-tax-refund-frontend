@@ -35,7 +35,10 @@
 
         @components.heading("howMuchBankBuildingSocietyInterest.heading")
 
-        @components.input_text(InputViewModel("value", form), label = messages("howMuchBankBuildingSocietyInterest.heading"), labelClass=Some("visually-hidden"))
+        @components.input_text(InputViewModel("value", form),
+            label = messages("howMuchBankBuildingSocietyInterest.heading"),
+            labelClass=Some("visually-hidden"),
+            prefix = Some(messages("global.poundSign")))
 
         @components.submit_button()
     }

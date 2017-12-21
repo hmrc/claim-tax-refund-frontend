@@ -35,7 +35,10 @@
 
         @components.heading("howMuchEmploymentAndSupportAllowance.heading")
 
-        @components.input_text(InputViewModel("value", form), label = messages("howMuchEmploymentAndSupportAllowance.heading"), labelClass=Some("visually-hidden"))
+        @components.input_text(InputViewModel("value", form),
+            label = messages("howMuchEmploymentAndSupportAllowance.heading"),
+            labelClass=Some("visually-hidden"),
+            prefix = Some(messages("global.poundSign")))
 
         @components.submit_button()
     }
