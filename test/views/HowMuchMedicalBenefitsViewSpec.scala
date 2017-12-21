@@ -42,6 +42,7 @@ class HowMuchMedicalBenefitsViewSpec extends StringViewBehaviours with MockitoSu
 
     behave like pageWithBackLink(createView)
 
-    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.HowMuchMedicalBenefitsController.onSubmit(NormalMode).url)
+    behave like stringPage(createViewUsingForm, messageKeyPrefix,
+      routes.HowMuchMedicalBenefitsController.onSubmit(NormalMode).url, None, None, Some(messages("global.poundSign")))
   }
 }

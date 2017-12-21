@@ -42,6 +42,7 @@ class HowMuchJobseekersAllowanceViewSpec extends StringViewBehaviours with Mocki
 
     behave like pageWithBackLink(createView)
 
-    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.HowMuchJobseekersAllowanceController.onSubmit(NormalMode).url)
+    behave like stringPage(createViewUsingForm, messageKeyPrefix,
+      routes.HowMuchJobseekersAllowanceController.onSubmit(NormalMode).url, None, None, Some(messages("global.poundSign")))
   }
 }

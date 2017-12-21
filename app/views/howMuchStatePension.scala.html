@@ -35,7 +35,10 @@
 
         @components.heading("howMuchStatePension.heading")
 
-        @components.input_text(InputViewModel("value", form), label = messages("howMuchStatePension.heading"), labelClass=Some("visually-hidden"))
+        @components.input_text(InputViewModel("value", form),
+            label = messages("howMuchStatePension.heading"),
+            labelClass=Some("visually-hidden"),
+            prefix = Some(messages("global.poundSign")))
 
         @components.submit_button()
     }
