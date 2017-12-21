@@ -42,6 +42,7 @@ class HowMuchCarBenefitsViewSpec extends StringViewBehaviours with MockitoSugar 
 
     behave like pageWithBackLink(createView)
 
-    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.HowMuchCarBenefitsController.onSubmit(NormalMode).url)
+    behave like stringPage(createViewUsingForm, messageKeyPrefix,
+      routes.HowMuchCarBenefitsController.onSubmit(NormalMode).url, None, None, Some(messages("global.poundSign")))
   }
 }

@@ -42,6 +42,7 @@ class HowMuchBankBuildingSocietyInterestViewSpec extends StringViewBehaviours wi
 
     behave like pageWithBackLink(createView)
 
-    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.HowMuchBankBuildingSocietyInterestController.onSubmit(NormalMode).url)
+    behave like stringPage(createViewUsingForm, messageKeyPrefix,
+      routes.HowMuchBankBuildingSocietyInterestController.onSubmit(NormalMode).url, None, None, Some(messages("global.poundSign")))
   }
 }
