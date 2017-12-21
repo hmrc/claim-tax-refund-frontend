@@ -310,22 +310,22 @@ anyAgentRef.heading = Does the person you want us to send any payment to have an
 anyAgentRef.checkYourAnswersLabel = Does the person you want us to send any payment to have an agent reference number?
 anyAgentRef.blank = Select yes if the person you want us to send any payment to has an agent reference number
 
-isPayeeAddressInTheUK.title =Is payee address in the UK?
-isPayeeAddressInTheUK.heading = Is payee address in the UK?
-isPayeeAddressInTheUK.checkYourAnswersLabel = Is payee address in the UK?
-isPayeeAddressInTheUK.blank = Select yes if the payee address is in the UK
+isPayeeAddressInTheUK.title = Is the address of the person you want us to make the payment to in the UK?
+isPayeeAddressInTheUK.heading = Is the address of the person you want us to make the payment to in the UK?
+isPayeeAddressInTheUK.checkYourAnswersLabel = Is the address of the person you want us to make the payment to in the UK?
+isPayeeAddressInTheUK.blank = Select yes if the address of the person you want us to make the payment to is in the UK
 
-payeeInternationalAddress.title = payeeInternationalAddress
-payeeInternationalAddress.heading = payeeInternationalAddress
-payeeInternationalAddress.field1 = Field 1
-payeeInternationalAddress.field2 = Field 2
-payeeInternationalAddress.checkYourAnswersLabel = payeeInternationalAddress
-payeeInternationalAddress.field1.blank = payeeInternationalAddress field 1 blank
-payeeInternationalAddress.field2.blank = payeeInternationalAddress field 2 blank
+payeeInternationalAddress.title = What is the address of the person you want us to make the payment to?
+payeeInternationalAddress.heading = What is the address of the person you want us to make the payment to?
+payeeInternationalAddress.field1 = Address line 1
+payeeInternationalAddress.field2 = Address line 2
+payeeInternationalAddress.checkYourAnswersLabel = Address of the person you want us to make the payment to
+payeeInternationalAddress.field1.blank = Enter address line 1
+payeeInternationalAddress.field2.blank = Enter address line 2
 
-payeeUKAddress.title = payeeUKAddress
-payeeUKAddress.heading = payeeUKAddress
-payeeUKAddress.checkYourAnswersLabel = payeeUKAddress
+payeeUKAddress.title = What is the address of the person you want us to make the payment to?
+payeeUKAddress.heading = What is the address of the person you want us to make the payment to?
+payeeUKAddress.checkYourAnswersLabel = Address of the person you want us to make the payment to
 payeeUKAddress.postcode.invalid = Enter a valid postcode
 payeeUKAddress.postcode.blank = Enter a postcode
 
