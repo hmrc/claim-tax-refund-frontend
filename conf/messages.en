@@ -1,7 +1,3 @@
-checkYourAnswers.title = Check Your Answers
-checkYourAnswers.heading = Check Your Answers
-checkYourAnswers.guidance = Guidance for check your answers
-
 error.boolean = Please give an answer
 error.invalid_date = Give a correct date
 error.date.day_blank = Enter a day
@@ -88,6 +84,16 @@ site.yes = Yes
 site.save_and_continue = Save and continue
 site.service_name = Claim a tax refund
 site.textarea.char_limit = (Limit is {0} characters)
+
+checkYourAnswers.title = Check Your Answers
+checkYourAnswers.heading = Check Your Answers
+checkYourAnswers.guidance = Guidance for check your answers
+
+checkYourAnswers.yourDetailsSection = Your details
+checkYourAnswers.incomeDetailsSection = Income details
+checkYourAnswers.benefitDetailsSection = Benefit details
+checkYourAnswers.otherIncomeDetailsSection = Other income details
+checkYourAnswers.paymentDetailsSection = Payment details
 
 unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account
@@ -289,7 +295,6 @@ otherBenefitsDetailsAndAmount.heading = What other taxable benefits did you get 
 otherBenefitsDetailsAndAmount.checkYourAnswersLabel = Other taxable benefits you got in the tax year your claim is for
 otherBenefitsDetailsAndAmount.blank = Enter the other taxable benefits you got in the tax year your claim is for
 otherBenefitsDetailsAndAmount.hint = Enter the type of benefits and the amounts you got.
-
 
 otherIncomeDetailsAndAmount.title = What other taxable income did you get in the tax year your claim is for?
 otherIncomeDetailsAndAmount.heading = What other taxable income did you get in the tax year your claim is for?

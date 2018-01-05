@@ -19,7 +19,7 @@ package controllers
 import com.google.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import controllers.actions.{AuthAction, DataRequiredAction, DataRetrievalAction}
-import utils.CheckYourAnswersHelper
+import utils.{CheckYourAnswersHelper, CheckYourAnswersSections}
 import viewmodels.AnswerSection
 import views.html.check_your_answers
 import config.FrontendAppConfig
@@ -33,8 +33,8 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
 
   def onPageLoad() = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val checkYourAnswersHelper = new CheckYourAnswersHelper(request.userAnswers)
-      val sections = Seq(AnswerSection(None, Seq()))
-      Ok(check_your_answers(appConfig, sections))
+      val cyaHelper = new CheckYourAnswersHelper(request.userAnswers)
+      val sections = new CheckYourAnswersSections(cyaHelper, request.userAnswers)
+      Ok(check_your_answers(appConfig, sections.sectionsToShow))
   }
 }

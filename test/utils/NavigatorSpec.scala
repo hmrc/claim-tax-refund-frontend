@@ -23,7 +23,7 @@ import controllers.routes
 import identifiers._
 import models.FullOrPartialClaim.{OptionAll, OptionSome}
 import models.TypeOfClaim.{OptionPAYE, OptionSA}
-import models.WhereToSendPayment.OptionSomeoneElse
+import models.WhereToSendPayment.{OptionSomeoneElse, OptionYou}
 import models._
 
 class NavigatorSpec extends SpecBase with MockitoSugar {
@@ -123,13 +123,17 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(OtherIncomeDetailsAndAmountId, NormalMode)(answers) mustBe routes.WhereToSendPaymentController.onPageLoad(NormalMode)
       }
 
-      "go to PayeeFullName from WhereToSendPayment when Yes is selected" in {
+      "go to PayeeFullName from WhereToSendPayment when SomeoneElse is selected" in {
         val answers = mock[UserAnswers]
         when(answers.whereToSendPayment) thenReturn Some(OptionSomeoneElse)
         navigator.nextPage(WhereToSendPaymentId, NormalMode)(answers) mustBe routes.PayeeFullNameController.onPageLoad(NormalMode)
       }
 
-      //TODO - Add "you" path to summary page
+      "go to PayeeFullName from WhereToSendPayment when Yourself is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.whereToSendPayment) thenReturn Some(OptionYou)
+        navigator.nextPage(WhereToSendPaymentId, NormalMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+      }
 
       "go to AnyBenefits from SelectATaxYear" in {
         val answers = mock[UserAnswers]
@@ -345,6 +349,16 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         val answers = mock[UserAnswers]
         when(answers.isPayeeAddressInTheUK) thenReturn Some(true)
         navigator.nextPage(IsPayeeAddressInTheUKId, NormalMode)(answers) mustBe routes.PayeeUKAddressController.onPageLoad(NormalMode)
+      }
+
+      "go to CheckYourAnswers from PayeeUKAddress" in {
+        val answers = mock[UserAnswers]
+        navigator.nextPage(PayeeUKAddressId, NormalMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+      }
+
+      "go to CheckYourAnswers from PayeeInternational" in {
+        val answers = mock[UserAnswers]
+        navigator.nextPage(PayeeUKAddressId, NormalMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
       }
     }
 
