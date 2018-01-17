@@ -302,6 +302,12 @@ otherIncomeDetailsAndAmount.checkYourAnswersLabel = Other taxable income you got
 otherIncomeDetailsAndAmount.blank = Enter the other taxable income you got in the tax year your claim is for
 otherIncomeDetailsAndAmount.hint = Enter the type of income and the amounts you got.
 
+otherIncomeDetailsAndAmount.title = What other taxable income did you get in the tax year your claim is for?
+otherIncomeDetailsAndAmount.heading = What other taxable income did you get in the tax year your claim is for?
+otherIncomeDetailsAndAmount.checkYourAnswersLabel = Other taxable income you got in the tax year your claim is for
+otherIncomeDetailsAndAmount.blank = Enter the other taxable income you got in the tax year your claim is for
+otherIncomeDetailsAndAmount.hint = Enter the type of income and the amounts you got.
+
 payeeFullName.title = What is the full name of the person you want us to send any payment to?
 payeeFullName.heading = What is the full name of the person you want us to send any payment to?
 payeeFullName.checkYourAnswersLabel = Full name of the person you want us to send any payment to

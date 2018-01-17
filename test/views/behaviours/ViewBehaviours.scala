@@ -48,7 +48,6 @@ trait ViewBehaviours extends ViewSpecBase {
           val doc = asDocument(view())
           for (key <- expectedGuidanceKeys) assertContainsText(doc, messages(s"$messageKeyPrefix.$key"))
         }
-
       }
     }
   }
@@ -62,4 +61,15 @@ trait ViewBehaviours extends ViewSpecBase {
       }
     }
   }
+
+//  def pageWithHintText(view: () => HtmlFormat.Appendable,
+//                       messageKeyPrefix: String) = {
+//    "behave like a page with hint text" must {
+//      "display the correct hint text" in {
+//        val doc = asDocument(view())
+//        assertContainsText(doc, messages(s"$messageKeyPrefix.hint"))
+//      }
+//
+//    }
+//  }
 }
