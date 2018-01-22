@@ -35,7 +35,10 @@
 
         @components.heading("otherIncomeDetailsAndAmount.heading")
 
-        @components.input_textarea(InputViewModel("value", form), label = messages("otherIncomeDetailsAndAmount.heading"))
+        @components.input_textarea(InputViewModel("value", form),
+         label = messages("otherIncomeDetailsAndAmount.heading"),
+         labelClass = Some("visually-hidden"),
+         hint = Some(messages("otherIncomeDetailsAndAmount.hint")))
 
         @components.submit_button()
     }
