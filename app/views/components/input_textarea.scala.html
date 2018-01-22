@@ -22,12 +22,13 @@ label: String,
 secondaryLabel: Option[String] = None,
 inputClass: Option[String] = None,
 hint: Option[String] = None,
-charLimit: Option[Int] = None
+charLimit: Option[Int] = None,
+labelClass: Option[String] = None
 )(implicit messages: Messages)
 
 <div class="form-field @if(viewModel.errorKey != ""){form-field--error}">
     <label class="form-label" for="@{viewModel.id}">
-        <span class="bold">@label</span>
+        <span class="bold @if(labelClass.nonEmpty){@labelClass}">@label</span>
         @if(hint != ""){
         <span class="form-hint">@hint</span>
         }
