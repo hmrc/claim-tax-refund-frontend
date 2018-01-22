@@ -48,7 +48,6 @@ trait ViewBehaviours extends ViewSpecBase {
           val doc = asDocument(view())
           for (key <- expectedGuidanceKeys) assertContainsText(doc, messages(s"$messageKeyPrefix.$key"))
         }
-
       }
     }
   }

@@ -42,6 +42,7 @@ class OtherBenefitsDetailsAndAmountViewSpec extends StringViewBehaviours with Mo
 
     behave like pageWithBackLink(createView)
 
-    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.OtherBenefitsDetailsAndAmountController.onSubmit(NormalMode).url)
+    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.OtherBenefitsDetailsAndAmountController.onSubmit(NormalMode).url,
+     Some(s"$messageKeyPrefix.hint"))
   }
 }
