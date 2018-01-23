@@ -16,7 +16,6 @@
 
 package utils
 
-import models.TypeOfClaim.OptionSA
 import models._
 import viewmodels.AnswerSection
 
@@ -44,11 +43,6 @@ class CheckYourAnswersSections (cyaHelper: CheckYourAnswersHelper, userAnswers: 
   ).flatten)
 
   def incomeDetails = AnswerSection(Some("checkYourAnswers.incomeDetailsSection"), Seq(
-    cyaHelper.typeOfClaim,
-    cyaHelper.uniqueTaxpayerReference,
-    cyaHelper.fullOrPartialClaim,
-    cyaHelper.partialClaimAmount,
-    cyaHelper.payAsYouEarn,
     cyaHelper.anyBenefits,
     cyaHelper.otherIncome
   ).flatten)
