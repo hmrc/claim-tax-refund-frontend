@@ -279,9 +279,9 @@ anyMedicalBenefits.heading = Did you get any medical benefits in the tax year yo
 anyMedicalBenefits.checkYourAnswersLabel = Did you get any medical benefits in the tax year your claim is for?
 anyMedicalBenefits.blank = Select yes if you got any medical benefits in the tax year your claim is for
 
-howMuchMedicalBenefits.title = How much did you get in medical benefits did you get in the tax year your claim is for?
-howMuchMedicalBenefits.heading = How much did you get in medical benefits did you get in the tax year your claim is for?
-howMuchMedicalBenefits.checkYourAnswersLabel = Amount you got in medical benefits did you get in the tax year your claim is for
+howMuchMedicalBenefits.title = How much medical benefit did you get in the tax year your claim is for?
+howMuchMedicalBenefits.heading = How much medical benefit did you get in the tax year your claim is for?
+howMuchMedicalBenefits.checkYourAnswersLabel = Amount you got in medical benefits in the tax year your claim is for
 howMuchMedicalBenefits.blank = Enter the amount you got in medical benefits in the tax year your claim is for
 howMuchMedicalBenefits.invalid = Enter a valid amount you got in medical benefits in the tax year your claim is for
 
