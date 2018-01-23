@@ -138,28 +138,8 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
     x => AnswerRow("anyBenefits.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.AnyBenefitsController.onPageLoad(CheckMode).url)
   }
 
-  def partialClaimAmount: Option[AnswerRow] = userAnswers.partialClaimAmount map {
-    x => AnswerRow("partialClaimAmount.checkYourAnswersLabel", s"$x", false, routes.PartialClaimAmountController.onPageLoad(CheckMode).url)
-  }
-
-  def fullOrPartialClaim: Option[AnswerRow] = userAnswers.fullOrPartialClaim map {
-    x => AnswerRow("fullOrPartialClaim.checkYourAnswersLabel", s"fullOrPartialClaim.$x", true, routes.FullOrPartialClaimController.onPageLoad(CheckMode).url)
-  }
-
   def selectTaxYear: Option[AnswerRow] = userAnswers.selectTaxYear map {
     x => AnswerRow("selectTaxYear.checkYourAnswersLabel", s"selectTaxYear.$x", true, routes.SelectTaxYearController.onPageLoad(CheckMode).url)
-  }
-
-  def payAsYouEarn: Option[AnswerRow] = userAnswers.payAsYouEarn map {
-    x => AnswerRow("payAsYouEarn.checkYourAnswersLabel", s"$x", false, routes.PayAsYouEarnController.onPageLoad(CheckMode).url)
-  }
-
-  def uniqueTaxpayerReference: Option[AnswerRow] = userAnswers.uniqueTaxpayerReference map {
-    x => AnswerRow("uniqueTaxpayerReference.checkYourAnswersLabel", s"$x", false, routes.UniqueTaxpayerReferenceController.onPageLoad(CheckMode).url)
-  }
-
-  def typeOfClaim: Option[AnswerRow] = userAnswers.typeOfClaim map {
-    x => AnswerRow("typeOfClaim.checkYourAnswersLabel", s"typeOfClaim.$x", true, routes.TypeOfClaimController.onPageLoad(CheckMode).url)
   }
 
   def telephoneNumber: Option[AnswerRow] = userAnswers.telephoneNumber map {

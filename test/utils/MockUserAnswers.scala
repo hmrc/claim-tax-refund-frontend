@@ -16,9 +16,7 @@
 
 package utils
 
-import models.FullOrPartialClaim.OptionAll
 import models.SelectTaxYear.Option1
-import models.TypeOfClaim.{OptionPAYE, OptionSA}
 import models.WhereToSendPayment.OptionYou
 import models.{InternationalAddress, UkAddress}
 import org.mockito.Mockito.when
@@ -35,11 +33,6 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.ukAddress) thenReturn None
     when(answers.internationalAddress) thenReturn None
     when(answers.telephoneNumber) thenReturn None
-    when(answers.typeOfClaim) thenReturn None
-    when(answers.uniqueTaxpayerReference) thenReturn None
-    when(answers.fullOrPartialClaim) thenReturn None
-    when(answers.partialClaimAmount) thenReturn None
-    when(answers.payAsYouEarn) thenReturn None
     when(answers.selectTaxYear) thenReturn None
     when(answers.anyBenefits) thenReturn None
     when(answers.anyJobseekersAllowance) thenReturn None
@@ -92,9 +85,6 @@ object MockUserAnswers extends MockitoSugar {
     val answers = nothingAnswered
 
     yourDetailsUserAnswers
-    when(answers.typeOfClaim) thenReturn Some(OptionSA)
-    when(answers.uniqueTaxpayerReference) thenReturn Some("1234567890")
-    when(answers.fullOrPartialClaim) thenReturn Some(OptionAll)
     when(answers.whereToSendPayment) thenReturn Some(OptionYou)
 
     answers

@@ -21,8 +21,6 @@ import org.mockito.Mockito._
 import org.scalatest.mockito.MockitoSugar
 import controllers.routes
 import identifiers._
-import models.FullOrPartialClaim.{OptionAll, OptionSome}
-import models.TypeOfClaim.{OptionPAYE, OptionSA}
 import models.WhereToSendPayment.{OptionSomeoneElse, OptionYou}
 import models._
 
@@ -68,48 +66,9 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(InternationalAddressId, NormalMode)(answers) mustBe routes.TelephoneNumberController.onPageLoad(NormalMode)
       }
 
-      "go to TypeOfClaim from TelephoneNumber" in {
+      "go to SelectTaxYear from TelephoneNumber" in {
         val answers = mock[UserAnswers]
-        navigator.nextPage(TelephoneNumberId, NormalMode)(answers) mustBe routes.TypeOfClaimController.onPageLoad(NormalMode)
-      }
-
-      "go to UniqueTaxpayerReference from TypeOfClaim when SA is selected" in {
-        val answers = mock[UserAnswers]
-        when(answers.typeOfClaim) thenReturn Some(OptionSA)
-        navigator.nextPage(TypeOfClaimId, NormalMode)(answers) mustBe routes.UniqueTaxpayerReferenceController.onPageLoad(NormalMode)
-      }
-
-      "go to PayAsYouEarn from TypeOfClaim when PAYE is selected" in {
-        val answers = mock[UserAnswers]
-        when(answers.typeOfClaim) thenReturn Some(OptionPAYE)
-        navigator.nextPage(TypeOfClaimId, NormalMode)(answers) mustBe routes.PayAsYouEarnController.onPageLoad(NormalMode)
-      }
-
-      "go to FullOrPartialClaim from UniqueTaxpayerReference" in {
-        val answers = mock[UserAnswers]
-        navigator.nextPage(UniqueTaxpayerReferenceId, NormalMode)(answers) mustBe routes.FullOrPartialClaimController.onPageLoad(NormalMode)
-      }
-
-      "go to SelectTaxYear from PayAsYouEarn" in {
-        val answers = mock[UserAnswers]
-        navigator.nextPage(PayAsYouEarnId, NormalMode)(answers) mustBe routes.SelectTaxYearController.onPageLoad(NormalMode)
-      }
-
-      "go to PartialClaimAmount from TypeOfClaim when FullOrPartialClaim is selected" in {
-        val answers = mock[UserAnswers]
-        when(answers.fullOrPartialClaim) thenReturn Some(OptionSome)
-        navigator.nextPage(FullOrPartialClaimId, NormalMode)(answers) mustBe routes.PartialClaimAmountController.onPageLoad(NormalMode)
-      }
-
-      "go to WhereToSendPayment from TypeOfClaim when FullClaim is selected" in {
-        val answers = mock[UserAnswers]
-        when(answers.fullOrPartialClaim) thenReturn Some(OptionAll)
-        navigator.nextPage(FullOrPartialClaimId, NormalMode)(answers) mustBe routes.WhereToSendPaymentController.onPageLoad(NormalMode)
-      }
-
-      "go to WhereToSendPayments from PartialClaimAmount" in {
-        val answers = mock[UserAnswers]
-        navigator.nextPage(PartialClaimAmountId, NormalMode)(answers) mustBe routes.WhereToSendPaymentController.onPageLoad(NormalMode)
+        navigator.nextPage(TelephoneNumberId, NormalMode)(answers) mustBe routes.SelectTaxYearController.onPageLoad(NormalMode)
       }
 
       "go to WhereToSendPayment from AnyOtherTaxableIncome when no is selected" in {
