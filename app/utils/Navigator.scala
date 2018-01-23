@@ -21,8 +21,6 @@ import javax.inject.{Inject, Singleton}
 import play.api.mvc.Call
 import controllers.routes
 import identifiers._
-import models.FullOrPartialClaim.{OptionAll, OptionSome}
-import models.TypeOfClaim.{OptionPAYE, OptionSA}
 import models.WhereToSendPayment.{OptionSomeoneElse, OptionYou}
 import models.{CheckMode, Mode, NormalMode}
 
@@ -35,13 +33,8 @@ class Navigator @Inject()() {
     IsTheAddressInTheUKId -> isAddressInUkRoute,
     UkAddressId -> (_ =>  routes.TelephoneNumberController.onPageLoad(NormalMode)),
     InternationalAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
-    TelephoneNumberId -> (_ => routes.TypeOfClaimController.onPageLoad(NormalMode)),
-    TypeOfClaimId -> typeOfClaim,
-    UniqueTaxpayerReferenceId -> (_ => routes.FullOrPartialClaimController.onPageLoad(NormalMode)),
-    PayAsYouEarnId -> (_ => routes.SelectTaxYearController.onPageLoad(NormalMode)),
+    TelephoneNumberId -> (_ => routes.SelectTaxYearController.onPageLoad(NormalMode)),
     SelectTaxYearId -> (_ => routes.AnyBenefitsController.onPageLoad(NormalMode)),
-    FullOrPartialClaimId -> fullOrPartialClaim,
-    PartialClaimAmountId -> (_ => routes.WhereToSendPaymentController.onPageLoad(NormalMode)),
     AnyBenefitsId -> anyBenefits,
     AnyJobseekersAllowanceId -> anyJobseekers,
     HowMuchJobseekersAllowanceId -> (_ => routes.AnyIncapacityBenefitController.onPageLoad(NormalMode)),
@@ -83,18 +76,6 @@ class Navigator @Inject()() {
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
-  private def typeOfClaim(userAnswers: UserAnswers) = userAnswers.typeOfClaim match {
-    case Some(OptionSA) => routes.UniqueTaxpayerReferenceController.onPageLoad(NormalMode)
-    case Some(OptionPAYE) => routes.PayAsYouEarnController.onPageLoad(NormalMode)
-    case None => routes.SessionExpiredController.onPageLoad()
-  }
-
-  private def fullOrPartialClaim(userAnswers: UserAnswers) = userAnswers.fullOrPartialClaim match {
-    case Some(OptionSome) => routes.PartialClaimAmountController.onPageLoad(NormalMode)
-    case Some(OptionAll) => routes.WhereToSendPaymentController.onPageLoad(NormalMode)
-    case None => routes.SessionExpiredController.onPageLoad()
-  }
-
   private def anyBenefits(userAnswers: UserAnswers) = userAnswers.anyBenefits match {
     case Some(true) => routes.AnyJobseekersAllowanceController.onPageLoad(NormalMode)
     case Some(false) => routes.OtherIncomeController.onPageLoad(NormalMode)
@@ -106,7 +87,6 @@ class Navigator @Inject()() {
     case Some(false) => routes.AnyIncapacityBenefitController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
-
 
   private def anyIncapacity(userAnswers: UserAnswers) = userAnswers.anyIncapacityBenefit match {
     case Some(true) => routes.HowMuchIncapacityBenefitController.onPageLoad(NormalMode)

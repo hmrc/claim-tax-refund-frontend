@@ -42,35 +42,10 @@ POST       /enter-telephone-number                              controllers.Tele
 GET        /change-telephone-number                             controllers.TelephoneNumberController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-telephone-number                             controllers.TelephoneNumberController.onSubmit(mode: Mode = CheckMode)
 
-GET        /select-the-type-of-claim                            controllers.TypeOfClaimController.onPageLoad(mode: Mode = NormalMode)
-POST       /select-the-type-of-claim                            controllers.TypeOfClaimController.onSubmit(mode: Mode = NormalMode)
-GET        /change-the-type-of-claim                            controllers.TypeOfClaimController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-the-type-of-claim                            controllers.TypeOfClaimController.onSubmit(mode: Mode = CheckMode)
-
-GET        /what-is-your-utr                                    controllers.UniqueTaxpayerReferenceController.onPageLoad(mode: Mode = NormalMode)
-POST       /what-is-your-utr                                    controllers.UniqueTaxpayerReferenceController.onSubmit(mode: Mode = NormalMode)
-GET        /change-your-utr                                     controllers.UniqueTaxpayerReferenceController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-your-utr                                     controllers.UniqueTaxpayerReferenceController.onSubmit(mode: Mode = CheckMode)
-
-GET        /enter-paye-reference-number                         controllers.PayAsYouEarnController.onPageLoad(mode: Mode = NormalMode)
-POST       /enter-paye-reference-number                         controllers.PayAsYouEarnController.onSubmit(mode: Mode = NormalMode)
-GET        /change-paye-reference-number                        controllers.PayAsYouEarnController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-paye-reference-number                        controllers.PayAsYouEarnController.onSubmit(mode: Mode = CheckMode)
-
 GET        /select-claim-tax-year                               controllers.SelectTaxYearController.onPageLoad(mode: Mode = NormalMode)
 POST       /select-claim-tax-year                               controllers.SelectTaxYearController.onSubmit(mode: Mode = NormalMode)
 GET        /change-claim-tax-year                               controllers.SelectTaxYearController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-claim-tax-year                               controllers.SelectTaxYearController.onSubmit(mode: Mode = CheckMode)
-
-GET        /how-much-is-overpaid                                controllers.FullOrPartialClaimController.onPageLoad(mode: Mode = NormalMode)
-POST       /how-much-is-overpaid                                controllers.FullOrPartialClaimController.onSubmit(mode: Mode = NormalMode)
-GET        /change-amount-overpaid                              controllers.FullOrPartialClaimController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-amount-overpaid                              controllers.FullOrPartialClaimController.onSubmit(mode: Mode = CheckMode)
-
-GET        /how-much-do-you-want-to-claim                       controllers.PartialClaimAmountController.onPageLoad(mode: Mode = NormalMode)
-POST       /how-much-do-you-want-to-claim                       controllers.PartialClaimAmountController.onSubmit(mode: Mode = NormalMode)
-GET        /change-amount-to-claim                              controllers.PartialClaimAmountController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-amount-to-claim                              controllers.PartialClaimAmountController.onSubmit(mode: Mode = CheckMode)
 
 GET        /did-you-get-any-benefits                            controllers.AnyBenefitsController.onPageLoad(mode: Mode = NormalMode)
 POST       /did-you-get-any-benefits                            controllers.AnyBenefitsController.onSubmit(mode: Mode = NormalMode)

@@ -80,17 +80,7 @@ class UserAnswers(val cacheMap: CacheMap) {
 
   def anyBenefits: Option[Boolean] = cacheMap.getEntry[Boolean](AnyBenefitsId.toString)
 
-  def partialClaimAmount: Option[String] = cacheMap.getEntry[String](PartialClaimAmountId.toString)
-
-  def fullOrPartialClaim: Option[FullOrPartialClaim] = cacheMap.getEntry[FullOrPartialClaim](FullOrPartialClaimId.toString)
-
   def selectTaxYear: Option[SelectTaxYear] = cacheMap.getEntry[SelectTaxYear](SelectTaxYearId.toString)
-
-  def payAsYouEarn: Option[String] = cacheMap.getEntry[String](PayAsYouEarnId.toString)
-
-  def uniqueTaxpayerReference: Option[String] = cacheMap.getEntry[String](UniqueTaxpayerReferenceId.toString)
-
-  def typeOfClaim: Option[TypeOfClaim] = cacheMap.getEntry[TypeOfClaim](TypeOfClaimId.toString)
 
   def telephoneNumber: Option[String] = cacheMap.getEntry[String](TelephoneNumberId.toString)
 
