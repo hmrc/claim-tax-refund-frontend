@@ -24,7 +24,7 @@ import play.api.data.Forms._
 
 class PayeeFullNameForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 
-  private val payeeFullNameBlankKey = "error.required"
+  private val payeeFullNameBlankKey = "payeeFullName.blank"
 
   def apply(): Form[String] = Form("value" -> text.verifying(nonEmpty(payeeFullNameBlankKey)))
 }
