@@ -25,7 +25,7 @@ import play.api.data.Form
 
 class AgentReferenceNumberFormSpec extends FormBehaviours with MockitoSugar {
 
-  val errorKeyBlank = "error.required"
+  val errorKeyBlank = "agentReferenceNumber.blank"
 
   def appConfig: FrontendAppConfig = {
     val instance = mock[FrontendAppConfig]

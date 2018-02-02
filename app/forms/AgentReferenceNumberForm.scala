@@ -24,7 +24,7 @@ import play.api.data.Forms._
 
 class AgentReferenceNumberForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 
-  private val agentReferenceNumberBlankKey = "error.required"
+  private val agentReferenceNumberBlankKey = "agentReferenceNumber.blank"
 
   def apply(): Form[String] = Form("value" -> text.verifying(nonEmpty(agentReferenceNumberBlankKey)))
 }
