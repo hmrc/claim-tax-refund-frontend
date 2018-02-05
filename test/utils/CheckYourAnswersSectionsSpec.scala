@@ -17,6 +17,7 @@
 package utils
 
 import base.SpecBase
+import models.SelectTaxYear.Option1
 import models.WhereToSendPayment.OptionSomeoneElse
 import models._
 import org.scalatest.mockito.MockitoSugar
@@ -190,6 +191,21 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       rows(2).label mustBe "anyAgentRef.checkYourAnswersLabel"
       rows(3).label mustBe "isPayeeAddressInTheUK.checkYourAnswersLabel"
       rows(4).label mustBe "payeeInternationalAddress.checkYourAnswersLabel"
+    }
+
+    "have the correct rows in the right order in the Income Details section" in {
+      when(answers.selectTaxYear) thenReturn Some(Option1)
+      when(answers.anyBenefits) thenReturn Some(false)
+      when(answers.otherIncome) thenReturn Some(false)
+
+      val helper = new CheckYourAnswersHelper(answers)
+      val sections = new CheckYourAnswersSections(helper, MockUserAnswers.minimalValidUserAnswers)
+      val rows = sections.incomeDetails.rows
+
+      rows.size mustBe 3
+      rows.head.label mustBe "selectTaxYear.checkYourAnswersLabel"
+      rows(1).label mustBe "anyBenefits.checkYourAnswersLabel"
+      rows(2).label mustBe "otherIncome.checkYourAnswersLabel"
     }
   }
 }
