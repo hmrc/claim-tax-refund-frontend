@@ -142,10 +142,10 @@ POST       /how-much-state-pension                              controllers.HowM
 GET        /change-how-much-state-pension                       controllers.HowMuchStatePensionController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-how-much-state-pension                       controllers.HowMuchStatePensionController.onSubmit(mode: Mode = CheckMode)
 
-GET        /did-you-get-other-income                            controllers.AnyOtherTaxableIncomeController.onPageLoad(mode: Mode = NormalMode)
-POST       /did-you-get-other-income                            controllers.AnyOtherTaxableIncomeController.onSubmit(mode: Mode = NormalMode)
-GET        /change-if-you-got-other-income                      controllers.AnyOtherTaxableIncomeController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-if-you-got-other-income                      controllers.AnyOtherTaxableIncomeController.onSubmit(mode: Mode = CheckMode)
+GET        /did-you-get-any-other-income                            controllers.AnyOtherTaxableIncomeController.onPageLoad(mode: Mode = NormalMode)
+POST       /did-you-get-any-other-income                            controllers.AnyOtherTaxableIncomeController.onSubmit(mode: Mode = NormalMode)
+GET        /change-if-you-got-any-other-income                      controllers.AnyOtherTaxableIncomeController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-if-you-got-any-other-income                      controllers.AnyOtherTaxableIncomeController.onSubmit(mode: Mode = CheckMode)
 
 GET        /what-other-benefits                                 controllers.OtherBenefitsDetailsAndAmountController.onPageLoad(mode: Mode = NormalMode)
 POST       /what-other-benefits                                 controllers.OtherBenefitsDetailsAndAmountController.onSubmit(mode: Mode = NormalMode)
