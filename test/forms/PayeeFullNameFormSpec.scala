@@ -18,17 +18,20 @@ package forms
 
 import config.FrontendAppConfig
 import forms.behaviours.FormBehaviours
-import models.MandatoryField
+import models.{MandatoryField, MaxLengthField}
 import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito._
 import play.api.data.Form
 
 class PayeeFullNameFormSpec extends FormBehaviours with MockitoSugar {
 
-  val errorKeyBlank = "payeeFullName.blank"
+  private val errorKeyBlank = "payeeFullName.blank"
+  private val errorKeyTooLong = "payeeFullName.tooLong"
+  private val maxLength = 35
 
   def appConfig: FrontendAppConfig = {
     val instance = mock[FrontendAppConfig]
+    when(instance.payeeFullNameMaxLength) thenReturn maxLength
     instance
   }
 
@@ -38,8 +41,8 @@ class PayeeFullNameFormSpec extends FormBehaviours with MockitoSugar {
 
   "PayeeFullName Form" must {
 
-    behave like formWithMandatoryTextFields(
-      MandatoryField("value", errorKeyBlank)
-    )
+    behave like formWithMandatoryTextFields(MandatoryField("value", errorKeyBlank))
+
+    behave like formWithMaxLengthTextFields(MaxLengthField("value", errorKeyTooLong, maxLength))
   }
 }
