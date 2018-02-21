@@ -37,6 +37,7 @@ class AgentReferenceNumberControllerSpec extends ControllerSpecBase {
       dataRetrievalAction, new DataRequiredActionImpl, new AgentReferenceNumberForm(frontendAppConfig))
 
   val testAnswer = "answer"
+  val testTooLongAnswer = "AnswerAnswerAnswerAnswerAnswerAnswer"
   val form = new AgentReferenceNumberForm(frontendAppConfig)()
 
   def viewAsString(form: Form[_] = form) = agentReferenceNumber(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
@@ -71,6 +72,16 @@ class AgentReferenceNumberControllerSpec extends ControllerSpecBase {
     "return a Bad Request and errors when invalid data is submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", ""))
       val boundForm = form.bind(Map("value" -> ""))
+
+      val result = controller().onSubmit(NormalMode)(postRequest)
+
+      status(result) mustBe BAD_REQUEST
+      contentAsString(result) mustBe viewAsString(boundForm)
+    }
+
+    "return a Bad Request and errors when data that is too long is submitted" in {
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", testTooLongAnswer))
+      val boundForm = form.bind(Map("value" -> testTooLongAnswer))
 
       val result = controller().onSubmit(NormalMode)(postRequest)
 
