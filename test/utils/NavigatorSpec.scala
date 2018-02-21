@@ -36,14 +36,6 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(UnknownIdentifier, NormalMode)(mock[UserAnswers]) mustBe routes.IndexController.onPageLoad()
       }
 
-      "go to Nino from FullName" in {
-        navigator.nextPage(FullNameId, NormalMode)(mock[UserAnswers]) mustBe routes.NationalInsuranceNumberController.onPageLoad(NormalMode)
-      }
-
-      "go to isTheAddressInTheUK from Nino" in {
-        navigator.nextPage(NationalInsuranceNumberId, NormalMode)(mock[UserAnswers]) mustBe routes.IsTheAddressInTheUKController.onPageLoad(NormalMode)
-      }
-
       "go to UkAddress from isTheAddressInTheUK when Yes is selected" in {
         val answers = mock[UserAnswers]
         when(answers.isTheAddressInTheUK) thenReturn Some(true)
