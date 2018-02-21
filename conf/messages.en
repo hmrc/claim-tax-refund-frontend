@@ -311,6 +311,8 @@ agentReferenceNumber.title = What is the agent reference number of the person yo
 agentReferenceNumber.heading = What is the agent reference number of the person you want us to send any payment to?
 agentReferenceNumber.checkYourAnswersLabel = Agent reference number of the person you want us to send any payment to
 agentReferenceNumber.blank = Enter the agent reference number of the person you want us to send any payment to
+agentReferenceNumber.tooLong = Agent reference number can only be up to 35 characters
+
 
 anyAgentRef.title = Does the person you want us to send any payment to have an agent reference number?
 anyAgentRef.heading = Does the person you want us to send any payment to have an agent reference number?
