@@ -25,6 +25,10 @@ import play.api.data.Forms._
 class AgentReferenceNumberForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 
   private val agentReferenceNumberBlankKey = "agentReferenceNumber.blank"
+  private val agentReferenceNumberTooLong = "agentReferenceNumber.tooLong"
+  private val agentReferenceLength = appConfig.agentReferenceMaxLength
 
-  def apply(): Form[String] = Form("value" -> text.verifying(nonEmpty(agentReferenceNumberBlankKey)))
+  def apply(): Form[String] = Form(
+    "value" -> text.verifying(firstError(nonEmpty(agentReferenceNumberBlankKey), maxLength(agentReferenceLength, agentReferenceNumberTooLong)))
+  )
 }
