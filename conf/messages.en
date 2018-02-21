@@ -306,13 +306,13 @@ payeeFullName.title = What is the full name of the person you want us to send an
 payeeFullName.heading = What is the full name of the person you want us to send any payment to?
 payeeFullName.checkYourAnswersLabel = Full name of the person you want us to send any payment to
 payeeFullName.blank = Enter the full name of the person you want us to send any payment to
+payeeFullName.tooLong = Full name of the person you want us to send any payment to can only be up to 30 characters
 
 agentReferenceNumber.title = What is the agent reference number of the person you want us to send any payment to?
 agentReferenceNumber.heading = What is the agent reference number of the person you want us to send any payment to?
 agentReferenceNumber.checkYourAnswersLabel = Agent reference number of the person you want us to send any payment to
 agentReferenceNumber.blank = Enter the agent reference number of the person you want us to send any payment to
 agentReferenceNumber.tooLong = Agent reference number can only be up to 35 characters
-
 
 anyAgentRef.title = Does the person you want us to send any payment to have an agent reference number?
 anyAgentRef.heading = Does the person you want us to send any payment to have an agent reference number?
