@@ -25,6 +25,10 @@ import play.api.data.Forms._
 class PayeeFullNameForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 
   private val payeeFullNameBlankKey = "payeeFullName.blank"
+  private val payeeFullNameTooLong = "payeeFullName.tooLong"
+  private val payeeFullNameLength = appConfig.payeeFullNameMaxLength
 
-  def apply(): Form[String] = Form("value" -> text.verifying(nonEmpty(payeeFullNameBlankKey)))
+  def apply(): Form[String] = Form(
+    "value" -> text.verifying(firstError(nonEmpty(payeeFullNameBlankKey), maxLength(payeeFullNameLength, payeeFullNameTooLong)))
+  )
 }
