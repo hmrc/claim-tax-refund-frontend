@@ -18,7 +18,7 @@ package forms
 
 import config.FrontendAppConfig
 import forms.behaviours.FormBehaviours
-import models.MandatoryField
+import models.{MandatoryField, MaxLengthField}
 import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito._
 import play.api.data.Form
@@ -26,9 +26,12 @@ import play.api.data.Form
 class AgentReferenceNumberFormSpec extends FormBehaviours with MockitoSugar {
 
   val errorKeyBlank = "agentReferenceNumber.blank"
+  val agentReferenceTooLong = "agentReferenceNumber.tooLong"
+  val agentReferenceMaxLength = 35
 
   def appConfig: FrontendAppConfig = {
     val instance = mock[FrontendAppConfig]
+    when(instance.agentReferenceMaxLength) thenReturn agentReferenceMaxLength
     instance
   }
 
@@ -38,8 +41,8 @@ class AgentReferenceNumberFormSpec extends FormBehaviours with MockitoSugar {
 
   "AgentReferenceNumber Form" must {
 
-    behave like formWithMandatoryTextFields(
-      MandatoryField("value", errorKeyBlank)
-    )
+    behave like formWithMandatoryTextFields(MandatoryField("value", errorKeyBlank))
+
+    behave like formWithMaxLengthTextFields(MaxLengthField("value", agentReferenceTooLong, agentReferenceMaxLength))
   }
 }
