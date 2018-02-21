@@ -90,8 +90,4 @@ class UserAnswers(val cacheMap: CacheMap) {
 
   def isTheAddressInTheUK: Option[Boolean] = cacheMap.getEntry[Boolean](IsTheAddressInTheUKId.toString)
 
-  def nationalInsuranceNumber: Option[String] = cacheMap.getEntry[String](NationalInsuranceNumberId.toString)
-
-  def fullName: Option[String] = cacheMap.getEntry[String](FullNameId.toString)
-
 }

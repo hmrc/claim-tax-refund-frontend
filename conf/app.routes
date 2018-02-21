@@ -12,16 +12,6 @@ GET        /check-your-answers                                  controllers.Chec
 
 GET        /unauthorised                                        controllers.UnauthorisedController.onPageLoad
 
-GET        /enter-your-full-name                                controllers.FullNameController.onPageLoad(mode: Mode = NormalMode)
-POST       /enter-your-full-name                                controllers.FullNameController.onSubmit(mode: Mode = NormalMode)
-GET        /change-your-full-name                               controllers.FullNameController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-your-full-name                               controllers.FullNameController.onSubmit(mode: Mode = CheckMode)
-
-GET        /enter-your-national-insurance-number                controllers.NationalInsuranceNumberController.onPageLoad(mode: Mode = NormalMode)
-POST       /enter-your-national-insurance-number                controllers.NationalInsuranceNumberController.onSubmit(mode: Mode = NormalMode)
-GET        /change-your-national-insurance-number               controllers.NationalInsuranceNumberController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-your-national-insurance-number               controllers.NationalInsuranceNumberController.onSubmit(mode: Mode = CheckMode)
-
 GET        /is-address-in-uk                                    controllers.IsTheAddressInTheUKController.onPageLoad(mode: Mode = NormalMode)
 POST       /is-address-in-uk                                    controllers.IsTheAddressInTheUKController.onSubmit(mode: Mode = NormalMode)
 GET        /change-address-location                             controllers.IsTheAddressInTheUKController.onPageLoad(mode: Mode = CheckMode)
