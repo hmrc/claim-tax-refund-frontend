@@ -116,8 +116,6 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
 
   "all questions are answered with a UK address" must {
     "have the correct rows in the right order in the Your Details section" in {
-      when(answers.fullName) thenReturn Some("name")
-      when(answers.nationalInsuranceNumber) thenReturn Some("AB123456A")
       when(answers.isTheAddressInTheUK) thenReturn Some(true)
       when(answers.ukAddress) thenReturn Some(UkAddress("Line 1", "Line 2", None, None, None, "DE2 7RD"))
       when(answers.telephoneNumber) thenReturn Some("983475894357934")
@@ -126,12 +124,10 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       val sections = new CheckYourAnswersSections(helper, MockUserAnswers.minimalValidUserAnswers)
       val rows = sections.yourDetails.rows
 
-      rows.size mustBe 5
-      rows.head.label mustBe "fullName.checkYourAnswersLabel"
-      rows(1).label mustBe "nationalInsuranceNumber.checkYourAnswersLabel"
-      rows(2).label mustBe "isTheAddressInTheUK.checkYourAnswersLabel"
-      rows(3).label mustBe "ukAddress.checkYourAnswersLabel"
-      rows(4).label mustBe "telephoneNumber.checkYourAnswersLabel"
+      rows.size mustBe 3
+      rows.head.label mustBe "isTheAddressInTheUK.checkYourAnswersLabel"
+      rows(1).label mustBe "ukAddress.checkYourAnswersLabel"
+      rows(2).label mustBe "telephoneNumber.checkYourAnswersLabel"
     }
 
     "have the correct rows in the right order in the Payment Details section" in {
@@ -156,8 +152,6 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
 
   "all questions are answered with an international address" must {
     "have the correct rows in the right order in the Your Details section" in {
-      when(answers.fullName) thenReturn Some("name")
-      when(answers.nationalInsuranceNumber) thenReturn Some("AB123456A")
       when(answers.isTheAddressInTheUK) thenReturn Some(false)
       when(answers.internationalAddress) thenReturn Some(InternationalAddress("Line 1", "Line 2", None, None, None, "Thailand"))
       when(answers.telephoneNumber) thenReturn Some("983475894357934")
@@ -166,12 +160,10 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       val sections = new CheckYourAnswersSections(helper, MockUserAnswers.minimalValidUserAnswers)
       val rows = sections.yourDetails.rows
 
-      rows.size mustBe 5
-      rows.head.label mustBe "fullName.checkYourAnswersLabel"
-      rows(1).label mustBe "nationalInsuranceNumber.checkYourAnswersLabel"
-      rows(2).label mustBe "isTheAddressInTheUK.checkYourAnswersLabel"
-      rows(3).label mustBe "internationalAddress.checkYourAnswersLabel"
-      rows(4).label mustBe "telephoneNumber.checkYourAnswersLabel"
+      rows.size mustBe 3
+      rows.head.label mustBe "isTheAddressInTheUK.checkYourAnswersLabel"
+      rows(1).label mustBe "internationalAddress.checkYourAnswersLabel"
+      rows(2).label mustBe "telephoneNumber.checkYourAnswersLabel"
     }
 
     "have the correct rows in the right order in the Payment Details section" in {

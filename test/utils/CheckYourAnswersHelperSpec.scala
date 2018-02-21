@@ -27,23 +27,6 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
 
   private var answers = mock[UserAnswers]
 
-  "Full Name" must {
-    s"have the correct label" in {
-      when(answers.fullName) thenReturn Some("value")
-      val helper = new CheckYourAnswersHelper(answers)
-      helper.fullName.get.label mustBe s"fullName.checkYourAnswersLabel"
-    }
-  }
-
-  "National Insurance Number" must {
-    s"have the correct label" in {
-      when(answers.nationalInsuranceNumber) thenReturn Some("value")
-      val helper = new CheckYourAnswersHelper(answers)
-      helper.nationalInsuranceNumber.get.label mustBe s"nationalInsuranceNumber.checkYourAnswersLabel"
-    }
-  }
-
-
   "Is the address in the UK (true)" must {
     s"have the correct label" in {
       when(answers.isTheAddressInTheUK) thenReturn Some(true)
