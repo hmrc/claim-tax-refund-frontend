@@ -27,8 +27,6 @@ object MockUserAnswers extends MockitoSugar {
   def nothingAnswered: UserAnswers = {
 
     val answers = mock[UserAnswers]
-    when(answers.fullName) thenReturn None
-    when(answers.nationalInsuranceNumber) thenReturn None
     when(answers.isTheAddressInTheUK) thenReturn None
     when(answers.ukAddress) thenReturn None
     when(answers.internationalAddress) thenReturn None
@@ -71,8 +69,6 @@ object MockUserAnswers extends MockitoSugar {
 
     val answers = nothingAnswered
 
-    when(answers.fullName) thenReturn Some("name")
-    when(answers.nationalInsuranceNumber) thenReturn Some("AB123456A")
     when(answers.isTheAddressInTheUK) thenReturn Some(true)
     when(answers.ukAddress) thenReturn Some(UkAddress("Line 1", "Line 2", None, None, None, "DE2 7RD"))
     when(answers.telephoneNumber) thenReturn Some("983475894357934")

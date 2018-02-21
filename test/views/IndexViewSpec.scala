@@ -25,7 +25,7 @@ class IndexViewSpec extends ViewBehaviours {
 
   def view = () => index(frontendAppConfig, call)(fakeRequest, messages)
 
-  val call = routes.FullNameController.onPageLoad(NormalMode)
+  val call = routes.IsTheAddressInTheUKController.onPageLoad(NormalMode)
 
   "Index view" must {
 
@@ -34,7 +34,7 @@ class IndexViewSpec extends ViewBehaviours {
 
   "link should direct the user to full name page" in {
     val doc = asDocument(view())
-    doc.getElementById("start-now").attr("href") must include("/enter-your-full-name")
+    doc.getElementById("start-now").attr("href") must include("/is-address-in-uk")
   }
 
   "Page should have title and heading Claim a tax refund" in {

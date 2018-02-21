@@ -22,24 +22,24 @@ import viewmodels.{AnswerRow, RepeaterAnswerRow, RepeaterAnswerSection}
 
 class CheckYourAnswersHelper(userAnswers: UserAnswers) {
 
- def payeeInternationalAddress: Option[AnswerRow] = userAnswers.payeeInternationalAddress map {
+  def payeeInternationalAddress: Option[AnswerRow] = userAnswers.payeeInternationalAddress map {
     x => AnswerRow("payeeInternationalAddress.checkYourAnswersLabel", s"${x.addressLine1} ${x.addressLine2}", false, routes.PayeeInternationalAddressController.onPageLoad(CheckMode).url)
- }
-  
+  }
+
   def payeeUKAddress: Option[AnswerRow] = userAnswers.payeeUKAddress map {
     x => AnswerRow("payeeUKAddress.checkYourAnswersLabel", s"${x.addressLine1} ${x.addressLine2}", false, routes.PayeeUKAddressController.onPageLoad(CheckMode).url)
   }
-  
+
   def whereToSendPayment: Option[AnswerRow] = userAnswers.whereToSendPayment map {
     x => AnswerRow("whereToSendPayment.checkYourAnswersLabel", s"whereToSendPayment.$x", true, routes.WhereToSendPaymentController.onPageLoad(CheckMode).url)
   }
 
   def isPayeeAddressInTheUK: Option[AnswerRow] = userAnswers.isPayeeAddressInTheUK map {
-    x => AnswerRow("isPayeeAddressInTheUK.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.IsPayeeAddressInTheUKController.onPageLoad(CheckMode).url)
+    x => AnswerRow("isPayeeAddressInTheUK.checkYourAnswersLabel", if (x) "site.yes" else "site.no", true, routes.IsPayeeAddressInTheUKController.onPageLoad(CheckMode).url)
   }
 
   def anyAgentRef: Option[AnswerRow] = userAnswers.anyAgentRef map {
-    x => AnswerRow("anyAgentRef.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.AnyAgentRefController.onPageLoad(CheckMode).url)
+    x => AnswerRow("anyAgentRef.checkYourAnswersLabel", if (x) "site.yes" else "site.no", true, routes.AnyAgentRefController.onPageLoad(CheckMode).url)
   }
 
   def agentReferenceNumber: Option[AnswerRow] = userAnswers.agentReferenceNumber map {
@@ -59,7 +59,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
   }
 
   def anyOtherTaxableIncome: Option[AnswerRow] = userAnswers.anyOtherTaxableIncome map {
-    x => AnswerRow("anyOtherTaxableIncome.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.AnyOtherTaxableIncomeController.onPageLoad(CheckMode).url)
+    x => AnswerRow("anyOtherTaxableIncome.checkYourAnswersLabel", if (x) "site.yes" else "site.no", true, routes.AnyOtherTaxableIncomeController.onPageLoad(CheckMode).url)
   }
 
   def howMuchStatePension: Option[AnswerRow] = userAnswers.howMuchStatePension map {
@@ -79,23 +79,23 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
   }
 
   def anyOtherTaxableBenefits: Option[AnswerRow] = userAnswers.anyOtherTaxableBenefits map {
-    x => AnswerRow("anyOtherTaxableBenefits.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.AnyOtherTaxableBenefitsController.onPageLoad(CheckMode).url)
+    x => AnswerRow("anyOtherTaxableBenefits.checkYourAnswersLabel", if (x) "site.yes" else "site.no", true, routes.AnyOtherTaxableBenefitsController.onPageLoad(CheckMode).url)
   }
 
   def anyStatePension: Option[AnswerRow] = userAnswers.anyStatePension map {
-    x => AnswerRow("anyStatePension.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.AnyStatePensionController.onPageLoad(CheckMode).url)
+    x => AnswerRow("anyStatePension.checkYourAnswersLabel", if (x) "site.yes" else "site.no", true, routes.AnyStatePensionController.onPageLoad(CheckMode).url)
   }
 
   def anyEmploymentAndSupportAllowance: Option[AnswerRow] = userAnswers.anyEmploymentAndSupportAllowance map {
-    x => AnswerRow("anyEmploymentAndSupportAllowance.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.AnyEmploymentAndSupportAllowanceController.onPageLoad(CheckMode).url)
+    x => AnswerRow("anyEmploymentAndSupportAllowance.checkYourAnswersLabel", if (x) "site.yes" else "site.no", true, routes.AnyEmploymentAndSupportAllowanceController.onPageLoad(CheckMode).url)
   }
 
   def anyIncapacityBenefit: Option[AnswerRow] = userAnswers.anyIncapacityBenefit map {
-    x => AnswerRow("anyIncapacityBenefit.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.AnyIncapacityBenefitController.onPageLoad(CheckMode).url)
+    x => AnswerRow("anyIncapacityBenefit.checkYourAnswersLabel", if (x) "site.yes" else "site.no", true, routes.AnyIncapacityBenefitController.onPageLoad(CheckMode).url)
   }
 
   def anyJobseekersAllowance: Option[AnswerRow] = userAnswers.anyJobseekersAllowance map {
-    x => AnswerRow("anyJobseekersAllowance.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.AnyJobseekersAllowanceController.onPageLoad(CheckMode).url)
+    x => AnswerRow("anyJobseekersAllowance.checkYourAnswersLabel", if (x) "site.yes" else "site.no", true, routes.AnyJobseekersAllowanceController.onPageLoad(CheckMode).url)
   }
 
   def howMuchMedicalBenefits: Option[AnswerRow] = userAnswers.howMuchMedicalBenefits map {
@@ -103,7 +103,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
   }
 
   def anyMedicalBenefits: Option[AnswerRow] = userAnswers.anyMedicalBenefits map {
-    x => AnswerRow("anyMedicalBenefits.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.AnyMedicalBenefitsController.onPageLoad(CheckMode).url)
+    x => AnswerRow("anyMedicalBenefits.checkYourAnswersLabel", if (x) "site.yes" else "site.no", true, routes.AnyMedicalBenefitsController.onPageLoad(CheckMode).url)
   }
 
   def howMuchBankBuildingSocietyInterest: Option[AnswerRow] = userAnswers.howMuchBankBuildingSocietyInterest map {
@@ -111,7 +111,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
   }
 
   def anyBankBuildingSocietyInterest: Option[AnswerRow] = userAnswers.anyBankBuildingSocietyInterest map {
-    x => AnswerRow("anyBankBuildingSocietyInterest.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.AnyBankBuildingSocietyInterestController.onPageLoad(CheckMode).url)
+    x => AnswerRow("anyBankBuildingSocietyInterest.checkYourAnswersLabel", if (x) "site.yes" else "site.no", true, routes.AnyBankBuildingSocietyInterestController.onPageLoad(CheckMode).url)
   }
 
   def howMuchRentalIncome: Option[AnswerRow] = userAnswers.howMuchRentalIncome map {
@@ -119,7 +119,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
   }
 
   def anyRentalIncome: Option[AnswerRow] = userAnswers.anyRentalIncome map {
-    x => AnswerRow("anyRentalIncome.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.AnyRentalIncomeController.onPageLoad(CheckMode).url)
+    x => AnswerRow("anyRentalIncome.checkYourAnswersLabel", if (x) "site.yes" else "site.no", true, routes.AnyRentalIncomeController.onPageLoad(CheckMode).url)
   }
 
   def howMuchCarBenefits: Option[AnswerRow] = userAnswers.howMuchCarBenefits map {
@@ -127,15 +127,15 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
   }
 
   def anyCarBenefits: Option[AnswerRow] = userAnswers.anyCarBenefits map {
-    x => AnswerRow("anyCarBenefits.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.AnyCarBenefitsController.onPageLoad(CheckMode).url)
+    x => AnswerRow("anyCarBenefits.checkYourAnswersLabel", if (x) "site.yes" else "site.no", true, routes.AnyCarBenefitsController.onPageLoad(CheckMode).url)
   }
 
   def otherIncome: Option[AnswerRow] = userAnswers.otherIncome map {
-    x => AnswerRow("otherIncome.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.OtherIncomeController.onPageLoad(CheckMode).url)
+    x => AnswerRow("otherIncome.checkYourAnswersLabel", if (x) "site.yes" else "site.no", true, routes.OtherIncomeController.onPageLoad(CheckMode).url)
   }
 
   def anyBenefits: Option[AnswerRow] = userAnswers.anyBenefits map {
-    x => AnswerRow("anyBenefits.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.AnyBenefitsController.onPageLoad(CheckMode).url)
+    x => AnswerRow("anyBenefits.checkYourAnswersLabel", if (x) "site.yes" else "site.no", true, routes.AnyBenefitsController.onPageLoad(CheckMode).url)
   }
 
   def selectTaxYear: Option[AnswerRow] = userAnswers.selectTaxYear map {
@@ -155,14 +155,6 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
   }
 
   def isTheAddressInTheUK: Option[AnswerRow] = userAnswers.isTheAddressInTheUK map {
-    x => AnswerRow("isTheAddressInTheUK.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.IsTheAddressInTheUKController.onPageLoad(CheckMode).url)
-  }
-
-  def nationalInsuranceNumber: Option[AnswerRow] = userAnswers.nationalInsuranceNumber map {
-    x => AnswerRow("nationalInsuranceNumber.checkYourAnswersLabel", s"$x", false, routes.NationalInsuranceNumberController.onPageLoad(CheckMode).url)
-  }
-
-  def fullName: Option[AnswerRow] = userAnswers.fullName map {
-    x => AnswerRow("fullName.checkYourAnswersLabel", s"$x", false, routes.FullNameController.onPageLoad(CheckMode).url)
+    x => AnswerRow("isTheAddressInTheUK.checkYourAnswersLabel", if (x) "site.yes" else "site.no", true, routes.IsTheAddressInTheUKController.onPageLoad(CheckMode).url)
   }
 }
