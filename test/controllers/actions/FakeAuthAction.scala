@@ -18,11 +18,12 @@ package controllers.actions
 
 import play.api.mvc.{Request, Result}
 import models.requests.AuthenticatedRequest
+import uk.gov.hmrc.auth.core.retrieve.ItmpAddress
 
 import scala.concurrent.Future
 
 object FakeAuthAction extends AuthAction {
   override def invokeBlock[A](request: Request[A], block: (AuthenticatedRequest[A]) => Future[Result]): Future[Result] =
-    block(AuthenticatedRequest(request, "id"))
+    block(AuthenticatedRequest(request, "id", "John", "Doe", "AB123456A",
+      ItmpAddress(Some("Test address"), Some("Test Street"), None, None, None, Some("TE15 TWN"), None, None)))
 }
-
