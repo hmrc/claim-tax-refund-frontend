@@ -22,6 +22,7 @@ import org.scalatest.mockito.MockitoSugar
 import base.SpecBase
 import connectors.DataCacheConnector
 import models.requests.{AuthenticatedRequest, OptionalDataRequest}
+import uk.gov.hmrc.auth.core.retrieve.ItmpAddress
 import uk.gov.hmrc.http.cache.client.CacheMap
 
 import scala.concurrent.Future
@@ -40,7 +41,12 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar with ScalaFutur
         when(dataCacheConnector.fetch("id")) thenReturn Future(None)
         val action = new Harness(dataCacheConnector)
 
-        val futureResult = action.callTransform(new AuthenticatedRequest(fakeRequest, "id"))
+        val futureResult = action.callTransform(
+          new AuthenticatedRequest(
+          fakeRequest, "id", "John", "Doe", "AB123456A",
+          ItmpAddress(Some("Test address"), Some("Test Street"), None, None, None, Some("TE15 TWN"), None, None)
+          )
+        )
 
         whenReady(futureResult) { result =>
           result.userAnswers.isEmpty mustBe true
@@ -54,7 +60,12 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar with ScalaFutur
         when(dataCacheConnector.fetch("id")) thenReturn Future(Some(new CacheMap("id", Map())))
         val action = new Harness(dataCacheConnector)
 
-        val futureResult = action.callTransform(new AuthenticatedRequest(fakeRequest, "id"))
+        val futureResult = action.callTransform(
+          new AuthenticatedRequest(
+            fakeRequest, "id", "John", "Doe", "AB123456A",
+            ItmpAddress(Some("Test address"), Some("Test Street"), None, None, None, Some("TE15 TWN"), None, None)
+          )
+        )
 
         whenReady(futureResult) { result =>
           result.userAnswers.isDefined mustBe true
