@@ -27,7 +27,7 @@ import models.requests.AuthenticatedRequest
 import uk.gov.hmrc.http.UnauthorizedException
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.HeaderCarrierConverter
-
+import uk.gov.hmrc.auth.core.retrieve._
 import scala.concurrent.{ExecutionContext, Future}
 
 class AuthActionImpl @Inject()(override val authConnector: AuthConnector, config: FrontendAppConfig)
@@ -36,10 +36,13 @@ class AuthActionImpl @Inject()(override val authConnector: AuthConnector, config
   override def invokeBlock[A](request: Request[A], block: (AuthenticatedRequest[A]) => Future[Result]): Future[Result] = {
     implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromHeadersAndSession(request.headers, Some(request.session))
 
-    authorised().retrieve(Retrievals.externalId) {
-      _.map {
-        externalId => block(AuthenticatedRequest(request, externalId))
-      }.getOrElse(throw new UnauthorizedException("Unable to retrieve external Id"))
+    authorised(ConfidenceLevel.L200 and AffinityGroup.Individual)
+      .retrieve(Retrievals.externalId and Retrievals.name and Retrievals.nino and Retrievals.itmpAddress) {
+        case Some(externalId) ~ Name(Some(firstName), Some(lastName)) ~ Some(nino) ~ address =>
+          block(AuthenticatedRequest(request, externalId, firstName, lastName, nino, address))
+        case _ =>
+          ???
+          //TODO handle unlikely error
     } recover {
       case ex: NoActiveSession =>
         Redirect(config.loginUrl, Map("continue" -> Seq(config.loginContinueUrl)))
@@ -47,6 +50,7 @@ class AuthActionImpl @Inject()(override val authConnector: AuthConnector, config
         Redirect(routes.UnauthorisedController.onPageLoad)
       case ex: InsufficientConfidenceLevel =>
         Redirect(routes.UnauthorisedController.onPageLoad)
+        //TODO redirect to auth page
       case ex: UnsupportedAuthProvider =>
         Redirect(routes.UnauthorisedController.onPageLoad)
       case ex: UnsupportedAffinityGroup =>
@@ -56,6 +60,8 @@ class AuthActionImpl @Inject()(override val authConnector: AuthConnector, config
     }
   }
 }
+
+
 
 @ImplementedBy(classOf[AuthActionImpl])
 trait AuthAction extends ActionBuilder[AuthenticatedRequest] with ActionFunction[Request, AuthenticatedRequest]

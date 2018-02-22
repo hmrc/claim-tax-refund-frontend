@@ -17,18 +17,22 @@
 package config
 
 import com.google.inject.{Inject, Singleton}
-import play.api.Configuration
+import play.api.{Configuration, Environment}
 import play.api.i18n.Lang
-import uk.gov.hmrc.play.bootstrap.config.{AppName, BaseUrl}
+import uk.gov.hmrc.play.bootstrap.config.AppName
 import controllers.routes
+import play.api.Mode.Mode
+import uk.gov.hmrc.play.config.ServicesConfig
 
 @Singleton
-class FrontendAppConfig @Inject() (override val configuration: Configuration) extends AppName with BaseUrl {
+class FrontendAppConfig @Inject() (override val runModeConfiguration: Configuration, environment: Environment) extends ServicesConfig {
 
-  private def loadConfig(key: String) = configuration.getString(key).getOrElse(throw new Exception(s"Missing configuration key: $key"))
-  private def loadConfigInt(key: String) = configuration.getInt(key).getOrElse(throw new Exception(s"Missing configuration key: $key"))
+  override protected def mode: Mode = environment.mode
 
-  private lazy val contactHost = configuration.getString("contact-frontend.host").getOrElse("")
+  private def loadConfig(key: String) = runModeConfiguration.getString(key).getOrElse(throw new Exception(s"Missing configuration key: $key"))
+  private def loadConfigInt(key: String) = runModeConfiguration.getInt(key).getOrElse(throw new Exception(s"Missing configuration key: $key"))
+
+  private lazy val contactHost = runModeConfiguration.getString("contact-frontend.host").getOrElse("")
   private val contactFormServiceIdentifier = "claimtaxrefundfrontend"
 
   lazy val analyticsToken = loadConfig(s"google-analytics.token")
@@ -42,7 +46,7 @@ class FrontendAppConfig @Inject() (override val configuration: Configuration) ex
   lazy val loginUrl = loadConfig("urls.login")
   lazy val loginContinueUrl = loadConfig("urls.loginContinue")
 
-  lazy val languageTranslationEnabled = configuration.getBoolean("microservice.services.features.welsh-translation").getOrElse(true)
+  lazy val languageTranslationEnabled = runModeConfiguration.getBoolean("microservice.services.features.welsh-translation").getOrElse(true)
 
   lazy val fullNameLength = loadConfigInt("microservice.services.validation.full-name-length")
   lazy val ninoRegex = loadConfig("microservice.services.validation.nino-regex")
