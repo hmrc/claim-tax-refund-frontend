@@ -44,16 +44,16 @@ class IsTheAddressInTheUKController @Inject()(appConfig: FrontendAppConfig,
   private val errorKey = "isTheAddressInTheUK.blank"
   val form: Form[Boolean] = formProvider(errorKey)
 
-  def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode) = (authenticate andThen getData) {
     implicit request =>
-      val preparedForm = request.userAnswers.isTheAddressInTheUK match {
+      val preparedForm = request.userAnswers.flatMap(x => x.isTheAddressInTheUK) match {
         case None => form
         case Some(value) => form.fill(value)
       }
       Ok(isTheAddressInTheUK(appConfig, preparedForm, mode))
   }
 
-  def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode) = (authenticate andThen getData).async {
     implicit request =>
       form.bindFromRequest().fold(
         (formWithErrors: Form[_]) =>
