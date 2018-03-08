@@ -16,22 +16,28 @@
 
 package forms
 
+import base.SpecBase
 import forms.behaviours.FormBehaviours
 import models.SelectTaxYear
+import play.api.i18n.Messages
+import utils.RadioOption
 
 class SelectTaxYearFormSpec extends FormBehaviours {
 
   private val errorKeyBlank = "selectTaxYear.blank"
 
+  def radioButtonOptions(implicit messages: Messages): Seq[RadioOption] = SelectTaxYearForm.options(messages)
+
   val validData: Map[String, String] = Map(
-    "value" -> SelectTaxYearForm.options.head.value
+    "value" -> radioButtonOptions(messages).head.value
   )
+
   val form = SelectTaxYearForm()
 
   "SelectTaxYear form" must {
 
     behave like questionForm[SelectTaxYear](SelectTaxYear.values.head)
 
-    behave like formWithOptionField("value", errorKeyBlank, SelectTaxYearForm.options.toSeq.map(_.value): _*)
+    behave like formWithOptionField("value", errorKeyBlank, radioButtonOptions(messages).map(_.value): _*)
   }
 }

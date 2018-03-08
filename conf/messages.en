@@ -167,10 +167,10 @@ fullOrPartialClaim.blank = Select whether you want to claim all some of the amou
 
 selectTaxYear.title = Which tax year does your claim apply to?
 selectTaxYear.heading = Which tax year does your claim apply to?
-selectTaxYear.option1 = 6 April 2017 to 5 April 2018
-selectTaxYear.option2 = 6 April 2016 to 5 April 2017
-selectTaxYear.option3 = 6 April 2015 to 5 April 2016
-selectTaxYear.option4 = 6 April 2014 to 5 April 2015
+selectTaxYear.current-year-minus-2 = {0} to {1}
+selectTaxYear.current-year-minus-3 = {0} to {1}
+selectTaxYear.current-year-minus-4 = {0} to {1}
+selectTaxYear.current-year-minus-5 = {0} to {1}
 selectTaxYear.checkYourAnswersLabel = The tax year your claim applies to
 selectTaxYear.blank = Select a tax year
 
@@ -340,8 +340,8 @@ payeeUKAddress.postcode.blank = Enter a postcode
 
 whereToSendPayment.title = Where do you want us to send any payment?
 whereToSendPayment.heading = Where do you want us to send any payment?
-whereToSendPayment.optionYou = You
-whereToSendPayment.optionSomeoneElse = Someone else
+whereToSendPayment.you = You
+whereToSendPayment.someoneElse = Someone else
 whereToSendPayment.checkYourAnswersLabel = Where you want us to send any payment
 whereToSendPayment.blank = Select where you want us to send any payment
 

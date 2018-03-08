@@ -16,4 +16,26 @@
 
 package viewmodels
 
-case class AnswerRow(label: String, answer: String, answerIsMessageKey: Boolean, changeUrl: String)
+import play.api.i18n.Messages
+
+import scala.language.implicitConversions
+
+case class Message(key: String, args: Any*) {
+
+  def print(implicit messages: Messages): String =
+    messages(key, args: _*)
+}
+
+object Message {
+
+  implicit def fromString(str: String): Message =
+    Message(str)
+}
+
+case class AnswerRow(label: Message, answer: Message, url: String)
+
+object AnswerRow {
+
+  def apply(label: String, answer: String, answerIsMessageKey: Boolean, url: String): AnswerRow =
+    AnswerRow(Message(label), Message(answer), url)
+}

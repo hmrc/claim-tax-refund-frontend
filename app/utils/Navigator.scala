@@ -21,7 +21,7 @@ import javax.inject.{Inject, Singleton}
 import play.api.mvc.Call
 import controllers.routes
 import identifiers._
-import models.WhereToSendPayment.{OptionSomeoneElse, OptionYou}
+import models.WhereToSendPayment.{SomeoneElse, You}
 import models.{CheckMode, Mode, NormalMode}
 
 @Singleton
@@ -147,8 +147,8 @@ class Navigator @Inject()() {
   }
 
   private def whereToSendPayment(userAnswers: UserAnswers) = userAnswers.whereToSendPayment match {
-    case Some(OptionSomeoneElse) => routes.PayeeFullNameController.onPageLoad(NormalMode)
-    case Some(OptionYou) => routes.CheckYourAnswersController.onPageLoad()
+    case Some(SomeoneElse) => routes.PayeeFullNameController.onPageLoad(NormalMode)
+    case Some(You) => routes.CheckYourAnswersController.onPageLoad()
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
