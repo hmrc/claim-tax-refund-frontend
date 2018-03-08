@@ -42,7 +42,7 @@
             viewModel = InputViewModel("value", form),
             legend = messages("selectTaxYear.heading"),
             legendClass = Some("visually-hidden"),
-            inputs = SelectTaxYearForm.options.toSeq
+            inputs = SelectTaxYearForm.options
         )
 
         @components.submit_button()
