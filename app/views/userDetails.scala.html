@@ -36,15 +36,15 @@
         <table>
             <tbody>
                 <tr>
-                    <td class="bold">Name</td>
+                    <td class="bold">@messages("userDetails.checkYourAnswersLabel.name")</td>
                     <td>@name</td>
                 </tr>
                 <tr>
-                    <td class="bold">National insurance number</td>
+                    <td class="bold">@messages("userDetails.checkYourAnswersLabel.nino")</td>
                     <td>@nino</td>
                 </tr>
                 <tr>
-                    <td class="bold">Address</td>
+                    <td class="bold">@messages("userDetails.checkYourAnswersLabel.address")</td>
                     <td>@address.addressLine1,<br/>
                         @address.addressLine2,<br/>
                         @if(address.addressLine3.isDefined) {@address.addressLine3,} <br/>
