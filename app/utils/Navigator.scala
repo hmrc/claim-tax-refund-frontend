@@ -29,9 +29,8 @@ class Navigator @Inject()() {
 
   private val routeMap: Map[Identifier, UserAnswers => Call] = Map(
     IsTheAddressInTheUKId -> isAddressInUkRoute,
-    UkAddressId -> (_ =>  routes.TelephoneNumberController.onPageLoad(NormalMode)),
-    InternationalAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
-    TelephoneNumberId -> (_ => routes.SelectTaxYearController.onPageLoad(NormalMode)),
+    UkAddressId -> (_ =>  routes.SelectTaxYearController.onPageLoad(NormalMode)),
+    InternationalAddressId -> (_ => routes.SelectTaxYearController.onPageLoad(NormalMode)),
     SelectTaxYearId -> (_ => routes.AnyBenefitsController.onPageLoad(NormalMode)),
     AnyBenefitsId -> anyBenefits,
     AnyJobseekersAllowanceId -> anyJobseekers,
@@ -60,8 +59,9 @@ class Navigator @Inject()() {
     AnyAgentRefId -> anyAgentRef,
     AgentReferenceNumberId -> (_=> routes.IsPayeeAddressInTheUKController.onPageLoad(NormalMode)),
     IsPayeeAddressInTheUKId -> isPayeeAddressInUkRoute,
-    PayeeUKAddressId -> (_ => routes.CheckYourAnswersController.onPageLoad()),
-    PayeeInternationalAddressId -> (_ => routes.CheckYourAnswersController.onPageLoad())
+    PayeeUKAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
+    PayeeInternationalAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
+    TelephoneNumberId -> (_ => routes.CheckYourAnswersController.onPageLoad())
   )
 
   private val editRouteMap: Map[Identifier, UserAnswers => Call] = Map(
@@ -148,7 +148,7 @@ class Navigator @Inject()() {
 
   private def whereToSendPayment(userAnswers: UserAnswers) = userAnswers.whereToSendPayment match {
     case Some(OptionSomeoneElse) => routes.PayeeFullNameController.onPageLoad(NormalMode)
-    case Some(OptionYou) => routes.CheckYourAnswersController.onPageLoad()
+    case Some(OptionYou) => routes.TelephoneNumberController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
