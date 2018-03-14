@@ -16,17 +16,17 @@
 
 package controllers.actions
 
-import org.mockito.Mockito._
-import org.scalatest.concurrent.ScalaFutures
-import org.scalatest.mockito.MockitoSugar
 import base.SpecBase
 import connectors.DataCacheConnector
 import models.requests.{AuthenticatedRequest, OptionalDataRequest}
-import uk.gov.hmrc.auth.core.retrieve.ItmpAddress
+import org.mockito.Mockito._
+import org.scalatest.concurrent.ScalaFutures
+import org.scalatest.mockito.MockitoSugar
+import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
 import uk.gov.hmrc.http.cache.client.CacheMap
 
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 class DataRetrievalActionSpec extends SpecBase with MockitoSugar with ScalaFutures {
 
@@ -43,8 +43,7 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar with ScalaFutur
 
         val futureResult = action.callTransform(
           new AuthenticatedRequest(
-          fakeRequest, "id", "John", "Doe", "AB123456A",
-          ItmpAddress(Some("Test address"), Some("Test Street"), None, None, None, Some("TE15 TWN"), None, None)
+          fakeRequest, "id", ItmpName(Some("firstName"), Some("middleName"), Some("familyName")), "AB123456A", ItmpAddress(Some("Line1"), Some("Line2"), Some("Line3"), Some("Line4"), Some("Line5"), Some("AB1 2CD"), Some("United Kingdom"), Some("UK"))
           )
         )
 
@@ -62,8 +61,7 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar with ScalaFutur
 
         val futureResult = action.callTransform(
           new AuthenticatedRequest(
-            fakeRequest, "id", "John", "Doe", "AB123456A",
-            ItmpAddress(Some("Test address"), Some("Test Street"), None, None, None, Some("TE15 TWN"), None, None)
+            fakeRequest, "id", ItmpName(Some("firstName"), Some("middleName"), Some("familyName")), "AB123456A", ItmpAddress(Some("Line1"), Some("Line2"), Some("Line3"), Some("Line4"), Some("Line5"), Some("AB1 2CD"), Some("United Kingdom"), Some("UK"))
           )
         )
 

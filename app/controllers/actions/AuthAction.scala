@@ -17,31 +17,31 @@
 package controllers.actions
 
 import com.google.inject.{ImplementedBy, Inject}
-import play.api.mvc.{ActionBuilder, ActionFunction, Request, Result}
-import play.api.mvc.Results._
-import uk.gov.hmrc.auth.core._
-import uk.gov.hmrc.auth.core.retrieve.Retrievals
 import config.FrontendAppConfig
+import connectors.DataCacheConnector
 import controllers.routes
 import models.requests.AuthenticatedRequest
-import uk.gov.hmrc.http.UnauthorizedException
+import play.api.mvc.Results._
+import play.api.mvc.{ActionBuilder, ActionFunction, Request, Result}
+import uk.gov.hmrc.auth.core._
+import uk.gov.hmrc.auth.core.retrieve.{Retrievals, _}
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.HeaderCarrierConverter
-import uk.gov.hmrc.auth.core.retrieve._
+
 import scala.concurrent.{ExecutionContext, Future}
 
-class AuthActionImpl @Inject()(override val authConnector: AuthConnector, config: FrontendAppConfig)
+class AuthActionImpl @Inject()(override val authConnector: AuthConnector, config: FrontendAppConfig)(dataCacheConnector: DataCacheConnector)
                               (implicit ec: ExecutionContext) extends AuthAction with AuthorisedFunctions {
 
   override def invokeBlock[A](request: Request[A], block: (AuthenticatedRequest[A]) => Future[Result]): Future[Result] = {
     implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromHeadersAndSession(request.headers, Some(request.session))
 
     authorised(ConfidenceLevel.L200 and AffinityGroup.Individual)
-      .retrieve(Retrievals.externalId and Retrievals.name and Retrievals.nino and Retrievals.itmpAddress) {
-        case Some(externalId) ~ Name(Some(firstName), Some(lastName)) ~ Some(nino) ~ address =>
-          block(AuthenticatedRequest(request, externalId, firstName, lastName, nino, address))
-        case _ =>
-          ???
+      .retrieve(Retrievals.externalId and Retrievals.itmpName and Retrievals.nino and Retrievals.itmpAddress) {
+        case Some(externalId) ~ name ~ Some(nino) ~ address =>
+          block(AuthenticatedRequest(request, externalId, name, nino, address))
+        case a =>
+          throw new Exception(a.toString)
           //TODO handle unlikely error
     } recover {
       case ex: NoActiveSession =>

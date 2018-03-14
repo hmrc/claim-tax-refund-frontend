@@ -14,14 +14,8 @@
  * limitations under the License.
  */
 
-package models.requests
+package identifiers
 
-import play.api.mvc.{Request, WrappedRequest}
-import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
-import utils.UserAnswers
-
-case class OptionalDataRequest[A] (request: Request[A], externalId: String, name: ItmpName, nino: String,
-                                   address: ItmpAddress, userAnswers: Option[UserAnswers]) extends WrappedRequest[A](request)
-
-case class DataRequest[A] (request: Request[A], externalId: String, name: ItmpName, nino: String,
-                           address: ItmpAddress, userAnswers: UserAnswers) extends WrappedRequest[A](request)
+case object UserDetailsId extends Identifier {
+  override def toString: String = "userDetails"
+}

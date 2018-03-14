@@ -182,3 +182,8 @@ POST       /where-to-send-payment                               controllers.Wher
 GET        /change-where-to-send-payment                        controllers.WhereToSendPaymentController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-where-to-send-payment                        controllers.WhereToSendPaymentController.onSubmit(mode: Mode = CheckMode)
 
+
+GET        /user-details                                        controllers.UserDetailsController.onPageLoad(mode: Mode = NormalMode)
+POST       /user-details                                        controllers.UserDetailsController.onSubmit(mode: Mode = NormalMode)
+GET        /change-user-details                                 controllers.UserDetailsController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-user-details                                 controllers.UserDetailsController.onSubmit(mode: Mode = CheckMode)
