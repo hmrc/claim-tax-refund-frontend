@@ -16,8 +16,7 @@
 
 package utils
 
-import models.SelectTaxYear.Option1
-import models.WhereToSendPayment.OptionYou
+import models.WhereToSendPayment.You
 import models.{InternationalAddress, UkAddress}
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
@@ -81,7 +80,7 @@ object MockUserAnswers extends MockitoSugar {
     val answers = nothingAnswered
 
     yourDetailsUserAnswers
-    when(answers.whereToSendPayment) thenReturn Some(OptionYou)
+    when(answers.whereToSendPayment) thenReturn Some(You)
 
     answers
   }

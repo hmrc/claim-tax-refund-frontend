@@ -21,7 +21,7 @@ import org.mockito.Mockito._
 import org.scalatest.mockito.MockitoSugar
 import controllers.routes
 import identifiers._
-import models.WhereToSendPayment.{OptionSomeoneElse, OptionYou}
+import models.WhereToSendPayment.{SomeoneElse, You}
 import models._
 
 class NavigatorSpec extends SpecBase with MockitoSugar {
@@ -71,7 +71,7 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
 
       "go to PayeeFullName from WhereToSendPayment when SomeoneElse is selected" in {
         val answers = mock[UserAnswers]
-        when(answers.whereToSendPayment) thenReturn Some(OptionSomeoneElse)
+        when(answers.whereToSendPayment) thenReturn Some(SomeoneElse)
         navigator.nextPage(WhereToSendPaymentId, NormalMode)(answers) mustBe routes.PayeeFullNameController.onPageLoad(NormalMode)
       }
 

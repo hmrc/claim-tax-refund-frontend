@@ -21,16 +21,39 @@ import play.api.data.Forms._
 import play.api.data.format.Formatter
 import utils.RadioOption
 import models.SelectTaxYear
+import models.SelectTaxYear.{CYMinus2, CYMinus3, CYMinus4, CYMinus5}
+import play.api.i18n.Messages
+import uk.gov.hmrc.time.TaxYearResolver
 
 object SelectTaxYearForm extends FormErrorHelper {
+
+  val dateFormat = "dd MMMM YYYY"
 
   def apply(): Form[SelectTaxYear] =
     Form(single("value" -> of(selectTaxYearFormatter)))
 
-  def options = SelectTaxYear.values.map {
-    value =>
-      RadioOption("selectTaxYear", value.toString)
-  }
+  def options(implicit messages: Messages): Seq[RadioOption] = Seq(
+    RadioOption(
+      CYMinus2.toString, CYMinus2.toString,
+      messages(s"selectTaxYear.${CYMinus2.toString}",
+        TaxYearResolver.startOfCurrentTaxYear.minusYears(2).toString(dateFormat),
+        TaxYearResolver.endOfCurrentTaxYear.minusYears(2).toString(dateFormat))),
+    RadioOption(
+      CYMinus3.toString, CYMinus3.toString,
+      messages(s"selectTaxYear.${CYMinus3.toString}",
+        TaxYearResolver.startOfCurrentTaxYear.minusYears(3).toString(dateFormat),
+        TaxYearResolver.endOfCurrentTaxYear.minusYears(3).toString(dateFormat))),
+    RadioOption(
+      CYMinus4.toString, CYMinus4.toString,
+      messages(s"selectTaxYear.${CYMinus4.toString}",
+        TaxYearResolver.startOfCurrentTaxYear.minusYears(4).toString(dateFormat),
+        TaxYearResolver.endOfCurrentTaxYear.minusYears(4).toString(dateFormat))),
+    RadioOption(
+      CYMinus5.toString, CYMinus5.toString,
+      messages(s"selectTaxYear.${CYMinus5.toString}",
+        TaxYearResolver.startOfCurrentTaxYear.minusYears(5).toString(dateFormat),
+        TaxYearResolver.endOfCurrentTaxYear.minusYears(5).toString(dateFormat)))
+  )
 
   private def selectTaxYearFormatter = new Formatter[SelectTaxYear] {
 
@@ -45,6 +68,4 @@ object SelectTaxYearForm extends FormErrorHelper {
 
     def unbind(key: String, value: SelectTaxYear) = Map(key -> value.toString)
   }
-
-  private def optionIsValid(value: String) = options.exists(o => o.value == value)
 }

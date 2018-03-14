@@ -21,7 +21,7 @@ import javax.inject.{Inject, Singleton}
 import play.api.mvc.Call
 import controllers.routes
 import identifiers._
-import models.WhereToSendPayment.{OptionSomeoneElse, OptionYou}
+import models.WhereToSendPayment.{SomeoneElse, You}
 import models.{CheckMode, Mode, NormalMode}
 
 @Singleton

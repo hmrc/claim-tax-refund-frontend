@@ -19,7 +19,8 @@ package views
 import play.api.data.Form
 import forms.SelectTaxYearForm
 import models.NormalMode
-import models.SelectTaxYear
+import play.api.i18n.Messages
+import utils.RadioOption
 import views.behaviours.ViewBehaviours
 import views.html.selectTaxYear
 
@@ -31,6 +32,9 @@ class SelectTaxYearViewSpec extends ViewBehaviours {
 
   def createViewUsingForm = (form: Form[_]) => selectTaxYear(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
+  def radioButtonOptions(implicit messages: Messages): Seq[RadioOption] = SelectTaxYearForm.options(messages)
+
+
   "SelectTaxYear view" must {
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -41,19 +45,19 @@ class SelectTaxYearViewSpec extends ViewBehaviours {
     "rendered" must {
       "contain radio buttons for the value" in {
         val doc = asDocument(createViewUsingForm(SelectTaxYearForm()))
-        for (option <- SelectTaxYearForm.options) {
+        for (option <- radioButtonOptions(messages)) {
           assertContainsRadioButton(doc, option.id, "value", option.value, false)
         }
       }
     }
 
-    for(option <- SelectTaxYearForm.options) {
+    for(option <- radioButtonOptions(messages)) {
       s"rendered with a value of '${option.value}'" must {
         s"have the '${option.value}' radio button selected" in {
           val doc = asDocument(createViewUsingForm(SelectTaxYearForm().bind(Map("value" -> s"${option.value}"))))
           assertContainsRadioButton(doc, option.id, "value", option.value, true)
 
-          for(unselectedOption <- SelectTaxYearForm.options.filterNot(o => o == option)) {
+          for(unselectedOption <- radioButtonOptions(messages).filterNot(o => o == option)) {
             assertContainsRadioButton(doc, unselectedOption.id, "value", unselectedOption.value, false)
           }
         }

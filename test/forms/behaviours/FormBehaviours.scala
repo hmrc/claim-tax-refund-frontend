@@ -16,15 +16,30 @@
 
 package forms.behaviours
 
+import config.FrontendAppConfig
 import play.api.data.Form
 import forms.FormSpec
 import models.{MandatoryField, MaxLengthField, RegexField}
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import play.api.i18n.{Messages, MessagesApi}
+import play.api.inject.Injector
+import play.api.test.FakeRequest
 
-trait FormBehaviours extends FormSpec {
+trait FormBehaviours extends FormSpec with GuiceOneAppPerSuite {
 
   val validData: Map[String, String]
 
   val form: Form[_]
+
+  def injector: Injector = app.injector
+
+  def frontendAppConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
+
+  def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
+
+  def fakeRequest = FakeRequest("", "")
+
+  def messages: Messages = messagesApi.preferred(fakeRequest)
 
   def questionForm[A](expectedResult: A) = {
     "bind valid values correctly" in {

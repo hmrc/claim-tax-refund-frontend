@@ -17,8 +17,8 @@
 package utils
 
 import base.SpecBase
-import models.SelectTaxYear.Option1
-import models.WhereToSendPayment.OptionSomeoneElse
+import models.SelectTaxYear.CYMinus2
+import models.WhereToSendPayment.SomeoneElse
 import models._
 import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito._
@@ -134,7 +134,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
     }
 
     "have the correct rows in the right order in the Payment Details section" in {
-      when(answers.whereToSendPayment) thenReturn Some(OptionSomeoneElse)
+      when(answers.whereToSendPayment) thenReturn Some(SomeoneElse)
       when(answers.payeeFullName) thenReturn Some("Agent Name")
       when(answers.anyAgentRef) thenReturn Some(false)
       when(answers.isPayeeAddressInTheUK) thenReturn Some(true)
@@ -145,11 +145,11 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       val rows = sections.paymentDetails.rows
 
       rows.size mustBe 5
-      rows.head.label mustBe "whereToSendPayment.checkYourAnswersLabel"
-      rows(1).label mustBe "payeeFullName.checkYourAnswersLabel"
-      rows(2).label mustBe "anyAgentRef.checkYourAnswersLabel"
-      rows(3).label mustBe "isPayeeAddressInTheUK.checkYourAnswersLabel"
-      rows(4).label mustBe "payeeUKAddress.checkYourAnswersLabel"
+      rows.head.label.key mustBe "whereToSendPayment.checkYourAnswersLabel"
+      rows(1).label.key mustBe "payeeFullName.checkYourAnswersLabel"
+      rows(2).label.key mustBe "anyAgentRef.checkYourAnswersLabel"
+      rows(3).label.key mustBe "isPayeeAddressInTheUK.checkYourAnswersLabel"
+      rows(4).label.key mustBe "payeeUKAddress.checkYourAnswersLabel"
     }
   }
 
@@ -169,7 +169,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
     }
 
     "have the correct rows in the right order in the Payment Details section" in {
-      when(answers.whereToSendPayment) thenReturn Some(OptionSomeoneElse)
+      when(answers.whereToSendPayment) thenReturn Some(SomeoneElse)
       when(answers.payeeFullName) thenReturn Some("Agent Name")
       when(answers.anyAgentRef) thenReturn Some(false)
       when(answers.isPayeeAddressInTheUK) thenReturn Some(false)
@@ -180,15 +180,15 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       val rows = sections.paymentDetails.rows
 
       rows.size mustBe 5
-      rows.head.label mustBe "whereToSendPayment.checkYourAnswersLabel"
-      rows(1).label mustBe "payeeFullName.checkYourAnswersLabel"
-      rows(2).label mustBe "anyAgentRef.checkYourAnswersLabel"
-      rows(3).label mustBe "isPayeeAddressInTheUK.checkYourAnswersLabel"
-      rows(4).label mustBe "payeeInternationalAddress.checkYourAnswersLabel"
+      rows.head.label.key mustBe "whereToSendPayment.checkYourAnswersLabel"
+      rows(1).label.key mustBe "payeeFullName.checkYourAnswersLabel"
+      rows(2).label.key mustBe "anyAgentRef.checkYourAnswersLabel"
+      rows(3).label.key mustBe "isPayeeAddressInTheUK.checkYourAnswersLabel"
+      rows(4).label.key mustBe "payeeInternationalAddress.checkYourAnswersLabel"
     }
 
     "have the correct rows in the right order in the Income Details section" in {
-      when(answers.selectTaxYear) thenReturn Some(Option1)
+      when(answers.selectTaxYear) thenReturn Some(CYMinus2)
       when(answers.anyBenefits) thenReturn Some(false)
       when(answers.otherIncome) thenReturn Some(false)
 
@@ -197,9 +197,9 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       val rows = sections.incomeDetails.rows
 
       rows.size mustBe 3
-      rows.head.label mustBe "selectTaxYear.checkYourAnswersLabel"
-      rows(1).label mustBe "anyBenefits.checkYourAnswersLabel"
-      rows(2).label mustBe "otherIncome.checkYourAnswersLabel"
+      rows.head.label.key mustBe "selectTaxYear.checkYourAnswersLabel"
+      rows(1).label.key mustBe "anyBenefits.checkYourAnswersLabel"
+      rows(2).label.key mustBe "otherIncome.checkYourAnswersLabel"
     }
   }
 }
