@@ -17,29 +17,31 @@
 package controllers.actions
 
 import com.google.inject.{ImplementedBy, Inject}
-import play.api.mvc.{ActionBuilder, ActionFunction, Request, Result}
-import play.api.mvc.Results._
-import uk.gov.hmrc.auth.core._
-import uk.gov.hmrc.auth.core.retrieve.Retrievals
 import config.FrontendAppConfig
+import connectors.DataCacheConnector
 import controllers.routes
 import models.requests.AuthenticatedRequest
-import uk.gov.hmrc.http.UnauthorizedException
-import uk.gov.hmrc.http.HeaderCarrier
+import play.api.mvc.Results._
+import play.api.mvc.{ActionBuilder, ActionFunction, Request, Result}
+import uk.gov.hmrc.auth.core._
+import uk.gov.hmrc.auth.core.retrieve.{Retrievals, _}
+import uk.gov.hmrc.http.{HeaderCarrier, UnauthorizedException}
 import uk.gov.hmrc.play.HeaderCarrierConverter
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class AuthActionImpl @Inject()(override val authConnector: AuthConnector, config: FrontendAppConfig)
+class AuthActionImpl @Inject()(override val authConnector: AuthConnector, config: FrontendAppConfig)(dataCacheConnector: DataCacheConnector)
                               (implicit ec: ExecutionContext) extends AuthAction with AuthorisedFunctions {
 
   override def invokeBlock[A](request: Request[A], block: (AuthenticatedRequest[A]) => Future[Result]): Future[Result] = {
     implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromHeadersAndSession(request.headers, Some(request.session))
 
-    authorised().retrieve(Retrievals.externalId) {
-      _.map {
-        externalId => block(AuthenticatedRequest(request, externalId))
-      }.getOrElse(throw new UnauthorizedException("Unable to retrieve external Id"))
+    authorised(ConfidenceLevel.L200 and AffinityGroup.Individual)
+      .retrieve(Retrievals.externalId and Retrievals.itmpName and Retrievals.nino and Retrievals.itmpAddress) {
+        case Some(externalId) ~ name ~ Some(nino) ~ address =>
+          block(AuthenticatedRequest(request, externalId, name, nino, address))
+        case _ =>
+          throw new UnauthorizedException("Unable to retrieve external Id")
     } recover {
       case ex: NoActiveSession =>
         Redirect(config.loginUrl, Map("continue" -> Seq(config.loginContinueUrl)))
@@ -56,6 +58,8 @@ class AuthActionImpl @Inject()(override val authConnector: AuthConnector, config
     }
   }
 }
+
+
 
 @ImplementedBy(classOf[AuthActionImpl])
 trait AuthAction extends ActionBuilder[AuthenticatedRequest] with ActionFunction[Request, AuthenticatedRequest]

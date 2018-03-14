@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-package models.requests
+package models
 
-import play.api.mvc.{Request, WrappedRequest}
-import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
-import utils.UserAnswers
+import play.api.libs.json._
 
-case class OptionalDataRequest[A] (request: Request[A], externalId: String, name: ItmpName, nino: String,
-                                   address: ItmpAddress, userAnswers: Option[UserAnswers]) extends WrappedRequest[A](request)
-
-case class DataRequest[A] (request: Request[A], externalId: String, name: ItmpName, nino: String,
-                           address: ItmpAddress, userAnswers: UserAnswers) extends WrappedRequest[A](request)
+case class UserDetails (name: String,
+                        nino: String,
+                        address: UkAddress)
+object UserDetails {
+  implicit val format = Json.format[UserDetails]
+}

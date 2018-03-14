@@ -345,3 +345,10 @@ whereToSendPayment.someoneElse = Someone else
 whereToSendPayment.checkYourAnswersLabel = Where you want us to send any payment
 whereToSendPayment.blank = Select where you want us to send any payment
 
+
+userDetails.title = User Details
+userDetails.heading = User Details
+userDetails.checkYourAnswersLabel.name = Name
+userDetails.checkYourAnswersLabel.nino = National insurance number
+userDetails.checkYourAnswersLabel.address = Address
+userDetails.blank = User Details
