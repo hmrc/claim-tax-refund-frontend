@@ -18,11 +18,15 @@ package utils
 
 import controllers.routes
 import models.CheckMode
-import viewmodels.{AnswerRow, RepeaterAnswerRow, RepeaterAnswerSection}
+import models.SelectTaxYear.{CYMinus2, CYMinus3, CYMinus4, CYMinus5}
+import uk.gov.hmrc.time.TaxYearResolver
+import viewmodels.AnswerRow
 
 class CheckYourAnswersHelper(userAnswers: UserAnswers) {
 
-  def payeeInternationalAddress: Option[AnswerRow] = userAnswers.payeeInternationalAddress map {
+  val dateFormat = "dd MMMM YYYY"
+
+ def payeeInternationalAddress: Option[AnswerRow] = userAnswers.payeeInternationalAddress map {
     x => AnswerRow("payeeInternationalAddress.checkYourAnswersLabel", s"${x.addressLine1} ${x.addressLine2}", false, routes.PayeeInternationalAddressController.onPageLoad(CheckMode).url)
   }
 
@@ -139,7 +143,22 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
   }
 
   def selectTaxYear: Option[AnswerRow] = userAnswers.selectTaxYear map {
-    x => AnswerRow("selectTaxYear.checkYourAnswersLabel", s"selectTaxYear.$x", true, routes.SelectTaxYearController.onPageLoad(CheckMode).url)
+    x => AnswerRow("selectTaxYear.checkYourAnswersLabel",
+      x match {
+        case CYMinus2 =>
+            TaxYearResolver.startOfCurrentTaxYear.minusYears(2).toString(dateFormat) + " to " +
+            TaxYearResolver.endOfCurrentTaxYear.minusYears(2).toString(dateFormat)
+        case CYMinus3 =>
+            TaxYearResolver.startOfCurrentTaxYear.minusYears(3).toString(dateFormat) + " to " +
+            TaxYearResolver.endOfCurrentTaxYear.minusYears(3).toString(dateFormat)
+        case CYMinus4 =>
+            TaxYearResolver.startOfCurrentTaxYear.minusYears(4).toString(dateFormat) + " to " +
+            TaxYearResolver.endOfCurrentTaxYear.minusYears(4).toString(dateFormat)
+        case CYMinus5 =>
+            TaxYearResolver.startOfCurrentTaxYear.minusYears(5).toString(dateFormat) + " to " +
+            TaxYearResolver.endOfCurrentTaxYear.minusYears(5).toString(dateFormat)
+      },
+      false, routes.SelectTaxYearController.onPageLoad(CheckMode).url)
   }
 
   def telephoneNumber: Option[AnswerRow] = userAnswers.telephoneNumber map {
