@@ -94,6 +94,7 @@ checkYourAnswers.incomeDetailsSection = Income details
 checkYourAnswers.benefitDetailsSection = Benefit details
 checkYourAnswers.otherIncomeDetailsSection = Other income details
 checkYourAnswers.paymentDetailsSection = Payment details
+checkYourAnswers.contactDetailsSection = Contact details
 
 unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account
@@ -344,7 +345,6 @@ whereToSendPayment.you = You
 whereToSendPayment.someoneElse = Someone else
 whereToSendPayment.checkYourAnswersLabel = Where you want us to send any payment
 whereToSendPayment.blank = Select where you want us to send any payment
-
 
 userDetails.title = User Details
 userDetails.heading = User Details

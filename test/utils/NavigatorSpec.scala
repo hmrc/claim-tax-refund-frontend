@@ -48,19 +48,14 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(IsTheAddressInTheUKId, NormalMode)(answers) mustBe routes.InternationalAddressController.onPageLoad(NormalMode)
       }
 
-      "go to TelephoneNumber from UkAddress" in {
+      "go to SelectTaxYear from UkAddress" in {
         val answers = mock[UserAnswers]
-        navigator.nextPage(UkAddressId, NormalMode)(answers) mustBe routes.TelephoneNumberController.onPageLoad(NormalMode)
+        navigator.nextPage(UkAddressId, NormalMode)(answers) mustBe routes.SelectTaxYearController.onPageLoad(NormalMode)
       }
 
-      "go to TelephoneNumber from InternationalAddress" in {
+      "go to SelectTaxYear from InternationalAddress" in {
         val answers = mock[UserAnswers]
-        navigator.nextPage(InternationalAddressId, NormalMode)(answers) mustBe routes.TelephoneNumberController.onPageLoad(NormalMode)
-      }
-
-      "go to SelectTaxYear from TelephoneNumber" in {
-        val answers = mock[UserAnswers]
-        navigator.nextPage(TelephoneNumberId, NormalMode)(answers) mustBe routes.SelectTaxYearController.onPageLoad(NormalMode)
+        navigator.nextPage(InternationalAddressId, NormalMode)(answers) mustBe routes.SelectTaxYearController.onPageLoad(NormalMode)
       }
 
       "go to WhereToSendPayment from AnyOtherTaxableIncome when no is selected" in {
@@ -83,7 +78,7 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
       "go to PayeeFullName from WhereToSendPayment when Yourself is selected" in {
         val answers = mock[UserAnswers]
         when(answers.whereToSendPayment) thenReturn Some(You)
-        navigator.nextPage(WhereToSendPaymentId, NormalMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+        navigator.nextPage(WhereToSendPaymentId, NormalMode)(answers) mustBe routes.TelephoneNumberController.onPageLoad(NormalMode)
       }
 
       "go to AnyBenefits from SelectATaxYear" in {
@@ -302,14 +297,9 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(IsPayeeAddressInTheUKId, NormalMode)(answers) mustBe routes.PayeeUKAddressController.onPageLoad(NormalMode)
       }
 
-      "go to CheckYourAnswers from PayeeUKAddress" in {
+     "go to CheckYourAnswers from TelephoneNumber" in {
         val answers = mock[UserAnswers]
-        navigator.nextPage(PayeeUKAddressId, NormalMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
-      }
-
-      "go to CheckYourAnswers from PayeeInternational" in {
-        val answers = mock[UserAnswers]
-        navigator.nextPage(PayeeUKAddressId, NormalMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+        navigator.nextPage(TelephoneNumberId, NormalMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
       }
     }
 
