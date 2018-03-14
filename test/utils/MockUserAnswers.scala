@@ -17,7 +17,7 @@
 package utils
 
 import models.WhereToSendPayment.You
-import models.{InternationalAddress, UkAddress}
+import models.{UkAddress, UserDetails}
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
 
@@ -26,6 +26,7 @@ object MockUserAnswers extends MockitoSugar {
   def nothingAnswered: UserAnswers = {
 
     val answers = mock[UserAnswers]
+    when(answers.userDetails) thenReturn None
     when(answers.isTheAddressInTheUK) thenReturn None
     when(answers.ukAddress) thenReturn None
     when(answers.internationalAddress) thenReturn None
@@ -68,6 +69,7 @@ object MockUserAnswers extends MockitoSugar {
 
     val answers = nothingAnswered
 
+    when(answers.userDetails) thenReturn Some(UserDetails("test name", "AB123123A", UkAddress("testLine1", "testLine2", None, None, None, "AB1 2CD")))
     when(answers.isTheAddressInTheUK) thenReturn Some(true)
     when(answers.ukAddress) thenReturn Some(UkAddress("Line 1", "Line 2", None, None, None, "DE2 7RD"))
     when(answers.telephoneNumber) thenReturn Some("983475894357934")

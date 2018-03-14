@@ -21,6 +21,7 @@ import identifiers._
 import models._
 
 class UserAnswers(val cacheMap: CacheMap) {
+  def userDetails: Option[UserDetails] = cacheMap.getEntry[UserDetails](UserDetailsId.toString)
 
   def payeeInternationalAddress: Option[InternationalAddress] = cacheMap.getEntry[InternationalAddress](PayeeInternationalAddressId.toString)
 

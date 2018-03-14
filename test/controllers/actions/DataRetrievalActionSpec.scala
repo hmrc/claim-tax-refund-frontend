@@ -16,16 +16,17 @@
 
 package controllers.actions
 
-import org.mockito.Mockito._
-import org.scalatest.concurrent.ScalaFutures
-import org.scalatest.mockito.MockitoSugar
 import base.SpecBase
 import connectors.DataCacheConnector
 import models.requests.{AuthenticatedRequest, OptionalDataRequest}
+import org.mockito.Mockito._
+import org.scalatest.concurrent.ScalaFutures
+import org.scalatest.mockito.MockitoSugar
+import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
 import uk.gov.hmrc.http.cache.client.CacheMap
 
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 class DataRetrievalActionSpec extends SpecBase with MockitoSugar with ScalaFutures {
 
@@ -40,7 +41,11 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar with ScalaFutur
         when(dataCacheConnector.fetch("id")) thenReturn Future(None)
         val action = new Harness(dataCacheConnector)
 
-        val futureResult = action.callTransform(new AuthenticatedRequest(fakeRequest, "id"))
+        val futureResult = action.callTransform(
+          new AuthenticatedRequest(
+          fakeRequest, "id", ItmpName(Some("firstName"), Some("middleName"), Some("familyName")), "AB123456A", ItmpAddress(Some("Line1"), Some("Line2"), Some("Line3"), Some("Line4"), Some("Line5"), Some("AB1 2CD"), Some("United Kingdom"), Some("UK"))
+          )
+        )
 
         whenReady(futureResult) { result =>
           result.userAnswers.isEmpty mustBe true
@@ -54,7 +59,11 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar with ScalaFutur
         when(dataCacheConnector.fetch("id")) thenReturn Future(Some(new CacheMap("id", Map())))
         val action = new Harness(dataCacheConnector)
 
-        val futureResult = action.callTransform(new AuthenticatedRequest(fakeRequest, "id"))
+        val futureResult = action.callTransform(
+          new AuthenticatedRequest(
+            fakeRequest, "id", ItmpName(Some("firstName"), Some("middleName"), Some("familyName")), "AB123456A", ItmpAddress(Some("Line1"), Some("Line2"), Some("Line3"), Some("Line4"), Some("Line5"), Some("AB1 2CD"), Some("United Kingdom"), Some("UK"))
+          )
+        )
 
         whenReady(futureResult) { result =>
           result.userAnswers.isDefined mustBe true
