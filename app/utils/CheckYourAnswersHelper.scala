@@ -25,8 +25,20 @@ import viewmodels.AnswerRow
 class CheckYourAnswersHelper(userAnswers: UserAnswers) {
 
   val dateFormat = "dd MMMM YYYY"
+  
+  def userName: Option[AnswerRow] = userAnswers.userDetails map {
+    x => AnswerRow("userDetails.checkYourAnswersLabel.name", s"${x.name}", false, routes.UserDetailsController.onPageLoad(CheckMode).url)
+  }
 
- def payeeInternationalAddress: Option[AnswerRow] = userAnswers.payeeInternationalAddress map {
+  def userNino: Option[AnswerRow] = userAnswers.userDetails map {
+    x => AnswerRow("userDetails.checkYourAnswersLabel.nino", s"${x.nino}", false, routes.UserDetailsController.onPageLoad(CheckMode).url)
+  }
+
+  def userAddress: Option[AnswerRow] = userAnswers.userDetails map {
+    x => AnswerRow("userDetails.checkYourAnswersLabel.address", s"${x.address.addressLine1}, ${x.address.addressLine2}, ${x.address.addressLine3.get}, ${x.address.addressLine4.get}, ${x.address.addressLine5.get}, ${x.address.postcode}", false, routes.UserDetailsController.onPageLoad(CheckMode).url)
+  }
+
+  def payeeInternationalAddress: Option[AnswerRow] = userAnswers.payeeInternationalAddress map {
     x => AnswerRow("payeeInternationalAddress.checkYourAnswersLabel", s"${x.addressLine1} ${x.addressLine2}", false, routes.PayeeInternationalAddressController.onPageLoad(CheckMode).url)
   }
 

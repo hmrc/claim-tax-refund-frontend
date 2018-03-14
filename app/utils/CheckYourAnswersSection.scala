@@ -33,6 +33,9 @@ class CheckYourAnswersSections (cyaHelper: CheckYourAnswersHelper, userAnswers: 
   }
 
   def yourDetails = AnswerSection(Some("checkYourAnswers.yourDetailsSection"), Seq(
+    cyaHelper.userName,
+    cyaHelper.userNino,
+    cyaHelper.userAddress,
     cyaHelper.isTheAddressInTheUK,
     cyaHelper.ukAddress,
     cyaHelper.internationalAddress,

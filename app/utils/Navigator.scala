@@ -28,6 +28,7 @@ import models.{CheckMode, Mode, NormalMode}
 class Navigator @Inject()() {
 
   private val routeMap: Map[Identifier, UserAnswers => Call] = Map(
+    UserDetailsId -> (_ => routes.IsTheAddressInTheUKController.onPageLoad(NormalMode)),
     IsTheAddressInTheUKId -> isAddressInUkRoute,
     UkAddressId -> (_ =>  routes.TelephoneNumberController.onPageLoad(NormalMode)),
     InternationalAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),

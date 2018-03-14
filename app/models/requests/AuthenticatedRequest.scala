@@ -17,6 +17,7 @@
 package models.requests
 
 import play.api.mvc.{Request, WrappedRequest}
-import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, Name}
+import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
 
-case class AuthenticatedRequest[A] (request: Request[A], externalId: String, firstName: String, lastName: String, nino: String, address: ItmpAddress) extends WrappedRequest[A](request)
+case class AuthenticatedRequest[A] (request: Request[A], externalId: String, name:ItmpName, nino: String,
+                                    address: ItmpAddress) extends WrappedRequest[A](request)

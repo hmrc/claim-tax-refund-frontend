@@ -41,8 +41,7 @@ class UkAddressControllerSpec extends ControllerSpecBase {
 
   val form = new UkAddressForm(frontendAppConfig)()
 
-  def viewAsString(form: Form[UkAddress] = form) =
-    ukAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
+  def viewAsString(form: Form[UkAddress] = form) = ukAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
 
   "UkAddress Controller" must {
 
