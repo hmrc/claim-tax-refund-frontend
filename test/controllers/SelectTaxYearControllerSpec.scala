@@ -27,6 +27,7 @@ import forms.SelectTaxYearForm
 import identifiers.SelectTaxYearId
 import models.NormalMode
 import models.SelectTaxYear
+import play.api.i18n.Messages
 import views.html.selectTaxYear
 
 class SelectTaxYearControllerSpec extends ControllerSpecBase {
@@ -38,6 +39,8 @@ class SelectTaxYearControllerSpec extends ControllerSpecBase {
       dataRetrievalAction, new DataRequiredActionImpl)
 
   def viewAsString(form: Form[_] = SelectTaxYearForm()) = selectTaxYear(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
+
+  def radioButtonOptions(implicit messages: Messages): String = SelectTaxYearForm.options(messages).head.value
 
   "SelectTaxYear Controller" must {
 
@@ -58,7 +61,7 @@ class SelectTaxYearControllerSpec extends ControllerSpecBase {
     }
 
     "redirect to the next page when valid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", SelectTaxYearForm.options.head.value))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", radioButtonOptions(messages: Messages)))
 
       val result = controller().onSubmit(NormalMode)(postRequest)
 
@@ -84,7 +87,7 @@ class SelectTaxYearControllerSpec extends ControllerSpecBase {
     }
 
     "redirect to Session Expired for a POST if no existing data is found" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", SelectTaxYearForm.options.head.value))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", radioButtonOptions(messages: Messages)))
       val result = controller(dontGetAnyData).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER

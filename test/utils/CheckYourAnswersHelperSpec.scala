@@ -31,7 +31,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.isTheAddressInTheUK) thenReturn Some(true)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.isTheAddressInTheUK.get.label mustBe s"isTheAddressInTheUK.checkYourAnswersLabel"
+      helper.isTheAddressInTheUK.get.label.key mustBe s"isTheAddressInTheUK.checkYourAnswersLabel"
     }
   }
 
@@ -39,7 +39,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.isTheAddressInTheUK) thenReturn Some(false)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.isTheAddressInTheUK.get.label mustBe s"isTheAddressInTheUK.checkYourAnswersLabel"
+      helper.isTheAddressInTheUK.get.label.key mustBe s"isTheAddressInTheUK.checkYourAnswersLabel"
     }
   }
 
@@ -48,7 +48,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have correct label" in {
       when(answers.ukAddress) thenReturn Some (UkAddress("line 1", "line 2", None, None, None, "AA11 1AA"))
       val helper = new CheckYourAnswersHelper(answers)
-      helper.ukAddress.get.label mustBe s"ukAddress.checkYourAnswersLabel"
+      helper.ukAddress.get.label.key mustBe s"ukAddress.checkYourAnswersLabel"
     }
   }
 
@@ -56,7 +56,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have correct label" in {
       when(answers.internationalAddress) thenReturn Some(InternationalAddress("line 1", "line 2", None, None, None, "country"))
       val helper = new CheckYourAnswersHelper(answers)
-      helper.internationalAddress.get.label mustBe s"internationalAddress.checkYourAnswersLabel"
+      helper.internationalAddress.get.label.key mustBe s"internationalAddress.checkYourAnswersLabel"
     }
   }
 
@@ -64,39 +64,39 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.telephoneNumber) thenReturn Some("01912134587")
       val helper = new CheckYourAnswersHelper(answers)
-      helper.telephoneNumber.get.label mustBe s"telephoneNumber.checkYourAnswersLabel"
+      helper.telephoneNumber.get.label.key mustBe s"telephoneNumber.checkYourAnswersLabel"
     }
   }
 
-  "Select tax year (Option 1)" must {
+  "Select current year minus 2" must {
     s"have correct label" in {
-      when(answers.selectTaxYear) thenReturn Some(Option1)
+      when(answers.selectTaxYear) thenReturn Some(CYMinus2)
       val helper = new CheckYourAnswersHelper (answers)
-      helper.selectTaxYear.get.label mustBe s"selectTaxYear.checkYourAnswersLabel"
+      helper.selectTaxYear.get.label.key mustBe s"selectTaxYear.checkYourAnswersLabel"
      }
   }
 
-  "Select tax year (Option 2)" must {
+  "Select current year minus 3" must {
     s"have correct label" in {
-      when(answers.selectTaxYear) thenReturn Some(Option2)
+      when(answers.selectTaxYear) thenReturn Some(CYMinus3)
       val helper = new CheckYourAnswersHelper (answers)
-      helper.selectTaxYear.get.label mustBe s"selectTaxYear.checkYourAnswersLabel"
+      helper.selectTaxYear.get.label.key mustBe s"selectTaxYear.checkYourAnswersLabel"
     }
   }
 
-  "Select tax year (Option 3)" must {
+  "Select current year minus 4" must {
     s"have correct label" in {
-      when(answers.selectTaxYear) thenReturn Some(Option3)
+      when(answers.selectTaxYear) thenReturn Some(CYMinus4)
       val helper = new CheckYourAnswersHelper (answers)
-      helper.selectTaxYear.get.label mustBe s"selectTaxYear.checkYourAnswersLabel"
+      helper.selectTaxYear.get.label.key mustBe s"selectTaxYear.checkYourAnswersLabel"
     }
   }
 
-  "Select tax year (Option 4)" must {
+  "Select current year minus 5" must {
     s"have correct label" in {
-      when(answers.selectTaxYear) thenReturn Some(Option4)
+      when(answers.selectTaxYear) thenReturn Some(CYMinus5)
       val helper = new CheckYourAnswersHelper (answers)
-      helper.selectTaxYear.get.label mustBe s"selectTaxYear.checkYourAnswersLabel"
+      helper.selectTaxYear.get.label.key mustBe s"selectTaxYear.checkYourAnswersLabel"
     }
   }
 
@@ -104,7 +104,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.anyBenefits) thenReturn Some(true)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.anyBenefits.get.label mustBe s"anyBenefits.checkYourAnswersLabel"
+      helper.anyBenefits.get.label.key mustBe s"anyBenefits.checkYourAnswersLabel"
     }
   }
 
@@ -112,7 +112,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.anyBenefits) thenReturn Some(false)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.anyBenefits.get.label mustBe s"anyBenefits.checkYourAnswersLabel"
+      helper.anyBenefits.get.label.key mustBe s"anyBenefits.checkYourAnswersLabel"
     }
   }
 
@@ -120,7 +120,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.otherIncome) thenReturn Some(true)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.otherIncome.get.label mustBe s"otherIncome.checkYourAnswersLabel"
+      helper.otherIncome.get.label.key mustBe s"otherIncome.checkYourAnswersLabel"
     }
   }
 
@@ -128,7 +128,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.otherIncome) thenReturn Some(false)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.otherIncome.get.label mustBe s"otherIncome.checkYourAnswersLabel"
+      helper.otherIncome.get.label.key mustBe s"otherIncome.checkYourAnswersLabel"
     }
   }
 
@@ -136,7 +136,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.anyJobseekersAllowance) thenReturn Some(true)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.anyJobseekersAllowance.get.label mustBe s"anyJobseekersAllowance.checkYourAnswersLabel"
+      helper.anyJobseekersAllowance.get.label.key mustBe s"anyJobseekersAllowance.checkYourAnswersLabel"
     }
   }
 
@@ -144,7 +144,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.anyJobseekersAllowance) thenReturn Some(false)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.anyJobseekersAllowance.get.label mustBe s"anyJobseekersAllowance.checkYourAnswersLabel"
+      helper.anyJobseekersAllowance.get.label.key mustBe s"anyJobseekersAllowance.checkYourAnswersLabel"
     }
   }
 
@@ -152,7 +152,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.howMuchJobseekersAllowance) thenReturn Some("9,999.99")
       val helper = new CheckYourAnswersHelper (answers)
-      helper.howMuchJobseekersAllowance.get.label mustBe s"howMuchJobseekersAllowance.checkYourAnswersLabel"
+      helper.howMuchJobseekersAllowance.get.label.key mustBe s"howMuchJobseekersAllowance.checkYourAnswersLabel"
     }
   }
 
@@ -160,7 +160,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.anyIncapacityBenefit) thenReturn Some(true)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.anyIncapacityBenefit.get.label mustBe s"anyIncapacityBenefit.checkYourAnswersLabel"
+      helper.anyIncapacityBenefit.get.label.key mustBe s"anyIncapacityBenefit.checkYourAnswersLabel"
     }
   }
 
@@ -168,7 +168,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.anyIncapacityBenefit) thenReturn Some(false)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.anyIncapacityBenefit.get.label mustBe s"anyIncapacityBenefit.checkYourAnswersLabel"
+      helper.anyIncapacityBenefit.get.label.key mustBe s"anyIncapacityBenefit.checkYourAnswersLabel"
     }
   }
 
@@ -176,7 +176,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.howMuchIncapacityBenefit) thenReturn Some("9,999.99")
       val helper = new CheckYourAnswersHelper (answers)
-      helper.howMuchIncapacityBenefit.get.label mustBe s"howMuchIncapacityBenefit.checkYourAnswersLabel"
+      helper.howMuchIncapacityBenefit.get.label.key mustBe s"howMuchIncapacityBenefit.checkYourAnswersLabel"
     }
   }
 
@@ -184,7 +184,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.anyEmploymentAndSupportAllowance) thenReturn Some(true)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.anyEmploymentAndSupportAllowance.get.label mustBe s"anyEmploymentAndSupportAllowance.checkYourAnswersLabel"
+      helper.anyEmploymentAndSupportAllowance.get.label.key mustBe s"anyEmploymentAndSupportAllowance.checkYourAnswersLabel"
     }
   }
 
@@ -192,7 +192,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.anyEmploymentAndSupportAllowance) thenReturn Some(false)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.anyEmploymentAndSupportAllowance.get.label mustBe s"anyEmploymentAndSupportAllowance.checkYourAnswersLabel"
+      helper.anyEmploymentAndSupportAllowance.get.label.key mustBe s"anyEmploymentAndSupportAllowance.checkYourAnswersLabel"
     }
   }
 
@@ -200,7 +200,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.howMuchEmploymentAndSupportAllowance) thenReturn Some("9,999.99")
       val helper = new CheckYourAnswersHelper (answers)
-      helper.howMuchEmploymentAndSupportAllowance.get.label mustBe s"howMuchEmploymentAndSupportAllowance.checkYourAnswersLabel"
+      helper.howMuchEmploymentAndSupportAllowance.get.label.key mustBe s"howMuchEmploymentAndSupportAllowance.checkYourAnswersLabel"
     }
   }
 
@@ -208,7 +208,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.anyStatePension) thenReturn Some(true)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.anyStatePension.get.label mustBe s"anyStatePension.checkYourAnswersLabel"
+      helper.anyStatePension.get.label.key mustBe s"anyStatePension.checkYourAnswersLabel"
     }
   }
 
@@ -216,7 +216,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.anyStatePension) thenReturn Some(false)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.anyStatePension.get.label mustBe s"anyStatePension.checkYourAnswersLabel"
+      helper.anyStatePension.get.label.key mustBe s"anyStatePension.checkYourAnswersLabel"
     }
   }
 
@@ -224,7 +224,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.howMuchStatePension) thenReturn Some("9,999.99")
       val helper = new CheckYourAnswersHelper (answers)
-      helper.howMuchStatePension.get.label mustBe s"howMuchStatePension.checkYourAnswersLabel"
+      helper.howMuchStatePension.get.label.key mustBe s"howMuchStatePension.checkYourAnswersLabel"
     }
   }
 
@@ -232,7 +232,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.anyOtherTaxableBenefits) thenReturn Some(true)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.anyOtherTaxableBenefits.get.label mustBe s"anyOtherTaxableBenefits.checkYourAnswersLabel"
+      helper.anyOtherTaxableBenefits.get.label.key mustBe s"anyOtherTaxableBenefits.checkYourAnswersLabel"
     }
   }
 
@@ -240,7 +240,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.anyOtherTaxableBenefits) thenReturn Some(false)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.anyOtherTaxableBenefits.get.label mustBe s"anyOtherTaxableBenefits.checkYourAnswersLabel"
+      helper.anyOtherTaxableBenefits.get.label.key mustBe s"anyOtherTaxableBenefits.checkYourAnswersLabel"
     }
   }
 
@@ -248,7 +248,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.otherBenefitsDetailsAndAmount) thenReturn Some("9,999.99")
       val helper = new CheckYourAnswersHelper (answers)
-      helper.otherBenefitsDetailsAndAmount.get.label mustBe s"otherBenefitsDetailsAndAmount.checkYourAnswersLabel"
+      helper.otherBenefitsDetailsAndAmount.get.label.key mustBe s"otherBenefitsDetailsAndAmount.checkYourAnswersLabel"
     }
   }
 
@@ -256,7 +256,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.anyCarBenefits) thenReturn Some(true)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.anyCarBenefits.get.label mustBe s"anyCarBenefits.checkYourAnswersLabel"
+      helper.anyCarBenefits.get.label.key mustBe s"anyCarBenefits.checkYourAnswersLabel"
     }
   }
 
@@ -264,7 +264,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.anyCarBenefits) thenReturn Some(false)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.anyCarBenefits.get.label mustBe s"anyCarBenefits.checkYourAnswersLabel"
+      helper.anyCarBenefits.get.label.key mustBe s"anyCarBenefits.checkYourAnswersLabel"
     }
   }
 
@@ -272,7 +272,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.howMuchCarBenefits) thenReturn Some("9,999.99")
       val helper = new CheckYourAnswersHelper (answers)
-      helper.howMuchCarBenefits.get.label mustBe s"howMuchCarBenefits.checkYourAnswersLabel"
+      helper.howMuchCarBenefits.get.label.key mustBe s"howMuchCarBenefits.checkYourAnswersLabel"
     }
   }
 
@@ -280,7 +280,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.anyRentalIncome) thenReturn Some(true)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.anyRentalIncome.get.label mustBe s"anyRentalIncome.checkYourAnswersLabel"
+      helper.anyRentalIncome.get.label.key mustBe s"anyRentalIncome.checkYourAnswersLabel"
     }
   }
 
@@ -288,7 +288,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.anyRentalIncome) thenReturn Some(false)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.anyRentalIncome.get.label mustBe s"anyRentalIncome.checkYourAnswersLabel"
+      helper.anyRentalIncome.get.label.key mustBe s"anyRentalIncome.checkYourAnswersLabel"
     }
   }
 
@@ -296,7 +296,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.howMuchRentalIncome) thenReturn Some("9,999.99")
       val helper = new CheckYourAnswersHelper (answers)
-      helper.howMuchRentalIncome.get.label mustBe s"howMuchRentalIncome.checkYourAnswersLabel"
+      helper.howMuchRentalIncome.get.label.key mustBe s"howMuchRentalIncome.checkYourAnswersLabel"
     }
   }
 
@@ -304,7 +304,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.anyBankBuildingSocietyInterest) thenReturn Some(true)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.anyBankBuildingSocietyInterest.get.label mustBe s"anyBankBuildingSocietyInterest.checkYourAnswersLabel"
+      helper.anyBankBuildingSocietyInterest.get.label.key mustBe s"anyBankBuildingSocietyInterest.checkYourAnswersLabel"
     }
   }
 
@@ -312,7 +312,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.anyBankBuildingSocietyInterest) thenReturn Some(false)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.anyBankBuildingSocietyInterest.get.label mustBe s"anyBankBuildingSocietyInterest.checkYourAnswersLabel"
+      helper.anyBankBuildingSocietyInterest.get.label.key mustBe s"anyBankBuildingSocietyInterest.checkYourAnswersLabel"
     }
   }
 
@@ -320,7 +320,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.howMuchBankBuildingSocietyInterest) thenReturn Some("9,999.99")
       val helper = new CheckYourAnswersHelper (answers)
-      helper.howMuchBankBuildingSocietyInterest.get.label mustBe s"howMuchBankBuildingSocietyInterest.checkYourAnswersLabel"
+      helper.howMuchBankBuildingSocietyInterest.get.label.key mustBe s"howMuchBankBuildingSocietyInterest.checkYourAnswersLabel"
     }
   }
 
@@ -328,7 +328,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.anyMedicalBenefits) thenReturn Some(true)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.anyMedicalBenefits.get.label mustBe s"anyMedicalBenefits.checkYourAnswersLabel"
+      helper.anyMedicalBenefits.get.label.key mustBe s"anyMedicalBenefits.checkYourAnswersLabel"
     }
   }
 
@@ -336,7 +336,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.anyMedicalBenefits) thenReturn Some(false)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.anyMedicalBenefits.get.label mustBe s"anyMedicalBenefits.checkYourAnswersLabel"
+      helper.anyMedicalBenefits.get.label.key mustBe s"anyMedicalBenefits.checkYourAnswersLabel"
     }
   }
 
@@ -344,7 +344,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.howMuchMedicalBenefits) thenReturn Some("9,999.99")
       val helper = new CheckYourAnswersHelper (answers)
-      helper.howMuchMedicalBenefits.get.label mustBe s"howMuchMedicalBenefits.checkYourAnswersLabel"
+      helper.howMuchMedicalBenefits.get.label.key mustBe s"howMuchMedicalBenefits.checkYourAnswersLabel"
     }
   }
 
@@ -352,7 +352,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.anyOtherTaxableIncome) thenReturn Some(true)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.anyOtherTaxableIncome.get.label mustBe s"anyOtherTaxableIncome.checkYourAnswersLabel"
+      helper.anyOtherTaxableIncome.get.label.key mustBe s"anyOtherTaxableIncome.checkYourAnswersLabel"
     }
   }
 
@@ -360,7 +360,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.anyOtherTaxableIncome) thenReturn Some(false)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.anyOtherTaxableIncome.get.label mustBe s"anyOtherTaxableIncome.checkYourAnswersLabel"
+      helper.anyOtherTaxableIncome.get.label.key mustBe s"anyOtherTaxableIncome.checkYourAnswersLabel"
     }
   }
 
@@ -368,23 +368,23 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.otherIncomeDetailsAndAmount) thenReturn Some("9,999.99")
       val helper = new CheckYourAnswersHelper (answers)
-      helper.otherIncomeDetailsAndAmount.get.label mustBe s"otherIncomeDetailsAndAmount.checkYourAnswersLabel"
+      helper.otherIncomeDetailsAndAmount.get.label.key mustBe s"otherIncomeDetailsAndAmount.checkYourAnswersLabel"
     }
   }
 
   "Is WhereToSendPayment yourself" must {
     s"have the correct label" in {
-      when(answers.whereToSendPayment) thenReturn Some(OptionYou)
+      when(answers.whereToSendPayment) thenReturn Some(You)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.whereToSendPayment.get.label mustBe s"whereToSendPayment.checkYourAnswersLabel"
+      helper.whereToSendPayment.get.label.key mustBe s"whereToSendPayment.checkYourAnswersLabel"
     }
   }
 
   "Is WhereToSendPayment someone else" must {
     s"have the correct label" in {
-      when(answers.whereToSendPayment) thenReturn Some(OptionSomeoneElse)
+      when(answers.whereToSendPayment) thenReturn Some(SomeoneElse)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.whereToSendPayment.get.label mustBe s"whereToSendPayment.checkYourAnswersLabel"
+      helper.whereToSendPayment.get.label.key mustBe s"whereToSendPayment.checkYourAnswersLabel"
     }
   }
 
@@ -392,7 +392,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.payeeFullName) thenReturn Some("Test name")
       val helper = new CheckYourAnswersHelper (answers)
-      helper.payeeFullName.get.label mustBe s"payeeFullName.checkYourAnswersLabel"
+      helper.payeeFullName.get.label.key mustBe s"payeeFullName.checkYourAnswersLabel"
     }
   }
 
@@ -400,7 +400,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.anyAgentRef) thenReturn Some(true)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.anyAgentRef.get.label mustBe s"anyAgentRef.checkYourAnswersLabel"
+      helper.anyAgentRef.get.label.key mustBe s"anyAgentRef.checkYourAnswersLabel"
     }
   }
 
@@ -408,7 +408,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.anyAgentRef) thenReturn Some(false)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.anyAgentRef.get.label mustBe s"anyAgentRef.checkYourAnswersLabel"
+      helper.anyAgentRef.get.label.key mustBe s"anyAgentRef.checkYourAnswersLabel"
     }
   }
 
@@ -416,14 +416,14 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.agentReferenceNumber) thenReturn Some("Test number")
       val helper = new CheckYourAnswersHelper (answers)
-      helper.agentReferenceNumber.get.label mustBe s"agentReferenceNumber.checkYourAnswersLabel"
+      helper.agentReferenceNumber.get.label.key mustBe s"agentReferenceNumber.checkYourAnswersLabel"
     }
   }
   "Is isPayeeAddressInTheUK (true)" must {
     s"have the correct label" in {
       when(answers.isPayeeAddressInTheUK) thenReturn Some(true)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.isPayeeAddressInTheUK.get.label mustBe s"isPayeeAddressInTheUK.checkYourAnswersLabel"
+      helper.isPayeeAddressInTheUK.get.label.key mustBe s"isPayeeAddressInTheUK.checkYourAnswersLabel"
     }
   }
 
@@ -431,7 +431,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have the correct label" in {
       when(answers.isPayeeAddressInTheUK) thenReturn Some(false)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.isPayeeAddressInTheUK.get.label mustBe s"isPayeeAddressInTheUK.checkYourAnswersLabel"
+      helper.isPayeeAddressInTheUK.get.label.key mustBe s"isPayeeAddressInTheUK.checkYourAnswersLabel"
     }
   }
 
@@ -439,7 +439,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have correct label" in {
       when(answers.payeeInternationalAddress) thenReturn Some(InternationalAddress("line 1", "line 2", None, None, None, "country"))
       val helper = new CheckYourAnswersHelper(answers)
-      helper.payeeInternationalAddress.get.label mustBe s"payeeInternationalAddress.checkYourAnswersLabel"
+      helper.payeeInternationalAddress.get.label.key mustBe s"payeeInternationalAddress.checkYourAnswersLabel"
     }
   }
 
@@ -447,7 +447,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     s"have correct label" in {
       when(answers.payeeUKAddress) thenReturn Some (UkAddress("line 1", "line 2", None, None, None, "AA11 1AA"))
       val helper = new CheckYourAnswersHelper(answers)
-      helper.payeeUKAddress.get.label mustBe s"payeeUKAddress.checkYourAnswersLabel"
+      helper.payeeUKAddress.get.label.key mustBe s"payeeUKAddress.checkYourAnswersLabel"
     }
   }
 

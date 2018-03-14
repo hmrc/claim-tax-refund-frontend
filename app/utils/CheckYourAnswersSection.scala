@@ -16,7 +16,6 @@
 
 package utils
 
-import models._
 import viewmodels.AnswerSection
 
 class CheckYourAnswersSections (cyaHelper: CheckYourAnswersHelper, userAnswers: UserAnswers) {

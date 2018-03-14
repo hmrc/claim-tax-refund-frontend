@@ -22,10 +22,10 @@ sealed trait WhereToSendPayment
 
 object WhereToSendPayment extends Enumerable[WhereToSendPayment] {
 
-  case object OptionSomeoneElse extends WithName("optionSomeoneElse") with WhereToSendPayment
-  case object OptionYou extends WithName("optionYou") with WhereToSendPayment
+  case object SomeoneElse extends WithName("someoneElse") with WhereToSendPayment
+  case object You extends WithName("you") with WhereToSendPayment
 
   lazy val values: Set[WhereToSendPayment] = Set(
-    OptionSomeoneElse, OptionYou
+    SomeoneElse, You
   )
 }

@@ -22,12 +22,12 @@ sealed trait SelectTaxYear
 
 object SelectTaxYear extends Enumerable[SelectTaxYear] {
 
-  case object Option1 extends WithName("option1") with SelectTaxYear
-  case object Option2 extends WithName("option2") with SelectTaxYear
-  case object Option3 extends WithName("option3") with SelectTaxYear
-  case object Option4 extends WithName("option4") with SelectTaxYear
+  case object CYMinus2 extends WithName("current-year-minus-2") with SelectTaxYear
+  case object CYMinus3 extends WithName("current-year-minus-3") with SelectTaxYear
+  case object CYMinus4 extends WithName("current-year-minus-4") with SelectTaxYear
+  case object CYMinus5 extends WithName("current-year-minus-5") with SelectTaxYear
 
   lazy val values: Set[SelectTaxYear] = Set(
-    Option1, Option2, Option3, Option4
+    CYMinus2, CYMinus3, CYMinus4 , CYMinus5
   )
 }
