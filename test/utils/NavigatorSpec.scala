@@ -36,26 +36,9 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(UnknownIdentifier, NormalMode)(mock[UserAnswers]) mustBe routes.IndexController.onPageLoad()
       }
 
-      "go to UkAddress from isTheAddressInTheUK when Yes is selected" in {
+      "go to SelectTaxYear from UserDetails" in {
         val answers = mock[UserAnswers]
-        when(answers.isTheAddressInTheUK) thenReturn Some(true)
-        navigator.nextPage(IsTheAddressInTheUKId, NormalMode)(answers) mustBe routes.UkAddressController.onPageLoad(NormalMode)
-      }
-
-      "go to InternationalAddress from isTheAddressInTheUK when No is selected" in {
-        val answers = mock[UserAnswers]
-        when(answers.isTheAddressInTheUK) thenReturn Some(false)
-        navigator.nextPage(IsTheAddressInTheUKId, NormalMode)(answers) mustBe routes.InternationalAddressController.onPageLoad(NormalMode)
-      }
-
-      "go to SelectTaxYear from UkAddress" in {
-        val answers = mock[UserAnswers]
-        navigator.nextPage(UkAddressId, NormalMode)(answers) mustBe routes.SelectTaxYearController.onPageLoad(NormalMode)
-      }
-
-      "go to SelectTaxYear from InternationalAddress" in {
-        val answers = mock[UserAnswers]
-        navigator.nextPage(InternationalAddressId, NormalMode)(answers) mustBe routes.SelectTaxYearController.onPageLoad(NormalMode)
+        navigator.nextPage(UserDetailsId, NormalMode)(answers) mustBe routes.SelectTaxYearController.onPageLoad(NormalMode)
       }
 
       "go to WhereToSendPayment from AnyOtherTaxableIncome when no is selected" in {

@@ -12,21 +12,6 @@ GET        /check-your-answers                                  controllers.Chec
 
 GET        /unauthorised                                        controllers.UnauthorisedController.onPageLoad
 
-GET        /is-address-in-uk                                    controllers.IsTheAddressInTheUKController.onPageLoad(mode: Mode = NormalMode)
-POST       /is-address-in-uk                                    controllers.IsTheAddressInTheUKController.onSubmit(mode: Mode = NormalMode)
-GET        /change-address-location                             controllers.IsTheAddressInTheUKController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-address-location                             controllers.IsTheAddressInTheUKController.onSubmit(mode: Mode = CheckMode)
-
-GET        /enter-uk-address                                    controllers.UkAddressController.onPageLoad(mode: Mode = NormalMode)
-POST       /enter-uk-address                                    controllers.UkAddressController.onSubmit(mode: Mode = NormalMode)
-GET        /change-uk-address                                   controllers.UkAddressController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-uk-address                                   controllers.UkAddressController.onSubmit(mode: Mode = CheckMode)
-
-GET        /enter-international-address                         controllers.InternationalAddressController.onPageLoad(mode: Mode = NormalMode)
-POST       /enter-international-address                         controllers.InternationalAddressController.onSubmit(mode: Mode = NormalMode)
-GET        /change-international-address                        controllers.InternationalAddressController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-international-address                        controllers.InternationalAddressController.onSubmit(mode: Mode = CheckMode)
-
 GET        /enter-telephone-number                              controllers.TelephoneNumberController.onPageLoad(mode: Mode = NormalMode)
 POST       /enter-telephone-number                              controllers.TelephoneNumberController.onSubmit(mode: Mode = NormalMode)
 GET        /change-telephone-number                             controllers.TelephoneNumberController.onPageLoad(mode: Mode = CheckMode)

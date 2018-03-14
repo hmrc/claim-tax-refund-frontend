@@ -28,8 +28,7 @@ import models.{CheckMode, Mode, NormalMode}
 class Navigator @Inject()() {
 
   private val routeMap: Map[Identifier, UserAnswers => Call] = Map(
-    UserDetailsId -> (_ => routes.IsTheAddressInTheUKController.onPageLoad(NormalMode)),
-    IsTheAddressInTheUKId -> isAddressInUkRoute,
+    UserDetailsId -> (_ => routes.SelectTaxYearController.onPageLoad(NormalMode)),
     UkAddressId -> (_ =>  routes.SelectTaxYearController.onPageLoad(NormalMode)),
     InternationalAddressId -> (_ => routes.SelectTaxYearController.onPageLoad(NormalMode)),
     SelectTaxYearId -> (_ => routes.AnyBenefitsController.onPageLoad(NormalMode)),
@@ -68,12 +67,6 @@ class Navigator @Inject()() {
   private val editRouteMap: Map[Identifier, UserAnswers => Call] = Map(
 
   )
-
-  private def isAddressInUkRoute(userAnswers: UserAnswers) = userAnswers.isTheAddressInTheUK match {
-    case Some(true) => routes.UkAddressController.onPageLoad(NormalMode)
-    case Some(false) => routes.InternationalAddressController.onPageLoad(NormalMode)
-    case None => routes.SessionExpiredController.onPageLoad()
-  }
 
   private def anyBenefits(userAnswers: UserAnswers) = userAnswers.anyBenefits match {
     case Some(true) => routes.AnyJobseekersAllowanceController.onPageLoad(NormalMode)

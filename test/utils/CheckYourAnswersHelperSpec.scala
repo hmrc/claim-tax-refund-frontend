@@ -21,42 +21,20 @@ import models.SelectTaxYear._
 import models.WhereToSendPayment._
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
-import models.{InternationalAddress, UkAddress}
+import models.{InternationalAddress, UkAddress, UserDetails}
 
 class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
 
   private var answers = mock[UserAnswers]
 
-  "Is the address in the UK (true)" must {
+  "User details" must {
     s"have the correct label" in {
-      when(answers.isTheAddressInTheUK) thenReturn Some(true)
+      when(answers.userDetails) thenReturn Some(UserDetails("Joe Smith", "AB123456A",
+        UkAddress("Line 1", "Line 2", Some("Line 3"), Some("Line 4"), Some("Line 5"), "AB123CD")))
       val helper = new CheckYourAnswersHelper(answers)
-      helper.isTheAddressInTheUK.get.label.key mustBe s"isTheAddressInTheUK.checkYourAnswersLabel"
-    }
-  }
-
-  "Is the address in the UK (false)" must {
-    s"have the correct label" in {
-      when(answers.isTheAddressInTheUK) thenReturn Some(false)
-      val helper = new CheckYourAnswersHelper(answers)
-      helper.isTheAddressInTheUK.get.label.key mustBe s"isTheAddressInTheUK.checkYourAnswersLabel"
-    }
-  }
-
-
-  "UK Address" must {
-    s"have correct label" in {
-      when(answers.ukAddress) thenReturn Some (UkAddress("line 1", "line 2", None, None, None, "AA11 1AA"))
-      val helper = new CheckYourAnswersHelper(answers)
-      helper.ukAddress.get.label.key mustBe s"ukAddress.checkYourAnswersLabel"
-    }
-  }
-
-  "International Address" must {
-    s"have correct label" in {
-      when(answers.internationalAddress) thenReturn Some(InternationalAddress("line 1", "line 2", None, None, None, "country"))
-      val helper = new CheckYourAnswersHelper(answers)
-      helper.internationalAddress.get.label.key mustBe s"internationalAddress.checkYourAnswersLabel"
+      helper.userName.get.label.key mustBe s"userDetails.checkYourAnswersLabel.name"
+      helper.userNino.get.label.key mustBe s"userDetails.checkYourAnswersLabel.nino"
+      helper.userAddress.get.label.key mustBe s"userDetails.checkYourAnswersLabel.address"
     }
   }
 
