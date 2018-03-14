@@ -25,7 +25,7 @@ import play.api.mvc.Results._
 import play.api.mvc.{ActionBuilder, ActionFunction, Request, Result}
 import uk.gov.hmrc.auth.core._
 import uk.gov.hmrc.auth.core.retrieve.{Retrievals, _}
-import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.http.{HeaderCarrier, UnauthorizedException}
 import uk.gov.hmrc.play.HeaderCarrierConverter
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -40,9 +40,8 @@ class AuthActionImpl @Inject()(override val authConnector: AuthConnector, config
       .retrieve(Retrievals.externalId and Retrievals.itmpName and Retrievals.nino and Retrievals.itmpAddress) {
         case Some(externalId) ~ name ~ Some(nino) ~ address =>
           block(AuthenticatedRequest(request, externalId, name, nino, address))
-        case a =>
-          throw new Exception(a.toString)
-          //TODO handle unlikely error
+        case _ =>
+          throw new UnauthorizedException("Unable to retrieve external Id")
     } recover {
       case ex: NoActiveSession =>
         Redirect(config.loginUrl, Map("continue" -> Seq(config.loginContinueUrl)))
@@ -50,7 +49,6 @@ class AuthActionImpl @Inject()(override val authConnector: AuthConnector, config
         Redirect(routes.UnauthorisedController.onPageLoad)
       case ex: InsufficientConfidenceLevel =>
         Redirect(routes.UnauthorisedController.onPageLoad)
-        //TODO redirect to auth page
       case ex: UnsupportedAuthProvider =>
         Redirect(routes.UnauthorisedController.onPageLoad)
       case ex: UnsupportedAffinityGroup =>

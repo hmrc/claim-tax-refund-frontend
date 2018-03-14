@@ -16,7 +16,7 @@
 
 package utils
 
-import models.WhereToSendPayment.OptionYou
+import models.WhereToSendPayment.You
 import models.{UkAddress, UserDetails}
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
