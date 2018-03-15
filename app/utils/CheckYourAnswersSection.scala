@@ -22,24 +22,20 @@ class CheckYourAnswersSections (cyaHelper: CheckYourAnswersHelper, userAnswers: 
 
   def sectionsToShow: Seq[AnswerSection] = {
     if (userAnswers.anyBenefits == Some(true) && userAnswers.otherIncome == Some(false)) {
-      Seq(yourDetails, incomeDetails, benefitDetails, paymentDetails)
+      Seq(yourDetails, incomeDetails, benefitDetails, paymentDetails, contactDetails)
     } else if (userAnswers.otherIncome == Some(true) && userAnswers.anyBenefits == Some(false)) {
-      Seq(yourDetails, incomeDetails, otherIncomeDetails, paymentDetails)
+      Seq(yourDetails, incomeDetails, otherIncomeDetails, paymentDetails, contactDetails)
     } else if (userAnswers.otherIncome == Some(true) && userAnswers.anyBenefits == Some(true)) {
-      Seq(yourDetails, incomeDetails,benefitDetails, otherIncomeDetails, paymentDetails)
+      Seq(yourDetails, incomeDetails,benefitDetails, otherIncomeDetails, paymentDetails, contactDetails)
     } else {
-      Seq(yourDetails, incomeDetails, paymentDetails)
+      Seq(yourDetails, incomeDetails, paymentDetails, contactDetails)
     }
   }
 
   def yourDetails = AnswerSection(Some("checkYourAnswers.yourDetailsSection"), Seq(
     cyaHelper.userName,
     cyaHelper.userNino,
-    cyaHelper.userAddress,
-    cyaHelper.isTheAddressInTheUK,
-    cyaHelper.ukAddress,
-    cyaHelper.internationalAddress,
-    cyaHelper.telephoneNumber
+    cyaHelper.userAddress
   ).flatten)
 
   def incomeDetails = AnswerSection(Some("checkYourAnswers.incomeDetailsSection"), Seq(
@@ -82,5 +78,9 @@ class CheckYourAnswersSections (cyaHelper: CheckYourAnswersHelper, userAnswers: 
     cyaHelper.howMuchMedicalBenefits,
     cyaHelper.anyOtherTaxableIncome,
     cyaHelper.otherIncomeDetailsAndAmount
+  ).flatten)
+
+  def contactDetails = AnswerSection(Some("checkYourAnswers.contactDetailsSection"), Seq(
+    cyaHelper.telephoneNumber
   ).flatten)
 }
