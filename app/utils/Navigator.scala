@@ -28,11 +28,7 @@ import models.{CheckMode, Mode, NormalMode}
 class Navigator @Inject()() {
 
   private val routeMap: Map[Identifier, UserAnswers => Call] = Map(
-    UserDetailsId -> (_ => routes.IsTheAddressInTheUKController.onPageLoad(NormalMode)),
-    IsTheAddressInTheUKId -> isAddressInUkRoute,
-    UkAddressId -> (_ =>  routes.TelephoneNumberController.onPageLoad(NormalMode)),
-    InternationalAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
-    TelephoneNumberId -> (_ => routes.SelectTaxYearController.onPageLoad(NormalMode)),
+    UserDetailsId -> (_ => routes.SelectTaxYearController.onPageLoad(NormalMode)),
     SelectTaxYearId -> (_ => routes.AnyBenefitsController.onPageLoad(NormalMode)),
     AnyBenefitsId -> anyBenefits,
     AnyJobseekersAllowanceId -> anyJobseekers,
@@ -61,19 +57,14 @@ class Navigator @Inject()() {
     AnyAgentRefId -> anyAgentRef,
     AgentReferenceNumberId -> (_=> routes.IsPayeeAddressInTheUKController.onPageLoad(NormalMode)),
     IsPayeeAddressInTheUKId -> isPayeeAddressInUkRoute,
-    PayeeUKAddressId -> (_ => routes.CheckYourAnswersController.onPageLoad()),
-    PayeeInternationalAddressId -> (_ => routes.CheckYourAnswersController.onPageLoad())
+    PayeeUKAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
+    PayeeInternationalAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
+    TelephoneNumberId -> (_ => routes.CheckYourAnswersController.onPageLoad())
   )
 
   private val editRouteMap: Map[Identifier, UserAnswers => Call] = Map(
 
   )
-
-  private def isAddressInUkRoute(userAnswers: UserAnswers) = userAnswers.isTheAddressInTheUK match {
-    case Some(true) => routes.UkAddressController.onPageLoad(NormalMode)
-    case Some(false) => routes.InternationalAddressController.onPageLoad(NormalMode)
-    case None => routes.SessionExpiredController.onPageLoad()
-  }
 
   private def anyBenefits(userAnswers: UserAnswers) = userAnswers.anyBenefits match {
     case Some(true) => routes.AnyJobseekersAllowanceController.onPageLoad(NormalMode)
@@ -149,7 +140,7 @@ class Navigator @Inject()() {
 
   private def whereToSendPayment(userAnswers: UserAnswers) = userAnswers.whereToSendPayment match {
     case Some(SomeoneElse) => routes.PayeeFullNameController.onPageLoad(NormalMode)
-    case Some(You) => routes.CheckYourAnswersController.onPageLoad()
+    case Some(You) => routes.TelephoneNumberController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
