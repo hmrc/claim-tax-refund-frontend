@@ -81,7 +81,7 @@ site.hidden-delete = Delete {0}
 site.hidden-edit = Change {0}
 site.no = No
 site.yes = Yes
-site.save_and_continue = Save and continue
+site.continue = Continue
 site.service_name = Claim a tax refund
 site.textarea.char_limit = (Limit is {0} characters)
 
@@ -99,42 +99,11 @@ checkYourAnswers.contactDetailsSection = Contact details
 unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account
 
-fullName.title = What is your full name?
-fullName.heading = What is your full name?
-fullName.checkYourAnswersLabel = Your full name
-fullName.blank = Enter your full name
-fullName.tooLong = Enter a valid full name
-
-nationalInsuranceNumber.title = Enter your National insurance number
-nationalInsuranceNumber.heading = What is your National Insurance number?
-nationalInsuranceNumber.checkYourAnswersLabel = Your National insurance number
-nationalInsuranceNumber.hintLine1 = It''s on your National Insurance card, benefit letter, payslip or P60.
-nationalInsuranceNumber.hintLine2 = For example, ''QQ 12 34 56 C''
-nationalInsuranceNumber.blank = Enter your National Insurance number
-nationalInsuranceNumber.invalid = Enter a valid National Insurance number
-
-isTheAddressInTheUK.title = Is your address in the UK?
-isTheAddressInTheUK.heading = Is your address in the UK?
-isTheAddressInTheUK.checkYourAnswersLabel = Is your address in the UK?
-isTheAddressInTheUK.blank = Select yes if your address is in the UK
-
-ukAddress.title = What is your address?
-ukAddress.heading = What is your address?
-ukAddress.checkYourAnswersLabel = Your address
-ukAddress.postcode.invalid = Enter a valid postcode
-ukAddress.postcode.blank = Enter a postcode
-
-internationalAddress.title = What is your address?
-internationalAddress.heading = What is your address?
-internationalAddress.checkYourAnswersLabel = Your address
-internationalAddress.country.blank = Enter the country
-internationalAddress.country.tooLong = Enter a valid country
-
-telephoneNumber.title = What is your telephone number?
-telephoneNumber.heading = What is your telephone number?
-telephoneNumber.checkYourAnswersLabel = Your telephone number
-telephoneNumber.invalid = Enter a valid telephone number
-telephoneNumber.blank = Enter a telephone number
+userDetails.title = Your details
+userDetails.heading = Your details
+userDetails.checkYourAnswersLabel.name = Name
+userDetails.checkYourAnswersLabel.nino = National insurance number
+userDetails.checkYourAnswersLabel.address = Address
 
 typeOfClaim.title = What kind of tax refund do you want to claim?
 typeOfClaim.heading = What kind of tax refund do you want to claim?
@@ -346,9 +315,8 @@ whereToSendPayment.someoneElse = Someone else
 whereToSendPayment.checkYourAnswersLabel = Where you want us to send any payment
 whereToSendPayment.blank = Select where you want us to send any payment
 
-userDetails.title = User Details
-userDetails.heading = User Details
-userDetails.checkYourAnswersLabel.name = Name
-userDetails.checkYourAnswersLabel.nino = National insurance number
-userDetails.checkYourAnswersLabel.address = Address
-userDetails.blank = User Details
+telephoneNumber.title = What is your telephone number?
+telephoneNumber.heading = What is your telephone number?
+telephoneNumber.checkYourAnswersLabel = Your telephone number
+telephoneNumber.invalid = Enter a valid telephone number
+telephoneNumber.blank = Enter a telephone number
