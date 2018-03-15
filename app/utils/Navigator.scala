@@ -29,8 +29,6 @@ class Navigator @Inject()() {
 
   private val routeMap: Map[Identifier, UserAnswers => Call] = Map(
     UserDetailsId -> (_ => routes.SelectTaxYearController.onPageLoad(NormalMode)),
-    UkAddressId -> (_ =>  routes.SelectTaxYearController.onPageLoad(NormalMode)),
-    InternationalAddressId -> (_ => routes.SelectTaxYearController.onPageLoad(NormalMode)),
     SelectTaxYearId -> (_ => routes.AnyBenefitsController.onPageLoad(NormalMode)),
     AnyBenefitsId -> anyBenefits,
     AnyJobseekersAllowanceId -> anyJobseekers,
