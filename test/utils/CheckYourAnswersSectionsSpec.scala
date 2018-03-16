@@ -127,7 +127,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
   "all questions are answered" must {
     "have the correct rows in the right order in the Your Details section" in {
       when(answers.userDetails) thenReturn Some(UserDetails("Dave Smith", "AB123456A",
-        UkAddress("Line 1", "Line 2", Some("Line 3"), Some("Line 4"), Some("Line 5"), "AB123CD")))
+        UkAddress("Line 1", "Line 2", Some("Line 3"), Some("Line 4"), None, "AB123CD")))
 
       val helper = new CheckYourAnswersHelper(answers)
       val sections = new CheckYourAnswersSections(helper, MockUserAnswers.minimalValidUserAnswers)

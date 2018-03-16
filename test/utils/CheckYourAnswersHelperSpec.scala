@@ -22,19 +22,28 @@ import models.WhereToSendPayment._
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
 import models.{InternationalAddress, UkAddress, UserDetails}
+import viewmodels.AnswerRow
 
 class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
 
   private var answers = mock[UserAnswers]
+  private var answerRow = mock[AnswerRow]
 
   "User details" must {
     s"have the correct label" in {
       when(answers.userDetails) thenReturn Some(UserDetails("Joe Smith", "AB123456A",
-        UkAddress("Line 1", "Line 2", Some("Line 3"), Some("Line 4"), Some("Line 5"), "AB123CD")))
+        UkAddress("Line 1", "Line 2", Some("Line 3"), Some("Line 4"), None, "AB123CD")))
       val helper = new CheckYourAnswersHelper(answers)
       helper.userName.get.label.key mustBe s"userDetails.checkYourAnswersLabel.name"
       helper.userNino.get.label.key mustBe s"userDetails.checkYourAnswersLabel.nino"
       helper.userAddress.get.label.key mustBe s"userDetails.checkYourAnswersLabel.address"
+    }
+    s"not have a change link when set to false" in {
+      when(answerRow.changeLink) thenReturn false
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.userName.get.changeLink mustBe false
+      helper.userNino.get.changeLink mustBe false
+      helper.userAddress.get.changeLink mustBe false
     }
   }
 
@@ -43,6 +52,11 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
       when(answers.telephoneNumber) thenReturn Some("01912134587")
       val helper = new CheckYourAnswersHelper(answers)
       helper.telephoneNumber.get.label.key mustBe s"telephoneNumber.checkYourAnswersLabel"
+    }
+    s"have a change link when set to true" in {
+      when(answerRow.changeLink) thenReturn true
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.telephoneNumber.get.changeLink mustBe true
     }
   }
 
@@ -423,7 +437,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
 
   "Payee UK Address" must {
     s"have correct label" in {
-      when(answers.payeeUKAddress) thenReturn Some (UkAddress("line 1", "line 2", None, None, None, "AA11 1AA"))
+      when(answers.payeeUKAddress) thenReturn Some(UkAddress("line 1", "line 2", None, None, None, "AA11 1AA"))
       val helper = new CheckYourAnswersHelper(answers)
       helper.payeeUKAddress.get.label.key mustBe s"payeeUKAddress.checkYourAnswersLabel"
     }
