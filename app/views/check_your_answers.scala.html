@@ -28,12 +28,15 @@
 
     <p>@messages("checkYourAnswers.guidance")</p>
 
-    @for(section <- answerSections){
+    @for((section, i) <- answerSections.zipWithIndex){
         @{
             section match {
-                case a: AnswerSection => components.answer_section(a)
-                case r: RepeaterAnswerSection => components.repeater_answer_section(r)
+                case a: AnswerSection => components.answer_section(a, i.toString)
+                case r: RepeaterAnswerSection => components.repeater_answer_section(r, i.toString)
             }
         }
     }
+
+    @components.submit_button()
+
 }

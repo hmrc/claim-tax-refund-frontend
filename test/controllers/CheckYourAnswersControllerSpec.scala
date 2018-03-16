@@ -16,10 +16,8 @@
 
 package controllers
 
-import play.api.test.Helpers._
 import controllers.actions.{DataRequiredActionImpl, DataRetrievalAction, FakeAuthAction}
-import viewmodels.AnswerSection
-import views.html.check_your_answers
+import play.api.test.Helpers._
 
 class CheckYourAnswersControllerSpec extends ControllerSpecBase {
 
