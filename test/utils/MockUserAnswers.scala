@@ -70,9 +70,6 @@ object MockUserAnswers extends MockitoSugar {
     val answers = nothingAnswered
 
     when(answers.userDetails) thenReturn Some(UserDetails("test name", "AB123123A", UkAddress("testLine1", "testLine2", None, None, None, "AB1 2CD")))
-    when(answers.isTheAddressInTheUK) thenReturn Some(true)
-    when(answers.ukAddress) thenReturn Some(UkAddress("Line 1", "Line 2", None, None, None, "DE2 7RD"))
-    when(answers.telephoneNumber) thenReturn Some("983475894357934")
 
     answers
   }
@@ -83,6 +80,7 @@ object MockUserAnswers extends MockitoSugar {
 
     yourDetailsUserAnswers
     when(answers.whereToSendPayment) thenReturn Some(You)
+    contactDetails
 
     answers
   }
@@ -156,6 +154,15 @@ object MockUserAnswers extends MockitoSugar {
     benefitsUserAnswers
     when(answers.otherIncome) thenReturn Some(true)
     incomeUserAnswers
+
+    answers
+  }
+
+  def contactDetails: UserAnswers = {
+
+    val answers = nothingAnswered
+
+    when(answers.telephoneNumber) thenReturn Some("983475894357934")
 
     answers
   }
