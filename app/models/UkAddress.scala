@@ -26,4 +26,15 @@ case class UkAddress (addressLine1: String,
                       postcode: String)
 object UkAddress {
   implicit val format = Json.format[UkAddress]
+
+  def answeredLines(a: UkAddress) = Seq(
+    Some(a.addressLine1),
+    Some(a.addressLine2),
+    a.addressLine3,
+    a.addressLine4,
+    a.addressLine5,
+    Some(a.postcode)
+  ).flatten
+
+  def asString(a: UkAddress) = answeredLines(a).mkString(", <br>")
 }

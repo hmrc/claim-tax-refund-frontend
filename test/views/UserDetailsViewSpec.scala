@@ -36,7 +36,5 @@ class UserDetailsViewSpec extends ViewBehaviours with MockitoSugar {
 
   "UserDetails view" must {
     behave like normalPage(createView, messageKeyPrefix)
-
-    behave like pageWithBackLink(createView)
   }
 }

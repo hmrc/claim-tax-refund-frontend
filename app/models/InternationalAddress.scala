@@ -27,4 +27,14 @@ case class InternationalAddress (addressLine1: String,
 
 object InternationalAddress {
   implicit val format = Json.format[InternationalAddress]
+
+  def answeredLines(a: InternationalAddress) = Seq(
+    Some(a.addressLine1),
+    Some(a.addressLine2),
+    a.addressLine3,
+    a.addressLine4,
+    a.addressLine5,
+    Some(a.country)).flatten
+
+  def asString(a: InternationalAddress) = answeredLines(a).mkString(", <br>")
 }
