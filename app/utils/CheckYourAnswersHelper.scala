@@ -24,6 +24,10 @@ import viewmodels.AnswerRow
 
 class CheckYourAnswersHelper(userAnswers: UserAnswers) {
 
+  def employmentDetails: Option[AnswerRow] = userAnswers.employmentDetails map {
+    x => AnswerRow("employmentDetails.checkYourAnswersLabel", s"$x", false, routes.EmploymentDetailsController.onPageLoad(CheckMode).url, false)
+  }
+
   val dateFormat = "dd MMMM YYYY"
   
   def userName: Option[AnswerRow] = userAnswers.userDetails map {
