@@ -37,9 +37,5 @@ class EmploymentDetailsFormSpec extends FormBehaviours with MockitoSugar {
   override val form: Form[_] = new EmploymentDetailsForm(appConfig)()
 
   "EmploymentDetails Form" must {
-
-    behave like formWithMandatoryTextFields(
-      MandatoryField("value", errorKeyBlank)
-    )
   }
 }

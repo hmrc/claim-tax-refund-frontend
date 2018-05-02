@@ -41,7 +41,5 @@ class EmploymentDetailsViewSpec extends StringViewBehaviours with MockitoSugar {
     behave like normalPage(createView, messageKeyPrefix)
 
     behave like pageWithBackLink(createView)
-
-    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.EmploymentDetailsController.onSubmit(NormalMode).url)
   }
 }
