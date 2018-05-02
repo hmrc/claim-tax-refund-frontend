@@ -320,3 +320,8 @@ telephoneNumber.heading = What is your telephone number?
 telephoneNumber.checkYourAnswersLabel = Your telephone number
 telephoneNumber.invalid = Enter a valid telephone number
 telephoneNumber.blank = Enter a telephone number
+
+employmentDetails.title = employmentDetails
+employmentDetails.heading = employmentDetails
+employmentDetails.checkYourAnswersLabel = employmentDetails
+employmentDetails.blank = employmentDetails
