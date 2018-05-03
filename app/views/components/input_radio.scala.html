@@ -26,10 +26,10 @@ trackGa: Boolean = false,
 inputs: Seq[RadioOption]
 )(implicit messages: Messages)
 
-<div class="form-field">
+<div class="form-group">
     <fieldset class="form-group" id="@{viewModel.id}">
         <legend>
-          <span class="bold-small @if(legendClass.nonEmpty){@{legendClass.get}}">@legend</span>
+          <span class="@if(legendClass.nonEmpty){@{legendClass.get}}">@legend</span>
           @if(hint.nonEmpty){
           <span class="form-hint">@{hint.get}</span>
           }
@@ -38,10 +38,12 @@ inputs: Seq[RadioOption]
           }
         </legend>
         @for(input <- inputs) {
-        <label class="block-label selection-button-radio" for="@{input.id}">
-            <input id="@{input.id}" type="radio" name="@{viewModel.id}" value="@{input.value}" @if(viewModel.value == Some(input.value)){checked="checked"} @if(trackGa){data-journey-click="claim-tax-refund-frontend:click:@{input.id}"} />
-            @messages(input.messageKey)
-        </label>
+        <div class="multiple-choice">
+            <input id="@{input.id}" type="radio" name="@{viewModel.id}" value="@{input.value}" @if(viewModel.value == Some(input.value)){checked="checked"} @if(trackGa){data-journey-click="claim-tax-refund-frontend:click:@{input.id}"} aria-expanded="true" />
+            <label for="@{input.id}">
+                @messages(input.messageKey)
+            </label>
+        </div>
         }
     </fieldset>
 </div>
