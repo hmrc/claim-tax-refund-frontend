@@ -22,27 +22,42 @@ import uk.gov.hmrc.http.cache.client.CacheMap
 import utils.FakeNavigator
 import connectors.{FakeDataCacheConnector, TaiConnector}
 import controllers.actions._
+import play.api.test.Helpers._
 import forms.BooleanForm
-import identifiers.AnyBenefitsId
-import models.NormalMode
+import identifiers.TaiEmploymentDetailsId
+import models.{Employment, NormalMode}
+import org.mockito.Matchers
+import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
-import views.html.anyBenefits
+import views.html.taiEmploymentDetails
 
-class AnyBenefitsControllerSpec extends ControllerSpecBase with MockitoSugar {
+import scala.concurrent.Future
+
+class TaiEmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSugar {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
   val formProvider = new BooleanForm()
   val form = formProvider()
-  val mockTai: TaiConnector = mock[TaiConnector]
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new AnyBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, mockTai, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+    new TaiEmploymentDetailsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, formProvider)
 
-  def viewAsString(form: Form[_] = form) = anyBenefits(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = form) = taiEmploymentDetails(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
 
-  "AnyBenefits Controller" must {
+  val fakeTaiConnector: TaiConnector = mock[TaiConnector]
+
+  "TaiEmploymentDetails Controller" must {
+
+    "create a sequence of employment details when correct data if provided" in {
+
+      val validNino = "JG219314C"
+      val validYear = 2016
+
+      when(fakeTaiConnector.taiEmployments(Matchers.eq(validNino), Matchers.eq(validYear))(Matchers.any(), Matchers.any()))
+        .thenReturn(Future.successful(Seq(Employment("AVIVA PENSIONS", "754", "AZ00070"))))
+    }
 
     "return OK and the correct view for a GET" in {
       val result = controller().onPageLoad(NormalMode)(fakeRequest)
@@ -52,7 +67,7 @@ class AnyBenefitsControllerSpec extends ControllerSpecBase with MockitoSugar {
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      val validData = Map(AnyBenefitsId.toString -> JsBoolean(true))
+      val validData = Map(TaiEmploymentDetailsId.toString -> JsBoolean(true))
       val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validData)))
 
       val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)
@@ -60,7 +75,7 @@ class AnyBenefitsControllerSpec extends ControllerSpecBase with MockitoSugar {
       contentAsString(result) mustBe viewAsString(form.fill(true))
     }
 
-    "redirect to the next page when valid dAata is submitted" in {
+    "redirect to the next page when valid data is submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
 
       val result = controller().onSubmit(NormalMode)(postRequest)
@@ -95,3 +110,7 @@ class AnyBenefitsControllerSpec extends ControllerSpecBase with MockitoSugar {
     }
   }
 }
+
+
+
+

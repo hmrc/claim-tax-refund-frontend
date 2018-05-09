@@ -16,29 +16,35 @@
 
 package controllers
 
+import javax.inject.Inject
+
 import config.FrontendAppConfig
-import connectors.DataCacheConnector
+import connectors.{DataCacheConnector, TaiConnector}
 import controllers.actions._
 import forms.BooleanForm
 import identifiers.AnyBenefitsId
 import javax.inject.Inject
 import models.Mode
+import models.SelectTaxYear.{CYMinus2, CYMinus3, CYMinus4, CYMinus5}
+import play.api.Logger
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import uk.gov.hmrc.time.TaxYearResolver
 import utils.{Navigator, UserAnswers}
 import views.html.anyBenefits
 
 import scala.concurrent.Future
 
 class AnyBenefitsController @Inject()(appConfig: FrontendAppConfig,
-                                      override val messagesApi: MessagesApi,
-                                      dataCacheConnector: DataCacheConnector,
-                                      navigator: Navigator,
-                                      authenticate: AuthAction,
-                                      getData: DataRetrievalAction,
-                                      requireData: DataRequiredAction,
-                                      formProvider: BooleanForm) extends FrontendController with I18nSupport {
+                                         override val messagesApi: MessagesApi,
+                                         dataCacheConnector: DataCacheConnector,
+                                         taiConnector: TaiConnector,
+                                         navigator: Navigator,
+                                         authenticate: AuthAction,
+                                         getData: DataRetrievalAction,
+                                         requireData: DataRequiredAction,
+                                         formProvider: BooleanForm) extends FrontendController with I18nSupport {
 
   private val errorKey = "anyBenefits.blank"
   val form: Form[Boolean] = formProvider(errorKey)
@@ -49,7 +55,7 @@ class AnyBenefitsController @Inject()(appConfig: FrontendAppConfig,
         case None => form
         case Some(value) => form.fill(value)
       }
-      Ok(anyBenefits(appConfig, preparedForm, mode))
+  Ok(anyBenefits(appConfig, preparedForm, mode))
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
