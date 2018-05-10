@@ -16,12 +16,15 @@
 
 package models
 
+import base.SpecBase
 import identifiers.SelectTaxYearId
 import org.mockito.Mockito._
+import utils.MockUserAnswers
 
-class EnrolmentSpec extends ModelSpecBase {
+class SubmissionSpec extends SpecBase {
 
   val NA = "N/A"
+  val answers = MockUserAnswers.nothingAnswered
 
   ".apply" must {
 
@@ -35,7 +38,7 @@ class EnrolmentSpec extends ModelSpecBase {
 
     "fail to build" in {
       val exception = intercept[IllegalArgumentException] {
-        Submission(answers)
+        val submission = Submission(MockUserAnswers.nothingAnswered)
       }
 
         exception.getMessage mustBe "requirement failed: Tax year was not answered"

@@ -17,11 +17,10 @@
 package config
 
 import com.google.inject.{Inject, Singleton}
-import play.api.{Configuration, Environment}
-import play.api.i18n.Lang
-import uk.gov.hmrc.play.bootstrap.config.AppName
 import controllers.routes
 import play.api.Mode.Mode
+import play.api.i18n.Lang
+import play.api.{Configuration, Environment}
 import uk.gov.hmrc.play.config.ServicesConfig
 
 @Singleton
@@ -45,6 +44,7 @@ class FrontendAppConfig @Inject() (override val runModeConfiguration: Configurat
   lazy val authUrl = baseUrl("auth")
   lazy val loginUrl = loadConfig("urls.login")
   lazy val loginContinueUrl = loadConfig("urls.loginContinue")
+  lazy val dmiUrl = baseUrl("digital-mail-integration")
 
   lazy val languageTranslationEnabled = runModeConfiguration.getBoolean("microservice.services.features.welsh-translation").getOrElse(true)
 
