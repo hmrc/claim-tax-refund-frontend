@@ -16,20 +16,6 @@
 
 package models
 
-import base.SpecBase
-import org.mockito.Mockito.when
-import org.scalatest.BeforeAndAfterEach
-import org.scalatest.mockito.MockitoSugar
-import utils.UserAnswers
-
-trait ModelSpecBase extends SpecBase with MockitoSugar with BeforeAndAfterEach {
-
-  var answers = mock[UserAnswers]
-
-  override def beforeEach: Unit = {
-    super.beforeEach()
-    answers = mock[UserAnswers]
-    when(answers.selectTaxYear) thenReturn None
-  }
-
-}
+trait SubmissionResult
+case object SubmissionSuccessful extends SubmissionResult
+case object SubmissionFailed extends SubmissionResult
