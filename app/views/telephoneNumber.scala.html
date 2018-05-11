@@ -23,20 +23,20 @@
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("telephoneNumber.title"),
-    appConfig = appConfig,
-    bodyClasses = None) {
+title = messages("telephoneNumber.title"),
+appConfig = appConfig,
+bodyClasses = None) {
 
-    @helpers.form(action = TelephoneNumberController.onSubmit(mode), 'autoComplete -> "off") {
+@helpers.form(action = TelephoneNumberController.onSubmit(mode), 'autoComplete -> "off") {
 
-        @components.back_link()
+@components.back_link()
 
-        @components.error_summary(form.errors)
+@components.error_summary(form.errors)
 
-        @components.heading("telephoneNumber.heading")
+@components.heading("telephoneNumber.heading")
 
-        @components.input_text(InputViewModel("value", form), label = messages("telephoneNumber.heading"), labelClass=Some("visually-hidden"))
+@components.input_text(InputViewModel("value", form), label = messages("telephoneNumber.heading"), labelClass=Some("visually-hidden"))
 
-        @components.submit_button()
-    }
+@components.submit_button()
+}
 }

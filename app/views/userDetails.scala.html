@@ -23,35 +23,36 @@
 @(appConfig: FrontendAppConfig, mode: Mode, name: String, nino: String, address: UkAddress)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("userDetails.title"),
-    appConfig = appConfig,
-    bodyClasses = None) {
+title = messages("userDetails.title"),
+appConfig = appConfig,
+bodyClasses = None) {
 
-    @helpers.form(action = UserDetailsController.onSubmit(mode), 'autoComplete -> "off") {
+@helpers.form(action = UserDetailsController.onSubmit(mode), 'autoComplete -> "off") {
 
-        @components.heading("userDetails.heading")
+@components.heading("userDetails.heading")
 
-        <table>
-            <tbody>
-                <tr>
-                    <td class="bold">@messages("userDetails.checkYourAnswersLabel.name")</td>
-                    <td>@name</td>
-                </tr>
-                <tr>
-                    <td class="bold">@messages("userDetails.checkYourAnswersLabel.nino")</td>
-                    <td>@nino</td>
-                </tr>
-                <tr>
-                    <td class="bold">@messages("userDetails.checkYourAnswersLabel.address")</td>
-                    <td>@address.addressLine1,<br/>
-                        @address.addressLine2,<br/>
-                        @if(address.addressLine3.isDefined) {@address.addressLine3,} <br/>
-                        @if(address.addressLine4.isDefined) {@address.addressLine4,} <br/>
-                        @if(address.addressLine5.isDefined) {@address.addressLine5,} <br/>
-                        @address.postcode</td>
-                </tr>
-            </tbody>
-        </table>
-        @components.submit_button()
-    }
+<table>
+    <tbody>
+    <tr>
+        <td class="bold">@messages("userDetails.checkYourAnswersLabel.name")</td>
+        <td>@name</td>
+    </tr>
+    <tr>
+        <td class="bold">@messages("userDetails.checkYourAnswersLabel.nino")</td>
+        <td>@nino</td>
+    </tr>
+    <tr>
+        <td class="bold">@messages("userDetails.checkYourAnswersLabel.address")</td>
+        <td>@address.addressLine1,<br/>
+            @address.addressLine2,<br/>
+            @if(address.addressLine3.isDefined) {@address.addressLine3,} <br/>
+            @if(address.addressLine4.isDefined) {@address.addressLine4,} <br/>
+            @if(address.addressLine5.isDefined) {@address.addressLine5,} <br/>
+            @address.postcode
+        </td>
+    </tr>
+    </tbody>
+</table>
+@components.submit_button()
+}
 }

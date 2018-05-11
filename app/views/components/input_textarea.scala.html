@@ -27,31 +27,31 @@ labelClass: Option[String] = None
 )(implicit messages: Messages)
 
 <div class="form-field @if(viewModel.errorKey != ""){form-field--error}">
-    <label class="form-label" for="@{viewModel.id}">
-        <span class="bold @if(labelClass.nonEmpty){@labelClass}">@label</span>
-        @if(hint != ""){
-        <span class="form-hint">@hint</span>
-        }
-        @if(viewModel.errorKey != ""){
-        <span class="error-notification" id="error-message-@{viewModel.id}-input">@messages(viewModel.errorKey)</span>
-        }
-    </label>
-    <div class="form-control-wrapper char-counter" data-char-counter>
+<label class="form-label" for="@{viewModel.id}">
+    <span class="bold @if(labelClass.nonEmpty){@labelClass}">@label</span>
+    @if(hint != ""){
+    <span class="form-hint">@hint</span>
+    }
+    @if(viewModel.errorKey != ""){
+    <span class="error-notification" id="error-message-@{viewModel.id}-input">@messages(viewModel.errorKey)</span>
+    }
+</label>
+<div class="form-control-wrapper char-counter" data-char-counter>
         <textarea
                 class="form-control form-control--full-width @inputClass"
                 id="@{viewModel.id}"
                 name="@{viewModel.id}"
                 value="@{viewModel.value}"
                 aria-describedby="error-message-@{viewModel.id}-input"
-                @if(charLimit.isDefined){maxLength="@{charLimit}"}
+                @if(charLimit.isDefined){maxLength="@{charLimit}" }
                 data-char-field
                 cols="30"
                 rows="20"
         ></textarea>
-        @if(charLimit.isDefined){
-        <noscript>
-            <p class="char-counter-text flush">@messages("site.textarea.char_limit", charLimit.get)</p>
-        </noscript>
-        }
-    </div>
+    @if(charLimit.isDefined){
+    <noscript>
+        <p class="char-counter-text flush">@messages("site.textarea.char_limit", charLimit.get)</p>
+    </noscript>
+    }
+</div>
 </div>

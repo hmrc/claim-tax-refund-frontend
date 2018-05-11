@@ -32,20 +32,25 @@ labelClass: Option[String] = None
     <fieldset class="inline" id="@{viewModel.id}">
 
         <legend>
-          <span @if(labelClass.nonEmpty){class="@labelClass"}>@label</span>
-          @if(hint.nonEmpty){
+            <span @if(labelClass.nonEmpty){class="@labelClass" }>@label</span>
+            @if(hint.nonEmpty){
             <span class="form-hint">@hint</span>
-          }
-          @if(viewModel.errorKey.nonEmpty){
-            <span class="error-notification" id="error-message-@{viewModel.id}-input">@messages(viewModel.errorKey)</span>
-          }
+            }
+            @if(viewModel.errorKey.nonEmpty){
+            <span class="error-notification"
+                  id="error-message-@{viewModel.id}-input">@messages(viewModel.errorKey)</span>
+            }
         </legend>
-        <label class="block-label selection-button-radio" for="@{viewModel.id}-yes" data-target="@if(yesAssoc.nonEmpty){@yesAssoc}">
-            <input id="@{viewModel.id}-yes" type="radio" name="@{viewModel.id}" value="true" @if(viewModel.value.contains("true")){checked="checked"} />
+        <label class="block-label selection-button-radio" for="@{viewModel.id}-yes"
+               data-target="@if(yesAssoc.nonEmpty){@yesAssoc}">
+            <input id="@{viewModel.id}-yes" type="radio" name="@{viewModel.id}" value="true"
+                   @if(viewModel.value.contains("true")){checked="checked"} />
             @messages("site.yes")
         </label>
-        <label class="block-label selection-button-radio" for="@{viewModel.id}-no" data-target="@if(noAssoc.nonEmpty){@noAssoc}">
-            <input id="@{viewModel.id}-no" type="radio" name="@{viewModel.id}" value="false" @if(viewModel.value.contains("false")){checked="checked"} />
+        <label class="block-label selection-button-radio" for="@{viewModel.id}-no"
+               data-target="@if(noAssoc.nonEmpty){@noAssoc}">
+            <input id="@{viewModel.id}-no" type="radio" name="@{viewModel.id}" value="false"
+                   @if(viewModel.value.contains("false")){checked="checked"} />
             @messages("site.no")
         </label>
 

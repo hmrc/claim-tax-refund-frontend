@@ -24,24 +24,24 @@
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("anyEmploymentAndSupportAllowance.title"),
-    appConfig = appConfig,
-    bodyClasses = None) {
+title = messages("anyEmploymentAndSupportAllowance.title"),
+appConfig = appConfig,
+bodyClasses = None) {
 
-    @helpers.form(action = AnyEmploymentAndSupportAllowanceController.onSubmit(mode), 'autoComplete -> "off") {
+@helpers.form(action = AnyEmploymentAndSupportAllowanceController.onSubmit(mode), 'autoComplete -> "off") {
 
-        @components.back_link()
+@components.back_link()
 
-        @components.error_summary(form.errors)
+@components.error_summary(form.errors)
 
-        @components.heading("anyEmploymentAndSupportAllowance.heading")
+@components.heading("anyEmploymentAndSupportAllowance.heading")
 
-        @components.input_yes_no(
-            InputViewModel("value", form),
-            label = messages("anyEmploymentAndSupportAllowance.heading"),
-            labelClass = Some("visually-hidden")
-        )
+@components.input_yes_no(
+InputViewModel("value", form),
+label = messages("anyEmploymentAndSupportAllowance.heading"),
+labelClass = Some("visually-hidden")
+)
 
-        @components.submit_button()
-    }
+@components.submit_button()
+}
 }

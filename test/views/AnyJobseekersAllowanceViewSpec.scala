@@ -16,11 +16,11 @@
 
 package views
 
-import play.api.data.Form
 import controllers.routes
 import forms.BooleanForm
-import views.behaviours.YesNoViewBehaviours
 import models.NormalMode
+import play.api.data.Form
+import views.behaviours.YesNoViewBehaviours
 import views.html.anyJobseekersAllowance
 
 class AnyJobseekersAllowanceViewSpec extends YesNoViewBehaviours {

@@ -16,16 +16,16 @@
 
 package controllers
 
-import play.api.data.Form
-import play.api.libs.json.Json
-import uk.gov.hmrc.http.cache.client.CacheMap
-import utils.FakeNavigator
 import connectors.FakeDataCacheConnector
 import controllers.actions._
-import play.api.test.Helpers._
 import forms.PayeeUKAddressForm
 import identifiers.PayeeUKAddressId
 import models.{NormalMode, UkAddress}
+import play.api.data.Form
+import play.api.libs.json.Json
+import play.api.test.Helpers._
+import uk.gov.hmrc.http.cache.client.CacheMap
+import utils.FakeNavigator
 import views.html.payeeUKAddress
 
 class PayeeUKAddressControllerSpec extends ControllerSpecBase {
@@ -59,7 +59,7 @@ class PayeeUKAddressControllerSpec extends ControllerSpecBase {
     }
 
     "redirect to the next page when valid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("addressLine1", "line 1"),("addressLine2", "line 2") , ("postcode", "NE2 7RF"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("addressLine1", "line 1"), ("addressLine2", "line 2"), ("postcode", "NE2 7RF"))
 
       val result = controller().onSubmit(NormalMode)(postRequest)
 

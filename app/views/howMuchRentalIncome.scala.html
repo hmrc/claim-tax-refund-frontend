@@ -23,23 +23,23 @@
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("howMuchRentalIncome.title"),
-    appConfig = appConfig,
-    bodyClasses = None) {
+title = messages("howMuchRentalIncome.title"),
+appConfig = appConfig,
+bodyClasses = None) {
 
-    @helpers.form(action = HowMuchRentalIncomeController.onSubmit(mode), 'autoComplete -> "off") {
+@helpers.form(action = HowMuchRentalIncomeController.onSubmit(mode), 'autoComplete -> "off") {
 
-        @components.back_link()
+@components.back_link()
 
-        @components.error_summary(form.errors)
+@components.error_summary(form.errors)
 
-        @components.heading("howMuchRentalIncome.heading")
+@components.heading("howMuchRentalIncome.heading")
 
-        @components.input_text(InputViewModel("value", form),
-            label = messages("howMuchRentalIncome.heading"),
-            labelClass=Some("visually-hidden"),
-            prefix = Some(messages("global.poundSign")))
+@components.input_text(InputViewModel("value", form),
+label = messages("howMuchRentalIncome.heading"),
+labelClass=Some("visually-hidden"),
+prefix = Some(messages("global.poundSign")))
 
-        @components.submit_button()
-    }
+@components.submit_button()
+}
 }

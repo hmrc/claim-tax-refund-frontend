@@ -18,9 +18,10 @@ package models
 
 import play.api.libs.json._
 
-case class UserDetails (name: String,
-                        nino: String,
-                        address: UkAddress)
+case class UserDetails(name: String,
+                       nino: String,
+                       address: UkAddress)
+
 object UserDetails {
   implicit val format = Json.format[UserDetails]
 }

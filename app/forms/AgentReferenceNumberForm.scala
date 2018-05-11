@@ -22,7 +22,7 @@ import forms.mappings.Constraints
 import play.api.data.Form
 import play.api.data.Forms._
 
-class AgentReferenceNumberForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
+class AgentReferenceNumberForm @Inject()(appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 
   private val agentReferenceNumberBlankKey = "agentReferenceNumber.blank"
   private val agentReferenceNumberTooLong = "agentReferenceNumber.tooLong"

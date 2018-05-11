@@ -24,30 +24,30 @@
 @(appConfig: FrontendAppConfig, form: Form[InternationalAddress], mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("payeeInternationalAddress.title"),
-    appConfig = appConfig,
-    bodyClasses = None) {
+title = messages("payeeInternationalAddress.title"),
+appConfig = appConfig,
+bodyClasses = None) {
 
-    @helpers.form(action = PayeeInternationalAddressController.onSubmit(mode), 'autoComplete -> "off") {
+@helpers.form(action = PayeeInternationalAddressController.onSubmit(mode), 'autoComplete -> "off") {
 
-        @components.back_link()
+@components.back_link()
 
-        @components.error_summary(form.errors)
+@components.error_summary(form.errors)
 
-        @components.heading("payeeInternationalAddress.heading")
+@components.heading("payeeInternationalAddress.heading")
 
-        @components.input_text(InputViewModel[InternationalAddress]("addressLine1", form), label = messages("global.addressLine1"))
+@components.input_text(InputViewModel[InternationalAddress]("addressLine1", form), label = messages("global.addressLine1"))
 
-        @components.input_text(InputViewModel[InternationalAddress]("addressLine2", form), label = messages("global.addressLine2"))
+@components.input_text(InputViewModel[InternationalAddress]("addressLine2", form), label = messages("global.addressLine2"))
 
-        @components.input_text(InputViewModel[InternationalAddress]("addressLine3", form), label = messages("global.addressLine3"))
+@components.input_text(InputViewModel[InternationalAddress]("addressLine3", form), label = messages("global.addressLine3"))
 
-        @components.input_text(InputViewModel[InternationalAddress]("addressLine4", form), label = messages("global.addressLine4"))
+@components.input_text(InputViewModel[InternationalAddress]("addressLine4", form), label = messages("global.addressLine4"))
 
-        @components.input_text(InputViewModel[InternationalAddress]("addressLine5", form), label = messages("global.addressLine5"))
+@components.input_text(InputViewModel[InternationalAddress]("addressLine5", form), label = messages("global.addressLine5"))
 
-        @components.input_text(InputViewModel[InternationalAddress]("country", form), label = messages("global.country"))
+@components.input_text(InputViewModel[InternationalAddress]("country", form), label = messages("global.country"))
 
-        @components.submit_button()
-    }
+@components.submit_button()
+}
 }

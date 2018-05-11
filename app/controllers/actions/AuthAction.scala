@@ -42,7 +42,7 @@ class AuthActionImpl @Inject()(override val authConnector: AuthConnector, config
           block(AuthenticatedRequest(request, externalId, name, nino, address))
         case _ =>
           throw new UnauthorizedException("Unable to retrieve external Id")
-    } recover {
+      } recover {
       case ex: NoActiveSession =>
         Redirect(config.loginUrl, Map("continue" -> Seq(config.loginContinueUrl)))
       case ex: InsufficientEnrolments =>
@@ -58,7 +58,6 @@ class AuthActionImpl @Inject()(override val authConnector: AuthConnector, config
     }
   }
 }
-
 
 
 @ImplementedBy(classOf[AuthActionImpl])

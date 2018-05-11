@@ -47,7 +47,7 @@ prefix: Option[String] = None
                 id="@{viewModel.id}"
                 name="@{viewModel.id}"
                 value="@{viewModel.value}"
-                @if(viewModel.errorKey.nonEmpty){aria-describedby="error-message-@{viewModel.id}-input"}
+                @if(viewModel.errorKey.nonEmpty){aria-describedby="error-message-@{viewModel.id}-input" }
         />
     </div>
 </div>

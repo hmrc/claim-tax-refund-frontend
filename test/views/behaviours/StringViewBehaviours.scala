@@ -35,10 +35,10 @@ trait StringViewBehaviours extends QuestionViewBehaviours[String] {
 
         "contain a label for the value" in {
           val doc = asDocument(createView(form))
-          val expectedHintTextLine1 = expectedHintKeyLine1 map(k => messages(k))
-          val expectedHintTextLine2 = expectedHintKeyLine2 map(k => messages(k))
+          val expectedHintTextLine1 = expectedHintKeyLine1 map (k => messages(k))
+          val expectedHintTextLine2 = expectedHintKeyLine2 map (k => messages(k))
           assertContainsLabel(doc, "value", messages(s"$messageKeyPrefix.heading"), expectedHintTextLine1, expectedHintTextLine2)
-      }
+        }
 
         "contain a prefix for the value" in {
           val doc = asDocument(createView(form))
