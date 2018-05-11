@@ -24,24 +24,24 @@
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("anyAgentRef.title"),
-    appConfig = appConfig,
-    bodyClasses = None) {
+title = messages("anyAgentRef.title"),
+appConfig = appConfig,
+bodyClasses = None) {
 
-    @helpers.form(action = AnyAgentRefController.onSubmit(mode), 'autoComplete -> "off") {
+@helpers.form(action = AnyAgentRefController.onSubmit(mode), 'autoComplete -> "off") {
 
-        @components.back_link()
+@components.back_link()
 
-        @components.error_summary(form.errors)
+@components.error_summary(form.errors)
 
-        @components.heading("anyAgentRef.heading")
+@components.heading("anyAgentRef.heading")
 
-        @components.input_yes_no(
-            InputViewModel("value", form),
-            label = messages("anyAgentRef.heading"),
-            labelClass = Some("visually-hidden")
-        )
+@components.input_yes_no(
+InputViewModel("value", form),
+label = messages("anyAgentRef.heading"),
+labelClass = Some("visually-hidden")
+)
 
-        @components.submit_button()
-    }
+@components.submit_button()
+}
 }

@@ -16,13 +16,12 @@
 
 package utils
 
-import javax.inject.{Inject, Singleton}
-
-import play.api.mvc.Call
 import controllers.routes
 import identifiers._
+import javax.inject.{Inject, Singleton}
 import models.WhereToSendPayment.{SomeoneElse, You}
 import models.{CheckMode, Mode, NormalMode}
+import play.api.mvc.Call
 
 @Singleton
 class Navigator @Inject()() {
@@ -50,13 +49,13 @@ class Navigator @Inject()() {
     AnyBankBuildingSocietyInterestId -> anyBankBuildingInterest,
     HowMuchBankBuildingSocietyInterestId -> (_ => routes.AnyMedicalBenefitsController.onPageLoad(NormalMode)),
     AnyMedicalBenefitsId -> anyMedicalBenefit,
-    HowMuchMedicalBenefitsId -> (_=> routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)),
+    HowMuchMedicalBenefitsId -> (_ => routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)),
     AnyOtherTaxableIncomeId -> anyOtherTaxableIncome,
     OtherIncomeDetailsAndAmountId -> (_ => routes.WhereToSendPaymentController.onPageLoad(NormalMode)),
     WhereToSendPaymentId -> whereToSendPayment,
     PayeeFullNameId -> (_ => routes.AnyAgentRefController.onPageLoad(NormalMode)),
     AnyAgentRefId -> anyAgentRef,
-    AgentReferenceNumberId -> (_=> routes.IsPayeeAddressInTheUKController.onPageLoad(NormalMode)),
+    AgentReferenceNumberId -> (_ => routes.IsPayeeAddressInTheUKController.onPageLoad(NormalMode)),
     IsPayeeAddressInTheUKId -> isPayeeAddressInUkRoute,
     PayeeUKAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
     PayeeInternationalAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
@@ -145,7 +144,7 @@ class Navigator @Inject()() {
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
-  private def anyAgentRef (userAnswers: UserAnswers) = userAnswers.anyAgentRef match {
+  private def anyAgentRef(userAnswers: UserAnswers) = userAnswers.anyAgentRef match {
     case Some(true) => routes.AgentReferenceNumberController.onPageLoad(NormalMode)
     case Some(false) => routes.IsPayeeAddressInTheUKController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()

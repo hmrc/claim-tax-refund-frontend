@@ -16,33 +16,32 @@
 
 package controllers
 
+import config.FrontendAppConfig
+import connectors.DataCacheConnector
+import controllers.actions._
+import forms.TelephoneNumberForm
+import identifiers.TelephoneNumberId
 import javax.inject.Inject
-
+import models.Mode
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
-import connectors.DataCacheConnector
-import controllers.actions._
-import config.FrontendAppConfig
-import forms.TelephoneNumberForm
-import identifiers.TelephoneNumberId
-import models.Mode
 import utils.{Navigator, UserAnswers}
 import views.html.telephoneNumber
 
 import scala.concurrent.Future
 
 class TelephoneNumberController @Inject()(
-                                        appConfig: FrontendAppConfig,
-                                        override val messagesApi: MessagesApi,
-                                        dataCacheConnector: DataCacheConnector,
-                                        navigator: Navigator,
-                                        authenticate: AuthAction,
-                                        getData: DataRetrievalAction,
-                                        requireData: DataRequiredAction,
-                                        formBuilder: TelephoneNumberForm) extends FrontendController with I18nSupport {
+                                           appConfig: FrontendAppConfig,
+                                           override val messagesApi: MessagesApi,
+                                           dataCacheConnector: DataCacheConnector,
+                                           navigator: Navigator,
+                                           authenticate: AuthAction,
+                                           getData: DataRetrievalAction,
+                                           requireData: DataRequiredAction,
+                                           formBuilder: TelephoneNumberForm) extends FrontendController with I18nSupport {
 
-private val form: Form[String] = formBuilder()
+  private val form: Form[String] = formBuilder()
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>

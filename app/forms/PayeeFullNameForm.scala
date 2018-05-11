@@ -22,7 +22,7 @@ import forms.mappings.Constraints
 import play.api.data.Form
 import play.api.data.Forms._
 
-class PayeeFullNameForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
+class PayeeFullNameForm @Inject()(appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 
   private val payeeFullNameBlankKey = "payeeFullName.blank"
   private val payeeFullNameTooLong = "payeeFullName.tooLong"

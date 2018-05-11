@@ -24,24 +24,24 @@
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("anyStatePension.title"),
-    appConfig = appConfig,
-    bodyClasses = None) {
+title = messages("anyStatePension.title"),
+appConfig = appConfig,
+bodyClasses = None) {
 
-    @helpers.form(action = AnyStatePensionController.onSubmit(mode), 'autoComplete -> "off") {
+@helpers.form(action = AnyStatePensionController.onSubmit(mode), 'autoComplete -> "off") {
 
-        @components.back_link()
+@components.back_link()
 
-        @components.error_summary(form.errors)
+@components.error_summary(form.errors)
 
-        @components.heading("anyStatePension.heading")
+@components.heading("anyStatePension.heading")
 
-        @components.input_yes_no(
-            InputViewModel("value", form),
-            label = messages("anyStatePension.heading"),
-            labelClass = Some("visually-hidden")
-        )
+@components.input_yes_no(
+InputViewModel("value", form),
+label = messages("anyStatePension.heading"),
+labelClass = Some("visually-hidden")
+)
 
-        @components.submit_button()
-    }
+@components.submit_button()
+}
 }

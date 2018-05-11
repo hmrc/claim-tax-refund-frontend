@@ -18,7 +18,7 @@ package utils
 
 import viewmodels.AnswerSection
 
-class CheckYourAnswersSections (cyaHelper: CheckYourAnswersHelper, userAnswers: UserAnswers) {
+class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: UserAnswers) {
 
   def sectionsToShow: Seq[AnswerSection] = {
     if (userAnswers.anyBenefits == Some(true) && userAnswers.otherIncome == Some(false)) {
@@ -26,7 +26,7 @@ class CheckYourAnswersSections (cyaHelper: CheckYourAnswersHelper, userAnswers: 
     } else if (userAnswers.otherIncome == Some(true) && userAnswers.anyBenefits == Some(false)) {
       Seq(yourDetails, incomeDetails, otherIncomeDetails, paymentDetails, contactDetails)
     } else if (userAnswers.otherIncome == Some(true) && userAnswers.anyBenefits == Some(true)) {
-      Seq(yourDetails, incomeDetails,benefitDetails, otherIncomeDetails, paymentDetails, contactDetails)
+      Seq(yourDetails, incomeDetails, benefitDetails, otherIncomeDetails, paymentDetails, contactDetails)
     } else {
       Seq(yourDetails, incomeDetails, paymentDetails, contactDetails)
     }

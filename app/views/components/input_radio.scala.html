@@ -29,17 +29,21 @@ inputs: Seq[RadioOption]
 <div class="form-group">
     <fieldset class="form-group" id="@{viewModel.id}">
         <legend>
-          <span class="@if(legendClass.nonEmpty){@{legendClass.get}}">@legend</span>
-          @if(hint.nonEmpty){
-          <span class="form-hint">@{hint.get}</span>
-          }
-          @if(viewModel.errorKey.nonEmpty){
-          <span class="error-notification" id="error-message-@{viewModel.id}-input">@messages(viewModel.errorKey)</span>
-          }
+            <span class="@if(legendClass.nonEmpty){@{legendClass.get}}">@legend</span>
+            @if(hint.nonEmpty){
+            <span class="form-hint">@{hint.get}</span>
+            }
+            @if(viewModel.errorKey.nonEmpty){
+            <span class="error-notification"
+                  id="error-message-@{viewModel.id}-input">@messages(viewModel.errorKey)</span>
+            }
         </legend>
         @for(input <- inputs) {
         <div class="multiple-choice">
-            <input id="@{input.id}" type="radio" name="@{viewModel.id}" value="@{input.value}" @if(viewModel.value == Some(input.value)){checked="checked"} @if(trackGa){data-journey-click="claim-tax-refund-frontend:click:@{input.id}"} aria-expanded="true" />
+            <input id="@{input.id}" type="radio" name="@{viewModel.id}" value="@{input.value}" @if(viewModel.value==
+                   Some(input.value)){checked="checked" }
+                   @if(trackGa){data-journey-click="claim-tax-refund-frontend:click:@{input.id}" }
+                   aria-expanded="true"/>
             <label for="@{input.id}">
                 @messages(input.messageKey)
             </label>

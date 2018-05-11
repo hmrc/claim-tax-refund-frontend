@@ -16,7 +16,6 @@
 
 package forms
 
-import base.SpecBase
 import forms.behaviours.FormBehaviours
 import models.SelectTaxYear
 import play.api.i18n.Messages

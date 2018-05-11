@@ -26,25 +26,25 @@
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("selectTaxYear.title"),
-    appConfig = appConfig,
-    bodyClasses = None) {
+title = messages("selectTaxYear.title"),
+appConfig = appConfig,
+bodyClasses = None) {
 
-    @helpers.form(action = SelectTaxYearController.onSubmit(mode), 'autoComplete -> "off") {
+@helpers.form(action = SelectTaxYearController.onSubmit(mode), 'autoComplete -> "off") {
 
-        @components.back_link()
+@components.back_link()
 
-        @components.error_summary(form.errors)
+@components.error_summary(form.errors)
 
-        @components.heading("selectTaxYear.heading")
+@components.heading("selectTaxYear.heading")
 
-        @components.input_radio(
-            viewModel = InputViewModel("value", form),
-            legend = messages("selectTaxYear.heading"),
-            legendClass = Some("visually-hidden"),
-            inputs = SelectTaxYearForm.options
-        )
+@components.input_radio(
+viewModel = InputViewModel("value", form),
+legend = messages("selectTaxYear.heading"),
+legendClass = Some("visually-hidden"),
+inputs = SelectTaxYearForm.options
+)
 
-        @components.submit_button()
-    }
+@components.submit_button()
+}
 }

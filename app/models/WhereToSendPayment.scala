@@ -16,13 +16,14 @@
 
 package models
 
-import utils.{WithName, Enumerable}
+import utils.{Enumerable, WithName}
 
 sealed trait WhereToSendPayment
 
 object WhereToSendPayment extends Enumerable[WhereToSendPayment] {
 
   case object SomeoneElse extends WithName("someoneElse") with WhereToSendPayment
+
   case object You extends WithName("you") with WhereToSendPayment
 
   lazy val values: Set[WhereToSendPayment] = Set(

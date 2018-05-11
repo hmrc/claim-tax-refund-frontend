@@ -16,30 +16,29 @@
 
 package controllers
 
+import config.FrontendAppConfig
+import connectors.DataCacheConnector
+import controllers.actions._
+import forms.PayeeUKAddressForm
+import identifiers.PayeeUKAddressId
 import javax.inject.Inject
-
+import models.{Mode, UkAddress}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
-import connectors.DataCacheConnector
-import controllers.actions._
-import config.FrontendAppConfig
-import forms.PayeeUKAddressForm
-import identifiers.PayeeUKAddressId
-import models.{Mode, UkAddress}
 import utils.{Navigator, UserAnswers}
 import views.html.payeeUKAddress
 
 import scala.concurrent.Future
 
 class PayeeUKAddressController @Inject()(appConfig: FrontendAppConfig,
-                                                  override val messagesApi: MessagesApi,
-                                                  dataCacheConnector: DataCacheConnector,
-                                                  navigator: Navigator,
-                                                  authenticate: AuthAction,
-                                                  getData: DataRetrievalAction,
-                                                  requireData: DataRequiredAction,
-                                                  formBuilder: PayeeUKAddressForm) extends FrontendController with I18nSupport {
+                                         override val messagesApi: MessagesApi,
+                                         dataCacheConnector: DataCacheConnector,
+                                         navigator: Navigator,
+                                         authenticate: AuthAction,
+                                         getData: DataRetrievalAction,
+                                         requireData: DataRequiredAction,
+                                         formBuilder: PayeeUKAddressForm) extends FrontendController with I18nSupport {
 
   private val form: Form[UkAddress] = formBuilder()
 
