@@ -19,9 +19,9 @@ package forms
 import config.FrontendAppConfig
 import forms.behaviours.FormBehaviours
 import models.{MandatoryField, MaxLengthField, RegexField, UkAddress}
+import org.mockito.Mockito._
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
-import org.mockito.Mockito._
 
 class PayeeUKAddressFormSpec extends FormBehaviours with MockitoSugar {
 

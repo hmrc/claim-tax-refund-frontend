@@ -16,10 +16,9 @@
 
 package views
 
-import play.api.data.Form
 import forms.WhereToSendPaymentForm
 import models.NormalMode
-import models.WhereToSendPayment
+import play.api.data.Form
 import views.behaviours.ViewBehaviours
 import views.html.whereToSendPayment
 
@@ -47,13 +46,13 @@ class WhereToSendPaymentViewSpec extends ViewBehaviours {
       }
     }
 
-    for(option <- WhereToSendPaymentForm.options) {
+    for (option <- WhereToSendPaymentForm.options) {
       s"rendered with a value of '${option.value}'" must {
         s"have the '${option.value}' radio button selected" in {
           val doc = asDocument(createViewUsingForm(WhereToSendPaymentForm().bind(Map("value" -> s"${option.value}"))))
           assertContainsRadioButton(doc, option.id, "value", option.value, true)
 
-          for(unselectedOption <- WhereToSendPaymentForm.options.filterNot(o => o == option)) {
+          for (unselectedOption <- WhereToSendPaymentForm.options.filterNot(o => o == option)) {
             assertContainsRadioButton(doc, unselectedOption.id, "value", unselectedOption.value, false)
           }
         }

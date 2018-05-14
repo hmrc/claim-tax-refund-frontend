@@ -17,11 +17,11 @@
 package views
 
 import config.FrontendAppConfig
-import play.api.data.Form
 import controllers.routes
 import forms.OtherBenefitsDetailsAndAmountForm
 import models.NormalMode
 import org.scalatest.mockito.MockitoSugar
+import play.api.data.Form
 import views.behaviours.StringViewBehaviours
 import views.html.otherBenefitsDetailsAndAmount
 
@@ -43,6 +43,6 @@ class OtherBenefitsDetailsAndAmountViewSpec extends StringViewBehaviours with Mo
     behave like pageWithBackLink(createView)
 
     behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.OtherBenefitsDetailsAndAmountController.onSubmit(NormalMode).url,
-     Some(s"$messageKeyPrefix.hint"))
+      Some(s"$messageKeyPrefix.hint"))
   }
 }

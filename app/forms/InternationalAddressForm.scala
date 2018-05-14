@@ -19,11 +19,11 @@ package forms
 import com.google.inject.Inject
 import config.FrontendAppConfig
 import forms.mappings.Constraints
+import models.InternationalAddress
 import play.api.data.Form
 import play.api.data.Forms._
-import models.InternationalAddress
 
-class InternationalAddressForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
+class InternationalAddressForm @Inject()(appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 
   private val maxLengthInt = appConfig.addressLineMaxLength
   private val countryLength = appConfig.countryMaxLength
@@ -46,7 +46,7 @@ class InternationalAddressForm @Inject() (appConfig: FrontendAppConfig) extends 
         "addressLine3" -> optional(text.verifying(maxLength(maxLengthInt, addressLine3KeyTooLong))),
         "addressLine4" -> optional(text.verifying(maxLength(maxLengthInt, addressLine4KeyTooLong))),
         "addressLine5" -> optional(text.verifying(maxLength(maxLengthInt, addressLine5KeyTooLong))),
-        "country"      -> text.verifying(nonEmpty(countryKeyBlank), maxLength(countryLength, countryKeyTooLong))
+        "country" -> text.verifying(nonEmpty(countryKeyBlank), maxLength(countryLength, countryKeyTooLong))
       )(InternationalAddress.apply)(InternationalAddress.unapply)
     )
   }

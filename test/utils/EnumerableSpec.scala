@@ -16,19 +16,22 @@
 
 package utils
 
-import org.scalatest.{EitherValues, OptionValues, MustMatchers, WordSpec}
+import org.scalatest.{EitherValues, MustMatchers, OptionValues, WordSpec}
 import play.api.data.validation.ValidationError
 import play.api.libs.json._
 
 object EnumerableSpec {
 
   sealed trait Foo
+
   case object Bar extends Foo
+
   case object Baz extends Foo
 
   object Foo extends Enumerable[Foo] {
     override def values: Set[Foo] = Set(Bar, Baz)
   }
+
 }
 
 class EnumerableSpec extends WordSpec with MustMatchers with EitherValues with OptionValues {

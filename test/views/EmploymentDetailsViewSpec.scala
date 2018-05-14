@@ -17,11 +17,10 @@
 package views
 
 import config.FrontendAppConfig
-import play.api.data.Form
-import controllers.routes
 import forms.EmploymentDetailsForm
 import models.NormalMode
 import org.scalatest.mockito.MockitoSugar
+import play.api.data.Form
 import views.behaviours.StringViewBehaviours
 import views.html.employmentDetails
 

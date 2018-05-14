@@ -22,7 +22,7 @@ import forms.mappings.Constraints
 import play.api.data.Form
 import play.api.data.Forms._
 
-class HowMuchCarBenefitsForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
+class HowMuchCarBenefitsForm @Inject()(appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 
   private val currencyRegex = appConfig.currencyRegex
   private val errorKeyInvalid = "howMuchCarBenefits.invalid"

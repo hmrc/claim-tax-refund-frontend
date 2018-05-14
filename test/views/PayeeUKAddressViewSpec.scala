@@ -17,11 +17,11 @@
 package views
 
 import config.FrontendAppConfig
-import play.api.data.Form
 import controllers.routes
 import forms.PayeeUKAddressForm
 import models.{NormalMode, UkAddress}
 import org.scalatest.mockito.MockitoSugar
+import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 import views.html.payeeUKAddress
 

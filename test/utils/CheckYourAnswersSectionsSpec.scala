@@ -20,9 +20,9 @@ import base.SpecBase
 import models.SelectTaxYear.CYMinus2
 import models.WhereToSendPayment.SomeoneElse
 import models._
-import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito._
 import org.scalatest.BeforeAndAfterEach
+import org.scalatest.mockito.MockitoSugar
 
 class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with BeforeAndAfterEach {
 
