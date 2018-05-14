@@ -22,14 +22,14 @@ import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, MockUserAnswers,
 import views.behaviours.ViewBehaviours
 import views.html.check_your_answers
 
-class CheckYourAnswersViewSpec extends SpecBase with ViewBehaviours with MockitoSugar{
+class CheckYourAnswersViewSpec extends SpecBase with ViewBehaviours with MockitoSugar {
 
   val messageKeyPrefix = "checkYourAnswers"
 
   def view = () => check_your_answers(frontendAppConfig, sections)(fakeRequest, messages)
 
   private var answers = mock[UserAnswers]
-    answers = MockUserAnswers.minimalValidUserAnswers
+  answers = MockUserAnswers.minimalValidUserAnswers
 
   val helper = new CheckYourAnswersHelper(answers)
   val section = new CheckYourAnswersSections(helper, MockUserAnswers.minimalValidUserAnswers)

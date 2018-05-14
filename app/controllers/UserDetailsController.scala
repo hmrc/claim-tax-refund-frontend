@@ -16,27 +16,25 @@
 
 package controllers
 
-import javax.inject.Inject
-
 import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
 import identifiers.UserDetailsId
+import javax.inject.Inject
 import models.{Mode, UkAddress, UserDetails}
-import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import utils.{Navigator, UserAnswers}
 import views.html.userDetails
 
 class UserDetailsController @Inject()(
-                                        appConfig: FrontendAppConfig,
-                                        override val messagesApi: MessagesApi,
-                                        dataCacheConnector: DataCacheConnector,
-                                        navigator: Navigator,
-                                        authenticate: AuthAction,
-                                        getData: DataRetrievalAction,
-                                        requireData: DataRequiredAction) extends FrontendController with I18nSupport {
+                                       appConfig: FrontendAppConfig,
+                                       override val messagesApi: MessagesApi,
+                                       dataCacheConnector: DataCacheConnector,
+                                       navigator: Navigator,
+                                       authenticate: AuthAction,
+                                       getData: DataRetrievalAction,
+                                       requireData: DataRequiredAction) extends FrontendController with I18nSupport {
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData) {
     implicit request =>
@@ -53,8 +51,8 @@ class UserDetailsController @Inject()(
       val userNino = request.nino
       val userAddress = UkAddress(request.address.line1.get, request.address.line2.get, Some(request.address.line3.get),
         Some(request.address.line4.get), Some(request.address.line5.get), request.address.postCode.get)
-          dataCacheConnector.save[UserDetails](request.externalId, UserDetailsId.toString, UserDetails(userName, userNino, userAddress)).map(cacheMap =>
-            Redirect(navigator.nextPage(UserDetailsId, mode)(new UserAnswers(cacheMap)))
+      dataCacheConnector.save[UserDetails](request.externalId, UserDetailsId.toString, UserDetails(userName, userNino, userAddress)).map(cacheMap =>
+        Redirect(navigator.nextPage(UserDetailsId, mode)(new UserAnswers(cacheMap)))
       )
   }
 }

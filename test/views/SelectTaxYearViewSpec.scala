@@ -16,9 +16,9 @@
 
 package views
 
-import play.api.data.Form
 import forms.SelectTaxYearForm
 import models.NormalMode
+import play.api.data.Form
 import play.api.i18n.Messages
 import utils.RadioOption
 import views.behaviours.ViewBehaviours
@@ -51,13 +51,13 @@ class SelectTaxYearViewSpec extends ViewBehaviours {
       }
     }
 
-    for(option <- radioButtonOptions(messages)) {
+    for (option <- radioButtonOptions(messages)) {
       s"rendered with a value of '${option.value}'" must {
         s"have the '${option.value}' radio button selected" in {
           val doc = asDocument(createViewUsingForm(SelectTaxYearForm().bind(Map("value" -> s"${option.value}"))))
           assertContainsRadioButton(doc, option.id, "value", option.value, true)
 
-          for(unselectedOption <- radioButtonOptions(messages).filterNot(o => o == option)) {
+          for (unselectedOption <- radioButtonOptions(messages).filterNot(o => o == option)) {
             assertContainsRadioButton(doc, unselectedOption.id, "value", unselectedOption.value, false)
           }
         }

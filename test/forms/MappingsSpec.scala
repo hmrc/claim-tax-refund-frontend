@@ -18,23 +18,23 @@ package forms.mappings
 
 import org.scalatest.{MustMatchers, OptionValues, WordSpec}
 import play.api.data.{Form, FormError}
-import utils.Enumerable
 
 object MappingsSpec {
 
   sealed trait Foo
+
   case object Bar extends Foo
+
   case object Baz extends Foo
 
   object Foo {
 
     val values: Set[Foo] = Set(Bar, Baz)
   }
+
 }
 
 class MappingsSpec extends WordSpec with MustMatchers with OptionValues with Mappings {
-
-  import MappingsSpec._
 
   "text" must {
 

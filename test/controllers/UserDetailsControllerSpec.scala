@@ -16,12 +16,11 @@
 
 package controllers
 
-import play.api.data.Form
-import utils.FakeNavigator
 import connectors.FakeDataCacheConnector
 import controllers.actions._
+import models.{NormalMode, UkAddress}
 import play.api.test.Helpers._
-import models.{NormalMode, UkAddress, UserDetails}
+import utils.FakeNavigator
 import views.html.userDetails
 
 class UserDetailsControllerSpec extends ControllerSpecBase {

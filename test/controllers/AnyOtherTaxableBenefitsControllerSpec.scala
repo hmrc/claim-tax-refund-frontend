@@ -16,16 +16,16 @@
 
 package controllers
 
-import play.api.data.Form
-import play.api.libs.json.JsBoolean
-import uk.gov.hmrc.http.cache.client.CacheMap
-import utils.FakeNavigator
 import connectors.FakeDataCacheConnector
 import controllers.actions._
-import play.api.test.Helpers._
 import forms.BooleanForm
 import identifiers.AnyOtherTaxableBenefitsId
 import models.NormalMode
+import play.api.data.Form
+import play.api.libs.json.JsBoolean
+import play.api.test.Helpers._
+import uk.gov.hmrc.http.cache.client.CacheMap
+import utils.FakeNavigator
 import views.html.anyOtherTaxableBenefits
 
 class AnyOtherTaxableBenefitsControllerSpec extends ControllerSpecBase {

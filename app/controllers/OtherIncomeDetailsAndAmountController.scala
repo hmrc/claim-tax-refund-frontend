@@ -16,31 +16,30 @@
 
 package controllers
 
+import config.FrontendAppConfig
+import connectors.DataCacheConnector
+import controllers.actions._
+import forms.OtherIncomeDetailsAndAmountForm
+import identifiers.OtherIncomeDetailsAndAmountId
 import javax.inject.Inject
-
+import models.Mode
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
-import connectors.DataCacheConnector
-import controllers.actions._
-import config.FrontendAppConfig
-import forms.OtherIncomeDetailsAndAmountForm
-import identifiers.OtherIncomeDetailsAndAmountId
-import models.Mode
 import utils.{Navigator, UserAnswers}
 import views.html.otherIncomeDetailsAndAmount
 
 import scala.concurrent.Future
 
 class OtherIncomeDetailsAndAmountController @Inject()(
-                                        appConfig: FrontendAppConfig,
-                                        override val messagesApi: MessagesApi,
-                                        dataCacheConnector: DataCacheConnector,
-                                        navigator: Navigator,
-                                        authenticate: AuthAction,
-                                        getData: DataRetrievalAction,
-                                        requireData: DataRequiredAction,
-                                        formBuilder: OtherIncomeDetailsAndAmountForm) extends FrontendController with I18nSupport {
+                                                       appConfig: FrontendAppConfig,
+                                                       override val messagesApi: MessagesApi,
+                                                       dataCacheConnector: DataCacheConnector,
+                                                       navigator: Navigator,
+                                                       authenticate: AuthAction,
+                                                       getData: DataRetrievalAction,
+                                                       requireData: DataRequiredAction,
+                                                       formBuilder: OtherIncomeDetailsAndAmountForm) extends FrontendController with I18nSupport {
 
   private val form: Form[String] = formBuilder()
 

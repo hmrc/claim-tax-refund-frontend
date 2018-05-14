@@ -16,31 +16,29 @@
 
 package controllers
 
+import config.FrontendAppConfig
+import connectors.DataCacheConnector
+import controllers.actions._
+import forms.WhereToSendPaymentForm
+import identifiers.WhereToSendPaymentId
 import javax.inject.Inject
-
+import models.{Mode, WhereToSendPayment}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
-import connectors.DataCacheConnector
-import controllers.actions._
-import config.FrontendAppConfig
-import forms.WhereToSendPaymentForm
-import identifiers.WhereToSendPaymentId
-import models.Mode
-import models.WhereToSendPayment
 import utils.{Navigator, UserAnswers}
 import views.html.whereToSendPayment
 
 import scala.concurrent.Future
 
 class WhereToSendPaymentController @Inject()(
-                                        appConfig: FrontendAppConfig,
-                                        override val messagesApi: MessagesApi,
-                                        dataCacheConnector: DataCacheConnector,
-                                        navigator: Navigator,
-                                        authenticate: AuthAction,
-                                        getData: DataRetrievalAction,
-                                        requireData: DataRequiredAction) extends FrontendController with I18nSupport {
+                                              appConfig: FrontendAppConfig,
+                                              override val messagesApi: MessagesApi,
+                                              dataCacheConnector: DataCacheConnector,
+                                              navigator: Navigator,
+                                              authenticate: AuthAction,
+                                              getData: DataRetrievalAction,
+                                              requireData: DataRequiredAction) extends FrontendController with I18nSupport {
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
