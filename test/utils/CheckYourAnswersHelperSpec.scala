@@ -19,9 +19,9 @@ package utils
 import base.SpecBase
 import models.SelectTaxYear._
 import models.WhereToSendPayment._
+import models.{InternationalAddress, UkAddress, UserDetails}
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
-import models.{InternationalAddress, UkAddress, UserDetails}
 import viewmodels.AnswerRow
 
 class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
@@ -63,15 +63,15 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
   "Select current year minus 2" must {
     s"have correct label" in {
       when(answers.selectTaxYear) thenReturn Some(CYMinus2)
-      val helper = new CheckYourAnswersHelper (answers)
+      val helper = new CheckYourAnswersHelper(answers)
       helper.selectTaxYear.get.label.key mustBe s"selectTaxYear.checkYourAnswersLabel"
-     }
+    }
   }
 
   "Select current year minus 3" must {
     s"have correct label" in {
       when(answers.selectTaxYear) thenReturn Some(CYMinus3)
-      val helper = new CheckYourAnswersHelper (answers)
+      val helper = new CheckYourAnswersHelper(answers)
       helper.selectTaxYear.get.label.key mustBe s"selectTaxYear.checkYourAnswersLabel"
     }
   }
@@ -79,7 +79,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
   "Select current year minus 4" must {
     s"have correct label" in {
       when(answers.selectTaxYear) thenReturn Some(CYMinus4)
-      val helper = new CheckYourAnswersHelper (answers)
+      val helper = new CheckYourAnswersHelper(answers)
       helper.selectTaxYear.get.label.key mustBe s"selectTaxYear.checkYourAnswersLabel"
     }
   }
@@ -87,7 +87,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
   "Select current year minus 5" must {
     s"have correct label" in {
       when(answers.selectTaxYear) thenReturn Some(CYMinus5)
-      val helper = new CheckYourAnswersHelper (answers)
+      val helper = new CheckYourAnswersHelper(answers)
       helper.selectTaxYear.get.label.key mustBe s"selectTaxYear.checkYourAnswersLabel"
     }
   }
@@ -143,7 +143,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
   "How much jobseekers allowance" must {
     s"have the correct label" in {
       when(answers.howMuchJobseekersAllowance) thenReturn Some("9,999.99")
-      val helper = new CheckYourAnswersHelper (answers)
+      val helper = new CheckYourAnswersHelper(answers)
       helper.howMuchJobseekersAllowance.get.label.key mustBe s"howMuchJobseekersAllowance.checkYourAnswersLabel"
     }
   }
@@ -167,7 +167,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
   "How much incapacity benefit" must {
     s"have the correct label" in {
       when(answers.howMuchIncapacityBenefit) thenReturn Some("9,999.99")
-      val helper = new CheckYourAnswersHelper (answers)
+      val helper = new CheckYourAnswersHelper(answers)
       helper.howMuchIncapacityBenefit.get.label.key mustBe s"howMuchIncapacityBenefit.checkYourAnswersLabel"
     }
   }
@@ -191,7 +191,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
   "How much employment and support allowance" must {
     s"have the correct label" in {
       when(answers.howMuchEmploymentAndSupportAllowance) thenReturn Some("9,999.99")
-      val helper = new CheckYourAnswersHelper (answers)
+      val helper = new CheckYourAnswersHelper(answers)
       helper.howMuchEmploymentAndSupportAllowance.get.label.key mustBe s"howMuchEmploymentAndSupportAllowance.checkYourAnswersLabel"
     }
   }
@@ -215,7 +215,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
   "How much state pension" must {
     s"have the correct label" in {
       when(answers.howMuchStatePension) thenReturn Some("9,999.99")
-      val helper = new CheckYourAnswersHelper (answers)
+      val helper = new CheckYourAnswersHelper(answers)
       helper.howMuchStatePension.get.label.key mustBe s"howMuchStatePension.checkYourAnswersLabel"
     }
   }
@@ -239,7 +239,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
   "Other benefits details and amount" must {
     s"have the correct label" in {
       when(answers.otherBenefitsDetailsAndAmount) thenReturn Some("9,999.99")
-      val helper = new CheckYourAnswersHelper (answers)
+      val helper = new CheckYourAnswersHelper(answers)
       helper.otherBenefitsDetailsAndAmount.get.label.key mustBe s"otherBenefitsDetailsAndAmount.checkYourAnswersLabel"
     }
   }
@@ -263,7 +263,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
   "How much car benefits" must {
     s"have the correct label" in {
       when(answers.howMuchCarBenefits) thenReturn Some("9,999.99")
-      val helper = new CheckYourAnswersHelper (answers)
+      val helper = new CheckYourAnswersHelper(answers)
       helper.howMuchCarBenefits.get.label.key mustBe s"howMuchCarBenefits.checkYourAnswersLabel"
     }
   }
@@ -287,7 +287,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
   "How much rental income" must {
     s"have the correct label" in {
       when(answers.howMuchRentalIncome) thenReturn Some("9,999.99")
-      val helper = new CheckYourAnswersHelper (answers)
+      val helper = new CheckYourAnswersHelper(answers)
       helper.howMuchRentalIncome.get.label.key mustBe s"howMuchRentalIncome.checkYourAnswersLabel"
     }
   }
@@ -311,7 +311,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
   "How much bank building society interest" must {
     s"have the correct label" in {
       when(answers.howMuchBankBuildingSocietyInterest) thenReturn Some("9,999.99")
-      val helper = new CheckYourAnswersHelper (answers)
+      val helper = new CheckYourAnswersHelper(answers)
       helper.howMuchBankBuildingSocietyInterest.get.label.key mustBe s"howMuchBankBuildingSocietyInterest.checkYourAnswersLabel"
     }
   }
@@ -335,7 +335,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
   "How much medical benefits" must {
     s"have the correct label" in {
       when(answers.howMuchMedicalBenefits) thenReturn Some("9,999.99")
-      val helper = new CheckYourAnswersHelper (answers)
+      val helper = new CheckYourAnswersHelper(answers)
       helper.howMuchMedicalBenefits.get.label.key mustBe s"howMuchMedicalBenefits.checkYourAnswersLabel"
     }
   }
@@ -359,7 +359,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
   "Other taxable income details and amount" must {
     s"have the correct label" in {
       when(answers.otherIncomeDetailsAndAmount) thenReturn Some("9,999.99")
-      val helper = new CheckYourAnswersHelper (answers)
+      val helper = new CheckYourAnswersHelper(answers)
       helper.otherIncomeDetailsAndAmount.get.label.key mustBe s"otherIncomeDetailsAndAmount.checkYourAnswersLabel"
     }
   }
@@ -383,7 +383,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
   "Payee Full Name" must {
     s"have the correct label" in {
       when(answers.payeeFullName) thenReturn Some("Test name")
-      val helper = new CheckYourAnswersHelper (answers)
+      val helper = new CheckYourAnswersHelper(answers)
       helper.payeeFullName.get.label.key mustBe s"payeeFullName.checkYourAnswersLabel"
     }
   }
@@ -407,7 +407,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
   "Agent Reference Number" must {
     s"have the correct label" in {
       when(answers.agentReferenceNumber) thenReturn Some("Test number")
-      val helper = new CheckYourAnswersHelper (answers)
+      val helper = new CheckYourAnswersHelper(answers)
       helper.agentReferenceNumber.get.label.key mustBe s"agentReferenceNumber.checkYourAnswersLabel"
     }
   }

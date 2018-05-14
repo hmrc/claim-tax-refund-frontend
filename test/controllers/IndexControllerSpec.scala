@@ -23,7 +23,7 @@ import views.html.index
 
 class IndexControllerSpec extends ControllerSpecBase {
 
-  def call(implicit request: Request[_]) : Call = routes.UserDetailsController.onPageLoad(NormalMode)
+  def call(implicit request: Request[_]): Call = routes.UserDetailsController.onPageLoad(NormalMode)
 
   "Index Controller" must {
     "return 200 for a GET" in {
@@ -31,9 +31,9 @@ class IndexControllerSpec extends ControllerSpecBase {
       status(result) mustBe OK
     }
 
-   "return the correct view for a GET" in {
+    "return the correct view for a GET" in {
       val result = new IndexController(frontendAppConfig, messagesApi).onPageLoad()(fakeRequest)
       contentAsString(result) mustBe index(frontendAppConfig, call(fakeRequest))(fakeRequest, messages).toString
-   }
+    }
   }
 }

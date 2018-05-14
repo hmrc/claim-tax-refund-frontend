@@ -16,14 +16,14 @@
 
 package forms
 
+import models.SelectTaxYear
+import models.SelectTaxYear.{CYMinus2, CYMinus3, CYMinus4, CYMinus5}
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.data.format.Formatter
-import utils.RadioOption
-import models.SelectTaxYear
-import models.SelectTaxYear.{CYMinus2, CYMinus3, CYMinus4, CYMinus5}
 import play.api.i18n.Messages
 import uk.gov.hmrc.time.TaxYearResolver
+import utils.RadioOption
 
 object SelectTaxYearForm extends FormErrorHelper {
 

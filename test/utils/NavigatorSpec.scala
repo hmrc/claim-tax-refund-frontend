@@ -17,12 +17,12 @@
 package utils
 
 import base.SpecBase
-import org.mockito.Mockito._
-import org.scalatest.mockito.MockitoSugar
 import controllers.routes
 import identifiers._
 import models.WhereToSendPayment.{SomeoneElse, You}
 import models._
+import org.mockito.Mockito._
+import org.scalatest.mockito.MockitoSugar
 
 class NavigatorSpec extends SpecBase with MockitoSugar {
 
@@ -285,7 +285,7 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(IsPayeeAddressInTheUKId, NormalMode)(answers) mustBe routes.PayeeUKAddressController.onPageLoad(NormalMode)
       }
 
-     "go to CheckYourAnswers from TelephoneNumber" in {
+      "go to CheckYourAnswers from TelephoneNumber" in {
         val answers = mock[UserAnswers]
         navigator.nextPage(TelephoneNumberId, NormalMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
       }

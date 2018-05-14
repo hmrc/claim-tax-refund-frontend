@@ -16,9 +16,9 @@
 
 package utils
 
-import uk.gov.hmrc.http.cache.client.CacheMap
 import identifiers._
 import models._
+import uk.gov.hmrc.http.cache.client.CacheMap
 
 class UserAnswers(val cacheMap: CacheMap) {
   def employmentDetails: Option[String] = cacheMap.getEntry[String](EmploymentDetailsId.toString)

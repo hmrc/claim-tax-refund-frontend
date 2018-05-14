@@ -16,18 +16,17 @@
 
 package controllers.actions
 
-import uk.gov.hmrc.http.cache.client.CacheMap
 import models.requests.{AuthenticatedRequest, OptionalDataRequest}
+import uk.gov.hmrc.http.cache.client.CacheMap
 import utils.UserAnswers
 
-import scala.concurrent.Future
-
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 class FakeDataRetrievalAction(cacheMapToReturn: Option[CacheMap]) extends DataRetrievalAction {
   override protected def transform[A](request: AuthenticatedRequest[A]): Future[OptionalDataRequest[A]] = cacheMapToReturn match {
     case None => Future(OptionalDataRequest(request.request, request.externalId, request.name, request.nino, request.address, None))
-    case Some(cacheMap)=>
+    case Some(cacheMap) =>
       Future(OptionalDataRequest(request.request, request.externalId, request.name, request.nino, request.address, Some(new UserAnswers(cacheMap))))
   }
 }

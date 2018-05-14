@@ -17,10 +17,10 @@
 package forms.behaviours
 
 import config.FrontendAppConfig
-import play.api.data.Form
 import forms.FormSpec
 import models.{MandatoryField, MaxLengthField, RegexField}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import play.api.data.Form
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.Injector
 import play.api.test.FakeRequest
@@ -69,7 +69,7 @@ trait FormBehaviours extends FormSpec with GuiceOneAppPerSuite {
     }
   }
 
-  def formWithRegex(fields: RegexField*) ={
+  def formWithRegex(fields: RegexField*) = {
     for (field <- fields) {
       s"fail regex validation ${field.regexString}" in {
         val invalid = "."

@@ -19,11 +19,10 @@ package forms
 import com.google.inject.Inject
 import config.FrontendAppConfig
 import forms.mappings.Constraints
-import play.api.data.{Form, FormError}
+import play.api.data.Form
 import play.api.data.Forms._
-import play.api.data.format.Formatter
 
-class TelephoneNumberForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
+class TelephoneNumberForm @Inject()(appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 
   private val telephoneRegex = appConfig.telephoneRegex
   private val errorKeyInvalid = "telephoneNumber.invalid"

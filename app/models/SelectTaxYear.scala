@@ -16,18 +16,21 @@
 
 package models
 
-import utils.{WithName, Enumerable}
+import utils.{Enumerable, WithName}
 
 sealed trait SelectTaxYear
 
 object SelectTaxYear extends Enumerable[SelectTaxYear] {
 
   case object CYMinus2 extends WithName("current-year-minus-2") with SelectTaxYear
+
   case object CYMinus3 extends WithName("current-year-minus-3") with SelectTaxYear
+
   case object CYMinus4 extends WithName("current-year-minus-4") with SelectTaxYear
+
   case object CYMinus5 extends WithName("current-year-minus-5") with SelectTaxYear
 
   lazy val values: Set[SelectTaxYear] = Set(
-    CYMinus2, CYMinus3, CYMinus4 , CYMinus5
+    CYMinus2, CYMinus3, CYMinus4, CYMinus5
   )
 }
