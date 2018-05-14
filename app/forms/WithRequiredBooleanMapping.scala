@@ -16,8 +16,8 @@
 
 package forms
 
-import play.api.data.{FormError, Forms, Mapping}
 import play.api.data.format.Formatter
+import play.api.data.{FormError, Forms, Mapping}
 
 trait WithRequiredBooleanMapping {
 

@@ -17,11 +17,11 @@
 package views
 
 import config.FrontendAppConfig
-import play.api.data.Form
 import controllers.routes
 import forms.PayeeInternationalAddressForm
-import models.{NormalMode, InternationalAddress}
+import models.{InternationalAddress, NormalMode}
 import org.scalatest.mockito.MockitoSugar
+import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 import views.html.payeeInternationalAddress
 
@@ -43,6 +43,6 @@ class PayeeInternationalAddressViewSpec extends QuestionViewBehaviours[Internati
 
     behave like pageWithBackLink(createView)
 
-    behave like pageWithTextFields(createViewUsingForm, messageKeyPrefix, routes.PayeeInternationalAddressController.onSubmit(NormalMode).url, "addressLine1", "addressLine2", "addressLine3", "addressLine4","addressLine5","country")
+    behave like pageWithTextFields(createViewUsingForm, messageKeyPrefix, routes.PayeeInternationalAddressController.onSubmit(NormalMode).url, "addressLine1", "addressLine2", "addressLine3", "addressLine4", "addressLine5", "country")
   }
 }

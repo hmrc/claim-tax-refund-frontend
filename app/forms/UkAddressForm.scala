@@ -23,7 +23,7 @@ import models.UkAddress
 import play.api.data.Form
 import play.api.data.Forms.{mapping, optional, text}
 
-class UkAddressForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
+class UkAddressForm @Inject()(appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 
   private val maxLengthInt = appConfig.addressLineMaxLength
   private val postcodeRegex = appConfig.postcodeRegex
@@ -46,7 +46,7 @@ class UkAddressForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHe
         "addressLine3" -> optional(text.verifying(maxLength(maxLengthInt, addressLine3KeyTooLong))),
         "addressLine4" -> optional(text.verifying(maxLength(maxLengthInt, addressLine4KeyTooLong))),
         "addressLine5" -> optional(text.verifying(maxLength(maxLengthInt, addressLine5KeyTooLong))),
-        "postcode"     -> text.verifying(firstError(nonEmpty(postcodeKeyBlank), regexValidation(postcodeRegex, postcodeKeyInvalid)))
+        "postcode" -> text.verifying(firstError(nonEmpty(postcodeKeyBlank), regexValidation(postcodeRegex, postcodeKeyInvalid)))
       )(UkAddress.apply)(UkAddress.unapply))
   }
 }

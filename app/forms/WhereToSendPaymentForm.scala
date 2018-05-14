@@ -16,11 +16,11 @@
 
 package forms
 
+import models.WhereToSendPayment
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.data.format.Formatter
 import utils.RadioOption
-import models.WhereToSendPayment
 
 object WhereToSendPaymentForm extends FormErrorHelper {
 

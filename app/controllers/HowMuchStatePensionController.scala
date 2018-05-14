@@ -16,31 +16,30 @@
 
 package controllers
 
+import config.FrontendAppConfig
+import connectors.DataCacheConnector
+import controllers.actions._
+import forms.HowMuchStatePensionForm
+import identifiers.HowMuchStatePensionId
 import javax.inject.Inject
-
+import models.Mode
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
-import connectors.DataCacheConnector
-import controllers.actions._
-import config.FrontendAppConfig
-import forms.HowMuchStatePensionForm
-import identifiers.HowMuchStatePensionId
-import models.Mode
 import utils.{Navigator, UserAnswers}
 import views.html.howMuchStatePension
 
 import scala.concurrent.Future
 
 class HowMuchStatePensionController @Inject()(
-                                        appConfig: FrontendAppConfig,
-                                        override val messagesApi: MessagesApi,
-                                        dataCacheConnector: DataCacheConnector,
-                                        navigator: Navigator,
-                                        authenticate: AuthAction,
-                                        getData: DataRetrievalAction,
-                                        requireData: DataRequiredAction,
-                                        formBuilder: HowMuchStatePensionForm) extends FrontendController with I18nSupport {
+                                               appConfig: FrontendAppConfig,
+                                               override val messagesApi: MessagesApi,
+                                               dataCacheConnector: DataCacheConnector,
+                                               navigator: Navigator,
+                                               authenticate: AuthAction,
+                                               getData: DataRetrievalAction,
+                                               requireData: DataRequiredAction,
+                                               formBuilder: HowMuchStatePensionForm) extends FrontendController with I18nSupport {
 
   private val form: Form[String] = formBuilder()
 

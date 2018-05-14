@@ -19,11 +19,11 @@ package forms
 import com.google.inject.Inject
 import config.FrontendAppConfig
 import forms.mappings.Constraints
+import models.UkAddress
 import play.api.data.Form
 import play.api.data.Forms._
-import models.UkAddress
 
-class PayeeUKAddressForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
+class PayeeUKAddressForm @Inject()(appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 
   private val maxLengthInt = appConfig.addressLineMaxLength
   private val postcodeRegex = appConfig.postcodeRegex
@@ -47,7 +47,7 @@ class PayeeUKAddressForm @Inject() (appConfig: FrontendAppConfig) extends FormEr
         "addressLine3" -> optional(text.verifying(maxLength(maxLengthInt, addressLine3KeyTooLong))),
         "addressLine4" -> optional(text.verifying(maxLength(maxLengthInt, addressLine4KeyTooLong))),
         "addressLine5" -> optional(text.verifying(maxLength(maxLengthInt, addressLine5KeyTooLong))),
-        "postcode"     -> text.verifying(firstError(nonEmpty(postcodeKeyBlank), regexValidation(postcodeRegex, postcodeKeyInvalid)))
+        "postcode" -> text.verifying(firstError(nonEmpty(postcodeKeyBlank), regexValidation(postcodeRegex, postcodeKeyInvalid)))
       )(UkAddress.apply)(UkAddress.unapply))
   }
 }
