@@ -45,6 +45,7 @@ class FrontendAppConfig @Inject()(override val runModeConfiguration: Configurati
   lazy val authUrl = baseUrl("auth")
   lazy val loginUrl = loadConfig("urls.login")
   lazy val loginContinueUrl = loadConfig("urls.loginContinue")
+  lazy val dmiUrl = baseUrl("digital-mail-integration")
 
   lazy val languageTranslationEnabled = runModeConfiguration.getBoolean("microservice.services.features.welsh-translation").getOrElse(true)
 
