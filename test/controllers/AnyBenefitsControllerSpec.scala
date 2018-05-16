@@ -16,17 +16,20 @@
 
 package controllers
 
+
+import identifiers.AnyBenefitsId
+import views.html.anyBenefits
 import play.api.data.Form
 import play.api.libs.json.JsBoolean
 import uk.gov.hmrc.http.cache.client.CacheMap
 import utils.FakeNavigator
 import connectors.{FakeDataCacheConnector, TaiConnector}
 import controllers.actions._
+import play.api.test.Helpers._
 import forms.BooleanForm
-import identifiers.AnyBenefitsId
 import models.NormalMode
+
 import org.scalatest.mockito.MockitoSugar
-import views.html.anyBenefits
 
 class AnyBenefitsControllerSpec extends ControllerSpecBase with MockitoSugar {
 

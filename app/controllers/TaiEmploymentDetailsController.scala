@@ -17,7 +17,6 @@
 package controllers
 
 import javax.inject.Inject
-
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
@@ -27,8 +26,6 @@ import config.FrontendAppConfig
 import forms.BooleanForm
 import identifiers.TaiEmploymentDetailsId
 import models.Mode
-import models.SelectTaxYear.{CYMinus2, CYMinus3, CYMinus4, CYMinus5}
-import uk.gov.hmrc.time.TaxYearResolver
 import utils.{Navigator, UserAnswers}
 import views.html.taiEmploymentDetails
 
@@ -50,62 +47,50 @@ class TaiEmploymentDetailsController @Inject()(appConfig: FrontendAppConfig,
   private val errorKey = "taiEmploymentDetails.blank"
   val form: Form[Boolean] = formProvider(errorKey)
 
+
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
+
       val preparedForm = request.userAnswers.taiEmploymentDetails match {
         case None => form
         case Some(value) => form.fill(value)
       }
 
-      def selectedTaxYear: Option[Int] = request.userAnswers.selectTaxYear map {
-            case CYMinus2 =>
-              TaxYearResolver.startOfCurrentTaxYear.minusYears(2).getYear
-            case CYMinus3 =>
-              TaxYearResolver.startOfCurrentTaxYear.minusYears(3).getYear
-            case CYMinus4 =>
-              TaxYearResolver.startOfCurrentTaxYear.minusYears(4).getYear
-            case CYMinus5 =>
-              TaxYearResolver.startOfCurrentTaxYear.minusYears(5).getYear
-      }
+      request.userAnswers.selectTaxYear.map {
+        selectedTaxYear =>
+          val results = taiConnector.taiEmployments(request.nino, selectedTaxYear.year)
 
-      val results = taiConnector.taiEmployments(request.nino, selectedTaxYear.get)
-
-      results.map(
-        employments =>
-          Ok(taiEmploymentDetails(appConfig, preparedForm, mode, employments))
-      ).recover {
-        case NonFatal(e) =>
-          ???
+          results.map(
+            employments =>
+              Ok(taiEmploymentDetails(appConfig, preparedForm, mode, employments))
+          ).recover {
+            case NonFatal(e) =>
+              Redirect(routes.SessionExpiredController.onPageLoad())
+          }
+      }.getOrElse {
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
       }
   }
-
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
 
-      def selectedTaxYear: Option[Int] = request.userAnswers.selectTaxYear map {
-            case CYMinus2 =>
-              TaxYearResolver.startOfCurrentTaxYear.minusYears(2).getYear
-            case CYMinus3 =>
-              TaxYearResolver.startOfCurrentTaxYear.minusYears(3).getYear
-            case CYMinus4 =>
-              TaxYearResolver.startOfCurrentTaxYear.minusYears(4).getYear
-            case CYMinus5 =>
-              TaxYearResolver.startOfCurrentTaxYear.minusYears(5).getYear
+      request.userAnswers.selectTaxYear.map {
+        selectedTaxYear =>
+          val results = taiConnector.taiEmployments(request.nino, selectedTaxYear.year)
 
-      }
-
-      val results =  taiConnector.taiEmployments(request.nino, selectedTaxYear.get)
-
-      results.flatMap {
-        employments =>
-          form.bindFromRequest().fold(
-            (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(taiEmploymentDetails(appConfig, formWithErrors, mode, employments))),
-            (value) =>
-              dataCacheConnector.save[Boolean](request.externalId, TaiEmploymentDetailsId.toString, value).map(cacheMap =>
-                Redirect(navigator.nextPage(TaiEmploymentDetailsId, mode)(new UserAnswers(cacheMap))))
-          )
+          results.flatMap {
+            employments =>
+              form.bindFromRequest().fold(
+                (formWithErrors: Form[_]) =>
+                  Future.successful(BadRequest(taiEmploymentDetails(appConfig, formWithErrors, mode, employments))),
+                (value) =>
+                  dataCacheConnector.save[Boolean](request.externalId, TaiEmploymentDetailsId.toString, value).map(cacheMap =>
+                    Redirect(navigator.nextPage(TaiEmploymentDetailsId, mode)(new UserAnswers(cacheMap))))
+              )
+          }
+      }.getOrElse {
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
       }
   }
 }

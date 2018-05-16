@@ -19,9 +19,6 @@
 @import controllers.routes._
 @import models.Mode
 @import viewmodels.InputViewModel
-@import scala.concurrent.Future
-@import scala.concurrent.ExecutionContext.Implicits.global
-
 
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, results: Seq[Employment])(implicit request: Request[_], messages: Messages)
 
@@ -38,16 +35,20 @@
 
         @components.heading("taiEmploymentDetails.heading")
 
+        <p>@Messages("taiEmploymentDetails.detailsWeHave")</p>
+
         <ul class="list list-bullet">
         @for(employments <- results) {
             <li>Employer: @employments.name</li>
                 Payroll number: @employments.payeNumber
+            <br/><br/>
         }
         </ul>
 
         @components.input_yes_no(
-        InputViewModel("value", form),
-        label = messages("taiEmploymentDetails.heading")
+            InputViewModel("value", form),
+            label = messages("taiEmploymentDetails.correctDetails"),
+            labelClass = Some("bold")
         )
 
 

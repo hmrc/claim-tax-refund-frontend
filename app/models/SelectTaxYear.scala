@@ -16,19 +16,30 @@
 
 package models
 
+import uk.gov.hmrc.time.TaxYearResolver
 import utils.{Enumerable, WithName}
 
-sealed trait SelectTaxYear
+sealed trait SelectTaxYear {
+  def year: Int
+}
 
 object SelectTaxYear extends Enumerable[SelectTaxYear] {
 
-  case object CYMinus2 extends WithName("current-year-minus-2") with SelectTaxYear
+  case object CYMinus2 extends WithName("current-year-minus-2") with SelectTaxYear {
+    override def year: Int = TaxYearResolver.startOfCurrentTaxYear.minusYears(2).getYear
+  }
 
-  case object CYMinus3 extends WithName("current-year-minus-3") with SelectTaxYear
+  case object CYMinus3 extends WithName("current-year-minus-3") with SelectTaxYear {
+    override def year: Int = TaxYearResolver.startOfCurrentTaxYear.minusYears(3).getYear
+  }
 
-  case object CYMinus4 extends WithName("current-year-minus-4") with SelectTaxYear
+  case object CYMinus4 extends WithName("current-year-minus-4") with SelectTaxYear {
+    override def year: Int = TaxYearResolver.startOfCurrentTaxYear.minusYears(4).getYear
+  }
 
-  case object CYMinus5 extends WithName("current-year-minus-5") with SelectTaxYear
+  case object CYMinus5 extends WithName("current-year-minus-5") with SelectTaxYear {
+    override def year: Int = TaxYearResolver.startOfCurrentTaxYear.minusYears(5).getYear
+  }
 
   lazy val values: Set[SelectTaxYear] = Set(
     CYMinus2, CYMinus3, CYMinus4, CYMinus5

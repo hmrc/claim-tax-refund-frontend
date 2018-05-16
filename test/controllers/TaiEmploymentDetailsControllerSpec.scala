@@ -16,19 +16,18 @@
 
 package controllers
 
-import play.api.data.Form
-import play.api.libs.json.JsBoolean
-import uk.gov.hmrc.http.cache.client.CacheMap
-import utils.FakeNavigator
 import connectors.{FakeDataCacheConnector, TaiConnector}
 import controllers.actions._
-import play.api.test.Helpers._
 import forms.BooleanForm
-import identifiers.TaiEmploymentDetailsId
+import models.requests.{AuthenticatedRequest, OptionalDataRequest}
 import models.{Employment, NormalMode}
 import org.mockito.Matchers
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
+import play.api.data.Form
+import play.api.test.Helpers._
+import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
+import utils.{FakeNavigator, MockUserAnswers}
 import views.html.taiEmploymentDetails
 
 import scala.concurrent.Future
@@ -39,56 +38,67 @@ class TaiEmploymentDetailsControllerSpec extends ControllerSpecBase with Mockito
 
   val formProvider = new BooleanForm()
   val form = formProvider()
+  val mockTaiConnector = mock[TaiConnector]
+  val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new TaiEmploymentDetailsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, formProvider)
+      dataRetrievalAction, new DataRequiredActionImpl, formProvider, mockTaiConnector)
 
-  def viewAsString(form: Form[_] = form) = taiEmploymentDetails(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = form) = taiEmploymentDetails(frontendAppConfig, form, NormalMode,
+    Seq(Employment("AVIVA PENSIONS", "754", "AZ00070")))(fakeRequest, messages).toString
 
-  val fakeTaiConnector: TaiConnector = mock[TaiConnector]
+  val fakeDataRetrievalAction = new DataRetrievalAction {
+    override protected def transform[A](request: AuthenticatedRequest[A]): Future[OptionalDataRequest[A]] = {
+      Future.successful(OptionalDataRequest(request, "123123", ItmpName(Some("sdadsad"), Some("sdfasfad"), Some("adfsdfa")), "AB123456A",
+        ItmpAddress(None, None, None, None, None, None, None, None),
+        Some(mockUserAnswers)))
+    }
+  }
 
   "TaiEmploymentDetails Controller" must {
 
-    "create a sequence of employment details when correct data if provided" in {
-
-      val validNino = "JG219314C"
-      val validYear = 2016
-
-      when(fakeTaiConnector.taiEmployments(Matchers.eq(validNino), Matchers.eq(validYear))(Matchers.any(), Matchers.any()))
-        .thenReturn(Future.successful(Seq(Employment("AVIVA PENSIONS", "754", "AZ00070"))))
-    }
-
     "return OK and the correct view for a GET" in {
-      val result = controller().onPageLoad(NormalMode)(fakeRequest)
+      when(mockUserAnswers.taiEmploymentDetails).thenReturn(None)
+      when(mockTaiConnector.taiEmployments(Matchers.eq("AB123456A"), Matchers.eq(2016))(Matchers.any(), Matchers.any()))
+        .thenReturn(Future.successful(Seq(Employment("AVIVA PENSIONS", "754", "AZ00070"))))
+
+      val result = controller(fakeDataRetrievalAction).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe OK
       contentAsString(result) mustBe viewAsString()
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      val validData = Map(TaiEmploymentDetailsId.toString -> JsBoolean(true))
-      val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validData)))
+      when(mockUserAnswers.taiEmploymentDetails).thenReturn(Some(true))
+      when(mockTaiConnector.taiEmployments(Matchers.eq("AB123456A"), Matchers.eq(2016))(Matchers.any(), Matchers.any()))
+        .thenReturn(Future.successful(Seq(Employment("AVIVA PENSIONS", "754", "AZ00070"))))
 
-      val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(fakeDataRetrievalAction).onPageLoad(NormalMode)(fakeRequest)
 
       contentAsString(result) mustBe viewAsString(form.fill(true))
     }
 
     "redirect to the next page when valid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+      when(mockUserAnswers.taiEmploymentDetails).thenReturn(None)
+      when(mockTaiConnector.taiEmployments(Matchers.eq("AB123456A"), Matchers.eq(2016))(Matchers.any(), Matchers.any()))
+        .thenReturn(Future.successful(Seq(Employment("AVIVA PENSIONS", "754", "AZ00070"))))
 
-      val result = controller().onSubmit(NormalMode)(postRequest)
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+      val result = controller(fakeDataRetrievalAction).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(onwardRoute.url)
     }
 
     "return a Bad Request and errors when invalid data is submitted" in {
+      when(mockUserAnswers.taiEmploymentDetails).thenReturn(None)
+      when(mockTaiConnector.taiEmployments(Matchers.eq("AB123456A"), Matchers.eq(2016))(Matchers.any(), Matchers.any()))
+        .thenReturn(Future.successful(Seq(Employment("AVIVA PENSIONS", "754", "AZ00070"))))
+
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
       val boundForm = form.bind(Map("value" -> "invalid value"))
-
-      val result = controller().onSubmit(NormalMode)(postRequest)
+      val result = controller(fakeDataRetrievalAction).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe BAD_REQUEST
       contentAsString(result) mustBe viewAsString(boundForm)
