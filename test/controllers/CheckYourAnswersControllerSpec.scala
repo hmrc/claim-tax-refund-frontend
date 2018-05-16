@@ -17,16 +17,24 @@
 package controllers
 
 import controllers.actions.{DataRequiredActionImpl, DataRetrievalAction, FakeAuthAction}
+import models.{SubmissionFailed, SubmissionSuccessful}
 import play.api.test.Helpers._
+import services.SubmissionService
+import uk.gov.hmrc.http.HeaderCarrier
+import utils.UserAnswers
+
+import scala.concurrent.Future
 
 class CheckYourAnswersControllerSpec extends ControllerSpecBase {
 
-  def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new CheckYourAnswersController(frontendAppConfig, messagesApi, FakeAuthAction, dataRetrievalAction, new DataRequiredActionImpl)
+  def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap,
+                 submissionService: SubmissionService = FakeSuccessfulSubmissionService) =
+    new CheckYourAnswersController(frontendAppConfig, messagesApi, FakeAuthAction, dataRetrievalAction,
+      new DataRequiredActionImpl, submissionService)
 
   "Check Your Answers Controller" must {
     "return 200 and the correct view for a GET" in {
-      val result = controller().onPageLoad()(fakeRequest)
+      val result = controller(someData).onPageLoad()(fakeRequest)
       status(result) mustBe OK
     }
 
@@ -37,4 +45,12 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase {
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
     }
   }
+}
+
+object FakeSuccessfulSubmissionService extends SubmissionService {
+  override def ctrSubmission(answers: UserAnswers)(implicit hc: HeaderCarrier) = Future.successful(SubmissionSuccessful)
+}
+
+object FakeFailingSubmissionService extends SubmissionService {
+  override def ctrSubmission(answers: UserAnswers)(implicit hc: HeaderCarrier) = Future.successful(SubmissionFailed)
 }
