@@ -16,11 +16,13 @@
 
 package controllers
 
+
 import base.SpecBase
 import controllers.actions.FakeDataRetrievalAction
 import identifiers.SelectTaxYearId
 import models.SelectTaxYear
 import play.api.libs.json.Json
+import uk.gov.hmrc.http.cache.client.CacheMap
 
 trait ControllerSpecBase extends SpecBase {
 
