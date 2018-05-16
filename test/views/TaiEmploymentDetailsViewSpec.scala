@@ -29,12 +29,12 @@ class TaiEmploymentDetailsViewSpec extends YesNoViewBehaviours {
 
   override val form = new BooleanForm()()
 
-  val testEmployments = Seq(Employment("AVIVA PENSIONS", "754", "AZ00070"))
+  val fakeEmployments = Seq(Employment("AVIVA PENSIONS", "754", "AZ00070"))
 
 
-  def createView = () => taiEmploymentDetails(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[_]) => taiEmploymentDetails(frontendAppConfig, form, NormalMode, fakeEmployments)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[_]) => taiEmploymentDetails(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createView = () => taiEmploymentDetails(frontendAppConfig, form, NormalMode, fakeEmployments)(fakeRequest, messages)
 
   "TaiEmploymentDetails view" must {
 

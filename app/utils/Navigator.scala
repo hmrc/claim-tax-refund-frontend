@@ -84,7 +84,7 @@ class Navigator @Inject()() {
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
-  private def anyEmploymentAndSupport(userAnswers: UserAnswers) = userAnswers.anyEmploymentAndSupportAllowance match {
+private def anyEmploymentAndSupport(userAnswers: UserAnswers) = userAnswers.anyEmploymentAndSupportAllowance match {
     case Some(true) => routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(NormalMode)
     case Some(false) => routes.AnyStatePensionController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()

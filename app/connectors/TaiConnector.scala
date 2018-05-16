@@ -19,7 +19,7 @@ package connectors
 import javax.inject.Singleton
 import com.google.inject.{ImplementedBy, Inject}
 import config.FrontendAppConfig
-import models.{Employment}
+import models.Employment
 import play.api.libs.json._
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.http.HttpClient
