@@ -172,7 +172,7 @@ POST       /user-details                                        controllers.User
 GET        /change-user-details                                 controllers.UserDetailsController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-user-details                                 controllers.UserDetailsController.onSubmit(mode: Mode = CheckMode)
 
-GET        /taiEmploymentDetails                       controllers.TaiEmploymentDetailsController.onPageLoad(mode: Mode = NormalMode)
-POST       /taiEmploymentDetails                       controllers.TaiEmploymentDetailsController.onSubmit(mode: Mode = NormalMode)
-GET        /changeTaiEmploymentDetails                       controllers.TaiEmploymentDetailsController.onPageLoad(mode: Mode = CheckMode)
-POST       /changeTaiEmploymentDetails                       controllers.TaiEmploymentDetailsController.onSubmit(mode: Mode = CheckMode)
+GET        /employmentDetails                                   controllers.EmploymentDetailsController.onPageLoad(mode: Mode = NormalMode)
+POST       /employmentDetails                                   controllers.EmploymentDetailsController.onSubmit(mode: Mode = NormalMode)
+GET        /changeEmploymentDetails                             controllers.EmploymentDetailsController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeEmploymentDetails                             controllers.EmploymentDetailsController.onSubmit(mode: Mode = CheckMode)

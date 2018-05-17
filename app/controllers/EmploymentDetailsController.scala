@@ -17,6 +17,7 @@
 package controllers
 
 import javax.inject.Inject
+
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
@@ -24,34 +25,34 @@ import connectors.{DataCacheConnector, TaiConnector}
 import controllers.actions._
 import config.FrontendAppConfig
 import forms.BooleanForm
-import identifiers.TaiEmploymentDetailsId
+import identifiers.EmploymentDetailsId
 import models.Mode
 import utils.{Navigator, UserAnswers}
-import views.html.taiEmploymentDetails
+import views.html.employmentDetails
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.util.control.NonFatal
 
 
-class TaiEmploymentDetailsController @Inject()(appConfig: FrontendAppConfig,
-                                               override val messagesApi: MessagesApi,
-                                               dataCacheConnector: DataCacheConnector,
-                                               navigator: Navigator,
-                                               authenticate: AuthAction,
-                                               getData: DataRetrievalAction,
-                                               requireData: DataRequiredAction,
-                                               formProvider: BooleanForm,
-                                               taiConnector: TaiConnector) extends FrontendController with I18nSupport {
+class EmploymentDetailsController @Inject()(appConfig: FrontendAppConfig,
+                                            override val messagesApi: MessagesApi,
+                                            dataCacheConnector: DataCacheConnector,
+                                            navigator: Navigator,
+                                            authenticate: AuthAction,
+                                            getData: DataRetrievalAction,
+                                            requireData: DataRequiredAction,
+                                            formProvider: BooleanForm,
+                                            taiConnector: TaiConnector) extends FrontendController with I18nSupport {
 
-  private val errorKey = "taiEmploymentDetails.blank"
+  private val errorKey = "mploymentDetails.blank"
   val form: Form[Boolean] = formProvider(errorKey)
 
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
 
-      val preparedForm = request.userAnswers.taiEmploymentDetails match {
+      val preparedForm = request.userAnswers.employmentDetails match {
         case None => form
         case Some(value) => form.fill(value)
       }
@@ -62,7 +63,7 @@ class TaiEmploymentDetailsController @Inject()(appConfig: FrontendAppConfig,
 
           results.map(
             employments =>
-              Ok(taiEmploymentDetails(appConfig, preparedForm, mode, employments))
+              Ok(employmentDetails(appConfig, preparedForm, mode, employments))
           ).recover {
             case NonFatal(e) =>
               Redirect(routes.SessionExpiredController.onPageLoad())
@@ -83,10 +84,10 @@ class TaiEmploymentDetailsController @Inject()(appConfig: FrontendAppConfig,
             employments =>
               form.bindFromRequest().fold(
                 (formWithErrors: Form[_]) =>
-                  Future.successful(BadRequest(taiEmploymentDetails(appConfig, formWithErrors, mode, employments))),
+                  Future.successful(BadRequest(employmentDetails(appConfig, formWithErrors, mode, employments))),
                 (value) =>
-                  dataCacheConnector.save[Boolean](request.externalId, TaiEmploymentDetailsId.toString, value).map(cacheMap =>
-                    Redirect(navigator.nextPage(TaiEmploymentDetailsId, mode)(new UserAnswers(cacheMap))))
+                  dataCacheConnector.save[Boolean](request.externalId, EmploymentDetailsId.toString, value).map(cacheMap =>
+                    Redirect(navigator.nextPage(EmploymentDetailsId, mode)(new UserAnswers(cacheMap))))
               )
           }
       }.getOrElse {
