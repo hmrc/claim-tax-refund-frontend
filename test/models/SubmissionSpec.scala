@@ -19,12 +19,15 @@ package models
 import base.SpecBase
 import identifiers.SelectTaxYearId
 import org.mockito.Mockito._
+import play.api.libs.json.Json
 import utils.MockUserAnswers
+
+import scala.util.parsing.json.JSON
 
 class SubmissionSpec extends SpecBase {
 
   val NA = "N/A"
-  val answers = MockUserAnswers.nothingAnswered
+  val answers = MockUserAnswers.minimalValidUserAnswers
 
   ".apply" must {
 
@@ -41,7 +44,7 @@ class SubmissionSpec extends SpecBase {
         val submission = Submission(MockUserAnswers.nothingAnswered)
       }
 
-        exception.getMessage mustBe "requirement failed: Tax year was not answered"
+      exception.getMessage mustBe "requirement failed: Tax year was not answered"
     }
   }
 
@@ -55,5 +58,21 @@ class SubmissionSpec extends SpecBase {
         SelectTaxYearId.toString -> "current-year-minus-2"
       )
     }
+  }
+
+  "Submission data must " must {
+    "contain correct payee full name" in {
+      when(answers.payeeFullName) thenReturn Some("Frank Sinatra")
+      val submission = Submission(answers)
+      submission.toString must contain("Frank Sinatra")
+    }
+
+    "contain expected keys for backend" in {
+      val submission = Submission(answers)
+      val result = Json.toJson(submission).toString
+      result.toString must contain ("pdfHtml")
+      result.toString must contain ("metaData")
+    }
+
   }
 }
