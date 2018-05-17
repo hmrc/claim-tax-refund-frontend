@@ -211,13 +211,6 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
         s"$x", false, routes.HowMuchRentalIncomeController.onPageLoad(CheckMode).url, true)
   }
 
-  def anyRentalIncome: Option[AnswerRow] = userAnswers.anyRentalIncome map {
-    x =>
-      AnswerRow("anyRentalIncome.checkYourAnswersLabel",
-        if (x) "site.yes" else "site.no",
-        true, routes.AnyRentalIncomeController.onPageLoad(CheckMode).url, true)
-  }
-
   def howMuchCarBenefits: Option[AnswerRow] = userAnswers.howMuchCarBenefits map {
     x =>
       AnswerRow("howMuchCarBenefits.checkYourAnswersLabel",

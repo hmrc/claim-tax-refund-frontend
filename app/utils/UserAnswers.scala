@@ -71,8 +71,6 @@ class UserAnswers(val cacheMap: CacheMap) {
 
   def howMuchRentalIncome: Option[String] = cacheMap.getEntry[String](HowMuchRentalIncomeId.toString)
 
-  def anyRentalIncome: Option[Boolean] = cacheMap.getEntry[Boolean](AnyRentalIncomeId.toString)
-
   def howMuchCarBenefits: Option[String] = cacheMap.getEntry[String](HowMuchCarBenefitsId.toString)
 
   def otherIncome: Option[Boolean] = cacheMap.getEntry[Boolean](OtherIncomeId.toString)

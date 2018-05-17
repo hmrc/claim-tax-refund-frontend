@@ -45,7 +45,6 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.otherBenefitsDetailsAndAmount) thenReturn None
     when(answers.otherIncome) thenReturn None
     when(answers.howMuchCarBenefits) thenReturn None
-    when(answers.anyRentalIncome) thenReturn None
     when(answers.howMuchRentalIncome) thenReturn None
     when(answers.anyBankBuildingSocietyInterest) thenReturn None
     when(answers.howMuchBankBuildingSocietyInterest) thenReturn None
@@ -105,7 +104,6 @@ object MockUserAnswers extends MockitoSugar {
     val answers = nothingAnswered
 
     when(answers.howMuchCarBenefits) thenReturn Some("123123")
-    when(answers.anyRentalIncome) thenReturn Some(true)
     when(answers.howMuchRentalIncome) thenReturn Some("123123")
     when(answers.anyBankBuildingSocietyInterest) thenReturn Some(true)
     when(answers.howMuchBankBuildingSocietyInterest) thenReturn Some("123123")
