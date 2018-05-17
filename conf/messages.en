@@ -239,11 +239,6 @@ howMuchBankBuildingSocietyInterest.checkYourAnswersLabel = Amount of bank or bui
 howMuchBankBuildingSocietyInterest.blank = Enter the amount of bank or building society interest income you got in the tax year your claim is for
 howMuchBankBuildingSocietyInterest.invalid = Enter a valid amount of bank or building society interest income you got in the tax year your claim is for
 
-anyMedicalBenefits.title = Did you get any medical benefits in the tax year your claim is for?
-anyMedicalBenefits.heading = Did you get any medical benefits in the tax year your claim is for?
-anyMedicalBenefits.checkYourAnswersLabel = Did you get any medical benefits in the tax year your claim is for?
-anyMedicalBenefits.blank = Select yes if you got any medical benefits in the tax year your claim is for
-
 howMuchMedicalBenefits.title = How much medical benefit did you get in the tax year your claim is for?
 howMuchMedicalBenefits.heading = How much medical benefit did you get in the tax year your claim is for?
 howMuchMedicalBenefits.checkYourAnswersLabel = Amount you got in medical benefits in the tax year your claim is for

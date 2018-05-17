@@ -192,13 +192,6 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
         s"$x", false, routes.HowMuchMedicalBenefitsController.onPageLoad(CheckMode).url, true)
   }
 
-  def anyMedicalBenefits: Option[AnswerRow] = userAnswers.anyMedicalBenefits map {
-    x =>
-      AnswerRow("anyMedicalBenefits.checkYourAnswersLabel",
-        if (x) "site.yes" else "site.no",
-        true, routes.AnyMedicalBenefitsController.onPageLoad(CheckMode).url, true)
-  }
-
   def howMuchBankBuildingSocietyInterest: Option[AnswerRow] = userAnswers.howMuchBankBuildingSocietyInterest map {
     x =>
       AnswerRow("howMuchBankBuildingSocietyInterest.checkYourAnswersLabel",

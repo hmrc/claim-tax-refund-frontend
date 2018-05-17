@@ -57,11 +57,6 @@ POST       /how-much-interest                                   controllers.HowM
 GET        /change-how-much-interest                            controllers.HowMuchBankBuildingSocietyInterestController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-how-much-interest                            controllers.HowMuchBankBuildingSocietyInterestController.onSubmit(mode: Mode = CheckMode)
 
-GET        /did-you-get-medical-benefits                        controllers.AnyMedicalBenefitsController.onPageLoad(mode: Mode = NormalMode)
-POST       /did-you-get-medical-benefits                        controllers.AnyMedicalBenefitsController.onSubmit(mode: Mode = NormalMode)
-GET        /change-if-you-got-medical-benefits                  controllers.AnyMedicalBenefitsController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-if-you-got-medical-benefits                  controllers.AnyMedicalBenefitsController.onSubmit(mode: Mode = CheckMode)
-
 GET        /how-much-medical-benefit                            controllers.HowMuchMedicalBenefitsController.onPageLoad(mode: Mode = NormalMode)
 POST       /how-much-medical-benefit                            controllers.HowMuchMedicalBenefitsController.onSubmit(mode: Mode = NormalMode)
 GET        /change-how-much-medical-benefit                     controllers.HowMuchMedicalBenefitsController.onPageLoad(mode: Mode = CheckMode)

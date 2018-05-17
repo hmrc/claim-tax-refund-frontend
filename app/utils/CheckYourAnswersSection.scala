@@ -73,7 +73,6 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
     cyaHelper.howMuchRentalIncome,
     cyaHelper.anyBankBuildingSocietyInterest,
     cyaHelper.howMuchBankBuildingSocietyInterest,
-    cyaHelper.anyMedicalBenefits,
     cyaHelper.howMuchMedicalBenefits,
     cyaHelper.anyOtherTaxableIncome,
     cyaHelper.otherIncomeDetailsAndAmount
