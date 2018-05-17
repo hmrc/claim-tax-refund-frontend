@@ -124,43 +124,11 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     }
   }
 
-  "Is anyJobseekersAllownance (true)" must {
-    s"have the correct label" in {
-      when(answers.anyJobseekersAllowance) thenReturn Some(true)
-      val helper = new CheckYourAnswersHelper(answers)
-      helper.anyJobseekersAllowance.get.label.key mustBe s"anyJobseekersAllowance.checkYourAnswersLabel"
-    }
-  }
-
-  "Is anyJobseekersAllownance (false)" must {
-    s"have the correct label" in {
-      when(answers.anyJobseekersAllowance) thenReturn Some(false)
-      val helper = new CheckYourAnswersHelper(answers)
-      helper.anyJobseekersAllowance.get.label.key mustBe s"anyJobseekersAllowance.checkYourAnswersLabel"
-    }
-  }
-
   "How much jobseekers allowance" must {
     s"have the correct label" in {
       when(answers.howMuchJobseekersAllowance) thenReturn Some("9,999.99")
       val helper = new CheckYourAnswersHelper(answers)
       helper.howMuchJobseekersAllowance.get.label.key mustBe s"howMuchJobseekersAllowance.checkYourAnswersLabel"
-    }
-  }
-
-  "Is anyIncapacityBenefit (true)" must {
-    s"have the correct label" in {
-      when(answers.anyIncapacityBenefit) thenReturn Some(true)
-      val helper = new CheckYourAnswersHelper(answers)
-      helper.anyIncapacityBenefit.get.label.key mustBe s"anyIncapacityBenefit.checkYourAnswersLabel"
-    }
-  }
-
-  "Is anyIncapacityBenefit (false)" must {
-    s"have the correct label" in {
-      when(answers.anyIncapacityBenefit) thenReturn Some(false)
-      val helper = new CheckYourAnswersHelper(answers)
-      helper.anyIncapacityBenefit.get.label.key mustBe s"anyIncapacityBenefit.checkYourAnswersLabel"
     }
   }
 
@@ -172,43 +140,11 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     }
   }
 
-  "Is anyEmploymentAndSupportAllowance (true)" must {
-    s"have the correct label" in {
-      when(answers.anyEmploymentAndSupportAllowance) thenReturn Some(true)
-      val helper = new CheckYourAnswersHelper(answers)
-      helper.anyEmploymentAndSupportAllowance.get.label.key mustBe s"anyEmploymentAndSupportAllowance.checkYourAnswersLabel"
-    }
-  }
-
-  "Is anyEmploymentAndSupportAllowance (false)" must {
-    s"have the correct label" in {
-      when(answers.anyEmploymentAndSupportAllowance) thenReturn Some(false)
-      val helper = new CheckYourAnswersHelper(answers)
-      helper.anyEmploymentAndSupportAllowance.get.label.key mustBe s"anyEmploymentAndSupportAllowance.checkYourAnswersLabel"
-    }
-  }
-
   "How much employment and support allowance" must {
     s"have the correct label" in {
       when(answers.howMuchEmploymentAndSupportAllowance) thenReturn Some("9,999.99")
       val helper = new CheckYourAnswersHelper(answers)
       helper.howMuchEmploymentAndSupportAllowance.get.label.key mustBe s"howMuchEmploymentAndSupportAllowance.checkYourAnswersLabel"
-    }
-  }
-
-  "Is anyStatePension (true)" must {
-    s"have the correct label" in {
-      when(answers.anyStatePension) thenReturn Some(true)
-      val helper = new CheckYourAnswersHelper(answers)
-      helper.anyStatePension.get.label.key mustBe s"anyStatePension.checkYourAnswersLabel"
-    }
-  }
-
-  "Is anyStatePension (false)" must {
-    s"have the correct label" in {
-      when(answers.anyStatePension) thenReturn Some(false)
-      val helper = new CheckYourAnswersHelper(answers)
-      helper.anyStatePension.get.label.key mustBe s"anyStatePension.checkYourAnswersLabel"
     }
   }
 

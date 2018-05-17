@@ -189,26 +189,6 @@ anyBankBuildingSocietyInterest.heading = Did you get any bank or building societ
 anyBankBuildingSocietyInterest.checkYourAnswersLabel = Did you get any bank or building society interest income in the tax year your claim is for?
 anyBankBuildingSocietyInterest.blank = Select yes if you got any bank or building society interest income in the tax year your claim is for
 
-anyJobseekersAllowance.title = Did you get Jobseeker''s Allowance in the tax year your claim is for?
-anyJobseekersAllowance.heading = Did you get Jobseeker''s Allowance in the tax year your claim is for?
-anyJobseekersAllowance.blank = Select yes if you got Jobseeker''s Allowance in the tax year your claim is for
-anyJobseekersAllowance.checkYourAnswersLabel = Did you get Jobseeker''s Allowance in the tax year your claim is for?
-
-anyIncapacityBenefit.title = Did you get Incapacity Benefit in the tax year your claim is for?
-anyIncapacityBenefit.heading = Did you get Incapacity Benefit in the tax year your claim is for?
-anyIncapacityBenefit.checkYourAnswersLabel = Did you get Incapacity Benefit in the tax year your claim is for?
-anyIncapacityBenefit.blank = Select yes if you got Incapacity benefit in the tax year your claim is for
-
-anyEmploymentAndSupportAllowance.title = Did you get Employment and Support Allowance in the tax year your claim is for?
-anyEmploymentAndSupportAllowance.heading = Did you get Employment and Support Allowance in the tax year your claim is for?
-anyEmploymentAndSupportAllowance.checkYourAnswersLabel = Did you get Employment and Support Allowance in the tax year your claim is for?
-anyEmploymentAndSupportAllowance.blank = Select yes if you got Employment and Support Allowance in the tax year your claim is for
-
-anyStatePension.title = Did you get a State Pension in the tax year your claim is for?
-anyStatePension.heading = Did you get a State Pension in the tax year your claim is for?
-anyStatePension.checkYourAnswersLabel = Did you get a State Pension in the tax year your claim is for?
-anyStatePension.blank = Select yes if you got a State Pension in the tax year your claim is for
-
 anyOtherTaxableBenefits.title = Did you get any other taxable benefits in the tax year your claim is for?
 anyOtherTaxableBenefits.heading = Did you get any other taxable benefits in the tax year your claim is for?
 anyOtherTaxableBenefits.blank = Select yes if you got any other taxable benefits in the tax year your claim is for
