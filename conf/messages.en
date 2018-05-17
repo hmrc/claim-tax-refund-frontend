@@ -189,11 +189,6 @@ anyBankBuildingSocietyInterest.heading = Did you get any bank or building societ
 anyBankBuildingSocietyInterest.checkYourAnswersLabel = Did you get any bank or building society interest income in the tax year your claim is for?
 anyBankBuildingSocietyInterest.blank = Select yes if you got any bank or building society interest income in the tax year your claim is for
 
-anyStatePension.title = Did you get a State Pension in the tax year your claim is for?
-anyStatePension.heading = Did you get a State Pension in the tax year your claim is for?
-anyStatePension.checkYourAnswersLabel = Did you get a State Pension in the tax year your claim is for?
-anyStatePension.blank = Select yes if you got a State Pension in the tax year your claim is for
-
 anyOtherTaxableBenefits.title = Did you get any other taxable benefits in the tax year your claim is for?
 anyOtherTaxableBenefits.heading = Did you get any other taxable benefits in the tax year your claim is for?
 anyOtherTaxableBenefits.blank = Select yes if you got any other taxable benefits in the tax year your claim is for

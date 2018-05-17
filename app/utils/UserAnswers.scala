@@ -57,8 +57,6 @@ class UserAnswers(val cacheMap: CacheMap) {
 
   def anyOtherTaxableBenefits: Option[Boolean] = cacheMap.getEntry[Boolean](AnyOtherTaxableBenefitsId.toString)
 
-  def anyStatePension: Option[Boolean] = cacheMap.getEntry[Boolean](AnyStatePensionId.toString)
-
   def howMuchMedicalBenefits: Option[String] = cacheMap.getEntry[String](HowMuchMedicalBenefitsId.toString)
 
   def anyMedicalBenefits: Option[Boolean] = cacheMap.getEntry[Boolean](AnyMedicalBenefitsId.toString)

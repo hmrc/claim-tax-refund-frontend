@@ -58,7 +58,6 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
     cyaHelper.howMuchJobseekersAllowance,
     cyaHelper.howMuchIncapacityBenefit,
     cyaHelper.howMuchEmploymentAndSupportAllowance,
-    cyaHelper.anyStatePension,
     cyaHelper.howMuchStatePension,
     cyaHelper.anyOtherTaxableBenefits,
     cyaHelper.otherBenefitsDetailsAndAmount
