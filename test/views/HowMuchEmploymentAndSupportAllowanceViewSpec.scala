@@ -42,6 +42,8 @@ class HowMuchEmploymentAndSupportAllowanceViewSpec extends StringViewBehaviours 
 
     behave like pageWithBackLink(createView)
 
+    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+
     behave like stringPage(createViewUsingForm, messageKeyPrefix,
       routes.HowMuchEmploymentAndSupportAllowanceController.onSubmit(NormalMode).url, None, None, Some(messages("global.poundSign")))
   }

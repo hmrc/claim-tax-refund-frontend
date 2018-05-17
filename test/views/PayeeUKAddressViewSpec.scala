@@ -43,6 +43,8 @@ class PayeeUKAddressViewSpec extends QuestionViewBehaviours[UkAddress] with Mock
 
     behave like pageWithBackLink(createView)
 
+    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+
     behave like pageWithTextFields(createViewUsingForm, messageKeyPrefix, routes.PayeeUKAddressController.onSubmit(NormalMode)
       .url, "addressLine1", "addressLine2", "addressLine3", "addressLine4", "addressLine5", "postcode")
   }
