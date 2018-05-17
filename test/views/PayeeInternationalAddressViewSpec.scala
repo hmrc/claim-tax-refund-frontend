@@ -43,6 +43,8 @@ class PayeeInternationalAddressViewSpec extends QuestionViewBehaviours[Internati
 
     behave like pageWithBackLink(createView)
 
+    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+
     behave like pageWithTextFields(createViewUsingForm, messageKeyPrefix, routes.PayeeInternationalAddressController.onSubmit(NormalMode).url, "addressLine1", "addressLine2", "addressLine3", "addressLine4", "addressLine5", "country")
   }
 }

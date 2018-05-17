@@ -43,6 +43,8 @@ class TelephoneNumberViewSpec extends StringViewBehaviours with MockitoSugar {
 
     behave like pageWithBackLink(createView)
 
+    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+
     behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.TelephoneNumberController.onSubmit(NormalMode).url)
   }
 }

@@ -42,6 +42,8 @@ class PayeeFullNameViewSpec extends StringViewBehaviours with MockitoSugar {
 
     behave like pageWithBackLink(createView)
 
+    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+
     behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.PayeeFullNameController.onSubmit(NormalMode).url)
   }
 }
