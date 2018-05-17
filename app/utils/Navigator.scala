@@ -42,7 +42,6 @@ class Navigator @Inject()() {
     AnyOtherTaxableBenefitsId -> anyOtherBenefits,
     OtherBenefitsDetailsAndAmountId -> (_ => routes.OtherIncomeController.onPageLoad(NormalMode)),
     OtherIncomeId -> otherTaxableIncome,
-    AnyCarBenefitsId -> anyCarBenefit,
     HowMuchCarBenefitsId -> (_ => routes.AnyRentalIncomeController.onPageLoad(NormalMode)),
     AnyRentalIncomeId -> anyRental,
     HowMuchRentalIncomeId -> (_ => routes.AnyBankBuildingSocietyInterestController.onPageLoad(NormalMode)),
@@ -103,14 +102,8 @@ private def anyEmploymentAndSupport(userAnswers: UserAnswers) = userAnswers.anyE
   }
 
   private def otherTaxableIncome(userAnswers: UserAnswers) = userAnswers.otherIncome match {
-    case Some(true) => routes.AnyCarBenefitsController.onPageLoad(NormalMode)
+    case Some(true) => ???
     case Some(false) => routes.WhereToSendPaymentController.onPageLoad(NormalMode)
-    case None => routes.SessionExpiredController.onPageLoad()
-  }
-
-  private def anyCarBenefit(userAnswers: UserAnswers) = userAnswers.anyCarBenefits match {
-    case Some(true) => routes.HowMuchCarBenefitsController.onPageLoad(NormalMode)
-    case Some(false) => routes.AnyRentalIncomeController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
 

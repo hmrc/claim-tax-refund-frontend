@@ -32,11 +32,6 @@ POST       /did-you-get-other-income                            controllers.Othe
 GET        /change-if-you-got-other-income                      controllers.OtherIncomeController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-if-you-got-other-income                      controllers.OtherIncomeController.onSubmit(mode: Mode = CheckMode)
 
-GET        /did-you-get-car-benefits                            controllers.AnyCarBenefitsController.onPageLoad(mode: Mode = NormalMode)
-POST       /did-you-get-car-benefits                            controllers.AnyCarBenefitsController.onSubmit(mode: Mode = NormalMode)
-GET        /change-if-you-got-car-benefits                      controllers.AnyCarBenefitsController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-if-you-got-car-benefits                      controllers.AnyCarBenefitsController.onSubmit(mode: Mode = CheckMode)
-
 GET        /how-much-car-benefit                                controllers.HowMuchCarBenefitsController.onPageLoad(mode: Mode = NormalMode)
 POST       /how-much-car-benefit                                controllers.HowMuchCarBenefitsController.onSubmit(mode: Mode = NormalMode)
 GET        /change-how-much-car-benefit                         controllers.HowMuchCarBenefitsController.onPageLoad(mode: Mode = CheckMode)
