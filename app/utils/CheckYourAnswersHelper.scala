@@ -176,13 +176,6 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
         true, routes.AnyEmploymentAndSupportAllowanceController.onPageLoad(CheckMode).url, true)
   }
 
-  def anyIncapacityBenefit: Option[AnswerRow] = userAnswers.anyIncapacityBenefit map {
-    x =>
-      AnswerRow("anyIncapacityBenefit.checkYourAnswersLabel",
-        if (x) "site.yes" else "site.no",
-        true, routes.AnyIncapacityBenefitController.onPageLoad(CheckMode).url, true)
-  }
-
   def howMuchMedicalBenefits: Option[AnswerRow] = userAnswers.howMuchMedicalBenefits map {
     x =>
       AnswerRow("howMuchMedicalBenefits.checkYourAnswersLabel",

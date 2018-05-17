@@ -56,7 +56,6 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
 
   def benefitDetails = AnswerSection(Some("checkYourAnswers.benefitDetailsSection"), Seq(
     cyaHelper.howMuchJobseekersAllowance,
-    cyaHelper.anyIncapacityBenefit,
     cyaHelper.howMuchIncapacityBenefit,
     cyaHelper.anyEmploymentAndSupportAllowance,
     cyaHelper.howMuchEmploymentAndSupportAllowance,
