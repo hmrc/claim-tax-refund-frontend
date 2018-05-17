@@ -260,22 +260,6 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     }
   }
 
-  "Is anyBankBuildingSocietyInterest (true)" must {
-    s"have the correct label" in {
-      when(answers.anyBankBuildingSocietyInterest) thenReturn Some(true)
-      val helper = new CheckYourAnswersHelper(answers)
-      helper.anyBankBuildingSocietyInterest.get.label.key mustBe s"anyBankBuildingSocietyInterest.checkYourAnswersLabel"
-    }
-  }
-
-  "Is anyBankBuildingSocietyInterest (false)" must {
-    s"have the correct label" in {
-      when(answers.anyBankBuildingSocietyInterest) thenReturn Some(false)
-      val helper = new CheckYourAnswersHelper(answers)
-      helper.anyBankBuildingSocietyInterest.get.label.key mustBe s"anyBankBuildingSocietyInterest.checkYourAnswersLabel"
-    }
-  }
-
   "How much bank building society interest" must {
     s"have the correct label" in {
       when(answers.howMuchBankBuildingSocietyInterest) thenReturn Some("9,999.99")

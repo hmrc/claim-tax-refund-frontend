@@ -174,11 +174,6 @@ howMuchRentalIncome.checkYourAnswersLabel = Amount of rental income you got in t
 howMuchRentalIncome.blank = Enter the amount of rental income you got in the tax year your claim is for
 howMuchRentalIncome.invalid = Enter a valid amount of rental income you got in the tax year your claim is for
 
-anyBankBuildingSocietyInterest.title = Did you get any bank or building society interest income in the tax year your claim is for?
-anyBankBuildingSocietyInterest.heading = Did you get any bank or building society interest income in the tax year your claim is for?
-anyBankBuildingSocietyInterest.checkYourAnswersLabel = Did you get any bank or building society interest income in the tax year your claim is for?
-anyBankBuildingSocietyInterest.blank = Select yes if you got any bank or building society interest income in the tax year your claim is for
-
 anyJobseekersAllowance.title = Did you get Jobseeker''s Allowance in the tax year your claim is for?
 anyJobseekersAllowance.heading = Did you get Jobseeker''s Allowance in the tax year your claim is for?
 anyJobseekersAllowance.blank = Select yes if you got Jobseeker''s Allowance in the tax year your claim is for

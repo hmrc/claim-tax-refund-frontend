@@ -198,13 +198,6 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
         s"$x", false, routes.HowMuchBankBuildingSocietyInterestController.onPageLoad(CheckMode).url, true)
   }
 
-  def anyBankBuildingSocietyInterest: Option[AnswerRow] = userAnswers.anyBankBuildingSocietyInterest map {
-    x =>
-      AnswerRow("anyBankBuildingSocietyInterest.checkYourAnswersLabel",
-        if (x) "site.yes" else "site.no",
-        true, routes.AnyBankBuildingSocietyInterestController.onPageLoad(CheckMode).url, true)
-  }
-
   def howMuchRentalIncome: Option[AnswerRow] = userAnswers.howMuchRentalIncome map {
     x =>
       AnswerRow("howMuchRentalIncome.checkYourAnswersLabel",
