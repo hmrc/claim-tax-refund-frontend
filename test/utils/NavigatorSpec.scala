@@ -199,29 +199,6 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(AnyBankBuildingSocietyInterestId, NormalMode)(answers) mustBe routes.HowMuchBankBuildingSocietyInterestController.onPageLoad(NormalMode)
       }
 
-      "go to AnyMedicalBenefits from AnyBankSocietyInterest when No is selected" in {
-        val answers = mock[UserAnswers]
-        when(answers.anyBankBuildingSocietyInterest) thenReturn Some(false)
-        navigator.nextPage(AnyBankBuildingSocietyInterestId, NormalMode)(answers) mustBe routes.AnyMedicalBenefitsController.onPageLoad(NormalMode)
-      }
-
-      "go to AnyMedicalBenefits from HowMuchBankSocietyInterest" in {
-        val answers = mock[UserAnswers]
-        navigator.nextPage(HowMuchBankBuildingSocietyInterestId, NormalMode)(answers) mustBe routes.AnyMedicalBenefitsController.onPageLoad(NormalMode)
-      }
-
-      "go to HowMuchMedicalBenefits from AnyMedicalBenefits when Yes is selected" in {
-        val answers = mock[UserAnswers]
-        when(answers.anyMedicalBenefits) thenReturn Some(true)
-        navigator.nextPage(AnyMedicalBenefitsId, NormalMode)(answers) mustBe routes.HowMuchMedicalBenefitsController.onPageLoad(NormalMode)
-      }
-
-      "go to AnyOtherTaxableIncome from AnyMedicalBenefits when No is selected" in {
-        val answers = mock[UserAnswers]
-        when(answers.anyMedicalBenefits) thenReturn Some(false)
-        navigator.nextPage(AnyMedicalBenefitsId, NormalMode)(answers) mustBe routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)
-      }
-
       "go to AnyOtherTaxableIncome from HowMuchMedicalBenefits" in {
         val answers = mock[UserAnswers]
         navigator.nextPage(HowMuchMedicalBenefitsId, NormalMode)(answers) mustBe routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)

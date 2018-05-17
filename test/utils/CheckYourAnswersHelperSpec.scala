@@ -300,22 +300,6 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     }
   }
 
-  "Is anyMedicalBenefits (true)" must {
-    s"have the correct label" in {
-      when(answers.anyMedicalBenefits) thenReturn Some(true)
-      val helper = new CheckYourAnswersHelper(answers)
-      helper.anyMedicalBenefits.get.label.key mustBe s"anyMedicalBenefits.checkYourAnswersLabel"
-    }
-  }
-
-  "Is anyMedicalBenefits (false)" must {
-    s"have the correct label" in {
-      when(answers.anyMedicalBenefits) thenReturn Some(false)
-      val helper = new CheckYourAnswersHelper(answers)
-      helper.anyMedicalBenefits.get.label.key mustBe s"anyMedicalBenefits.checkYourAnswersLabel"
-    }
-  }
-
   "How much medical benefits" must {
     s"have the correct label" in {
       when(answers.howMuchMedicalBenefits) thenReturn Some("9,999.99")

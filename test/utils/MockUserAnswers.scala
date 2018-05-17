@@ -49,7 +49,6 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.howMuchRentalIncome) thenReturn None
     when(answers.anyBankBuildingSocietyInterest) thenReturn None
     when(answers.howMuchBankBuildingSocietyInterest) thenReturn None
-    when(answers.anyMedicalBenefits) thenReturn None
     when(answers.howMuchMedicalBenefits) thenReturn None
     when(answers.anyOtherTaxableIncome) thenReturn None
     when(answers.otherIncomeDetailsAndAmount) thenReturn None
@@ -110,7 +109,6 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.howMuchRentalIncome) thenReturn Some("123123")
     when(answers.anyBankBuildingSocietyInterest) thenReturn Some(true)
     when(answers.howMuchBankBuildingSocietyInterest) thenReturn Some("123123")
-    when(answers.anyMedicalBenefits) thenReturn Some(true)
     when(answers.howMuchMedicalBenefits) thenReturn Some("123123")
     when(answers.anyOtherTaxableIncome) thenReturn Some(true)
     when(answers.howMuchEmploymentAndSupportAllowance) thenReturn Some("123123")
