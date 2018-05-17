@@ -21,7 +21,7 @@ import models._
 import uk.gov.hmrc.http.cache.client.CacheMap
 
 class UserAnswers(val cacheMap: CacheMap) {
-  def taiEmploymentDetails: Option[Boolean] = cacheMap.getEntry[Boolean](TaiEmploymentDetailsId.toString)
+  def employmentDetails: Option[Boolean] = cacheMap.getEntry[Boolean](EmploymentDetailsId.toString)
 
   def userDetails: Option[UserDetails] = cacheMap.getEntry[UserDetails](UserDetailsId.toString)
 

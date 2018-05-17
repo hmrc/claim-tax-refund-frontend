@@ -321,9 +321,9 @@ telephoneNumber.checkYourAnswersLabel = Your telephone number
 telephoneNumber.invalid = Enter a valid telephone number
 telephoneNumber.blank = Enter a telephone number
 
-taiEmploymentDetails.title = Employment details
-taiEmploymentDetails.heading = Employment details
-taiEmploymentDetails.checkYourAnswersLabel = Employment details
-taiEmploymentDetails.blank = Select yes if these details are correct
-taiEmploymentDetails.correctDetails = Are these details correct?
-taiEmploymentDetails.detailsWeHave = Details we have between :
+employmentDetails.title = Employment details
+employmentDetails.heading = Employment details
+employmentDetails.checkYourAnswersLabel = Employment details
+employmentDetails.blank = Select yes if these details are correct
+employmentDetails.correctDetails = Are these details correct?
+employmentDetails.detailsWeHave = Details we have between :

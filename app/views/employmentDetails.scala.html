@@ -23,19 +23,19 @@
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, results: Seq[Employment])(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("taiEmploymentDetails.title"),
+    title = messages("employmentDetails.title"),
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @helpers.form(action = TaiEmploymentDetailsController.onSubmit(mode), 'autoComplete -> "off") {
+    @helpers.form(action = EmploymentDetailsController.onSubmit(mode), 'autoComplete -> "off") {
 
         @components.back_link()
 
         @components.error_summary(form.errors)
 
-        @components.heading("taiEmploymentDetails.heading")
+        @components.heading("employmentDetails.heading")
 
-        <p>@Messages("taiEmploymentDetails.detailsWeHave")</p>
+        <p>@Messages("employmentDetails.detailsWeHave")</p>
 
         <ul class="list list-bullet">
         @for(employments <- results) {
@@ -47,7 +47,7 @@
 
         @components.input_yes_no(
             InputViewModel("value", form),
-            label = messages("taiEmploymentDetails.correctDetails"),
+            label = messages("employmentDetails.correctDetails"),
             labelClass = Some("bold")
         )
 

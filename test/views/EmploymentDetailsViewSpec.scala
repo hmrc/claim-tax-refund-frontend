@@ -21,27 +21,27 @@ import controllers.routes
 import forms.BooleanForm
 import views.behaviours.YesNoViewBehaviours
 import models.{Employment, NormalMode}
-import views.html.taiEmploymentDetails
+import views.html.employmentDetails
 
-class TaiEmploymentDetailsViewSpec extends YesNoViewBehaviours {
+class EmploymentDetailsViewSpec extends YesNoViewBehaviours {
 
-  val messageKeyPrefix = "taiEmploymentDetails"
+  val messageKeyPrefix = "employmentDetails"
 
   override val form = new BooleanForm()()
 
   val fakeEmployments = Seq(Employment("AVIVA PENSIONS", "754", "AZ00070"))
 
 
-  def createViewUsingForm = (form: Form[_]) => taiEmploymentDetails(frontendAppConfig, form, NormalMode, fakeEmployments)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[_]) => employmentDetails(frontendAppConfig, form, NormalMode, fakeEmployments)(fakeRequest, messages)
 
-  def createView = () => taiEmploymentDetails(frontendAppConfig, form, NormalMode, fakeEmployments)(fakeRequest, messages)
+  def createView = () => employmentDetails(frontendAppConfig, form, NormalMode, fakeEmployments)(fakeRequest, messages)
 
-  "TaiEmploymentDetails view" must {
+  "EmploymentDetails view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
     behave like pageWithBackLink(createView)
 
-    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.TaiEmploymentDetailsController.onSubmit(NormalMode).url)
+    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.EmploymentDetailsController.onSubmit(NormalMode).url)
   }
 }

@@ -28,11 +28,11 @@ import play.api.data.Form
 import play.api.test.Helpers._
 import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
 import utils.{FakeNavigator, MockUserAnswers}
-import views.html.taiEmploymentDetails
+import views.html.employmentDetails
 
 import scala.concurrent.Future
 
-class TaiEmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSugar {
+class EmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSugar {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
@@ -42,10 +42,10 @@ class TaiEmploymentDetailsControllerSpec extends ControllerSpecBase with Mockito
   val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new TaiEmploymentDetailsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+    new EmploymentDetailsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, formProvider, mockTaiConnector)
 
-  def viewAsString(form: Form[_] = form) = taiEmploymentDetails(frontendAppConfig, form, NormalMode,
+  def viewAsString(form: Form[_] = form) = employmentDetails(frontendAppConfig, form, NormalMode,
     Seq(Employment("AVIVA PENSIONS", "754", "AZ00070")))(fakeRequest, messages).toString
 
   val fakeDataRetrievalAction = new DataRetrievalAction {
@@ -56,10 +56,10 @@ class TaiEmploymentDetailsControllerSpec extends ControllerSpecBase with Mockito
     }
   }
 
-  "TaiEmploymentDetails Controller" must {
+  "EmploymentDetails Controller" must {
 
     "return OK and the correct view for a GET" in {
-      when(mockUserAnswers.taiEmploymentDetails).thenReturn(None)
+      when(mockUserAnswers.employmentDetails).thenReturn(None)
       when(mockTaiConnector.taiEmployments(Matchers.eq("AB123456A"), Matchers.eq(2016))(Matchers.any(), Matchers.any()))
         .thenReturn(Future.successful(Seq(Employment("AVIVA PENSIONS", "754", "AZ00070"))))
 
@@ -70,7 +70,7 @@ class TaiEmploymentDetailsControllerSpec extends ControllerSpecBase with Mockito
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      when(mockUserAnswers.taiEmploymentDetails).thenReturn(Some(true))
+      when(mockUserAnswers.employmentDetails).thenReturn(Some(true))
       when(mockTaiConnector.taiEmployments(Matchers.eq("AB123456A"), Matchers.eq(2016))(Matchers.any(), Matchers.any()))
         .thenReturn(Future.successful(Seq(Employment("AVIVA PENSIONS", "754", "AZ00070"))))
 
@@ -80,7 +80,7 @@ class TaiEmploymentDetailsControllerSpec extends ControllerSpecBase with Mockito
     }
 
     "redirect to the next page when valid data is submitted" in {
-      when(mockUserAnswers.taiEmploymentDetails).thenReturn(None)
+      when(mockUserAnswers.employmentDetails).thenReturn(None)
       when(mockTaiConnector.taiEmployments(Matchers.eq("AB123456A"), Matchers.eq(2016))(Matchers.any(), Matchers.any()))
         .thenReturn(Future.successful(Seq(Employment("AVIVA PENSIONS", "754", "AZ00070"))))
 
@@ -92,7 +92,7 @@ class TaiEmploymentDetailsControllerSpec extends ControllerSpecBase with Mockito
     }
 
     "return a Bad Request and errors when invalid data is submitted" in {
-      when(mockUserAnswers.taiEmploymentDetails).thenReturn(None)
+      when(mockUserAnswers.employmentDetails).thenReturn(None)
       when(mockTaiConnector.taiEmployments(Matchers.eq("AB123456A"), Matchers.eq(2016))(Matchers.any(), Matchers.any()))
         .thenReturn(Future.successful(Seq(Employment("AVIVA PENSIONS", "754", "AZ00070"))))
 
@@ -120,7 +120,7 @@ class TaiEmploymentDetailsControllerSpec extends ControllerSpecBase with Mockito
     }
 
     "redirect to Session Expired if call to tai has failed" in {
-      when(mockUserAnswers.taiEmploymentDetails).thenReturn(None)
+      when(mockUserAnswers.employmentDetails).thenReturn(None)
 
       when(mockTaiConnector.taiEmployments(Matchers.eq("AB123456A"), Matchers.eq(2016))(Matchers.any(), Matchers.any()))
         .thenReturn(Future.failed(new Exception("Couldnt find tai details")))
@@ -132,7 +132,7 @@ class TaiEmploymentDetailsControllerSpec extends ControllerSpecBase with Mockito
     }
 
     "redirect to Session Expired if no taxYears have been selected" in {
-      when(mockUserAnswers.taiEmploymentDetails).thenReturn(None)
+      when(mockUserAnswers.employmentDetails).thenReturn(None)
       when(mockUserAnswers.selectTaxYear).thenReturn(None)
 
       val result = controller(fakeDataRetrievalAction).onPageLoad(NormalMode)(fakeRequest)
@@ -142,7 +142,7 @@ class TaiEmploymentDetailsControllerSpec extends ControllerSpecBase with Mockito
     }
 
     "redirect to Session Expired if no taxYears have been selected on submit" in {
-      when(mockUserAnswers.taiEmploymentDetails).thenReturn(None)
+      when(mockUserAnswers.employmentDetails).thenReturn(None)
       when(mockUserAnswers.selectTaxYear).thenReturn(None)
 
       val result = controller(fakeDataRetrievalAction).onSubmit(NormalMode)(fakeRequest)
