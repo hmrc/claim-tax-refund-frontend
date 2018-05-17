@@ -36,7 +36,6 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.howMuchJobseekersAllowance) thenReturn None
     when(answers.howMuchIncapacityBenefit) thenReturn None
     when(answers.howMuchEmploymentAndSupportAllowance) thenReturn None
-    when(answers.anyStatePension) thenReturn None
     when(answers.howMuchStatePension) thenReturn None
     when(answers.anyOtherTaxableBenefits) thenReturn None
     when(answers.otherBenefitsDetailsAndAmount) thenReturn None
@@ -88,7 +87,6 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.howMuchJobseekersAllowance) thenReturn Some("123123")
     when(answers.howMuchIncapacityBenefit) thenReturn Some("123123")
     when(answers.howMuchEmploymentAndSupportAllowance) thenReturn Some("123123")
-    when(answers.anyStatePension) thenReturn Some(true)
     when(answers.howMuchStatePension) thenReturn Some("123123")
     when(answers.anyOtherTaxableBenefits) thenReturn Some(true)
     when(answers.otherBenefitsDetailsAndAmount) thenReturn Some("123123")

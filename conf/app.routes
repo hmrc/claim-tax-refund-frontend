@@ -72,11 +72,6 @@ POST       /how-much-medical-benefit                            controllers.HowM
 GET        /change-how-much-medical-benefit                     controllers.HowMuchMedicalBenefitsController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-how-much-medical-benefit                     controllers.HowMuchMedicalBenefitsController.onSubmit(mode: Mode = CheckMode)
 
-GET        /did-you-get-state-pension                           controllers.AnyStatePensionController.onPageLoad(mode: Mode = NormalMode)
-POST       /did-you-get-state-pension                           controllers.AnyStatePensionController.onSubmit(mode: Mode = NormalMode)
-GET        /change-if-you-got-state-pension                     controllers.AnyStatePensionController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-if-you-got-state-pension                     controllers.AnyStatePensionController.onSubmit(mode: Mode = CheckMode)
-
 GET        /did-you-get-other-benefits                          controllers.AnyOtherTaxableBenefitsController.onPageLoad(mode: Mode = NormalMode)
 POST       /did-you-get-other-benefits                          controllers.AnyOtherTaxableBenefitsController.onSubmit(mode: Mode = NormalMode)
 GET        /change-if-you-got-other-benefits                    controllers.AnyOtherTaxableBenefitsController.onPageLoad(mode: Mode = CheckMode)

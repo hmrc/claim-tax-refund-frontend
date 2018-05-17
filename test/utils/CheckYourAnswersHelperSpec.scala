@@ -148,22 +148,6 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     }
   }
 
-  "Is anyStatePension (true)" must {
-    s"have the correct label" in {
-      when(answers.anyStatePension) thenReturn Some(true)
-      val helper = new CheckYourAnswersHelper(answers)
-      helper.anyStatePension.get.label.key mustBe s"anyStatePension.checkYourAnswersLabel"
-    }
-  }
-
-  "Is anyStatePension (false)" must {
-    s"have the correct label" in {
-      when(answers.anyStatePension) thenReturn Some(false)
-      val helper = new CheckYourAnswersHelper(answers)
-      helper.anyStatePension.get.label.key mustBe s"anyStatePension.checkYourAnswersLabel"
-    }
-  }
-
   "How much state pension" must {
     s"have the correct label" in {
       when(answers.howMuchStatePension) thenReturn Some("9,999.99")
