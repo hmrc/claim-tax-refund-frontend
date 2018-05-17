@@ -18,17 +18,17 @@ package connectors
 
 import base.SpecBase
 import models.{Submission, SubmissionResponse}
+import org.mockito.Matchers._
+import org.mockito.Mockito._
+import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.mockito.MockitoSugar
 import play.api.libs.json.{JsValue, Json}
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.play.bootstrap.http.HttpClient
-import org.mockito.Matchers._
-import org.mockito.Mockito._
 import utils.MockUserAnswers
 
-import scala.concurrent.Future
-import org.scalatest.concurrent.ScalaFutures
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 class CtrConnectorSpec extends SpecBase with MockitoSugar with ScalaFutures {
 
@@ -59,14 +59,33 @@ class CtrConnectorSpec extends SpecBase with MockitoSugar with ScalaFutures {
 
       val answers = MockUserAnswers.minimalValidUserAnswers
 
-      val enrolment = Submission(answers)
+      val submission = Submission(answers)
 
       val httpMock = mock[HttpClient]
       when(httpMock.POST[JsValue, HttpResponse](any(), any(), any())(any(), any(), any(), any()))
         .thenReturn(Future.successful(HttpResponse(500, None)))
 
       val connector = new CtrConnector(frontendAppConfig, httpMock)
-      val futureResult = connector.ctrSubmission(Json.toJson(enrolment))
+      val futureResult = connector.ctrSubmission(Json.toJson(submission))
+
+      whenReady(futureResult) { result =>
+        result mustBe None
+      }
+    }
+
+    "return nothing when the HTTP call exceptions" in {
+      implicit val hc: HeaderCarrier = HeaderCarrier()
+
+      val answers = MockUserAnswers.minimalValidUserAnswers
+
+      val submission = Submission(answers)
+
+      val httpMock = mock[HttpClient]
+      when(httpMock.POST[JsValue, HttpResponse](any(), any(), any())(any(), any(), any(), any()))
+        .thenReturn(Future.failed(new RuntimeException("call failed")))
+
+      val connector = new CtrConnector(frontendAppConfig, httpMock)
+      val futureResult = connector.ctrSubmission(Json.toJson(submission))
 
       whenReady(futureResult) { result =>
         result mustBe None
