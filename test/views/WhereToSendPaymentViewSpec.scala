@@ -34,6 +34,8 @@ class WhereToSendPaymentViewSpec extends ViewBehaviours {
     behave like normalPage(createView, messageKeyPrefix)
 
     behave like pageWithBackLink(createView)
+
+    behave like pageWithSecondaryHeader(createView, messages("index.title"))
   }
 
   "WhereToSendPayment view" when {

@@ -36,7 +36,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading("selectTaxYear.heading")
+        @components.heading("selectTaxYear.heading", secondaryHeaderKey = Some("index.title"))
 
         @components.input_radio(
             viewModel = InputViewModel("value", form),
