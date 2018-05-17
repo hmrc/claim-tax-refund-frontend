@@ -42,6 +42,8 @@ class OtherIncomeDetailsAndAmountViewSpec extends StringViewBehaviours with Mock
 
     behave like pageWithBackLink(createView)
 
+    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+
     behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.OtherIncomeDetailsAndAmountController.onSubmit(NormalMode).url,
       Some(s"$messageKeyPrefix.hint"))
   }

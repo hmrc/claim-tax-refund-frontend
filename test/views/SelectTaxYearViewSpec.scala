@@ -39,6 +39,8 @@ class SelectTaxYearViewSpec extends ViewBehaviours {
     behave like normalPage(createView, messageKeyPrefix)
 
     behave like pageWithBackLink(createView)
+
+    behave like pageWithSecondaryHeader(createView, messages("index.title"))
   }
 
   "SelectTaxYear view" when {

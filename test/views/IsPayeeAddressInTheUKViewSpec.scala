@@ -39,6 +39,8 @@ class IsPayeeAddressInTheUKViewSpec extends YesNoViewBehaviours {
 
     behave like pageWithBackLink(createView)
 
+    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+
     behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.IsPayeeAddressInTheUKController.onSubmit(NormalMode).url)
   }
 }

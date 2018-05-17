@@ -42,6 +42,8 @@ class HowMuchIncapacityBenefitViewSpec extends StringViewBehaviours with Mockito
 
     behave like pageWithBackLink(createView)
 
+    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+
     behave like stringPage(createViewUsingForm, messageKeyPrefix,
       routes.HowMuchIncapacityBenefitController.onSubmit(NormalMode).url, None, None, Some(messages("global.poundSign")))
   }

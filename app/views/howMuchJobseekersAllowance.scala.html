@@ -33,7 +33,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading("howMuchJobseekersAllowance.heading")
+        @components.heading("howMuchJobseekersAllowance.heading", secondaryHeaderKey = Some("index.title"))
 
         @components.input_text(InputViewModel("value", form),
             label = messages("howMuchJobseekersAllowance.heading"),
