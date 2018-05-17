@@ -20,7 +20,7 @@
 @import models.Mode
 @import viewmodels.InputViewModel
 
-@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, results: Seq[Employment])(implicit request: Request[_], messages: Messages)
 
 @main_template(
     title = messages("employmentDetails.title"),
@@ -34,6 +34,23 @@
         @components.error_summary(form.errors)
 
         @components.heading("employmentDetails.heading")
+
+        <p>@Messages("employmentDetails.detailsWeHave")</p>
+
+        <ul class="list list-bullet">
+        @for(employments <- results) {
+            <li>Employer: @employments.name</li>
+                Payroll number: @employments.payeNumber
+            <br/><br/>
+        }
+        </ul>
+
+        @components.input_yes_no(
+            InputViewModel("value", form),
+            label = messages("employmentDetails.correctDetails"),
+            labelClass = Some("bold")
+        )
+
 
         @components.submit_button()
     }

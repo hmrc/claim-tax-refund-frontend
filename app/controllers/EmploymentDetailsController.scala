@@ -16,50 +16,82 @@
 
 package controllers
 
-import config.FrontendAppConfig
-import connectors.DataCacheConnector
-import controllers.actions._
-import forms.EmploymentDetailsForm
-import identifiers.EmploymentDetailsId
 import javax.inject.Inject
-import models.Mode
+
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import connectors.{DataCacheConnector, TaiConnector}
+import controllers.actions._
+import config.FrontendAppConfig
+import forms.BooleanForm
+import identifiers.EmploymentDetailsId
+import models.Mode
 import utils.{Navigator, UserAnswers}
 import views.html.employmentDetails
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import scala.util.control.NonFatal
 
-class EmploymentDetailsController @Inject()(
-                                             appConfig: FrontendAppConfig,
-                                             override val messagesApi: MessagesApi,
-                                             dataCacheConnector: DataCacheConnector,
-                                             navigator: Navigator,
-                                             authenticate: AuthAction,
-                                             getData: DataRetrievalAction,
-                                             requireData: DataRequiredAction,
-                                             formBuilder: EmploymentDetailsForm) extends FrontendController with I18nSupport {
 
-  private val form: Form[String] = formBuilder()
+class EmploymentDetailsController @Inject()(appConfig: FrontendAppConfig,
+                                            override val messagesApi: MessagesApi,
+                                            dataCacheConnector: DataCacheConnector,
+                                            navigator: Navigator,
+                                            authenticate: AuthAction,
+                                            getData: DataRetrievalAction,
+                                            requireData: DataRequiredAction,
+                                            formProvider: BooleanForm,
+                                            taiConnector: TaiConnector) extends FrontendController with I18nSupport {
 
-  def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
+  private val errorKey = "mploymentDetails.blank"
+  val form: Form[Boolean] = formProvider(errorKey)
+
+
+  def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
+
       val preparedForm = request.userAnswers.employmentDetails match {
         case None => form
         case Some(value) => form.fill(value)
       }
-      Ok(employmentDetails(appConfig, preparedForm, mode))
+
+      request.userAnswers.selectTaxYear.map {
+        selectedTaxYear =>
+          val results = taiConnector.taiEmployments(request.nino, selectedTaxYear.year)
+
+          results.map(
+            employments =>
+              Ok(employmentDetails(appConfig, preparedForm, mode, employments))
+          ).recover {
+            case NonFatal(e) =>
+              Redirect(routes.SessionExpiredController.onPageLoad())
+          }
+      }.getOrElse {
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+      }
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      form.bindFromRequest().fold(
-        (formWithErrors: Form[_]) =>
-          Future.successful(BadRequest(employmentDetails(appConfig, formWithErrors, mode))),
-        (value) =>
-          dataCacheConnector.save[String](request.externalId, EmploymentDetailsId.toString, value).map(cacheMap =>
-            Redirect(navigator.nextPage(EmploymentDetailsId, mode)(new UserAnswers(cacheMap))))
-      )
+
+      request.userAnswers.selectTaxYear.map {
+        selectedTaxYear =>
+          val results = taiConnector.taiEmployments(request.nino, selectedTaxYear.year)
+
+          results.flatMap {
+            employments =>
+              form.bindFromRequest().fold(
+                (formWithErrors: Form[_]) =>
+                  Future.successful(BadRequest(employmentDetails(appConfig, formWithErrors, mode, employments))),
+                (value) =>
+                  dataCacheConnector.save[Boolean](request.externalId, EmploymentDetailsId.toString, value).map(cacheMap =>
+                    Redirect(navigator.nextPage(EmploymentDetailsId, mode)(new UserAnswers(cacheMap))))
+              )
+          }
+      }.getOrElse {
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+      }
   }
 }
