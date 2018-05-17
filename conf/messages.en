@@ -189,11 +189,6 @@ anyBankBuildingSocietyInterest.heading = Did you get any bank or building societ
 anyBankBuildingSocietyInterest.checkYourAnswersLabel = Did you get any bank or building society interest income in the tax year your claim is for?
 anyBankBuildingSocietyInterest.blank = Select yes if you got any bank or building society interest income in the tax year your claim is for
 
-anyIncapacityBenefit.title = Did you get Incapacity Benefit in the tax year your claim is for?
-anyIncapacityBenefit.heading = Did you get Incapacity Benefit in the tax year your claim is for?
-anyIncapacityBenefit.checkYourAnswersLabel = Did you get Incapacity Benefit in the tax year your claim is for?
-anyIncapacityBenefit.blank = Select yes if you got Incapacity benefit in the tax year your claim is for
-
 anyEmploymentAndSupportAllowance.title = Did you get Employment and Support Allowance in the tax year your claim is for?
 anyEmploymentAndSupportAllowance.heading = Did you get Employment and Support Allowance in the tax year your claim is for?
 anyEmploymentAndSupportAllowance.checkYourAnswersLabel = Did you get Employment and Support Allowance in the tax year your claim is for?

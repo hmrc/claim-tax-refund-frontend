@@ -72,11 +72,6 @@ POST       /how-much-medical-benefit                            controllers.HowM
 GET        /change-how-much-medical-benefit                     controllers.HowMuchMedicalBenefitsController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-how-much-medical-benefit                     controllers.HowMuchMedicalBenefitsController.onSubmit(mode: Mode = CheckMode)
 
-GET        /did-you-get-incapacity-benefit                      controllers.AnyIncapacityBenefitController.onPageLoad(mode: Mode = NormalMode)
-POST       /did-you-get-incapacity-benefit                      controllers.AnyIncapacityBenefitController.onSubmit(mode: Mode = NormalMode)
-GET        /change-if-you-got-incapacity-benefit                controllers.AnyIncapacityBenefitController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-if-you-got-incapacity-benefit                controllers.AnyIncapacityBenefitController.onSubmit(mode: Mode = CheckMode)
-
 GET        /did-you-get-employment-support-allowance            controllers.AnyEmploymentAndSupportAllowanceController.onPageLoad(mode: Mode = NormalMode)
 POST       /did-you-get-employment-support-allowance            controllers.AnyEmploymentAndSupportAllowanceController.onSubmit(mode: Mode = NormalMode)
 GET        /change-if-you-got-employment-support-allowance      controllers.AnyEmploymentAndSupportAllowanceController.onPageLoad(mode: Mode = CheckMode)
