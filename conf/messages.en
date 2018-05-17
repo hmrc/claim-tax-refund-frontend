@@ -168,11 +168,6 @@ howMuchCarBenefits.checkYourAnswersLabel = Amount you got in company car or fuel
 howMuchCarBenefits.blank = Enter the amount you got in company car or fuel benefits in the tax year your claim is for
 howMuchCarBenefits.invalid = Enter a valid amount you got in company car or fuel benefits in the tax year your claim is for
 
-anyRentalIncome.title = Did you get any rental income in the tax year your claim is for?
-anyRentalIncome.heading = Did you get any rental income in the tax year your claim is for?
-anyRentalIncome.checkYourAnswersLabel = Did you get any rental income in the tax year your claim is for?
-anyRentalIncome.blank = Select yes if you got any rental income in the tax year your claim is for
-
 howMuchRentalIncome.title = How much rental income did you get in the tax year your claim is for?
 howMuchRentalIncome.heading = How much rental income did you get in the tax year your claim is for?
 howMuchRentalIncome.checkYourAnswersLabel = Amount of rental income you got in the tax year your claim is for

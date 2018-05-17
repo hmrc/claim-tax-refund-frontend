@@ -252,22 +252,6 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     }
   }
 
-  "Is anyRentalIncome (true)" must {
-    s"have the correct label" in {
-      when(answers.anyRentalIncome) thenReturn Some(true)
-      val helper = new CheckYourAnswersHelper(answers)
-      helper.anyRentalIncome.get.label.key mustBe s"anyRentalIncome.checkYourAnswersLabel"
-    }
-  }
-
-  "Is anyRentalIncome (false)" must {
-    s"have the correct label" in {
-      when(answers.anyRentalIncome) thenReturn Some(false)
-      val helper = new CheckYourAnswersHelper(answers)
-      helper.anyRentalIncome.get.label.key mustBe s"anyRentalIncome.checkYourAnswersLabel"
-    }
-  }
-
   "How much rental income" must {
     s"have the correct label" in {
       when(answers.howMuchRentalIncome) thenReturn Some("9,999.99")
