@@ -16,29 +16,32 @@
 
 package views
 
-import config.FrontendAppConfig
-import forms.EmploymentDetailsForm
-import models.NormalMode
-import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
-import views.behaviours.StringViewBehaviours
+import controllers.routes
+import forms.BooleanForm
+import views.behaviours.YesNoViewBehaviours
+import models.{Employment, NormalMode}
 import views.html.employmentDetails
 
-class EmploymentDetailsViewSpec extends StringViewBehaviours with MockitoSugar {
+class EmploymentDetailsViewSpec extends YesNoViewBehaviours {
 
   val messageKeyPrefix = "employmentDetails"
 
-  val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
+  override val form = new BooleanForm()()
 
-  override val form: Form[String] = new EmploymentDetailsForm(appConfig)()
+  val fakeEmployments = Seq(Employment("AVIVA PENSIONS", "754", "AZ00070"))
 
-  def createView = () => employmentDetails(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) => employmentDetails(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[_]) => employmentDetails(frontendAppConfig, form, NormalMode, fakeEmployments)(fakeRequest, messages)
+
+  def createView = () => employmentDetails(frontendAppConfig, form, NormalMode, fakeEmployments)(fakeRequest, messages)
 
   "EmploymentDetails view" must {
+
     behave like normalPage(createView, messageKeyPrefix)
 
     behave like pageWithBackLink(createView)
+
+    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.EmploymentDetailsController.onSubmit(NormalMode).url)
   }
 }
