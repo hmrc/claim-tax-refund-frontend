@@ -24,6 +24,11 @@ import viewmodels.AnswerRow
 
 class CheckYourAnswersHelper(userAnswers: UserAnswers) {
 
+  def taiEmploymentDetails: Option[AnswerRow] = userAnswers.taiEmploymentDetails map {
+    x => AnswerRow("taiEmploymentDetails.checkYourAnswersLabel",
+      if(x) "site.yes" else "site.no", true, routes.TaiEmploymentDetailsController.onPageLoad(CheckMode).url, false)
+  }
+
   def employmentDetails: Option[AnswerRow] = userAnswers.employmentDetails map {
     x => AnswerRow("employmentDetails.checkYourAnswersLabel", s"$x", false, routes.EmploymentDetailsController.onPageLoad(CheckMode).url, false)
   }

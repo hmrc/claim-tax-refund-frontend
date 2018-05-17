@@ -16,27 +16,31 @@
 
 package controllers
 
-import connectors.FakeDataCacheConnector
-import controllers.actions._
-import forms.BooleanForm
+
 import identifiers.AnyBenefitsId
-import models.NormalMode
+import views.html.anyBenefits
 import play.api.data.Form
 import play.api.libs.json.JsBoolean
-import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
 import utils.FakeNavigator
-import views.html.anyBenefits
+import connectors.{FakeDataCacheConnector, TaiConnector}
+import controllers.actions._
+import play.api.test.Helpers._
+import forms.BooleanForm
+import models.NormalMode
 
-class AnyBenefitsControllerSpec extends ControllerSpecBase {
+import org.scalatest.mockito.MockitoSugar
+
+class AnyBenefitsControllerSpec extends ControllerSpecBase with MockitoSugar {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
   val formProvider = new BooleanForm()
   val form = formProvider()
+  val mockTai: TaiConnector = mock[TaiConnector]
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new AnyBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+    new AnyBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, mockTai, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, formProvider)
 
   def viewAsString(form: Form[_] = form) = anyBenefits(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
@@ -94,7 +98,3 @@ class AnyBenefitsControllerSpec extends ControllerSpecBase {
     }
   }
 }
-
-
-
-

@@ -325,3 +325,10 @@ employmentDetails.title = employmentDetails
 employmentDetails.heading = employmentDetails
 employmentDetails.checkYourAnswersLabel = employmentDetails
 employmentDetails.blank = employmentDetails
+
+taiEmploymentDetails.title = Employment details
+taiEmploymentDetails.heading = Employment details
+taiEmploymentDetails.checkYourAnswersLabel = Employment details
+taiEmploymentDetails.blank = Select yes if these details are correct
+taiEmploymentDetails.correctDetails = Are these details correct?
+taiEmploymentDetails.detailsWeHave = Details we have between :

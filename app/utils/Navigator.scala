@@ -28,8 +28,8 @@ class Navigator @Inject()() {
 
   private val routeMap: Map[Identifier, UserAnswers => Call] = Map(
     UserDetailsId -> (_ => routes.SelectTaxYearController.onPageLoad(NormalMode)),
-    SelectTaxYearId -> (_ => routes.EmploymentDetailsController.onPageLoad(NormalMode)),
-    EmploymentDetailsId -> (_ => routes.AnyBenefitsController.onPageLoad(NormalMode)),
+    SelectTaxYearId -> (_ => routes.TaiEmploymentDetailsController.onPageLoad(NormalMode)),
+    TaiEmploymentDetailsId -> (_ => routes.AnyBenefitsController.onPageLoad(NormalMode)),
     AnyBenefitsId -> anyBenefits,
     AnyJobseekersAllowanceId -> anyJobseekers,
     HowMuchJobseekersAllowanceId -> (_ => routes.AnyIncapacityBenefitController.onPageLoad(NormalMode)),
@@ -84,7 +84,7 @@ class Navigator @Inject()() {
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
-  private def anyEmploymentAndSupport(userAnswers: UserAnswers) = userAnswers.anyEmploymentAndSupportAllowance match {
+private def anyEmploymentAndSupport(userAnswers: UserAnswers) = userAnswers.anyEmploymentAndSupportAllowance match {
     case Some(true) => routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(NormalMode)
     case Some(false) => routes.AnyStatePensionController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
