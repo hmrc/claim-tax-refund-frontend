@@ -29,10 +29,6 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
       if(x) "site.yes" else "site.no", true, routes.TaiEmploymentDetailsController.onPageLoad(CheckMode).url, false)
   }
 
-  def employmentDetails: Option[AnswerRow] = userAnswers.employmentDetails map {
-    x => AnswerRow("employmentDetails.checkYourAnswersLabel", s"$x", false, routes.EmploymentDetailsController.onPageLoad(CheckMode).url, false)
-  }
-
   val dateFormat = "dd MMMM YYYY"
 
   def userName: Option[AnswerRow] = userAnswers.userDetails map {
