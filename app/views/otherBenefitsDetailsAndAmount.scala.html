@@ -33,7 +33,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading("otherBenefitsDetailsAndAmount.heading")
+        @components.heading("otherBenefitsDetailsAndAmount.heading", secondaryHeaderKey = Some("index.title"))
 
         @components.input_textarea(InputViewModel("value", form),
             label = messages("otherBenefitsDetailsAndAmount.heading"),

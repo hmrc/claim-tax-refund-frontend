@@ -42,6 +42,8 @@ class HowMuchRentalIncomeViewSpec extends StringViewBehaviours with MockitoSugar
 
     behave like pageWithBackLink(createView)
 
+    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+
     behave like stringPage(createViewUsingForm, messageKeyPrefix,
       routes.HowMuchRentalIncomeController.onSubmit(NormalMode).url, None, None, Some(messages("global.poundSign")))
   }

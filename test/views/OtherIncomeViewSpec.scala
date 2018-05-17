@@ -39,6 +39,8 @@ class OtherIncomeViewSpec extends YesNoViewBehaviours {
 
     behave like pageWithBackLink(createView)
 
+    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+
     behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.OtherIncomeController.onSubmit(NormalMode).url)
   }
 }

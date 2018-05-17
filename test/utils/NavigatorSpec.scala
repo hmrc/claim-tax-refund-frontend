@@ -74,79 +74,10 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(EmploymentDetailsId, NormalMode)(answers) mustBe routes.AnyBenefitsController.onPageLoad(NormalMode)
       }
 
-      "go to AnyJobseekers from AnyBenefits when Yes is selected" in {
-        val answers = mock[UserAnswers]
-        when(answers.anyBenefits) thenReturn Some(true)
-        navigator.nextPage(AnyBenefitsId, NormalMode)(answers) mustBe routes.AnyJobseekersAllowanceController.onPageLoad(NormalMode)
-      }
-
       "go to OtherIncome from AnyBenefits when No is selected" in {
         val answers = mock[UserAnswers]
         when(answers.anyBenefits) thenReturn Some(false)
         navigator.nextPage(AnyBenefitsId, NormalMode)(answers) mustBe routes.OtherIncomeController.onPageLoad(NormalMode)
-      }
-
-      "go to HowMuchJobseekers from AnyJobseekers when Yes is selected" in {
-        val answers = mock[UserAnswers]
-        when(answers.anyJobseekersAllowance) thenReturn Some(true)
-        navigator.nextPage(AnyJobseekersAllowanceId, NormalMode)(answers) mustBe routes.HowMuchJobseekersAllowanceController.onPageLoad(NormalMode)
-      }
-
-      "go to AnyIncapacityBenefit from AnyJobseekers when No is selected" in {
-        val answers = mock[UserAnswers]
-        when(answers.anyJobseekersAllowance) thenReturn Some(false)
-        navigator.nextPage(AnyJobseekersAllowanceId, NormalMode)(answers) mustBe routes.AnyIncapacityBenefitController.onPageLoad(NormalMode)
-      }
-
-      "go to AnyIncapacityBenefit from HowMuchJobseekers" in {
-        val answers = mock[UserAnswers]
-        navigator.nextPage(HowMuchJobseekersAllowanceId, NormalMode)(answers) mustBe routes.AnyIncapacityBenefitController.onPageLoad(NormalMode)
-      }
-
-      "go to HowMuchIncapacityBenefit from AnyIncapacityBenefit when Yes is selected" in {
-        val answers = mock[UserAnswers]
-        when(answers.anyIncapacityBenefit) thenReturn Some(true)
-        navigator.nextPage(AnyIncapacityBenefitId, NormalMode)(answers) mustBe routes.HowMuchIncapacityBenefitController.onPageLoad(NormalMode)
-      }
-
-      "go to AnyEmploymentSupport from AnyIncapacityBenefit when No is selected" in {
-        val answers = mock[UserAnswers]
-        when(answers.anyIncapacityBenefit) thenReturn Some(false)
-        navigator.nextPage(AnyIncapacityBenefitId, NormalMode)(answers) mustBe routes.AnyEmploymentAndSupportAllowanceController.onPageLoad(NormalMode)
-      }
-
-      "go to AnyEmploymentSupport from HowMuchIncapacityBenefit" in {
-        val answers = mock[UserAnswers]
-        navigator.nextPage(HowMuchIncapacityBenefitId, NormalMode)(answers) mustBe routes.AnyEmploymentAndSupportAllowanceController.onPageLoad(NormalMode)
-      }
-
-      "go to HowMuchEmploymentSupport from AnyEmploymentSupport when Yes is selected" in {
-        val answers = mock[UserAnswers]
-        when(answers.anyEmploymentAndSupportAllowance) thenReturn Some(true)
-        navigator.nextPage(AnyEmploymentAndSupportAllowanceId, NormalMode)(answers) mustBe routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(NormalMode)
-      }
-
-      "go to AnyStatePension from AnyEmploymentSupport when No is selected" in {
-        val answers = mock[UserAnswers]
-        when(answers.anyEmploymentAndSupportAllowance) thenReturn Some(false)
-        navigator.nextPage(AnyEmploymentAndSupportAllowanceId, NormalMode)(answers) mustBe routes.AnyStatePensionController.onPageLoad(NormalMode)
-      }
-
-      "go to AnyStatePension from HowMuchEmploymentSupport" in {
-        val answers = mock[UserAnswers]
-        navigator.nextPage(HowMuchEmploymentAndSupportAllowanceId, NormalMode)(answers) mustBe routes.AnyStatePensionController.onPageLoad(NormalMode)
-      }
-
-      "go to HowMuchStatePension from AnyStatePension when Yes is selected" in {
-        val answers = mock[UserAnswers]
-        when(answers.anyStatePension) thenReturn Some(true)
-        navigator.nextPage(AnyStatePensionId, NormalMode)(answers) mustBe routes.HowMuchStatePensionController.onPageLoad(NormalMode)
-      }
-
-      "go to AnyOtherTaxableBenefit from AnyStatePension when No is selected" in {
-        val answers = mock[UserAnswers]
-        when(answers.anyStatePension) thenReturn Some(false)
-        navigator.nextPage(AnyStatePensionId, NormalMode)(answers) mustBe routes.AnyOtherTaxableBenefitsController.onPageLoad(NormalMode)
       }
 
       "go to AnyOtherTaxableBenefit from HowMuchStatePension" in {

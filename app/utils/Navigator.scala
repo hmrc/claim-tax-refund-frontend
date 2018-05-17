@@ -31,13 +31,6 @@ class Navigator @Inject()() {
     SelectTaxYearId -> (_ => routes.EmploymentDetailsController.onPageLoad(NormalMode)),
     EmploymentDetailsId -> (_ => routes.AnyBenefitsController.onPageLoad(NormalMode)),
     AnyBenefitsId -> anyBenefits,
-    AnyJobseekersAllowanceId -> anyJobseekers,
-    HowMuchJobseekersAllowanceId -> (_ => routes.AnyIncapacityBenefitController.onPageLoad(NormalMode)),
-    AnyIncapacityBenefitId -> anyIncapacity,
-    HowMuchIncapacityBenefitId -> (_ => routes.AnyEmploymentAndSupportAllowanceController.onPageLoad(NormalMode)),
-    AnyEmploymentAndSupportAllowanceId -> anyEmploymentAndSupport,
-    HowMuchEmploymentAndSupportAllowanceId -> (_ => routes.AnyStatePensionController.onPageLoad(NormalMode)),
-    AnyStatePensionId -> anyStatePension,
     HowMuchStatePensionId -> (_ => routes.AnyOtherTaxableBenefitsController.onPageLoad(NormalMode)),
     AnyOtherTaxableBenefitsId -> anyOtherBenefits,
     OtherBenefitsDetailsAndAmountId -> (_ => routes.OtherIncomeController.onPageLoad(NormalMode)),
@@ -60,32 +53,8 @@ class Navigator @Inject()() {
   )
 
   private def anyBenefits(userAnswers: UserAnswers) = userAnswers.anyBenefits match {
-    case Some(true) => routes.AnyJobseekersAllowanceController.onPageLoad(NormalMode)
+    case Some(true) => ???
     case Some(false) => routes.OtherIncomeController.onPageLoad(NormalMode)
-    case None => routes.SessionExpiredController.onPageLoad()
-  }
-
-  private def anyJobseekers(userAnswers: UserAnswers) = userAnswers.anyJobseekersAllowance match {
-    case Some(true) => routes.HowMuchJobseekersAllowanceController.onPageLoad(NormalMode)
-    case Some(false) => routes.AnyIncapacityBenefitController.onPageLoad(NormalMode)
-    case None => routes.SessionExpiredController.onPageLoad()
-  }
-
-  private def anyIncapacity(userAnswers: UserAnswers) = userAnswers.anyIncapacityBenefit match {
-    case Some(true) => routes.HowMuchIncapacityBenefitController.onPageLoad(NormalMode)
-    case Some(false) => routes.AnyEmploymentAndSupportAllowanceController.onPageLoad(NormalMode)
-    case None => routes.SessionExpiredController.onPageLoad()
-  }
-
-private def anyEmploymentAndSupport(userAnswers: UserAnswers) = userAnswers.anyEmploymentAndSupportAllowance match {
-    case Some(true) => routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(NormalMode)
-    case Some(false) => routes.AnyStatePensionController.onPageLoad(NormalMode)
-    case None => routes.SessionExpiredController.onPageLoad()
-  }
-
-  private def anyStatePension(userAnswers: UserAnswers) = userAnswers.anyStatePension match {
-    case Some(true) => routes.HowMuchStatePensionController.onPageLoad(NormalMode)
-    case Some(false) => routes.AnyOtherTaxableBenefitsController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
