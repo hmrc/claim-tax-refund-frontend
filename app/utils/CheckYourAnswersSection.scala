@@ -70,7 +70,6 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
   def otherIncomeDetails = AnswerSection(Some("checkYourAnswers.otherIncomeDetailsSection"), Seq(
     cyaHelper.howMuchCarBenefits,
     cyaHelper.howMuchRentalIncome,
-    cyaHelper.anyBankBuildingSocietyInterest,
     cyaHelper.howMuchBankBuildingSocietyInterest,
     cyaHelper.howMuchMedicalBenefits,
     cyaHelper.anyOtherTaxableIncome,

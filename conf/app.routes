@@ -42,11 +42,6 @@ POST       /how-much-rental-income                              controllers.HowM
 GET        /change-how-much-rental-income                       controllers.HowMuchRentalIncomeController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-how-much-rental-income                       controllers.HowMuchRentalIncomeController.onSubmit(mode: Mode = CheckMode)
 
-GET        /did-you-get-interest                                controllers.AnyBankBuildingSocietyInterestController.onPageLoad(mode: Mode = NormalMode)
-POST       /did-you-get-interest                                controllers.AnyBankBuildingSocietyInterestController.onSubmit(mode: Mode = NormalMode)
-GET        /change-if-you-got-interest                          controllers.AnyBankBuildingSocietyInterestController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-if-you-got-interest                          controllers.AnyBankBuildingSocietyInterestController.onSubmit(mode: Mode = CheckMode)
-
 GET        /how-much-interest                                   controllers.HowMuchBankBuildingSocietyInterestController.onPageLoad(mode: Mode = NormalMode)
 POST       /how-much-interest                                   controllers.HowMuchBankBuildingSocietyInterestController.onSubmit(mode: Mode = NormalMode)
 GET        /change-how-much-interest                            controllers.HowMuchBankBuildingSocietyInterestController.onPageLoad(mode: Mode = CheckMode)
