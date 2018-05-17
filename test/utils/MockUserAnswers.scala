@@ -71,7 +71,7 @@ object MockUserAnswers extends MockitoSugar {
   def minimalValidUserAnswers: UserAnswers = {
 
     val answers = nothingAnswered
-
+    when(answers.userDetails) thenReturn Some(UserDetails("test name", "AB123123A", UkAddress("testLine1", "testLine2", None, None, None, "AB1 2CD")))
     when(answers.selectTaxYear) thenReturn Some(SelectTaxYear.CYMinus2)
     when(answers.employmentDetails) thenReturn Some(true)
 
