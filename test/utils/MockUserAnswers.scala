@@ -16,6 +16,8 @@
 
 package utils
 
+import models.SelectTaxYear.CYMinus2
+import models.WhereToSendPayment.You
 import models.{SelectTaxYear, UkAddress, UserDetails}
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
@@ -69,6 +71,7 @@ object MockUserAnswers extends MockitoSugar {
     val answers = nothingAnswered
 
     when(answers.userDetails) thenReturn Some(UserDetails("test name", "AB123123A", UkAddress("testLine1", "testLine2", None, None, None, "AB1 2CD")))
+    when(answers.selectTaxYear) thenReturn Some(CYMinus2)
 
     answers
   }
