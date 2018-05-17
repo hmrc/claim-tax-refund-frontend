@@ -118,9 +118,37 @@ class TaiEmploymentDetailsControllerSpec extends ControllerSpecBase with Mockito
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
     }
+
+    "redirect to Session Expired if call to tai has failed" in {
+      when(mockUserAnswers.taiEmploymentDetails).thenReturn(None)
+
+      when(mockTaiConnector.taiEmployments(Matchers.eq("AB123456A"), Matchers.eq(2016))(Matchers.any(), Matchers.any()))
+        .thenReturn(Future.failed(new Exception("Couldnt find tai details")))
+
+      val result = controller(fakeDataRetrievalAction).onPageLoad(NormalMode)(fakeRequest)
+
+      status(result) mustBe SEE_OTHER
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+    }
+
+    "redirect to Session Expired if no taxYears have been selected" in {
+      when(mockUserAnswers.taiEmploymentDetails).thenReturn(None)
+      when(mockUserAnswers.selectTaxYear).thenReturn(None)
+
+      val result = controller(fakeDataRetrievalAction).onPageLoad(NormalMode)(fakeRequest)
+
+      status(result) mustBe SEE_OTHER
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+    }
+
+    "redirect to Session Expired if no taxYears have been selected on submit" in {
+      when(mockUserAnswers.taiEmploymentDetails).thenReturn(None)
+      when(mockUserAnswers.selectTaxYear).thenReturn(None)
+
+      val result = controller(fakeDataRetrievalAction).onSubmit(NormalMode)(fakeRequest)
+
+      status(result) mustBe SEE_OTHER
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+    }
   }
 }
-
-
-
-
