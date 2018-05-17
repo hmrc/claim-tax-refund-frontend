@@ -31,7 +31,6 @@ class Navigator @Inject()() {
     SelectTaxYearId -> (_ => routes.TaiEmploymentDetailsController.onPageLoad(NormalMode)),
     TaiEmploymentDetailsId -> (_ => routes.AnyBenefitsController.onPageLoad(NormalMode)),
     AnyBenefitsId -> anyBenefits,
-    AnyJobseekersAllowanceId -> anyJobseekers,
     HowMuchJobseekersAllowanceId -> (_ => routes.AnyIncapacityBenefitController.onPageLoad(NormalMode)),
     AnyIncapacityBenefitId -> anyIncapacity,
     HowMuchIncapacityBenefitId -> (_ => routes.AnyEmploymentAndSupportAllowanceController.onPageLoad(NormalMode)),
@@ -67,14 +66,8 @@ class Navigator @Inject()() {
   )
 
   private def anyBenefits(userAnswers: UserAnswers) = userAnswers.anyBenefits match {
-    case Some(true) => routes.AnyJobseekersAllowanceController.onPageLoad(NormalMode)
+    case Some(true) => ???
     case Some(false) => routes.OtherIncomeController.onPageLoad(NormalMode)
-    case None => routes.SessionExpiredController.onPageLoad()
-  }
-
-  private def anyJobseekers(userAnswers: UserAnswers) = userAnswers.anyJobseekersAllowance match {
-    case Some(true) => routes.HowMuchJobseekersAllowanceController.onPageLoad(NormalMode)
-    case Some(false) => routes.AnyIncapacityBenefitController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
 

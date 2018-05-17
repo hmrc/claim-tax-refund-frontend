@@ -74,28 +74,10 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(TaiEmploymentDetailsId, NormalMode)(answers) mustBe routes.AnyBenefitsController.onPageLoad(NormalMode)
       }
 
-      "go to AnyJobseekers from AnyBenefits when Yes is selected" in {
-        val answers = mock[UserAnswers]
-        when(answers.anyBenefits) thenReturn Some(true)
-        navigator.nextPage(AnyBenefitsId, NormalMode)(answers) mustBe routes.AnyJobseekersAllowanceController.onPageLoad(NormalMode)
-      }
-
       "go to OtherIncome from AnyBenefits when No is selected" in {
         val answers = mock[UserAnswers]
         when(answers.anyBenefits) thenReturn Some(false)
         navigator.nextPage(AnyBenefitsId, NormalMode)(answers) mustBe routes.OtherIncomeController.onPageLoad(NormalMode)
-      }
-
-      "go to HowMuchJobseekers from AnyJobseekers when Yes is selected" in {
-        val answers = mock[UserAnswers]
-        when(answers.anyJobseekersAllowance) thenReturn Some(true)
-        navigator.nextPage(AnyJobseekersAllowanceId, NormalMode)(answers) mustBe routes.HowMuchJobseekersAllowanceController.onPageLoad(NormalMode)
-      }
-
-      "go to AnyIncapacityBenefit from AnyJobseekers when No is selected" in {
-        val answers = mock[UserAnswers]
-        when(answers.anyJobseekersAllowance) thenReturn Some(false)
-        navigator.nextPage(AnyJobseekersAllowanceId, NormalMode)(answers) mustBe routes.AnyIncapacityBenefitController.onPageLoad(NormalMode)
       }
 
       "go to AnyIncapacityBenefit from HowMuchJobseekers" in {
