@@ -31,7 +31,7 @@ class TaiConnectorImpl @Inject()(appConfig: FrontendAppConfig, http: HttpClient)
 
   override def taiEmployments(nino: String, year: Int)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[Seq[Employment]] = {
 
-    val submissionUrl = s"${appConfig.TaiUrl}/tai/$nino/employments/years/$year"
+    val submissionUrl = s"${appConfig.taiUrl}/tai/$nino/employments/years/$year"
 
     implicit val employmentsReads: Reads[Seq[Employment]] = Employment.employmentsReads
 

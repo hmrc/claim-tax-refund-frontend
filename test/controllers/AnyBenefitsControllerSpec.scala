@@ -63,7 +63,7 @@ class AnyBenefitsControllerSpec extends ControllerSpecBase with MockitoSugar {
       contentAsString(result) mustBe viewAsString(form.fill(true))
     }
 
-    "redirect to the next page when valid dAata is submitted" in {
+    "redirect to the next page when valid data is submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
 
       val result = controller().onSubmit(NormalMode)(postRequest)
