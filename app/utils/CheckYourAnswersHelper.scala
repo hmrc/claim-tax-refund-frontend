@@ -34,20 +34,20 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
   def userName: Option[AnswerRow] = userAnswers.userDetails map {
     x =>
       AnswerRow("userDetails.checkYourAnswersLabel.name",
-        s"${x.name}", false, routes.UserDetailsController.onPageLoad(CheckMode).url, false)
+        s"${x.name}", false, routes.SelectTaxYearController.onPageLoad(CheckMode).url, false)
   }
 
   def userNino: Option[AnswerRow] = userAnswers.userDetails map {
     x =>
       AnswerRow("userDetails.checkYourAnswersLabel.nino",
-        s"${x.nino}", false, routes.UserDetailsController.onPageLoad(CheckMode).url, false)
+        s"${x.nino}", false, routes.SelectTaxYearController.onPageLoad(CheckMode).url, false)
   }
 
   def userAddress: Option[AnswerRow] = userAnswers.userDetails map {
     x =>
       AnswerRow("userDetails.checkYourAnswersLabel.address",
         UkAddress.asString(x.address),
-        false, routes.UserDetailsController.onPageLoad(CheckMode).url, false)
+        false, routes.SelectTaxYearController.onPageLoad(CheckMode).url, false)
   }
 
   def payeeUKAddress: Option[AnswerRow] = userAnswers.payeeUKAddress map {

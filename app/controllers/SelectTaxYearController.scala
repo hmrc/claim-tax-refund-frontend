@@ -16,13 +16,14 @@
 
 package controllers
 
+import javax.inject.Inject
+
 import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.SelectTaxYearForm
-import identifiers.SelectTaxYearId
-import javax.inject.Inject
-import models.{Mode, SelectTaxYear}
+import identifiers.{SelectTaxYearId, UserDetailsId}
+import models.{Mode, SelectTaxYear, UkAddress, UserDetails}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
@@ -40,23 +41,30 @@ class SelectTaxYearController @Inject()(
                                          getData: DataRetrievalAction,
                                          requireData: DataRequiredAction) extends FrontendController with I18nSupport {
 
-  def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode) = (authenticate andThen getData) {
     implicit request =>
-      val preparedForm = request.userAnswers.selectTaxYear match {
+      val preparedForm = request.userAnswers.flatMap(x => x.selectTaxYear) match {
         case None => SelectTaxYearForm()
         case Some(value) => SelectTaxYearForm().fill(value)
       }
       Ok(selectTaxYear(appConfig, preparedForm, mode))
   }
 
-  def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode) = (authenticate andThen getData).async {
     implicit request =>
+      val userName = request.name.givenName.get + " " + request.name.familyName.get
+      val userNino = request.nino
+      val userAddress = UkAddress(request.address.line1.get, request.address.line2.get, Some(request.address.line3.get),
+        Some(request.address.line4.get), Some(request.address.line5.get), request.address.postCode.get)
+
       SelectTaxYearForm().bindFromRequest().fold(
         (formWithErrors: Form[_]) =>
           Future.successful(BadRequest(selectTaxYear(appConfig, formWithErrors, mode))),
         (value) =>
-          dataCacheConnector.save[SelectTaxYear](request.externalId, SelectTaxYearId.toString, value).map(cacheMap =>
-            Redirect(navigator.nextPage(SelectTaxYearId, mode)(new UserAnswers(cacheMap))))
+          for {
+            _        <- dataCacheConnector.save[UserDetails](request.externalId, UserDetailsId.toString, UserDetails(userName, userNino, userAddress))
+            cacheMap <- dataCacheConnector.save[SelectTaxYear](request.externalId, SelectTaxYearId.toString, value)
+          } yield Redirect(navigator.nextPage(SelectTaxYearId, mode)(new UserAnswers(cacheMap)))
       )
   }
 }
