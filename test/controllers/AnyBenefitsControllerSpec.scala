@@ -28,7 +28,7 @@ import controllers.actions._
 import play.api.test.Helpers._
 import forms.BooleanForm
 import models.NormalMode
-
+import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
 
 class AnyBenefitsControllerSpec extends ControllerSpecBase with MockitoSugar {
@@ -38,12 +38,13 @@ class AnyBenefitsControllerSpec extends ControllerSpecBase with MockitoSugar {
   val formProvider = new BooleanForm()
   val form = formProvider()
   val mockTai: TaiConnector = mock[TaiConnector]
+  val taxYear: String = CYMinus2.asString
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, mockTai, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, formProvider)
 
-  def viewAsString(form: Form[_] = form) = anyBenefits(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = form) = anyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
 
   "AnyBenefits Controller" must {
 
