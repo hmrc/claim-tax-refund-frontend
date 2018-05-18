@@ -16,24 +16,21 @@
 
 package controllers
 
+import forms.SelectTaxYearForm
 import models.NormalMode
-import play.api.mvc.{Call, Request}
+import play.api.data.Form
 import play.api.test.Helpers._
-import views.html.index
+import views.html.selectTaxYear
 
 class IndexControllerSpec extends ControllerSpecBase {
 
-  def call(implicit request: Request[_]): Call = routes.UserDetailsController.onPageLoad(NormalMode)
+  def viewAsString(form: Form[_] = SelectTaxYearForm()) = selectTaxYear(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
 
   "Index Controller" must {
-    "return 200 for a GET" in {
+    "return redirect for a GET and redirect to select tax year" in {
       val result = new IndexController(frontendAppConfig, messagesApi).onPageLoad()(fakeRequest)
-      status(result) mustBe OK
-    }
-
-    "return the correct view for a GET" in {
-      val result = new IndexController(frontendAppConfig, messagesApi).onPageLoad()(fakeRequest)
-      contentAsString(result) mustBe index(frontendAppConfig, call(fakeRequest))(fakeRequest, messages).toString
+      status(result) mustBe TEMPORARY_REDIRECT
+      redirectLocation(result) mustBe Some(routes.SelectTaxYearController.onPageLoad(NormalMode).url)
     }
   }
 }
