@@ -61,10 +61,10 @@ class SelectTaxYearController @Inject()(
         (formWithErrors: Form[_]) =>
           Future.successful(BadRequest(selectTaxYear(appConfig, formWithErrors, mode))),
         (value) =>
-          dataCacheConnector.save[UserDetails](request.externalId, UserDetailsId.toString, UserDetails(userName, userNino, userAddress)).flatMap(
-            x => dataCacheConnector.save[SelectTaxYear](request.externalId, SelectTaxYearId.toString, value).map(cacheMap =>
-              Redirect(navigator.nextPage(SelectTaxYearId, mode)(new UserAnswers(cacheMap))))
-          )
+          for {
+            _        <- dataCacheConnector.save[UserDetails](request.externalId, UserDetailsId.toString, UserDetails(userName, userNino, userAddress))
+            cacheMap <- dataCacheConnector.save[SelectTaxYear](request.externalId, SelectTaxYearId.toString, value)
+          } yield Redirect(navigator.nextPage(SelectTaxYearId, mode)(new UserAnswers(cacheMap)))
       )
   }
 }
