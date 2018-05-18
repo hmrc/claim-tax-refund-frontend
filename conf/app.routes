@@ -32,40 +32,20 @@ POST       /did-you-get-other-income                            controllers.Othe
 GET        /change-if-you-got-other-income                      controllers.OtherIncomeController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-if-you-got-other-income                      controllers.OtherIncomeController.onSubmit(mode: Mode = CheckMode)
 
-GET        /did-you-get-car-benefits                            controllers.AnyCarBenefitsController.onPageLoad(mode: Mode = NormalMode)
-POST       /did-you-get-car-benefits                            controllers.AnyCarBenefitsController.onSubmit(mode: Mode = NormalMode)
-GET        /change-if-you-got-car-benefits                      controllers.AnyCarBenefitsController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-if-you-got-car-benefits                      controllers.AnyCarBenefitsController.onSubmit(mode: Mode = CheckMode)
-
 GET        /how-much-car-benefit                                controllers.HowMuchCarBenefitsController.onPageLoad(mode: Mode = NormalMode)
 POST       /how-much-car-benefit                                controllers.HowMuchCarBenefitsController.onSubmit(mode: Mode = NormalMode)
 GET        /change-how-much-car-benefit                         controllers.HowMuchCarBenefitsController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-how-much-car-benefit                         controllers.HowMuchCarBenefitsController.onSubmit(mode: Mode = CheckMode)
-
-GET        /did-you-get-rental-income                           controllers.AnyRentalIncomeController.onPageLoad(mode: Mode = NormalMode)
-POST       /did-you-get-rental-income                           controllers.AnyRentalIncomeController.onSubmit(mode: Mode = NormalMode)
-GET        /change-if-you-got-rental-income                     controllers.AnyRentalIncomeController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-if-you-got-rental-income                     controllers.AnyRentalIncomeController.onSubmit(mode: Mode = CheckMode)
 
 GET        /how-much-rental-income                              controllers.HowMuchRentalIncomeController.onPageLoad(mode: Mode = NormalMode)
 POST       /how-much-rental-income                              controllers.HowMuchRentalIncomeController.onSubmit(mode: Mode = NormalMode)
 GET        /change-how-much-rental-income                       controllers.HowMuchRentalIncomeController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-how-much-rental-income                       controllers.HowMuchRentalIncomeController.onSubmit(mode: Mode = CheckMode)
 
-GET        /did-you-get-interest                                controllers.AnyBankBuildingSocietyInterestController.onPageLoad(mode: Mode = NormalMode)
-POST       /did-you-get-interest                                controllers.AnyBankBuildingSocietyInterestController.onSubmit(mode: Mode = NormalMode)
-GET        /change-if-you-got-interest                          controllers.AnyBankBuildingSocietyInterestController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-if-you-got-interest                          controllers.AnyBankBuildingSocietyInterestController.onSubmit(mode: Mode = CheckMode)
-
 GET        /how-much-interest                                   controllers.HowMuchBankBuildingSocietyInterestController.onPageLoad(mode: Mode = NormalMode)
 POST       /how-much-interest                                   controllers.HowMuchBankBuildingSocietyInterestController.onSubmit(mode: Mode = NormalMode)
 GET        /change-how-much-interest                            controllers.HowMuchBankBuildingSocietyInterestController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-how-much-interest                            controllers.HowMuchBankBuildingSocietyInterestController.onSubmit(mode: Mode = CheckMode)
-
-GET        /did-you-get-medical-benefits                        controllers.AnyMedicalBenefitsController.onPageLoad(mode: Mode = NormalMode)
-POST       /did-you-get-medical-benefits                        controllers.AnyMedicalBenefitsController.onSubmit(mode: Mode = NormalMode)
-GET        /change-if-you-got-medical-benefits                  controllers.AnyMedicalBenefitsController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-if-you-got-medical-benefits                  controllers.AnyMedicalBenefitsController.onSubmit(mode: Mode = CheckMode)
 
 GET        /how-much-medical-benefit                            controllers.HowMuchMedicalBenefitsController.onPageLoad(mode: Mode = NormalMode)
 POST       /how-much-medical-benefit                            controllers.HowMuchMedicalBenefitsController.onSubmit(mode: Mode = NormalMode)

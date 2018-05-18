@@ -162,32 +162,17 @@ otherIncome.heading = Did you get any other income in the tax year your claim is
 otherIncome.checkYourAnswersLabel = Did you get any other income in the tax year your claim is for?
 otherIncome.blank = Select yes if you got any other income in the tax year your claim is for
 
-anyCarBenefits.title = Did you get any company car or fuel benefits in the tax year your claim is for?
-anyCarBenefits.heading = Did you get any company car or fuel benefits in the tax year your claim is for?
-anyCarBenefits.checkYourAnswersLabel = Did you get any company car or fuel benefits in the tax year your claim is for?
-anyCarBenefits.blank = Select yes if you got any company car or fuel benefits in the tax year your claim is for
-
 howMuchCarBenefits.title = How much did you get in company car or fuel benefits in the tax year your claim is for?
 howMuchCarBenefits.heading = How much did you get in company car or fuel benefits in the tax year your claim is for?
 howMuchCarBenefits.checkYourAnswersLabel = Amount you got in company car or fuel benefits in the tax year your claim is for
 howMuchCarBenefits.blank = Enter the amount you got in company car or fuel benefits in the tax year your claim is for
 howMuchCarBenefits.invalid = Enter a valid amount you got in company car or fuel benefits in the tax year your claim is for
 
-anyRentalIncome.title = Did you get any rental income in the tax year your claim is for?
-anyRentalIncome.heading = Did you get any rental income in the tax year your claim is for?
-anyRentalIncome.checkYourAnswersLabel = Did you get any rental income in the tax year your claim is for?
-anyRentalIncome.blank = Select yes if you got any rental income in the tax year your claim is for
-
 howMuchRentalIncome.title = How much rental income did you get in the tax year your claim is for?
 howMuchRentalIncome.heading = How much rental income did you get in the tax year your claim is for?
 howMuchRentalIncome.checkYourAnswersLabel = Amount of rental income you got in the tax year your claim is for
 howMuchRentalIncome.blank = Enter the amount of rental income you got in the tax year your claim is for
 howMuchRentalIncome.invalid = Enter a valid amount of rental income you got in the tax year your claim is for
-
-anyBankBuildingSocietyInterest.title = Did you get any bank or building society interest income in the tax year your claim is for?
-anyBankBuildingSocietyInterest.heading = Did you get any bank or building society interest income in the tax year your claim is for?
-anyBankBuildingSocietyInterest.checkYourAnswersLabel = Did you get any bank or building society interest income in the tax year your claim is for?
-anyBankBuildingSocietyInterest.blank = Select yes if you got any bank or building society interest income in the tax year your claim is for
 
 anyOtherTaxableBenefits.title = Did you get any other taxable benefits in the tax year your claim is for?
 anyOtherTaxableBenefits.heading = Did you get any other taxable benefits in the tax year your claim is for?
@@ -223,11 +208,6 @@ howMuchBankBuildingSocietyInterest.heading = How much bank or building society i
 howMuchBankBuildingSocietyInterest.checkYourAnswersLabel = Amount of bank or building society interest income you got in the tax year your claim is for
 howMuchBankBuildingSocietyInterest.blank = Enter the amount of bank or building society interest income you got in the tax year your claim is for
 howMuchBankBuildingSocietyInterest.invalid = Enter a valid amount of bank or building society interest income you got in the tax year your claim is for
-
-anyMedicalBenefits.title = Did you get any medical benefits in the tax year your claim is for?
-anyMedicalBenefits.heading = Did you get any medical benefits in the tax year your claim is for?
-anyMedicalBenefits.checkYourAnswersLabel = Did you get any medical benefits in the tax year your claim is for?
-anyMedicalBenefits.blank = Select yes if you got any medical benefits in the tax year your claim is for
 
 howMuchMedicalBenefits.title = How much medical benefit did you get in the tax year your claim is for?
 howMuchMedicalBenefits.heading = How much medical benefit did you get in the tax year your claim is for?

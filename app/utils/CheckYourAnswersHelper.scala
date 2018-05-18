@@ -164,24 +164,10 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
         s"$x", false, routes.HowMuchMedicalBenefitsController.onPageLoad(CheckMode).url, true)
   }
 
-  def anyMedicalBenefits: Option[AnswerRow] = userAnswers.anyMedicalBenefits map {
-    x =>
-      AnswerRow("anyMedicalBenefits.checkYourAnswersLabel",
-        if (x) "site.yes" else "site.no",
-        true, routes.AnyMedicalBenefitsController.onPageLoad(CheckMode).url, true)
-  }
-
   def howMuchBankBuildingSocietyInterest: Option[AnswerRow] = userAnswers.howMuchBankBuildingSocietyInterest map {
     x =>
       AnswerRow("howMuchBankBuildingSocietyInterest.checkYourAnswersLabel",
         s"$x", false, routes.HowMuchBankBuildingSocietyInterestController.onPageLoad(CheckMode).url, true)
-  }
-
-  def anyBankBuildingSocietyInterest: Option[AnswerRow] = userAnswers.anyBankBuildingSocietyInterest map {
-    x =>
-      AnswerRow("anyBankBuildingSocietyInterest.checkYourAnswersLabel",
-        if (x) "site.yes" else "site.no",
-        true, routes.AnyBankBuildingSocietyInterestController.onPageLoad(CheckMode).url, true)
   }
 
   def howMuchRentalIncome: Option[AnswerRow] = userAnswers.howMuchRentalIncome map {
@@ -190,24 +176,10 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
         s"$x", false, routes.HowMuchRentalIncomeController.onPageLoad(CheckMode).url, true)
   }
 
-  def anyRentalIncome: Option[AnswerRow] = userAnswers.anyRentalIncome map {
-    x =>
-      AnswerRow("anyRentalIncome.checkYourAnswersLabel",
-        if (x) "site.yes" else "site.no",
-        true, routes.AnyRentalIncomeController.onPageLoad(CheckMode).url, true)
-  }
-
   def howMuchCarBenefits: Option[AnswerRow] = userAnswers.howMuchCarBenefits map {
     x =>
       AnswerRow("howMuchCarBenefits.checkYourAnswersLabel",
         s"$x", false, routes.HowMuchCarBenefitsController.onPageLoad(CheckMode).url, true)
-  }
-
-  def anyCarBenefits: Option[AnswerRow] = userAnswers.anyCarBenefits map {
-    x =>
-      AnswerRow("anyCarBenefits.checkYourAnswersLabel",
-        if (x) "site.yes" else "site.no",
-        true, routes.AnyCarBenefitsController.onPageLoad(CheckMode).url, true)
   }
 
   def otherIncome: Option[AnswerRow] = userAnswers.otherIncome map {
