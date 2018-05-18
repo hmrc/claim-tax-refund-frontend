@@ -12,15 +12,15 @@ GET        /check-your-answers                                  controllers.Chec
 
 GET        /unauthorised                                        controllers.UnauthorisedController.onPageLoad
 
-GET        /enter-telephone-number                              controllers.TelephoneNumberController.onPageLoad(mode: Mode = NormalMode)
-POST       /enter-telephone-number                              controllers.TelephoneNumberController.onSubmit(mode: Mode = NormalMode)
-GET        /change-telephone-number                             controllers.TelephoneNumberController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-telephone-number                             controllers.TelephoneNumberController.onSubmit(mode: Mode = CheckMode)
-
 GET        /select-claim-tax-year                               controllers.SelectTaxYearController.onPageLoad(mode: Mode = NormalMode)
 POST       /select-claim-tax-year                               controllers.SelectTaxYearController.onSubmit(mode: Mode = NormalMode)
 GET        /change-claim-tax-year                               controllers.SelectTaxYearController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-claim-tax-year                               controllers.SelectTaxYearController.onSubmit(mode: Mode = CheckMode)
+
+GET        /enter-telephone-number                              controllers.TelephoneNumberController.onPageLoad(mode: Mode = NormalMode)
+POST       /enter-telephone-number                              controllers.TelephoneNumberController.onSubmit(mode: Mode = NormalMode)
+GET        /change-telephone-number                             controllers.TelephoneNumberController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-telephone-number                             controllers.TelephoneNumberController.onSubmit(mode: Mode = CheckMode)
 
 GET        /did-you-get-any-benefits                            controllers.AnyBenefitsController.onPageLoad(mode: Mode = NormalMode)
 POST       /did-you-get-any-benefits                            controllers.AnyBenefitsController.onSubmit(mode: Mode = NormalMode)
@@ -126,11 +126,6 @@ GET        /where-to-send-payment                               controllers.Wher
 POST       /where-to-send-payment                               controllers.WhereToSendPaymentController.onSubmit(mode: Mode = NormalMode)
 GET        /change-where-to-send-payment                        controllers.WhereToSendPaymentController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-where-to-send-payment                        controllers.WhereToSendPaymentController.onSubmit(mode: Mode = CheckMode)
-
-GET        /user-details                                        controllers.UserDetailsController.onPageLoad(mode: Mode = NormalMode)
-POST       /user-details                                        controllers.UserDetailsController.onSubmit(mode: Mode = NormalMode)
-GET        /change-user-details                                 controllers.UserDetailsController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-user-details                                 controllers.UserDetailsController.onSubmit(mode: Mode = CheckMode)
 
 GET        /employmentDetails                                   controllers.EmploymentDetailsController.onPageLoad(mode: Mode = NormalMode)
 POST       /employmentDetails                                   controllers.EmploymentDetailsController.onSubmit(mode: Mode = NormalMode)

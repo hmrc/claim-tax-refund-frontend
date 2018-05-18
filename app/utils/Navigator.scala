@@ -27,7 +27,6 @@ import play.api.mvc.Call
 class Navigator @Inject()() {
 
   private val routeMap: Map[Identifier, UserAnswers => Call] = Map(
-    UserDetailsId -> (_ => routes.SelectTaxYearController.onPageLoad(NormalMode)),
     SelectTaxYearId -> (_ => routes.EmploymentDetailsController.onPageLoad(NormalMode)),
     EmploymentDetailsId -> (_ => routes.AnyBenefitsController.onPageLoad(NormalMode)),
     AnyBenefitsId -> anyBenefits,
