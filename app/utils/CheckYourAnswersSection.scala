@@ -64,13 +64,9 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
   ).flatten)
 
   def otherIncomeDetails = AnswerSection(Some("checkYourAnswers.otherIncomeDetailsSection"), Seq(
-    cyaHelper.anyCarBenefits,
     cyaHelper.howMuchCarBenefits,
-    cyaHelper.anyRentalIncome,
     cyaHelper.howMuchRentalIncome,
-    cyaHelper.anyBankBuildingSocietyInterest,
     cyaHelper.howMuchBankBuildingSocietyInterest,
-    cyaHelper.anyMedicalBenefits,
     cyaHelper.howMuchMedicalBenefits,
     cyaHelper.anyOtherTaxableIncome,
     cyaHelper.otherIncomeDetailsAndAmount

@@ -57,19 +57,11 @@ class UserAnswers(val cacheMap: CacheMap) {
 
   def howMuchMedicalBenefits: Option[String] = cacheMap.getEntry[String](HowMuchMedicalBenefitsId.toString)
 
-  def anyMedicalBenefits: Option[Boolean] = cacheMap.getEntry[Boolean](AnyMedicalBenefitsId.toString)
-
   def howMuchBankBuildingSocietyInterest: Option[String] = cacheMap.getEntry[String](HowMuchBankBuildingSocietyInterestId.toString)
-
-  def anyBankBuildingSocietyInterest: Option[Boolean] = cacheMap.getEntry[Boolean](AnyBankBuildingSocietyInterestId.toString)
 
   def howMuchRentalIncome: Option[String] = cacheMap.getEntry[String](HowMuchRentalIncomeId.toString)
 
-  def anyRentalIncome: Option[Boolean] = cacheMap.getEntry[Boolean](AnyRentalIncomeId.toString)
-
   def howMuchCarBenefits: Option[String] = cacheMap.getEntry[String](HowMuchCarBenefitsId.toString)
-
-  def anyCarBenefits: Option[Boolean] = cacheMap.getEntry[Boolean](AnyCarBenefitsId.toString)
 
   def otherIncome: Option[Boolean] = cacheMap.getEntry[Boolean](OtherIncomeId.toString)
 

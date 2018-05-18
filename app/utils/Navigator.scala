@@ -35,13 +35,6 @@ class Navigator @Inject()() {
     AnyOtherTaxableBenefitsId -> anyOtherBenefits,
     OtherBenefitsDetailsAndAmountId -> (_ => routes.OtherIncomeController.onPageLoad(NormalMode)),
     OtherIncomeId -> otherTaxableIncome,
-    AnyCarBenefitsId -> anyCarBenefit,
-    HowMuchCarBenefitsId -> (_ => routes.AnyRentalIncomeController.onPageLoad(NormalMode)),
-    AnyRentalIncomeId -> anyRental,
-    HowMuchRentalIncomeId -> (_ => routes.AnyBankBuildingSocietyInterestController.onPageLoad(NormalMode)),
-    AnyBankBuildingSocietyInterestId -> anyBankBuildingInterest,
-    HowMuchBankBuildingSocietyInterestId -> (_ => routes.AnyMedicalBenefitsController.onPageLoad(NormalMode)),
-    AnyMedicalBenefitsId -> anyMedicalBenefit,
     HowMuchMedicalBenefitsId -> (_ => routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)),
     AnyOtherTaxableIncomeId -> anyOtherTaxableIncome,
     OtherIncomeDetailsAndAmountId -> (_ => routes.WhereToSendPaymentController.onPageLoad(NormalMode)),
@@ -72,32 +65,8 @@ class Navigator @Inject()() {
   }
 
   private def otherTaxableIncome(userAnswers: UserAnswers) = userAnswers.otherIncome match {
-    case Some(true) => routes.AnyCarBenefitsController.onPageLoad(NormalMode)
+    case Some(true) => ???
     case Some(false) => routes.WhereToSendPaymentController.onPageLoad(NormalMode)
-    case None => routes.SessionExpiredController.onPageLoad()
-  }
-
-  private def anyCarBenefit(userAnswers: UserAnswers) = userAnswers.anyCarBenefits match {
-    case Some(true) => routes.HowMuchCarBenefitsController.onPageLoad(NormalMode)
-    case Some(false) => routes.AnyRentalIncomeController.onPageLoad(NormalMode)
-    case None => routes.SessionExpiredController.onPageLoad()
-  }
-
-  private def anyRental(userAnswers: UserAnswers) = userAnswers.anyRentalIncome match {
-    case Some(true) => routes.HowMuchRentalIncomeController.onPageLoad(NormalMode)
-    case Some(false) => routes.AnyBankBuildingSocietyInterestController.onPageLoad(NormalMode)
-    case None => routes.SessionExpiredController.onPageLoad()
-  }
-
-  private def anyBankBuildingInterest(userAnswers: UserAnswers) = userAnswers.anyBankBuildingSocietyInterest match {
-    case Some(true) => routes.HowMuchBankBuildingSocietyInterestController.onPageLoad(NormalMode)
-    case Some(false) => routes.AnyMedicalBenefitsController.onPageLoad(NormalMode)
-    case None => routes.SessionExpiredController.onPageLoad()
-  }
-
-  private def anyMedicalBenefit(userAnswers: UserAnswers) = userAnswers.anyMedicalBenefits match {
-    case Some(true) => routes.HowMuchMedicalBenefitsController.onPageLoad(NormalMode)
-    case Some(false) => routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
 

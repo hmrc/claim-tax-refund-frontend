@@ -180,43 +180,11 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     }
   }
 
-  "Is anyCarBenefits (true)" must {
-    s"have the correct label" in {
-      when(answers.anyCarBenefits) thenReturn Some(true)
-      val helper = new CheckYourAnswersHelper(answers)
-      helper.anyCarBenefits.get.label.key mustBe s"anyCarBenefits.checkYourAnswersLabel"
-    }
-  }
-
-  "Is anyCarBenefits (false)" must {
-    s"have the correct label" in {
-      when(answers.anyCarBenefits) thenReturn Some(false)
-      val helper = new CheckYourAnswersHelper(answers)
-      helper.anyCarBenefits.get.label.key mustBe s"anyCarBenefits.checkYourAnswersLabel"
-    }
-  }
-
   "How much car benefits" must {
     s"have the correct label" in {
       when(answers.howMuchCarBenefits) thenReturn Some("9,999.99")
       val helper = new CheckYourAnswersHelper(answers)
       helper.howMuchCarBenefits.get.label.key mustBe s"howMuchCarBenefits.checkYourAnswersLabel"
-    }
-  }
-
-  "Is anyRentalIncome (true)" must {
-    s"have the correct label" in {
-      when(answers.anyRentalIncome) thenReturn Some(true)
-      val helper = new CheckYourAnswersHelper(answers)
-      helper.anyRentalIncome.get.label.key mustBe s"anyRentalIncome.checkYourAnswersLabel"
-    }
-  }
-
-  "Is anyRentalIncome (false)" must {
-    s"have the correct label" in {
-      when(answers.anyRentalIncome) thenReturn Some(false)
-      val helper = new CheckYourAnswersHelper(answers)
-      helper.anyRentalIncome.get.label.key mustBe s"anyRentalIncome.checkYourAnswersLabel"
     }
   }
 
@@ -228,43 +196,11 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     }
   }
 
-  "Is anyBankBuildingSocietyInterest (true)" must {
-    s"have the correct label" in {
-      when(answers.anyBankBuildingSocietyInterest) thenReturn Some(true)
-      val helper = new CheckYourAnswersHelper(answers)
-      helper.anyBankBuildingSocietyInterest.get.label.key mustBe s"anyBankBuildingSocietyInterest.checkYourAnswersLabel"
-    }
-  }
-
-  "Is anyBankBuildingSocietyInterest (false)" must {
-    s"have the correct label" in {
-      when(answers.anyBankBuildingSocietyInterest) thenReturn Some(false)
-      val helper = new CheckYourAnswersHelper(answers)
-      helper.anyBankBuildingSocietyInterest.get.label.key mustBe s"anyBankBuildingSocietyInterest.checkYourAnswersLabel"
-    }
-  }
-
   "How much bank building society interest" must {
     s"have the correct label" in {
       when(answers.howMuchBankBuildingSocietyInterest) thenReturn Some("9,999.99")
       val helper = new CheckYourAnswersHelper(answers)
       helper.howMuchBankBuildingSocietyInterest.get.label.key mustBe s"howMuchBankBuildingSocietyInterest.checkYourAnswersLabel"
-    }
-  }
-
-  "Is anyMedicalBenefits (true)" must {
-    s"have the correct label" in {
-      when(answers.anyMedicalBenefits) thenReturn Some(true)
-      val helper = new CheckYourAnswersHelper(answers)
-      helper.anyMedicalBenefits.get.label.key mustBe s"anyMedicalBenefits.checkYourAnswersLabel"
-    }
-  }
-
-  "Is anyMedicalBenefits (false)" must {
-    s"have the correct label" in {
-      when(answers.anyMedicalBenefits) thenReturn Some(false)
-      val helper = new CheckYourAnswersHelper(answers)
-      helper.anyMedicalBenefits.get.label.key mustBe s"anyMedicalBenefits.checkYourAnswersLabel"
     }
   }
 
