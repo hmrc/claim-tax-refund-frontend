@@ -36,11 +36,14 @@
 
         @components.heading("anyBenefits.heading", secondaryHeaderKey = Some("index.title"))
 
+        <p>@messages(messages("anyBenefits.listHeading"))</p>
+
+        @components.list("anyBenefits", Seq("list1", "list2", "list3", "list4", "list5", "list6", "list7"))
+
         @components.input_yes_no(
             InputViewModel("value", form),
             label = messages("anyBenefits.heading"),
-            labelClass = Some("visually-hidden"),
-            hint = Some(messages("anyBenefits.hint"))
+            labelClass = Some("visually-hidden")
         )
 
         @components.submit_button()
