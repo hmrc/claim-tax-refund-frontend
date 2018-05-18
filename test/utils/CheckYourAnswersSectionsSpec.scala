@@ -18,7 +18,7 @@ package utils
 
 import base.SpecBase
 import models.SelectTaxYear.CYMinus2
-import models.WhereToSendPayment.SomeoneElse
+import models.WhereToSendPayment.Nominee
 import models._
 import org.mockito.Mockito._
 import org.scalatest.BeforeAndAfterEach
@@ -140,7 +140,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
     }
 
     "have the correct rows in the right order in the Payment Details section" in {
-      when(answers.whereToSendPayment) thenReturn Some(SomeoneElse)
+      when(answers.whereToSendPayment) thenReturn Some(Nominee)
       when(answers.payeeFullName) thenReturn Some("Agent Name")
       when(answers.anyAgentRef) thenReturn Some(false)
       when(answers.isPayeeAddressInTheUK) thenReturn Some(false)
