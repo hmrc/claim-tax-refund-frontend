@@ -40,10 +40,6 @@ class AnyBenefitsViewSpec extends YesNoViewBehaviours {
     behave like pageWithBackLink(createView)
 
     behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.AnyBenefitsController.onSubmit(NormalMode).url, Some(s"$messageKeyPrefix.hint"))
-
-    "contains hint text" in {
-      val doc = asDocument(anyBenefits(frontendAppConfig, form, NormalMode)(fakeRequest, messages))
-      assertContainsText(doc, messages(s"$messageKeyPrefix.hint"))
-    }
+    
   }
 }
