@@ -16,6 +16,7 @@
 
 package models
 
+import models.SelectTaxYear.dateFormat
 import org.scalatest.{MustMatchers, WordSpec}
 import org.scalatest.mockito.MockitoSugar
 import uk.gov.hmrc.time.TaxYearResolver
@@ -41,6 +42,27 @@ class SelectTaxYearSpec extends WordSpec with MustMatchers with MockitoSugar {
     "return the currect tax year for CYMinus5" in {
       val taxYear = SelectTaxYear.CYMinus5
       taxYear.year mustBe TaxYearResolver.startOfCurrentTaxYear.minusYears(5).getYear
+    }
+
+    "return the currect tax year for CYMinus2 as String" in {
+      val taxYear = SelectTaxYear.CYMinus2
+      taxYear.asString mustBe TaxYearResolver.startOfCurrentTaxYear.minusYears(2).toString(dateFormat) + " to " +
+        TaxYearResolver.endOfCurrentTaxYear.minusYears(2).toString(dateFormat)
+    }
+    "return the currect tax year for CYMinus3 as String" in {
+      val taxYear = SelectTaxYear.CYMinus3
+      taxYear.asString mustBe TaxYearResolver.startOfCurrentTaxYear.minusYears(3).toString(dateFormat) + " to " +
+        TaxYearResolver.endOfCurrentTaxYear.minusYears(3).toString(dateFormat)
+    }
+    "return the currect tax year for CYMinus4 as String" in {
+      val taxYear = SelectTaxYear.CYMinus4
+      taxYear.asString mustBe TaxYearResolver.startOfCurrentTaxYear.minusYears(4).toString(dateFormat) + " to " +
+        TaxYearResolver.endOfCurrentTaxYear.minusYears(4).toString(dateFormat)
+    }
+    "return the currect tax year for CYMinus5 as String" in {
+      val taxYear = SelectTaxYear.CYMinus5
+      taxYear.asString mustBe TaxYearResolver.startOfCurrentTaxYear.minusYears(5).toString(dateFormat) + " to " +
+        TaxYearResolver.endOfCurrentTaxYear.minusYears(5).toString(dateFormat)
     }
   }
 }

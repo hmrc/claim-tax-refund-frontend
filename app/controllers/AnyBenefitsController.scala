@@ -23,14 +23,10 @@ import connectors.{DataCacheConnector, TaiConnector}
 import controllers.actions._
 import forms.BooleanForm
 import identifiers.AnyBenefitsId
-import javax.inject.Inject
 import models.Mode
-import models.SelectTaxYear.{CYMinus2, CYMinus3, CYMinus4, CYMinus5}
-import play.api.Logger
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
-import uk.gov.hmrc.time.TaxYearResolver
 import utils.{Navigator, UserAnswers}
 import views.html.anyBenefits
 
@@ -55,14 +51,16 @@ class AnyBenefitsController @Inject()(appConfig: FrontendAppConfig,
         case None => form
         case Some(value) => form.fill(value)
       }
-  Ok(anyBenefits(appConfig, preparedForm, mode))
+      val taxYear = request.userAnswers.selectTaxYear.get.asString
+      Ok(anyBenefits(appConfig, preparedForm, mode, taxYear))
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
+      val taxYear = request.userAnswers.selectTaxYear.get.asString
       form.bindFromRequest().fold(
         (formWithErrors: Form[_]) =>
-          Future.successful(BadRequest(anyBenefits(appConfig, formWithErrors, mode))),
+          Future.successful(BadRequest(anyBenefits(appConfig, formWithErrors, mode, taxYear))),
         (value) =>
           dataCacheConnector.save[Boolean](request.externalId, AnyBenefitsId.toString, value).map(cacheMap =>
             Redirect(navigator.nextPage(AnyBenefitsId, mode)(new UserAnswers(cacheMap))))

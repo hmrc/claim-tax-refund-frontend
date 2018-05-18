@@ -19,6 +19,7 @@ package views
 import controllers.routes
 import forms.BooleanForm
 import models.NormalMode
+import models.SelectTaxYear.CYMinus2
 import play.api.data.Form
 import views.behaviours.YesNoViewBehaviours
 import views.html.anyBenefits
@@ -29,15 +30,19 @@ class AnyBenefitsViewSpec extends YesNoViewBehaviours {
 
   override val form = new BooleanForm()()
 
-  def createView = () => anyBenefits(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  val dynamicHeader = CYMinus2.asString + "?"
 
-  def createViewUsingForm = (form: Form[_]) => anyBenefits(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createView = () => anyBenefits(frontendAppConfig, form, NormalMode, dynamicHeader)(fakeRequest, messages)
+
+  def createViewUsingForm = (form: Form[_]) => anyBenefits(frontendAppConfig, form, NormalMode, dynamicHeader)(fakeRequest, messages)
 
   "AnyBenefits view" must {
 
-    behave like normalPage(createView, messageKeyPrefix)
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, dynamicHeader)
 
     behave like pageWithBackLink(createView)
+
+    behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
     behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.AnyBenefitsController.onSubmit(NormalMode).url, Some(s"$messageKeyPrefix.hint"))
     

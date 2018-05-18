@@ -132,8 +132,9 @@ partialClaimAmount.blank = Enter the amount you want to claim
 partialClaimAmount.invalid = Enter a valid amount you want to claim
 partialClaimAmount.hintLine1 = Enter an amount that is less than the amount you overpaid.
 
-anyBenefits.title = Did you get any taxable benefits in the tax year that your claim relates to?
-anyBenefits.heading = Did you get any taxable benefits in the tax year that your claim relates to?
+anyBenefits.title = Did you get any of these benefits between
+anyBenefits.heading = Did you get any of these benefits between
+anyBenefits.question = ?
 anyBenefits.checkYourAnswersLabel = Did you get any taxable benefits in the tax year that your claim relates to?
 anyBenefits.blank = Select yes if you got any taxable benefits in the tax year that your claim relates to
 anyBenefits.listHeading = A benefit can be something like:
