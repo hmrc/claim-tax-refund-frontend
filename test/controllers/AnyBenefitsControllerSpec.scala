@@ -38,7 +38,7 @@ class AnyBenefitsControllerSpec extends ControllerSpecBase with MockitoSugar {
   val formProvider = new BooleanForm()
   val form = formProvider()
   val mockTai: TaiConnector = mock[TaiConnector]
-  val taxYear = CYMinus2.asString
+  val taxYear: String = CYMinus2.asString
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, mockTai, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
