@@ -92,6 +92,22 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     }
   }
 
+  "Employment details (yes)" must {
+    s"have correct label" in {
+      when(answers.employmentDetails) thenReturn Some(true)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.employmentDetails.get.label.key mustBe s"employmentDetails.checkYourAnswersLabel"
+    }
+  }
+
+  "Employment details (no)" must {
+    s"have correct label" in {
+      when(answers.employmentDetails) thenReturn Some(false)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.employmentDetails.get.label.key mustBe s"employmentDetails.checkYourAnswersLabel"
+    }
+  }
+
   "Is any benefits (true)" must {
     s"have the correct label" in {
       when(answers.anyBenefits) thenReturn Some(true)

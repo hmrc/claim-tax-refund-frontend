@@ -24,11 +24,6 @@ import viewmodels.AnswerRow
 
 class CheckYourAnswersHelper(userAnswers: UserAnswers) {
 
-  def employmentDetails: Option[AnswerRow] = userAnswers.employmentDetails map {
-    x => AnswerRow("employmentDetails.checkYourAnswersLabel",
-      if(x) "site.yes" else "site.no", true, routes.EmploymentDetailsController.onPageLoad(CheckMode).url, false)
-  }
-
   val dateFormat = "dd MMMM YYYY"
 
   def userName: Option[AnswerRow] = userAnswers.userDetails map {
@@ -214,6 +209,12 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
               TaxYearResolver.endOfCurrentTaxYear.minusYears(5).toString(dateFormat)
         },
         false, routes.SelectTaxYearController.onPageLoad(CheckMode).url, true)
+  }
+
+  def employmentDetails: Option[AnswerRow] = userAnswers.employmentDetails map {
+    x => AnswerRow("employmentDetails.checkYourAnswersLabel",
+      if(x) "site.yes" else "site.no",
+      true, routes.EmploymentDetailsController.onPageLoad(CheckMode).url, true)
   }
 
   def telephoneNumber: Option[AnswerRow] = userAnswers.telephoneNumber map {

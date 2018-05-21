@@ -37,18 +37,31 @@
 
         <p>@Messages("employmentDetails.detailsWeHave")</p>
 
-        <ul class="list list-bullet">
-        @for(employments <- results) {
-            <li>Employer: @employments.name</li>
-                Payroll number: @employments.payeNumber
-            <br/><br/>
-        }
-        </ul>
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">@Messages("employmentDetails.employer")</th>
+                    <th class="numeric" scope="col">@Messages("employmentDetails.staffNumber")</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @for(employments <- results) {
+                    <tr>
+                        <th scope="row">@employments.name</th>
+                        <td class="numeric">@employments.payeNumber</td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+        <br>
 
         @components.input_yes_no(
             InputViewModel("value", form),
             label = messages("employmentDetails.correctDetails"),
-            labelClass = Some("bold")
+            labelClass = Some("bold"),
+            hint = Some(messages("employmentDetails.hintText"))
         )
 
 
