@@ -14,15 +14,17 @@
  * limitations under the License.
  *@
 
-@(headingKey: String, dynamicHeading: Option[String] = None, headingSize: String = "heading-xlarge", secondaryHeaderKey: Option[String] = None, subSecHeader:Option[String] = None)(implicit messages: Messages)
+@(
+        pageKey: String,
+        bulletList: Seq[String]
+)(implicit messages: Messages)
 
-<header class="page-header">
- <h1 class="@headingSize">@messages(headingKey) @dynamicHeading</h1>
-    @secondaryHeaderKey.map { secHeader =>
-    <p class="heading-secondary"><span class="visuallyhidden">This section is: </span>@messages(secHeader)
-        @subSecHeader.map { subSecHeader =>
-        @subSecHeader
-    }
-    </p>
- }
-</header>
+<div class="form-field" id="component-bullet-list">
+        <ul class="list list-bullet">
+            @for(bullet <- bulletList) {
+                <li id="bullet-@bullet">
+                    @messages(messages(pageKey+"."+bullet))
+                </li>
+            }
+        </ul>
+</div>

@@ -23,14 +23,10 @@ import connectors.{DataCacheConnector, TaiConnector}
 import controllers.actions._
 import forms.BooleanForm
 import identifiers.AnyBenefitsId
-import javax.inject.Inject
 import models.Mode
-import models.SelectTaxYear.{CYMinus2, CYMinus3, CYMinus4, CYMinus5}
-import play.api.Logger
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
-import uk.gov.hmrc.time.TaxYearResolver
 import utils.{Navigator, UserAnswers}
 import views.html.anyBenefits
 
@@ -55,17 +51,32 @@ class AnyBenefitsController @Inject()(appConfig: FrontendAppConfig,
         case None => form
         case Some(value) => form.fill(value)
       }
-  Ok(anyBenefits(appConfig, preparedForm, mode))
+
+      request.userAnswers.selectTaxYear.map{
+        selectedTaxYear =>
+          val taxYear = selectedTaxYear.asString
+          Ok(anyBenefits(appConfig, preparedForm, mode, taxYear))
+      }.getOrElse {
+        Redirect(routes.SessionExpiredController.onPageLoad())
+      }
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      form.bindFromRequest().fold(
-        (formWithErrors: Form[_]) =>
-          Future.successful(BadRequest(anyBenefits(appConfig, formWithErrors, mode))),
-        (value) =>
-          dataCacheConnector.save[Boolean](request.externalId, AnyBenefitsId.toString, value).map(cacheMap =>
-            Redirect(navigator.nextPage(AnyBenefitsId, mode)(new UserAnswers(cacheMap))))
-      )
+
+      request.userAnswers.selectTaxYear.map{
+        selectedTaxYear =>
+          val taxYear = selectedTaxYear.asString
+          form.bindFromRequest().fold(
+            (formWithErrors: Form[_]) =>
+              Future.successful(BadRequest(anyBenefits(appConfig, formWithErrors, mode, taxYear))),
+            (value) =>
+              dataCacheConnector.save[Boolean](request.externalId, AnyBenefitsId.toString, value).map(cacheMap =>
+                Redirect(navigator.nextPage(AnyBenefitsId, mode)(new UserAnswers(cacheMap))))
+          )
+      }.getOrElse{
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+      }
+
   }
 }

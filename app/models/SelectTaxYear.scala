@@ -21,24 +21,35 @@ import utils.{Enumerable, WithName}
 
 sealed trait SelectTaxYear {
   def year: Int
+  def asString: String
 }
 
 object SelectTaxYear extends Enumerable[SelectTaxYear] {
 
+  val dateFormat = "dd MMMM YYYY"
+
   case object CYMinus2 extends WithName("current-year-minus-2") with SelectTaxYear {
     override def year: Int = TaxYearResolver.startOfCurrentTaxYear.minusYears(2).getYear
+    override def asString: String = TaxYearResolver.startOfCurrentTaxYear.minusYears(2).toString(dateFormat) + " to " +
+      TaxYearResolver.endOfCurrentTaxYear.minusYears(2).toString(dateFormat)
   }
 
   case object CYMinus3 extends WithName("current-year-minus-3") with SelectTaxYear {
     override def year: Int = TaxYearResolver.startOfCurrentTaxYear.minusYears(3).getYear
+    override def asString: String = TaxYearResolver.startOfCurrentTaxYear.minusYears(3).toString(dateFormat) + " to " +
+      TaxYearResolver.endOfCurrentTaxYear.minusYears(3).toString(dateFormat)
   }
 
   case object CYMinus4 extends WithName("current-year-minus-4") with SelectTaxYear {
     override def year: Int = TaxYearResolver.startOfCurrentTaxYear.minusYears(4).getYear
+    override def asString: String = TaxYearResolver.startOfCurrentTaxYear.minusYears(4).toString(dateFormat) + " to " +
+      TaxYearResolver.endOfCurrentTaxYear.minusYears(4).toString(dateFormat)
   }
 
   case object CYMinus5 extends WithName("current-year-minus-5") with SelectTaxYear {
     override def year: Int = TaxYearResolver.startOfCurrentTaxYear.minusYears(5).getYear
+    override def asString: String = TaxYearResolver.startOfCurrentTaxYear.minusYears(5).toString(dateFormat) + " to " +
+      TaxYearResolver.endOfCurrentTaxYear.minusYears(5).toString(dateFormat)
   }
 
   lazy val values: Set[SelectTaxYear] = Set(
