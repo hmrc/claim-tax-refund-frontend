@@ -19,10 +19,11 @@ package controllers
 import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
-import forms.BooleanForm
+import forms.AnyAgentReferenceForm
 import identifiers.AnyAgentRefId
 import javax.inject.Inject
-import models.Mode
+
+import models.{AgentRef, Mode}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
@@ -38,10 +39,9 @@ class AnyAgentRefController @Inject()(appConfig: FrontendAppConfig,
                                       authenticate: AuthAction,
                                       getData: DataRetrievalAction,
                                       requireData: DataRequiredAction,
-                                      formProvider: BooleanForm) extends FrontendController with I18nSupport {
+                                      formProvider: AnyAgentReferenceForm) extends FrontendController with I18nSupport {
 
-  private val errorKey = "anyAgentRef.blank"
-  val form: Form[Boolean] = formProvider(errorKey)
+  val form: Form[AgentRef] = formProvider()
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
@@ -58,7 +58,7 @@ class AnyAgentRefController @Inject()(appConfig: FrontendAppConfig,
         (formWithErrors: Form[_]) =>
           Future.successful(BadRequest(anyAgentRef(appConfig, formWithErrors, mode))),
         (value) =>
-          dataCacheConnector.save[Boolean](request.externalId, AnyAgentRefId.toString, value).map(cacheMap =>
+          dataCacheConnector.save[AgentRef](request.externalId, AnyAgentRefId.toString, value).map(cacheMap =>
             Redirect(navigator.nextPage(AnyAgentRefId, mode)(new UserAnswers(cacheMap))))
       )
   }

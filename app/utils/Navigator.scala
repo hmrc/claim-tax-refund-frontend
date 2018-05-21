@@ -19,8 +19,9 @@ package utils
 import controllers.routes
 import identifiers._
 import javax.inject.{Inject, Singleton}
-import models.WhereToSendPayment.{Nominee, Myself}
-import models.{CheckMode, Mode, NormalMode}
+
+import models.WhereToSendPayment.{Myself, Nominee}
+import models.{AgentRef, CheckMode, Mode, NormalMode}
 import play.api.mvc.Call
 
 @Singleton
@@ -39,7 +40,6 @@ class Navigator @Inject()() {
     OtherIncomeDetailsAndAmountId -> (_ => routes.WhereToSendPaymentController.onPageLoad(NormalMode)),
     WhereToSendPaymentId -> whereToSendPayment,
     PayeeFullNameId -> (_ => routes.AnyAgentRefController.onPageLoad(NormalMode)),
-    AnyAgentRefId -> anyAgentRef,
     AgentReferenceNumberId -> (_ => routes.IsPayeeAddressInTheUKController.onPageLoad(NormalMode)),
     IsPayeeAddressInTheUKId -> isPayeeAddressInUkRoute,
     PayeeUKAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
@@ -81,10 +81,10 @@ class Navigator @Inject()() {
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
-  private def anyAgentRef(userAnswers: UserAnswers) = userAnswers.anyAgentRef match {
-    case Some(true) => routes.AgentReferenceNumberController.onPageLoad(NormalMode)
-    case Some(false) => routes.IsPayeeAddressInTheUKController.onPageLoad(NormalMode)
-    case None => routes.SessionExpiredController.onPageLoad()
+  private def anyAgentRef(userAnswers: UserAnswers) = userAnswers.anyAgentRef map {
+    case AgentRef.Yes(agentRef) => routes.AgentReferenceNumberController.onPageLoad(NormalMode)
+    case AgentRef.No => routes.IsPayeeAddressInTheUKController.onPageLoad(NormalMode)
+    case _ => routes.SessionExpiredController.onPageLoad()
   }
 
   private def isPayeeAddressInUkRoute(userAnswers: UserAnswers) = userAnswers.isPayeeAddressInTheUK match {
