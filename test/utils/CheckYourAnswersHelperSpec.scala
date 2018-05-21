@@ -238,7 +238,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
 
   "Is WhereToSendPayment yourself" must {
     s"have the correct label" in {
-      when(answers.whereToSendPayment) thenReturn Some(You)
+      when(answers.whereToSendPayment) thenReturn Some(Myself)
       val helper = new CheckYourAnswersHelper(answers)
       helper.whereToSendPayment.get.label.key mustBe s"whereToSendPayment.checkYourAnswersLabel"
     }
@@ -246,7 +246,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
 
   "Is WhereToSendPayment someone else" must {
     s"have the correct label" in {
-      when(answers.whereToSendPayment) thenReturn Some(SomeoneElse)
+      when(answers.whereToSendPayment) thenReturn Some(Nominee)
       val helper = new CheckYourAnswersHelper(answers)
       helper.whereToSendPayment.get.label.key mustBe s"whereToSendPayment.checkYourAnswersLabel"
     }
