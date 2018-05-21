@@ -20,11 +20,11 @@
 )(implicit messages: Messages)
 
 <div class="form-field" id="component-bullet-list">
-    <div class="multiple-choice">
-        @for(bullet <- bulletList) {
-            <li id="bullet-@bullet">
-                @messages(messages(pageKey+"."+bullet))
-            </li>
-        }
-    </div>
+        <ul class="list list-bullet">
+            @for(bullet <- bulletList) {
+                <li id="bullet-@bullet">
+                    @messages(messages(pageKey+"."+bullet))
+                </li>
+            }
+        </ul>
 </div>
