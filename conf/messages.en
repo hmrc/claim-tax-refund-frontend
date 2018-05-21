@@ -233,10 +233,13 @@ agentReferenceNumber.checkYourAnswersLabel = Agent reference number of the perso
 agentReferenceNumber.blank = Enter the agent reference number of the person you want us to send any payment to
 agentReferenceNumber.tooLong = Agent reference number can only be up to 35 characters
 
-anyAgentRef.title = Does the person you want us to send any payment to have an agent reference number?
-anyAgentRef.heading = Does the person you want us to send any payment to have an agent reference number?
-anyAgentRef.checkYourAnswersLabel = Does the person you want us to send any payment to have an agent reference number?
-anyAgentRef.blank = Select yes if the person you want us to send any payment to has an agent reference number
+anyAgentRef.title = Does have an agent reference?
+anyAgentRef.heading = Does have an agent reference?
+anyAgentRef.checkYourAnswersLabel = Does have an agent reference?
+anyAgentRef.blank = Select yes if the person you want us to send any payment to has an agent reference
+anyAgentRef.agentRefField = Agent reference
+anyAgentRef.blankAgentRef = Enter the agent reference of the person you want us to send any payment to
+anyAgentRef.maxLength = Agent reference can only be up to 160 characters
 
 isPayeeAddressInTheUK.title = Is the address of the person you want us to send any payment to in the UK?
 isPayeeAddressInTheUK.heading = Is the address of the person you want us to send any payment to in the UK?
