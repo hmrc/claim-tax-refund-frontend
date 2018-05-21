@@ -19,7 +19,7 @@ package utils
 import controllers.routes
 import identifiers._
 import javax.inject.{Inject, Singleton}
-import models.WhereToSendPayment.{SomeoneElse, You}
+import models.WhereToSendPayment.{Nominee, Myself}
 import models.{CheckMode, Mode, NormalMode}
 import play.api.mvc.Call
 
@@ -76,8 +76,8 @@ class Navigator @Inject()() {
   }
 
   private def whereToSendPayment(userAnswers: UserAnswers) = userAnswers.whereToSendPayment match {
-    case Some(SomeoneElse) => routes.PayeeFullNameController.onPageLoad(NormalMode)
-    case Some(You) => routes.TelephoneNumberController.onPageLoad(NormalMode)
+    case Some(Nominee) => routes.PayeeFullNameController.onPageLoad(NormalMode)
+    case Some(Myself) => routes.TelephoneNumberController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
