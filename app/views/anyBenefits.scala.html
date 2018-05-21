@@ -21,7 +21,7 @@
 @import utils.FormHelpers
 @import viewmodels.InputViewModel
 
-@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: String)(implicit request: Request[_], messages: Messages)
 
 @main_template(
     title = messages("anyBenefits.title"),
@@ -34,13 +34,16 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading("anyBenefits.heading", secondaryHeaderKey = Some("index.title"))
+        @components.heading(s"anyBenefits.heading", dynamicHeading = Some(s"$taxYear" + messages("global.questionMark")), secondaryHeaderKey = Some("index.title"))
+
+        <p>@messages(messages("anyBenefits.listHeading"))</p>
+
+        @components.list("anyBenefits", Seq("list1", "list2", "list3", "list4", "list5", "list6", "list7"))
 
         @components.input_yes_no(
             InputViewModel("value", form),
             label = messages("anyBenefits.heading"),
-            labelClass = Some("visually-hidden"),
-            hint = Some(messages("anyBenefits.hint"))
+            labelClass = Some("visually-hidden")
         )
 
         @components.submit_button()

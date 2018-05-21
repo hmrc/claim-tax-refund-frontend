@@ -69,6 +69,52 @@ trait ViewBehaviours extends ViewSpecBase {
     "behave like a page with a secondary header" in {
       Jsoup.parse(view().toString()).getElementsByClass("heading-secondary").text() must include(heading)
     }
-
   }
+
+  def pageWithList(view: () => HtmlFormat.Appendable,
+                   pageKey: String,
+                   bulletList: Seq[String]) = {
+
+    "behave like a page with a list" must {
+      "have a list" in {
+        val doc = asDocument(view())
+        bulletList.foreach{
+          x => assertRenderedById(doc, s"bullet-$x")
+        }
+      }
+    }
+  }
+
+  def normalPageWithDynamicHeader(view: () => HtmlFormat.Appendable,
+                                  messageKeyPrefix: String,
+                                  dynamicHeader: String,
+                                  expectedGuidanceKeys: String*) = {
+
+    "behave like a normal page" when {
+      "rendered" must {
+        "have the correct banner title" in {
+          val doc = asDocument(view())
+          val nav = doc.getElementById("proposition-menu")
+          val span = nav.children.first
+          span.text mustBe messagesApi("site.service_name")
+        }
+
+        "display the correct browser title" in {
+          val doc = asDocument(view())
+          assertEqualsMessage(doc, "title", s"$messageKeyPrefix.title")
+        }
+
+        "display the correct page title" in {
+          val doc = asDocument(view())
+          assertDynamicPageTitleEqualsMessage(doc, s"$messageKeyPrefix.heading", dynamicHeader)
+        }
+
+        "display the correct guidance" in {
+          val doc = asDocument(view())
+          for (key <- expectedGuidanceKeys) assertContainsText(doc, messages(s"$messageKeyPrefix.$key"))
+        }
+      }
+    }
+  }
+
 }
