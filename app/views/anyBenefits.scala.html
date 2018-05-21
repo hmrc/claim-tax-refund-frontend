@@ -34,7 +34,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading(s"anyBenefits.heading", dynamicHeading = Some(s"$taxYear?"), secondaryHeaderKey = Some("index.title"))
+        @components.heading(s"anyBenefits.heading", dynamicHeading = Some(s"$taxYear" + messages("global.questionMark")), secondaryHeaderKey = Some("index.title"))
 
         <p>@messages(messages("anyBenefits.listHeading"))</p>
 

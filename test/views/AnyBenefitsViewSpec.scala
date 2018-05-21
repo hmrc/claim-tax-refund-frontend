@@ -30,7 +30,7 @@ class AnyBenefitsViewSpec extends YesNoViewBehaviours {
 
   override val form = new BooleanForm()()
 
-  val dynamicHeader = CYMinus2.asString + "?"
+  def dynamicHeader = CYMinus2.asString
 
   def createView = () => anyBenefits(frontendAppConfig, form, NormalMode, dynamicHeader)(fakeRequest, messages)
 
@@ -38,13 +38,15 @@ class AnyBenefitsViewSpec extends YesNoViewBehaviours {
 
   "AnyBenefits view" must {
 
-    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, dynamicHeader)
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, dynamicHeader + messages("global.questionMark"))
 
     behave like pageWithBackLink(createView)
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
     behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.AnyBenefitsController.onSubmit(NormalMode).url, Some(s"$messageKeyPrefix.hint"))
+
+    behave like pageWithList(createView, messageKeyPrefix, Seq("list1","list2","list3"))
     
   }
 }

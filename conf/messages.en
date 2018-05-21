@@ -47,6 +47,7 @@ global.postcode.blank = Enter a postcode
 global.postcode.invalid = Enter a valid postcode
 
 global.poundSign = £
+global.questionMark = ?
 
 index.title = Claim a tax refund
 index.heading = Claim a tax refund
@@ -134,7 +135,6 @@ partialClaimAmount.hintLine1 = Enter an amount that is less than the amount you 
 
 anyBenefits.title = Did you get any of these benefits between
 anyBenefits.heading = Did you get any of these benefits between
-anyBenefits.question = ?
 anyBenefits.checkYourAnswersLabel = Did you get any taxable benefits in the tax year that your claim relates to?
 anyBenefits.blank = Select yes if you got any taxable benefits in the tax year that your claim relates to
 anyBenefits.listHeading = A benefit can be something like:

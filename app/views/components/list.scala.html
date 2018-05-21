@@ -19,12 +19,12 @@
         bulletList: Seq[String]
 )(implicit messages: Messages)
 
-<div class="form-field">
-    @for(bullet <- bulletList) {
-        <div class="multiple-choice">
-            <li>
-            @messages(messages(pageKey+"."+bullet))
+<div class="form-field" id="component-bullet-list">
+    <div class="multiple-choice">
+        @for(bullet <- bulletList) {
+            <li id="bullet-@bullet">
+                @messages(messages(pageKey+"."+bullet))
             </li>
-        </div>
-    }
+        }
+    </div>
 </div>
