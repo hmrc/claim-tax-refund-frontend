@@ -51,19 +51,32 @@ class AnyBenefitsController @Inject()(appConfig: FrontendAppConfig,
         case None => form
         case Some(value) => form.fill(value)
       }
-      val taxYear = request.userAnswers.selectTaxYear.get.asString
-      Ok(anyBenefits(appConfig, preparedForm, mode, taxYear))
+
+      request.userAnswers.selectTaxYear.map{
+        selectedTaxYear =>
+          val taxYear = selectedTaxYear.asString
+          Ok(anyBenefits(appConfig, preparedForm, mode, taxYear))
+      }.getOrElse {
+        Redirect(routes.SessionExpiredController.onPageLoad())
+      }
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      val taxYear = request.userAnswers.selectTaxYear.get.asString
-      form.bindFromRequest().fold(
-        (formWithErrors: Form[_]) =>
-          Future.successful(BadRequest(anyBenefits(appConfig, formWithErrors, mode, taxYear))),
-        (value) =>
-          dataCacheConnector.save[Boolean](request.externalId, AnyBenefitsId.toString, value).map(cacheMap =>
-            Redirect(navigator.nextPage(AnyBenefitsId, mode)(new UserAnswers(cacheMap))))
-      )
+
+      request.userAnswers.selectTaxYear.map{
+        selectedTaxYear =>
+          val taxYear = selectedTaxYear.asString
+          form.bindFromRequest().fold(
+            (formWithErrors: Form[_]) =>
+              Future.successful(BadRequest(anyBenefits(appConfig, formWithErrors, mode, taxYear))),
+            (value) =>
+              dataCacheConnector.save[Boolean](request.externalId, AnyBenefitsId.toString, value).map(cacheMap =>
+                Redirect(navigator.nextPage(AnyBenefitsId, mode)(new UserAnswers(cacheMap))))
+          )
+      }.getOrElse{
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+      }
+
   }
 }
