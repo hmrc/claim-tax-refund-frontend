@@ -32,26 +32,23 @@ object AgentRef {
   )
 
   implicit val reads: Reads[AgentRef] = {
-
     (JsPath \ "anyAgentRef").read[Boolean].flatMap {
       case true =>
         (JsPath \ "agentRef").read[String]
           .map[AgentRef](Yes.apply)
           .orElse(Reads[AgentRef](_ => JsError("AgentRef value expected")))
       case false =>
-        (JsPath \ "agentRef").read[String]
-          .map[AgentRef](Yes.apply)
-          .orElse(Reads[AgentRef](_ => JsError("AgentRef value expected")))
+        Reads.pure(No)
     }
   }
 
   implicit lazy val writes = new Writes[AgentRef] {
-    def writes(o: AgentRef) = {
+    def writes(o: AgentRef): JsObject = {
       o match {
-        case AgentRef.Yes(agentRef) =>
+        case Yes(agentRef) =>
           Json.obj("anyAgentRef" -> true, "agentRef" -> agentRef)
         case _ =>
-          Json.obj("anyAgentRef" -> false)
+          Json.obj("anyAgentRef" ->false)
       }
     }
   }
