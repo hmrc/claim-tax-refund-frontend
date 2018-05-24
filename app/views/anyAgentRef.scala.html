@@ -36,31 +36,14 @@
 
         @components.heading("anyAgentRef.heading", secondaryHeaderKey = Some("index.title"))
 
-        @components.fieldSet(
-            field = form("agentRef.anyAgentRef"),
-            legend = messages("anyAgentRef.heading"),
-            hiddenLegend = true
-        ){
-            @components.radio(
-                field = form("agentRef.anyAgentRef"),
-                label = AgentRef.options.head.label,
-                value = AgentRef.options.head.value,
-                dataTarget = AgentRef.options.head.dataTarget
-            )
+        @components.input_yes_no(
+            InputViewModel("agentRef.anyAgentRef", form),
+            label = messages("anyAgentRef.heading"),
+            labelClass = Some("visually-hidden"),
+            yesAssoc = Some("yesAgentRef")
+        )
 
-            @components.conditional_text(
-                field = form("agentRef.agentRef"),
-                label = messages("anyAgentRef.agentRefField"),
-                groupClass = Some("js-hidden panel panel-border-narrow")
-            )
-
-            @components.radio(
-                field = form("agentRef.anyAgentRef"),
-                label = AgentRef.options(1).label,
-                value = AgentRef.options(1).value,
-                dataTarget = AgentRef.options(1).dataTarget
-            )
-        }
+        @components.conditional_input_text(form("agentRef.agentRef"), messages("anyAgentRef.agentRefField"), "yesAgentRef")
 
         @components.submit_button()
     }
