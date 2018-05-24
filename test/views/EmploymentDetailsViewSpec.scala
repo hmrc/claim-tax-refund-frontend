@@ -19,6 +19,7 @@ package views
 import play.api.data.Form
 import controllers.routes
 import forms.BooleanForm
+import models.SelectTaxYear.CYMinus2
 import views.behaviours.YesNoViewBehaviours
 import models.{Employment, NormalMode}
 import views.html.employmentDetails
@@ -31,10 +32,12 @@ class EmploymentDetailsViewSpec extends YesNoViewBehaviours {
 
   val fakeEmployments = Seq(Employment("AVIVA PENSIONS", "754", "AZ00070"))
 
+  def taxYear = CYMinus2.asString
 
-  def createViewUsingForm = (form: Form[_]) => employmentDetails(frontendAppConfig, form, NormalMode, fakeEmployments)(fakeRequest, messages)
 
-  def createView = () => employmentDetails(frontendAppConfig, form, NormalMode, fakeEmployments)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[_]) => employmentDetails(frontendAppConfig, form, NormalMode, fakeEmployments, taxYear)(fakeRequest, messages)
+
+  def createView = () => employmentDetails(frontendAppConfig, form, NormalMode, fakeEmployments, taxYear)(fakeRequest, messages)
 
   "EmploymentDetails view" must {
 
