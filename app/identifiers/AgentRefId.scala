@@ -16,6 +16,6 @@
 
 package identifiers
 
-case object AgentReferenceNumberId extends Identifier {
-  override def toString: String = "agentReferenceNumber"
+case object AgentRefId extends Identifier {
+  override def toString: String = "agentRef"
 }

@@ -19,7 +19,7 @@ package utils
 import base.SpecBase
 import models.SelectTaxYear._
 import models.WhereToSendPayment._
-import models.{InternationalAddress, UkAddress, UserDetails}
+import models.{AgentRef, InternationalAddress, UkAddress, UserDetails}
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
 import viewmodels.AnswerRow
@@ -262,7 +262,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
 
   "Is anyAgentRef (true)" must {
     s"have the correct label" in {
-      when(answers.anyAgentRef) thenReturn Some(true)
+      when(answers.anyAgentRef) thenReturn Some(AgentRef.Yes("AB12345"))
       val helper = new CheckYourAnswersHelper(answers)
       helper.anyAgentRef.get.label.key mustBe s"anyAgentRef.checkYourAnswersLabel"
     }
@@ -270,7 +270,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
 
   "Is anyAgentRef (false)" must {
     s"have the correct label" in {
-      when(answers.anyAgentRef) thenReturn Some(false)
+      when(answers.anyAgentRef) thenReturn Some(AgentRef.No)
       val helper = new CheckYourAnswersHelper(answers)
       helper.anyAgentRef.get.label.key mustBe s"anyAgentRef.checkYourAnswersLabel"
     }

@@ -227,12 +227,6 @@ payeeFullName.checkYourAnswersLabel = Full name of the person you want us to sen
 payeeFullName.blank = Enter the full name of the person you want us to send any payment to
 payeeFullName.tooLong = Full name of the person you want us to send any payment to can only be up to 30 characters
 
-agentReferenceNumber.title = What is the agent reference number of the person you want us to send any payment to?
-agentReferenceNumber.heading = What is the agent reference number of the person you want us to send any payment to?
-agentReferenceNumber.checkYourAnswersLabel = Agent reference number of the person you want us to send any payment to
-agentReferenceNumber.blank = Enter the agent reference number of the person you want us to send any payment to
-agentReferenceNumber.tooLong = Agent reference number can only be up to 35 characters
-
 anyAgentRef.title = Does have an agent reference?
 anyAgentRef.heading = Does have an agent reference?
 anyAgentRef.checkYourAnswersLabel = Does have an agent reference?

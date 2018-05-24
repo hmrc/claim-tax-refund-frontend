@@ -40,7 +40,7 @@ class Navigator @Inject()() {
     OtherIncomeDetailsAndAmountId -> (_ => routes.WhereToSendPaymentController.onPageLoad(NormalMode)),
     WhereToSendPaymentId -> whereToSendPayment,
     PayeeFullNameId -> (_ => routes.AnyAgentRefController.onPageLoad(NormalMode)),
-    AgentReferenceNumberId -> (_ => routes.IsPayeeAddressInTheUKController.onPageLoad(NormalMode)),
+    AgentRefId -> (_ => routes.IsPayeeAddressInTheUKController.onPageLoad(NormalMode)),
     IsPayeeAddressInTheUKId -> isPayeeAddressInUkRoute,
     PayeeUKAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
     PayeeInternationalAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
@@ -82,7 +82,7 @@ class Navigator @Inject()() {
   }
 
   private def anyAgentRef(userAnswers: UserAnswers) = userAnswers.anyAgentRef map {
-    case AgentRef.Yes(agentRef) => routes.AgentReferenceNumberController.onPageLoad(NormalMode)
+    case AgentRef.Yes(agentRef) => ???
     case AgentRef.No => routes.IsPayeeAddressInTheUKController.onPageLoad(NormalMode)
     case _ => routes.SessionExpiredController.onPageLoad()
   }

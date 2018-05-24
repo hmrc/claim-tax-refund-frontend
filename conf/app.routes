@@ -102,11 +102,6 @@ POST       /has-agent-reference-number                          controllers.AnyA
 GET        /change-has-agent-reference-number                   controllers.AnyAgentRefController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-has-agent-reference-number                   controllers.AnyAgentRefController.onSubmit(mode: Mode = CheckMode)
 
-GET        /what-is-the-agent-reference-number                  controllers.AgentReferenceNumberController.onPageLoad(mode: Mode = NormalMode)
-POST       /what-is-the-agent-reference-number                  controllers.AgentReferenceNumberController.onSubmit(mode: Mode = NormalMode)
-GET        /change-agent-reference-number                       controllers.AgentReferenceNumberController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-agent-reference-number                       controllers.AgentReferenceNumberController.onSubmit(mode: Mode = CheckMode)
-
 GET        /is-payee-address-in-uk                              controllers.IsPayeeAddressInTheUKController.onPageLoad(mode: Mode = NormalMode)
 POST       /is-payee-address-in-uk                              controllers.IsPayeeAddressInTheUKController.onSubmit(mode: Mode = NormalMode)
 GET        /change-payee-address-location                       controllers.IsPayeeAddressInTheUKController.onPageLoad(mode: Mode = CheckMode)
