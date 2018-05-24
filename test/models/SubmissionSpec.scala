@@ -18,26 +18,36 @@ package models
 
 import base.SpecBase
 import identifiers.SelectTaxYearId
+import models.templates.Metadata
+import org.joda.time.{DateTime, DateTimeUtils}
 import org.mockito.Mockito._
 import play.api.libs.json.Json
 import utils.MockUserAnswers
-
-import scala.util.parsing.json.JSON
 
 class SubmissionSpec extends SpecBase {
 
   val NA = "N/A"
   val answers = MockUserAnswers.minimalValidUserAnswers
+  val submission = Submission(answers)
+
 
   ".apply" must {
 
     "build " in {
-      when(answers.selectTaxYear) thenReturn Some(SelectTaxYear.CYMinus2)
-      val submission = Submission(answers)
+      val TimeNow = DateTime.now()
+      DateTimeUtils.setCurrentMillisFixed(TimeNow.getMillis)
+      val timedAnswers = MockUserAnswers.minimalValidUserAnswers
+      when(timedAnswers.selectTaxYear) thenReturn Some(SelectTaxYear.CYMinus2)
 
-      submission mustBe Submission(
-        SelectTaxYear.CYMinus2)
+      val metadata = new Metadata("test_case")
+      val result = Submission(SelectTaxYear.CYMinus2, "<html>Test result</html>", Json.toJson(metadata).toString)
+      val fakeSubmission = Submission(timedAnswers)
+
+      fakeSubmission mustBe result
+
+      DateTimeUtils.setCurrentMillisSystem()
     }
+
 
     "fail to build" in {
       val exception = intercept[IllegalArgumentException] {
@@ -51,28 +61,58 @@ class SubmissionSpec extends SpecBase {
   ".asMap" must {
 
     "return a map" in {
-      when(answers.selectTaxYear) thenReturn Some(SelectTaxYear.CYMinus2)
-      val submission = Submission(answers)
+      val TimeNow = DateTime.now()
+      DateTimeUtils.setCurrentMillisFixed(TimeNow.getMillis)
+      val timedAnswers = MockUserAnswers.minimalValidUserAnswers
+
+      when(timedAnswers.selectTaxYear) thenReturn Some(SelectTaxYear.CYMinus2)
+      val submission = Submission(timedAnswers)
+      val metadata = new Metadata("test_case")
 
       Submission.asMap(submission) mustBe Map(
-        SelectTaxYearId.toString -> "current-year-minus-2"
+        SelectTaxYearId.toString -> "current-year-minus-2",
+        "pdfHtml" -> "<html>Test result</html>",
+        "metaData" -> Json.toJson(metadata).toString
       )
     }
   }
 
   "Submission data must " must {
-    "contain correct payee full name" in {
-      when(answers.payeeFullName) thenReturn Some("Frank Sinatra")
-      val submission = Submission(answers)
-      submission.toString must contain("Frank Sinatra")
+
+    "contain correct tax year" in {
+      assert(submission.toString.contains("current-year-minus-2"))
     }
 
     "contain expected keys for backend" in {
-      val submission = Submission(answers)
-      val result = Json.toJson(submission).toString
-      result.toString must contain ("pdfHtml")
-      result.toString must contain ("metaData")
+      val result = Json.toJson(submission)
+      assert(result.toString.contains("pdfHtml"))
     }
 
+    "contain metaData" in {
+      val result = Json.toJson(submission)
+      assert(result.toString.contains("metadata"))
+    }
+
+    "contain keys in metadata" in {
+      val result = Json.toJson(submission).toString
+
+      assert(result.contains("metadata"))
+      assert(result.contains("hmrcReceivedAt"))
+      assert(result.contains("xmlCreatedAt"))
+      assert(result.contains("submissionReference"))
+      assert(result.contains("reconciliationId"))
+      assert(result.contains("fileFormat"))
+      assert(result.contains("mimeType"))
+      assert(result.contains("casKey"))
+      assert(result.contains("submissionMark"))
+      assert(result.contains("attachmentCount"))
+      assert(result.contains("numberOfPages"))
+      assert(result.contains("formId"))
+      assert(result.contains("businessArea"))
+      assert(result.contains("classificationType"))
+      assert(result.contains("source"))
+      assert(result.contains("target"))
+      assert(result.contains("store"))
+    }
   }
 }

@@ -32,6 +32,9 @@ class FrontendAppConfig @Inject()(override val runModeConfiguration: Configurati
 
   private def loadConfigInt(key: String) = runModeConfiguration.getInt(key).getOrElse(throw new Exception(s"Missing configuration key: $key"))
 
+  private def loadBoolean(key: String) = runModeConfiguration.getBoolean(key).getOrElse(throw new Exception(s"Missing configuration key: $key"))
+
+
   private lazy val contactHost = runModeConfiguration.getString("contact-frontend.host").getOrElse("")
   private val contactFormServiceIdentifier = "claimtaxrefundfrontend"
 
