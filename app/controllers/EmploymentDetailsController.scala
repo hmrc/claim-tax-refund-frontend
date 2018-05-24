@@ -59,11 +59,12 @@ class EmploymentDetailsController @Inject()(appConfig: FrontendAppConfig,
 
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
+          val taxYear = selectedTaxYear.asString
           val results = taiConnector.taiEmployments(request.nino, selectedTaxYear.year)
 
           results.map(
             employments =>
-              Ok(employmentDetails(appConfig, preparedForm, mode, employments))
+              Ok(employmentDetails(appConfig, preparedForm, mode, employments, taxYear))
           ).recover {
             case NonFatal(e) =>
               Redirect(routes.SessionExpiredController.onPageLoad())
@@ -78,13 +79,14 @@ class EmploymentDetailsController @Inject()(appConfig: FrontendAppConfig,
 
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
+          val taxYear = selectedTaxYear.asString
           val results = taiConnector.taiEmployments(request.nino, selectedTaxYear.year)
 
           results.flatMap {
             employments =>
               form.bindFromRequest().fold(
                 (formWithErrors: Form[_]) =>
-                  Future.successful(BadRequest(employmentDetails(appConfig, formWithErrors, mode, employments))),
+                  Future.successful(BadRequest(employmentDetails(appConfig, formWithErrors, mode, employments, taxYear))),
                 (value) =>
                   dataCacheConnector.save[Boolean](request.externalId, EmploymentDetailsId.toString, value).map(cacheMap =>
                     Redirect(navigator.nextPage(EmploymentDetailsId, mode)(new UserAnswers(cacheMap))))
