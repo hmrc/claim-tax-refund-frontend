@@ -17,7 +17,7 @@
 package models
 
 import models.templates.Metadata
-import org.joda.time.LocalDateTime
+import org.joda.time.{DateTime, DateTimeUtils, LocalDateTime}
 import org.scalacheck.Gen
 import org.scalatest.prop.PropertyChecks
 import org.scalatest.{MustMatchers, OptionValues, WordSpec}
@@ -60,10 +60,13 @@ class MetadataSpec extends WordSpec with MustMatchers with OptionValues with Pro
 
   ".reads" must {
     "be successfully parsed" in {
+      val TimeNow = DateTime.now()
+      DateTimeUtils.setCurrentMillisFixed(TimeNow.getMillis)
       val metadata = new Metadata("Test meta")
       val fakeJson = FakeJson
       val json = Json.toJson(metadata)
       fakeJson mustBe(json)
+      DateTimeUtils.setCurrentMillisSystem()
     }
   }
 

@@ -19,11 +19,9 @@ package models.templates
 import org.joda.time.LocalDateTime
 import org.joda.time.format.DateTimeFormat
 import play.api.libs.json._
+import play.api.libs.functional.syntax._
 
-case class Metadata(customerId: String = "") {
-
-  val hmrcReceivedAt: LocalDateTime = LocalDateTime.now
-  val xmlCreatedAt: LocalDateTime = LocalDateTime.now
+case class Metadata(customerId: String = "", hmrcReceivedAt: LocalDateTime = LocalDateTime.now, xmlCreatedAt: LocalDateTime = LocalDateTime.now) {
 
   val submissionReference: String = xmlCreatedAt.toString("ssMMyyddmmHH")
   val reconciliationId: String = submissionReference
@@ -73,9 +71,12 @@ object Metadata {
         )
     }
 
-  implicit  def reads: Reads[Metadata] = (
-    (JsPath \ "metadata").read[Metadata]
-  )
+  implicit def reads: Reads[Metadata] = (
+      (__ \ "customerId").read[String] and
+      (__ \ "hmrcReceivedAt").read[LocalDateTime](jodaDateReads) and
+      (__ \ "xmlCreatedAt").read[LocalDateTime](jodaDateReads)
+    )(Metadata.apply(_,_,_))
+
 
   def apply(customerId: String, hmrc: String): Metadata = {
     Metadata(customerId)

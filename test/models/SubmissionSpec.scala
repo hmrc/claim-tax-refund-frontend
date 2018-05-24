@@ -29,6 +29,7 @@ class SubmissionSpec extends SpecBase {
   val NA = "N/A"
   val answers = MockUserAnswers.minimalValidUserAnswers
   val submission = Submission(answers)
+  val taxYear = SelectTaxYear.CYMinus2
 
 
   ".apply" must {
@@ -40,7 +41,7 @@ class SubmissionSpec extends SpecBase {
       when(timedAnswers.selectTaxYear) thenReturn Some(SelectTaxYear.CYMinus2)
 
       val metadata = new Metadata("test_case")
-      val result = Submission(SelectTaxYear.CYMinus2, "<html>Test result</html>", Json.toJson(metadata).toString)
+      val result = Submission(taxYear.asString, "<html>Test result</html>", Json.toJson(metadata).toString)
       val fakeSubmission = Submission(timedAnswers)
 
       fakeSubmission mustBe result
@@ -70,7 +71,7 @@ class SubmissionSpec extends SpecBase {
       val metadata = new Metadata("test_case")
 
       Submission.asMap(submission) mustBe Map(
-        SelectTaxYearId.toString -> "current-year-minus-2",
+        SelectTaxYearId.toString -> taxYear.asString,
         "pdfHtml" -> "<html>Test result</html>",
         "metaData" -> Json.toJson(metadata).toString
       )
@@ -80,7 +81,7 @@ class SubmissionSpec extends SpecBase {
   "Submission data must " must {
 
     "contain correct tax year" in {
-      assert(submission.toString.contains("current-year-minus-2"))
+      assert(submission.toString.contains(taxYear.asString))
     }
 
     "contain expected keys for backend" in {

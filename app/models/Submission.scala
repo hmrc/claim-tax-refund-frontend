@@ -21,7 +21,7 @@ import models.templates.Metadata
 import play.api.libs.json.Json
 import utils.UserAnswers
 
-case class Submission(selectTaxYear: SelectTaxYear, pdfHtml: String, metadata: String)
+case class Submission(selectTaxYear: String, pdfHtml: String, metadata: String)
 
 object Submission {
 
@@ -32,9 +32,17 @@ object Submission {
     require(answers.selectTaxYear.isDefined, "Tax year was not answered")
     require(answers.pdfHtml.isDefined, "PDF has not been created")
     require(answers.metadata.isDefined, new Metadata("Metadata has not been created"))
-    val meta = Json.toJson(answers.metadata)
 
-    Submission(answers.selectTaxYear.get, answers.pdfHtml.get, meta.toString)
+    val meta = Json.toJson(answers.metadata).toString()
+    val pdf = answers.pdfHtml.getOrElse("Failed to get PDF")
+
+    val taxYear = answers.selectTaxYear.map(
+      taxYear =>
+        taxYear.asString
+    ).getOrElse("Failed to get Tax year")
+
+    Submission(taxYear, pdf, meta)
+
   }
 
   def asMap(e: Submission): Map[String, String] = {
