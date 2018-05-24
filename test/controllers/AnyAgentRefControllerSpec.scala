@@ -18,11 +18,11 @@ package controllers
 
 import connectors.FakeDataCacheConnector
 import controllers.actions._
-import forms.BooleanForm
-import identifiers.AnyAgentRefId
-import models.NormalMode
+import forms.AnyAgentReferenceForm
+import identifiers.{AgentRefId, AnyAgentRefId}
+import models.{AgentRef, NormalMode}
 import play.api.data.Form
-import play.api.libs.json.JsBoolean
+import play.api.libs.json._
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
 import utils.FakeNavigator
@@ -32,7 +32,7 @@ class AnyAgentRefControllerSpec extends ControllerSpecBase {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
-  val formProvider = new BooleanForm()
+  val formProvider = new AnyAgentReferenceForm()
   val form = formProvider()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
@@ -51,12 +51,12 @@ class AnyAgentRefControllerSpec extends ControllerSpecBase {
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      val validData = Map(AnyAgentRefId.toString -> JsBoolean(true))
+      val validData = Map(AnyAgentRefId.toString -> Json.obj(AnyAgentRefId.toString -> JsBoolean(true), AgentRefId.toString -> JsString("AB1234")))
       val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validData)))
 
       val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)
 
-      contentAsString(result) mustBe viewAsString(form.fill(true))
+      contentAsString(result) mustBe viewAsString(form.fill(AgentRef.Yes("AB1234")))
     }
 
     "redirect to the next page when valid data is submitted" in {

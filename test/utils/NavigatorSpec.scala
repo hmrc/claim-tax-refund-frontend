@@ -113,23 +113,6 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(PayeeFullNameId, NormalMode)(answers) mustBe routes.AnyAgentRefController.onPageLoad(NormalMode)
       }
 
-      "go to AgentReferenceNumber from AnyAgentRef when Yes is selected" in {
-        val answers = mock[UserAnswers]
-        when(answers.anyAgentRef) thenReturn Some(true)
-        navigator.nextPage(AnyAgentRefId, NormalMode)(answers) mustBe routes.AgentReferenceNumberController.onPageLoad(NormalMode)
-      }
-
-      "go to IsPayeeAddressInTheUK from AgentReferenceNumber" in {
-        val answers = mock[UserAnswers]
-        navigator.nextPage(AgentReferenceNumberId, NormalMode)(answers) mustBe routes.IsPayeeAddressInTheUKController.onPageLoad(NormalMode)
-      }
-
-      "go to IsPayeeAddressInTheUK from AnyAgentRef when no is selected" in {
-        val answers = mock[UserAnswers]
-        when(answers.anyAgentRef) thenReturn Some(false)
-        navigator.nextPage(AnyAgentRefId, NormalMode)(answers) mustBe routes.IsPayeeAddressInTheUKController.onPageLoad(NormalMode)
-      }
-
       "go to PayeeInternationalAddress from IsPayeeAddressInTheUK when no is selected" in {
         val answers = mock[UserAnswers]
         when(answers.isPayeeAddressInTheUK) thenReturn Some(false)

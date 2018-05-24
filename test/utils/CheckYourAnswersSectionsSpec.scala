@@ -142,7 +142,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
     "have the correct rows in the right order in the Payment Details section" in {
       when(answers.whereToSendPayment) thenReturn Some(Nominee)
       when(answers.payeeFullName) thenReturn Some("Agent Name")
-      when(answers.anyAgentRef) thenReturn Some(false)
+      when(answers.anyAgentRef) thenReturn Some(AgentRef.No)
       when(answers.isPayeeAddressInTheUK) thenReturn Some(false)
       when(answers.payeeInternationalAddress) thenReturn Some(InternationalAddress("Line 1", "Line 2", None, None, None, "Thailand"))
 
