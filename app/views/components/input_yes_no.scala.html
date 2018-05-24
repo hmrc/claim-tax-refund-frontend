@@ -28,7 +28,7 @@ labelClass: Option[String] = None
 )(implicit messages: Messages)
 
 
-<div class="form-field @if(viewModel.errorKey.nonEmpty){form-field--error}">
+<div class="form-group @if(viewModel.errorKey.nonEmpty){form-field--error}">
     <fieldset class="inline" id="@{viewModel.id}">
 
         <legend>
@@ -40,14 +40,14 @@ labelClass: Option[String] = None
             <span class="error-notification" id="error-message-@{viewModel.id}-input">@messages(viewModel.errorKey)</span>
           }
         </legend>
-        <label class="block-label selection-button-radio" for="@{viewModel.id}-yes" data-target="@if(yesAssoc.nonEmpty){@yesAssoc}">
+        <div class="multiple-choice" data-target="@if(yesAssoc.nonEmpty){@yesAssoc}">
             <input id="@{viewModel.id}-yes" type="radio" name="@{viewModel.id}" value="true" @if(viewModel.value.contains("true")){checked="checked"} />
-            @messages("site.yes")
-        </label>
-        <label class="block-label selection-button-radio" for="@{viewModel.id}-no" data-target="@if(noAssoc.nonEmpty){@noAssoc}">
+            <label for="@{viewModel.id}-yes" > @messages("site.yes") </label>
+        </div>
+        <div class="multiple-choice" data-target="@if(noAssoc.nonEmpty){@noAssoc}">
             <input id="@{viewModel.id}-no" type="radio" name="@{viewModel.id}" value="false" @if(viewModel.value.contains("false")){checked="checked"} />
-            @messages("site.no")
-        </label>
+            <label for="@{viewModel.id}-no" > @messages("site.no") </label>
+        </div>
 
     </fieldset>
 </div>

@@ -17,7 +17,6 @@
 package models
 
 import play.api.libs.json._
-import utils.InputOption
 
 sealed trait AgentRef
 
@@ -25,11 +24,6 @@ object AgentRef {
 
   case class Yes(agentRef: String) extends AgentRef
   case object No extends AgentRef
-
-  def options: Seq[InputOption] = Seq(
-    InputOption("true", "site.yes", Some("agentRef_agentRef-form")),
-    InputOption("false", "site.no")
-  )
 
   implicit val reads: Reads[AgentRef] = {
     (JsPath \ "anyAgentRef").read[Boolean].flatMap {
