@@ -19,6 +19,7 @@ package controllers
 import connectors.{FakeDataCacheConnector, TaiConnector}
 import controllers.actions._
 import forms.BooleanForm
+import models.SelectTaxYear.CYMinus2
 import models.requests.{AuthenticatedRequest, OptionalDataRequest}
 import models.{Employment, NormalMode}
 import org.mockito.Matchers
@@ -40,13 +41,14 @@ class EmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSug
   val form = formProvider()
   val mockTaiConnector = mock[TaiConnector]
   val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
+  val taxYear: String = CYMinus2.asString
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new EmploymentDetailsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, formProvider, mockTaiConnector)
 
   def viewAsString(form: Form[_] = form) = employmentDetails(frontendAppConfig, form, NormalMode,
-    Seq(Employment("AVIVA PENSIONS", "754", "AZ00070")))(fakeRequest, messages).toString
+    Seq(Employment("AVIVA PENSIONS", "754", "AZ00070")), taxYear)(fakeRequest, messages).toString
 
   val fakeDataRetrievalAction = new DataRetrievalAction {
     override protected def transform[A](request: AuthenticatedRequest[A]): Future[OptionalDataRequest[A]] = {

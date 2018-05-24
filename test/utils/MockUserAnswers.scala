@@ -32,6 +32,7 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.internationalAddress) thenReturn None
     when(answers.telephoneNumber) thenReturn None
     when(answers.selectTaxYear) thenReturn None
+    when(answers.employmentDetails) thenReturn None
     when(answers.anyBenefits) thenReturn None
     when(answers.howMuchJobseekersAllowance) thenReturn None
     when(answers.howMuchIncapacityBenefit) thenReturn None
@@ -72,6 +73,7 @@ object MockUserAnswers extends MockitoSugar {
     val answers = nothingAnswered
 
     when(answers.selectTaxYear) thenReturn Some(SelectTaxYear.CYMinus2)
+    when(answers.employmentDetails) thenReturn Some(true)
 
     answers
   }
