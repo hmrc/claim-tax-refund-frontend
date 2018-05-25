@@ -40,10 +40,10 @@ class Navigator @Inject()() {
     WhereToSendPaymentId -> whereToSendPayment,
     NomineeFullNameId -> (_ => routes.AnyAgentRefController.onPageLoad(NormalMode)),
     AnyAgentRefId -> anyAgentRef,
-    AgentReferenceNumberId -> (_ => routes.IsPayeeAddressInTheUKController.onPageLoad(NormalMode)),
-    IsPayeeAddressInTheUKId -> isPayeeAddressInUkRoute,
+    AgentReferenceNumberId -> (_ => routes.IsPaymentAddressInTheUKController.onPageLoad(NormalMode)),
+    IsPaymentAddressInTheUKId -> isPaymentAddressInUkRoute,
     PaymentUKAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
-    PayeeInternationalAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
+    PaymentInternationalAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
     TelephoneNumberId -> (_ => routes.CheckYourAnswersController.onPageLoad())
   )
 
@@ -83,13 +83,13 @@ class Navigator @Inject()() {
 
   private def anyAgentRef(userAnswers: UserAnswers) = userAnswers.anyAgentRef match {
     case Some(true) => routes.AgentReferenceNumberController.onPageLoad(NormalMode)
-    case Some(false) => routes.IsPayeeAddressInTheUKController.onPageLoad(NormalMode)
+    case Some(false) => routes.IsPaymentAddressInTheUKController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
-  private def isPayeeAddressInUkRoute(userAnswers: UserAnswers) = userAnswers.isPayeeAddressInTheUK match {
+  private def isPaymentAddressInUkRoute(userAnswers: UserAnswers) = userAnswers.isPaymentAddressInTheUK match {
     case Some(true) => routes.PaymentUKAddressController.onPageLoad(NormalMode)
-    case Some(false) => routes.PayeeInternationalAddressController.onPageLoad(NormalMode)
+    case Some(false) => routes.PaymentInternationalAddressController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
 

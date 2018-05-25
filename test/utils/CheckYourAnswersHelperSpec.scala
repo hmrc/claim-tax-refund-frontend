@@ -299,27 +299,27 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
       helper.agentReferenceNumber.get.label.key mustBe s"agentReferenceNumber.checkYourAnswersLabel"
     }
   }
-  "Is isPayeeAddressInTheUK (true)" must {
+  "Is isPaymentAddressInTheUK (true)" must {
     s"have the correct label" in {
-      when(answers.isPayeeAddressInTheUK) thenReturn Some(true)
+      when(answers.isPaymentAddressInTheUK) thenReturn Some(true)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.isPayeeAddressInTheUK.get.label.key mustBe s"isPayeeAddressInTheUK.checkYourAnswersLabel"
+      helper.isPaymentAddressInTheUK.get.label.key mustBe s"isPaymentAddressInTheUK.checkYourAnswersLabel"
     }
   }
 
-  "Is isPayeeAddressInTheUK (false)" must {
+  "Is isPaymentAddressInTheUK (false)" must {
     s"have the correct label" in {
-      when(answers.isPayeeAddressInTheUK) thenReturn Some(false)
+      when(answers.isPaymentAddressInTheUK) thenReturn Some(false)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.isPayeeAddressInTheUK.get.label.key mustBe s"isPayeeAddressInTheUK.checkYourAnswersLabel"
+      helper.isPaymentAddressInTheUK.get.label.key mustBe s"isPaymentAddressInTheUK.checkYourAnswersLabel"
     }
   }
 
-  "Payee International Address" must {
+  "Payment International Address" must {
     s"have correct label" in {
-      when(answers.payeeInternationalAddress) thenReturn Some(InternationalAddress("line 1", "line 2", None, None, None, "country"))
+      when(answers.paymentInternationalAddress) thenReturn Some(InternationalAddress("line 1", "line 2", None, None, None, "country"))
       val helper = new CheckYourAnswersHelper(answers)
-      helper.payeeInternationalAddress.get.label.key mustBe s"payeeInternationalAddress.checkYourAnswersLabel"
+      helper.paymentInternationalAddress.get.label.key mustBe s"paymentInternationalAddress.checkYourAnswersLabel"
     }
   }
 

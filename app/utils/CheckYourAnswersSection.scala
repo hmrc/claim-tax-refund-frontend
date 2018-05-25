@@ -50,9 +50,9 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
     cyaHelper.nomineeFullName,
     cyaHelper.anyAgentRef,
     cyaHelper.agentReferenceNumber,
-    cyaHelper.isPayeeAddressInTheUK,
+    cyaHelper.isPaymentAddressInTheUK,
     cyaHelper.paymentUKAddress,
-    cyaHelper.payeeInternationalAddress
+    cyaHelper.paymentInternationalAddress
   ).flatten)
 
   def benefitDetails = AnswerSection(Some("checkYourAnswers.benefitDetailsSection"), Seq(

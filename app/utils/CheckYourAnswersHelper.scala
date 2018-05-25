@@ -58,9 +58,9 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
         false, routes.PaymentUKAddressController.onPageLoad(CheckMode).url, true)
   }
 
-  def payeeInternationalAddress: Option[AnswerRow] = userAnswers.payeeInternationalAddress map {
+  def paymentInternationalAddress: Option[AnswerRow] = userAnswers.paymentInternationalAddress map {
     x =>
-      AnswerRow("payeeInternationalAddress.checkYourAnswersLabel",
+      AnswerRow("paymentInternationalAddress.checkYourAnswersLabel",
         InternationalAddress.asString(
           InternationalAddress(x.addressLine1,
             x.addressLine2,
@@ -68,7 +68,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
             x.addressLine4,
             x.addressLine5,
             x.country)),
-        false, routes.PayeeInternationalAddressController.onPageLoad(CheckMode).url, true)
+        false, routes.PaymentInternationalAddressController.onPageLoad(CheckMode).url, true)
   }
 
   def whereToSendPayment: Option[AnswerRow] = userAnswers.whereToSendPayment map {
@@ -77,11 +77,11 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
         s"whereToSendPayment.$x", true, routes.WhereToSendPaymentController.onPageLoad(CheckMode).url, true)
   }
 
-  def isPayeeAddressInTheUK: Option[AnswerRow] = userAnswers.isPayeeAddressInTheUK map {
+  def isPaymentAddressInTheUK: Option[AnswerRow] = userAnswers.isPaymentAddressInTheUK map {
     x =>
-      AnswerRow("isPayeeAddressInTheUK.checkYourAnswersLabel",
+      AnswerRow("isPaymentAddressInTheUK.checkYourAnswersLabel",
         if (x) "site.yes" else "site.no",
-        true, routes.IsPayeeAddressInTheUKController.onPageLoad(CheckMode).url, true)
+        true, routes.IsPaymentAddressInTheUKController.onPageLoad(CheckMode).url, true)
   }
 
   def anyAgentRef: Option[AnswerRow] = userAnswers.anyAgentRef map {
