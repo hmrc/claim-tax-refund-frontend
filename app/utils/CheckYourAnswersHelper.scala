@@ -97,10 +97,10 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
         s"$x", false, routes.AgentReferenceNumberController.onPageLoad(CheckMode).url, true)
   }
 
-  def payeeFullName: Option[AnswerRow] = userAnswers.payeeFullName map {
+  def nomineeFullName: Option[AnswerRow] = userAnswers.nomineeFullName map {
     x =>
-      AnswerRow("payeeFullName.checkYourAnswersLabel",
-        s"$x", false, routes.PayeeFullNameController.onPageLoad(CheckMode).url, true)
+      AnswerRow("nomineeFullName.checkYourAnswersLabel",
+        s"$x", false, routes.NomineeFullNameController.onPageLoad(CheckMode).url, true)
   }
 
   def otherIncomeDetailsAndAmount: Option[AnswerRow] = userAnswers.otherIncomeDetailsAndAmount map {

@@ -47,13 +47,13 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(OtherIncomeDetailsAndAmountId, NormalMode)(answers) mustBe routes.WhereToSendPaymentController.onPageLoad(NormalMode)
       }
 
-      "go to PayeeFullName from WhereToSendPayment when SomeoneElse is selected" in {
+      "go to NomineeFullName from WhereToSendPayment when SomeoneElse is selected" in {
         val answers = mock[UserAnswers]
         when(answers.whereToSendPayment) thenReturn Some(Nominee)
-        navigator.nextPage(WhereToSendPaymentId, NormalMode)(answers) mustBe routes.PayeeFullNameController.onPageLoad(NormalMode)
+        navigator.nextPage(WhereToSendPaymentId, NormalMode)(answers) mustBe routes.NomineeFullNameController.onPageLoad(NormalMode)
       }
 
-      "go to PayeeFullName from WhereToSendPayment when Yourself is selected" in {
+      "go to NomineeFullName from WhereToSendPayment when Yourself is selected" in {
         val answers = mock[UserAnswers]
         when(answers.whereToSendPayment) thenReturn Some(Myself)
         navigator.nextPage(WhereToSendPaymentId, NormalMode)(answers) mustBe routes.TelephoneNumberController.onPageLoad(NormalMode)
@@ -108,9 +108,9 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(AnyOtherTaxableIncomeId, NormalMode)(answers) mustBe routes.OtherIncomeDetailsAndAmountController.onPageLoad(NormalMode)
       }
 
-      "go to AnyAgentRef from PayeeFullName" in {
+      "go to AnyAgentRef from NomineeFullName" in {
         val answers = mock[UserAnswers]
-        navigator.nextPage(PayeeFullNameId, NormalMode)(answers) mustBe routes.AnyAgentRefController.onPageLoad(NormalMode)
+        navigator.nextPage(NomineeFullNameId, NormalMode)(answers) mustBe routes.AnyAgentRefController.onPageLoad(NormalMode)
       }
 
       "go to AgentReferenceNumber from AnyAgentRef when Yes is selected" in {

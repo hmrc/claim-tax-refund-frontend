@@ -57,7 +57,7 @@ class FrontendAppConfig @Inject()(override val runModeConfiguration: Configurati
   lazy val postcodeRegex = loadConfig("microservice.services.validation.postcode-regex")
   lazy val countryMaxLength = loadConfigInt("microservice.services.validation.country-length")
   lazy val agentReferenceMaxLength = loadConfigInt("microservice.services.validation.agent-reference-length")
-  lazy val payeeFullNameMaxLength = loadConfigInt("microservice.services.validation.payee-full-name-length")
+  lazy val nomineeFullNameMaxLength = loadConfigInt("microservice.services.validation.payee-full-name-length")
 
   lazy val telephoneRegex = loadConfig("microservice.services.validation.telephone-regex")
   lazy val utrRegex = loadConfig("microservice.services.validation.utr-regex")
