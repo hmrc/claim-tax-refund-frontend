@@ -239,10 +239,10 @@ anyAgentRef.heading = Does the person you want us to send any payment to have an
 anyAgentRef.checkYourAnswersLabel = Does the person you want us to send any payment to have an agent reference number?
 anyAgentRef.blank = Select yes if the person you want us to send any payment to has an agent reference number
 
-isPayeeAddressInTheUK.title = Is the address of the person you want us to send any payment to in the UK?
-isPayeeAddressInTheUK.heading = Is the address of the person you want us to send any payment to in the UK?
-isPayeeAddressInTheUK.checkYourAnswersLabel = Is the address of the person you want us to send any payment to in the UK?
-isPayeeAddressInTheUK.blank = Select yes if the address of the person you want us to send any payment to is in the UK
+isPaymentAddressInTheUK.title = Is the address of the person you want us to send any payment to in the UK?
+isPaymentAddressInTheUK.heading = Is the address of the person you want us to send any payment to in the UK?
+isPaymentAddressInTheUK.checkYourAnswersLabel = Is the address of the person you want us to send any payment to in the UK?
+isPaymentAddressInTheUK.blank = Select yes if the address of the person you want us to send any payment to is in the UK
 
 paymentInternationalAddress.title = What is the address of the person you want us to send any payment to?
 paymentInternationalAddress.heading = What is the address of the person you want us to send any payment to?

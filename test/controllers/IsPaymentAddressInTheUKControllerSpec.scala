@@ -19,16 +19,16 @@ package controllers
 import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.BooleanForm
-import identifiers.IsPayeeAddressInTheUKId
+import identifiers.IsPaymentAddressInTheUKId
 import models.NormalMode
 import play.api.data.Form
 import play.api.libs.json.JsBoolean
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
 import utils.FakeNavigator
-import views.html.isPayeeAddressInTheUK
+import views.html.isPaymentAddressInTheUK
 
-class IsPayeeAddressInTheUKControllerSpec extends ControllerSpecBase {
+class IsPaymentAddressInTheUKControllerSpec extends ControllerSpecBase {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
@@ -36,12 +36,12 @@ class IsPayeeAddressInTheUKControllerSpec extends ControllerSpecBase {
   val form = formProvider()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new IsPayeeAddressInTheUKController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+    new IsPaymentAddressInTheUKController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, formProvider)
 
-  def viewAsString(form: Form[_] = form) = isPayeeAddressInTheUK(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = form) = isPaymentAddressInTheUK(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
 
-  "IsPayeeAddressInTheUK Controller" must {
+  "IsPaymentAddressInTheUK Controller" must {
 
     "return OK and the correct view for a GET" in {
       val result = controller().onPageLoad(NormalMode)(fakeRequest)
@@ -51,7 +51,7 @@ class IsPayeeAddressInTheUKControllerSpec extends ControllerSpecBase {
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      val validData = Map(IsPayeeAddressInTheUKId.toString -> JsBoolean(true))
+      val validData = Map(IsPaymentAddressInTheUKId.toString -> JsBoolean(true))
       val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validData)))
 
       val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)
