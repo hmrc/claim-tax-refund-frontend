@@ -18,31 +18,31 @@ package controllers
 
 import connectors.FakeDataCacheConnector
 import controllers.actions._
-import forms.PayeeFullNameForm
-import identifiers.PayeeFullNameId
+import forms.NomineeFullNameForm
+import identifiers.NomineeFullNameId
 import models.NormalMode
 import play.api.data.Form
 import play.api.libs.json.JsString
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
 import utils.FakeNavigator
-import views.html.payeeFullName
+import views.html.nomineeFullName
 
-class PayeeFullNameControllerSpec extends ControllerSpecBase {
+class NomineeFullNameControllerSpec extends ControllerSpecBase {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new PayeeFullNameController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, new PayeeFullNameForm(frontendAppConfig))
+    new NomineeFullNameController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+      dataRetrievalAction, new DataRequiredActionImpl, new NomineeFullNameForm(frontendAppConfig))
 
   val testAnswer = "answer"
   val testTooLongAnswer = "AnswerAnswerAnswerAnswerAnswerAnswer"
-  val form = new PayeeFullNameForm(frontendAppConfig)()
+  val form = new NomineeFullNameForm(frontendAppConfig)()
 
-  def viewAsString(form: Form[_] = form) = payeeFullName(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = form) = nomineeFullName(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
 
-  "PayeeFullName Controller" must {
+  "NomineeFullName Controller" must {
 
     "return OK and the correct view for a GET" in {
       val result = controller().onPageLoad(NormalMode)(fakeRequest)
@@ -52,7 +52,7 @@ class PayeeFullNameControllerSpec extends ControllerSpecBase {
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      val validData = Map(PayeeFullNameId.toString -> JsString(testAnswer))
+      val validData = Map(NomineeFullNameId.toString -> JsString(testAnswer))
       val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validData)))
 
       val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)
