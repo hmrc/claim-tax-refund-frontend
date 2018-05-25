@@ -18,32 +18,32 @@ package views
 
 import config.FrontendAppConfig
 import controllers.routes
-import forms.PayeeFullNameForm
+import forms.NomineeFullNameForm
 import models.NormalMode
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
 import views.behaviours.StringViewBehaviours
-import views.html.payeeFullName
+import views.html.nomineeFullName
 
-class PayeeFullNameViewSpec extends StringViewBehaviours with MockitoSugar {
+class NomineeFullNameViewSpec extends StringViewBehaviours with MockitoSugar {
 
-  val messageKeyPrefix = "payeeFullName"
+  val messageKeyPrefix = "nomineeFullName"
 
   val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
-  override val form: Form[String] = new PayeeFullNameForm(appConfig)()
+  override val form: Form[String] = new NomineeFullNameForm(appConfig)()
 
-  def createView = () => payeeFullName(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createView = () => nomineeFullName(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) => payeeFullName(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[String]) => nomineeFullName(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
-  "PayeeFullName view" must {
+  "NomineeFullName view" must {
     behave like normalPage(createView, messageKeyPrefix)
 
     behave like pageWithBackLink(createView)
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.PayeeFullNameController.onSubmit(NormalMode).url)
+    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.NomineeFullNameController.onSubmit(NormalMode).url)
   }
 }

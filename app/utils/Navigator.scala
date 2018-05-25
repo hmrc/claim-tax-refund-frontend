@@ -38,7 +38,7 @@ class Navigator @Inject()() {
     AnyOtherTaxableIncomeId -> anyOtherTaxableIncome,
     OtherIncomeDetailsAndAmountId -> (_ => routes.WhereToSendPaymentController.onPageLoad(NormalMode)),
     WhereToSendPaymentId -> whereToSendPayment,
-    PayeeFullNameId -> (_ => routes.AnyAgentRefController.onPageLoad(NormalMode)),
+    NomineeFullNameId -> (_ => routes.AnyAgentRefController.onPageLoad(NormalMode)),
     AnyAgentRefId -> anyAgentRef,
     AgentReferenceNumberId -> (_ => routes.IsPayeeAddressInTheUKController.onPageLoad(NormalMode)),
     IsPayeeAddressInTheUKId -> isPayeeAddressInUkRoute,
@@ -76,7 +76,7 @@ class Navigator @Inject()() {
   }
 
   private def whereToSendPayment(userAnswers: UserAnswers) = userAnswers.whereToSendPayment match {
-    case Some(Nominee) => routes.PayeeFullNameController.onPageLoad(NormalMode)
+    case Some(Nominee) => routes.NomineeFullNameController.onPageLoad(NormalMode)
     case Some(Myself) => routes.TelephoneNumberController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }

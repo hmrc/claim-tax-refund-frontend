@@ -141,7 +141,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
 
     "have the correct rows in the right order in the Payment Details section" in {
       when(answers.whereToSendPayment) thenReturn Some(Nominee)
-      when(answers.payeeFullName) thenReturn Some("Agent Name")
+      when(answers.nomineeFullName) thenReturn Some("Agent Name")
       when(answers.anyAgentRef) thenReturn Some(false)
       when(answers.isPayeeAddressInTheUK) thenReturn Some(false)
       when(answers.payeeInternationalAddress) thenReturn Some(InternationalAddress("Line 1", "Line 2", None, None, None, "Thailand"))
@@ -152,7 +152,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
 
       rows.size mustBe 5
       rows.head.label.key mustBe "whereToSendPayment.checkYourAnswersLabel"
-      rows(1).label.key mustBe "payeeFullName.checkYourAnswersLabel"
+      rows(1).label.key mustBe "nomineeFullName.checkYourAnswersLabel"
       rows(2).label.key mustBe "anyAgentRef.checkYourAnswersLabel"
       rows(3).label.key mustBe "isPayeeAddressInTheUK.checkYourAnswersLabel"
       rows(4).label.key mustBe "payeeInternationalAddress.checkYourAnswersLabel"
