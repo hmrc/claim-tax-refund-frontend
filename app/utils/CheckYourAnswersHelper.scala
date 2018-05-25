@@ -77,11 +77,11 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
         s"whereToSendPayment.$x", true, routes.WhereToSendPaymentController.onPageLoad(CheckMode).url, true)
   }
 
-  def isPayeeAddressInTheUK: Option[AnswerRow] = userAnswers.isPayeeAddressInTheUK map {
+  def isPaymentAddressInTheUK: Option[AnswerRow] = userAnswers.isPaymentAddressInTheUK map {
     x =>
-      AnswerRow("isPayeeAddressInTheUK.checkYourAnswersLabel",
+      AnswerRow("isPaymentAddressInTheUK.checkYourAnswersLabel",
         if (x) "site.yes" else "site.no",
-        true, routes.IsPayeeAddressInTheUKController.onPageLoad(CheckMode).url, true)
+        true, routes.IsPaymentAddressInTheUKController.onPageLoad(CheckMode).url, true)
   }
 
   def anyAgentRef: Option[AnswerRow] = userAnswers.anyAgentRef map {

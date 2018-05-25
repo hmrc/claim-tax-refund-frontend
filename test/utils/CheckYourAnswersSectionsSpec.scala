@@ -143,7 +143,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       when(answers.whereToSendPayment) thenReturn Some(Nominee)
       when(answers.nomineeFullName) thenReturn Some("Agent Name")
       when(answers.anyAgentRef) thenReturn Some(false)
-      when(answers.isPayeeAddressInTheUK) thenReturn Some(false)
+      when(answers.isPaymentAddressInTheUK) thenReturn Some(false)
       when(answers.paymentInternationalAddress) thenReturn Some(InternationalAddress("Line 1", "Line 2", None, None, None, "Thailand"))
 
       val helper = new CheckYourAnswersHelper(answers)
@@ -154,7 +154,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       rows.head.label.key mustBe "whereToSendPayment.checkYourAnswersLabel"
       rows(1).label.key mustBe "nomineeFullName.checkYourAnswersLabel"
       rows(2).label.key mustBe "anyAgentRef.checkYourAnswersLabel"
-      rows(3).label.key mustBe "isPayeeAddressInTheUK.checkYourAnswersLabel"
+      rows(3).label.key mustBe "isPaymentAddressInTheUK.checkYourAnswersLabel"
       rows(4).label.key mustBe "paymentInternationalAddress.checkYourAnswersLabel"
     }
 

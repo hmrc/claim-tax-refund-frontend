@@ -21,19 +21,19 @@ import forms.BooleanForm
 import models.NormalMode
 import play.api.data.Form
 import views.behaviours.YesNoViewBehaviours
-import views.html.isPayeeAddressInTheUK
+import views.html.isPaymentAddressInTheUK
 
-class IsPayeeAddressInTheUKViewSpec extends YesNoViewBehaviours {
+class IsPaymentAddressInTheUKViewSpec extends YesNoViewBehaviours {
 
-  val messageKeyPrefix = "isPayeeAddressInTheUK"
+  val messageKeyPrefix = "isPaymentAddressInTheUK"
 
   override val form = new BooleanForm()()
 
-  def createView = () => isPayeeAddressInTheUK(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createView = () => isPaymentAddressInTheUK(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[_]) => isPayeeAddressInTheUK(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[_]) => isPaymentAddressInTheUK(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
-  "IsPayeeAddressInTheUK view" must {
+  "IsPaymentAddressInTheUK view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -41,6 +41,6 @@ class IsPayeeAddressInTheUKViewSpec extends YesNoViewBehaviours {
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.IsPayeeAddressInTheUKController.onSubmit(NormalMode).url)
+    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.IsPaymentAddressInTheUKController.onSubmit(NormalMode).url)
   }
 }
