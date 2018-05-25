@@ -45,9 +45,9 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
         false, routes.SelectTaxYearController.onPageLoad(CheckMode).url, false)
   }
 
-  def payeeUKAddress: Option[AnswerRow] = userAnswers.payeeUKAddress map {
+  def paymentUKAddress: Option[AnswerRow] = userAnswers.paymentUKAddress map {
     x =>
-      AnswerRow("payeeUKAddress.checkYourAnswersLabel",
+      AnswerRow("paymentUKAddress.checkYourAnswersLabel",
         UkAddress.asString(
           UkAddress(x.addressLine1,
             x.addressLine2,
@@ -55,7 +55,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
             x.addressLine4,
             x.addressLine5,
             x.postcode)),
-        false, routes.PayeeUKAddressController.onPageLoad(CheckMode).url, true)
+        false, routes.PaymentUKAddressController.onPageLoad(CheckMode).url, true)
   }
 
   def payeeInternationalAddress: Option[AnswerRow] = userAnswers.payeeInternationalAddress map {

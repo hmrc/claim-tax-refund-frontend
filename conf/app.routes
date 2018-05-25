@@ -117,11 +117,11 @@ POST       /enter-payee-international-address                   controllers.Paye
 GET        /change-payee-international-address                  controllers.PayeeInternationalAddressController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-payee-international-address                  controllers.PayeeInternationalAddressController.onSubmit(mode: Mode = CheckMode)
 
-GET        /enter-payee-uk-address                              controllers.PayeeUKAddressController.onPageLoad(mode: Mode = NormalMode)
-POST       /enter-payee-uk-address                              controllers.PayeeUKAddressController.onSubmit(mode: Mode = NormalMode)
-GET        /change-payee-uk-address                             controllers.PayeeUKAddressController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-payee-uk-address                             controllers.PayeeUKAddressController.onSubmit(mode: Mode = CheckMode)
-
+GET        /enter-payment-uk-address                              controllers.PaymentUKAddressController.onPageLoad(mode: Mode = NormalMode)
+POST       /enter-payment-uk-address                              controllers.PaymentUKAddressController.onSubmit(mode: Mode = NormalMode)
+GET        /change-payment-uk-address                             controllers.PaymentUKAddressController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-payment-uk-address                             controllers.PaymentUKAddressController.onSubmit(mode: Mode = CheckMode)
+    
 GET        /where-to-send-payment                               controllers.WhereToSendPaymentController.onPageLoad(mode: Mode = NormalMode)
 POST       /where-to-send-payment                               controllers.WhereToSendPaymentController.onSubmit(mode: Mode = NormalMode)
 GET        /change-where-to-send-payment                        controllers.WhereToSendPaymentController.onPageLoad(mode: Mode = CheckMode)
