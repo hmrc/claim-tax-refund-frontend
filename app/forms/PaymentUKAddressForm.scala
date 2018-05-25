@@ -23,7 +23,7 @@ import models.UkAddress
 import play.api.data.Form
 import play.api.data.Forms._
 
-class PayeeUKAddressForm @Inject()(appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
+class PaymentUKAddressForm @Inject()(appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 
   private val maxLengthInt = appConfig.addressLineMaxLength
   private val postcodeRegex = appConfig.postcodeRegex

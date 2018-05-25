@@ -252,11 +252,11 @@ payeeInternationalAddress.checkYourAnswersLabel = Address of the person you want
 payeeInternationalAddress.field1.blank = payeeInternationalAddress field 1 blank
 payeeInternationalAddress.field2.blank = payeeInternationalAddress field 2 blank
 
-payeeUKAddress.title = What is the address of the person you want us to send any payment to?
-payeeUKAddress.heading = What is the address of the person you want us to send any payment to?
-payeeUKAddress.checkYourAnswersLabel = Address of the person you want us to send any payment to
-payeeUKAddress.postcode.invalid = Enter a valid postcode
-payeeUKAddress.postcode.blank = Enter a postcode
+paymentUKAddress.title = What is the address of the person you want us to send any payment to?
+paymentUKAddress.heading = What is the address of the person you want us to send any payment to?
+paymentUKAddress.checkYourAnswersLabel = Address of the person you want us to send any payment to
+paymentUKAddress.postcode.invalid = Enter a valid postcode
+paymentUKAddress.postcode.blank = Enter a postcode
 
 whereToSendPayment.title = Who would you like us to make the payment to?
 whereToSendPayment.heading = Who would you like us to make the payment to?
