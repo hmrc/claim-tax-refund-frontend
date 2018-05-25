@@ -51,7 +51,7 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
     cyaHelper.anyAgentRef,
     cyaHelper.agentReferenceNumber,
     cyaHelper.isPayeeAddressInTheUK,
-    cyaHelper.payeeUKAddress,
+    cyaHelper.paymentUKAddress,
     cyaHelper.payeeInternationalAddress
   ).flatten)
 

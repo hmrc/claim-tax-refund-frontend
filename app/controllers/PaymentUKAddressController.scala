@@ -19,46 +19,46 @@ package controllers
 import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
-import forms.PayeeUKAddressForm
-import identifiers.PayeeUKAddressId
+import forms.PaymentUKAddressForm
+import identifiers.PaymentUKAddressId
 import javax.inject.Inject
 import models.{Mode, UkAddress}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import utils.{Navigator, UserAnswers}
-import views.html.payeeUKAddress
+import views.html.paymentUKAddress
 
 import scala.concurrent.Future
 
-class PayeeUKAddressController @Inject()(appConfig: FrontendAppConfig,
-                                         override val messagesApi: MessagesApi,
-                                         dataCacheConnector: DataCacheConnector,
-                                         navigator: Navigator,
-                                         authenticate: AuthAction,
-                                         getData: DataRetrievalAction,
-                                         requireData: DataRequiredAction,
-                                         formBuilder: PayeeUKAddressForm) extends FrontendController with I18nSupport {
+class PaymentUKAddressController @Inject()(appConfig: FrontendAppConfig,
+                                           override val messagesApi: MessagesApi,
+                                           dataCacheConnector: DataCacheConnector,
+                                           navigator: Navigator,
+                                           authenticate: AuthAction,
+                                           getData: DataRetrievalAction,
+                                           requireData: DataRequiredAction,
+                                           formBuilder: PaymentUKAddressForm) extends FrontendController with I18nSupport {
 
   private val form: Form[UkAddress] = formBuilder()
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val preparedForm = request.userAnswers.payeeUKAddress match {
+      val preparedForm = request.userAnswers.paymentUKAddress match {
         case None => form
         case Some(value) => form.fill(value)
       }
-      Ok(payeeUKAddress(appConfig, preparedForm, mode))
+      Ok(paymentUKAddress(appConfig, preparedForm, mode))
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
       form.bindFromRequest().fold(
         (formWithErrors: Form[UkAddress]) =>
-          Future.successful(BadRequest(payeeUKAddress(appConfig, formWithErrors, mode))),
+          Future.successful(BadRequest(paymentUKAddress(appConfig, formWithErrors, mode))),
         (value) =>
-          dataCacheConnector.save[UkAddress](request.externalId, PayeeUKAddressId.toString, value).map(cacheMap =>
-            Redirect(navigator.nextPage(PayeeUKAddressId, mode)(new UserAnswers(cacheMap))))
+          dataCacheConnector.save[UkAddress](request.externalId, PaymentUKAddressId.toString, value).map(cacheMap =>
+            Redirect(navigator.nextPage(PaymentUKAddressId, mode)(new UserAnswers(cacheMap))))
       )
   }
 }

@@ -18,26 +18,26 @@ package views
 
 import config.FrontendAppConfig
 import controllers.routes
-import forms.PayeeUKAddressForm
+import forms.PaymentUKAddressForm
 import models.{NormalMode, UkAddress}
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
-import views.html.payeeUKAddress
+import views.html.paymentUKAddress
 
-class PayeeUKAddressViewSpec extends QuestionViewBehaviours[UkAddress] with MockitoSugar {
+class PaymentUKAddressViewSpec extends QuestionViewBehaviours[UkAddress] with MockitoSugar {
 
-  val messageKeyPrefix = "payeeUKAddress"
+  val messageKeyPrefix = "paymentUKAddress"
 
   val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
-  override val form: Form[UkAddress] = new PayeeUKAddressForm(appConfig)()
+  override val form: Form[UkAddress] = new PaymentUKAddressForm(appConfig)()
 
-  def createView = () => payeeUKAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createView = () => paymentUKAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[UkAddress]) => payeeUKAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[UkAddress]) => paymentUKAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
-  "PayeeUKAddress view" must {
+  "PaymentUKAddress view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -45,7 +45,7 @@ class PayeeUKAddressViewSpec extends QuestionViewBehaviours[UkAddress] with Mock
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    behave like pageWithTextFields(createViewUsingForm, messageKeyPrefix, routes.PayeeUKAddressController.onSubmit(NormalMode)
+    behave like pageWithTextFields(createViewUsingForm, messageKeyPrefix, routes.PaymentUKAddressController.onSubmit(NormalMode)
       .url, "addressLine1", "addressLine2", "addressLine3", "addressLine4", "addressLine5", "postcode")
   }
 }

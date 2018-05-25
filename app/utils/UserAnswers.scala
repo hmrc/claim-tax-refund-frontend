@@ -27,7 +27,7 @@ class UserAnswers(val cacheMap: CacheMap) {
 
   def payeeInternationalAddress: Option[InternationalAddress] = cacheMap.getEntry[InternationalAddress](PayeeInternationalAddressId.toString)
 
-  def payeeUKAddress: Option[UkAddress] = cacheMap.getEntry[UkAddress](PayeeUKAddressId.toString)
+  def paymentUKAddress: Option[UkAddress] = cacheMap.getEntry[UkAddress](PaymentUKAddressId.toString)
 
   def isPayeeAddressInTheUK: Option[Boolean] = cacheMap.getEntry[Boolean](IsPayeeAddressInTheUKId.toString)
 
