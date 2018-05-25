@@ -112,10 +112,10 @@ POST       /is-payee-address-in-uk                              controllers.IsPa
 GET        /change-payee-address-location                       controllers.IsPayeeAddressInTheUKController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-payee-address-location                       controllers.IsPayeeAddressInTheUKController.onSubmit(mode: Mode = CheckMode)
 
-GET        /enter-payee-international-address                   controllers.PayeeInternationalAddressController.onPageLoad(mode: Mode = NormalMode)
-POST       /enter-payee-international-address                   controllers.PayeeInternationalAddressController.onSubmit(mode: Mode = NormalMode)
-GET        /change-payee-international-address                  controllers.PayeeInternationalAddressController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-payee-international-address                  controllers.PayeeInternationalAddressController.onSubmit(mode: Mode = CheckMode)
+GET        /enter-payment-international-address                   controllers.PaymentInternationalAddressController.onPageLoad(mode: Mode = NormalMode)
+POST       /enter-payment-international-address                   controllers.PaymentInternationalAddressController.onSubmit(mode: Mode = NormalMode)
+GET        /change-payment-international-address                  controllers.PaymentInternationalAddressController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-payment-international-address                  controllers.PaymentInternationalAddressController.onSubmit(mode: Mode = CheckMode)
 
 GET        /enter-payment-uk-address                              controllers.PaymentUKAddressController.onPageLoad(mode: Mode = NormalMode)
 POST       /enter-payment-uk-address                              controllers.PaymentUKAddressController.onSubmit(mode: Mode = NormalMode)

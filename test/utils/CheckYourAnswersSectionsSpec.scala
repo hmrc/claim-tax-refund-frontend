@@ -144,7 +144,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       when(answers.nomineeFullName) thenReturn Some("Agent Name")
       when(answers.anyAgentRef) thenReturn Some(false)
       when(answers.isPayeeAddressInTheUK) thenReturn Some(false)
-      when(answers.payeeInternationalAddress) thenReturn Some(InternationalAddress("Line 1", "Line 2", None, None, None, "Thailand"))
+      when(answers.paymentInternationalAddress) thenReturn Some(InternationalAddress("Line 1", "Line 2", None, None, None, "Thailand"))
 
       val helper = new CheckYourAnswersHelper(answers)
       val sections = new CheckYourAnswersSections(helper, MockUserAnswers.minimalValidUserAnswers)
@@ -155,7 +155,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       rows(1).label.key mustBe "nomineeFullName.checkYourAnswersLabel"
       rows(2).label.key mustBe "anyAgentRef.checkYourAnswersLabel"
       rows(3).label.key mustBe "isPayeeAddressInTheUK.checkYourAnswersLabel"
-      rows(4).label.key mustBe "payeeInternationalAddress.checkYourAnswersLabel"
+      rows(4).label.key mustBe "paymentInternationalAddress.checkYourAnswersLabel"
     }
 
     "have the correct rows in the right order in the Income Details section" in {

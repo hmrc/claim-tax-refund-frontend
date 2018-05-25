@@ -244,13 +244,9 @@ isPayeeAddressInTheUK.heading = Is the address of the person you want us to send
 isPayeeAddressInTheUK.checkYourAnswersLabel = Is the address of the person you want us to send any payment to in the UK?
 isPayeeAddressInTheUK.blank = Select yes if the address of the person you want us to send any payment to is in the UK
 
-payeeInternationalAddress.title = What is the address of the person you want us to send any payment to?
-payeeInternationalAddress.heading = What is the address of the person you want us to send any payment to?
-payeeInternationalAddress.field1 = Field 1
-payeeInternationalAddress.field2 = Field 2
-payeeInternationalAddress.checkYourAnswersLabel = Address of the person you want us to send any payment to
-payeeInternationalAddress.field1.blank = payeeInternationalAddress field 1 blank
-payeeInternationalAddress.field2.blank = payeeInternationalAddress field 2 blank
+paymentInternationalAddress.title = What is the address of the person you want us to send any payment to?
+paymentInternationalAddress.heading = What is the address of the person you want us to send any payment to?
+paymentInternationalAddress.checkYourAnswersLabel = Address of the person you want us to send any payment to
 
 paymentUKAddress.title = What is the address of the person you want us to send any payment to?
 paymentUKAddress.heading = What is the address of the person you want us to send any payment to?
