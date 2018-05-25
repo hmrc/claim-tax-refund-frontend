@@ -43,7 +43,7 @@ class Navigator @Inject()() {
     AgentReferenceNumberId -> (_ => routes.IsPayeeAddressInTheUKController.onPageLoad(NormalMode)),
     IsPayeeAddressInTheUKId -> isPayeeAddressInUkRoute,
     PaymentUKAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
-    PayeeInternationalAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
+    PaymentInternationalAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
     TelephoneNumberId -> (_ => routes.CheckYourAnswersController.onPageLoad())
   )
 
@@ -89,7 +89,7 @@ class Navigator @Inject()() {
 
   private def isPayeeAddressInUkRoute(userAnswers: UserAnswers) = userAnswers.isPayeeAddressInTheUK match {
     case Some(true) => routes.PaymentUKAddressController.onPageLoad(NormalMode)
-    case Some(false) => routes.PayeeInternationalAddressController.onPageLoad(NormalMode)
+    case Some(false) => routes.PaymentInternationalAddressController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
 

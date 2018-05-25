@@ -52,7 +52,7 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
     cyaHelper.agentReferenceNumber,
     cyaHelper.isPayeeAddressInTheUK,
     cyaHelper.paymentUKAddress,
-    cyaHelper.payeeInternationalAddress
+    cyaHelper.paymentInternationalAddress
   ).flatten)
 
   def benefitDetails = AnswerSection(Some("checkYourAnswers.benefitDetailsSection"), Seq(

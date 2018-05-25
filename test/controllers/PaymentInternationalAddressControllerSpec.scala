@@ -18,29 +18,29 @@ package controllers
 
 import connectors.FakeDataCacheConnector
 import controllers.actions._
-import forms.PayeeInternationalAddressForm
-import identifiers.PayeeInternationalAddressId
+import forms.PaymentInternationalAddressForm
+import identifiers.PaymentInternationalAddressId
 import models.{InternationalAddress, NormalMode}
 import play.api.data.Form
 import play.api.libs.json.Json
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
 import utils.FakeNavigator
-import views.html.payeeInternationalAddress
+import views.html.paymentInternationalAddress
 
-class PayeeInternationalAddressControllerSpec extends ControllerSpecBase {
+class PaymentInternationalAddressControllerSpec extends ControllerSpecBase {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new PayeeInternationalAddressController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, new PayeeInternationalAddressForm(frontendAppConfig))
+    new PaymentInternationalAddressController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+      dataRetrievalAction, new DataRequiredActionImpl, new PaymentInternationalAddressForm(frontendAppConfig))
 
-  val form = new PayeeInternationalAddressForm(frontendAppConfig)()
+  val form = new PaymentInternationalAddressForm(frontendAppConfig)()
 
-  def viewAsString(form: Form[InternationalAddress] = form) = payeeInternationalAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
+  def viewAsString(form: Form[InternationalAddress] = form) = paymentInternationalAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
 
-  "PayeeInternationalAddress Controller" must {
+  "PaymentInternationalAddress Controller" must {
 
     "return OK and the correct view for a GET" in {
       val result = controller().onPageLoad(NormalMode)(fakeRequest)
@@ -50,7 +50,7 @@ class PayeeInternationalAddressControllerSpec extends ControllerSpecBase {
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      val validData = Map(PayeeInternationalAddressId.toString -> Json.toJson(InternationalAddress("line 1", "line 2", None, None, None, "country")))
+      val validData = Map(PaymentInternationalAddressId.toString -> Json.toJson(InternationalAddress("line 1", "line 2", None, None, None, "country")))
       val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validData)))
 
       val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)

@@ -18,26 +18,26 @@ package views
 
 import config.FrontendAppConfig
 import controllers.routes
-import forms.PayeeInternationalAddressForm
+import forms.PaymentInternationalAddressForm
 import models.{InternationalAddress, NormalMode}
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
-import views.html.payeeInternationalAddress
+import views.html.paymentInternationalAddress
 
-class PayeeInternationalAddressViewSpec extends QuestionViewBehaviours[InternationalAddress] with MockitoSugar {
+class PaymentInternationalAddressViewSpec extends QuestionViewBehaviours[InternationalAddress] with MockitoSugar {
 
-  val messageKeyPrefix = "payeeInternationalAddress"
+  val messageKeyPrefix = "paymentInternationalAddress"
 
   val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
-  override val form: Form[InternationalAddress] = new PayeeInternationalAddressForm(appConfig)()
+  override val form: Form[InternationalAddress] = new PaymentInternationalAddressForm(appConfig)()
 
-  def createView = () => payeeInternationalAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createView = () => paymentInternationalAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[InternationalAddress]) => payeeInternationalAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[InternationalAddress]) => paymentInternationalAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
-  "PayeeInternationalAddress view" must {
+  "PaymentInternationalAddress view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -45,6 +45,6 @@ class PayeeInternationalAddressViewSpec extends QuestionViewBehaviours[Internati
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    behave like pageWithTextFields(createViewUsingForm, messageKeyPrefix, routes.PayeeInternationalAddressController.onSubmit(NormalMode).url, "addressLine1", "addressLine2", "addressLine3", "addressLine4", "addressLine5", "country")
+    behave like pageWithTextFields(createViewUsingForm, messageKeyPrefix, routes.PaymentInternationalAddressController.onSubmit(NormalMode).url, "addressLine1", "addressLine2", "addressLine3", "addressLine4", "addressLine5", "country")
   }
 }
