@@ -18,29 +18,29 @@ package controllers
 
 import connectors.FakeDataCacheConnector
 import controllers.actions._
-import forms.PayeeUKAddressForm
-import identifiers.PayeeUKAddressId
+import forms.PaymentUKAddressForm
+import identifiers.PaymentUKAddressId
 import models.{NormalMode, UkAddress}
 import play.api.data.Form
 import play.api.libs.json.Json
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
 import utils.FakeNavigator
-import views.html.payeeUKAddress
+import views.html.paymentUKAddress
 
-class PayeeUKAddressControllerSpec extends ControllerSpecBase {
+class PaymentUKAddressControllerSpec extends ControllerSpecBase {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new PayeeUKAddressController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, new PayeeUKAddressForm(frontendAppConfig))
+    new PaymentUKAddressController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+      dataRetrievalAction, new DataRequiredActionImpl, new PaymentUKAddressForm(frontendAppConfig))
 
-  val form = new PayeeUKAddressForm(frontendAppConfig)()
+  val form = new PaymentUKAddressForm(frontendAppConfig)()
 
-  def viewAsString(form: Form[UkAddress] = form) = payeeUKAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
+  def viewAsString(form: Form[UkAddress] = form) = paymentUKAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
 
-  "PayeeUKAddress Controller" must {
+  "PaymentUKAddress Controller" must {
 
     "return OK and the correct view for a GET" in {
       val result = controller().onPageLoad(NormalMode)(fakeRequest)
@@ -50,7 +50,7 @@ class PayeeUKAddressControllerSpec extends ControllerSpecBase {
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      val validData = Map(PayeeUKAddressId.toString -> Json.toJson(UkAddress("line 1", "line 2", None, None, None, "NE1 7RF")))
+      val validData = Map(PaymentUKAddressId.toString -> Json.toJson(UkAddress("line 1", "line 2", None, None, None, "NE1 7RF")))
       val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validData)))
 
       val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)

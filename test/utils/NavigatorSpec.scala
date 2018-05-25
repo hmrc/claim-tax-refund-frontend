@@ -136,10 +136,10 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(IsPayeeAddressInTheUKId, NormalMode)(answers) mustBe routes.PayeeInternationalAddressController.onPageLoad(NormalMode)
       }
 
-      "go to payeeUKAddress from IsPayeeAddressInTheUK when Yes is selected" in {
+      "go to paymentUKAddress from IsPayeeAddressInTheUK when Yes is selected" in {
         val answers = mock[UserAnswers]
         when(answers.isPayeeAddressInTheUK) thenReturn Some(true)
-        navigator.nextPage(IsPayeeAddressInTheUKId, NormalMode)(answers) mustBe routes.PayeeUKAddressController.onPageLoad(NormalMode)
+        navigator.nextPage(IsPayeeAddressInTheUKId, NormalMode)(answers) mustBe routes.PaymentUKAddressController.onPageLoad(NormalMode)
       }
 
       "go to CheckYourAnswers from TelephoneNumber" in {

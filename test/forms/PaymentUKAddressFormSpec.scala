@@ -23,7 +23,7 @@ import org.mockito.Mockito._
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
 
-class PayeeUKAddressFormSpec extends FormBehaviours with MockitoSugar {
+class PaymentUKAddressFormSpec extends FormBehaviours with MockitoSugar {
 
   private val addressLineMaxLength = 35
   private val postcodeRegex = """([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z]))))\s?[0-9][A-Za-z]{2})"""
@@ -54,9 +54,9 @@ class PayeeUKAddressFormSpec extends FormBehaviours with MockitoSugar {
     "postcode" -> "NE1 7RF"
   )
 
-  override val form: Form[UkAddress] = new PayeeUKAddressForm(appConfig)()
+  override val form: Form[UkAddress] = new PaymentUKAddressForm(appConfig)()
 
-  "PayeeUKAddress form" must {
+  "PaymentUKAddress form" must {
     behave like questionForm(UkAddress("line 1", "line 2", Some("line 3"), Some("line 4"), Some("line 5"), "NE1 7RF"))
 
     behave like formWithMandatoryTextFields(
