@@ -23,7 +23,7 @@ import models.InternationalAddress
 import play.api.data.Form
 import play.api.data.Forms._
 
-class PayeeInternationalAddressForm @Inject()(appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
+class PaymentInternationalAddressForm @Inject()(appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 
   private val maxLengthInt = appConfig.addressLineMaxLength
   private val countryLength = appConfig.countryMaxLength

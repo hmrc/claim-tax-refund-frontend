@@ -16,7 +16,7 @@
 
 package identifiers
 
-case object PayeeInternationalAddressId extends Identifier {
-  override def toString: String = "payeeInternationalAddress"
+case object PaymentInternationalAddressId extends Identifier {
+  override def toString: String = "paymentInternationalAddress"
 
 }

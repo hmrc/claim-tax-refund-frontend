@@ -51,9 +51,9 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.nomineeFullName) thenReturn None
     when(answers.anyAgentRef) thenReturn None
     when(answers.agentReferenceNumber) thenReturn None
-    when(answers.isPayeeAddressInTheUK) thenReturn None
+    when(answers.isPaymentAddressInTheUK) thenReturn None
     when(answers.paymentUKAddress) thenReturn None
-    when(answers.payeeInternationalAddress) thenReturn None
+    when(answers.paymentInternationalAddress) thenReturn None
 
     answers
   }
