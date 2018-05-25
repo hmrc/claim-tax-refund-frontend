@@ -47,7 +47,7 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
 
   def paymentDetails = AnswerSection(Some("checkYourAnswers.paymentDetailsSection"), Seq(
     cyaHelper.whereToSendPayment,
-    cyaHelper.payeeFullName,
+    cyaHelper.nomineeFullName,
     cyaHelper.anyAgentRef,
     cyaHelper.agentReferenceNumber,
     cyaHelper.isPayeeAddressInTheUK,

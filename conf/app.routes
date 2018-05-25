@@ -92,10 +92,10 @@ POST       /what-other-income                                   controllers.Othe
 GET        /change-other-income                                 controllers.OtherIncomeDetailsAndAmountController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-other-income                                 controllers.OtherIncomeDetailsAndAmountController.onSubmit(mode: Mode = CheckMode)
 
-GET        /enter-payee-full-name                               controllers.PayeeFullNameController.onPageLoad(mode: Mode = NormalMode)
-POST       /enter-payee-full-name                               controllers.PayeeFullNameController.onSubmit(mode: Mode = NormalMode)
-GET        /change-payee-full-name                              controllers.PayeeFullNameController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-payee-full-name                              controllers.PayeeFullNameController.onSubmit(mode: Mode = CheckMode)
+GET        /enter-nominee-full-name                               controllers.NomineeFullNameController.onPageLoad(mode: Mode = NormalMode)
+POST       /enter-nominee-full-name                               controllers.NomineeFullNameController.onSubmit(mode: Mode = NormalMode)
+GET        /change-nominee-full-name                              controllers.NomineeFullNameController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-nominee-full-name                              controllers.NomineeFullNameController.onSubmit(mode: Mode = CheckMode)
 
 GET        /has-agent-reference-number                          controllers.AgentReferenceNumberController.onPageLoad(mode: Mode = NormalMode)
 POST       /has-agent-reference-number                          controllers.AgentReferenceNumberController.onSubmit(mode: Mode = NormalMode)

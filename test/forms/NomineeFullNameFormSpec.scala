@@ -23,23 +23,23 @@ import org.mockito.Mockito._
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
 
-class PayeeFullNameFormSpec extends FormBehaviours with MockitoSugar {
+class NomineeFullNameFormSpec extends FormBehaviours with MockitoSugar {
 
-  private val errorKeyBlank = "payeeFullName.blank"
-  private val errorKeyTooLong = "payeeFullName.tooLong"
+  private val errorKeyBlank = "nomineeFullName.blank"
+  private val errorKeyTooLong = "nomineeFullName.tooLong"
   private val maxLength = 35
 
   def appConfig: FrontendAppConfig = {
     val instance = mock[FrontendAppConfig]
-    when(instance.payeeFullNameMaxLength) thenReturn maxLength
+    when(instance.nomineeFullNameMaxLength) thenReturn maxLength
     instance
   }
 
   val validData: Map[String, String] = Map("value" -> "test answer")
 
-  override val form: Form[_] = new PayeeFullNameForm(appConfig)()
+  override val form: Form[_] = new NomineeFullNameForm(appConfig)()
 
-  "PayeeFullName Form" must {
+  "NomineeFullName Form" must {
 
     behave like formWithMandatoryTextFields(MandatoryField("value", errorKeyBlank))
 
