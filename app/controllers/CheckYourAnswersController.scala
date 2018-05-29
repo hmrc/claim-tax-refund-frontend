@@ -56,7 +56,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
       val pdfHtml = pdf_check_your_answers(appConfig, sections.sectionsToShow)
       dataCacheConnector.save[String](request.externalId, "pdfHtml", pdfHtml.toString())
 
-      implicit val metadata = new Metadata("")
+      implicit val metadata = new Metadata()
       dataCacheConnector.save(request.externalId, "metadata", metadata)
 
 

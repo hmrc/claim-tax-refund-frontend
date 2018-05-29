@@ -75,12 +75,7 @@ object Metadata {
       (__ \ "customerId").read[String] and
       (__ \ "hmrcReceivedAt").read[LocalDateTime](jodaDateReads) and
       (__ \ "xmlCreatedAt").read[LocalDateTime](jodaDateReads)
-    )(Metadata.apply(_,_,_))
-
-
-  def apply(customerId: String, hmrc: String): Metadata = {
-    Metadata(customerId)
-  }
+    )(apply _)
 
   val dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSz"
 
