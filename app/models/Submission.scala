@@ -42,7 +42,6 @@ object Submission {
     ).getOrElse("Failed to get Tax year")
 
     Submission(taxYear, pdf, meta)
-
   }
 
   def asMap(e: Submission): Map[String, String] = {
