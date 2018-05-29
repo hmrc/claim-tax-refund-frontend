@@ -19,7 +19,7 @@ package models
 import base.SpecBase
 import identifiers.SelectTaxYearId
 import models.templates.Metadata
-import org.joda.time.{DateTime, DateTimeUtils}
+import org.joda.time.{DateTime, DateTimeUtils, LocalDateTime}
 import org.mockito.Mockito._
 import play.api.libs.json.Json
 import utils.MockUserAnswers
@@ -30,23 +30,21 @@ class SubmissionSpec extends SpecBase {
   val answers = MockUserAnswers.minimalValidUserAnswers
   val submission = Submission(answers)
   val taxYear = SelectTaxYear.CYMinus2
+  val timeNow = new LocalDateTime
+  val testMetadata = new Metadata("test_case", timeNow, timeNow)
 
 
   ".apply" must {
 
     "build " in {
-      val TimeNow = DateTime.now()
-      DateTimeUtils.setCurrentMillisFixed(TimeNow.getMillis)
-      val timedAnswers = MockUserAnswers.minimalValidUserAnswers
-      when(timedAnswers.selectTaxYear) thenReturn Some(SelectTaxYear.CYMinus2)
+      when(answers.selectTaxYear) thenReturn Some(SelectTaxYear.CYMinus2)
 
-      val metadata = new Metadata("test_case")
-      val result = Submission(taxYear.asString, "<html>Test result</html>", Json.toJson(metadata).toString)
-      val fakeSubmission = Submission(timedAnswers)
+
+      val result = Submission(taxYear.asString, "<html>Test result</html>", Json.toJson(testMetadata).toString)
+
+      val fakeSubmission = Submission(answers.selectTaxYear.get.asString, "<html>Test result</html>", Json.toJson(testMetadata).toString)
 
       fakeSubmission mustBe result
-
-      DateTimeUtils.setCurrentMillisSystem()
     }
 
 
@@ -62,18 +60,13 @@ class SubmissionSpec extends SpecBase {
   ".asMap" must {
 
     "return a map" in {
-      val TimeNow = DateTime.now()
-      DateTimeUtils.setCurrentMillisFixed(TimeNow.getMillis)
-      val timedAnswers = MockUserAnswers.minimalValidUserAnswers
-
-      when(timedAnswers.selectTaxYear) thenReturn Some(SelectTaxYear.CYMinus2)
-      val submission = Submission(timedAnswers)
-      val metadata = new Metadata("test_case")
+      when(answers.selectTaxYear) thenReturn Some(SelectTaxYear.CYMinus2)
+      val submission = Submission (answers.selectTaxYear.get.asString, "<html>Test result</html>", Json.toJson(testMetadata).toString)
 
       Submission.asMap(submission) mustBe Map(
         SelectTaxYearId.toString -> taxYear.asString,
         "pdfHtml" -> "<html>Test result</html>",
-        "metaData" -> Json.toJson(metadata).toString
+        "metaData" -> Json.toJson(testMetadata).toString
       )
     }
   }

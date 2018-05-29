@@ -60,13 +60,10 @@ class MetadataSpec extends WordSpec with MustMatchers with OptionValues with Pro
 
   ".reads" must {
     "be successfully parsed" in {
-      val TimeNow = DateTime.now()
-      DateTimeUtils.setCurrentMillisFixed(TimeNow.getMillis)
       val metadata = new Metadata("Test meta")
       val fakeJson = FakeJson
       val json = Json.toJson(metadata)
       fakeJson mustBe(json)
-      DateTimeUtils.setCurrentMillisSystem()
     }
   }
 
