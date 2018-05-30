@@ -28,13 +28,15 @@ import uk.gov.hmrc.http.cache.client.CacheMap
 import utils.FakeNavigator
 import views.html.anyAgentRef
 
+
 class AnyAgentRefControllerSpec extends ControllerSpecBase {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
   val formProvider = new AnyAgentReferenceForm()
   val form = formProvider()
-  val validData = Map(AnyAgentRefId.toString -> Json.obj(AnyAgentRefId.toString -> JsBoolean(true), AgentRefId.toString -> JsString("AB1234")))
+  val validYesData = Map(AnyAgentRefId.toString -> Json.obj(AnyAgentRefId.toString -> JsBoolean(true), AgentRefId.toString -> JsString("AB1234")))
+  val validNoData = Map(AnyAgentRefId.toString -> Json.obj(AnyAgentRefId.toString -> JsBoolean(false)))
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyAgentRefController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
@@ -51,16 +53,32 @@ class AnyAgentRefControllerSpec extends ControllerSpecBase {
       contentAsString(result) mustBe viewAsString()
     }
 
-    "populate the view correctly on a GET when the question has previously been answered" in {
-      val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validData)))
+    "populate the view correctly on a GET when YES has previously been answered" in {
+      val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validYesData)))
       val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)
 
       contentAsString(result) mustBe viewAsString(form.fill(AgentRef.Yes("AB1234")))
     }
 
-    "redirect to the next page when valid data is submitted" in {
-      val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validData)))
+    "populate the view correctly on a GET when NO has previously been answered" in {
+      val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validNoData)))
+      val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)
+
+      contentAsString(result) mustBe viewAsString(form.fill(AgentRef.No))
+    }
+
+    "redirect to the next page when valid YES data is submitted" in {
+      val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validYesData)))
       val postRequest = fakeRequest.withFormUrlEncodedBody(("agentRef.anyAgentRef", "true"),("agentRef.agentRef", "AB1234"))
+      val result = controller(getRelevantData).onSubmit(NormalMode)(postRequest)
+
+      status(result) mustBe SEE_OTHER
+      redirectLocation(result) mustBe Some(onwardRoute.url)
+    }
+
+    "redirect to the next page when valid NO data is submitted" in {
+      val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validYesData)))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("agentRef.anyAgentRef", "false"))
       val result = controller(getRelevantData).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
