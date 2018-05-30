@@ -17,6 +17,7 @@
 package utils
 
 import models.SelectTaxYear.CYMinus2
+import models.templates.Metadata
 import models.{SelectTaxYear, UkAddress, UserDetails}
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
@@ -32,6 +33,7 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.internationalAddress) thenReturn None
     when(answers.telephoneNumber) thenReturn None
     when(answers.selectTaxYear) thenReturn None
+    when(answers.employmentDetails) thenReturn None
     when(answers.anyBenefits) thenReturn None
     when(answers.howMuchJobseekersAllowance) thenReturn None
     when(answers.howMuchIncapacityBenefit) thenReturn None
@@ -47,12 +49,12 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.anyOtherTaxableIncome) thenReturn None
     when(answers.otherIncomeDetailsAndAmount) thenReturn None
     when(answers.whereToSendPayment) thenReturn None
-    when(answers.payeeFullName) thenReturn None
+    when(answers.nomineeFullName) thenReturn None
     when(answers.anyAgentRef) thenReturn None
     when(answers.agentReferenceNumber) thenReturn None
-    when(answers.isPayeeAddressInTheUK) thenReturn None
-    when(answers.payeeUKAddress) thenReturn None
-    when(answers.payeeInternationalAddress) thenReturn None
+    when(answers.isPaymentAddressInTheUK) thenReturn None
+    when(answers.paymentUKAddress) thenReturn None
+    when(answers.paymentInternationalAddress) thenReturn None
 
     answers
   }
@@ -70,8 +72,13 @@ object MockUserAnswers extends MockitoSugar {
   def minimalValidUserAnswers: UserAnswers = {
 
     val answers = nothingAnswered
+    val metadata = new Metadata("test_case")
 
+    when(answers.userDetails) thenReturn Some(UserDetails("test name", "AB123123A", UkAddress("testLine1", "testLine2", None, None, None, "AB1 2CD")))
     when(answers.selectTaxYear) thenReturn Some(SelectTaxYear.CYMinus2)
+    when(answers.employmentDetails) thenReturn Some(true)
+    when(answers.pdfHtml) thenReturn Some ("<html>Test result</html>")
+    when(answers.metadata) thenReturn Some (metadata)
 
     answers
   }

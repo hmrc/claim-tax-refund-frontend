@@ -19,7 +19,6 @@ package utils
 import controllers.routes
 import identifiers._
 import javax.inject.{Inject, Singleton}
-
 import models.WhereToSendPayment.{Myself, Nominee}
 import models.{AgentRef, CheckMode, Mode, NormalMode}
 import play.api.mvc.Call
@@ -39,11 +38,12 @@ class Navigator @Inject()() {
     AnyOtherTaxableIncomeId -> anyOtherTaxableIncome,
     OtherIncomeDetailsAndAmountId -> (_ => routes.WhereToSendPaymentController.onPageLoad(NormalMode)),
     WhereToSendPaymentId -> whereToSendPayment,
-    PayeeFullNameId -> (_ => routes.AnyAgentRefController.onPageLoad(NormalMode)),
-    AgentRefId -> (_ => routes.IsPayeeAddressInTheUKController.onPageLoad(NormalMode)),
-    IsPayeeAddressInTheUKId -> isPayeeAddressInUkRoute,
-    PayeeUKAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
-    PayeeInternationalAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
+    NomineeFullNameId -> (_ => routes.AnyAgentRefController.onPageLoad(NormalMode)),
+    AnyAgentRefId -> anyAgentRef,
+    AgentReferenceNumberId -> (_ => routes.IsPaymentAddressInTheUKController.onPageLoad(NormalMode)),
+    IsPaymentAddressInTheUKId -> isPaymentAddressInUkRoute,
+    PaymentUKAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
+    PaymentInternationalAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
     TelephoneNumberId -> (_ => routes.CheckYourAnswersController.onPageLoad())
   )
 
@@ -76,7 +76,7 @@ class Navigator @Inject()() {
   }
 
   private def whereToSendPayment(userAnswers: UserAnswers) = userAnswers.whereToSendPayment match {
-    case Some(Nominee) => routes.PayeeFullNameController.onPageLoad(NormalMode)
+    case Some(Nominee) => routes.NomineeFullNameController.onPageLoad(NormalMode)
     case Some(Myself) => routes.TelephoneNumberController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
@@ -87,9 +87,9 @@ class Navigator @Inject()() {
     case _ => routes.SessionExpiredController.onPageLoad()
   }
 
-  private def isPayeeAddressInUkRoute(userAnswers: UserAnswers) = userAnswers.isPayeeAddressInTheUK match {
-    case Some(true) => routes.PayeeUKAddressController.onPageLoad(NormalMode)
-    case Some(false) => routes.PayeeInternationalAddressController.onPageLoad(NormalMode)
+  private def isPaymentAddressInUkRoute(userAnswers: UserAnswers) = userAnswers.isPaymentAddressInTheUK match {
+    case Some(true) => routes.PaymentUKAddressController.onPageLoad(NormalMode)
+    case Some(false) => routes.PaymentInternationalAddressController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
 

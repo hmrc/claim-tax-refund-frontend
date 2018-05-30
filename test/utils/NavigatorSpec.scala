@@ -47,13 +47,13 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(OtherIncomeDetailsAndAmountId, NormalMode)(answers) mustBe routes.WhereToSendPaymentController.onPageLoad(NormalMode)
       }
 
-      "go to PayeeFullName from WhereToSendPayment when SomeoneElse is selected" in {
+      "go to NomineeFullName from WhereToSendPayment when SomeoneElse is selected" in {
         val answers = mock[UserAnswers]
         when(answers.whereToSendPayment) thenReturn Some(Nominee)
-        navigator.nextPage(WhereToSendPaymentId, NormalMode)(answers) mustBe routes.PayeeFullNameController.onPageLoad(NormalMode)
+        navigator.nextPage(WhereToSendPaymentId, NormalMode)(answers) mustBe routes.NomineeFullNameController.onPageLoad(NormalMode)
       }
 
-      "go to PayeeFullName from WhereToSendPayment when Yourself is selected" in {
+      "go to NomineeFullName from WhereToSendPayment when Yourself is selected" in {
         val answers = mock[UserAnswers]
         when(answers.whereToSendPayment) thenReturn Some(Myself)
         navigator.nextPage(WhereToSendPaymentId, NormalMode)(answers) mustBe routes.TelephoneNumberController.onPageLoad(NormalMode)
@@ -108,21 +108,38 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(AnyOtherTaxableIncomeId, NormalMode)(answers) mustBe routes.OtherIncomeDetailsAndAmountController.onPageLoad(NormalMode)
       }
 
-      "go to AnyAgentRef from PayeeFullName" in {
+      "go to AnyAgentRef from NomineeFullName" in {
         val answers = mock[UserAnswers]
-        navigator.nextPage(PayeeFullNameId, NormalMode)(answers) mustBe routes.AnyAgentRefController.onPageLoad(NormalMode)
+        navigator.nextPage(NomineeFullNameId, NormalMode)(answers) mustBe routes.AnyAgentRefController.onPageLoad(NormalMode)
       }
 
-      "go to PayeeInternationalAddress from IsPayeeAddressInTheUK when no is selected" in {
+      "go to AgentReferenceNumber from AnyAgentRef when Yes is selected" in {
         val answers = mock[UserAnswers]
-        when(answers.isPayeeAddressInTheUK) thenReturn Some(false)
-        navigator.nextPage(IsPayeeAddressInTheUKId, NormalMode)(answers) mustBe routes.PayeeInternationalAddressController.onPageLoad(NormalMode)
+        when(answers.anyAgentRef) thenReturn Some(true)
+        navigator.nextPage(AnyAgentRefId, NormalMode)(answers) mustBe routes.AgentReferenceNumberController.onPageLoad(NormalMode)
       }
 
-      "go to payeeUKAddress from IsPayeeAddressInTheUK when Yes is selected" in {
+      "go to IsPaymentAddressInTheUK from AgentReferenceNumber" in {
         val answers = mock[UserAnswers]
-        when(answers.isPayeeAddressInTheUK) thenReturn Some(true)
-        navigator.nextPage(IsPayeeAddressInTheUKId, NormalMode)(answers) mustBe routes.PayeeUKAddressController.onPageLoad(NormalMode)
+        navigator.nextPage(AgentReferenceNumberId, NormalMode)(answers) mustBe routes.IsPaymentAddressInTheUKController.onPageLoad(NormalMode)
+      }
+
+      "go to IsPaymentAddressInTheUK from AnyAgentRef when no is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.anyAgentRef) thenReturn Some(false)
+        navigator.nextPage(AnyAgentRefId, NormalMode)(answers) mustBe routes.IsPaymentAddressInTheUKController.onPageLoad(NormalMode)
+      }
+
+      "go to PaymentInternationalAddress from IsPaymentAddressInTheUK when no is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.isPaymentAddressInTheUK) thenReturn Some(false)
+        navigator.nextPage(IsPaymentAddressInTheUKId, NormalMode)(answers) mustBe routes.PaymentInternationalAddressController.onPageLoad(NormalMode)
+      }
+
+      "go to PaymentUKAddress from IsPaymentAddressInTheUK when Yes is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.isPaymentAddressInTheUK) thenReturn Some(true)
+        navigator.nextPage(IsPaymentAddressInTheUKId, NormalMode)(answers) mustBe routes.PaymentUKAddressController.onPageLoad(NormalMode)
       }
 
       "go to CheckYourAnswers from TelephoneNumber" in {

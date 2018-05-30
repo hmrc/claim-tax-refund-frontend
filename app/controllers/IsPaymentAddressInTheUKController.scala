@@ -19,47 +19,48 @@ package controllers
 import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
-import forms.PayeeFullNameForm
-import identifiers.PayeeFullNameId
+import forms.BooleanForm
 import javax.inject.Inject
+
+import identifiers.IsPaymentAddressInTheUKId
 import models.Mode
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import utils.{Navigator, UserAnswers}
-import views.html.payeeFullName
+import views.html.isPaymentAddressInTheUK
 
 import scala.concurrent.Future
 
-class PayeeFullNameController @Inject()(
-                                         appConfig: FrontendAppConfig,
-                                         override val messagesApi: MessagesApi,
-                                         dataCacheConnector: DataCacheConnector,
-                                         navigator: Navigator,
-                                         authenticate: AuthAction,
-                                         getData: DataRetrievalAction,
-                                         requireData: DataRequiredAction,
-                                         formBuilder: PayeeFullNameForm) extends FrontendController with I18nSupport {
+class IsPaymentAddressInTheUKController @Inject()(appConfig: FrontendAppConfig,
+                                                  override val messagesApi: MessagesApi,
+                                                  dataCacheConnector: DataCacheConnector,
+                                                  navigator: Navigator,
+                                                  authenticate: AuthAction,
+                                                  getData: DataRetrievalAction,
+                                                  requireData: DataRequiredAction,
+                                                  formProvider: BooleanForm) extends FrontendController with I18nSupport {
 
-  private val form: Form[String] = formBuilder()
+  private val errorKey = "isPaymentAddressInTheUK.blank"
+  val form: Form[Boolean] = formProvider(errorKey)
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val preparedForm = request.userAnswers.payeeFullName match {
+      val preparedForm = request.userAnswers.isPaymentAddressInTheUK match {
         case None => form
         case Some(value) => form.fill(value)
       }
-      Ok(payeeFullName(appConfig, preparedForm, mode))
+      Ok(isPaymentAddressInTheUK(appConfig, preparedForm, mode))
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
       form.bindFromRequest().fold(
         (formWithErrors: Form[_]) =>
-          Future.successful(BadRequest(payeeFullName(appConfig, formWithErrors, mode))),
+          Future.successful(BadRequest(isPaymentAddressInTheUK(appConfig, formWithErrors, mode))),
         (value) =>
-          dataCacheConnector.save[String](request.externalId, PayeeFullNameId.toString, value).map(cacheMap =>
-            Redirect(navigator.nextPage(PayeeFullNameId, mode)(new UserAnswers(cacheMap))))
+          dataCacheConnector.save[Boolean](request.externalId, IsPaymentAddressInTheUKId.toString, value).map(cacheMap =>
+            Redirect(navigator.nextPage(IsPaymentAddressInTheUKId, mode)(new UserAnswers(cacheMap))))
       )
   }
 }

@@ -24,11 +24,6 @@ import viewmodels.AnswerRow
 
 class CheckYourAnswersHelper(userAnswers: UserAnswers) {
 
-  def employmentDetails: Option[AnswerRow] = userAnswers.employmentDetails map {
-    x => AnswerRow("employmentDetails.checkYourAnswersLabel",
-      if(x) "site.yes" else "site.no", true, routes.EmploymentDetailsController.onPageLoad(CheckMode).url, false)
-  }
-
   val dateFormat = "dd MMMM YYYY"
 
   def userName: Option[AnswerRow] = userAnswers.userDetails map {
@@ -50,9 +45,9 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
         false, routes.SelectTaxYearController.onPageLoad(CheckMode).url, false)
   }
 
-  def payeeUKAddress: Option[AnswerRow] = userAnswers.payeeUKAddress map {
+  def paymentUKAddress: Option[AnswerRow] = userAnswers.paymentUKAddress map {
     x =>
-      AnswerRow("payeeUKAddress.checkYourAnswersLabel",
+      AnswerRow("paymentUKAddress.checkYourAnswersLabel",
         UkAddress.asString(
           UkAddress(x.addressLine1,
             x.addressLine2,
@@ -60,12 +55,12 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
             x.addressLine4,
             x.addressLine5,
             x.postcode)),
-        false, routes.PayeeUKAddressController.onPageLoad(CheckMode).url, true)
+        false, routes.PaymentUKAddressController.onPageLoad(CheckMode).url, true)
   }
 
-  def payeeInternationalAddress: Option[AnswerRow] = userAnswers.payeeInternationalAddress map {
+  def paymentInternationalAddress: Option[AnswerRow] = userAnswers.paymentInternationalAddress map {
     x =>
-      AnswerRow("payeeInternationalAddress.checkYourAnswersLabel",
+      AnswerRow("paymentInternationalAddress.checkYourAnswersLabel",
         InternationalAddress.asString(
           InternationalAddress(x.addressLine1,
             x.addressLine2,
@@ -73,7 +68,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
             x.addressLine4,
             x.addressLine5,
             x.country)),
-        false, routes.PayeeInternationalAddressController.onPageLoad(CheckMode).url, true)
+        false, routes.PaymentInternationalAddressController.onPageLoad(CheckMode).url, true)
   }
 
   def whereToSendPayment: Option[AnswerRow] = userAnswers.whereToSendPayment map {
@@ -82,11 +77,11 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
         s"whereToSendPayment.$x", true, routes.WhereToSendPaymentController.onPageLoad(CheckMode).url, true)
   }
 
-  def isPayeeAddressInTheUK: Option[AnswerRow] = userAnswers.isPayeeAddressInTheUK map {
+  def isPaymentAddressInTheUK: Option[AnswerRow] = userAnswers.isPaymentAddressInTheUK map {
     x =>
-      AnswerRow("isPayeeAddressInTheUK.checkYourAnswersLabel",
+      AnswerRow("isPaymentAddressInTheUK.checkYourAnswersLabel",
         if (x) "site.yes" else "site.no",
-        true, routes.IsPayeeAddressInTheUKController.onPageLoad(CheckMode).url, true)
+        true, routes.IsPaymentAddressInTheUKController.onPageLoad(CheckMode).url, true)
   }
 
   def anyAgentRef: Option[AnswerRow] = userAnswers.anyAgentRef map {
@@ -103,10 +98,10 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
         s"$x", false, routes.AnyAgentRefController.onPageLoad(CheckMode).url, true)
   }
 
-  def payeeFullName: Option[AnswerRow] = userAnswers.payeeFullName map {
+  def nomineeFullName: Option[AnswerRow] = userAnswers.nomineeFullName map {
     x =>
-      AnswerRow("payeeFullName.checkYourAnswersLabel",
-        s"$x", false, routes.PayeeFullNameController.onPageLoad(CheckMode).url, true)
+      AnswerRow("nomineeFullName.checkYourAnswersLabel",
+        s"$x", false, routes.NomineeFullNameController.onPageLoad(CheckMode).url, true)
   }
 
   def otherIncomeDetailsAndAmount: Option[AnswerRow] = userAnswers.otherIncomeDetailsAndAmount map {
@@ -215,6 +210,12 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
               TaxYearResolver.endOfCurrentTaxYear.minusYears(5).toString(dateFormat)
         },
         false, routes.SelectTaxYearController.onPageLoad(CheckMode).url, true)
+  }
+
+  def employmentDetails: Option[AnswerRow] = userAnswers.employmentDetails map {
+    x => AnswerRow("employmentDetails.checkYourAnswersLabel",
+      if(x) "site.yes" else "site.no",
+      true, routes.EmploymentDetailsController.onPageLoad(CheckMode).url, true)
   }
 
   def telephoneNumber: Option[AnswerRow] = userAnswers.telephoneNumber map {

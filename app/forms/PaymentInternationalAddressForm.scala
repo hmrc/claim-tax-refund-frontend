@@ -19,14 +19,14 @@ package forms
 import com.google.inject.Inject
 import config.FrontendAppConfig
 import forms.mappings.Constraints
-import models.UkAddress
+import models.InternationalAddress
 import play.api.data.Form
 import play.api.data.Forms._
 
-class PayeeUKAddressForm @Inject()(appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
+class PaymentInternationalAddressForm @Inject()(appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 
   private val maxLengthInt = appConfig.addressLineMaxLength
-  private val postcodeRegex = appConfig.postcodeRegex
+  private val countryLength = appConfig.countryMaxLength
 
   private val addressLine1KeyBlank = "global.addressLine1.blank"
   private val addressLine1KeyTooLong = "global.addressLine1.tooLong"
@@ -35,11 +35,10 @@ class PayeeUKAddressForm @Inject()(appConfig: FrontendAppConfig) extends FormErr
   private val addressLine3KeyTooLong = "global.addressLine3.tooLong"
   private val addressLine4KeyTooLong = "global.addressLine4.tooLong"
   private val addressLine5KeyTooLong = "global.addressLine5.tooLong"
-  private val postcodeKeyInvalid = "ukAddress.postcode.invalid"
-  private val postcodeKeyBlank = "ukAddress.postcode.blank"
+  private val countryKeyBlank = "global.country.blank"
+  private val countryKeyTooLong = "global.country.tooLong"
 
-
-  def apply(): Form[UkAddress] = {
+  def apply(): Form[InternationalAddress] = {
     Form(
       mapping(
         "addressLine1" -> text.verifying(nonEmpty(addressLine1KeyBlank), maxLength(maxLengthInt, addressLine1KeyTooLong)),
@@ -47,7 +46,8 @@ class PayeeUKAddressForm @Inject()(appConfig: FrontendAppConfig) extends FormErr
         "addressLine3" -> optional(text.verifying(maxLength(maxLengthInt, addressLine3KeyTooLong))),
         "addressLine4" -> optional(text.verifying(maxLength(maxLengthInt, addressLine4KeyTooLong))),
         "addressLine5" -> optional(text.verifying(maxLength(maxLengthInt, addressLine5KeyTooLong))),
-        "postcode" -> text.verifying(firstError(nonEmpty(postcodeKeyBlank), regexValidation(postcodeRegex, postcodeKeyInvalid)))
-      )(UkAddress.apply)(UkAddress.unapply))
+        "country" -> text.verifying(nonEmpty(countryKeyBlank), maxLength(countryLength, countryKeyTooLong))
+      )(InternationalAddress.apply)(InternationalAddress.unapply)
+    )
   }
 }

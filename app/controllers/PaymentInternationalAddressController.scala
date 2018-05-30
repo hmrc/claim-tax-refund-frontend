@@ -19,47 +19,48 @@ package controllers
 import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
-import forms.PayeeInternationalAddressForm
-import identifiers.PayeeInternationalAddressId
+import forms.PaymentInternationalAddressForm
+import identifiers.PaymentInternationalAddressId
 import javax.inject.Inject
+
 import models.{InternationalAddress, Mode}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import utils.{Navigator, UserAnswers}
-import views.html.payeeInternationalAddress
+import views.html.paymentInternationalAddress
 
 import scala.concurrent.Future
 
 
-class PayeeInternationalAddressController @Inject()(appConfig: FrontendAppConfig,
-                                                    override val messagesApi: MessagesApi,
-                                                    dataCacheConnector: DataCacheConnector,
-                                                    navigator: Navigator,
-                                                    authenticate: AuthAction,
-                                                    getData: DataRetrievalAction,
-                                                    requireData: DataRequiredAction,
-                                                    formBuilder: PayeeInternationalAddressForm) extends FrontendController with I18nSupport {
+class PaymentInternationalAddressController @Inject()(appConfig: FrontendAppConfig,
+                                                      override val messagesApi: MessagesApi,
+                                                      dataCacheConnector: DataCacheConnector,
+                                                      navigator: Navigator,
+                                                      authenticate: AuthAction,
+                                                      getData: DataRetrievalAction,
+                                                      requireData: DataRequiredAction,
+                                                      formBuilder: PaymentInternationalAddressForm) extends FrontendController with I18nSupport {
 
   private val form: Form[InternationalAddress] = formBuilder()
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val preparedForm = request.userAnswers.payeeInternationalAddress match {
+      val preparedForm = request.userAnswers.paymentInternationalAddress match {
         case None => form
         case Some(value) => form.fill(value)
       }
-      Ok(payeeInternationalAddress(appConfig, preparedForm, mode))
+      Ok(paymentInternationalAddress(appConfig, preparedForm, mode))
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
       form.bindFromRequest().fold(
         (formWithErrors: Form[InternationalAddress]) =>
-          Future.successful(BadRequest(payeeInternationalAddress(appConfig, formWithErrors, mode))),
+          Future.successful(BadRequest(paymentInternationalAddress(appConfig, formWithErrors, mode))),
         (value) =>
-          dataCacheConnector.save[InternationalAddress](request.externalId, PayeeInternationalAddressId.toString, value).map(cacheMap =>
-            Redirect(navigator.nextPage(PayeeInternationalAddressId, mode)(new UserAnswers(cacheMap))))
+          dataCacheConnector.save[InternationalAddress](request.externalId, PaymentInternationalAddressId.toString, value).map(cacheMap =>
+            Redirect(navigator.nextPage(PaymentInternationalAddressId, mode)(new UserAnswers(cacheMap))))
       )
   }
 }

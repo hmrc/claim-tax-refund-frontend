@@ -40,18 +40,19 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
 
   def incomeDetails = AnswerSection(Some("checkYourAnswers.incomeDetailsSection"), Seq(
     cyaHelper.selectTaxYear,
+    cyaHelper.employmentDetails,
     cyaHelper.anyBenefits,
     cyaHelper.otherIncome
   ).flatten)
 
   def paymentDetails = AnswerSection(Some("checkYourAnswers.paymentDetailsSection"), Seq(
     cyaHelper.whereToSendPayment,
-    cyaHelper.payeeFullName,
+    cyaHelper.nomineeFullName,
     cyaHelper.anyAgentRef,
     cyaHelper.agentReferenceNumber,
-    cyaHelper.isPayeeAddressInTheUK,
-    cyaHelper.payeeUKAddress,
-    cyaHelper.payeeInternationalAddress
+    cyaHelper.isPaymentAddressInTheUK,
+    cyaHelper.paymentUKAddress,
+    cyaHelper.paymentInternationalAddress
   ).flatten)
 
   def benefitDetails = AnswerSection(Some("checkYourAnswers.benefitDetailsSection"), Seq(

@@ -18,30 +18,29 @@ package controllers
 
 import connectors.FakeDataCacheConnector
 import controllers.actions._
-import forms.BooleanForm
-import identifiers.IsPayeeAddressInTheUKId
-import models.NormalMode
+import forms.PaymentUKAddressForm
+import identifiers.PaymentUKAddressId
+import models.{NormalMode, UkAddress}
 import play.api.data.Form
-import play.api.libs.json.JsBoolean
+import play.api.libs.json.Json
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
 import utils.FakeNavigator
-import views.html.isPayeeAddressInTheUK
+import views.html.paymentUKAddress
 
-class IsPayeeAddressInTheUKControllerSpec extends ControllerSpecBase {
+class PaymentUKAddressControllerSpec extends ControllerSpecBase {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
-  val formProvider = new BooleanForm()
-  val form = formProvider()
-
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new IsPayeeAddressInTheUKController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, formProvider)
+    new PaymentUKAddressController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+      dataRetrievalAction, new DataRequiredActionImpl, new PaymentUKAddressForm(frontendAppConfig))
 
-  def viewAsString(form: Form[_] = form) = isPayeeAddressInTheUK(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
+  val form = new PaymentUKAddressForm(frontendAppConfig)()
 
-  "IsPayeeAddressInTheUK Controller" must {
+  def viewAsString(form: Form[UkAddress] = form) = paymentUKAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
+
+  "PaymentUKAddress Controller" must {
 
     "return OK and the correct view for a GET" in {
       val result = controller().onPageLoad(NormalMode)(fakeRequest)
@@ -51,16 +50,16 @@ class IsPayeeAddressInTheUKControllerSpec extends ControllerSpecBase {
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      val validData = Map(IsPayeeAddressInTheUKId.toString -> JsBoolean(true))
+      val validData = Map(PaymentUKAddressId.toString -> Json.toJson(UkAddress("line 1", "line 2", None, None, None, "NE1 7RF")))
       val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validData)))
 
       val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)
 
-      contentAsString(result) mustBe viewAsString(form.fill(true))
+      contentAsString(result) mustBe viewAsString(form.fill(UkAddress("line 1", "line 2", None, None, None, "NE1 7RF")))
     }
 
     "redirect to the next page when valid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("addressLine1", "line 1"), ("addressLine2", "line 2"), ("postcode", "NE2 7RF"))
 
       val result = controller().onSubmit(NormalMode)(postRequest)
 
@@ -86,7 +85,7 @@ class IsPayeeAddressInTheUKControllerSpec extends ControllerSpecBase {
     }
 
     "redirect to Session Expired for a POST if no existing data is found" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("addressLine1", "line 1"), ("addressLine2", "line 2"), ("postcode", "NE1 6RF"))
       val result = controller(dontGetAnyData).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER

@@ -92,6 +92,22 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     }
   }
 
+  "Employment details (yes)" must {
+    s"have correct label" in {
+      when(answers.employmentDetails) thenReturn Some(true)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.employmentDetails.get.label.key mustBe s"employmentDetails.checkYourAnswersLabel"
+    }
+  }
+
+  "Employment details (no)" must {
+    s"have correct label" in {
+      when(answers.employmentDetails) thenReturn Some(false)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.employmentDetails.get.label.key mustBe s"employmentDetails.checkYourAnswersLabel"
+    }
+  }
+
   "Is any benefits (true)" must {
     s"have the correct label" in {
       when(answers.anyBenefits) thenReturn Some(true)
@@ -252,11 +268,11 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     }
   }
 
-  "Payee Full Name" must {
+  "Nominee Full Name" must {
     s"have the correct label" in {
-      when(answers.payeeFullName) thenReturn Some("Test name")
+      when(answers.nomineeFullName) thenReturn Some("Test name")
       val helper = new CheckYourAnswersHelper(answers)
-      helper.payeeFullName.get.label.key mustBe s"payeeFullName.checkYourAnswersLabel"
+      helper.nomineeFullName.get.label.key mustBe s"nomineeFullName.checkYourAnswersLabel"
     }
   }
 
@@ -275,36 +291,43 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
       helper.anyAgentRef.get.label.key mustBe s"anyAgentRef.checkYourAnswersLabel"
     }
   }
-  
-  "Is isPayeeAddressInTheUK (true)" must {
+
+  "Agent Reference Number" must {
     s"have the correct label" in {
-      when(answers.isPayeeAddressInTheUK) thenReturn Some(true)
+      when(answers.agentReferenceNumber) thenReturn Some("Test number")
       val helper = new CheckYourAnswersHelper(answers)
-      helper.isPayeeAddressInTheUK.get.label.key mustBe s"isPayeeAddressInTheUK.checkYourAnswersLabel"
+      helper.agentReferenceNumber.get.label.key mustBe s"agentReferenceNumber.checkYourAnswersLabel"
     }
   }
-
-  "Is isPayeeAddressInTheUK (false)" must {
+  "Is isPaymentAddressInTheUK (true)" must {
     s"have the correct label" in {
-      when(answers.isPayeeAddressInTheUK) thenReturn Some(false)
+      when(answers.isPaymentAddressInTheUK) thenReturn Some(true)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.isPayeeAddressInTheUK.get.label.key mustBe s"isPayeeAddressInTheUK.checkYourAnswersLabel"
+      helper.isPaymentAddressInTheUK.get.label.key mustBe s"isPaymentAddressInTheUK.checkYourAnswersLabel"
     }
   }
 
-  "Payee International Address" must {
-    s"have correct label" in {
-      when(answers.payeeInternationalAddress) thenReturn Some(InternationalAddress("line 1", "line 2", None, None, None, "country"))
+  "Is isPaymentAddressInTheUK (false)" must {
+    s"have the correct label" in {
+      when(answers.isPaymentAddressInTheUK) thenReturn Some(false)
       val helper = new CheckYourAnswersHelper(answers)
-      helper.payeeInternationalAddress.get.label.key mustBe s"payeeInternationalAddress.checkYourAnswersLabel"
+      helper.isPaymentAddressInTheUK.get.label.key mustBe s"isPaymentAddressInTheUK.checkYourAnswersLabel"
     }
   }
 
-  "Payee UK Address" must {
+  "Payment International Address" must {
     s"have correct label" in {
-      when(answers.payeeUKAddress) thenReturn Some(UkAddress("line 1", "line 2", None, None, None, "AA11 1AA"))
+      when(answers.paymentInternationalAddress) thenReturn Some(InternationalAddress("line 1", "line 2", None, None, None, "country"))
       val helper = new CheckYourAnswersHelper(answers)
-      helper.payeeUKAddress.get.label.key mustBe s"payeeUKAddress.checkYourAnswersLabel"
+      helper.paymentInternationalAddress.get.label.key mustBe s"paymentInternationalAddress.checkYourAnswersLabel"
+    }
+  }
+
+  "Payment UK Address" must {
+    s"have correct label" in {
+      when(answers.paymentUKAddress) thenReturn Some(UkAddress("line 1", "line 2", None, None, None, "AA11 1AA"))
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.paymentUKAddress.get.label.key mustBe s"paymentUKAddress.checkYourAnswersLabel"
     }
   }
 
