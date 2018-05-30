@@ -16,15 +16,45 @@
 
 package forms
 
-import com.google.inject.Inject
-import config.FrontendAppConfig
-import forms.mappings.Constraints
+import models.CompanyBenefits
+import models.CompanyBenefits.{companyCarBenefit, fuelBenefit, medicalBenefit, otherCompanyBenefit}
 import play.api.data.Form
 import play.api.data.Forms._
+import play.api.data.format.Formatter
+import play.api.i18n.Messages
+import utils.RadioOption
 
-class SelectCompanyBenefitsForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
+object SelectCompanyBenefitsForm extends FormErrorHelper {
 
-  private val selectCompanyBenefitsBlankKey = "error.required"
+  def apply(): Form[CompanyBenefits] =
+    Form("value" -> of(companyBenefitsFormatter))
 
-  def apply(): Form[String] = Form("value" -> text.verifying(nonEmpty(selectCompanyBenefitsBlankKey)))
+  def options(implicit messages: Messages): Seq[RadioOption] = Seq(
+    RadioOption(
+      companyCarBenefit.toString, companyCarBenefit.toString,
+      messages("selectCompanyBenefits.companyCar")),
+    RadioOption(
+      fuelBenefit.toString, fuelBenefit.toString,
+      messages("selectCompanyBenefits.fuel")),
+    RadioOption(
+      medicalBenefit.toString, medicalBenefit.toString,
+      messages("selectCompanyBenefits.medical")),
+    RadioOption(
+      otherCompanyBenefit.toString, otherCompanyBenefit.toString,
+      messages("selectCompanyBenefits.other"))
+  )
+
+  private def companyBenefitsFormatter = new Formatter[CompanyBenefits] {
+
+    private val errorKeyBlank = "selectCompanyBenefits.blank"
+
+    def bind(key: String, data: Map[String, String]) = data.get(key) match {
+      case Some(s) => CompanyBenefits.withName(s)
+        .map(Right.apply)
+        .getOrElse(produceError(key, "error.unknown"))
+      case None => produceError(key, errorKeyBlank)
+    }
+
+    def unbind(key: String, value: CompanyBenefits) = Map(key -> value.toString)
+  }
 }

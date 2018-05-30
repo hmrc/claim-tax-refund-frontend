@@ -280,7 +280,11 @@ employmentDetails.hintText = Your employer or pension provider might use a diffe
 selectCompanyBenefits.title = selectCompanyBenefits
 selectCompanyBenefits.heading = selectCompanyBenefits
 selectCompanyBenefits.checkYourAnswersLabel = selectCompanyBenefits
-selectCompanyBenefits.blank = selectCompanyBenefits
+selectCompanyBenefits.blank = Select a company benefit
+selectCompanyBenefits.companyCar = Company car benefit
+selectCompanyBenefits.fuel = Fuel benefit
+selectCompanyBenefits.medical = Medical benefit
+selectCompanyBenefits.other = Other company benefits
 
 anyCompanyBenefits.title = Did you get any company benefits from your employer between
 anyCompanyBenefits.heading = Did you get any company benefits from your employer between

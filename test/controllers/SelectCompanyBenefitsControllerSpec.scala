@@ -25,7 +25,8 @@ import controllers.actions._
 import play.api.test.Helpers._
 import forms.SelectCompanyBenefitsForm
 import identifiers.SelectCompanyBenefitsId
-import models.NormalMode
+import models.{CompanyBenefits, NormalMode}
+import play.api.i18n.Messages
 import views.html.selectCompanyBenefits
 
 class SelectCompanyBenefitsControllerSpec extends ControllerSpecBase {
@@ -34,12 +35,11 @@ class SelectCompanyBenefitsControllerSpec extends ControllerSpecBase {
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new SelectCompanyBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, new SelectCompanyBenefitsForm(frontendAppConfig))
+      dataRetrievalAction, new DataRequiredActionImpl)
 
-  val testAnswer = "answer"
-  val form = new SelectCompanyBenefitsForm(frontendAppConfig)()
+  def viewAsString(form: Form[_] = SelectCompanyBenefitsForm()) = selectCompanyBenefits(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
 
-  def viewAsString(form: Form[_] = form) = selectCompanyBenefits(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
+  def radioButtonOptions(implicit messages: Messages): String = SelectCompanyBenefitsForm.options(messages).head.value
 
   "SelectCompanyBenefits Controller" must {
 
@@ -51,16 +51,16 @@ class SelectCompanyBenefitsControllerSpec extends ControllerSpecBase {
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      val validData = Map(SelectCompanyBenefitsId.toString -> JsString(testAnswer))
+      val validData = Map(SelectCompanyBenefitsId.toString -> JsString(CompanyBenefits.values.head.toString))
       val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validData)))
 
       val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)
 
-      contentAsString(result) mustBe viewAsString(form.fill(testAnswer))
+      contentAsString(result) mustBe viewAsString(SelectCompanyBenefitsForm().fill(CompanyBenefits.values.head))
     }
 
     "redirect to the next page when valid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", testAnswer))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", radioButtonOptions(messages: Messages)))
 
       val result = controller().onSubmit(NormalMode)(postRequest)
 
@@ -69,8 +69,8 @@ class SelectCompanyBenefitsControllerSpec extends ControllerSpecBase {
     }
 
     "return a Bad Request and errors when invalid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", ""))
-      val boundForm = form.bind(Map("value" -> ""))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
+      val boundForm = SelectCompanyBenefitsForm().bind(Map("value" -> "invalid value"))
 
       val result = controller().onSubmit(NormalMode)(postRequest)
 
@@ -86,7 +86,7 @@ class SelectCompanyBenefitsControllerSpec extends ControllerSpecBase {
     }
 
     "redirect to Session Expired for a POST if no existing data is found" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", testAnswer))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", ""))
       val result = controller(dontGetAnyData).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER

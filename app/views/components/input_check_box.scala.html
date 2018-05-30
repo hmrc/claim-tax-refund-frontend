@@ -14,13 +14,14 @@
  * limitations under the License.
  *@
 
+@import utils.RadioOption
 @(
         field: Field,
         legend: String,
         legendClass: Option[String] = None,
         hint: Option[String] = None,
         trackGa: Boolean = false,
-        inputs: Map[String, String]
+        inputs: Seq[RadioOption]
 )(implicit messages: Messages)
 
 <div class="form-field @if(field.hasErrors){form-field--error}">
@@ -36,19 +37,13 @@
             @messages(error.message, error.args: _*)
             </span>
         }
-        @for(((label, v), i) <- inputs.zipWithIndex) {
-            @defining(
-                (0 until inputs.size).flatMap { j =>
-                    field(s"[$j]").value
-                }
-            ) { answers =>
-                <div class="multiple-choice">
-                    <input id="@field(s"[$i]").id" type="checkbox" name="@field(s"[$i]").name" value="@v" @if(answers.contains(v)){ checked="checked"} @if(trackGa){data-journey-click="childcare-calculator-frontend:click:@field(s"[$i]").id"} />
-                    <label for="@field(s"[$i]").id">
-                    @messages(label)
-                    </label>
-                </div>
-            }
+        @for(input <- inputs) {
+            <div class="multiple-choice">
+                <input id="@{input.id}" type="checkbox" name="@{field.id}" value="@{input.value}" @if(field.value.contains(input.value)){checked="checked"} @if(trackGa){data-journey-click="claim-tax-refund-frontend:click:@{input.id}"} aria-expanded="true" />
+                <label for="@{input.id}">
+                @messages(input.messageKey)
+                </label>
+            </div>
         }
     </fieldset>
 </div>

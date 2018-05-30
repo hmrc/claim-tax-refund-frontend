@@ -18,7 +18,7 @@
 @import uk.gov.hmrc.play.views.html._
 @import controllers.routes._
 @import models.Mode
-@import viewmodels.InputViewModel
+@import forms.SelectCompanyBenefitsForm
 
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
@@ -33,9 +33,14 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading("selectCompanyBenefits.heading")
+        @components.heading("selectCompanyBenefits.heading", secondaryHeaderKey = Some("index.title"))
 
-        @components.input_text(InputViewModel("value", form), label = messages("selectCompanyBenefits.heading"), labelClass=Some("visually-hidden"))
+        @components.input_check_box(
+            form("value"),
+            legend = messages("selectCompanyBenefits.heading"),
+            legendClass = Some("visually-hidden"),
+            inputs = SelectCompanyBenefitsForm.options
+        )
 
         @components.submit_button()
     }
