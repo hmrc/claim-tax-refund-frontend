@@ -120,6 +120,7 @@ fullOrPartialClaim.blank = Select whether you want to claim all some of the amou
 
 selectTaxYear.title = Which tax year does your claim apply to?
 selectTaxYear.heading = Which tax year does your claim apply to?
+selectTaxYear.current-year-minus-1 = {0} to {1}
 selectTaxYear.current-year-minus-2 = {0} to {1}
 selectTaxYear.current-year-minus-3 = {0} to {1}
 selectTaxYear.current-year-minus-4 = {0} to {1}
