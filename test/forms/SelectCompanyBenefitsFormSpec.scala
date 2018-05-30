@@ -16,30 +16,29 @@
 
 package forms
 
-import config.FrontendAppConfig
 import forms.behaviours.FormBehaviours
-import models.MandatoryField
+import models.CompanyBenefits
+import models.CompanyBenefits.companyCarBenefit
 import org.scalatest.mockito.MockitoSugar
-import org.mockito.Mockito._
-import play.api.data.Form
+import play.api.i18n.Messages
+import utils.RadioOption
 
 class SelectCompanyBenefitsFormSpec extends FormBehaviours with MockitoSugar {
 
-  val errorKeyBlank = "error.required"
+  val errorKeyBlank = "selectCompanyBenefits.blank"
 
-  def appConfig: FrontendAppConfig = {
-    val instance = mock[FrontendAppConfig]
-    instance
-  }
+  def radioButtonOptions(implicit messages: Messages): Seq[RadioOption] = SelectCompanyBenefitsForm.options(messages)
 
-  val validData: Map[String, String] = Map("value" -> "test answer")
+  val validData: Map[String, String] = Map(
+    "value" -> radioButtonOptions(messages).head.value
+  )
 
-  override val form: Form[_] = new SelectCompanyBenefitsForm(appConfig)()
+  val form = SelectCompanyBenefitsForm()
 
-  "SelectCompanyBenefits Form" must {
+  "SelectCompanyBenefits form" must {
 
-    behave like formWithMandatoryTextFields(
-      MandatoryField("value", errorKeyBlank)
-    )
+    behave like questionForm[CompanyBenefits](companyCarBenefit)
+
+    behave like formWithOptionField("value", errorKeyBlank, radioButtonOptions(messages).map(_.value): _*)
   }
 }

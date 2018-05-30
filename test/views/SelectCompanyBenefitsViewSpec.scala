@@ -16,32 +16,54 @@
 
 package views
 
-import config.FrontendAppConfig
-import play.api.data.Form
-import controllers.routes
 import forms.SelectCompanyBenefitsForm
 import models.NormalMode
 import org.scalatest.mockito.MockitoSugar
-import views.behaviours.StringViewBehaviours
+import play.api.data.Form
+import play.api.i18n.Messages
+import utils.RadioOption
+import views.behaviours.ViewBehaviours
 import views.html.selectCompanyBenefits
 
-class SelectCompanyBenefitsViewSpec extends StringViewBehaviours with MockitoSugar {
+class SelectCompanyBenefitsViewSpec extends ViewBehaviours with MockitoSugar {
 
   val messageKeyPrefix = "selectCompanyBenefits"
 
-  val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
+  def createView = () => selectCompanyBenefits(frontendAppConfig, SelectCompanyBenefitsForm(), NormalMode)(fakeRequest, messages)
 
-  override val form: Form[String] = new SelectCompanyBenefitsForm(appConfig)()
+  def createViewUsingForm = (form: Form[_]) => selectCompanyBenefits(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
-  def createView = () => selectCompanyBenefits(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
-
-  def createViewUsingForm = (form: Form[String]) => selectCompanyBenefits(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def checkBoxOptions(implicit messages: Messages): Seq[RadioOption] = SelectCompanyBenefitsForm.options(messages)
 
   "SelectCompanyBenefits view" must {
     behave like normalPage(createView, messageKeyPrefix)
 
     behave like pageWithBackLink(createView)
 
-    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.SelectCompanyBenefitsController.onSubmit(NormalMode).url)
+    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+
+    "SelectTaxYear view" when {
+      "rendered" must {
+        "contain radio buttons for the value" in {
+          val doc = asDocument(createViewUsingForm(SelectCompanyBenefitsForm()))
+          for (option <- checkBoxOptions(messages)) {
+            assertContainsRadioButton(doc, option.id, "value", option.value, false)
+          }
+        }
+      }
+
+      for (option <- checkBoxOptions(messages)) {
+        s"rendered with a value of '${option.value}'" must {
+          s"have the '${option.value}' radio button selected" in {
+            val doc = asDocument(createViewUsingForm(SelectCompanyBenefitsForm().bind(Map("value" -> s"${option.value}"))))
+            assertContainsRadioButton(doc, option.id, "value", option.value, true)
+
+            for (unselectedOption <- checkBoxOptions(messages).filterNot(o => o == option)) {
+              assertContainsRadioButton(doc, unselectedOption.id, "value", unselectedOption.value, false)
+            }
+          }
+        }
+      }
+    }
   }
 }

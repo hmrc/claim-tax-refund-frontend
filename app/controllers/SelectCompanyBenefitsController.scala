@@ -26,7 +26,7 @@ import controllers.actions._
 import config.FrontendAppConfig
 import forms.SelectCompanyBenefitsForm
 import identifiers.SelectCompanyBenefitsId
-import models.Mode
+import models.{CompanyBenefits, Mode}
 import utils.{Navigator, UserAnswers}
 import views.html.selectCompanyBenefits
 
@@ -39,27 +39,24 @@ class SelectCompanyBenefitsController @Inject()(
                                         navigator: Navigator,
                                         authenticate: AuthAction,
                                         getData: DataRetrievalAction,
-                                        requireData: DataRequiredAction,
-                                        formBuilder: SelectCompanyBenefitsForm) extends FrontendController with I18nSupport {
-
-  private val form: Form[String] = formBuilder()
+                                        requireData: DataRequiredAction) extends FrontendController with I18nSupport {
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.selectCompanyBenefits match {
-        case None => form
-        case Some(value) => form.fill(value)
+        case None => SelectCompanyBenefitsForm()
+        case Some(value) => SelectCompanyBenefitsForm().fill(value)
       }
       Ok(selectCompanyBenefits(appConfig, preparedForm, mode))
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      form.bindFromRequest().fold(
+      SelectCompanyBenefitsForm().bindFromRequest().fold(
         (formWithErrors: Form[_]) =>
           Future.successful(BadRequest(selectCompanyBenefits(appConfig, formWithErrors, mode))),
         (value) =>
-          dataCacheConnector.save[String](request.externalId, SelectCompanyBenefitsId.toString, value).map(cacheMap =>
+          dataCacheConnector.save[CompanyBenefits](request.externalId, SelectCompanyBenefitsId.toString, value).map(cacheMap =>
             Redirect(navigator.nextPage(SelectCompanyBenefitsId, mode)(new UserAnswers(cacheMap))))
       )
   }
