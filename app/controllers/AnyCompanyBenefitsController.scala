@@ -44,23 +44,38 @@ class AnyCompanyBenefitsController @Inject()(appConfig: FrontendAppConfig,
   private val errorKey = "anyCompanyBenefits.blank"
   val form: Form[Boolean] = formProvider(errorKey)
 
+
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.anyCompanyBenefits match {
         case None => form
         case Some(value) => form.fill(value)
       }
-      Ok(anyCompanyBenefits(appConfig, preparedForm, mode))
+
+      request.userAnswers.selectTaxYear.map{
+        selectedTaxYear =>
+          val taxYear = selectedTaxYear.asString
+          Ok(anyCompanyBenefits(appConfig, preparedForm, mode, taxYear))
+      }.getOrElse{
+          Redirect(routes.SessionExpiredController.onPageLoad())
+      }
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      form.bindFromRequest().fold(
-        (formWithErrors: Form[_]) =>
-          Future.successful(BadRequest(anyCompanyBenefits(appConfig, formWithErrors, mode))),
-        (value) =>
-          dataCacheConnector.save[Boolean](request.externalId, AnyCompanyBenefitsId.toString, value).map(cacheMap =>
-            Redirect(navigator.nextPage(AnyCompanyBenefitsId, mode)(new UserAnswers(cacheMap))))
-      )
+
+      request.userAnswers.selectTaxYear.map{
+        selectedTaxYear =>
+          val taxYear = selectedTaxYear.asString
+          form.bindFromRequest().fold(
+            (formWithErrors: Form[_]) =>
+              Future.successful(BadRequest(anyCompanyBenefits(appConfig, formWithErrors, mode, taxYear))),
+            (value) =>
+              dataCacheConnector.save[Boolean](request.externalId, AnyCompanyBenefitsId.toString, value).map(cacheMap =>
+                Redirect(navigator.nextPage(AnyCompanyBenefitsId, mode)(new UserAnswers(cacheMap))))
+          )
+      }.getOrElse{
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+      }
   }
 }
