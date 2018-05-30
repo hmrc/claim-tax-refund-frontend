@@ -24,6 +24,10 @@ import viewmodels.AnswerRow
 
 class CheckYourAnswersHelper(userAnswers: UserAnswers) {
 
+  def selectCompanyBenefits: Option[AnswerRow] = userAnswers.selectCompanyBenefits map {
+    x => AnswerRow("selectCompanyBenefits.checkYourAnswersLabel", s"$x", false, routes.SelectCompanyBenefitsController.onPageLoad(CheckMode).url, true)
+  }
+
   def anyCompanyBenefits: Option[AnswerRow] = userAnswers.anyCompanyBenefits map {
     x =>
       AnswerRow("anyCompanyBenefits.checkYourAnswersLabel",
