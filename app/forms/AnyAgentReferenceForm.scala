@@ -14,8 +14,21 @@
  * limitations under the License.
  */
 
-package identifiers
+package forms
 
-case object AgentReferenceNumberId extends Identifier {
-  override def toString: String = "agentReferenceNumber"
+import javax.inject.Inject
+
+import forms.mappings.AgentRefMapping
+import models.AgentRef
+import play.api.data.Form
+
+class AnyAgentReferenceForm @Inject() extends AgentRefMapping {
+
+  def apply(): Form[AgentRef] = Form(
+    "agentRef" -> agentRefMapping(
+      requiredKey = "anyAgentRef.blank",
+      requiredAgentRefKey = "anyAgentRef.blankAgentRef",
+      agentRefLengthKey = "anyAgentRef.maxLength"
+    )
+  )
 }

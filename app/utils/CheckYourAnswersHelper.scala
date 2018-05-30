@@ -18,7 +18,7 @@ package utils
 
 import controllers.routes
 import models.SelectTaxYear.{CYMinus1, CYMinus2, CYMinus3, CYMinus4, CYMinus5}
-import models.{CheckMode, InternationalAddress, UkAddress}
+import models.{AgentRef, CheckMode, InternationalAddress, UkAddress}
 import uk.gov.hmrc.time.TaxYearResolver
 import viewmodels.AnswerRow
 
@@ -85,16 +85,17 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
   }
 
   def anyAgentRef: Option[AnswerRow] = userAnswers.anyAgentRef map {
-    x =>
-      AnswerRow("anyAgentRef.checkYourAnswersLabel",
-        if (x) "site.yes" else "site.no",
-        true, routes.AnyAgentRefController.onPageLoad(CheckMode).url, true)
+    x => AnswerRow("anyAgentRef.checkYourAnswersLabel",
+    x match {
+      case AgentRef.Yes(agentRef) => "site.yes"
+      case AgentRef.No => "site.no"
+    }, true, routes.AnyAgentRefController.onPageLoad(CheckMode).url, true)
   }
 
   def agentReferenceNumber: Option[AnswerRow] = userAnswers.agentReferenceNumber map {
     x =>
-      AnswerRow("agentReferenceNumber.checkYourAnswersLabel",
-        s"$x", false, routes.AgentReferenceNumberController.onPageLoad(CheckMode).url, true)
+      AnswerRow("anyAgentRef.agentRefField",
+        s"$x", false, routes.AnyAgentRefController.onPageLoad(CheckMode).url, true)
   }
 
   def nomineeFullName: Option[AnswerRow] = userAnswers.nomineeFullName map {
