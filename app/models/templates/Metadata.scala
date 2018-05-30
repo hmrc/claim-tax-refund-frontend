@@ -23,8 +23,7 @@ import play.api.libs.functional.syntax._
 
 case class Metadata(customerId: String = "", hmrcReceivedAt: LocalDateTime = LocalDateTime.now, xmlCreatedAt: LocalDateTime = LocalDateTime.now) {
 
-  val submissionReference: String = xmlCreatedAt.toString("ssMMyyddmmHH")
-  val reconciliationId: String = submissionReference
+  val timeStamp: String = xmlCreatedAt.toString("ssMMyyddmmHH")
   val fileFormat: String = "pdf"
   val mimeType: String = "application/pdf"
 
@@ -52,9 +51,9 @@ object Metadata {
         Json.obj(
           "customerId" -> metadata.customerId,
           "hmrcReceivedAt" -> metadata.hmrcReceivedAt.toString,
-          "xmlCreatedAt" -> metadata.xmlCreatedAt.toString,
-          "submissionReference" -> metadata.submissionReference,
-          "reconciliationId" -> metadata.reconciliationId,
+          "xmlCreatedAt" -> metadata.timeStamp,
+          "submissionReference" -> metadata.timeStamp,
+          "reconciliationId" -> metadata.timeStamp,
           "fileFormat" -> metadata.fileFormat,
           "mimeType" -> metadata.mimeType,
           "casKey" -> metadata.casKey,
