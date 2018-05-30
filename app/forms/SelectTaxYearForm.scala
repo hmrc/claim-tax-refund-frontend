@@ -17,7 +17,7 @@
 package forms
 
 import models.SelectTaxYear
-import models.SelectTaxYear.{CYMinus2, CYMinus3, CYMinus4, CYMinus5}
+import models.SelectTaxYear.{CYMinus1, CYMinus2, CYMinus3, CYMinus4, CYMinus5}
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.data.format.Formatter
@@ -33,6 +33,11 @@ object SelectTaxYearForm extends FormErrorHelper {
     Form(single("value" -> of(selectTaxYearFormatter)))
 
   def options(implicit messages: Messages): Seq[RadioOption] = Seq(
+    RadioOption(
+      CYMinus1.toString, CYMinus1.toString,
+      messages(s"selectTaxYear.${CYMinus1.toString}",
+        TaxYearResolver.startOfCurrentTaxYear.minusYears(1).toString(dateFormat),
+        TaxYearResolver.endOfCurrentTaxYear.minusYears(1).toString(dateFormat))),
     RadioOption(
       CYMinus2.toString, CYMinus2.toString,
       messages(s"selectTaxYear.${CYMinus2.toString}",

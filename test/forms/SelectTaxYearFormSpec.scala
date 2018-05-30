@@ -18,6 +18,7 @@ package forms
 
 import forms.behaviours.FormBehaviours
 import models.SelectTaxYear
+import models.SelectTaxYear.CYMinus1
 import play.api.i18n.Messages
 import utils.RadioOption
 
@@ -35,7 +36,7 @@ class SelectTaxYearFormSpec extends FormBehaviours {
 
   "SelectTaxYear form" must {
 
-    behave like questionForm[SelectTaxYear](SelectTaxYear.values.head)
+    behave like questionForm[SelectTaxYear](CYMinus1)
 
     behave like formWithOptionField("value", errorKeyBlank, radioButtonOptions(messages).map(_.value): _*)
   }
