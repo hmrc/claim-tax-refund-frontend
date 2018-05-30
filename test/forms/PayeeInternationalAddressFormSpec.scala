@@ -23,7 +23,7 @@ import org.mockito.Mockito._
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
 
-class PayeeInternationalAddressFormSpec extends FormBehaviours with MockitoSugar {
+class PaymentInternationalAddressFormSpec extends FormBehaviours with MockitoSugar {
 
   private val addressLineMaxLength = 35
   private val countryMaxLength = 10
@@ -54,9 +54,9 @@ class PayeeInternationalAddressFormSpec extends FormBehaviours with MockitoSugar
     "country" -> "country"
   )
 
-  override val form: Form[InternationalAddress] = new PayeeInternationalAddressForm(appConfig)()
+  override val form: Form[InternationalAddress] = new PaymentInternationalAddressForm(appConfig)()
 
-  "PayeeInternationalAddress form" must {
+  "PaymentInternationalAddress form" must {
     behave like questionForm(InternationalAddress("value 1", "value 2", Some("value 3"), Some("value 4"), Some("value 5"), "country"))
 
     behave like formWithMandatoryTextFields(

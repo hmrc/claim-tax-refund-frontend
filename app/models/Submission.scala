@@ -17,10 +17,11 @@
 package models
 
 import identifiers._
+import models.templates.Metadata
 import play.api.libs.json.Json
 import utils.UserAnswers
 
-case class Submission(selectTaxYear: SelectTaxYear)
+case class Submission(selectTaxYear: String, pdfHtml: String, metadata: String)
 
 object Submission {
 
@@ -29,14 +30,26 @@ object Submission {
   def apply(answers: UserAnswers): Submission = {
 
     require(answers.selectTaxYear.isDefined, "Tax year was not answered")
+    require(answers.pdfHtml.isDefined, "PDF has not been created")
+    require(answers.metadata.isDefined, new Metadata("Metadata has not been created"))
 
-    Submission(answers.selectTaxYear.get)
+    val meta = Json.toJson(answers.metadata).toString()
+    val pdf = answers.pdfHtml.getOrElse("Failed to get PDF")
+
+    val taxYear = answers.selectTaxYear.map(
+      taxYear =>
+        taxYear.asString
+    ).getOrElse("Failed to get Tax year")
+
+    Submission(taxYear, pdf, meta)
   }
 
   def asMap(e: Submission): Map[String, String] = {
 
     Map(
-      SelectTaxYearId.toString -> e.selectTaxYear.toString
+      SelectTaxYearId.toString -> e.selectTaxYear.toString,
+      "pdfHtml" -> e.pdfHtml,
+      "metaData" -> e.metadata.toString
     )
   }
 }

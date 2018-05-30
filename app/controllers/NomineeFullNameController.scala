@@ -19,46 +19,48 @@ package controllers
 import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
-import forms.PayeeUKAddressForm
-import identifiers.PayeeUKAddressId
+import forms.NomineeFullNameForm
+import identifiers.NomineeFullNameId
 import javax.inject.Inject
-import models.{Mode, UkAddress}
+
+import models.Mode
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import utils.{Navigator, UserAnswers}
-import views.html.payeeUKAddress
+import views.html.nomineeFullName
 
 import scala.concurrent.Future
 
-class PayeeUKAddressController @Inject()(appConfig: FrontendAppConfig,
+class NomineeFullNameController @Inject()(
+                                         appConfig: FrontendAppConfig,
                                          override val messagesApi: MessagesApi,
                                          dataCacheConnector: DataCacheConnector,
                                          navigator: Navigator,
                                          authenticate: AuthAction,
                                          getData: DataRetrievalAction,
                                          requireData: DataRequiredAction,
-                                         formBuilder: PayeeUKAddressForm) extends FrontendController with I18nSupport {
+                                         formBuilder: NomineeFullNameForm) extends FrontendController with I18nSupport {
 
-  private val form: Form[UkAddress] = formBuilder()
+  private val form: Form[String] = formBuilder()
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val preparedForm = request.userAnswers.payeeUKAddress match {
+      val preparedForm = request.userAnswers.nomineeFullName match {
         case None => form
         case Some(value) => form.fill(value)
       }
-      Ok(payeeUKAddress(appConfig, preparedForm, mode))
+      Ok(nomineeFullName(appConfig, preparedForm, mode))
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
       form.bindFromRequest().fold(
-        (formWithErrors: Form[UkAddress]) =>
-          Future.successful(BadRequest(payeeUKAddress(appConfig, formWithErrors, mode))),
+        (formWithErrors: Form[_]) =>
+          Future.successful(BadRequest(nomineeFullName(appConfig, formWithErrors, mode))),
         (value) =>
-          dataCacheConnector.save[UkAddress](request.externalId, PayeeUKAddressId.toString, value).map(cacheMap =>
-            Redirect(navigator.nextPage(PayeeUKAddressId, mode)(new UserAnswers(cacheMap))))
+          dataCacheConnector.save[String](request.externalId, NomineeFullNameId.toString, value).map(cacheMap =>
+            Redirect(navigator.nextPage(NomineeFullNameId, mode)(new UserAnswers(cacheMap))))
       )
   }
 }

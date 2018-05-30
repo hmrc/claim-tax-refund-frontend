@@ -16,6 +16,6 @@
 
 package identifiers
 
-case object IsPayeeAddressInTheUKId extends Identifier {
-  override def toString: String = "isPayeeAddressInTheUK"
+case object NomineeFullNameId extends Identifier {
+  override def toString: String = "nomineeFullName"
 }

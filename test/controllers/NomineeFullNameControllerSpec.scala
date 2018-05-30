@@ -18,29 +18,31 @@ package controllers
 
 import connectors.FakeDataCacheConnector
 import controllers.actions._
-import forms.PayeeUKAddressForm
-import identifiers.PayeeUKAddressId
-import models.{NormalMode, UkAddress}
+import forms.NomineeFullNameForm
+import identifiers.NomineeFullNameId
+import models.NormalMode
 import play.api.data.Form
-import play.api.libs.json.Json
+import play.api.libs.json.JsString
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
 import utils.FakeNavigator
-import views.html.payeeUKAddress
+import views.html.nomineeFullName
 
-class PayeeUKAddressControllerSpec extends ControllerSpecBase {
+class NomineeFullNameControllerSpec extends ControllerSpecBase {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new PayeeUKAddressController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, new PayeeUKAddressForm(frontendAppConfig))
+    new NomineeFullNameController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+      dataRetrievalAction, new DataRequiredActionImpl, new NomineeFullNameForm(frontendAppConfig))
 
-  val form = new PayeeUKAddressForm(frontendAppConfig)()
+  val testAnswer = "answer"
+  val testTooLongAnswer = "AnswerAnswerAnswerAnswerAnswerAnswer"
+  val form = new NomineeFullNameForm(frontendAppConfig)()
 
-  def viewAsString(form: Form[UkAddress] = form) = payeeUKAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = form) = nomineeFullName(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
 
-  "PayeeUKAddress Controller" must {
+  "NomineeFullName Controller" must {
 
     "return OK and the correct view for a GET" in {
       val result = controller().onPageLoad(NormalMode)(fakeRequest)
@@ -50,16 +52,16 @@ class PayeeUKAddressControllerSpec extends ControllerSpecBase {
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      val validData = Map(PayeeUKAddressId.toString -> Json.toJson(UkAddress("line 1", "line 2", None, None, None, "NE1 7RF")))
+      val validData = Map(NomineeFullNameId.toString -> JsString(testAnswer))
       val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validData)))
 
       val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)
 
-      contentAsString(result) mustBe viewAsString(form.fill(UkAddress("line 1", "line 2", None, None, None, "NE1 7RF")))
+      contentAsString(result) mustBe viewAsString(form.fill(testAnswer))
     }
 
     "redirect to the next page when valid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("addressLine1", "line 1"), ("addressLine2", "line 2"), ("postcode", "NE2 7RF"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", testAnswer))
 
       val result = controller().onSubmit(NormalMode)(postRequest)
 
@@ -68,8 +70,18 @@ class PayeeUKAddressControllerSpec extends ControllerSpecBase {
     }
 
     "return a Bad Request and errors when invalid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
-      val boundForm = form.bind(Map("value" -> "invalid value"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", ""))
+      val boundForm = form.bind(Map("value" -> ""))
+
+      val result = controller().onSubmit(NormalMode)(postRequest)
+
+      status(result) mustBe BAD_REQUEST
+      contentAsString(result) mustBe viewAsString(boundForm)
+    }
+
+    "return a Bad Request and errors when data that is too long is submitted" in {
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", testTooLongAnswer))
+      val boundForm = form.bind(Map("value" -> testTooLongAnswer))
 
       val result = controller().onSubmit(NormalMode)(postRequest)
 
@@ -85,7 +97,7 @@ class PayeeUKAddressControllerSpec extends ControllerSpecBase {
     }
 
     "redirect to Session Expired for a POST if no existing data is found" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("addressLine1", "line 1"), ("addressLine2", "line 2"), ("postcode", "NE1 6RF"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", testAnswer))
       val result = controller(dontGetAnyData).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER

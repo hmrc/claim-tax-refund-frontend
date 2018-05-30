@@ -18,6 +18,7 @@ package utils
 
 import identifiers._
 import models._
+import models.templates._
 import uk.gov.hmrc.http.cache.client.CacheMap
 
 class UserAnswers(val cacheMap: CacheMap) {
@@ -25,11 +26,11 @@ class UserAnswers(val cacheMap: CacheMap) {
 
   def userDetails: Option[UserDetails] = cacheMap.getEntry[UserDetails](UserDetailsId.toString)
 
-  def payeeInternationalAddress: Option[InternationalAddress] = cacheMap.getEntry[InternationalAddress](PayeeInternationalAddressId.toString)
+  def paymentInternationalAddress: Option[InternationalAddress] = cacheMap.getEntry[InternationalAddress](PaymentInternationalAddressId.toString)
 
-  def payeeUKAddress: Option[UkAddress] = cacheMap.getEntry[UkAddress](PayeeUKAddressId.toString)
+  def paymentUKAddress: Option[UkAddress] = cacheMap.getEntry[UkAddress](PaymentUKAddressId.toString)
 
-  def isPayeeAddressInTheUK: Option[Boolean] = cacheMap.getEntry[Boolean](IsPayeeAddressInTheUKId.toString)
+  def isPaymentAddressInTheUK: Option[Boolean] = cacheMap.getEntry[Boolean](IsPaymentAddressInTheUKId.toString)
 
   def whereToSendPayment: Option[WhereToSendPayment] = cacheMap.getEntry[WhereToSendPayment](WhereToSendPaymentId.toString)
 
@@ -37,7 +38,7 @@ class UserAnswers(val cacheMap: CacheMap) {
 
   def agentReferenceNumber: Option[String] = cacheMap.getEntry[String](AgentRefId.toString)
 
-  def payeeFullName: Option[String] = cacheMap.getEntry[String](PayeeFullNameId.toString)
+  def nomineeFullName: Option[String] = cacheMap.getEntry[String](NomineeFullNameId.toString)
 
   def otherIncomeDetailsAndAmount: Option[String] = cacheMap.getEntry[String](OtherIncomeDetailsAndAmountId.toString)
 
@@ -76,5 +77,9 @@ class UserAnswers(val cacheMap: CacheMap) {
   def internationalAddress: Option[InternationalAddress] = cacheMap.getEntry[InternationalAddress](InternationalAddressId.toString)
 
   def isTheAddressInTheUK: Option[Boolean] = cacheMap.getEntry[Boolean](IsTheAddressInTheUKId.toString)
+
+  def pdfHtml: Option[String]= cacheMap.getEntry[String]("pdfHtml")
+
+  def metadata: Option[Metadata] = cacheMap.getEntry[Metadata]("metadata")
 
 }

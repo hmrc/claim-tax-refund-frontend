@@ -18,18 +18,22 @@ package controllers
 
 import com.google.inject.Inject
 import config.FrontendAppConfig
+import connectors.DataCacheConnector
 import controllers.actions.{AuthAction, DataRequiredAction, DataRetrievalAction}
 import models.SubmissionSuccessful
+import models.templates.Metadata
 import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.libs.json.Json
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.HeaderCarrierConverter
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import utils.{CheckYourAnswersHelper, CheckYourAnswersSections}
-import views.html.check_your_answers
+import views.html.{check_your_answers, pdf_check_your_answers}
 import services.SubmissionService
 
 class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
                                            override val messagesApi: MessagesApi,
+                                           dataCacheConnector: DataCacheConnector,
                                            authenticate: AuthAction,
                                            getData: DataRetrievalAction,
                                            requireData: DataRequiredAction,
@@ -47,7 +51,16 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
 
       implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromHeadersAndSession(request.headers, Some(request.session))
 
-      submissionService.ctrSubmission(request.userAnswers) map {
+      val cyaHelper = new CheckYourAnswersHelper(request.userAnswers)
+      val sections = new CheckYourAnswersSections(cyaHelper, request.userAnswers)
+      val pdfHtml = pdf_check_your_answers(appConfig, sections.sectionsToShow)
+      dataCacheConnector.save[String](request.externalId, "pdfHtml", pdfHtml.toString())
+
+      implicit val metadata = new Metadata()
+      dataCacheConnector.save(request.externalId, "metadata", metadata)
+
+
+    submissionService.ctrSubmission(request.userAnswers) map {
         case SubmissionSuccessful => Redirect(routes.SessionExpiredController.onPageLoad())
         case _ =>                    Redirect(routes.SessionExpiredController.onPageLoad())
       }

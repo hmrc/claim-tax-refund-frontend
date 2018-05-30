@@ -18,29 +18,24 @@
 @import uk.gov.hmrc.play.views.html._
 @import controllers.routes._
 @import models.Mode
-@import utils.FormHelpers
 @import viewmodels.InputViewModel
 
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("isPayeeAddressInTheUK.title"),
+    title = messages("nomineeFullName.title"),
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @helpers.form(action = IsPayeeAddressInTheUKController.onSubmit(mode), 'autoComplete -> "off") {
+    @helpers.form(action = NomineeFullNameController.onSubmit(mode), 'autoComplete -> "off") {
 
         @components.back_link()
 
         @components.error_summary(form.errors)
 
-        @components.heading("isPayeeAddressInTheUK.heading", secondaryHeaderKey = Some("index.title"))
+        @components.heading("nomineeFullName.heading", secondaryHeaderKey = Some("index.title"))
 
-        @components.input_yes_no(
-            InputViewModel("value", form),
-            label = messages("isPayeeAddressInTheUK.heading"),
-            labelClass = Some("visually-hidden")
-        )
+        @components.input_text(InputViewModel("value", form), label = messages("nomineeFullName.heading"), labelClass=Some("visually-hidden"))
 
         @components.submit_button()
     }
