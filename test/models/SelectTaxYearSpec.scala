@@ -27,6 +27,10 @@ class SelectTaxYearSpec extends WordSpec with MustMatchers with MockitoSugar {
   val mockSelectTaxYear = mock[SelectTaxYear]
 
   "SelectTaxYear model" must {
+    "return the currect tax year for CYMinus1" in {
+      val taxYear = SelectTaxYear.CYMinus1
+      taxYear.year mustBe TaxYearResolver.startOfCurrentTaxYear.minusYears(1).getYear
+    }
     "return the currect tax year for CYMinus2" in {
       val taxYear = SelectTaxYear.CYMinus2
       taxYear.year mustBe TaxYearResolver.startOfCurrentTaxYear.minusYears(2).getYear
@@ -44,6 +48,11 @@ class SelectTaxYearSpec extends WordSpec with MustMatchers with MockitoSugar {
       taxYear.year mustBe TaxYearResolver.startOfCurrentTaxYear.minusYears(5).getYear
     }
 
+    "return the currect tax year for CYMinus1 as String" in {
+      val taxYear = SelectTaxYear.CYMinus1
+      taxYear.asString mustBe TaxYearResolver.startOfCurrentTaxYear.minusYears(1).toString(dateFormat) + " to " +
+        TaxYearResolver.endOfCurrentTaxYear.minusYears(1).toString(dateFormat)
+    }
     "return the currect tax year for CYMinus2 as String" in {
       val taxYear = SelectTaxYear.CYMinus2
       taxYear.asString mustBe TaxYearResolver.startOfCurrentTaxYear.minusYears(2).toString(dateFormat) + " to " +
