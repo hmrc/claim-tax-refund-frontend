@@ -35,6 +35,7 @@ class DmsSubmissionServiceSpec extends SpecBase with MockitoSugar with ScalaFutu
 
   implicit val hcCaptor = ArgumentCaptor.forClass(classOf[HeaderCarrier])
   implicit val ecCaptor = ArgumentCaptor.forClass(classOf[ExecutionContext])
+  val taxYear = SelectTaxYear.CYMinus2
 
   ".ctrSubmission" when {
 
@@ -77,7 +78,7 @@ class DmsSubmissionServiceSpec extends SpecBase with MockitoSugar with ScalaFutu
         whenReady(futureResult) { result =>
           verify(mockAuditConnector).sendEvent(eventCaptor.capture)(hcCaptor.capture, ecCaptor.capture)
 
-          eventCaptor.getValue.detail.get("selectTaxYear") mustBe Some("current-year-minus-2")
+          eventCaptor.getValue.detail.get("selectTaxYear") mustBe Some(taxYear.asString)
           eventCaptor.getValue.detail.get("envelopeId") mustBe Some("id")
           eventCaptor.getValue.detail.get("filename") mustBe Some("filename")
 
