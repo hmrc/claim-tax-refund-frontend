@@ -17,7 +17,7 @@
 package utils
 
 import controllers.routes
-import models.SelectTaxYear.{CYMinus2, CYMinus3, CYMinus4, CYMinus5}
+import models.SelectTaxYear.{CYMinus1, CYMinus2, CYMinus3, CYMinus4, CYMinus5}
 import models.{CheckMode, InternationalAddress, UkAddress}
 import uk.gov.hmrc.time.TaxYearResolver
 import viewmodels.AnswerRow
@@ -195,6 +195,9 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) {
     x =>
       AnswerRow("selectTaxYear.checkYourAnswersLabel",
         x match {
+          case CYMinus1 =>
+            TaxYearResolver.startOfCurrentTaxYear.minusYears(1).toString(dateFormat) + " to " +
+              TaxYearResolver.endOfCurrentTaxYear.minusYears(1).toString(dateFormat)
           case CYMinus2 =>
             TaxYearResolver.startOfCurrentTaxYear.minusYears(2).toString(dateFormat) + " to " +
               TaxYearResolver.endOfCurrentTaxYear.minusYears(2).toString(dateFormat)
