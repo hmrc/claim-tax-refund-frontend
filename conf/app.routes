@@ -97,15 +97,10 @@ POST       /enter-nominee-full-name                               controllers.No
 GET        /change-nominee-full-name                              controllers.NomineeFullNameController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-nominee-full-name                              controllers.NomineeFullNameController.onSubmit(mode: Mode = CheckMode)
 
-GET        /has-agent-reference-number                          controllers.AgentReferenceNumberController.onPageLoad(mode: Mode = NormalMode)
-POST       /has-agent-reference-number                          controllers.AgentReferenceNumberController.onSubmit(mode: Mode = NormalMode)
-GET        /change-has-agent-reference-number                   controllers.AgentReferenceNumberController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-has-agent-reference-number                   controllers.AgentReferenceNumberController.onSubmit(mode: Mode = CheckMode)
-
-GET        /what-is-the-agent-reference-number                  controllers.AnyAgentRefController.onPageLoad(mode: Mode = NormalMode)
-POST       /what-is-the-agent-reference-number                  controllers.AnyAgentRefController.onSubmit(mode: Mode = NormalMode)
-GET        /change-agent-reference-number                       controllers.AnyAgentRefController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-agent-reference-number                       controllers.AnyAgentRefController.onSubmit(mode: Mode = CheckMode)
+GET        /has-agent-reference-number                          controllers.AnyAgentRefController.onPageLoad(mode: Mode = NormalMode)
+POST       /has-agent-reference-number                          controllers.AnyAgentRefController.onSubmit(mode: Mode = NormalMode)
+GET        /change-has-agent-reference-number                   controllers.AnyAgentRefController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-has-agent-reference-number                   controllers.AnyAgentRefController.onSubmit(mode: Mode = CheckMode)
 
 GET        /is-payment-address-in-uk                              controllers.IsPaymentAddressInTheUKController.onPageLoad(mode: Mode = NormalMode)
 POST       /is-payment-address-in-uk                              controllers.IsPaymentAddressInTheUKController.onSubmit(mode: Mode = NormalMode)

@@ -21,10 +21,10 @@
 @import utils.FormHelpers
 @import viewmodels.InputViewModel
 
-@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, nomineeName: String)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("anyAgentRef.title"),
+    title = messages("anyAgentRef.title") +s" $nomineeName "+ messages("anyAgentRef.titleSuffix"),
     appConfig = appConfig,
     bodyClasses = None) {
 
@@ -34,13 +34,16 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading("anyAgentRef.heading")
+        @components.heading("anyAgentRef.heading", dynamicHeading = Some(nomineeName), dynamicHeadingSuffix = Some("anyAgentRef.headingSuffix"), secondaryHeaderKey = Some("index.title"))
 
         @components.input_yes_no(
-            InputViewModel("value", form),
+            InputViewModel("agentRef.anyAgentRef", form),
             label = messages("anyAgentRef.heading"),
-            labelClass = Some("visually-hidden")
+            labelClass = Some("visually-hidden"),
+            yesAssoc = Some("yesAgentRef")
         )
+
+        @components.conditional_input_text(form("agentRef.agentRef"), messages("anyAgentRef.agentRefField"), "yesAgentRef")
 
         @components.submit_button()
     }
