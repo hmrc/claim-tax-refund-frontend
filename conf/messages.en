@@ -276,3 +276,8 @@ employmentDetails.detailsWeHave = Details we have between
 employmentDetails.employer = Employer
 employmentDetails.staffNumber = Staff Number
 employmentDetails.hintText = Your employer or pension provider might use a different trading name. Check with them if you don't recognise any of the names.
+
+anyCompanyBenefits.title = anyCompanyBenefits
+anyCompanyBenefits.heading = anyCompanyBenefits
+anyCompanyBenefits.checkYourAnswersLabel = anyCompanyBenefits
+anyCompanyBenefits.blank = anyCompanyBenefits
