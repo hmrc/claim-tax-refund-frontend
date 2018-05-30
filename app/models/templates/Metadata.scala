@@ -51,7 +51,7 @@ object Metadata {
         Json.obj(
           "customerId" -> metadata.customerId,
           "hmrcReceivedAt" -> metadata.hmrcReceivedAt.toString,
-          "xmlCreatedAt" -> metadata.timeStamp,
+          "xmlCreatedAt" -> metadata.xmlCreatedAt.toString,
           "submissionReference" -> metadata.timeStamp,
           "reconciliationId" -> metadata.timeStamp,
           "fileFormat" -> metadata.fileFormat,
