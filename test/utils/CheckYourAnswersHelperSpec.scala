@@ -60,6 +60,14 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
     }
   }
 
+  "Select current year minus 1" must {
+    s"have correct label" in {
+      when(answers.selectTaxYear) thenReturn Some(CYMinus1)
+      val helper = new CheckYourAnswersHelper(answers)
+      helper.selectTaxYear.get.label.key mustBe s"selectTaxYear.checkYourAnswersLabel"
+    }
+  }
+
   "Select current year minus 2" must {
     s"have correct label" in {
       when(answers.selectTaxYear) thenReturn Some(CYMinus2)
