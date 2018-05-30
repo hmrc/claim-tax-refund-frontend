@@ -59,6 +59,6 @@ object SelectTaxYear extends Enumerable[SelectTaxYear] {
   }
 
   lazy val values: Set[SelectTaxYear] = Set(
-    CYMinus2, CYMinus3, CYMinus4, CYMinus5
+    CYMinus1, CYMinus2, CYMinus3, CYMinus4, CYMinus5
   )
 }
