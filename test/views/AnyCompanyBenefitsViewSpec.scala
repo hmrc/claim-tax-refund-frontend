@@ -21,6 +21,7 @@ import controllers.routes
 import forms.BooleanForm
 import views.behaviours.YesNoViewBehaviours
 import models.NormalMode
+import models.SelectTaxYear.CYMinus2
 import views.html.anyCompanyBenefits
 
 class AnyCompanyBenefitsViewSpec extends YesNoViewBehaviours {
@@ -29,16 +30,22 @@ class AnyCompanyBenefitsViewSpec extends YesNoViewBehaviours {
 
   override val form = new BooleanForm()()
 
-  def createView = () => anyCompanyBenefits(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def dynamicHeader = CYMinus2.asString
 
-  def createViewUsingForm = (form: Form[_]) => anyCompanyBenefits(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createView = () => anyCompanyBenefits(frontendAppConfig, form, NormalMode, dynamicHeader)(fakeRequest, messages)
+
+  def createViewUsingForm = (form: Form[_]) => anyCompanyBenefits(frontendAppConfig, form, NormalMode, dynamicHeader)(fakeRequest, messages)
 
   "AnyCompanyBenefits view" must {
 
-    behave like normalPage(createView, messageKeyPrefix)
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, dynamicHeader + messages("global.questionMark"))
 
     behave like pageWithBackLink(createView)
 
-    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.AnyCompanyBenefitsController.onSubmit(NormalMode).url)
+    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+
+    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.AnyBenefitsController.onSubmit(NormalMode).url, Some(s"$messageKeyPrefix.hint"))
+
+    behave like pageWithList(createView, messageKeyPrefix, Seq("list1","list2","list3"))
   }
 }
