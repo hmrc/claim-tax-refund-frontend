@@ -16,12 +16,14 @@
 
 package controllers
 
+import connectors.{DataCacheConnector, FakeDataCacheConnector}
 import controllers.actions.{DataRequiredActionImpl, DataRetrievalAction, FakeAuthAction}
 import models.{SubmissionFailed, SubmissionSuccessful}
 import play.api.test.Helpers._
 import services.SubmissionService
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.UserAnswers
+import views.behaviours.ViewBehaviours
 
 import scala.concurrent.Future
 
@@ -29,8 +31,8 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase {
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap,
                  submissionService: SubmissionService = FakeSuccessfulSubmissionService) =
-    new CheckYourAnswersController(frontendAppConfig, messagesApi, FakeAuthAction, dataRetrievalAction,
-      new DataRequiredActionImpl, submissionService)
+    new CheckYourAnswersController(frontendAppConfig, messagesApi, FakeDataCacheConnector, FakeAuthAction, dataRetrievalAction,
+       new DataRequiredActionImpl, submissionService)
 
   "Check Your Answers Controller" must {
     "return 200 and the correct view for a GET" in {

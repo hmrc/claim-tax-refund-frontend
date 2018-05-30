@@ -18,6 +18,7 @@ package utils
 
 import identifiers._
 import models._
+import models.templates._
 import uk.gov.hmrc.http.cache.client.CacheMap
 
 class UserAnswers(val cacheMap: CacheMap) {
@@ -76,5 +77,9 @@ class UserAnswers(val cacheMap: CacheMap) {
   def internationalAddress: Option[InternationalAddress] = cacheMap.getEntry[InternationalAddress](InternationalAddressId.toString)
 
   def isTheAddressInTheUK: Option[Boolean] = cacheMap.getEntry[Boolean](IsTheAddressInTheUKId.toString)
+
+  def pdfHtml: Option[String]= cacheMap.getEntry[String]("pdfHtml")
+
+  def metadata: Option[Metadata] = cacheMap.getEntry[Metadata]("metadata")
 
 }

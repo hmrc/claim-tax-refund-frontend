@@ -17,6 +17,7 @@
 package utils
 
 import models.SelectTaxYear.CYMinus2
+import models.templates.Metadata
 import models.{SelectTaxYear, UkAddress, UserDetails}
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
@@ -71,9 +72,13 @@ object MockUserAnswers extends MockitoSugar {
   def minimalValidUserAnswers: UserAnswers = {
 
     val answers = nothingAnswered
+    val metadata = new Metadata("test_case")
 
+    when(answers.userDetails) thenReturn Some(UserDetails("test name", "AB123123A", UkAddress("testLine1", "testLine2", None, None, None, "AB1 2CD")))
     when(answers.selectTaxYear) thenReturn Some(SelectTaxYear.CYMinus2)
     when(answers.employmentDetails) thenReturn Some(true)
+    when(answers.pdfHtml) thenReturn Some ("<html>Test result</html>")
+    when(answers.metadata) thenReturn Some (metadata)
 
     answers
   }
