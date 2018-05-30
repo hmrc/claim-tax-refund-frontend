@@ -27,17 +27,18 @@ import views.html.anyAgentRef
 class AnyAgentRefViewSpec extends QuestionViewBehaviours[AgentRef]{
 
   val messageKeyPrefix = "anyAgentRef"
+  val dynamicHeaderNomineeName = " Test Nominee "
 
   val formProvider = new AnyAgentReferenceForm()
   val form = formProvider()
 
-  def createView = () => anyAgentRef(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createView = () => anyAgentRef(frontendAppConfig, form, NormalMode, dynamicHeaderNomineeName)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[_]) => anyAgentRef(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[_]) => anyAgentRef(frontendAppConfig, form, NormalMode, dynamicHeaderNomineeName)(fakeRequest, messages)
 
   "AnyAgentRef view" must {
 
-    behave like normalPage(createView, messageKeyPrefix)
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, dynamicHeaderNomineeName, messages(messageKeyPrefix+".headingSuffix"))
 
     behave like pageWithBackLink(createView)
 
