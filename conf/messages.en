@@ -277,6 +277,11 @@ employmentDetails.employer = Employer
 employmentDetails.staffNumber = Staff Number
 employmentDetails.hintText = Your employer or pension provider might use a different trading name. Check with them if you don't recognise any of the names.
 
+selectCompanyBenefits.title = selectCompanyBenefits
+selectCompanyBenefits.heading = selectCompanyBenefits
+selectCompanyBenefits.checkYourAnswersLabel = selectCompanyBenefits
+selectCompanyBenefits.blank = selectCompanyBenefits
+
 anyCompanyBenefits.title = Did you get any company benefits from your employer between
 anyCompanyBenefits.heading = Did you get any company benefits from your employer between
 anyCompanyBenefits.checkYourAnswersLabel = Did you get any taxable company benefits in the tax year that your claim relates to?
