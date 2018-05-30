@@ -49,17 +49,27 @@ class AnyAgentRefController @Inject()(appConfig: FrontendAppConfig,
         case None => form
         case Some(value) => form.fill(value)
       }
-      Ok(anyAgentRef(appConfig, preparedForm, mode))
+      request.userAnswers.nomineeFullName.map {
+        nomineeName =>
+          Ok(anyAgentRef(appConfig, preparedForm, mode, nomineeName))
+      }.getOrElse {
+        Redirect(routes.SessionExpiredController.onPageLoad())
+      }
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      form.bindFromRequest().fold(
-        (formWithErrors: Form[_]) =>
-          Future.successful(BadRequest(anyAgentRef(appConfig, formWithErrors, mode))),
-        (value) =>
-          dataCacheConnector.save[AgentRef](request.externalId, AnyAgentRefId.toString, value).map(cacheMap =>
-            Redirect(navigator.nextPage(AnyAgentRefId, mode)(new UserAnswers(cacheMap))))
-      )
+      request.userAnswers.nomineeFullName.map {
+        nomineeName =>
+          form.bindFromRequest().fold(
+            (formWithErrors: Form[_]) =>
+              Future.successful(BadRequest(anyAgentRef(appConfig, formWithErrors, mode, nomineeName))),
+            (value) =>
+              dataCacheConnector.save[AgentRef](request.externalId, AnyAgentRefId.toString, value).map(cacheMap =>
+                Redirect(navigator.nextPage(AnyAgentRefId, mode)(new UserAnswers(cacheMap))))
+          )
+      }.getOrElse {
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+      }
   }
 }

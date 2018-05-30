@@ -20,13 +20,17 @@ import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.AnyAgentReferenceForm
 import identifiers.{AgentRefId, AnyAgentRefId}
+import models.requests.{AuthenticatedRequest, OptionalDataRequest}
 import models.{AgentRef, NormalMode}
+import org.mockito.Mockito.when
 import play.api.data.Form
 import play.api.libs.json._
 import play.api.test.Helpers._
-import uk.gov.hmrc.http.cache.client.CacheMap
-import utils.FakeNavigator
+import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
+import utils.{FakeNavigator, MockUserAnswers}
 import views.html.anyAgentRef
+
+import scala.concurrent.Future
 
 
 class AnyAgentRefControllerSpec extends ControllerSpecBase {
@@ -37,49 +41,60 @@ class AnyAgentRefControllerSpec extends ControllerSpecBase {
   val form = formProvider()
   val validYesData = Map(AnyAgentRefId.toString -> Json.obj(AnyAgentRefId.toString -> JsBoolean(true), AgentRefId.toString -> JsString("AB1234")))
   val validNoData = Map(AnyAgentRefId.toString -> Json.obj(AnyAgentRefId.toString -> JsBoolean(false)))
+  val nomineeName = "Test Nominee"
+  val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyAgentRefController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, formProvider)
 
-  def viewAsString(form: Form[_] = form) = anyAgentRef(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
+  val fakeDataRetrievalAction = new DataRetrievalAction {
+    override protected def transform[A](request: AuthenticatedRequest[A]): Future[OptionalDataRequest[A]] = {
+      Future.successful(OptionalDataRequest(request, "123123", ItmpName(Some("sdadsad"), Some("sdfasfad"), Some("adfsdfa")), "AB123456A",
+        ItmpAddress(None, None, None, None, None, None, None, None),
+        Some(mockUserAnswers)))
+    }
+  }
+
+  def viewAsString(form: Form[_] = form) = anyAgentRef(frontendAppConfig, form, NormalMode, nomineeName)(fakeRequest, messages).toString
 
   "AnyAgentRef Controller" must {
 
     "return OK and the correct view for a GET" in {
-      val result = controller().onPageLoad(NormalMode)(fakeRequest)
+      when(mockUserAnswers.nomineeFullName).thenReturn(Some(nomineeName))
+      val result = controller(fakeDataRetrievalAction).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe OK
       contentAsString(result) mustBe viewAsString()
     }
 
     "populate the view correctly on a GET when YES has previously been answered" in {
-      val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validYesData)))
-      val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)
+      when(mockUserAnswers.nomineeFullName).thenReturn(Some(nomineeName))
+      when(mockUserAnswers.anyAgentRef).thenReturn(Some(AgentRef.Yes("AB1234")))
+      val result = controller(fakeDataRetrievalAction).onPageLoad(NormalMode)(fakeRequest)
 
       contentAsString(result) mustBe viewAsString(form.fill(AgentRef.Yes("AB1234")))
     }
 
     "populate the view correctly on a GET when NO has previously been answered" in {
-      val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validNoData)))
-      val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)
+      when(mockUserAnswers.nomineeFullName).thenReturn(Some(nomineeName))
+      when(mockUserAnswers.anyAgentRef).thenReturn(Some(AgentRef.No))
+      val result = controller(fakeDataRetrievalAction).onPageLoad(NormalMode)(fakeRequest)
 
       contentAsString(result) mustBe viewAsString(form.fill(AgentRef.No))
     }
 
     "redirect to the next page when valid YES data is submitted" in {
-      val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validYesData)))
       val postRequest = fakeRequest.withFormUrlEncodedBody(("agentRef.anyAgentRef", "true"),("agentRef.agentRef", "AB1234"))
-      val result = controller(getRelevantData).onSubmit(NormalMode)(postRequest)
+      val result = controller(fakeDataRetrievalAction).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(onwardRoute.url)
     }
 
     "redirect to the next page when valid NO data is submitted" in {
-      val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validYesData)))
       val postRequest = fakeRequest.withFormUrlEncodedBody(("agentRef.anyAgentRef", "false"))
-      val result = controller(getRelevantData).onSubmit(NormalMode)(postRequest)
+      val result = controller(fakeDataRetrievalAction).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(onwardRoute.url)
@@ -89,7 +104,7 @@ class AnyAgentRefControllerSpec extends ControllerSpecBase {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
       val boundForm = form.bind(Map("value" -> "invalid value"))
 
-      val result = controller().onSubmit(NormalMode)(postRequest)
+      val result = controller(fakeDataRetrievalAction).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe BAD_REQUEST
       contentAsString(result) mustBe viewAsString(boundForm)
