@@ -24,7 +24,7 @@
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, nomineeName: String)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("anyAgentRef.title") + nomineeName + messages("anyAgentRef.titleSuffix"),
+    title = messages("anyAgentRef.title") +s" $nomineeName "+ messages("anyAgentRef.titleSuffix"),
     appConfig = appConfig,
     bodyClasses = None) {
 

@@ -91,7 +91,7 @@ trait ViewBehaviours extends ViewSpecBase {
                                   dynamicHeaderSuffix: String,
                                   expectedGuidanceKeys: String*) = {
 
-    "behave like a normal page" when {
+    "behave like a normal dynamic page" when {
       "rendered" must {
         "have the correct banner title" in {
           val doc = asDocument(view())
