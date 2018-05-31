@@ -16,18 +16,18 @@
 
 package models
 
-import utils.{Enumerable, WithName}
+import play.api.libs.json.{Format, Reads, Writes}
+import utils.EnumUtils
 
-sealed trait CompanyBenefits
+object CompanyBenefits extends Enumeration {
 
-object CompanyBenefits extends Enumerable[CompanyBenefits] {
+  val COMPANY_CAR_BENEFIT = Value("company-car-benefit")
+  val FUEL_BENEFIT = Value("fuel-benefit")
+  val MEDICAL_BENEFIT = Value("medical-benefit")
+  val OTHER_COMPANY_BENEFIT = Value("other-company-benefit")
 
-  case object companyCarBenefit extends WithName("Company car benefit") with CompanyBenefits
-  case object fuelBenefit extends WithName("Fuel benefit") with CompanyBenefits
-  case object medicalBenefit extends WithName("Medical benefit") with CompanyBenefits
-  case object otherCompanyBenefit extends WithName("Other company benefits") with CompanyBenefits
+  val reads: Reads[Value] = EnumUtils.enumReads(CompanyBenefits)
+  val writes: Writes[Value] = EnumUtils.enumWrites
 
-  lazy val values: Set[CompanyBenefits] = Set(
-    companyCarBenefit, fuelBenefit, medicalBenefit, otherCompanyBenefit
-  )
+  implicit def enumFormats: Format[Value] = EnumUtils.enumFormat(CompanyBenefits)
 }

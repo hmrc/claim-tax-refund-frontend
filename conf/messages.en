@@ -279,12 +279,12 @@ employmentDetails.hintText = Your employer or pension provider might use a diffe
 
 selectCompanyBenefits.title = selectCompanyBenefits
 selectCompanyBenefits.heading = selectCompanyBenefits
-selectCompanyBenefits.checkYourAnswersLabel = selectCompanyBenefits
+selectCompanyBenefits.checkYourAnswersLabel = Company benefits
 selectCompanyBenefits.blank = Select a company benefit
-selectCompanyBenefits.companyCar = Company car benefit
-selectCompanyBenefits.fuel = Fuel benefit
-selectCompanyBenefits.medical = Medical benefit
-selectCompanyBenefits.other = Other company benefits
+selectCompanyBenefits.company-car-benefit = Company car benefit
+selectCompanyBenefits.fuel-benefit = Fuel benefit
+selectCompanyBenefits.medical-benefit = Medical benefit
+selectCompanyBenefits.other-company-benefit = Other company benefits
 
 anyCompanyBenefits.title = Did you get any company benefits from your employer between
 anyCompanyBenefits.heading = Did you get any company benefits from your employer between
