@@ -16,29 +16,21 @@
 
 package forms
 
-import forms.behaviours.FormBehaviours
+import forms.behaviours.CheckboxBehaviours
 import models.CompanyBenefits
-import models.CompanyBenefits.companyCarBenefit
-import org.scalatest.mockito.MockitoSugar
-import play.api.i18n.Messages
-import utils.RadioOption
 
-class SelectCompanyBenefitsFormSpec extends FormBehaviours with MockitoSugar {
+class SelectCompanyBenefitsFormSpec extends CheckboxBehaviours[CompanyBenefits.Value] {
 
-  val errorKeyBlank = "selectCompanyBenefits.blank"
+  override val validOptions: Set[CompanyBenefits.Value] = CompanyBenefits.values
 
-  def radioButtonOptions(implicit messages: Messages): Seq[RadioOption] = SelectCompanyBenefitsForm.options(messages)
-
-  val validData: Map[String, String] = Map(
-    "value" -> radioButtonOptions(messages).head.value
-  )
+  override val fieldName = "value"
 
   val form = SelectCompanyBenefitsForm()
 
   "SelectCompanyBenefits form" must {
+    behave like aCheckboxForm(invalid = "error.unknown")
 
-    behave like questionForm[CompanyBenefits](companyCarBenefit)
-
-    behave like formWithOptionField("value", errorKeyBlank, radioButtonOptions(messages).map(_.value): _*)
+    behave like aMandatoryCheckboxForm("selectCompanyBenefits.blank")
   }
+
 }
