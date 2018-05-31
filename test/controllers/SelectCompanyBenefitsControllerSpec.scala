@@ -16,17 +16,16 @@
 
 package controllers
 
-import play.api.data.Form
-import play.api.libs.json.JsString
-import uk.gov.hmrc.http.cache.client.CacheMap
-import utils.FakeNavigator
 import connectors.FakeDataCacheConnector
 import controllers.actions._
-import play.api.test.Helpers._
 import forms.SelectCompanyBenefitsForm
 import identifiers.SelectCompanyBenefitsId
 import models.{CompanyBenefits, NormalMode}
-import play.api.i18n.Messages
+import play.api.data.Form
+import play.api.libs.json.{JsArray, JsString}
+import play.api.test.Helpers._
+import uk.gov.hmrc.http.cache.client.CacheMap
+import utils.FakeNavigator
 import views.html.selectCompanyBenefits
 
 class SelectCompanyBenefitsControllerSpec extends ControllerSpecBase {
@@ -39,8 +38,6 @@ class SelectCompanyBenefitsControllerSpec extends ControllerSpecBase {
 
   def viewAsString(form: Form[_] = SelectCompanyBenefitsForm()) = selectCompanyBenefits(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
 
-  def radioButtonOptions(implicit messages: Messages): String = SelectCompanyBenefitsForm.options(messages).head.value
-
   "SelectCompanyBenefits Controller" must {
 
     "return OK and the correct view for a GET" in {
@@ -51,16 +48,16 @@ class SelectCompanyBenefitsControllerSpec extends ControllerSpecBase {
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      val validData = Map(SelectCompanyBenefitsId.toString -> JsString(CompanyBenefits.values.head.toString))
+      val validData = Map(SelectCompanyBenefitsId.toString -> JsArray(Seq(JsString(CompanyBenefits(0).toString))))
       val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validData)))
 
       val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)
 
-      contentAsString(result) mustBe viewAsString(SelectCompanyBenefitsForm().fill(CompanyBenefits.values.head))
+      contentAsString(result) mustBe viewAsString(SelectCompanyBenefitsForm().fill(Set(CompanyBenefits(0))))
     }
 
     "redirect to the next page when valid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", radioButtonOptions(messages: Messages)))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value[0]", CompanyBenefits(0).toString))
 
       val result = controller().onSubmit(NormalMode)(postRequest)
 
