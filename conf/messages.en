@@ -75,6 +75,7 @@ checkYourAnswers.guidance = Guidance for check your answers
 checkYourAnswers.yourDetailsSection = Your details
 checkYourAnswers.incomeDetailsSection = Income details
 checkYourAnswers.benefitDetailsSection = Benefit details
+checkYourAnswers.companyBenefitsDetailsSection = Company benefits details
 checkYourAnswers.otherIncomeDetailsSection = Other income details
 checkYourAnswers.paymentDetailsSection = Payment details
 checkYourAnswers.contactDetailsSection = Contact details

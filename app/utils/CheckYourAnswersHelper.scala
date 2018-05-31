@@ -18,14 +18,21 @@ package utils
 
 import controllers.routes
 import models.SelectTaxYear.{CYMinus1, CYMinus2, CYMinus3, CYMinus4, CYMinus5}
-import models.{AgentRef, CheckMode, InternationalAddress, UkAddress}
+import models.{AgentRef,CheckMode, CompanyBenefits, InternationalAddress, UkAddress}
+import play.api.i18n.Messages
 import uk.gov.hmrc.time.TaxYearResolver
 import viewmodels.AnswerRow
 
-class CheckYourAnswersHelper(userAnswers: UserAnswers) {
+class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messages){
 
   def selectCompanyBenefits: Option[AnswerRow] = userAnswers.selectCompanyBenefits map {
-    x => AnswerRow("selectCompanyBenefits.checkYourAnswersLabel", s"selectCompanyBenefits.$x", false, routes.SelectCompanyBenefitsController.onPageLoad(CheckMode).url, true)
+    val keyPrefix = "selectCompanyBenefits."
+    x => AnswerRow(keyPrefix + "checkYourAnswersLabel", x.toSeq.map {
+      case CompanyBenefits.COMPANY_CAR_BENEFIT => Messages(keyPrefix + "company-car-benefit")
+      case CompanyBenefits.FUEL_BENEFIT => Messages(keyPrefix + "fuel-benefit")
+      case CompanyBenefits.MEDICAL_BENEFIT => Messages(keyPrefix + "medical-benefit")
+      case CompanyBenefits.OTHER_COMPANY_BENEFIT => Messages(keyPrefix + "other-company-benefit")
+    }.mkString(", <br>"), false, routes.SelectCompanyBenefitsController.onPageLoad(CheckMode).url, true)
   }
 
   def anyCompanyBenefits: Option[AnswerRow] = userAnswers.anyCompanyBenefits map {
