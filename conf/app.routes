@@ -126,3 +126,8 @@ GET        /employmentDetails                                   controllers.Empl
 POST       /employmentDetails                                   controllers.EmploymentDetailsController.onSubmit(mode: Mode = NormalMode)
 GET        /changeEmploymentDetails                             controllers.EmploymentDetailsController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeEmploymentDetails                             controllers.EmploymentDetailsController.onSubmit(mode: Mode = CheckMode)
+
+GET        /any-company-benefits                               controllers.AnyCompanyBenefitsController.onPageLoad(mode: Mode = NormalMode)
+POST       /any-company-benefits                               controllers.AnyCompanyBenefitsController.onSubmit(mode: Mode = NormalMode)
+GET        /change-any-company-benefits                        controllers.AnyCompanyBenefitsController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-any-company-benefits                        controllers.AnyCompanyBenefitsController.onSubmit(mode: Mode = CheckMode)
