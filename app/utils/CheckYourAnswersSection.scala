@@ -34,6 +34,7 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
 
   def yourDetails = AnswerSection(Some("checkYourAnswers.yourDetailsSection"), Seq(
     cyaHelper.userName,
+    cyaHelper.selectCompanyBenefits,
     cyaHelper.userNino,
     cyaHelper.userAddress
   ).flatten)

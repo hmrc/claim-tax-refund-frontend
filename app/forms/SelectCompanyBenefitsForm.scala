@@ -16,45 +16,40 @@
 
 package forms
 
-import models.CompanyBenefits
-import models.CompanyBenefits.{companyCarBenefit, fuelBenefit, medicalBenefit, otherCompanyBenefit}
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.data.format.Formatter
-import play.api.i18n.Messages
-import utils.RadioOption
+import play.api.data.validation.{Constraint, Invalid, Valid}
+import models.CompanyBenefits
 
 object SelectCompanyBenefitsForm extends FormErrorHelper {
 
-  def apply(): Form[CompanyBenefits] =
-    Form("value" -> of(companyBenefitsFormatter))
-
-  def options(implicit messages: Messages): Seq[RadioOption] = Seq(
-    RadioOption(
-      companyCarBenefit.toString, companyCarBenefit.toString,
-      messages("selectCompanyBenefits.companyCar")),
-    RadioOption(
-      fuelBenefit.toString, fuelBenefit.toString,
-      messages("selectCompanyBenefits.fuel")),
-    RadioOption(
-      medicalBenefit.toString, medicalBenefit.toString,
-      messages("selectCompanyBenefits.medical")),
-    RadioOption(
-      otherCompanyBenefit.toString, otherCompanyBenefit.toString,
-      messages("selectCompanyBenefits.other"))
-  )
-
-  private def companyBenefitsFormatter = new Formatter[CompanyBenefits] {
-
-    private val errorKeyBlank = "selectCompanyBenefits.blank"
-
+  private def selectCompanyBenefitsFormatter = new Formatter[CompanyBenefits.Value] {
     def bind(key: String, data: Map[String, String]) = data.get(key) match {
-      case Some(s) => CompanyBenefits.withName(s)
-        .map(Right.apply)
-        .getOrElse(produceError(key, "error.unknown"))
-      case None => produceError(key, errorKeyBlank)
+      case Some(s) if optionIsValid(s) => Right(CompanyBenefits.withName(s))
+      case None => produceError(key, "selectCompanyBenefits.blank")
+      case _ => produceError(key, "error.unknown")
     }
 
-    def unbind(key: String, value: CompanyBenefits) = Map(key -> value.toString)
+    def unbind(key: String, value: CompanyBenefits.Value) = Map(key -> value.toString)
   }
+
+  private def optionIsValid(value: String): Boolean = options.values.toSeq.contains(value)
+
+  private def constraint(name: String): Constraint[Set[CompanyBenefits.Value]] = Constraint {
+    case set if set.nonEmpty =>
+      Valid
+    case _ =>
+      Invalid("selectCompanyBenefits.blank", name)
+  }
+
+  def apply(): Form[Set[CompanyBenefits.Value]] =
+    Form(
+      "value" -> set(of(selectCompanyBenefitsFormatter))
+    )
+
+  def options: Map[String, String] = CompanyBenefits.values.map {
+    value =>
+      s"selectCompanyBenefits.$value" -> value.toString
+  }.toMap
 }

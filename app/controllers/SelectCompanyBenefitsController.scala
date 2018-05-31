@@ -56,7 +56,7 @@ class SelectCompanyBenefitsController @Inject()(
         (formWithErrors: Form[_]) =>
           Future.successful(BadRequest(selectCompanyBenefits(appConfig, formWithErrors, mode))),
         (value) =>
-          dataCacheConnector.save[CompanyBenefits](request.externalId, SelectCompanyBenefitsId.toString, value).map(cacheMap =>
+          dataCacheConnector.save[Set[CompanyBenefits.Value]](request.externalId, SelectCompanyBenefitsId.toString, value).map(cacheMap =>
             Redirect(navigator.nextPage(SelectCompanyBenefitsId, mode)(new UserAnswers(cacheMap))))
       )
   }
