@@ -38,7 +38,7 @@ class AnyCompanyBenefitsViewSpec extends YesNoViewBehaviours {
 
   "AnyCompanyBenefits view" must {
 
-    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, dynamicHeader + messages("global.questionMark"))
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, " " + dynamicHeader, messages("global.questionMark"))
 
     behave like pageWithBackLink(createView)
 
