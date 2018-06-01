@@ -36,6 +36,6 @@ case class AnswerRow(label: Message, answer: Message, url: String, changeLink: B
 
 object AnswerRow {
 
-  def apply(label: String, answer: String, answerIsMessageKey: Boolean, url: String, changeLink: Boolean): AnswerRow =
+  def apply(label: String, answer: String, answerIsMessageKey: Boolean, url: String, changeLink: Boolean = true): AnswerRow =
     AnswerRow(Message(label), Message(answer), url, changeLink)
 }

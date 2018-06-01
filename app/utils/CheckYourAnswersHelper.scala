@@ -25,6 +25,10 @@ import viewmodels.AnswerRow
 
 class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messages){
 
+  def howMuchFuelBenefit: Option[AnswerRow] = userAnswers.howMuchFuelBenefit map {
+    x => AnswerRow("howMuchFuelBenefit.checkYourAnswersLabel", s"$x", false, routes.HowMuchFuelBenefitController.onPageLoad(CheckMode).url)
+  }
+
   def selectCompanyBenefits: Option[AnswerRow] = userAnswers.selectCompanyBenefits map {
     val keyPrefix = "selectCompanyBenefits."
     x => AnswerRow(keyPrefix + "checkYourAnswersLabel", x.toSeq.map {
@@ -32,7 +36,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
       case CompanyBenefits.FUEL_BENEFIT => Messages(keyPrefix + "fuel-benefit")
       case CompanyBenefits.MEDICAL_BENEFIT => Messages(keyPrefix + "medical-benefit")
       case CompanyBenefits.OTHER_COMPANY_BENEFIT => Messages(keyPrefix + "other-company-benefit")
-    }.mkString(", <br>"), false, routes.SelectCompanyBenefitsController.onPageLoad(CheckMode).url, true)
+    }.mkString(", <br>"), false, routes.SelectCompanyBenefitsController.onPageLoad(CheckMode).url)
   }
 
   def anyCompanyBenefits: Option[AnswerRow] = userAnswers.anyCompanyBenefits map {

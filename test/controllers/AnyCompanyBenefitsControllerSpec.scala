@@ -16,20 +16,16 @@
 
 package controllers
 
-import play.api.data.Form
-import utils.{FakeNavigator, MockUserAnswers}
 import connectors.FakeDataCacheConnector
 import controllers.actions._
-import play.api.test.Helpers._
 import forms.BooleanForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
-import models.requests.{AuthenticatedRequest, OptionalDataRequest}
-import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
-import views.html.anyCompanyBenefits
 import org.mockito.Mockito.when
-
-import scala.concurrent.Future
+import play.api.data.Form
+import play.api.test.Helpers._
+import utils.{FakeNavigator, MockUserAnswers}
+import views.html.anyCompanyBenefits
 
 class AnyCompanyBenefitsControllerSpec extends ControllerSpecBase {
 
@@ -38,20 +34,11 @@ class AnyCompanyBenefitsControllerSpec extends ControllerSpecBase {
   val formProvider = new BooleanForm()
   val form = formProvider()
   val taxYear: String = CYMinus2.asString
-  val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers
-
+  private val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyCompanyBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, formProvider)
-
-  val fakeDataRetrievalAction = new DataRetrievalAction {
-    override protected def transform[A](request: AuthenticatedRequest[A]): Future[OptionalDataRequest[A]] = {
-      Future.successful(OptionalDataRequest(request, "123123", ItmpName(Some("sdadsad"), Some("sdfasfad"), Some("adfsdfa")), "AB123456A",
-        ItmpAddress(None, None, None, None, None, None, None, None),
-        Some(mockUserAnswers)))
-    }
-  }
 
   def viewAsString(form: Form[_] = form) = anyCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
 
@@ -67,7 +54,7 @@ class AnyCompanyBenefitsControllerSpec extends ControllerSpecBase {
     "populate the view correctly on a GET when the question has previously been answered" in {
       when(mockUserAnswers.anyCompanyBenefits).thenReturn(Some(true))
 
-      val result = controller(fakeDataRetrievalAction).onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
       contentAsString(result) mustBe viewAsString(form.fill(true))
     }
@@ -75,7 +62,7 @@ class AnyCompanyBenefitsControllerSpec extends ControllerSpecBase {
     "redirect to the next page when valid data is submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
 
-      val result = controller(fakeDataRetrievalAction).onSubmit(NormalMode)(postRequest)
+      val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(onwardRoute.url)
@@ -85,7 +72,7 @@ class AnyCompanyBenefitsControllerSpec extends ControllerSpecBase {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
       val boundForm = form.bind(Map("value" -> "invalid value"))
 
-      val result = controller(fakeDataRetrievalAction).onSubmit(NormalMode)(postRequest)
+      val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe BAD_REQUEST
       contentAsString(result) mustBe viewAsString(boundForm)

@@ -132,7 +132,12 @@ POST       /select-company-benefits                             controllers.Sele
 GET        /change-select-company-benefits                      controllers.SelectCompanyBenefitsController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-select-company-benefits                      controllers.SelectCompanyBenefitsController.onSubmit(mode: Mode = CheckMode)
 
-GET        /any-company-benefits                               controllers.AnyCompanyBenefitsController.onPageLoad(mode: Mode = NormalMode)
-POST       /any-company-benefits                               controllers.AnyCompanyBenefitsController.onSubmit(mode: Mode = NormalMode)
-GET        /change-any-company-benefits                        controllers.AnyCompanyBenefitsController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-any-company-benefits                        controllers.AnyCompanyBenefitsController.onSubmit(mode: Mode = CheckMode)
+GET        /any-company-benefits                                controllers.AnyCompanyBenefitsController.onPageLoad(mode: Mode = NormalMode)
+POST       /any-company-benefits                                controllers.AnyCompanyBenefitsController.onSubmit(mode: Mode = NormalMode)
+GET        /change-any-company-benefits                         controllers.AnyCompanyBenefitsController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-any-company-benefits                         controllers.AnyCompanyBenefitsController.onSubmit(mode: Mode = CheckMode)
+
+GET        /how-much-fuel-benefit                               controllers.HowMuchFuelBenefitController.onPageLoad(mode: Mode = NormalMode)
+POST       /how-much-fuel-benefit                               controllers.HowMuchFuelBenefitController.onSubmit(mode: Mode = NormalMode)
+GET        /change-how-much-fuel-benefit                        controllers.HowMuchFuelBenefitController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-how-much-fuel-benefit                        controllers.HowMuchFuelBenefitController.onSubmit(mode: Mode = CheckMode)
