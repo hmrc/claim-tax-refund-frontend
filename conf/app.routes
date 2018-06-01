@@ -136,3 +136,8 @@ GET        /any-company-benefits                               controllers.AnyCo
 POST       /any-company-benefits                               controllers.AnyCompanyBenefitsController.onSubmit(mode: Mode = NormalMode)
 GET        /change-any-company-benefits                        controllers.AnyCompanyBenefitsController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-any-company-benefits                        controllers.AnyCompanyBenefitsController.onSubmit(mode: Mode = CheckMode)
+
+GET        /howMuchFuelBenefit               controllers.HowMuchFuelBenefitController.onPageLoad(mode: Mode = NormalMode)
+POST       /howMuchFuelBenefit               controllers.HowMuchFuelBenefitController.onSubmit(mode: Mode = NormalMode)
+GET        /changeHowMuchFuelBenefit                        controllers.HowMuchFuelBenefitController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeHowMuchFuelBenefit                        controllers.HowMuchFuelBenefitController.onSubmit(mode: Mode = CheckMode)
