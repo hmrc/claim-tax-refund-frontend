@@ -20,14 +20,12 @@ import connectors.{FakeDataCacheConnector, TaiConnector}
 import controllers.actions._
 import forms.BooleanForm
 import models.SelectTaxYear.CYMinus2
-import models.requests.{AuthenticatedRequest, OptionalDataRequest}
 import models.{Employment, NormalMode}
 import org.mockito.Matchers
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
 import play.api.test.Helpers._
-import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.employmentDetails
 
@@ -40,8 +38,8 @@ class EmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSug
   val formProvider = new BooleanForm()
   val form = formProvider()
   val mockTaiConnector = mock[TaiConnector]
-  val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
   val taxYear: String = CYMinus2.asString
+  private val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new EmploymentDetailsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
@@ -50,14 +48,6 @@ class EmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSug
   def viewAsString(form: Form[_] = form) = employmentDetails(frontendAppConfig, form, NormalMode,
     Seq(Employment("AVIVA PENSIONS", "754", "AZ00070")), taxYear)(fakeRequest, messages).toString
 
-  val fakeDataRetrievalAction = new DataRetrievalAction {
-    override protected def transform[A](request: AuthenticatedRequest[A]): Future[OptionalDataRequest[A]] = {
-      Future.successful(OptionalDataRequest(request, "123123", ItmpName(Some("sdadsad"), Some("sdfasfad"), Some("adfsdfa")), "AB123456A",
-        ItmpAddress(None, None, None, None, None, None, None, None),
-        Some(mockUserAnswers)))
-    }
-  }
-
   "EmploymentDetails Controller" must {
 
     "return OK and the correct view for a GET" in {
@@ -65,7 +55,7 @@ class EmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSug
       when(mockTaiConnector.taiEmployments(Matchers.eq("AB123456A"), Matchers.eq(2016))(Matchers.any(), Matchers.any()))
         .thenReturn(Future.successful(Seq(Employment("AVIVA PENSIONS", "754", "AZ00070"))))
 
-      val result = controller(fakeDataRetrievalAction).onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe OK
       contentAsString(result) mustBe viewAsString()
@@ -76,7 +66,7 @@ class EmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSug
       when(mockTaiConnector.taiEmployments(Matchers.eq("AB123456A"), Matchers.eq(2016))(Matchers.any(), Matchers.any()))
         .thenReturn(Future.successful(Seq(Employment("AVIVA PENSIONS", "754", "AZ00070"))))
 
-      val result = controller(fakeDataRetrievalAction).onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
       contentAsString(result) mustBe viewAsString(form.fill(true))
     }
@@ -87,7 +77,7 @@ class EmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSug
         .thenReturn(Future.successful(Seq(Employment("AVIVA PENSIONS", "754", "AZ00070"))))
 
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
-      val result = controller(fakeDataRetrievalAction).onSubmit(NormalMode)(postRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(onwardRoute.url)
@@ -100,7 +90,7 @@ class EmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSug
 
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
       val boundForm = form.bind(Map("value" -> "invalid value"))
-      val result = controller(fakeDataRetrievalAction).onSubmit(NormalMode)(postRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe BAD_REQUEST
       contentAsString(result) mustBe viewAsString(boundForm)
@@ -127,7 +117,7 @@ class EmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSug
       when(mockTaiConnector.taiEmployments(Matchers.eq("AB123456A"), Matchers.eq(2016))(Matchers.any(), Matchers.any()))
         .thenReturn(Future.failed(new Exception("Couldnt find tai details")))
 
-      val result = controller(fakeDataRetrievalAction).onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
@@ -137,7 +127,7 @@ class EmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSug
       when(mockUserAnswers.employmentDetails).thenReturn(None)
       when(mockUserAnswers.selectTaxYear).thenReturn(None)
 
-      val result = controller(fakeDataRetrievalAction).onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
@@ -147,7 +137,7 @@ class EmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSug
       when(mockUserAnswers.employmentDetails).thenReturn(None)
       when(mockUserAnswers.selectTaxYear).thenReturn(None)
 
-      val result = controller(fakeDataRetrievalAction).onSubmit(NormalMode)(fakeRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)

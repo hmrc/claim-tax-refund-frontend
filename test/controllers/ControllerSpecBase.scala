@@ -18,11 +18,16 @@ package controllers
 
 
 import base.SpecBase
-import controllers.actions.FakeDataRetrievalAction
+import controllers.actions.{DataRetrievalAction, FakeDataRetrievalAction}
 import identifiers.SelectTaxYearId
 import models.SelectTaxYear
+import models.requests.{AuthenticatedRequest, OptionalDataRequest}
 import play.api.libs.json.Json
+import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
 import uk.gov.hmrc.http.cache.client.CacheMap
+import utils.{MockUserAnswers, UserAnswers}
+
+import scala.concurrent.Future
 
 trait ControllerSpecBase extends SpecBase {
 
@@ -36,4 +41,12 @@ trait ControllerSpecBase extends SpecBase {
 
   def someData = new FakeDataRetrievalAction(
     Some(CacheMap(cacheMapId, Map(SelectTaxYearId.toString -> Json.toJson(SelectTaxYear.CYMinus2)))))
+
+  def fakeDataRetrievalAction(mockUserAnswers: UserAnswers = MockUserAnswers.yourDetailsUserAnswers) = new DataRetrievalAction {
+    override protected def transform[A](request: AuthenticatedRequest[A]): Future[OptionalDataRequest[A]] = {
+      Future.successful(OptionalDataRequest(request, "123123", ItmpName(Some("sdadsad"), Some("sdfasfad"), Some("adfsdfa")), "AB123456A",
+        ItmpAddress(None, None, None, None, None, None, None, None),
+        Some(mockUserAnswers)))
+    }
+  }
 }

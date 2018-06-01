@@ -17,37 +17,36 @@
 package views
 
 import config.FrontendAppConfig
+import play.api.data.Form
 import controllers.routes
-import forms.HowMuchCarBenefitsForm
+import forms.HowMuchFuelBenefitForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
-import play.api.data.Form
 import views.behaviours.StringViewBehaviours
-import views.html.howMuchCarBenefits
+import views.html.howMuchFuelBenefit
 
-class HowMuchCarBenefitsViewSpec extends StringViewBehaviours with MockitoSugar {
+class HowMuchFuelBenefitViewSpec extends StringViewBehaviours with MockitoSugar {
 
-  val messageKeyPrefix = "howMuchCarBenefits"
+  val messageKeyPrefix = "howMuchFuelBenefit"
 
   val taxYear = CYMinus2.asString
 
   val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
-  override val form: Form[String] = new HowMuchCarBenefitsForm(appConfig)()
+  override val form: Form[String] = new HowMuchFuelBenefitForm(appConfig)()
 
-  def createView = () => howMuchCarBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createView = () => howMuchFuelBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) => howMuchCarBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[String]) => howMuchFuelBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
-  "HowMuchCarBenefits view" must {
+  "HowMuchFuelBenefit view" must {
     behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, " " + taxYear, messages("global.questionMark"))
 
     behave like pageWithBackLink(createView)
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    behave like stringPage(createViewUsingForm, messageKeyPrefix,
-      routes.HowMuchCarBenefitsController.onSubmit(NormalMode).url, None, None, Some(messages("global.poundSign")))
+    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.HowMuchFuelBenefitController.onSubmit(NormalMode).url)
   }
 }

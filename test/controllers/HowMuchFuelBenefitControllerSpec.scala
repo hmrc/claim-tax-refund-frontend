@@ -18,7 +18,7 @@ package controllers
 
 import connectors.FakeDataCacheConnector
 import controllers.actions._
-import forms.HowMuchCarBenefitsForm
+import forms.HowMuchFuelBenefitForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.mockito.Mockito.when
@@ -26,24 +26,24 @@ import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
 import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
-import views.html.howMuchCarBenefits
+import views.html.howMuchFuelBenefit
 
-class HowMuchCarBenefitsControllerSpec extends ControllerSpecBase with MockitoSugar {
+class HowMuchFuelBenefitControllerSpec extends ControllerSpecBase with MockitoSugar {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
   val testAnswer = "9,999.99"
-  val form = new HowMuchCarBenefitsForm(frontendAppConfig)()
+  val form = new HowMuchFuelBenefitForm(frontendAppConfig)()
   val taxYear: String = CYMinus2.asString
   private val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new HowMuchCarBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, new HowMuchCarBenefitsForm(frontendAppConfig))
+    new HowMuchFuelBenefitController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+      dataRetrievalAction, new DataRequiredActionImpl, new HowMuchFuelBenefitForm(frontendAppConfig))
 
-  def viewAsString(form: Form[_] = form) = howMuchCarBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = form) = howMuchFuelBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
 
-  "HowMuchCarBenefits Controller" must {
+  "HowMuchFuelBenefit Controller" must {
 
     "return OK and the correct view for a GET" in {
       val result = controller(fakeDataRetrievalAction()).onPageLoad(NormalMode)(fakeRequest)
@@ -53,7 +53,7 @@ class HowMuchCarBenefitsControllerSpec extends ControllerSpecBase with MockitoSu
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      when(mockUserAnswers.howMuchCarBenefits).thenReturn(Some(testAnswer))
+      when(mockUserAnswers.howMuchFuelBenefit).thenReturn(Some(testAnswer))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
       contentAsString(result) mustBe viewAsString(form.fill(testAnswer))

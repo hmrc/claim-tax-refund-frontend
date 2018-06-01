@@ -16,36 +16,37 @@
 
 package controllers
 
-import config.FrontendAppConfig
-import connectors.DataCacheConnector
-import controllers.actions._
-import forms.HowMuchCarBenefitsForm
-import identifiers.HowMuchCarBenefitsId
 import javax.inject.Inject
-import models.Mode
+
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import connectors.DataCacheConnector
+import controllers.actions._
+import config.FrontendAppConfig
+import forms.HowMuchFuelBenefitForm
+import identifiers.HowMuchFuelBenefitId
+import models.Mode
 import utils.{Navigator, UserAnswers}
-import views.html.howMuchCarBenefits
+import views.html.howMuchFuelBenefit
 
 import scala.concurrent.Future
 
-class HowMuchCarBenefitsController @Inject()(
-                                              appConfig: FrontendAppConfig,
-                                              override val messagesApi: MessagesApi,
-                                              dataCacheConnector: DataCacheConnector,
-                                              navigator: Navigator,
-                                              authenticate: AuthAction,
-                                              getData: DataRetrievalAction,
-                                              requireData: DataRequiredAction,
-                                              formBuilder: HowMuchCarBenefitsForm) extends FrontendController with I18nSupport {
+class HowMuchFuelBenefitController @Inject()(
+                                        appConfig: FrontendAppConfig,
+                                        override val messagesApi: MessagesApi,
+                                        dataCacheConnector: DataCacheConnector,
+                                        navigator: Navigator,
+                                        authenticate: AuthAction,
+                                        getData: DataRetrievalAction,
+                                        requireData: DataRequiredAction,
+                                        formBuilder: HowMuchFuelBenefitForm) extends FrontendController with I18nSupport {
 
   private val form: Form[String] = formBuilder()
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val preparedForm = request.userAnswers.howMuchCarBenefits match {
+      val preparedForm = request.userAnswers.howMuchFuelBenefit match {
         case None => form
         case Some(value) => form.fill(value)
       }
@@ -53,7 +54,7 @@ class HowMuchCarBenefitsController @Inject()(
       request.userAnswers.selectTaxYear.map{
         selectedTaxYear =>
           val taxYear = selectedTaxYear.asString
-          Ok(howMuchCarBenefits(appConfig, preparedForm, mode, taxYear))
+          Ok(howMuchFuelBenefit(appConfig, preparedForm, mode, taxYear))
       }.getOrElse{
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
@@ -66,10 +67,10 @@ class HowMuchCarBenefitsController @Inject()(
           val taxYear = selectedTaxYear.asString
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(howMuchCarBenefits(appConfig, formWithErrors, mode, taxYear))),
+              Future.successful(BadRequest(howMuchFuelBenefit(appConfig, formWithErrors, mode, taxYear))),
             (value) =>
-              dataCacheConnector.save[String](request.externalId, HowMuchCarBenefitsId.toString, value).map(cacheMap =>
-                Redirect(navigator.nextPage(HowMuchCarBenefitsId, mode)(new UserAnswers(cacheMap))))
+              dataCacheConnector.save[String](request.externalId, HowMuchFuelBenefitId.toString, value).map(cacheMap =>
+                Redirect(navigator.nextPage(HowMuchFuelBenefitId, mode)(new UserAnswers(cacheMap))))
           )
       }.getOrElse {
         Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
