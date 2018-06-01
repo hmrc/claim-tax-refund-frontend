@@ -24,7 +24,11 @@ import play.api.data.Forms._
 
 class HowMuchFuelBenefitForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 
-  private val howMuchFuelBenefitBlankKey = "error.required"
+  private val currencyRegex = appConfig.currencyRegex
+  private val errorKeyInvalid = "howMuchFuelBenefit.invalid"
+  private val errorKeyBlank = "howMuchFuelBenefit.blank"
 
-  def apply(): Form[String] = Form("value" -> text.verifying(nonEmpty(howMuchFuelBenefitBlankKey)))
+  def apply(): Form[String] = Form(
+    "value" -> text.verifying(firstError(nonEmpty(errorKeyBlank), regexValidation(currencyRegex, errorKeyInvalid)))
+  )
 }
