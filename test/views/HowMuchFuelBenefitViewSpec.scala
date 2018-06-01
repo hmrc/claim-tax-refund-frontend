@@ -21,6 +21,7 @@ import play.api.data.Form
 import controllers.routes
 import forms.HowMuchFuelBenefitForm
 import models.NormalMode
+import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
 import views.behaviours.StringViewBehaviours
 import views.html.howMuchFuelBenefit
@@ -29,18 +30,22 @@ class HowMuchFuelBenefitViewSpec extends StringViewBehaviours with MockitoSugar 
 
   val messageKeyPrefix = "howMuchFuelBenefit"
 
+  val taxYear = CYMinus2.asString
+
   val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
   override val form: Form[String] = new HowMuchFuelBenefitForm(appConfig)()
 
-  def createView = () => howMuchFuelBenefit(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createView = () => howMuchFuelBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) => howMuchFuelBenefit(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[String]) => howMuchFuelBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "HowMuchFuelBenefit view" must {
-    behave like normalPage(createView, messageKeyPrefix)
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, " " + taxYear, messages("global.questionMark"))
 
     behave like pageWithBackLink(createView)
+
+    behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
     behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.HowMuchFuelBenefitController.onSubmit(NormalMode).url)
   }
