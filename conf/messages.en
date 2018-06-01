@@ -296,3 +296,8 @@ anyCompanyBenefits.list1 = company car
 anyCompanyBenefits.list2 = fuel benefit
 anyCompanyBenefits.list3 = medical benefit
 anyCompanyBenefits.list4 = other company benefits from your employer
+
+howMuchFuelBenefit.title = howMuchFuelBenefit
+howMuchFuelBenefit.heading = howMuchFuelBenefit
+howMuchFuelBenefit.checkYourAnswersLabel = howMuchFuelBenefit
+howMuchFuelBenefit.blank = howMuchFuelBenefit
