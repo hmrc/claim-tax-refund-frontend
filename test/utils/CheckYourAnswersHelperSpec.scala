@@ -22,9 +22,10 @@ import models.WhereToSendPayment._
 import models.{AgentRef, InternationalAddress, UkAddress, UserDetails}
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
+import play.api.i18n.Messages
 import viewmodels.AnswerRow
 
-class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar {
+class CheckYourAnswersHelperSpec (implicit messages: Messages)extends SpecBase with MockitoSugar {
 
   private var answers = mock[UserAnswers]
   private var answerRow = mock[AnswerRow]

@@ -18,11 +18,12 @@ package views
 
 import base.SpecBase
 import org.scalatest.mockito.MockitoSugar
+import play.api.i18n.Messages
 import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, MockUserAnswers, UserAnswers}
 import views.behaviours.ViewBehaviours
 import views.html.check_your_answers
 
-class CheckYourAnswersViewSpec extends SpecBase with ViewBehaviours with MockitoSugar {
+class CheckYourAnswersViewSpec (implicit messages: Messages) extends SpecBase with ViewBehaviours with MockitoSugar {
 
   val messageKeyPrefix = "checkYourAnswers"
 
