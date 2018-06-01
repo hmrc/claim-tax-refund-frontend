@@ -75,6 +75,7 @@ checkYourAnswers.guidance = Guidance for check your answers
 checkYourAnswers.yourDetailsSection = Your details
 checkYourAnswers.incomeDetailsSection = Income details
 checkYourAnswers.benefitDetailsSection = Benefit details
+checkYourAnswers.companyBenefitsDetailsSection = Company benefits details
 checkYourAnswers.otherIncomeDetailsSection = Other income details
 checkYourAnswers.paymentDetailsSection = Payment details
 checkYourAnswers.contactDetailsSection = Contact details
@@ -276,6 +277,15 @@ employmentDetails.detailsWeHave = Details we have between
 employmentDetails.employer = Employer
 employmentDetails.staffNumber = Staff Number
 employmentDetails.hintText = Your employer or pension provider might use a different trading name. Check with them if you don't recognise any of the names.
+
+selectCompanyBenefits.title = selectCompanyBenefits
+selectCompanyBenefits.heading = selectCompanyBenefits
+selectCompanyBenefits.checkYourAnswersLabel = Company benefits
+selectCompanyBenefits.blank = Select a company benefit
+selectCompanyBenefits.company-car-benefit = Company car benefit
+selectCompanyBenefits.fuel-benefit = Fuel benefit
+selectCompanyBenefits.medical-benefit = Medical benefit
+selectCompanyBenefits.other-company-benefit = Other company benefits
 
 anyCompanyBenefits.title = Did you get any company benefits from your employer between
 anyCompanyBenefits.heading = Did you get any company benefits from your employer between

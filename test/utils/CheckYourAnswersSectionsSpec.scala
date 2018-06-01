@@ -23,8 +23,9 @@ import models._
 import org.mockito.Mockito._
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.mockito.MockitoSugar
+import play.api.i18n.Messages
 
-class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with BeforeAndAfterEach {
+class CheckYourAnswersSectionsSpec (implicit messages: Messages)extends SpecBase with MockitoSugar with BeforeAndAfterEach {
 
   private var answers = mock[UserAnswers]
 
