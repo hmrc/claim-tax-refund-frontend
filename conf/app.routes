@@ -137,6 +137,11 @@ POST       /any-company-benefits                                controllers.AnyC
 GET        /change-any-company-benefits                         controllers.AnyCompanyBenefitsController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-any-company-benefits                         controllers.AnyCompanyBenefitsController.onSubmit(mode: Mode = CheckMode)
 
+GET        /enterPayeReference               controllers.EnterPayeReferenceController.onPageLoad(mode: Mode = NormalMode)
+POST       /enterPayeReference               controllers.EnterPayeReferenceController.onSubmit(mode: Mode = NormalMode)
+GET        /changeEnterPayeReference                        controllers.EnterPayeReferenceController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeEnterPayeReference                        controllers.EnterPayeReferenceController.onSubmit(mode: Mode = CheckMode)
+
 GET        /how-much-fuel-benefit                               controllers.HowMuchFuelBenefitController.onPageLoad(mode: Mode = NormalMode)
 POST       /how-much-fuel-benefit                               controllers.HowMuchFuelBenefitController.onSubmit(mode: Mode = NormalMode)
 GET        /change-how-much-fuel-benefit                        controllers.HowMuchFuelBenefitController.onPageLoad(mode: Mode = CheckMode)
