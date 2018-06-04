@@ -22,9 +22,14 @@ import forms.mappings.Constraints
 import play.api.data.Form
 import play.api.data.Forms._
 
-class EnterPayeReferenceForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
+class EnterPayeReferenceForm @Inject()(appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 
-  private val enterPayeReferenceBlankKey = "error.required"
+  private val enterPayeReferenceBlankKey = "enterPayeReference.blank"
+  private val enterPayeReferenceInvalid = "enterPayeReference.invalid"
+  private val enterPayeReferenceRegex = """^[0-9]{3}\/[A-Z]{1,2}[0-9]{0,8}$"""
 
-  def apply(): Form[String] = Form("value" -> text.verifying(nonEmpty(enterPayeReferenceBlankKey)))
+
+  def apply(): Form[String] = Form(
+    "value" -> text.verifying(firstError(nonEmpty(enterPayeReferenceBlankKey), regexValidation(enterPayeReferenceRegex, enterPayeReferenceInvalid)))
+  )
 }

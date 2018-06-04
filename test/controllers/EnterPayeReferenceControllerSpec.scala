@@ -36,7 +36,7 @@ class EnterPayeReferenceControllerSpec extends ControllerSpecBase {
     new EnterPayeReferenceController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, new EnterPayeReferenceForm(frontendAppConfig))
 
-  val testAnswer = "answer"
+  val testAnswer = "123/AB1234"
   val form = new EnterPayeReferenceForm(frontendAppConfig)()
 
   def viewAsString(form: Form[_] = form) = enterPayeReference(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString

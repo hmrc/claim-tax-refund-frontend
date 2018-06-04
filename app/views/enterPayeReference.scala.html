@@ -35,7 +35,7 @@
 
         @components.heading("enterPayeReference.heading")
 
-        @components.input_text(InputViewModel("value", form), label = messages("enterPayeReference.heading"), labelClass=Some("visually-hidden"))
+        @components.input_text(InputViewModel("value", form), label = messages("enterPayeReference.heading"), labelClass=Some("visually-hidden"), hintLine1 = Some(messages("enterPayeReference.hint")))
 
         @components.submit_button()
     }
