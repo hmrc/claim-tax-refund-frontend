@@ -317,3 +317,8 @@ selectBenefits.incapacity-benefit = Incapacity benefit
 selectBenefits.employment-and-support-allowance = Employment and Support Allowance
 selectBenefits.state-pension = State Pension
 selectBenefits.other-taxable-benefit = Other taxable benefit
+
+howMuchOtherCompanyBenefit.title = howMuchOtherCompanyBenefit
+howMuchOtherCompanyBenefit.heading = howMuchOtherCompanyBenefit
+howMuchOtherCompanyBenefit.checkYourAnswersLabel = howMuchOtherCompanyBenefit
+howMuchOtherCompanyBenefit.blank = howMuchOtherCompanyBenefit
