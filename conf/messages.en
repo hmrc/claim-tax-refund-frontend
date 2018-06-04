@@ -331,3 +331,8 @@ enterPayeReference.heading = Enter your employer or pension provider's PAYE refe
 enterPayeReference.hint = For example 123/AB456. You can find this on your payslip or P60enterPayeReference.title = enterPayeReference
 enterPayeReference.blank = Enter your employer or pension provider's PAYE reference
 enterPayeReference.invalid = Enter a valid PAYE reference
+
+anyOtherCompanyBenefits.title = Did you get any other company benefits between
+anyOtherCompanyBenefits.heading = Did you get any other company benefits between
+anyOtherCompanyBenefits.checkYourAnswersLabel = anyOtherCompanyBenefits
+anyOtherCompanyBenefits.blank = Did you get any other company benefits in the tax year your claim is for?
