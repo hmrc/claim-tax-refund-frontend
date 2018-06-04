@@ -166,3 +166,8 @@ GET        /how-much-other-company-benefit                      controllers.HowM
 POST       /how-much-other-company-benefit                      controllers.HowMuchOtherCompanyBenefitController.onSubmit(mode: Mode = NormalMode)
 GET        /change-how-much-other-company-benefit               controllers.HowMuchOtherCompanyBenefitController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-how-much-other-company-benefit               controllers.HowMuchOtherCompanyBenefitController.onSubmit(mode: Mode = CheckMode)
+
+GET        /howMuchBereavementAllowance               controllers.HowMuchBereavementAllowanceController.onPageLoad(mode: Mode = NormalMode)
+POST       /howMuchBereavementAllowance               controllers.HowMuchBereavementAllowanceController.onSubmit(mode: Mode = NormalMode)
+GET        /changeHowMuchBereavementAllowance                        controllers.HowMuchBereavementAllowanceController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeHowMuchBereavementAllowance                        controllers.HowMuchBereavementAllowanceController.onSubmit(mode: Mode = CheckMode)
