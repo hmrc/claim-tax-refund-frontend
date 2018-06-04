@@ -18,28 +18,29 @@ package forms
 
 import config.FrontendAppConfig
 import forms.behaviours.FormBehaviours
-import models.MandatoryField
+import models.{MandatoryField, RegexField}
 import org.scalatest.mockito.MockitoSugar
-import org.mockito.Mockito._
 import play.api.data.Form
 
 class EnterPayeReferenceFormSpec extends FormBehaviours with MockitoSugar {
 
-  val errorKeyBlank = "error.required"
+  private val enterPayeReferenceBlankKey = "enterPayeReference.blank"
+  private val enterPayeReferenceInvalid = "enterPayeReference.invalid"
+  private val testRegex = """^[0-9]{3}\/[A-Z]{1,2}[0-9]{0,8}$"""
 
   def appConfig: FrontendAppConfig = {
     val instance = mock[FrontendAppConfig]
     instance
   }
 
-  val validData: Map[String, String] = Map("value" -> "test answer")
+  val validData: Map[String, String] = Map("value" -> "123/AB1234")
 
   override val form: Form[_] = new EnterPayeReferenceForm(appConfig)()
 
   "EnterPayeReference Form" must {
 
-    behave like formWithMandatoryTextFields(
-      MandatoryField("value", errorKeyBlank)
-    )
+    behave like formWithMandatoryTextFields(MandatoryField("value", enterPayeReferenceBlankKey))
+
+    behave like formWithRegex(RegexField("value", enterPayeReferenceInvalid, testRegex))
   }
 }
