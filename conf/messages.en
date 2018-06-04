@@ -336,3 +336,8 @@ anyOtherCompanyBenefits.title = Did you get any other company benefits between
 anyOtherCompanyBenefits.heading = Did you get any other company benefits between
 anyOtherCompanyBenefits.checkYourAnswersLabel = anyOtherCompanyBenefits
 anyOtherCompanyBenefits.blank = Did you get any other company benefits in the tax year your claim is for?
+
+howMuchBereavementAllowance.title = howMuchBereavementAllowance
+howMuchBereavementAllowance.heading = howMuchBereavementAllowance
+howMuchBereavementAllowance.checkYourAnswersLabel = howMuchBereavementAllowance
+howMuchBereavementAllowance.blank = howMuchBereavementAllowance
