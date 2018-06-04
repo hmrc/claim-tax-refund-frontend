@@ -16,15 +16,40 @@
 
 package forms
 
-import com.google.inject.Inject
-import config.FrontendAppConfig
-import forms.mappings.Constraints
+import models.Benefits
 import play.api.data.Form
 import play.api.data.Forms._
+import play.api.data.format.Formatter
+import play.api.data.validation.{Constraint, Invalid, Valid}
 
-class SelectBenefitsForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
+object SelectBenefitsForm extends FormErrorHelper {
 
-  private val selectBenefitsBlankKey = "error.required"
+  private def selectBenefitsFormatter = new Formatter[Benefits.Value] {
+    def bind(key: String, data: Map[String, String]) = data.get(key) match {
+      case Some(s) if optionIsValid(s) => Right(Benefits.withName(s))
+      case None => produceError(key, "selectBenefits.blank")
+      case _ => produceError(key, "error.unknown")
+    }
 
-  def apply(): Form[String] = Form("value" -> text.verifying(nonEmpty(selectBenefitsBlankKey)))
+    def unbind(key: String, value: Benefits.Value) = Map(key -> value.toString)
+  }
+
+  private def optionIsValid(value: String): Boolean = options.values.toSeq.contains(value)
+
+  private def constraint: Constraint[Set[Benefits.Value]] = Constraint {
+    case set if set.nonEmpty =>
+      Valid
+    case _ =>
+      Invalid("selectBenefits.blank")
+  }
+
+  def apply(): Form[Set[Benefits.Value]] =
+    Form(
+      "value" -> set(of(selectBenefitsFormatter)).verifying(constraint)
+    )
+
+  def options: Map[String, String] = Benefits.values.map {
+    value =>
+      s"selectBenefits.$value" -> value.toString
+  }.toMap
 }

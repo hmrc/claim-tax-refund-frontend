@@ -16,30 +16,21 @@
 
 package forms
 
-import config.FrontendAppConfig
-import forms.behaviours.FormBehaviours
-import models.MandatoryField
-import org.scalatest.mockito.MockitoSugar
-import org.mockito.Mockito._
-import play.api.data.Form
+import forms.behaviours.CheckboxBehaviours
+import models.Benefits
 
-class SelectBenefitsFormSpec extends FormBehaviours with MockitoSugar {
+class SelectBenefitsFormSpec extends CheckboxBehaviours[Benefits.Value] {
 
-  val errorKeyBlank = "error.required"
+  override val validOptions: Set[Benefits.Value] = Benefits.values
 
-  def appConfig: FrontendAppConfig = {
-    val instance = mock[FrontendAppConfig]
-    instance
+  override val fieldName = "value"
+
+  val form = SelectBenefitsForm()
+
+  "SelectCompanyBenefits form" must {
+    behave like aCheckboxForm(invalid = "error.unknown")
+
+    behave like aMandatoryCheckboxForm("selectBenefits.blank")
   }
 
-  val validData: Map[String, String] = Map("value" -> "test answer")
-
-  override val form: Form[_] = new SelectBenefitsForm(appConfig)()
-
-  "SelectBenefits Form" must {
-
-    behave like formWithMandatoryTextFields(
-      MandatoryField("value", errorKeyBlank)
-    )
-  }
 }

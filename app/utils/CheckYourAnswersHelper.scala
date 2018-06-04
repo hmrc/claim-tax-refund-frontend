@@ -18,7 +18,7 @@ package utils
 
 import controllers.routes
 import models.SelectTaxYear.{CYMinus1, CYMinus2, CYMinus3, CYMinus4, CYMinus5}
-import models.{AgentRef,CheckMode, CompanyBenefits, InternationalAddress, UkAddress}
+import models._
 import play.api.i18n.Messages
 import uk.gov.hmrc.time.TaxYearResolver
 import viewmodels.AnswerRow
@@ -26,8 +26,16 @@ import viewmodels.AnswerRow
 class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messages){
 
   def selectBenefits: Option[AnswerRow] = userAnswers.selectBenefits map {
-    x => AnswerRow("selectBenefits.checkYourAnswersLabel", s"$x", false, routes.SelectBenefitsController.onPageLoad(CheckMode).url)
+    val keyPrefix = "selectCompanyBenefits."
+    x => AnswerRow(keyPrefix + "checkYourAnswersLabel", x.toSeq.map {
+      case Benefits.JOBSEEKERS_ALLOWANCE => Messages(keyPrefix + "jobseekers-allowance")
+      case Benefits.INCAPACITY_BENEFIT => Messages(keyPrefix + "incapacity-benefit")
+      case Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE => Messages(keyPrefix + "employment-and-support-allowance")
+      case Benefits.STATE_PENSION => Messages(keyPrefix + "state-pension")
+      case Benefits.OTHER_TAXABLE_BENEFIT => Messages(keyPrefix + "other-taxable-benefit")
+    }.mkString(", <br>"), false, routes.SelectBenefitsController.onPageLoad(CheckMode).url)
   }
+
 
   def howMuchFuelBenefit: Option[AnswerRow] = userAnswers.howMuchFuelBenefit map {
     x => AnswerRow("howMuchFuelBenefit.checkYourAnswersLabel", s"$x", false, routes.HowMuchFuelBenefitController.onPageLoad(CheckMode).url)

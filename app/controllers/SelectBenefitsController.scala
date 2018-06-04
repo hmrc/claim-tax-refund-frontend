@@ -26,41 +26,52 @@ import controllers.actions._
 import config.FrontendAppConfig
 import forms.SelectBenefitsForm
 import identifiers.SelectBenefitsId
-import models.Mode
+import models.{Benefits, Mode}
 import utils.{Navigator, UserAnswers}
 import views.html.selectBenefits
 
 import scala.concurrent.Future
 
 class SelectBenefitsController @Inject()(
-                                        appConfig: FrontendAppConfig,
-                                        override val messagesApi: MessagesApi,
-                                        dataCacheConnector: DataCacheConnector,
-                                        navigator: Navigator,
-                                        authenticate: AuthAction,
-                                        getData: DataRetrievalAction,
-                                        requireData: DataRequiredAction,
-                                        formBuilder: SelectBenefitsForm) extends FrontendController with I18nSupport {
-
-  private val form: Form[String] = formBuilder()
+                                          appConfig: FrontendAppConfig,
+                                          override val messagesApi: MessagesApi,
+                                          dataCacheConnector: DataCacheConnector,
+                                          navigator: Navigator,
+                                          authenticate: AuthAction,
+                                          getData: DataRetrievalAction,
+                                          requireData: DataRequiredAction) extends FrontendController with I18nSupport {
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.selectBenefits match {
-        case None => form
-        case Some(value) => form.fill(value)
+        case None => SelectBenefitsForm()
+        case Some(value) => SelectBenefitsForm().fill(value)
       }
-      Ok(selectBenefits(appConfig, preparedForm, mode))
+
+      request.userAnswers.selectTaxYear.map {
+        selectedTaxYear =>
+          val taxYear = selectedTaxYear.asString
+          Ok(selectBenefits(appConfig, preparedForm, mode, taxYear))
+      }.getOrElse {
+        Redirect(routes.SessionExpiredController.onPageLoad())
+      }
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      form.bindFromRequest().fold(
-        (formWithErrors: Form[_]) =>
-          Future.successful(BadRequest(selectBenefits(appConfig, formWithErrors, mode))),
-        (value) =>
-          dataCacheConnector.save[String](request.externalId, SelectBenefitsId.toString, value).map(cacheMap =>
-            Redirect(navigator.nextPage(SelectBenefitsId, mode)(new UserAnswers(cacheMap))))
-      )
+      request.userAnswers.selectTaxYear.map {
+        selectedTaxYear =>
+          val taxYear = selectedTaxYear.asString
+          SelectBenefitsForm().bindFromRequest().fold(
+            (formWithErrors: Form[_]) =>
+              Future.successful(BadRequest(selectBenefits(appConfig, formWithErrors, mode, taxYear))),
+            (value) =>
+              dataCacheConnector.save[Set[Benefits.Value]](request.externalId, SelectBenefitsId.toString, value).map(cacheMap =>
+                Redirect(navigator.nextPage(SelectBenefitsId, mode)(new UserAnswers(cacheMap))))
+          )
+      }.getOrElse {
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+      }
   }
 }
+
