@@ -42,5 +42,7 @@ class EnterPayeReferenceFormSpec extends FormBehaviours with MockitoSugar {
     behave like formWithMandatoryTextFields(MandatoryField("value", enterPayeReferenceBlankKey))
 
     behave like formWithRegex(RegexField("value", enterPayeReferenceInvalid, testRegex))
+
+    behave like questionForm("123/AB1234")
   }
 }
