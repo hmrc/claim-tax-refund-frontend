@@ -302,3 +302,8 @@ howMuchFuelBenefit.heading = How much fuel benefit did you get between
 howMuchFuelBenefit.checkYourAnswersLabel = Fuel benefit
 howMuchFuelBenefit.blank = Enter the amount you got for fuel benefit
 howMuchFuelBenefit.invalid = Enter a valid amount you got in fuel benefit
+
+selectBenefits.title = selectBenefits
+selectBenefits.heading = selectBenefits
+selectBenefits.checkYourAnswersLabel = selectBenefits
+selectBenefits.blank = selectBenefits
