@@ -33,13 +33,13 @@ import views.html.anyOtherCompanyBenefits
 import scala.concurrent.Future
 
 class AnyOtherCompanyBenefitsController @Inject()(appConfig: FrontendAppConfig,
-                                         override val messagesApi: MessagesApi,
-                                         dataCacheConnector: DataCacheConnector,
-                                         navigator: Navigator,
-                                         authenticate: AuthAction,
-                                         getData: DataRetrievalAction,
-                                         requireData: DataRequiredAction,
-                                         formProvider: BooleanForm) extends FrontendController with I18nSupport {
+                                                  override val messagesApi: MessagesApi,
+                                                  dataCacheConnector: DataCacheConnector,
+                                                  navigator: Navigator,
+                                                  authenticate: AuthAction,
+                                                  getData: DataRetrievalAction,
+                                                  requireData: DataRequiredAction,
+                                                  formProvider: BooleanForm) extends FrontendController with I18nSupport {
 
   private val errorKey = "anyOtherCompanyBenefits.blank"
   val form: Form[Boolean] = formProvider(errorKey)
@@ -50,17 +50,30 @@ class AnyOtherCompanyBenefitsController @Inject()(appConfig: FrontendAppConfig,
         case None => form
         case Some(value) => form.fill(value)
       }
-      Ok(anyOtherCompanyBenefits(appConfig, preparedForm, mode))
+
+      request.userAnswers.selectTaxYear.map {
+        selectedTaxYear =>
+          val taxYear = selectedTaxYear.asString
+          Ok(anyOtherCompanyBenefits(appConfig, preparedForm, mode, taxYear))
+      }.getOrElse {
+        Redirect(routes.SessionExpiredController.onPageLoad())
+      }
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      form.bindFromRequest().fold(
-        (formWithErrors: Form[_]) =>
-          Future.successful(BadRequest(anyOtherCompanyBenefits(appConfig, formWithErrors, mode))),
-        (value) =>
-          dataCacheConnector.save[Boolean](request.externalId, AnyOtherCompanyBenefitsId.toString, value).map(cacheMap =>
-            Redirect(navigator.nextPage(AnyOtherCompanyBenefitsId, mode)(new UserAnswers(cacheMap))))
-      )
+      request.userAnswers.selectTaxYear.map {
+        selectedTaxYear =>
+          val taxYear = selectedTaxYear.asString
+          form.bindFromRequest().fold(
+            (formWithErrors: Form[_]) =>
+              Future.successful(BadRequest(anyOtherCompanyBenefits(appConfig, formWithErrors, mode, taxYear))),
+            (value) =>
+              dataCacheConnector.save[Boolean](request.externalId, AnyOtherCompanyBenefitsId.toString, value).map(cacheMap =>
+                Redirect(navigator.nextPage(AnyOtherCompanyBenefitsId, mode)(new UserAnswers(cacheMap))))
+          )
+      }.getOrElse {
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+      }
   }
 }
