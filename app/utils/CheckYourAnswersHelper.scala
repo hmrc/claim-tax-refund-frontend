@@ -25,6 +25,10 @@ import viewmodels.AnswerRow
 
 class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messages){
 
+  def anyOtherCompanyBenefits: Option[AnswerRow] = userAnswers.anyOtherCompanyBenefits map {
+    x => AnswerRow("anyOtherCompanyBenefits.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.AnyOtherCompanyBenefitsController.onPageLoad(CheckMode).url)
+  }
+
   def enterPayeReference: Option[AnswerRow] = userAnswers.enterPayeReference map {
     x => AnswerRow("enterPayeReference.checkYourAnswersLabel",
       s"$x", false, routes.EnterPayeReferenceController.onPageLoad(CheckMode).url, true)
