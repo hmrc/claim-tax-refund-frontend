@@ -278,8 +278,8 @@ employmentDetails.employer = Employer
 employmentDetails.staffNumber = Staff Number
 employmentDetails.hintText = Your employer or pension provider might use a different trading name. Check with them if you don't recognise any of the names.
 
-selectCompanyBenefits.title = selectCompanyBenefits
-selectCompanyBenefits.heading = selectCompanyBenefits
+selectCompanyBenefits.title = Select the company benefits you have claimed from
+selectCompanyBenefits.heading = Select the company benefits you have claimed from
 selectCompanyBenefits.checkYourAnswersLabel = Company benefits
 selectCompanyBenefits.blank = Select a company benefit
 selectCompanyBenefits.company-car-benefit = Company car benefit
@@ -302,6 +302,11 @@ howMuchFuelBenefit.heading = How much fuel benefit did you get between
 howMuchFuelBenefit.checkYourAnswersLabel = Fuel benefit
 howMuchFuelBenefit.blank = Enter the amount you got for fuel benefit
 howMuchFuelBenefit.invalid = Enter a valid amount you got in fuel benefit
+
+otherCompanyBenefitsDetails.title = What is the name of the company benefit you got between
+otherCompanyBenefitsDetails.heading = What is the name of the company benefit you got between
+otherCompanyBenefitsDetails.checkYourAnswersLabel = Other company benefits name
+otherCompanyBenefitsDetails.blank = Enter the name of taxable benefit you got
 
 selectBenefits.title = Select the benefits you have claimed between
 selectBenefits.heading = Select the benefits you have claimed between

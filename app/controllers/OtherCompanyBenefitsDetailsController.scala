@@ -24,34 +24,37 @@ import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import connectors.DataCacheConnector
 import controllers.actions._
 import config.FrontendAppConfig
-import forms.SelectCompanyBenefitsForm
-import identifiers.SelectCompanyBenefitsId
-import models.{CompanyBenefits, Mode}
+import forms.OtherCompanyBenefitsDetailsForm
+import identifiers.OtherCompanyBenefitsDetailsId
+import models.Mode
 import utils.{Navigator, UserAnswers}
-import views.html.selectCompanyBenefits
+import views.html.otherCompanyBenefitsDetails
 
 import scala.concurrent.Future
 
-class SelectCompanyBenefitsController @Inject()(
-                                                 appConfig: FrontendAppConfig,
-                                                 override val messagesApi: MessagesApi,
-                                                 dataCacheConnector: DataCacheConnector,
-                                                 navigator: Navigator,
-                                                 authenticate: AuthAction,
-                                                 getData: DataRetrievalAction,
-                                                 requireData: DataRequiredAction) extends FrontendController with I18nSupport {
+class OtherCompanyBenefitsDetailsController @Inject()(
+                                        appConfig: FrontendAppConfig,
+                                        override val messagesApi: MessagesApi,
+                                        dataCacheConnector: DataCacheConnector,
+                                        navigator: Navigator,
+                                        authenticate: AuthAction,
+                                        getData: DataRetrievalAction,
+                                        requireData: DataRequiredAction,
+                                        formBuilder: OtherCompanyBenefitsDetailsForm) extends FrontendController with I18nSupport {
+
+  private val form: Form[String] = formBuilder()
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val preparedForm = request.userAnswers.selectCompanyBenefits match {
-        case None => SelectCompanyBenefitsForm()
-        case Some(value) => SelectCompanyBenefitsForm().fill(value)
+      val preparedForm = request.userAnswers.otherCompanyBenefitsDetails match {
+        case None => form
+        case Some(value) => form.fill(value)
       }
 
-      request.userAnswers.selectTaxYear.map {
+      request.userAnswers.selectTaxYear.map{
         selectedTaxYear =>
           val taxYear = selectedTaxYear.asString
-          Ok(selectCompanyBenefits(appConfig, preparedForm, mode, taxYear))
+          Ok(otherCompanyBenefitsDetails(appConfig, preparedForm, mode, taxYear))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
@@ -62,14 +65,14 @@ class SelectCompanyBenefitsController @Inject()(
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
           val taxYear = selectedTaxYear.asString
-          SelectCompanyBenefitsForm().bindFromRequest().fold(
+          form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(selectCompanyBenefits(appConfig, formWithErrors, mode, taxYear))),
+              Future.successful(BadRequest(otherCompanyBenefitsDetails(appConfig, formWithErrors, mode, taxYear))),
             (value) =>
-              dataCacheConnector.save[Set[CompanyBenefits.Value]](request.externalId, SelectCompanyBenefitsId.toString, value).map(cacheMap =>
-                Redirect(navigator.nextPage(SelectCompanyBenefitsId, mode)(new UserAnswers(cacheMap))))
+              dataCacheConnector.save[String](request.externalId, OtherCompanyBenefitsDetailsId.toString, value).map(cacheMap =>
+                Redirect(navigator.nextPage(OtherCompanyBenefitsDetailsId, mode)(new UserAnswers(cacheMap))))
           )
-      }.getOrElse {
+      }.getOrElse{
         Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
       }
   }

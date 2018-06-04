@@ -18,29 +18,24 @@
 @import uk.gov.hmrc.play.views.html._
 @import controllers.routes._
 @import models.Mode
-@import forms.SelectCompanyBenefitsForm
+@import viewmodels.InputViewModel
 
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: String)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("selectCompanyBenefits.title") + s" $taxYear" + messages("global.questionMark"),
+    title = messages("otherCompanyBenefitsDetails.title") + s" $taxYear" + messages("global.questionMark"),
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @helpers.form(action = SelectCompanyBenefitsController.onSubmit(mode), 'autoComplete -> "off") {
+    @helpers.form(action = OtherCompanyBenefitsDetailsController.onSubmit(mode), 'autoComplete -> "off") {
 
         @components.back_link()
 
         @components.error_summary(form.errors)
 
-        @components.heading("selectCompanyBenefits.heading", dynamicHeading = Some(s"$taxYear" + messages("global.questionMark")), secondaryHeaderKey = Some("index.title"))
+        @components.heading("otherCompanyBenefitsDetails.heading", dynamicHeading = Some(s"$taxYear" + messages("global.questionMark")), secondaryHeaderKey = Some("index.title"))
 
-        @components.input_check_box(
-            form("value"),
-            legend = messages("selectCompanyBenefits.heading"),
-            legendClass = Some("visually-hidden"),
-            inputs = SelectCompanyBenefitsForm.options
-        )
+        @components.input_text(InputViewModel("value", form), label = messages("otherCompanyBenefitsDetails.heading"), labelClass=Some("visually-hidden"))
 
         @components.submit_button()
     }

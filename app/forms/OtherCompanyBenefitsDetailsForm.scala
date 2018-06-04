@@ -16,21 +16,15 @@
 
 package forms
 
-import forms.behaviours.CheckboxBehaviours
-import models.Benefits
+import com.google.inject.Inject
+import config.FrontendAppConfig
+import forms.mappings.Constraints
+import play.api.data.Form
+import play.api.data.Forms._
 
-class SelectBenefitsFormSpec extends CheckboxBehaviours[Benefits.Value] {
+class OtherCompanyBenefitsDetailsForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 
-  override val validOptions: Set[Benefits.Value] = Benefits.values
+  private val errorBlankKey = "otherCompanyBenefitsDetails.blank"
 
-  override val fieldName = "value"
-
-  val form = SelectBenefitsForm()
-
-  "SelectBenefits form" must {
-    behave like aCheckboxForm(invalid = "error.unknown")
-
-    behave like aMandatoryCheckboxForm("selectBenefits.blank")
-  }
-
+  def apply(): Form[String] = Form("value" -> text.verifying(nonEmpty(errorBlankKey)))
 }
