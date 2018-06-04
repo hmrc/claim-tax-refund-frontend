@@ -19,34 +19,35 @@ package views
 import config.FrontendAppConfig
 import play.api.data.Form
 import controllers.routes
-import forms.HowMuchFuelBenefitForm
+import forms.HowMuchOtherCompanyBenefitForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
 import views.behaviours.StringViewBehaviours
-import views.html.howMuchFuelBenefit
+import views.html.howMuchOtherCompanyBenefit
 
-class HowMuchFuelBenefitViewSpec extends StringViewBehaviours with MockitoSugar {
+class HowMuchOtherCompanyBenefitViewSpec extends StringViewBehaviours with MockitoSugar {
 
-  val messageKeyPrefix = "howMuchFuelBenefit"
+  val messageKeyPrefix = "howMuchOtherCompanyBenefit"
 
   private val taxYear = CYMinus2.asString
+  private val otherBenefitName = "test benefit"
 
   val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
-  override val form: Form[String] = new HowMuchFuelBenefitForm(appConfig)()
+  override val form: Form[String] = new HowMuchOtherCompanyBenefitForm(appConfig)()
 
-  def createView = () => howMuchFuelBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createView = () => howMuchOtherCompanyBenefit(frontendAppConfig, form, NormalMode, taxYear, otherBenefitName)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) => howMuchFuelBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[String]) => howMuchOtherCompanyBenefit(frontendAppConfig, form, NormalMode, taxYear, otherBenefitName)(fakeRequest, messages)
 
-  "HowMuchFuelBenefit view" must {
-    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, " " + taxYear, messages("global.questionMark"))
+  "HowMuchOtherCompanyBenefit view" must {
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, s" $otherBenefitName " + messages("howMuchOtherCompanyBenefit.heading2") + s" $taxYear", messages("global.questionMark"))
 
     behave like pageWithBackLink(createView)
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.HowMuchFuelBenefitController.onSubmit(NormalMode).url)
+    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.HowMuchOtherCompanyBenefitController.onSubmit(NormalMode).url)
   }
 }
