@@ -56,6 +56,7 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.paymentUKAddress) thenReturn None
     when(answers.paymentInternationalAddress) thenReturn None
     when(answers.howMuchFuelBenefit) thenReturn None
+    when(answers.otherCompanyBenefitsDetails) thenReturn None
 
     answers
   }

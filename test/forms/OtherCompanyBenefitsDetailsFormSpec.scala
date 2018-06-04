@@ -20,12 +20,11 @@ import config.FrontendAppConfig
 import forms.behaviours.FormBehaviours
 import models.MandatoryField
 import org.scalatest.mockito.MockitoSugar
-import org.mockito.Mockito._
 import play.api.data.Form
 
 class OtherCompanyBenefitsDetailsFormSpec extends FormBehaviours with MockitoSugar {
 
-  val errorKeyBlank = "error.required"
+  val errorKeyBlank = "otherCompanyBenefitsDetails.blank"
 
   def appConfig: FrontendAppConfig = {
     val instance = mock[FrontendAppConfig]

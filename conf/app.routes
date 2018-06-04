@@ -142,7 +142,7 @@ POST       /how-much-fuel-benefit                               controllers.HowM
 GET        /change-how-much-fuel-benefit                        controllers.HowMuchFuelBenefitController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-how-much-fuel-benefit                        controllers.HowMuchFuelBenefitController.onSubmit(mode: Mode = CheckMode)
 
-GET        /otherCompanyBenefitsDetails               controllers.OtherCompanyBenefitsDetailsController.onPageLoad(mode: Mode = NormalMode)
-POST       /otherCompanyBenefitsDetails               controllers.OtherCompanyBenefitsDetailsController.onSubmit(mode: Mode = NormalMode)
-GET        /changeOtherCompanyBenefitsDetails                        controllers.OtherCompanyBenefitsDetailsController.onPageLoad(mode: Mode = CheckMode)
-POST       /changeOtherCompanyBenefitsDetails                        controllers.OtherCompanyBenefitsDetailsController.onSubmit(mode: Mode = CheckMode)
+GET        /other-company-benefits-details                      controllers.OtherCompanyBenefitsDetailsController.onPageLoad(mode: Mode = NormalMode)
+POST       /other-company-benefits-details                      controllers.OtherCompanyBenefitsDetailsController.onSubmit(mode: Mode = NormalMode)
+GET        /change-other-company-benefits-details               controllers.OtherCompanyBenefitsDetailsController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-other-company-benefits-details               controllers.OtherCompanyBenefitsDetailsController.onSubmit(mode: Mode = CheckMode)
