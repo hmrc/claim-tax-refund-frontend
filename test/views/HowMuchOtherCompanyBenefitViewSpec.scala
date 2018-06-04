@@ -21,6 +21,7 @@ import play.api.data.Form
 import controllers.routes
 import forms.HowMuchOtherCompanyBenefitForm
 import models.NormalMode
+import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
 import views.behaviours.StringViewBehaviours
 import views.html.howMuchOtherCompanyBenefit
@@ -29,18 +30,23 @@ class HowMuchOtherCompanyBenefitViewSpec extends StringViewBehaviours with Mocki
 
   val messageKeyPrefix = "howMuchOtherCompanyBenefit"
 
+  private val taxYear = CYMinus2.asString
+  private val otherBenefitName = "test benefit"
+
   val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
   override val form: Form[String] = new HowMuchOtherCompanyBenefitForm(appConfig)()
 
-  def createView = () => howMuchOtherCompanyBenefit(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createView = () => howMuchOtherCompanyBenefit(frontendAppConfig, form, NormalMode, taxYear, otherBenefitName)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) => howMuchOtherCompanyBenefit(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[String]) => howMuchOtherCompanyBenefit(frontendAppConfig, form, NormalMode, taxYear, otherBenefitName)(fakeRequest, messages)
 
   "HowMuchOtherCompanyBenefit view" must {
-    behave like normalPage(createView, messageKeyPrefix)
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, s" $otherBenefitName " + messages("howMuchOtherCompanyBenefit.heading2") + s" $taxYear", messages("global.questionMark"))
 
     behave like pageWithBackLink(createView)
+
+    behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
     behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.HowMuchOtherCompanyBenefitController.onSubmit(NormalMode).url)
   }

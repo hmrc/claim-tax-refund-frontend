@@ -30,7 +30,7 @@ class HowMuchFuelBenefitViewSpec extends StringViewBehaviours with MockitoSugar 
 
   val messageKeyPrefix = "howMuchFuelBenefit"
 
-  val taxYear = CYMinus2.asString
+  private val taxYear = CYMinus2.asString
 
   val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 

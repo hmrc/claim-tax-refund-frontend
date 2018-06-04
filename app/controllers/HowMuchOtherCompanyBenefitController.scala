@@ -27,6 +27,7 @@ import config.FrontendAppConfig
 import forms.HowMuchOtherCompanyBenefitForm
 import identifiers.HowMuchOtherCompanyBenefitId
 import models.Mode
+import play.api.mvc.Result
 import utils.{Navigator, UserAnswers}
 import views.html.howMuchOtherCompanyBenefit
 
@@ -50,17 +51,36 @@ class HowMuchOtherCompanyBenefitController @Inject()(
         case None => form
         case Some(value) => form.fill(value)
       }
-      Ok(howMuchOtherCompanyBenefit(appConfig, preparedForm, mode))
+
+      val details: Option[Result] = for(
+        selectedTaxYear <- request.userAnswers.selectTaxYear;
+        otherBenefitName <- request.userAnswers.otherCompanyBenefitsDetails
+      ) yield {
+        val taxYear = selectedTaxYear.asString
+        Ok(howMuchOtherCompanyBenefit(appConfig, preparedForm, mode, taxYear, otherBenefitName))
+      }
+      details.getOrElse{
+        Redirect(routes.SessionExpiredController.onPageLoad())
+      }
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      form.bindFromRequest().fold(
-        (formWithErrors: Form[_]) =>
-          Future.successful(BadRequest(howMuchOtherCompanyBenefit(appConfig, formWithErrors, mode))),
-        (value) =>
-          dataCacheConnector.save[String](request.externalId, HowMuchOtherCompanyBenefitId.toString, value).map(cacheMap =>
-            Redirect(navigator.nextPage(HowMuchOtherCompanyBenefitId, mode)(new UserAnswers(cacheMap))))
-      )
+      request.userAnswers.selectTaxYear.flatMap {
+        selectedTaxYear =>
+          val taxYear = selectedTaxYear.asString
+          request.userAnswers.otherCompanyBenefitsDetails.map {
+            benefitName =>
+              form.bindFromRequest().fold(
+                (formWithErrors: Form[_]) =>
+                  Future.successful(BadRequest(howMuchOtherCompanyBenefit(appConfig, formWithErrors, mode, taxYear, benefitName))),
+                (value) =>
+                  dataCacheConnector.save[String](request.externalId, HowMuchOtherCompanyBenefitId.toString, value).map(cacheMap =>
+                    Redirect(navigator.nextPage(HowMuchOtherCompanyBenefitId, mode)(new UserAnswers(cacheMap))))
+              )
+          }
+      }.getOrElse {
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+      }
   }
 }
