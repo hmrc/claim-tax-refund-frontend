@@ -16,32 +16,42 @@
 
 package views
 
-import config.FrontendAppConfig
 import play.api.data.Form
-import controllers.routes
 import forms.SelectBenefitsForm
-import models.NormalMode
-import org.scalatest.mockito.MockitoSugar
-import views.behaviours.StringViewBehaviours
+import models.SelectTaxYear.CYMinus2
+import models.{Benefits, NormalMode}
+import play.twirl.api.Html
+import views.behaviours.{CheckboxViewBehaviours, ViewBehaviours}
 import views.html.selectBenefits
 
-class SelectBenefitsViewSpec extends StringViewBehaviours with MockitoSugar {
+class SelectBenefitsViewSpec extends ViewBehaviours with CheckboxViewBehaviours[Benefits.Value] {
 
   val messageKeyPrefix = "selectBenefits"
+  val fieldKey = "value"
+  val errorMessage = "error.invalid"
+  val taxYear: String = CYMinus2.asString
 
-  val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
+  val values: Map[String, Benefits.Value] =
+    SelectBenefitsForm.options.map {
+      case (k, v) => k -> Benefits.withName(v)
+    }
 
-  override val form: Form[String] = new SelectBenefitsForm(appConfig)()
+  def form: Form[Set[Benefits.Value]] = SelectBenefitsForm()
 
-  def createView = () => selectBenefits(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  override def createView(): Html = createView(form)
 
-  def createViewUsingForm = (form: Form[String]) => selectBenefits(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createView(form: Form[Set[Benefits.Value]]): Html =
+    selectBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
-  "SelectBenefits view" must {
-    behave like normalPage(createView, messageKeyPrefix)
+  def createViewUsingForm = (form: Form[_]) => selectBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+
+  "SelectCompanyBenefits view" must {
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, " " + taxYear, messages("global.questionMark"))
 
     behave like pageWithBackLink(createView)
 
-    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.SelectBenefitsController.onSubmit(NormalMode).url)
+    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+
+    behave like checkboxPage(legend = Some(messages(s"$messageKeyPrefix.heading")))
   }
 }

@@ -18,7 +18,7 @@ package utils
 
 import models.SelectTaxYear.CYMinus2
 import models.templates.Metadata
-import models.{SelectTaxYear, UkAddress, UserDetails}
+import models.{Benefits, SelectTaxYear, UkAddress, UserDetails}
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
 
@@ -56,6 +56,7 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.paymentUKAddress) thenReturn None
     when(answers.paymentInternationalAddress) thenReturn None
     when(answers.howMuchFuelBenefit) thenReturn None
+    when(answers.selectBenefits) thenReturn None
 
     answers
   }

@@ -18,12 +18,12 @@
 @import uk.gov.hmrc.play.views.html._
 @import controllers.routes._
 @import models.Mode
-@import viewmodels.InputViewModel
+@import forms.SelectBenefitsForm
 
-@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: String)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("selectBenefits.title"),
+    title = messages("selectBenefits.title") + s" $taxYear" + messages("global.questionMark"),
     appConfig = appConfig,
     bodyClasses = None) {
 
@@ -33,9 +33,14 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading("selectBenefits.heading")
+        @components.heading("selectBenefits.heading", dynamicHeading = Some(s"$taxYear" + messages("global.questionMark")), secondaryHeaderKey = Some("index.title"))
 
-        @components.input_text(InputViewModel("value", form), label = messages("selectBenefits.heading"), labelClass=Some("visually-hidden"))
+        @components.input_check_box(
+            form("value"),
+            legend = messages("selectBenefits.heading"),
+            legendClass = Some("visually-hidden"),
+            inputs = SelectBenefitsForm.options
+        )
 
         @components.submit_button()
     }
