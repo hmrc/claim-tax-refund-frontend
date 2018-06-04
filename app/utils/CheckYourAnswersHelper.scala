@@ -29,8 +29,6 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
     x => AnswerRow("otherCompanyBenefitsDetails.checkYourAnswersLabel", s"$x", false, routes.OtherCompanyBenefitsDetailsController.onPageLoad(CheckMode).url)
   }
 
-  def howMuchFuelBenefit: Option[AnswerRow] = userAnswers.howMuchFuelBenefit map {
-    x => AnswerRow("howMuchFuelBenefit.checkYourAnswersLabel", s"$x", false, routes.HowMuchFuelBenefitController.onPageLoad(CheckMode).url)
   def selectBenefits: Option[AnswerRow] = userAnswers.selectBenefits map {
     val keyPrefix = "selectBenefits."
     x => AnswerRow(keyPrefix + "checkYourAnswersLabel", x.toSeq.map {
@@ -55,7 +53,6 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
   def howMuchFuelBenefit: Option[AnswerRow] = userAnswers.howMuchFuelBenefit map {
     x => AnswerRow("howMuchFuelBenefit.checkYourAnswersLabel", s"$x", false, routes.HowMuchFuelBenefitController.onPageLoad(CheckMode).url)
   }
-
 
   def anyCompanyBenefits: Option[AnswerRow] = userAnswers.anyCompanyBenefits map {
     x =>
