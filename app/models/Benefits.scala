@@ -21,6 +21,8 @@ import utils.EnumUtils
 
 object Benefits extends Enumeration {
 
+  val BEREAVEMENT_ALLOWANCE = Value("bereavement-allowance")
+  val CARERS_ALLOWANCE = Value("carers-allowance")
   val JOBSEEKERS_ALLOWANCE = Value("jobseekers-allowance")
   val INCAPACITY_BENEFIT = Value("incapacity-benefit")
   val EMPLOYMENT_AND_SUPPORT_ALLOWANCE = Value("employment-and-support-allowance")
