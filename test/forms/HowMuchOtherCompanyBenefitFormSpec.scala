@@ -18,28 +18,33 @@ package forms
 
 import config.FrontendAppConfig
 import forms.behaviours.FormBehaviours
-import models.MandatoryField
+import models.{MandatoryField, RegexField}
+import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
-import org.mockito.Mockito._
 import play.api.data.Form
 
 class HowMuchOtherCompanyBenefitFormSpec extends FormBehaviours with MockitoSugar {
 
-  val errorKeyBlank = "error.required"
+  private val testRegex = """(?=.)^\$?(([1-9][0-9]{0,2}(,[0-9]{3})*)|[0-9]+)?(\.[0-9]{1,2})?$"""
+  private val errorKeyInvalid = "howMuchOtherCompanyBenefit.invalid"
+  private val errorKeyBlank = "howMuchOtherCompanyBenefit.blank"
 
   def appConfig: FrontendAppConfig = {
     val instance = mock[FrontendAppConfig]
+    when(instance.currencyRegex) thenReturn testRegex
     instance
   }
 
-  val validData: Map[String, String] = Map("value" -> "test answer")
+  val validData: Map[String, String] = Map("value" -> "9,999.99")
 
   override val form: Form[_] = new HowMuchOtherCompanyBenefitForm(appConfig)()
 
   "HowMuchOtherCompanyBenefit Form" must {
 
-    behave like formWithMandatoryTextFields(
-      MandatoryField("value", errorKeyBlank)
-    )
+    behave like questionForm("""9,999.99""")
+
+    behave like formWithMandatoryTextFields(MandatoryField("value", errorKeyBlank))
+
+    behave like formWithRegex(RegexField("value", errorKeyInvalid, testRegex))
   }
 }
