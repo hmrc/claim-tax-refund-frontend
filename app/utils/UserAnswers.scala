@@ -24,7 +24,7 @@ import uk.gov.hmrc.http.cache.client.CacheMap
 class UserAnswers(val cacheMap: CacheMap) {
   
   def selectBenefits: Option[Set[Benefits.Value]] = cacheMap.getEntry[Set[Benefits.Value]](SelectBenefitsId.toString)
-  
+
   def otherCompanyBenefitsDetails: Option[String] = cacheMap.getEntry[String](OtherCompanyBenefitsDetailsId.toString)
 
   def howMuchFuelBenefit: Option[String] = cacheMap.getEntry[String](HowMuchFuelBenefitId.toString)
