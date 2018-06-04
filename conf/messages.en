@@ -278,8 +278,8 @@ employmentDetails.employer = Employer
 employmentDetails.staffNumber = Staff Number
 employmentDetails.hintText = Your employer or pension provider might use a different trading name. Check with them if you don't recognise any of the names.
 
-selectCompanyBenefits.title = selectCompanyBenefits
-selectCompanyBenefits.heading = selectCompanyBenefits
+selectCompanyBenefits.title = Select the company benefits you have claimed from
+selectCompanyBenefits.heading = Select the company benefits you have claimed from
 selectCompanyBenefits.checkYourAnswersLabel = Company benefits
 selectCompanyBenefits.blank = Select a company benefit
 selectCompanyBenefits.company-car-benefit = Company car benefit
@@ -307,3 +307,13 @@ otherCompanyBenefitsDetails.title = What is the name of the company benefit you 
 otherCompanyBenefitsDetails.heading = What is the name of the company benefit you got between
 otherCompanyBenefitsDetails.checkYourAnswersLabel = Other company benefits name
 otherCompanyBenefitsDetails.blank = Enter the name of taxable benefit you got
+
+selectBenefits.title = Select the benefits you have claimed between
+selectBenefits.heading = Select the benefits you have claimed between
+selectBenefits.checkYourAnswersLabel = Benefits
+selectBenefits.blank = Select a benefit
+selectBenefits.jobseekers-allowance = Contribution-based Jobseeker''s Allowance
+selectBenefits.incapacity-benefit = Incapacity benefit
+selectBenefits.employment-and-support-allowance = Employment and Support Allowance
+selectBenefits.state-pension = State Pension
+selectBenefits.other-taxable-benefit = Other taxable benefit

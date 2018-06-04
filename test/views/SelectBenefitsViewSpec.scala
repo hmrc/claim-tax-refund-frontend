@@ -16,37 +16,36 @@
 
 package views
 
-import forms.SelectCompanyBenefitsForm
-import models.SelectTaxYear.CYMinus2
-import models.{CompanyBenefits, NormalMode}
 import play.api.data.Form
+import forms.SelectBenefitsForm
+import models.SelectTaxYear.CYMinus2
+import models.{Benefits, NormalMode}
 import play.twirl.api.Html
 import views.behaviours.{CheckboxViewBehaviours, ViewBehaviours}
-import views.html.selectCompanyBenefits
+import views.html.selectBenefits
 
-class SelectCompanyBenefitsViewSpec extends ViewBehaviours with CheckboxViewBehaviours[CompanyBenefits.Value] {
+class SelectBenefitsViewSpec extends ViewBehaviours with CheckboxViewBehaviours[Benefits.Value] {
 
-  val messageKeyPrefix = "selectCompanyBenefits"
+  val messageKeyPrefix = "selectBenefits"
   val fieldKey = "value"
   val errorMessage = "error.invalid"
   val taxYear: String = CYMinus2.asString
 
-
-  val values: Map[String, CompanyBenefits.Value] =
-    SelectCompanyBenefitsForm.options.map {
-      case (k, v) => k -> CompanyBenefits.withName(v)
+  val values: Map[String, Benefits.Value] =
+    SelectBenefitsForm.options.map {
+      case (k, v) => k -> Benefits.withName(v)
     }
 
-  def form: Form[Set[CompanyBenefits.Value]] = SelectCompanyBenefitsForm()
+  def form: Form[Set[Benefits.Value]] = SelectBenefitsForm()
 
   override def createView(): Html = createView(form)
 
-  def createView(form: Form[Set[CompanyBenefits.Value]]): Html =
-    selectCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createView(form: Form[Set[Benefits.Value]]): Html =
+    selectBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[_]) => selectCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[_]) => selectBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
-  "SelectCompanyBenefits view" must {
+  "SelectBenefits view" must {
     behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, " " + taxYear, messages("global.questionMark"))
 
     behave like pageWithBackLink(createView)
@@ -54,6 +53,5 @@ class SelectCompanyBenefitsViewSpec extends ViewBehaviours with CheckboxViewBeha
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
     behave like checkboxPage(legend = Some(messages(s"$messageKeyPrefix.heading")))
-
   }
 }
