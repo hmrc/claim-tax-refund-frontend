@@ -18,31 +18,32 @@ package controllers
 
 import connectors.FakeDataCacheConnector
 import controllers.actions._
-import forms.SelectCompanyBenefitsForm
+import forms.OtherCompanyBenefitsDetailsForm
+import models.NormalMode
 import models.SelectTaxYear.CYMinus2
-import models.{CompanyBenefits, NormalMode}
+import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
 import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
-import views.html.selectCompanyBenefits
-import org.scalatest.mockito.MockitoSugar
+import views.html.otherCompanyBenefitsDetails
 import org.mockito.Mockito.when
 
-class SelectCompanyBenefitsControllerSpec extends ControllerSpecBase with MockitoSugar {
+class OtherCompanyBenefitsDetailsControllerSpec extends ControllerSpecBase with MockitoSugar {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
+  val testAnswer = "answer"
+  val form = new OtherCompanyBenefitsDetailsForm(frontendAppConfig)()
   val taxYear: String = CYMinus2.asString
   private val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new SelectCompanyBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl)
+    new OtherCompanyBenefitsDetailsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+      dataRetrievalAction, new DataRequiredActionImpl, new OtherCompanyBenefitsDetailsForm(frontendAppConfig))
 
-  def viewAsString(form: Form[_] = SelectCompanyBenefitsForm()) =
-    selectCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = form) = otherCompanyBenefitsDetails(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
 
-  "SelectCompanyBenefits Controller" must {
+  "OtherCompanyBenefitsDetails Controller" must {
 
     "return OK and the correct view for a GET" in {
       val result = controller(fakeDataRetrievalAction()).onPageLoad(NormalMode)(fakeRequest)
@@ -52,16 +53,14 @@ class SelectCompanyBenefitsControllerSpec extends ControllerSpecBase with Mockit
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      when(mockUserAnswers.selectCompanyBenefits).thenReturn(Some(Set(CompanyBenefits(0))))
-
+      when(mockUserAnswers.otherCompanyBenefitsDetails).thenReturn(Some(testAnswer))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
-      contentAsString(result) mustBe viewAsString(SelectCompanyBenefitsForm().fill(Set(CompanyBenefits(0))))
+      contentAsString(result) mustBe viewAsString(form.fill(testAnswer))
     }
 
     "redirect to the next page when valid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value[0]", CompanyBenefits(0).toString))
-
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", testAnswer))
       val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
@@ -69,8 +68,8 @@ class SelectCompanyBenefitsControllerSpec extends ControllerSpecBase with Mockit
     }
 
     "return a Bad Request and errors when invalid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
-      val boundForm = SelectCompanyBenefitsForm().bind(Map("value" -> "invalid value"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", ""))
+      val boundForm = form.bind(Map("value" -> ""))
 
       val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode)(postRequest)
 
@@ -86,7 +85,7 @@ class SelectCompanyBenefitsControllerSpec extends ControllerSpecBase with Mockit
     }
 
     "redirect to Session Expired for a POST if no existing data is found" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", ""))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", testAnswer))
       val result = controller(dontGetAnyData).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER

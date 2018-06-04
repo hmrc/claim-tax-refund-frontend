@@ -25,8 +25,14 @@ import viewmodels.AnswerRow
 
 class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messages){
 
+  def otherCompanyBenefitsDetails: Option[AnswerRow] = userAnswers.otherCompanyBenefitsDetails map {
+    x => AnswerRow("otherCompanyBenefitsDetails.checkYourAnswersLabel", s"$x", false, routes.OtherCompanyBenefitsDetailsController.onPageLoad(CheckMode).url)
+  }
+
+  def howMuchFuelBenefit: Option[AnswerRow] = userAnswers.howMuchFuelBenefit map {
+    x => AnswerRow("howMuchFuelBenefit.checkYourAnswersLabel", s"$x", false, routes.HowMuchFuelBenefitController.onPageLoad(CheckMode).url)
   def selectBenefits: Option[AnswerRow] = userAnswers.selectBenefits map {
-    val keyPrefix = "selectCompanyBenefits."
+    val keyPrefix = "selectBenefits."
     x => AnswerRow(keyPrefix + "checkYourAnswersLabel", x.toSeq.map {
       case Benefits.JOBSEEKERS_ALLOWANCE => Messages(keyPrefix + "jobseekers-allowance")
       case Benefits.INCAPACITY_BENEFIT => Messages(keyPrefix + "incapacity-benefit")
@@ -34,11 +40,6 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
       case Benefits.STATE_PENSION => Messages(keyPrefix + "state-pension")
       case Benefits.OTHER_TAXABLE_BENEFIT => Messages(keyPrefix + "other-taxable-benefit")
     }.mkString(", <br>"), false, routes.SelectBenefitsController.onPageLoad(CheckMode).url)
-  }
-
-
-  def howMuchFuelBenefit: Option[AnswerRow] = userAnswers.howMuchFuelBenefit map {
-    x => AnswerRow("howMuchFuelBenefit.checkYourAnswersLabel", s"$x", false, routes.HowMuchFuelBenefitController.onPageLoad(CheckMode).url)
   }
 
   def selectCompanyBenefits: Option[AnswerRow] = userAnswers.selectCompanyBenefits map {
@@ -50,6 +51,11 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
       case CompanyBenefits.OTHER_COMPANY_BENEFIT => Messages(keyPrefix + "other-company-benefit")
     }.mkString(", <br>"), false, routes.SelectCompanyBenefitsController.onPageLoad(CheckMode).url)
   }
+
+  def howMuchFuelBenefit: Option[AnswerRow] = userAnswers.howMuchFuelBenefit map {
+    x => AnswerRow("howMuchFuelBenefit.checkYourAnswersLabel", s"$x", false, routes.HowMuchFuelBenefitController.onPageLoad(CheckMode).url)
+  }
+
 
   def anyCompanyBenefits: Option[AnswerRow] = userAnswers.anyCompanyBenefits map {
     x =>

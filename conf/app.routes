@@ -146,3 +146,8 @@ GET        /select-benefits                                     controllers.Sele
 POST       /select-benefits                                     controllers.SelectBenefitsController.onSubmit(mode: Mode = NormalMode)
 GET        /change-select-benefits                              controllers.SelectBenefitsController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-select-benefits                              controllers.SelectBenefitsController.onSubmit(mode: Mode = CheckMode)
+
+GET        /other-company-benefits-details                      controllers.OtherCompanyBenefitsDetailsController.onPageLoad(mode: Mode = NormalMode)
+POST       /other-company-benefits-details                      controllers.OtherCompanyBenefitsDetailsController.onSubmit(mode: Mode = NormalMode)
+GET        /change-other-company-benefits-details               controllers.OtherCompanyBenefitsDetailsController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-other-company-benefits-details               controllers.OtherCompanyBenefitsDetailsController.onSubmit(mode: Mode = CheckMode)

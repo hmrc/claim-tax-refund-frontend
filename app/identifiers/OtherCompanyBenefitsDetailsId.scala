@@ -14,23 +14,8 @@
  * limitations under the License.
  */
 
-package forms
+package identifiers
 
-import forms.behaviours.CheckboxBehaviours
-import models.Benefits
-
-class SelectBenefitsFormSpec extends CheckboxBehaviours[Benefits.Value] {
-
-  override val validOptions: Set[Benefits.Value] = Benefits.values
-
-  override val fieldName = "value"
-
-  val form = SelectBenefitsForm()
-
-  "SelectBenefits form" must {
-    behave like aCheckboxForm(invalid = "error.unknown")
-
-    behave like aMandatoryCheckboxForm("selectBenefits.blank")
-  }
-
+case object OtherCompanyBenefitsDetailsId extends Identifier {
+  override def toString: String = "otherCompanyBenefitsDetails"
 }
