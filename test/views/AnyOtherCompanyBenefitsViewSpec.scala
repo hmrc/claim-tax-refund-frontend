@@ -21,6 +21,7 @@ import controllers.routes
 import forms.BooleanForm
 import views.behaviours.YesNoViewBehaviours
 import models.NormalMode
+import models.SelectTaxYear.CYMinus2
 import views.html.anyOtherCompanyBenefits
 
 class AnyOtherCompanyBenefitsViewSpec extends YesNoViewBehaviours {
@@ -29,13 +30,15 @@ class AnyOtherCompanyBenefitsViewSpec extends YesNoViewBehaviours {
 
   override val form = new BooleanForm()()
 
-  def createView = () => anyOtherCompanyBenefits(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def taxYear = CYMinus2.asString
 
-  def createViewUsingForm = (form: Form[_]) => anyOtherCompanyBenefits(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createView = () => anyOtherCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+
+  def createViewUsingForm = (form: Form[_]) => anyOtherCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "AnyOtherCompanyBenefits view" must {
 
-    behave like normalPage(createView, messageKeyPrefix)
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, " " + taxYear, messages("global.questionMark"))
 
     behave like pageWithBackLink(createView)
 
