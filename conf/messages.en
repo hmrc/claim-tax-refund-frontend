@@ -325,3 +325,9 @@ howMuchOtherCompanyBenefit.heading2 = did you get between
 howMuchOtherCompanyBenefit.checkYourAnswersLabel = Other company benefit
 howMuchOtherCompanyBenefit.blank = Enter the amount you got for this benefit
 howMuchOtherCompanyBenefit.invalid = Enter a valid amount you got for this benefit
+
+enterPayeReference.title = Enter your employer or pension provider's PAYE reference
+enterPayeReference.heading = Enter your employer or pension provider's PAYE reference
+enterPayeReference.hint = For example 123/AB456. You can find this on your payslip or P60enterPayeReference.title = enterPayeReference
+enterPayeReference.blank = Enter your employer or pension provider's PAYE reference
+enterPayeReference.invalid = Enter a valid PAYE reference
