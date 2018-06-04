@@ -297,9 +297,6 @@ anyCompanyBenefits.list2 = fuel benefit
 anyCompanyBenefits.list3 = medical benefit
 anyCompanyBenefits.list4 = other company benefits from your employer
 
-enterPayeReference.title = Enter your employer or pension provider's PAYE reference
-enterPayeReference.heading = Enter your employer or pension provider's PAYE reference
-enterPayeReference.hint = For example 123/AB456. You can find this on your payslip or P60
 howMuchFuelBenefit.title = How much fuel benefit did you get between
 howMuchFuelBenefit.heading = How much fuel benefit did you get between
 howMuchFuelBenefit.checkYourAnswersLabel = Fuel benefit
@@ -329,8 +326,8 @@ howMuchOtherCompanyBenefit.checkYourAnswersLabel = Other company benefit
 howMuchOtherCompanyBenefit.blank = Enter the amount you got for this benefit
 howMuchOtherCompanyBenefit.invalid = Enter a valid amount you got for this benefit
 
-enterPayeReference.title = enterPayeReference
-enterPayeReference.heading = enterPayeReference
-enterPayeReference.checkYourAnswersLabel = enterPayeReference
+enterPayeReference.title = Enter your employer or pension provider's PAYE reference
+enterPayeReference.heading = Enter your employer or pension provider's PAYE reference
+enterPayeReference.hint = For example 123/AB456. You can find this on your payslip or P60enterPayeReference.title = enterPayeReference
 enterPayeReference.blank = Enter your employer or pension provider's PAYE reference
 enterPayeReference.invalid = Enter a valid PAYE reference
