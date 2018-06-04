@@ -302,3 +302,8 @@ howMuchFuelBenefit.heading = How much fuel benefit did you get between
 howMuchFuelBenefit.checkYourAnswersLabel = Fuel benefit
 howMuchFuelBenefit.blank = Enter the amount you got for fuel benefit
 howMuchFuelBenefit.invalid = Enter a valid amount you got in fuel benefit
+
+otherCompanyBenefitsDetails.title = What is the name of the company benefit you got between
+otherCompanyBenefitsDetails.heading = What is the name of the company benefit you got between
+otherCompanyBenefitsDetails.checkYourAnswersLabel = Other company benefits name
+otherCompanyBenefitsDetails.blank = Enter the name of taxable benefit you got
