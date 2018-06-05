@@ -20,8 +20,10 @@ import identifiers._
 import models._
 import models.templates._
 import uk.gov.hmrc.http.cache.client.CacheMap
+import controllers.routes
 
 class UserAnswers(val cacheMap: CacheMap) {
+  def howMuchBereavementAllowance: Option[String] = cacheMap.getEntry[String](HowMuchBereavementAllowanceId.toString)
 
   def anyOtherCompanyBenefits: Option[Boolean] = cacheMap.getEntry[Boolean](AnyOtherCompanyBenefitsId.toString)
 
@@ -98,5 +100,12 @@ class UserAnswers(val cacheMap: CacheMap) {
   def pdfHtml: Option[String]= cacheMap.getEntry[String]("pdfHtml")
 
   def metadata: Option[Metadata] = cacheMap.getEntry[Metadata]("metadata")
+
+  def getSelectedTaxYear: String = {
+    this.selectTaxYear.map {
+      selectedTaxYear =>
+        selectedTaxYear.asString
+    }.orNull
+  }
 
 }
