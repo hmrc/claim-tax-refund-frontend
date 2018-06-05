@@ -336,3 +336,9 @@ anyOtherCompanyBenefits.title = Did you get any other company benefits between
 anyOtherCompanyBenefits.heading = Did you get any other company benefits between
 anyOtherCompanyBenefits.checkYourAnswersLabel = anyOtherCompanyBenefits
 anyOtherCompanyBenefits.blank = Did you get any other company benefits in the tax year your claim is for?
+
+howMuchBereavementAllowance.title = How much bereavement allowance did you get between
+howMuchBereavementAllowance.heading = How much bereavement allowance did you get between
+howMuchBereavementAllowance.checkYourAnswersLabel = Bereavement allowance
+howMuchBereavementAllowance.blank = Enter the amount you got in bereavement allowance
+howMuchBereavementAllowance.invalid = Enter a valid of bereavement allowance
