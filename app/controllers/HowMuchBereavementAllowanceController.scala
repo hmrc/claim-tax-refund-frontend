@@ -17,7 +17,6 @@
 package controllers
 
 import javax.inject.Inject
-
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
@@ -27,6 +26,7 @@ import config.FrontendAppConfig
 import forms.HowMuchBereavementAllowanceForm
 import identifiers.HowMuchBereavementAllowanceId
 import models.Mode
+import play.api.mvc.Results
 import utils.{Navigator, UserAnswers}
 import views.html.howMuchBereavementAllowance
 
@@ -50,17 +50,31 @@ class HowMuchBereavementAllowanceController @Inject()(
         case None => form
         case Some(value) => form.fill(value)
       }
-      Ok(howMuchBereavementAllowance(appConfig, preparedForm, mode))
+
+      request.userAnswers.selectTaxYear.map {
+        selectedTaxYear =>
+          val taxYear = selectedTaxYear.asString
+          Ok(howMuchBereavementAllowance(appConfig, preparedForm, mode, taxYear))
+      }.getOrElse {
+        Redirect(routes.SessionExpiredController.onPageLoad())
+      }
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      form.bindFromRequest().fold(
-        (formWithErrors: Form[_]) =>
-          Future.successful(BadRequest(howMuchBereavementAllowance(appConfig, formWithErrors, mode))),
-        (value) =>
-          dataCacheConnector.save[String](request.externalId, HowMuchBereavementAllowanceId.toString, value).map(cacheMap =>
-            Redirect(navigator.nextPage(HowMuchBereavementAllowanceId, mode)(new UserAnswers(cacheMap))))
-      )
+    request.userAnswers.selectTaxYear.map {
+      selectedTaxYear =>
+        val taxYear = selectedTaxYear.asString
+        form.bindFromRequest().fold(
+          (formWithErrors: Form[_]) =>
+            Future.successful(BadRequest(howMuchBereavementAllowance(appConfig, formWithErrors, mode, taxYear))),
+          value =>
+            dataCacheConnector.save[String](request.externalId, HowMuchBereavementAllowanceId.toString, value).map(cacheMap =>
+              Redirect(navigator.nextPage(HowMuchBereavementAllowanceId, mode)(new UserAnswers(cacheMap))))
+        )
+    }.getOrElse {
+      Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+    }
+
   }
 }
