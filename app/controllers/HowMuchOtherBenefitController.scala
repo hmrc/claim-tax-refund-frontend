@@ -50,17 +50,30 @@ class HowMuchOtherBenefitController @Inject()(
         case None => form
         case Some(value) => form.fill(value)
       }
-      Ok(howMuchOtherBenefit(appConfig, preparedForm, mode))
+
+      request.userAnswers.selectTaxYear.map{
+        selectedTaxYear =>
+          val taxYear = selectedTaxYear.asString
+          Ok(howMuchOtherBenefit(appConfig, preparedForm, mode, taxYear))
+      }.getOrElse{
+        Redirect(routes.SessionExpiredController.onPageLoad())
+      }
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      form.bindFromRequest().fold(
-        (formWithErrors: Form[_]) =>
-          Future.successful(BadRequest(howMuchOtherBenefit(appConfig, formWithErrors, mode))),
-        (value) =>
-          dataCacheConnector.save[String](request.externalId, HowMuchOtherBenefitId.toString, value).map(cacheMap =>
-            Redirect(navigator.nextPage(HowMuchOtherBenefitId, mode)(new UserAnswers(cacheMap))))
-      )
+      request.userAnswers.selectTaxYear.map {
+        selectedTaxYear =>
+          val taxYear = selectedTaxYear.asString
+          form.bindFromRequest().fold(
+            (formWithErrors: Form[_]) =>
+              Future.successful(BadRequest(howMuchOtherBenefit(appConfig, formWithErrors, mode, taxYear))),
+            (value) =>
+              dataCacheConnector.save[String](request.externalId, HowMuchOtherBenefitId.toString, value).map(cacheMap =>
+                Redirect(navigator.nextPage(HowMuchOtherBenefitId, mode)(new UserAnswers(cacheMap))))
+          )
+      }.getOrElse {
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+      }
   }
 }

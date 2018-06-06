@@ -21,6 +21,7 @@ import play.api.data.Form
 import controllers.routes
 import forms.HowMuchOtherBenefitForm
 import models.NormalMode
+import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
 import views.behaviours.StringViewBehaviours
 import views.html.howMuchOtherBenefit
@@ -28,19 +29,22 @@ import views.html.howMuchOtherBenefit
 class HowMuchOtherBenefitViewSpec extends StringViewBehaviours with MockitoSugar {
 
   val messageKeyPrefix = "howMuchOtherBenefit"
+  private val taxYear = CYMinus2.asString
 
   val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
   override val form: Form[String] = new HowMuchOtherBenefitForm(appConfig)()
 
-  def createView = () => howMuchOtherBenefit(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createView = () => howMuchOtherBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) => howMuchOtherBenefit(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[String]) => howMuchOtherBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "HowMuchOtherBenefit view" must {
-    behave like normalPage(createView, messageKeyPrefix)
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, " " + taxYear, messages("global.questionMark"))
 
     behave like pageWithBackLink(createView)
+
+    behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
     behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.HowMuchOtherBenefitController.onSubmit(NormalMode).url)
   }
