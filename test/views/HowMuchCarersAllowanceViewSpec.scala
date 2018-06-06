@@ -19,27 +19,27 @@ package views
 import config.FrontendAppConfig
 import play.api.data.Form
 import controllers.routes
-import forms.HowMuchBereavementAllowanceForm
+import forms.HowMuchCarersAllowanceForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
 import views.behaviours.StringViewBehaviours
-import views.html.howMuchBereavementAllowance
+import views.html.howMuchCarersAllowance
 
-class HowMuchBereavementAllowanceViewSpec extends StringViewBehaviours with MockitoSugar {
+class HowMuchCarersAllowanceViewSpec extends StringViewBehaviours with MockitoSugar {
 
-  val messageKeyPrefix = "howMuchBereavementAllowance"
+  val messageKeyPrefix = "howMuchCarersAllowance"
   def taxYear = CYMinus2.asString
 
   val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
-  override val form: Form[String] = new HowMuchBereavementAllowanceForm(appConfig)()
+  override val form: Form[String] = new HowMuchCarersAllowanceForm(appConfig)()
 
-  def createView = () => howMuchBereavementAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createView = () => howMuchCarersAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) => howMuchBereavementAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[String]) => howMuchCarersAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
-  "HowMuchBereavementAllowance view" must {
+  "HowMuchCarersAllowance view" must {
 
     behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, " " + taxYear, messages("global.questionMark"))
 
@@ -47,6 +47,6 @@ class HowMuchBereavementAllowanceViewSpec extends StringViewBehaviours with Mock
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.HowMuchBereavementAllowanceController.onSubmit(NormalMode).url)
+    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.HowMuchCarersAllowanceController.onSubmit(NormalMode).url)
   }
 }
