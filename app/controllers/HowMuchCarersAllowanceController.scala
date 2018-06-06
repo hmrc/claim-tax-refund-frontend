@@ -17,7 +17,6 @@
 package controllers
 
 import javax.inject.Inject
-
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
@@ -50,17 +49,31 @@ class HowMuchCarersAllowanceController @Inject()(
         case None => form
         case Some(value) => form.fill(value)
       }
-      Ok(howMuchCarersAllowance(appConfig, preparedForm, mode))
+
+      request.userAnswers.selectTaxYear.map {
+        selectedTaxYear =>
+          val taxYear = selectedTaxYear.asString
+          Ok(howMuchCarersAllowance(appConfig, preparedForm, mode, taxYear))
+      }.getOrElse{
+        Redirect(routes.SessionExpiredController.onPageLoad())
+      }
+
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
-    implicit request =>
-      form.bindFromRequest().fold(
-        (formWithErrors: Form[_]) =>
-          Future.successful(BadRequest(howMuchCarersAllowance(appConfig, formWithErrors, mode))),
-        (value) =>
-          dataCacheConnector.save[String](request.externalId, HowMuchCarersAllowanceId.toString, value).map(cacheMap =>
-            Redirect(navigator.nextPage(HowMuchCarersAllowanceId, mode)(new UserAnswers(cacheMap))))
-      )
+     implicit request =>
+      request.userAnswers.selectTaxYear.map {
+        selectedTaxYear =>
+          val taxYear = selectedTaxYear.asString
+          form.bindFromRequest().fold(
+            (formWithErrors: Form[_]) =>
+              Future.successful(BadRequest(howMuchCarersAllowance(appConfig, formWithErrors, mode, taxYear))),
+            value =>
+              dataCacheConnector.save[String](request.externalId, HowMuchCarersAllowanceId.toString, value).map(cacheMap =>
+                Redirect(navigator.nextPage(HowMuchCarersAllowanceId, mode)(new UserAnswers(cacheMap))))
+          )
+      }.getOrElse {
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+      }
   }
 }
