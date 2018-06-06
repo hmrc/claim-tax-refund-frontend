@@ -45,6 +45,8 @@ class HowMuchCarersAllowanceViewSpec extends StringViewBehaviours with MockitoSu
 
     behave like pageWithBackLink(createView)
 
+    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+
     behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.HowMuchCarersAllowanceController.onSubmit(NormalMode).url)
   }
 }
