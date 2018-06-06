@@ -24,7 +24,16 @@ import play.api.data.Forms._
 
 class HowMuchCarersAllowanceForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 
-  private val howMuchCarersAllowanceBlankKey = "error.required"
+  private val howMuchCarersAllowanceBlankKey = "howMuchCarersAllowance.blank"
+  private val howMuchCarersAllowanceInvalidKey = "howMuchCarersAllowance.invalid"
+  private val currencyRegex = appConfig.currencyRegex
 
-  def apply(): Form[String] = Form("value" -> text.verifying(nonEmpty(howMuchCarersAllowanceBlankKey)))
+  def apply(): Form[String] = Form(
+    "value" -> text.verifying(
+      firstError(
+        nonEmpty(howMuchCarersAllowanceBlankKey),
+        regexValidation(currencyRegex, howMuchCarersAllowanceInvalidKey))
+    )
+  )
+
 }
