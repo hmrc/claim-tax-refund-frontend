@@ -21,6 +21,7 @@ import play.api.data.Form
 import controllers.routes
 import forms.OtherBenefitsDetailsForm
 import models.NormalMode
+import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
 import views.behaviours.StringViewBehaviours
 import views.html.otherBenefitsDetails
@@ -29,18 +30,22 @@ class OtherBenefitsDetailsViewSpec extends StringViewBehaviours with MockitoSuga
 
   val messageKeyPrefix = "otherBenefitsDetails"
 
+  private val taxYear = CYMinus2.asString
+
   val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
   override val form: Form[String] = new OtherBenefitsDetailsForm(appConfig)()
 
-  def createView = () => otherBenefitsDetails(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createView = () => otherBenefitsDetails(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) => otherBenefitsDetails(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[String]) => otherBenefitsDetails(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "OtherBenefitsDetails view" must {
-    behave like normalPage(createView, messageKeyPrefix)
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, " " + taxYear, messages("global.questionMark"))
 
     behave like pageWithBackLink(createView)
+
+    behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
     behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.OtherBenefitsDetailsController.onSubmit(NormalMode).url)
   }
