@@ -63,6 +63,7 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.howMuchOtherCompanyBenefit) thenReturn None
     when(answers.howMuchBereavementAllowance) thenReturn None
     when(answers.otherBenefitsDetails) thenReturn None
+    when(answers.howMuchOtherBenefit) thenReturn None
 
     answers
   }
