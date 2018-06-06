@@ -203,7 +203,7 @@ howMuchBankBuildingSocietyInterest.invalid = Enter a valid amount of bank or bui
 
 howMuchMedicalBenefits.title = How much medical benefit did you get in the tax year your claim is for?
 howMuchMedicalBenefits.heading = How much medical benefit did you get in the tax year your claim is for?
-howMuchMedicalBenefits.checkYourAnswersLabel = Amount you got in medical benefits in the tax year your claim is for
+howMuchMedicalBenefits.checkYourAnswersLabel = Medical benefit
 howMuchMedicalBenefits.blank = Enter the amount you got in medical benefits in the tax year your claim is for
 howMuchMedicalBenefits.invalid = Enter a valid amount you got in medical benefits in the tax year your claim is for
 
@@ -334,5 +334,5 @@ enterPayeReference.invalid = Enter a valid PAYE reference
 
 anyOtherCompanyBenefits.title = Did you get any other company benefits between
 anyOtherCompanyBenefits.heading = Did you get any other company benefits between
-anyOtherCompanyBenefits.checkYourAnswersLabel = anyOtherCompanyBenefits
+anyOtherCompanyBenefits.checkYourAnswersLabel = Did you get any other company benefits?
 anyOtherCompanyBenefits.blank = Did you get any other company benefits in the tax year your claim is for?
