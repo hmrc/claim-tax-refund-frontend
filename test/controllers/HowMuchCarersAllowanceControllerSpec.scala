@@ -97,4 +97,23 @@ class HowMuchCarersAllowanceControllerSpec extends ControllerSpecBase {
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
     }
   }
+
+  "redirect to Session Expired if no taxYears have been selected" in {
+    when(mockUserAnswers.selectTaxYear).thenReturn(None)
+
+    val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
+
+    status(result) mustBe SEE_OTHER
+    redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+  }
+
+  "redirect to Session Expired if no taxYears have been selected on submit" in {
+    when(mockUserAnswers.selectTaxYear).thenReturn(None)
+
+    val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(fakeRequest)
+
+    status(result) mustBe SEE_OTHER
+    redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+  }
+
 }
