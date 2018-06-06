@@ -28,7 +28,7 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
     } else if (userAnswers.otherIncome == Some(true) && userAnswers.anyBenefits == Some(true)) {
       Seq(yourDetails, incomeDetails, benefitDetails, otherIncomeDetails, paymentDetails, contactDetails)
     } else {
-      Seq(yourDetails, incomeDetails, paymentDetails, contactDetails)
+      Seq(yourDetails, incomeDetails, paymentDetails, contactDetails, companyBenefitDetails)
     }
   }
 
@@ -65,9 +65,17 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
     cyaHelper.otherBenefitsDetailsAndAmount
   ).flatten)
 
-  def companyBenefitDetails = AnswerSection(Some("checkYourAnswers.companyBenefitsDetailsSection"), Seq(
-    cyaHelper.selectCompanyBenefits
-  ).flatten)
+  def companyBenefitDetails = {
+    AnswerSection(Some("checkYourAnswers.companyBenefitsDetailsSection"),
+      Seq(cyaHelper.anyCompanyBenefits,
+        cyaHelper.selectCompanyBenefits,
+        cyaHelper.howMuchCarBenefits,
+        cyaHelper.howMuchFuelBenefit,
+        cyaHelper.howMuchMedicalBenefits,
+        cyaHelper.anyOtherCompanyBenefits,
+        cyaHelper.otherCompanyBenefitsDetails,
+        cyaHelper.howMuchOtherCompanyBenefit).flatten)
+  }
 
   def otherIncomeDetails = AnswerSection(Some("checkYourAnswers.otherIncomeDetailsSection"), Seq(
     cyaHelper.howMuchCarBenefits,

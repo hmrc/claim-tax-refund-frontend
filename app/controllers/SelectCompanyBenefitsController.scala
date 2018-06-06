@@ -18,15 +18,15 @@ package controllers
 
 import javax.inject.Inject
 
-import play.api.data.Form
-import play.api.i18n.{I18nSupport, MessagesApi}
-import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
-import config.FrontendAppConfig
 import forms.SelectCompanyBenefitsForm
 import identifiers.SelectCompanyBenefitsId
 import models.{CompanyBenefits, Mode}
+import play.api.data.Form
+import play.api.i18n.{I18nSupport, MessagesApi}
+import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import utils.{Navigator, UserAnswers}
 import views.html.selectCompanyBenefits
 
@@ -65,9 +65,15 @@ class SelectCompanyBenefitsController @Inject()(
           SelectCompanyBenefitsForm().bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
               Future.successful(BadRequest(selectCompanyBenefits(appConfig, formWithErrors, mode, taxYear))),
-            (value) =>
+            (value) => {
+              CompanyBenefits.values.filterNot(value).foreach {
+                x =>
+                  val dataId = CompanyBenefits.getId(x)
+                  dataCacheConnector.remove(request.externalId, dataId.toString)
+              }
               dataCacheConnector.save[Set[CompanyBenefits.Value]](request.externalId, SelectCompanyBenefitsId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(SelectCompanyBenefitsId, mode)(new UserAnswers(cacheMap))))
+            }
           )
       }.getOrElse {
         Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
