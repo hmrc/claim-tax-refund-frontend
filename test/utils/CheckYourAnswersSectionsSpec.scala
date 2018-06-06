@@ -106,6 +106,12 @@ class CheckYourAnswersSectionsSpec (implicit messages: Messages)extends SpecBase
       sections.benefitDetails.headingKey mustBe Some("checkYourAnswers.benefitDetailsSection")
     }
 
+    "have the right section title for Company Benefits Details" in {
+      val helper = new CheckYourAnswersHelper(answers)
+      val sections = new CheckYourAnswersSections(helper, MockUserAnswers.companyBenefits)
+      sections.companyBenefitDetails.headingKey mustBe Some("checkYourAnswers.companyBenefitsDetailsSection")
+    }
+
     "have the right section title for Other Income Details" in {
       val helper = new CheckYourAnswersHelper(answers)
       val sections = new CheckYourAnswersSections(helper, MockUserAnswers.benefitsWithIncome)
@@ -138,6 +144,24 @@ class CheckYourAnswersSectionsSpec (implicit messages: Messages)extends SpecBase
       rows.head.label.key mustBe "userDetails.checkYourAnswersLabel.name"
       rows(1).label.key mustBe "userDetails.checkYourAnswersLabel.nino"
       rows(2).label.key mustBe "userDetails.checkYourAnswersLabel.address"
+    }
+
+    "have the correct rows in the right order in Company Benefits Details section" in {
+      answers = MockUserAnswers.companyBenefits
+
+      val helper = new CheckYourAnswersHelper(answers)
+      val sections = new CheckYourAnswersSections(helper, MockUserAnswers.minimalValidUserAnswers)
+      val rows = sections.companyBenefitDetails.rows
+
+      rows.size mustBe 8
+      rows.head.label.key mustBe "anyCompanyBenefits.checkYourAnswersLabel"
+      rows(1).label.key mustBe "selectCompanyBenefits.checkYourAnswersLabel"
+      rows(2).label.key mustBe "howMuchCarBenefits.checkYourAnswersLabel"
+      rows(3).label.key mustBe "howMuchMedicalBenefits.checkYourAnswersLabel"
+      rows(4).label.key mustBe "howMuchFuelBenefit.checkYourAnswersLabel"
+      rows(5).label.key mustBe "anyOtherCompanyBenefits.checkYourAnswersLabel"
+      rows(6).label.key mustBe "otherCompanyBenefitsDetails.checkYourAnswersLabel"
+      rows(7).label.key mustBe "howMuchOtherCompanyBenefit.checkYourAnswersLabel"
     }
 
     "have the correct rows in the right order in the Payment Details section" in {
