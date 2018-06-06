@@ -171,3 +171,8 @@ GET        /how-much-bereavement-allowance                      controllers.HowM
 POST       /how-much-bereavement-allowance                      controllers.HowMuchBereavementAllowanceController.onSubmit(mode: Mode = NormalMode)
 GET        /change-much-bereavement-allowance                   controllers.HowMuchBereavementAllowanceController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-much-bereavement-allowance                   controllers.HowMuchBereavementAllowanceController.onSubmit(mode: Mode = CheckMode)
+
+GET        /otherBenefitsDetails               controllers.OtherBenefitsDetailsController.onPageLoad(mode: Mode = NormalMode)
+POST       /otherBenefitsDetails               controllers.OtherBenefitsDetailsController.onSubmit(mode: Mode = NormalMode)
+GET        /changeOtherBenefitsDetails                        controllers.OtherBenefitsDetailsController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeOtherBenefitsDetails                        controllers.OtherBenefitsDetailsController.onSubmit(mode: Mode = CheckMode)
