@@ -343,7 +343,13 @@ howMuchBereavementAllowance.title = How much bereavement allowance did you get b
 howMuchBereavementAllowance.heading = How much bereavement allowance did you get between
 howMuchBereavementAllowance.checkYourAnswersLabel = Bereavement allowance
 howMuchBereavementAllowance.blank = Enter the amount you got in bereavement allowance
-howMuchBereavementAllowance.invalid = Enter a valid of bereavement allowance
+howMuchBereavementAllowance.invalid = Enter a valid amount of bereavement allowance
+
+howMuchCarersAllowance.title = How much carers allowance did you get between
+howMuchCarersAllowance.heading = How much carers allowance did you get between
+howMuchCarersAllowance.checkYourAnswersLabel = Carers Allowance
+howMuchCarersAllowance.blank = Enter the amount of carers allowance
+howMuchCarersAllowance.invalid = Enter a valid amount of carers allowance
 
 otherBenefitsDetails.title = What is the name of the taxable benefit you were getting between
 otherBenefitsDetails.heading = What is the name of the taxable benefit you were getting between

@@ -23,6 +23,8 @@ import uk.gov.hmrc.http.cache.client.CacheMap
 import controllers.routes
 
 class UserAnswers(val cacheMap: CacheMap) {
+  def howMuchCarersAllowance: Option[String] = cacheMap.getEntry[String](HowMuchCarersAllowanceId.toString)
+
   def howMuchOtherBenefit: Option[String] = cacheMap.getEntry[String](HowMuchOtherBenefitId.toString)
 
   def otherBenefitsDetails: Option[String] = cacheMap.getEntry[String](OtherBenefitsDetailsId.toString)

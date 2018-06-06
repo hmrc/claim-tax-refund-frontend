@@ -23,42 +23,40 @@ import utils.{FakeNavigator, MockUserAnswers}
 import connectors.FakeDataCacheConnector
 import controllers.actions._
 import play.api.test.Helpers._
-import forms.HowMuchBereavementAllowanceForm
-import identifiers.HowMuchBereavementAllowanceId
+import forms.HowMuchCarersAllowanceForm
+import identifiers.HowMuchCarersAllowanceId
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
-import views.html.howMuchBereavementAllowance
+import views.html.howMuchCarersAllowance
 import org.mockito.Mockito.when
 
 
-class HowMuchBereavementAllowanceControllerSpec extends ControllerSpecBase {
+class HowMuchCarersAllowanceControllerSpec extends ControllerSpecBase {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new HowMuchBereavementAllowanceController(
-      frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, new HowMuchBereavementAllowanceForm(frontendAppConfig))
-
-  val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
+    new HowMuchCarersAllowanceController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+      dataRetrievalAction, new DataRequiredActionImpl, new HowMuchCarersAllowanceForm(frontendAppConfig))
 
   val testAnswer = "9,999.99"
   val taxYear = CYMinus2.asString
-  val form = new HowMuchBereavementAllowanceForm(frontendAppConfig)()
+  val form = new HowMuchCarersAllowanceForm(frontendAppConfig)()
+  val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
 
-  def viewAsString(form: Form[_] = form) = howMuchBereavementAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = form) = howMuchCarersAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
 
-  "HowMuchBereavementAllowance Controller" must {
+  "HowMuchCarersAllowance Controller" must {
 
     "return OK and the correct view for a GET" in {
-      val result = controller(someData).onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(fakeDataRetrievalAction()).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe OK
       contentAsString(result) mustBe viewAsString()
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      when (mockUserAnswers.howMuchBereavementAllowance).thenReturn(Some(testAnswer))
+      when (mockUserAnswers.howMuchCarersAllowance).thenReturn(Some("9,999.99"))
 
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
@@ -117,4 +115,5 @@ class HowMuchBereavementAllowanceControllerSpec extends ControllerSpecBase {
     status(result) mustBe SEE_OTHER
     redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
   }
+
 }
