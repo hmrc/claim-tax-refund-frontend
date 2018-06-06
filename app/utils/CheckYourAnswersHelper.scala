@@ -53,6 +53,8 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
   def selectBenefits: Option[AnswerRow] = userAnswers.selectBenefits map {
     val keyPrefix = "selectBenefits."
     x => AnswerRow(keyPrefix + "checkYourAnswersLabel", x.toSeq.map {
+      case Benefits.BEREAVEMENT_ALLOWANCE => Messages(keyPrefix + "bereavement-allowance")
+      case Benefits.CARERS_ALLOWANCE => Messages(keyPrefix + "carers-allowance")
       case Benefits.JOBSEEKERS_ALLOWANCE => Messages(keyPrefix + "jobseekers-allowance")
       case Benefits.INCAPACITY_BENEFIT => Messages(keyPrefix + "incapacity-benefit")
       case Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE => Messages(keyPrefix + "employment-and-support-allowance")
