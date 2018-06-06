@@ -25,6 +25,10 @@ import viewmodels.AnswerRow
 
 class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messages){
 
+  def howMuchOtherBenefit: Option[AnswerRow] = userAnswers.howMuchOtherBenefit map {
+    x => AnswerRow("howMuchOtherBenefit.checkYourAnswersLabel", s"$x", false, routes.HowMuchOtherBenefitController.onPageLoad(CheckMode).url)
+  }
+
   def otherBenefitsDetails: Option[AnswerRow] = userAnswers.otherBenefitsDetails map {
     x => AnswerRow("otherBenefitsDetails.checkYourAnswersLabel", s"$x", false, routes.OtherBenefitsDetailsController.onPageLoad(CheckMode).url)
   }
