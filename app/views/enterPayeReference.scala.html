@@ -33,9 +33,12 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading("enterPayeReference.heading")
+        @components.heading("enterPayeReference.heading", secondaryHeaderKey = Some("index.title"))
 
-        @components.input_text(InputViewModel("value", form), label = messages("enterPayeReference.heading"), labelClass=Some("visually-hidden"), hintLine1 = Some(messages("enterPayeReference.hint")))
+        @components.input_text(InputViewModel("value", form),
+            label = messages("enterPayeReference.heading"),
+            labelClass=Some("visually-hidden"),
+            hintLine1 = Some(messages("enterPayeReference.hint")))
 
         @components.submit_button()
     }
