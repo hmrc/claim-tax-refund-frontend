@@ -348,7 +348,8 @@ otherBenefitsDetails.heading = What is the name of the taxable benefit you were 
 otherBenefitsDetails.checkYourAnswersLabel = Other benefits name
 otherBenefitsDetails.blank = Enter the name of the taxable benefit you got
 
-howMuchOtherBenefit.title = howMuchOtherBenefit
-howMuchOtherBenefit.heading = howMuchOtherBenefit
-howMuchOtherBenefit.checkYourAnswersLabel = howMuchOtherBenefit
-howMuchOtherBenefit.blank = howMuchOtherBenefit
+howMuchOtherBenefit.title = How much did you get between
+howMuchOtherBenefit.heading = How much did you get between
+howMuchOtherBenefit.checkYourAnswersLabel = Other benefit
+howMuchOtherBenefit.blank = Enter the amount you got for this benefit
+howMuchOtherBenefit.invalid = Enter a valid amount you got for this benefit
