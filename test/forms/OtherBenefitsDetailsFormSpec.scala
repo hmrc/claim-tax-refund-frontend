@@ -25,7 +25,7 @@ import play.api.data.Form
 
 class OtherBenefitsDetailsFormSpec extends FormBehaviours with MockitoSugar {
 
-  val errorKeyBlank = "error.required"
+  val errorKeyBlank = "otherBenefitsDetails.blank"
 
   def appConfig: FrontendAppConfig = {
     val instance = mock[FrontendAppConfig]
