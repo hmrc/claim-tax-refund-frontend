@@ -347,3 +347,8 @@ otherBenefitsDetails.title = What is the name of the taxable benefit you were ge
 otherBenefitsDetails.heading = What is the name of the taxable benefit you were getting between
 otherBenefitsDetails.checkYourAnswersLabel = Other benefits name
 otherBenefitsDetails.blank = Enter the name of the taxable benefit you got
+
+howMuchOtherBenefit.title = howMuchOtherBenefit
+howMuchOtherBenefit.heading = howMuchOtherBenefit
+howMuchOtherBenefit.checkYourAnswersLabel = howMuchOtherBenefit
+howMuchOtherBenefit.blank = howMuchOtherBenefit
