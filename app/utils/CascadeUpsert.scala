@@ -17,6 +17,9 @@
 package utils
 
 import javax.inject.Singleton
+
+import identifiers._
+import models.CompanyBenefits
 import play.api.libs.json._
 import uk.gov.hmrc.http.cache.client.CacheMap
 
@@ -24,7 +27,9 @@ import uk.gov.hmrc.http.cache.client.CacheMap
 class CascadeUpsert {
 
   val funcMap: Map[String, (JsValue, CacheMap) => CacheMap] =
-    Map()
+    Map(
+      SelectCompanyBenefitsId.toString -> storeCompanyBenefit
+    )
 
   def apply[A](key: String, value: A, originalCacheMap: CacheMap)(implicit fmt: Format[A]): CacheMap =
     funcMap.get(key).fold(store(key, value, originalCacheMap)) { fn => fn(Json.toJson(value), originalCacheMap) }
@@ -43,5 +48,22 @@ class CascadeUpsert {
       case _ => cacheMap
     }
     store(key, value, mapToStore)
+  }
+
+  private def storeCompanyBenefit(value: JsValue, cacheMap: CacheMap): CacheMap = {
+    cacheMap.data.get(SelectCompanyBenefitsId.toString) match {
+      case Some(benefits) if benefits != value =>
+        var mapToStore = cacheMap
+        benefits.as[JsArray].value.foreach {
+          x=> if(!value.as[JsArray].value.contains(x)){
+            mapToStore = cacheMap copy (data = cacheMap.data - CompanyBenefits.getIdString(x.as[String]).toString)
+            store(SelectCompanyBenefitsId.toString, value, mapToStore)
+          }
+        }
+        store(SelectCompanyBenefitsId.toString, value, mapToStore)
+      case _ =>
+        store(SelectCompanyBenefitsId.toString, value, cacheMap)
+    }
+
   }
 }
