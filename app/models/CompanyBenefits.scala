@@ -40,4 +40,13 @@ object CompanyBenefits extends Enumeration {
       case OTHER_COMPANY_BENEFIT => HowMuchOtherCompanyBenefitId
     }
   }
+
+  def getIdString(benefitValue: String) = {
+    benefitValue match {
+      case "company-car-benefit" => HowMuchCarBenefitsId
+      case "fuel-benefit" => HowMuchFuelBenefitId
+      case "medical-benefit" => HowMuchMedicalBenefitsId
+      case "other-company-benefit" => HowMuchOtherCompanyBenefitId
+    }
+  }
 }
