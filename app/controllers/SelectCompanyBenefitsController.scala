@@ -65,15 +65,9 @@ class SelectCompanyBenefitsController @Inject()(
           SelectCompanyBenefitsForm().bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
               Future.successful(BadRequest(selectCompanyBenefits(appConfig, formWithErrors, mode, taxYear))),
-            (value) => {
-              CompanyBenefits.values.filterNot(value).foreach {
-                x =>
-                  val dataId = CompanyBenefits.getId(x)
-                  dataCacheConnector.remove(request.externalId, dataId.toString)
-              }
+            (value) =>
               dataCacheConnector.save[Set[CompanyBenefits.Value]](request.externalId, SelectCompanyBenefitsId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(SelectCompanyBenefitsId, mode)(new UserAnswers(cacheMap))))
-            }
           )
       }.getOrElse {
         Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
