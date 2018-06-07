@@ -50,20 +50,19 @@ class CascadeUpsert {
     store(key, value, mapToStore)
   }
 
-  private def storeCompanyBenefit(value: JsValue, cacheMap: CacheMap): CacheMap = {
+  private def storeCompanyBenefit(selectedBenefits: JsValue, cacheMap: CacheMap): CacheMap = {
     cacheMap.data.get(SelectCompanyBenefitsId.toString) match {
-      case Some(benefits) if benefits != value =>
+      case Some(savedBenefits) if savedBenefits != selectedBenefits =>
         var mapToStore = cacheMap
-        benefits.as[JsArray].value.foreach {
-          x=> if(!value.as[JsArray].value.contains(x)){
-            mapToStore = cacheMap copy (data = cacheMap.data - CompanyBenefits.getIdString(x.as[String]).toString)
-            store(SelectCompanyBenefitsId.toString, value, mapToStore)
-          }
+        savedBenefits.as[JsArray].value.foreach {
+          benefit =>
+            if (!selectedBenefits.as[JsArray].value.contains(benefit)) {
+              mapToStore = cacheMap copy (data = cacheMap.data - CompanyBenefits.getIdString(benefit.as[String]).toString)
+            }
         }
-        store(SelectCompanyBenefitsId.toString, value, mapToStore)
+        store(SelectCompanyBenefitsId.toString, selectedBenefits, mapToStore)
       case _ =>
-        store(SelectCompanyBenefitsId.toString, value, cacheMap)
+        store(SelectCompanyBenefitsId.toString, selectedBenefits, cacheMap)
     }
-
   }
 }
