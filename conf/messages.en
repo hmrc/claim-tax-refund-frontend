@@ -251,8 +251,8 @@ paymentUKAddress.postcode.blank = Enter a postcode
 
 whereToSendPayment.title = Who would you like us to make the payment to?
 whereToSendPayment.heading = Who would you like us to make the payment to?
-whereToSendPayment.you = Myself
-whereToSendPayment.someoneElse = Nominee
+whereToSendPayment.myself = Myself
+whereToSendPayment.nominee = Nominee
 whereToSendPayment.checkYourAnswersLabel = Who would you like us to make the payment to?
 whereToSendPayment.blank = Select who you would like us to make the payment to
 

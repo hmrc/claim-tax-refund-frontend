@@ -39,22 +39,6 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     helper = new CheckYourAnswersHelper(answers)(messages: Messages)
   }
 
-  "User details" must {
-    s"have the correct label" in {
-      when(answers.userDetails) thenReturn Some(UserDetails("Joe Smith", "AB123456A",
-        UkAddress("Line 1", "Line 2", Some("Line 3"), Some("Line 4"), None, "AB123CD")))
-      helper.userName.get.label.key mustBe s"userDetails.checkYourAnswersLabel.name"
-      helper.userNino.get.label.key mustBe s"userDetails.checkYourAnswersLabel.nino"
-      helper.userAddress.get.label.key mustBe s"userDetails.checkYourAnswersLabel.address"
-    }
-    s"not have a change link when set to false" in {
-      when(answerRow.changeLink) thenReturn false
-      helper.userName.get.changeLink mustBe false
-      helper.userNino.get.changeLink mustBe false
-      helper.userAddress.get.changeLink mustBe false
-    }
-  }
-
   "Telephone number" must {
     s"have the correct label" in {
       when(answers.telephoneNumber) thenReturn Some("01912134587")

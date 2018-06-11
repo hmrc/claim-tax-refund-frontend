@@ -36,11 +36,10 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
   }
   "sections to show" must {
 
-    "give the right sections when SA claim" in {
+    "give the right sections in the minimal valid journey" in {
       val sections = new CheckYourAnswersSections(helper, MockUserAnswers.minimalValidUserAnswers)
 
       sections.sectionsToShow mustBe Seq(
-        sections.yourDetails,
         sections.incomeDetails,
         sections.paymentDetails,
         sections.contactDetails
@@ -51,7 +50,6 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       val sections = new CheckYourAnswersSections(helper, MockUserAnswers.benefitsWithNoIncome)
 
       sections.sectionsToShow mustBe Seq(
-        sections.yourDetails,
         sections.incomeDetails,
         sections.benefitDetails,
         sections.paymentDetails,
@@ -63,7 +61,6 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       val sections = new CheckYourAnswersSections(helper, MockUserAnswers.incomeWithNoBenefits)
 
       sections.sectionsToShow mustBe Seq(
-        sections.yourDetails,
         sections.incomeDetails,
         sections.otherIncomeDetails,
         sections.paymentDetails,
@@ -75,18 +72,12 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       val sections = new CheckYourAnswersSections(helper, MockUserAnswers.benefitsWithIncome)
 
       sections.sectionsToShow mustBe Seq(
-        sections.yourDetails,
         sections.incomeDetails,
         sections.benefitDetails,
         sections.otherIncomeDetails,
         sections.paymentDetails,
         sections.contactDetails
       )
-    }
-
-    "have the right section title for Your Details" in {
-      val sections = new CheckYourAnswersSections(helper, MockUserAnswers.minimalValidUserAnswers)
-      sections.yourDetails.headingKey mustBe Some("checkYourAnswers.yourDetailsSection")
     }
 
     "have the right section title for Income Details" in {
@@ -121,22 +112,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
   }
 
   "all questions are answered" must {
-    "have the correct rows in the right order in the Your Details section" in {
-      when(answers.userDetails) thenReturn Some(UserDetails("Dave Smith", "AB123456A",
-        UkAddress("Line 1", "Line 2", Some("Line 3"), Some("Line 4"), None, "AB123CD")))
-
-      val sections = new CheckYourAnswersSections(helper, MockUserAnswers.minimalValidUserAnswers)
-      val rows = sections.yourDetails.rows
-
-      rows.size mustBe 3
-      rows.head.label.key mustBe "userDetails.checkYourAnswersLabel.name"
-      rows(1).label.key mustBe "userDetails.checkYourAnswersLabel.nino"
-      rows(2).label.key mustBe "userDetails.checkYourAnswersLabel.address"
-    }
-
     "have the correct rows in the right order in Company Benefits Details section" in {
-      answers = MockUserAnswers.companyBenefits
-
       val sections = new CheckYourAnswersSections(helper, MockUserAnswers.minimalValidUserAnswers)
       val rows = sections.companyBenefitDetails.rows
 

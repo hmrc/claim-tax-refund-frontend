@@ -18,7 +18,7 @@ package utils
 
 import models.SelectTaxYear.CYMinus2
 import models.templates.Metadata
-import models.{CompanyBenefits, SelectTaxYear, UkAddress, UserDetails}
+import models._
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
 
@@ -74,7 +74,6 @@ object MockUserAnswers extends MockitoSugar {
 
     val answers = nothingAnswered
 
-    when(answers.userDetails) thenReturn Some(UserDetails("test name", "AB123123A", UkAddress("testLine1", "testLine2", None, None, None, "AB1 2CD")))
     when(answers.selectTaxYear) thenReturn Some(CYMinus2)
 
     answers
@@ -85,9 +84,13 @@ object MockUserAnswers extends MockitoSugar {
     val answers = nothingAnswered
     val metadata = new Metadata("test_case")
 
-    when(answers.userDetails) thenReturn Some(UserDetails("test name", "AB123123A", UkAddress("testLine1", "testLine2", None, None, None, "AB1 2CD")))
     when(answers.selectTaxYear) thenReturn Some(SelectTaxYear.CYMinus2)
     when(answers.employmentDetails) thenReturn Some(true)
+    when(answers.anyBenefits) thenReturn Some(false)
+    when(answers.otherIncome) thenReturn Some(false)
+    when(answers.whereToSendPayment) thenReturn Some(WhereToSendPayment.Myself)
+    when(answers.telephoneNumber) thenReturn Some("123456789")
+
     when(answers.pdfHtml) thenReturn Some ("<html>Test result</html>")
     when(answers.metadata) thenReturn Some (metadata)
 

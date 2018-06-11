@@ -34,7 +34,7 @@ class CheckYourAnswersViewSpec (implicit messages: Messages) extends SpecBase wi
 
   val helper = new CheckYourAnswersHelper(answers)
   val section = new CheckYourAnswersSections(helper, MockUserAnswers.minimalValidUserAnswers)
-  val sections = Seq(section.yourDetails, section.contactDetails)
+  val sections = Seq(section.contactDetails)
 
   "Check you answers view" must {
     behave like normalPage(view, messageKeyPrefix)
