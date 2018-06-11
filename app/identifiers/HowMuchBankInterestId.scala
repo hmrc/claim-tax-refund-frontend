@@ -16,6 +16,6 @@
 
 package identifiers
 
-case object HowMuchBankBuildingSocietyInterestId extends Identifier {
-  override def toString: String = "howMuchBankBuildingSocietyInterest"
+case object HowMuchBankInterestId extends Identifier {
+  override def toString: String = "howMuchBankInterest"
 }

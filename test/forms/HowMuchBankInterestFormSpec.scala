@@ -19,15 +19,15 @@ package forms
 import config.FrontendAppConfig
 import forms.behaviours.FormBehaviours
 import models.{MandatoryField, RegexField}
-import org.mockito.Mockito._
+import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
 
-class HowMuchBankBuildingSocietyInterestFormSpec extends FormBehaviours with MockitoSugar {
+class HowMuchBankInterestFormSpec extends FormBehaviours with MockitoSugar {
 
   private val testRegex = """(?=.)^\$?(([1-9][0-9]{0,2}(,[0-9]{3})*)|[0-9]+)?(\.[0-9]{1,2})?$"""
-  private val errorKeyInvalid = "howMuchBankBuildingSocietyInterest.invalid"
-  private val errorKeyBlank = "howMuchBankBuildingSocietyInterest.blank"
+  private val errorKeyInvalid = "howMuchBankInterest.invalid"
+  private val errorKeyBlank = "howMuchBankInterest.blank"
 
   def appConfig: FrontendAppConfig = {
     val instance = mock[FrontendAppConfig]
@@ -35,11 +35,11 @@ class HowMuchBankBuildingSocietyInterestFormSpec extends FormBehaviours with Moc
     instance
   }
 
-  val validData: Map[String, String] = Map("value" -> "9,999.99")
+  val validData: Map[String, String] = Map("value" -> """9,999.99""")
 
-  override val form: Form[_] = new HowMuchBankBuildingSocietyInterestForm(appConfig)()
+  override val form: Form[_] = new HowMuchBankInterestForm(appConfig)()
 
-  "HowMuchBankBuildingSocietyInterest Form" must {
+  "HowMuchBankInterest Form" must {
 
     behave like questionForm("""9,999.99""")
 

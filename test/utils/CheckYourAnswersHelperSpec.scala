@@ -223,9 +223,9 @@ class CheckYourAnswersHelperSpec (implicit messages: Messages)extends SpecBase w
 
   "How much bank building society interest" must {
     s"have the correct label" in {
-      when(answers.howMuchBankBuildingSocietyInterest) thenReturn Some("9,999.99")
+      when(answers.howMuchBankInterest) thenReturn Some("9,999.99")
       val helper = new CheckYourAnswersHelper(answers)
-      helper.howMuchBankBuildingSocietyInterest.get.label.key mustBe s"howMuchBankBuildingSocietyInterest.checkYourAnswersLabel"
+      helper.howMuchBankInterest.get.label.key mustBe s"howMuchBankInterest.checkYourAnswersLabel"
     }
   }
 
