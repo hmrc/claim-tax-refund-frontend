@@ -32,15 +32,6 @@ object CompanyBenefits extends Enumeration {
 
   implicit def enumFormats: Format[Value] = EnumUtils.enumFormat(CompanyBenefits)
 
-  def getId(benefitValue: CompanyBenefits.Value) = {
-    benefitValue match {
-      case COMPANY_CAR_BENEFIT => HowMuchCarBenefitsId
-      case FUEL_BENEFIT => HowMuchFuelBenefitId
-      case MEDICAL_BENEFIT => HowMuchMedicalBenefitsId
-      case OTHER_COMPANY_BENEFIT => HowMuchOtherCompanyBenefitId
-    }
-  }
-
   def getIdString(benefitValue: String) = {
     benefitValue match {
       case "company-car-benefit" => HowMuchCarBenefitsId
