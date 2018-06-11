@@ -361,3 +361,9 @@ howMuchOtherBenefit.heading = How much did you get between
 howMuchOtherBenefit.checkYourAnswersLabel = Other benefit
 howMuchOtherBenefit.blank = Enter the amount you got for this benefit
 howMuchOtherBenefit.invalid = Enter a valid amount you got for this benefit
+
+howMuchForeignIncome.title = How much tax did you pay on Foreign income between
+howMuchForeignIncome.heading = How much tax did you pay on Foreign income between
+howMuchForeignIncome.checkYourAnswersLabel = Foreign income
+howMuchForeignIncome.blank = Enter the amount of tax you paid on foreign income
+howMuchForeignIncome.invalid = Enter a valid amount of tax you paid on foreign income

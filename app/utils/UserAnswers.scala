@@ -20,9 +20,10 @@ import identifiers._
 import models._
 import models.templates._
 import uk.gov.hmrc.http.cache.client.CacheMap
-import controllers.routes
 
 class UserAnswers(val cacheMap: CacheMap) {
+  def howMuchForeignIncome: Option[String] = cacheMap.getEntry[String](HowMuchForeignIncomeId.toString)
+
   def howMuchCarersAllowance: Option[String] = cacheMap.getEntry[String](HowMuchCarersAllowanceId.toString)
 
   def howMuchOtherBenefit: Option[String] = cacheMap.getEntry[String](HowMuchOtherBenefitId.toString)
