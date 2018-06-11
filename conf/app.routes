@@ -191,3 +191,8 @@ GET        /how-much-bank-interest                              controllers.HowM
 POST       /how-much-bank-interest                              controllers.HowMuchBankInterestController.onSubmit(mode: Mode = NormalMode)
 GET        /change-how-much-bank-interest                       controllers.HowMuchBankInterestController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-how-much-bank-interest                       controllers.HowMuchBankInterestController.onSubmit(mode: Mode = CheckMode)
+
+GET        /detailsOfEmploymentOrPension               controllers.DetailsOfEmploymentOrPensionController.onPageLoad(mode: Mode = NormalMode)
+POST       /detailsOfEmploymentOrPension               controllers.DetailsOfEmploymentOrPensionController.onSubmit(mode: Mode = NormalMode)
+GET        /changeDetailsOfEmploymentOrPension                        controllers.DetailsOfEmploymentOrPensionController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeDetailsOfEmploymentOrPension                        controllers.DetailsOfEmploymentOrPensionController.onSubmit(mode: Mode = CheckMode)

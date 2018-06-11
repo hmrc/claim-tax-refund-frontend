@@ -368,3 +368,8 @@ howMuchBankInterest.hint = This may be shown on an annual statement from your ba
 howMuchBankInterest.checkYourAnswersLabel = Bank or building society interest
 howMuchBankInterest.blank = Enter the amount of tax you paid on bank or building society interest
 howMuchBankInterest.invalid = Enter a valid amount of tax you paid on bank or building society interest
+
+detailsOfEmploymentOrPension.title = detailsOfEmploymentOrPension
+detailsOfEmploymentOrPension.heading = detailsOfEmploymentOrPension
+detailsOfEmploymentOrPension.checkYourAnswersLabel = detailsOfEmploymentOrPension
+detailsOfEmploymentOrPension.blank = detailsOfEmploymentOrPension
