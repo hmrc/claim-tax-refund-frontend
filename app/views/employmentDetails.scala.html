@@ -33,7 +33,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading("employmentDetails.heading")
+        @components.heading("employmentDetails.heading", secondaryHeaderKey = Some("index.title"))
 
         <p>@Messages("employmentDetails.detailsWeHave") @taxYear @Messages("global.colon")</p>
 

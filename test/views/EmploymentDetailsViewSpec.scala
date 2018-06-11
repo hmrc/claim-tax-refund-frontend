@@ -45,6 +45,8 @@ class EmploymentDetailsViewSpec extends YesNoViewBehaviours {
 
     behave like pageWithBackLink(createView)
 
+    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+
     behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.EmploymentDetailsController.onSubmit(NormalMode).url)
   }
 }
