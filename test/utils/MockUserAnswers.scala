@@ -18,7 +18,7 @@ package utils
 
 import models.SelectTaxYear.CYMinus2
 import models.templates.Metadata
-import models.{Benefits, SelectTaxYear, UkAddress, UserDetails}
+import models.{CompanyBenefits, SelectTaxYear, UkAddress, UserDetails}
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
 
@@ -163,6 +163,28 @@ object MockUserAnswers extends MockitoSugar {
     val answers = nothingAnswered
 
     when(answers.telephoneNumber) thenReturn Some("983475894357934")
+
+    answers
+  }
+
+  def companyBenefits: UserAnswers = {
+
+    val answers = nothingAnswered
+
+    yourDetailsUserAnswers
+    when(answers.anyCompanyBenefits) thenReturn Some(true)
+    when(answers.selectCompanyBenefits) thenReturn Some(
+      Set(CompanyBenefits.COMPANY_CAR_BENEFIT,
+        CompanyBenefits.MEDICAL_BENEFIT,
+        CompanyBenefits.FUEL_BENEFIT,
+        CompanyBenefits.OTHER_COMPANY_BENEFIT)
+    )
+    when(answers.howMuchCarBenefits) thenReturn Some("1234")
+    when(answers.howMuchMedicalBenefits) thenReturn Some("1234")
+    when(answers.howMuchFuelBenefit) thenReturn Some("1234")
+    when(answers.anyOtherCompanyBenefits) thenReturn Some(true)
+    when(answers.otherCompanyBenefitsDetails) thenReturn Some("other company benefit")
+    when(answers.howMuchOtherCompanyBenefit) thenReturn Some("1234")
 
     answers
   }
