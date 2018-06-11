@@ -17,10 +17,14 @@
 package utils
 
 import base.SpecBase
+import identifiers._
+import models.CompanyBenefits
+import org.scalacheck.Gen
 import play.api.libs.json._
 import uk.gov.hmrc.http.cache.client.CacheMap
+import org.scalatest.prop.PropertyChecks
 
-class CascadeUpsertSpec extends SpecBase {
+class CascadeUpsertSpec extends SpecBase with PropertyChecks {
 
   "using the apply method for a key that has no special function" when {
     "the key doesn't already exists" must {
@@ -58,6 +62,110 @@ class CascadeUpsertSpec extends SpecBase {
         val cascadeUpsert = new CascadeUpsert
         val result = cascadeUpsert.addRepeatedValue("key", "new value", originalCacheMap)
         result.data mustBe Map("key" -> Json.toJson(Seq("value", "new value")))
+      }
+    }
+
+    "unselecting fuel benefit" must {
+
+      "remove amount of fuel benefit" in {
+
+        val arbitraryBenefits: Gen[Set[CompanyBenefits.Value]] =
+          Gen.containerOf[Set, CompanyBenefits.Value](Gen.oneOf(
+            CompanyBenefits.FUEL_BENEFIT,
+            CompanyBenefits.MEDICAL_BENEFIT,
+            CompanyBenefits.COMPANY_CAR_BENEFIT,
+            CompanyBenefits.OTHER_COMPANY_BENEFIT
+          ))
+
+        forAll(Gen.numStr, arbitraryBenefits) {
+          (fuelBenefitAmount, benefits) =>
+
+            val originalCacheMap = new CacheMap("id", Map(
+              SelectCompanyBenefitsId.toString -> Json.toJson(benefits + CompanyBenefits.FUEL_BENEFIT),
+              HowMuchFuelBenefitId.toString -> JsString(fuelBenefitAmount)
+            ))
+            val cascadeUpsert = new CascadeUpsert
+            val result = cascadeUpsert(SelectCompanyBenefitsId.toString, benefits - CompanyBenefits.FUEL_BENEFIT, originalCacheMap)
+            result.data mustEqual Map(SelectCompanyBenefitsId.toString -> Json.toJson(benefits - CompanyBenefits.FUEL_BENEFIT))
+        }
+      }
+    }
+
+    "unselecting company car benefit" must {
+
+      "remove amount of company car benefit" in {
+
+        val arbitraryBenefits: Gen[Set[CompanyBenefits.Value]] =
+          Gen.containerOf[Set, CompanyBenefits.Value](Gen.oneOf(
+            CompanyBenefits.FUEL_BENEFIT,
+            CompanyBenefits.MEDICAL_BENEFIT,
+            CompanyBenefits.COMPANY_CAR_BENEFIT,
+            CompanyBenefits.OTHER_COMPANY_BENEFIT
+          ))
+
+        forAll(Gen.numStr, arbitraryBenefits) {
+          (carBenefitAmount, benefits) =>
+
+            val originalCacheMap = new CacheMap("id", Map(
+              SelectCompanyBenefitsId.toString -> Json.toJson(benefits + CompanyBenefits.COMPANY_CAR_BENEFIT),
+              HowMuchCarBenefitsId.toString -> JsString(carBenefitAmount)
+            ))
+            val cascadeUpsert = new CascadeUpsert
+            val result = cascadeUpsert(SelectCompanyBenefitsId.toString, benefits - CompanyBenefits.COMPANY_CAR_BENEFIT, originalCacheMap)
+            result.data mustEqual Map(SelectCompanyBenefitsId.toString -> Json.toJson(benefits - CompanyBenefits.COMPANY_CAR_BENEFIT))
+        }
+      }
+    }
+
+    "unselecting medical benefit" must {
+
+      "remove amount of medical benefit" in {
+
+        val arbitraryBenefits: Gen[Set[CompanyBenefits.Value]] =
+          Gen.containerOf[Set, CompanyBenefits.Value](Gen.oneOf(
+            CompanyBenefits.FUEL_BENEFIT,
+            CompanyBenefits.MEDICAL_BENEFIT,
+            CompanyBenefits.COMPANY_CAR_BENEFIT,
+            CompanyBenefits.OTHER_COMPANY_BENEFIT
+          ))
+
+        forAll(Gen.numStr, arbitraryBenefits) {
+          (medicalBenefitAmount, benefits) =>
+
+            val originalCacheMap = new CacheMap("id", Map(
+              SelectCompanyBenefitsId.toString -> Json.toJson(benefits + CompanyBenefits.MEDICAL_BENEFIT),
+              HowMuchMedicalBenefitsId.toString -> JsString(medicalBenefitAmount)
+            ))
+            val cascadeUpsert = new CascadeUpsert
+            val result = cascadeUpsert(SelectCompanyBenefitsId.toString, benefits - CompanyBenefits.MEDICAL_BENEFIT, originalCacheMap)
+            result.data mustEqual Map(SelectCompanyBenefitsId.toString -> Json.toJson(benefits - CompanyBenefits.MEDICAL_BENEFIT))
+        }
+      }
+    }
+
+    "unselecting other company benefit" must {
+
+      "remove amount of other company benefit" in {
+
+        val arbitraryBenefits: Gen[Set[CompanyBenefits.Value]] =
+          Gen.containerOf[Set, CompanyBenefits.Value](Gen.oneOf(
+            CompanyBenefits.FUEL_BENEFIT,
+            CompanyBenefits.MEDICAL_BENEFIT,
+            CompanyBenefits.COMPANY_CAR_BENEFIT,
+            CompanyBenefits.OTHER_COMPANY_BENEFIT
+          ))
+
+        forAll(Gen.numStr, arbitraryBenefits) {
+          (otherCompanyBenefitAmount, benefits) =>
+
+            val originalCacheMap = new CacheMap("id", Map(
+              SelectCompanyBenefitsId.toString -> Json.toJson(benefits + CompanyBenefits.OTHER_COMPANY_BENEFIT),
+              HowMuchOtherCompanyBenefitId.toString -> JsString(otherCompanyBenefitAmount)
+            ))
+            val cascadeUpsert = new CascadeUpsert
+            val result = cascadeUpsert(SelectCompanyBenefitsId.toString, benefits - CompanyBenefits.OTHER_COMPANY_BENEFIT, originalCacheMap)
+            result.data mustEqual Map(SelectCompanyBenefitsId.toString -> Json.toJson(benefits - CompanyBenefits.OTHER_COMPANY_BENEFIT))
+        }
       }
     }
   }
