@@ -17,34 +17,36 @@
 package views
 
 import config.FrontendAppConfig
-import controllers.routes
-import forms.HowMuchBankBuildingSocietyInterestForm
-import models.NormalMode
-import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
+import controllers.routes
+import forms.HowMuchBankInterestForm
+import models.NormalMode
+import models.SelectTaxYear.CYMinus2
+import org.scalatest.mockito.MockitoSugar
 import views.behaviours.StringViewBehaviours
-import views.html.howMuchBankBuildingSocietyInterest
+import views.html.howMuchBankInterest
 
-class HowMuchBankBuildingSocietyInterestViewSpec extends StringViewBehaviours with MockitoSugar {
+class HowMuchBankInterestViewSpec extends StringViewBehaviours with MockitoSugar {
 
-  val messageKeyPrefix = "howMuchBankBuildingSocietyInterest"
+  val messageKeyPrefix = "howMuchBankInterest"
+
+  private val taxYear = CYMinus2.asString
 
   val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
-  override val form: Form[String] = new HowMuchBankBuildingSocietyInterestForm(appConfig)()
+  override val form: Form[String] = new HowMuchBankInterestForm(appConfig)()
 
-  def createView = () => howMuchBankBuildingSocietyInterest(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createView = () => howMuchBankInterest(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) => howMuchBankBuildingSocietyInterest(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[String]) => howMuchBankInterest(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
-  "HowMuchBankBuildingSocietyInterest view" must {
-    behave like normalPage(createView, messageKeyPrefix)
+  "HowMuchBankInterest view" must {
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, " " + taxYear, messages("global.questionMark"))
 
     behave like pageWithBackLink(createView)
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    behave like stringPage(createViewUsingForm, messageKeyPrefix,
-      routes.HowMuchBankBuildingSocietyInterestController.onSubmit(NormalMode).url, None, None, Some(messages("global.poundSign")))
+    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.HowMuchBankInterestController.onSubmit(NormalMode).url)
   }
 }

@@ -22,6 +22,8 @@ import models.templates._
 import uk.gov.hmrc.http.cache.client.CacheMap
 
 class UserAnswers(val cacheMap: CacheMap) {
+  def howMuchBankInterest: Option[String] = cacheMap.getEntry[String](HowMuchBankInterestId.toString)
+
   def howMuchForeignIncome: Option[String] = cacheMap.getEntry[String](HowMuchForeignIncomeId.toString)
 
   def howMuchCarersAllowance: Option[String] = cacheMap.getEntry[String](HowMuchCarersAllowanceId.toString)
@@ -83,8 +85,6 @@ class UserAnswers(val cacheMap: CacheMap) {
   def anyOtherTaxableBenefits: Option[Boolean] = cacheMap.getEntry[Boolean](AnyOtherTaxableBenefitsId.toString)
 
   def howMuchMedicalBenefits: Option[String] = cacheMap.getEntry[String](HowMuchMedicalBenefitsId.toString)
-
-  def howMuchBankBuildingSocietyInterest: Option[String] = cacheMap.getEntry[String](HowMuchBankBuildingSocietyInterestId.toString)
 
   def howMuchRentalIncome: Option[String] = cacheMap.getEntry[String](HowMuchRentalIncomeId.toString)
 
