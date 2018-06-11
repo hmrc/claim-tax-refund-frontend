@@ -42,11 +42,6 @@ POST       /how-much-rental-income                              controllers.HowM
 GET        /change-how-much-rental-income                       controllers.HowMuchRentalIncomeController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-how-much-rental-income                       controllers.HowMuchRentalIncomeController.onSubmit(mode: Mode = CheckMode)
 
-GET        /how-much-interest                                   controllers.HowMuchBankBuildingSocietyInterestController.onPageLoad(mode: Mode = NormalMode)
-POST       /how-much-interest                                   controllers.HowMuchBankBuildingSocietyInterestController.onSubmit(mode: Mode = NormalMode)
-GET        /change-how-much-interest                            controllers.HowMuchBankBuildingSocietyInterestController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-how-much-interest                            controllers.HowMuchBankBuildingSocietyInterestController.onSubmit(mode: Mode = CheckMode)
-
 GET        /how-much-medical-benefit                            controllers.HowMuchMedicalBenefitsController.onPageLoad(mode: Mode = NormalMode)
 POST       /how-much-medical-benefit                            controllers.HowMuchMedicalBenefitsController.onSubmit(mode: Mode = NormalMode)
 GET        /change-how-much-medical-benefit                     controllers.HowMuchMedicalBenefitsController.onPageLoad(mode: Mode = CheckMode)
@@ -191,3 +186,8 @@ GET        /how-much-foreign-income                             controllers.HowM
 POST       /how-much-foreign-income                             controllers.HowMuchForeignIncomeController.onSubmit(mode: Mode = NormalMode)
 GET        /change-how-much-foreign-income                      controllers.HowMuchForeignIncomeController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-how-much-foreign-income                      controllers.HowMuchForeignIncomeController.onSubmit(mode: Mode = CheckMode)
+
+GET        /how-much-bank-interest                              controllers.HowMuchBankInterestController.onPageLoad(mode: Mode = NormalMode)
+POST       /how-much-bank-interest                              controllers.HowMuchBankInterestController.onSubmit(mode: Mode = NormalMode)
+GET        /change-how-much-bank-interest                       controllers.HowMuchBankInterestController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-how-much-bank-interest                       controllers.HowMuchBankInterestController.onSubmit(mode: Mode = CheckMode)

@@ -20,25 +20,30 @@
 @import models.Mode
 @import viewmodels.InputViewModel
 
-@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: String)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("howMuchBankBuildingSocietyInterest.title"),
+    title = messages("howMuchBankInterest.title") + s" $taxYear" + messages("global.questionMark"),
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @helpers.form(action = HowMuchBankBuildingSocietyInterestController.onSubmit(mode), 'autoComplete -> "off") {
+    @helpers.form(action = HowMuchBankInterestController.onSubmit(mode), 'autoComplete -> "off") {
 
         @components.back_link()
 
         @components.error_summary(form.errors)
 
-        @components.heading("howMuchBankBuildingSocietyInterest.heading", secondaryHeaderKey = Some("index.title"))
+        @components.heading(
+            "howMuchBankInterest.heading",
+            dynamicHeading = Some(s"$taxYear" + messages("global.questionMark")),
+            secondaryHeaderKey = Some("index.title")
+        )
 
         @components.input_text(InputViewModel("value", form),
-            label = messages("howMuchBankBuildingSocietyInterest.heading"),
+            label = messages("howMuchBankInterest.heading"),
             labelClass=Some("visually-hidden"),
-            prefix = Some(messages("global.poundSign")))
+            prefix = Some(messages("global.poundSign")),
+            hintLine1 = Some(messages("howMuchBankInterest.hint")))
 
         @components.submit_button()
     }

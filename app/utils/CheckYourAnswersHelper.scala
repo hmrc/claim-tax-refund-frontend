@@ -25,6 +25,10 @@ import viewmodels.AnswerRow
 
 class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messages){
 
+  def howMuchBankInterest: Option[AnswerRow] = userAnswers.howMuchBankInterest map {
+    x => AnswerRow("howMuchBankInterest.checkYourAnswersLabel", s"$x", false, routes.HowMuchBankInterestController.onPageLoad(CheckMode).url)
+  }
+
   def howMuchForeignIncome: Option[AnswerRow] = userAnswers.howMuchForeignIncome map {
     x => AnswerRow("howMuchForeignIncome.checkYourAnswersLabel", s"$x", false, routes.HowMuchForeignIncomeController.onPageLoad(CheckMode).url)
   }
@@ -230,12 +234,6 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
     x =>
       AnswerRow("howMuchMedicalBenefits.checkYourAnswersLabel",
         s"$x", false, routes.HowMuchMedicalBenefitsController.onPageLoad(CheckMode).url, true)
-  }
-
-  def howMuchBankBuildingSocietyInterest: Option[AnswerRow] = userAnswers.howMuchBankBuildingSocietyInterest map {
-    x =>
-      AnswerRow("howMuchBankBuildingSocietyInterest.checkYourAnswersLabel",
-        s"$x", false, routes.HowMuchBankBuildingSocietyInterestController.onPageLoad(CheckMode).url, true)
   }
 
   def howMuchRentalIncome: Option[AnswerRow] = userAnswers.howMuchRentalIncome map {
