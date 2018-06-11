@@ -59,19 +59,20 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
     cyaHelper.otherBenefitsDetailsAndAmount
   ).flatten)
 
-  def companyBenefitDetails = {
-    AnswerSection(Some("checkYourAnswers.companyBenefitsDetailsSection"), Seq(
-        cyaHelper.anyCompanyBenefits,
-        cyaHelper.selectCompanyBenefits,
-        cyaHelper.howMuchCarBenefits,
-        cyaHelper.howMuchFuelBenefit,
-        cyaHelper.howMuchMedicalBenefits,
-        cyaHelper.anyOtherCompanyBenefits,
-        cyaHelper.otherCompanyBenefitsDetails,
-        cyaHelper.howMuchOtherCompanyBenefit).flatten)
-  }
+  def companyBenefitDetails = AnswerSection(Some("checkYourAnswers.companyBenefitsDetailsSection"), Seq(
+    cyaHelper.anyOtherCompanyBenefits,
+    cyaHelper.selectCompanyBenefits,
+    cyaHelper.howMuchCarBenefits,
+    cyaHelper.howMuchFuelBenefit,
+    cyaHelper.howMuchMedicalBenefits,
+    cyaHelper.anyOtherCompanyBenefits,
+    cyaHelper.otherCompanyBenefitsDetails,
+    cyaHelper.howMuchOtherCompanyBenefit
+  ).flatten)
+
 
   def otherIncomeDetails = AnswerSection(Some("checkYourAnswers.otherIncomeDetailsSection"), Seq(
+    cyaHelper.anyOtherTaxableIncome,
     cyaHelper.howMuchCarBenefits,
     cyaHelper.howMuchRentalIncome,
     cyaHelper.howMuchBankInterest,

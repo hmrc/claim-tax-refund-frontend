@@ -97,7 +97,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
     x =>
       AnswerRow("anyCompanyBenefits.checkYourAnswersLabel",
         if(x) "site.yes" else "site.no",
-        true, routes.AnyCompanyBenefitsController.onPageLoad(CheckMode).url, true)
+        true, routes.AnyCompanyBenefitsController.onPageLoad(CheckMode).url)
   }
 
   val dateFormat = "dd MMMM YYYY"

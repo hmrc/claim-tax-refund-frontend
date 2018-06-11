@@ -113,15 +113,29 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
 
   "all questions are answered" must {
     "have the correct rows in the right order in Company Benefits Details section" in {
-      val sections = new CheckYourAnswersSections(helper, MockUserAnswers.minimalValidUserAnswers)
+      when(answers.anyCompanyBenefits) thenReturn Some(true)
+      when(answers.selectCompanyBenefits) thenReturn Some(
+        Set(CompanyBenefits.COMPANY_CAR_BENEFIT,
+            CompanyBenefits.MEDICAL_BENEFIT,
+            CompanyBenefits.FUEL_BENEFIT,
+            CompanyBenefits.OTHER_COMPANY_BENEFIT)
+        )
+      when(answers.howMuchCarBenefits) thenReturn Some("1234")
+      when(answers.howMuchMedicalBenefits) thenReturn Some("1234")
+      when(answers.howMuchFuelBenefit) thenReturn Some("1234")
+      when(answers.anyOtherCompanyBenefits) thenReturn Some(true)
+      when(answers.otherCompanyBenefitsDetails) thenReturn Some("data")
+      when(answers.howMuchOtherCompanyBenefit) thenReturn Some("1234")
+
+      val sections = new CheckYourAnswersSections(helper, MockUserAnswers.companyBenefits)
       val rows = sections.companyBenefitDetails.rows
 
       rows.size mustBe 8
-      rows.head.label.key mustBe "anyCompanyBenefits.checkYourAnswersLabel"
+      rows.head.label.key mustBe "anyOtherCompanyBenefits.checkYourAnswersLabel"
       rows(1).label.key mustBe "selectCompanyBenefits.checkYourAnswersLabel"
       rows(2).label.key mustBe "howMuchCarBenefits.checkYourAnswersLabel"
-      rows(3).label.key mustBe "howMuchMedicalBenefits.checkYourAnswersLabel"
-      rows(4).label.key mustBe "howMuchFuelBenefit.checkYourAnswersLabel"
+      rows(3).label.key mustBe "howMuchFuelBenefit.checkYourAnswersLabel"
+      rows(4).label.key mustBe "howMuchMedicalBenefits.checkYourAnswersLabel"
       rows(5).label.key mustBe "anyOtherCompanyBenefits.checkYourAnswersLabel"
       rows(6).label.key mustBe "otherCompanyBenefitsDetails.checkYourAnswersLabel"
       rows(7).label.key mustBe "howMuchOtherCompanyBenefit.checkYourAnswersLabel"
