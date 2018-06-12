@@ -43,6 +43,7 @@ class DetailsOfEmploymentOrPensionController @Inject()(
                                         formBuilder: DetailsOfEmploymentOrPensionForm) extends FrontendController with I18nSupport {
 
   private val form: Form[String] = formBuilder()
+  private val characterLimit: Int = appConfig.detailsOfEmploymentOrPensionMaxLength
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
@@ -50,17 +51,30 @@ class DetailsOfEmploymentOrPensionController @Inject()(
         case None => form
         case Some(value) => form.fill(value)
       }
-      Ok(detailsOfEmploymentOrPension(appConfig, preparedForm, mode))
+
+      request.userAnswers.selectTaxYear.map {
+        selectedTaxYear =>
+          val taxYear = selectedTaxYear.asString
+          Ok(detailsOfEmploymentOrPension(appConfig, preparedForm, mode, taxYear, characterLimit))
+      }.getOrElse {
+        Redirect(routes.SessionExpiredController.onPageLoad())
+      }
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      form.bindFromRequest().fold(
-        (formWithErrors: Form[_]) =>
-          Future.successful(BadRequest(detailsOfEmploymentOrPension(appConfig, formWithErrors, mode))),
-        (value) =>
-          dataCacheConnector.save[String](request.externalId, DetailsOfEmploymentOrPensionId.toString, value).map(cacheMap =>
-            Redirect(navigator.nextPage(DetailsOfEmploymentOrPensionId, mode)(new UserAnswers(cacheMap))))
-      )
+      request.userAnswers.selectTaxYear.map {
+        selectedTaxYear =>
+          val taxYear = selectedTaxYear.asString
+          form.bindFromRequest().fold(
+            (formWithErrors: Form[_]) =>
+              Future.successful(BadRequest(detailsOfEmploymentOrPension(appConfig, formWithErrors, mode, taxYear, characterLimit))),
+            value =>
+              dataCacheConnector.save[String](request.externalId, DetailsOfEmploymentOrPensionId.toString, value).map(cacheMap =>
+                Redirect(navigator.nextPage(DetailsOfEmploymentOrPensionId, mode)(new UserAnswers(cacheMap))))
+          )
+      }.getOrElse {
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+      }
   }
 }

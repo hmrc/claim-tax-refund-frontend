@@ -24,7 +24,16 @@ import play.api.data.Forms._
 
 class DetailsOfEmploymentOrPensionForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 
-  private val detailsOfEmploymentOrPensionBlankKey = "error.required"
+  private val detailsOfEmploymentOrPensionBlankKey = "detailsOfEmploymentOrPension.blank"
+  private val detailsOfEmploymentOrPensionTooLongKey = "detailsOfEmploymentOrPension.tooLong"
+  private val maxLength = 500
 
-  def apply(): Form[String] = Form("value" -> text.verifying(nonEmpty(detailsOfEmploymentOrPensionBlankKey)))
+  def apply(): Form[String] = Form(
+    "value" -> text.verifying(
+      firstError(
+        nonEmpty(detailsOfEmploymentOrPensionBlankKey),
+        maxLength(maxLength, detailsOfEmploymentOrPensionTooLongKey)
+      )
+    )
+  )
 }

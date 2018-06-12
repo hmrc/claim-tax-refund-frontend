@@ -21,6 +21,7 @@ import play.api.data.Form
 import controllers.routes
 import forms.DetailsOfEmploymentOrPensionForm
 import models.NormalMode
+import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
 import views.behaviours.StringViewBehaviours
 import views.html.detailsOfEmploymentOrPension
@@ -29,19 +30,25 @@ class DetailsOfEmploymentOrPensionViewSpec extends StringViewBehaviours with Moc
 
   val messageKeyPrefix = "detailsOfEmploymentOrPension"
 
+  def taxYear = CYMinus2.asString
+  def characterLimit = 500
+
   val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
   override val form: Form[String] = new DetailsOfEmploymentOrPensionForm(appConfig)()
 
-  def createView = () => detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createView = () => detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) => detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[String]) => detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages)
 
   "DetailsOfEmploymentOrPension view" must {
-    behave like normalPage(createView, messageKeyPrefix)
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, " " + taxYear, messages("global.questionMark"))
 
     behave like pageWithBackLink(createView)
 
     behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.DetailsOfEmploymentOrPensionController.onSubmit(NormalMode).url)
+
+    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+
   }
 }
