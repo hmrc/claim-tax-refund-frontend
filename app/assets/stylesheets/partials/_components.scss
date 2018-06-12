@@ -1,0 +1,17 @@
+.char-counter-text {
+    margin-top: 0;
+    padding: 6px 0 0;
+    display: block;
+    color: #6f777b;
+    font-weight: normal;
+    text-align: left;
+}
+
+.textarea-char-counter {
+    width: 100%;
+    border-width: 2px;
+    position: relative;
+    background: transparent;
+    z-index: 2;
+    margin: 0;
+}

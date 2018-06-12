@@ -25,6 +25,10 @@ import viewmodels.AnswerRow
 
 class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messages){
 
+  def detailsOfEmploymentOrPension: Option[AnswerRow] = userAnswers.detailsOfEmploymentOrPension map {
+    x => AnswerRow("detailsOfEmploymentOrPension.checkYourAnswersLabel", s"$x", false, routes.DetailsOfEmploymentOrPensionController.onPageLoad(CheckMode).url)
+  }
+
   def howMuchBankInterest: Option[AnswerRow] = userAnswers.howMuchBankInterest map {
     x => AnswerRow("howMuchBankInterest.checkYourAnswersLabel", s"$x", false, routes.HowMuchBankInterestController.onPageLoad(CheckMode).url)
   }
