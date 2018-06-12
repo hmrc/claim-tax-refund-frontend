@@ -25,23 +25,21 @@ import org.scalatest.BeforeAndAfterEach
 import org.scalatest.mockito.MockitoSugar
 import play.api.i18n.Messages
 
-class CheckYourAnswersSectionsSpec (implicit messages: Messages)extends SpecBase with MockitoSugar with BeforeAndAfterEach {
-
+class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with BeforeAndAfterEach {
   private var answers = mock[UserAnswers]
+  private var helper = new CheckYourAnswersHelper(answers)(messages: Messages)
 
   override def beforeEach = {
     super.beforeEach()
     answers = MockUserAnswers.nothingAnswered
+    helper = new CheckYourAnswersHelper(answers)(messages: Messages)
   }
-
   "sections to show" must {
 
-    "give the right sections when SA claim" in {
-      val helper = new CheckYourAnswersHelper(answers)
+    "give the right sections in the minimal valid journey" in {
       val sections = new CheckYourAnswersSections(helper, MockUserAnswers.minimalValidUserAnswers)
 
       sections.sectionsToShow mustBe Seq(
-        sections.yourDetails,
         sections.incomeDetails,
         sections.paymentDetails,
         sections.contactDetails
@@ -49,11 +47,9 @@ class CheckYourAnswersSectionsSpec (implicit messages: Messages)extends SpecBase
     }
 
     "give the right sections when PAYE claim and have benefits but no income" in {
-      val helper = new CheckYourAnswersHelper(answers)
       val sections = new CheckYourAnswersSections(helper, MockUserAnswers.benefitsWithNoIncome)
 
       sections.sectionsToShow mustBe Seq(
-        sections.yourDetails,
         sections.incomeDetails,
         sections.benefitDetails,
         sections.paymentDetails,
@@ -62,11 +58,9 @@ class CheckYourAnswersSectionsSpec (implicit messages: Messages)extends SpecBase
     }
 
     "give the right sections when PAYE claim and have income but no benefits" in {
-      val helper = new CheckYourAnswersHelper(answers)
       val sections = new CheckYourAnswersSections(helper, MockUserAnswers.incomeWithNoBenefits)
 
       sections.sectionsToShow mustBe Seq(
-        sections.yourDetails,
         sections.incomeDetails,
         sections.otherIncomeDetails,
         sections.paymentDetails,
@@ -75,11 +69,9 @@ class CheckYourAnswersSectionsSpec (implicit messages: Messages)extends SpecBase
     }
 
     "give the right sections when PAYE claim and have income and benefits" in {
-      val helper = new CheckYourAnswersHelper(answers)
       val sections = new CheckYourAnswersSections(helper, MockUserAnswers.benefitsWithIncome)
 
       sections.sectionsToShow mustBe Seq(
-        sections.yourDetails,
         sections.incomeDetails,
         sections.benefitDetails,
         sections.otherIncomeDetails,
@@ -88,77 +80,62 @@ class CheckYourAnswersSectionsSpec (implicit messages: Messages)extends SpecBase
       )
     }
 
-    "have the right section title for Your Details" in {
-      val helper = new CheckYourAnswersHelper(answers)
-      val sections = new CheckYourAnswersSections(helper, MockUserAnswers.minimalValidUserAnswers)
-      sections.yourDetails.headingKey mustBe Some("checkYourAnswers.yourDetailsSection")
-    }
-
     "have the right section title for Income Details" in {
-      val helper = new CheckYourAnswersHelper(answers)
       val sections = new CheckYourAnswersSections(helper, MockUserAnswers.minimalValidUserAnswers)
       sections.incomeDetails.headingKey mustBe Some("checkYourAnswers.incomeDetailsSection")
     }
 
     "have the right section title for Benefit Details" in {
-      val helper = new CheckYourAnswersHelper(answers)
       val sections = new CheckYourAnswersSections(helper, MockUserAnswers.benefitsWithNoIncome)
       sections.benefitDetails.headingKey mustBe Some("checkYourAnswers.benefitDetailsSection")
     }
 
     "have the right section title for Company Benefits Details" in {
-      val helper = new CheckYourAnswersHelper(answers)
       val sections = new CheckYourAnswersSections(helper, MockUserAnswers.companyBenefits)
       sections.companyBenefitDetails.headingKey mustBe Some("checkYourAnswers.companyBenefitsDetailsSection")
     }
 
     "have the right section title for Other Income Details" in {
-      val helper = new CheckYourAnswersHelper(answers)
       val sections = new CheckYourAnswersSections(helper, MockUserAnswers.benefitsWithIncome)
       sections.otherIncomeDetails.headingKey mustBe Some("checkYourAnswers.otherIncomeDetailsSection")
     }
 
     "have the right section title for Other Payment Details" in {
-      val helper = new CheckYourAnswersHelper(answers)
       val sections = new CheckYourAnswersSections(helper, MockUserAnswers.benefitsWithIncome)
       sections.paymentDetails.headingKey mustBe Some("checkYourAnswers.paymentDetailsSection")
     }
 
     "have the right section title for Contact Details" in {
-      val helper = new CheckYourAnswersHelper(answers)
       val sections = new CheckYourAnswersSections(helper, MockUserAnswers.minimalValidUserAnswers)
       sections.contactDetails.headingKey mustBe Some("checkYourAnswers.contactDetailsSection")
     }
   }
 
   "all questions are answered" must {
-    "have the correct rows in the right order in the Your Details section" in {
-      when(answers.userDetails) thenReturn Some(UserDetails("Dave Smith", "AB123456A",
-        UkAddress("Line 1", "Line 2", Some("Line 3"), Some("Line 4"), None, "AB123CD")))
-
-      val helper = new CheckYourAnswersHelper(answers)
-      val sections = new CheckYourAnswersSections(helper, MockUserAnswers.minimalValidUserAnswers)
-      val rows = sections.yourDetails.rows
-
-      rows.size mustBe 3
-      rows.head.label.key mustBe "userDetails.checkYourAnswersLabel.name"
-      rows(1).label.key mustBe "userDetails.checkYourAnswersLabel.nino"
-      rows(2).label.key mustBe "userDetails.checkYourAnswersLabel.address"
-    }
-
     "have the correct rows in the right order in Company Benefits Details section" in {
-      answers = MockUserAnswers.companyBenefits
+      when(answers.anyCompanyBenefits) thenReturn Some(true)
+      when(answers.selectCompanyBenefits) thenReturn Some(
+        Set(CompanyBenefits.COMPANY_CAR_BENEFIT,
+            CompanyBenefits.MEDICAL_BENEFIT,
+            CompanyBenefits.FUEL_BENEFIT,
+            CompanyBenefits.OTHER_COMPANY_BENEFIT)
+        )
+      when(answers.howMuchCarBenefits) thenReturn Some("1234")
+      when(answers.howMuchMedicalBenefits) thenReturn Some("1234")
+      when(answers.howMuchFuelBenefit) thenReturn Some("1234")
+      when(answers.anyOtherCompanyBenefits) thenReturn Some(true)
+      when(answers.otherCompanyBenefitsDetails) thenReturn Some("data")
+      when(answers.howMuchOtherCompanyBenefit) thenReturn Some("1234")
 
-      val helper = new CheckYourAnswersHelper(answers)
-      val sections = new CheckYourAnswersSections(helper, MockUserAnswers.minimalValidUserAnswers)
+      val sections = new CheckYourAnswersSections(helper, MockUserAnswers.companyBenefits)
       val rows = sections.companyBenefitDetails.rows
 
       rows.size mustBe 8
-      rows.head.label.key mustBe "anyCompanyBenefits.checkYourAnswersLabel"
+      rows.head.label.key mustBe "anyOtherCompanyBenefits.checkYourAnswersLabel"
       rows(1).label.key mustBe "selectCompanyBenefits.checkYourAnswersLabel"
       rows(2).label.key mustBe "howMuchCarBenefits.checkYourAnswersLabel"
-      rows(3).label.key mustBe "howMuchMedicalBenefits.checkYourAnswersLabel"
-      rows(4).label.key mustBe "howMuchFuelBenefit.checkYourAnswersLabel"
+      rows(3).label.key mustBe "howMuchFuelBenefit.checkYourAnswersLabel"
+      rows(4).label.key mustBe "howMuchMedicalBenefits.checkYourAnswersLabel"
       rows(5).label.key mustBe "anyOtherCompanyBenefits.checkYourAnswersLabel"
       rows(6).label.key mustBe "otherCompanyBenefitsDetails.checkYourAnswersLabel"
       rows(7).label.key mustBe "howMuchOtherCompanyBenefit.checkYourAnswersLabel"
@@ -171,7 +148,6 @@ class CheckYourAnswersSectionsSpec (implicit messages: Messages)extends SpecBase
       when(answers.isPaymentAddressInTheUK) thenReturn Some(false)
       when(answers.paymentInternationalAddress) thenReturn Some(InternationalAddress("Line 1", "Line 2", None, None, None, "Thailand"))
 
-      val helper = new CheckYourAnswersHelper(answers)
       val sections = new CheckYourAnswersSections(helper, MockUserAnswers.minimalValidUserAnswers)
       val rows = sections.paymentDetails.rows
 
@@ -189,7 +165,6 @@ class CheckYourAnswersSectionsSpec (implicit messages: Messages)extends SpecBase
       when(answers.anyBenefits) thenReturn Some(false)
       when(answers.otherIncome) thenReturn Some(false)
 
-      val helper = new CheckYourAnswersHelper(answers)
       val sections = new CheckYourAnswersSections(helper, MockUserAnswers.minimalValidUserAnswers)
       val rows = sections.incomeDetails.rows
 
@@ -203,7 +178,6 @@ class CheckYourAnswersSectionsSpec (implicit messages: Messages)extends SpecBase
     "have the correct rows in the right order in the Contact Details section" in {
       when(answers.telephoneNumber) thenReturn Some("0191666666")
 
-      val helper = new CheckYourAnswersHelper(answers)
       val sections = new CheckYourAnswersSections(helper, MockUserAnswers.minimalValidUserAnswers)
       val rows = sections.contactDetails.rows
 
