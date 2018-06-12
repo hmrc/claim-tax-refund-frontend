@@ -26,7 +26,7 @@ charLimit: Option[Int] = None,
 labelClass: Option[String] = None
 )(implicit messages: Messages)
 
-<div class="form-field @if(viewModel.errorKey != ""){form-field--error}">
+<div class="form-group @if(viewModel.errorKey != ""){form-field--error}">
     <label class="form-label" for="@{viewModel.id}">
         <span class="bold @if(labelClass.nonEmpty){@labelClass}">@label</span>
         @if(hint != ""){
@@ -36,7 +36,7 @@ labelClass: Option[String] = None
         <span class="error-notification" id="error-message-@{viewModel.id}-input">@messages(viewModel.errorKey)</span>
         }
     </label>
-    <div class="form-control-wrapper char-counter" data-char-counter>
+    <div class="textarea-char-counter" data-char-counter>
         <textarea
                 class="form-control form-control--full-width @inputClass"
                 id="@{viewModel.id}"
@@ -45,8 +45,7 @@ labelClass: Option[String] = None
                 aria-describedby="error-message-@{viewModel.id}-input"
                 @if(charLimit.isDefined){maxLength="@{charLimit}"}
                 data-char-field
-                cols="30"
-                rows="20"
+                rows="5"
         ></textarea>
         @if(charLimit.isDefined){
         <noscript>
@@ -55,3 +54,4 @@ labelClass: Option[String] = None
         }
     </div>
 </div>
+
