@@ -34,6 +34,7 @@ import scala.concurrent.Future
 class EmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSugar {
 
   def onwardRoute = routes.IndexController.onPageLoad()
+  def noTaiRoute = routes.EnterPayeReferenceController.onPageLoad(NormalMode)
 
   val formProvider = new BooleanForm()
   val form = formProvider()
@@ -111,7 +112,7 @@ class EmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSug
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
     }
 
-    "redirect to Session Expired if call to tai has failed" in {
+    "redirect to paye reference page when call to tai returns nothing" in {
       when(mockUserAnswers.employmentDetails).thenReturn(None)
 
       when(mockTaiConnector.taiEmployments(Matchers.eq("AB123456A"), Matchers.eq(2016))(Matchers.any(), Matchers.any()))
@@ -120,7 +121,7 @@ class EmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSug
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(noTaiRoute.url)
     }
 
     "redirect to Session Expired if no taxYears have been selected" in {

@@ -45,7 +45,7 @@ class EmploymentDetailsController @Inject()(appConfig: FrontendAppConfig,
                                             formProvider: BooleanForm,
                                             taiConnector: TaiConnector) extends FrontendController with I18nSupport {
 
-  private val errorKey = "mploymentDetails.blank"
+  private val errorKey = "employmentDetails.blank"
   val form: Form[Boolean] = formProvider(errorKey)
 
 
@@ -69,7 +69,7 @@ class EmploymentDetailsController @Inject()(appConfig: FrontendAppConfig,
             case NonFatal(e) =>
               Redirect(routes.SessionExpiredController.onPageLoad())
           }
-      }.getOrElse {
+      }.getOrElse{
         Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
       }
   }
