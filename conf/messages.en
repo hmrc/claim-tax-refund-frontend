@@ -324,7 +324,7 @@ howMuchOtherCompanyBenefit.invalid = Enter a valid amount you got for this benef
 
 enterPayeReference.title = Enter your employer or pension provider's PAYE reference
 enterPayeReference.heading = Enter your employer or pension provider's PAYE reference
-enterPayeReference.hint = For example 123/AB456. You can find this on your payslip or P60enterPayeReference.title = enterPayeReference
+enterPayeReference.hint = For example 123/AB456. You can find this on your payslip or P60
 enterPayeReference.blank = Enter your employer or pension provider's PAYE reference
 enterPayeReference.invalid = Enter a valid PAYE reference
 
