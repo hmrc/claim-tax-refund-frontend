@@ -26,7 +26,7 @@ import controllers.actions._
 import config.FrontendAppConfig
 import forms.BooleanForm
 import identifiers.EmploymentDetailsId
-import models.Mode
+import models.{Mode, NormalMode}
 import utils.{Navigator, UserAnswers}
 import views.html.employmentDetails
 
@@ -45,7 +45,7 @@ class EmploymentDetailsController @Inject()(appConfig: FrontendAppConfig,
                                             formProvider: BooleanForm,
                                             taiConnector: TaiConnector) extends FrontendController with I18nSupport {
 
-  private val errorKey = "mploymentDetails.blank"
+  private val errorKey = "employmentDetails.blank"
   val form: Form[Boolean] = formProvider(errorKey)
 
 
@@ -67,9 +67,9 @@ class EmploymentDetailsController @Inject()(appConfig: FrontendAppConfig,
               Ok(employmentDetails(appConfig, preparedForm, mode, employments, taxYear))
           ).recover {
             case NonFatal(e) =>
-              Redirect(routes.SessionExpiredController.onPageLoad())
+              Redirect(routes.EnterPayeReferenceController.onPageLoad(NormalMode).url)
           }
-      }.getOrElse {
+      }.getOrElse{
         Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
       }
   }
