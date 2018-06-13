@@ -52,17 +52,11 @@ class SelectTaxYearController @Inject()(
 
   def onSubmit(mode: Mode) = (authenticate andThen getData).async {
     implicit request =>
-      val userName = request.name.givenName.get + " " + request.name.familyName.get
-      val userNino = request.nino
-      val userAddress = UkAddress(request.address.line1.get, request.address.line2.get, Some(request.address.line3.get),
-        Some(request.address.line4.get), Some(request.address.line5.get), request.address.postCode.get)
-
       SelectTaxYearForm().bindFromRequest().fold(
         (formWithErrors: Form[_]) =>
           Future.successful(BadRequest(selectTaxYear(appConfig, formWithErrors, mode))),
         (value) =>
           for {
-            _        <- dataCacheConnector.save[UserDetails](request.externalId, UserDetailsId.toString, UserDetails(userName, userNino, userAddress))
             cacheMap <- dataCacheConnector.save[SelectTaxYear](request.externalId, SelectTaxYearId.toString, value)
           } yield Redirect(navigator.nextPage(SelectTaxYearId, mode)(new UserAnswers(cacheMap)))
       )
