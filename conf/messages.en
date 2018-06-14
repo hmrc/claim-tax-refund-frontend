@@ -376,7 +376,8 @@ detailsOfEmploymentOrPension.checkYourAnswersLabel = Details of employment or pe
 detailsOfEmploymentOrPension.blank = Enter details of your employment or pension
 detailsOfEmploymentOrPension.tooLong = Details of employment or pension exceeds the maximum 500 characters
 
-howMuchInvestmentOrDividend.title = howMuchInvestmentOrDividend
-howMuchInvestmentOrDividend.heading = howMuchInvestmentOrDividend
-howMuchInvestmentOrDividend.checkYourAnswersLabel = howMuchInvestmentOrDividend
-howMuchInvestmentOrDividend.blank = howMuchInvestmentOrDividend
+howMuchInvestmentOrDividend.title = How much tax did you pay on investment or dividend income between
+howMuchInvestmentOrDividend.heading = How much tax did you pay on investment or dividend income between
+howMuchInvestmentOrDividend.checkYourAnswersLabel = Investment or dividend
+howMuchInvestmentOrDividend.blank = Enter a valid amount of tax you paid on investment or dividend
+howMuchInvestmentOrDividend.invalid = Enter a valid amount of tax you paid on investment or dividend

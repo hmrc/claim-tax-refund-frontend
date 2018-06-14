@@ -31,7 +31,6 @@ class HowMuchInvestmentOrDividendViewSpec extends StringViewBehaviours with Mock
   val messageKeyPrefix = "howMuchInvestmentOrDividend"
 
   private val taxYear = CYMinus2.asString
-  private val otherBenefitName = "test benefit"
 
   val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
@@ -42,7 +41,7 @@ class HowMuchInvestmentOrDividendViewSpec extends StringViewBehaviours with Mock
   def createViewUsingForm = (form: Form[String]) => howMuchInvestmentOrDividend(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "HowMuchInvestmentOrDividend view" must {
-    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, s" $otherBenefitName " + messages("howMuchInvestmentOrDividend.heading2") + s" $taxYear", messages("global.questionMark"))
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, " " + taxYear, messages("global.questionMark"))
 
     behave like pageWithBackLink(createView)
 

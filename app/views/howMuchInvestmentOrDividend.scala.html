@@ -23,7 +23,7 @@
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: String)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("howMuchInvestmentOrDividend.title"),
+    title = messages("howMuchInvestmentOrDividend.title") + s" $taxYear" + messages("global.questionMark"),
     appConfig = appConfig,
     bodyClasses = None) {
 
@@ -33,9 +33,16 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading("howMuchInvestmentOrDividend.heading")
+        @components.heading(
+            "howMuchInvestmentOrDividend.heading",
+            dynamicHeading = Some(s"$taxYear" + messages("global.questionMark")),
+            secondaryHeaderKey = Some("index.title")
+        )
 
-        @components.input_text(InputViewModel("value", form), label = messages("howMuchInvestmentOrDividend.heading"), labelClass=Some("visually-hidden"))
+        @components.input_text(InputViewModel("value", form),
+            label = messages("howMuchInvestmentOrDividend.heading"),
+            labelClass=Some("visually-hidden"),
+            prefix = Some(messages("global.poundSign")))
 
         @components.submit_button()
     }

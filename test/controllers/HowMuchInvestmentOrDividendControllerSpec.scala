@@ -17,14 +17,11 @@
 package controllers
 
 import play.api.data.Form
-import play.api.libs.json.JsString
-import uk.gov.hmrc.http.cache.client.CacheMap
 import utils.{FakeNavigator, MockUserAnswers}
 import connectors.FakeDataCacheConnector
 import controllers.actions._
 import play.api.test.Helpers._
 import forms.HowMuchInvestmentOrDividendForm
-import identifiers.HowMuchInvestmentOrDividendId
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.mockito.Mockito.when
@@ -39,10 +36,9 @@ class HowMuchInvestmentOrDividendControllerSpec extends ControllerSpecBase {
       frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, new HowMuchInvestmentOrDividendForm(frontendAppConfig))
 
-  val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
-
+  private val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
+  private val taxYear = CYMinus2.asString
   val testAnswer = "9,999.99"
-  val taxYear = CYMinus2.asString
   val form = new HowMuchInvestmentOrDividendForm(frontendAppConfig)()
 
   def viewAsString(form: Form[_] = form) = howMuchInvestmentOrDividend(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
@@ -66,7 +62,6 @@ class HowMuchInvestmentOrDividendControllerSpec extends ControllerSpecBase {
 
     "redirect to the next page when valid data is submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", testAnswer))
-
       val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
@@ -100,7 +95,6 @@ class HowMuchInvestmentOrDividendControllerSpec extends ControllerSpecBase {
 
     "redirect to Session Expired if no taxYears have been selected" in {
       when(mockUserAnswers.selectTaxYear).thenReturn(None)
-
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
@@ -109,7 +103,6 @@ class HowMuchInvestmentOrDividendControllerSpec extends ControllerSpecBase {
 
     "redirect to Session Expired if no taxYears have been selected on submit" in {
       when(mockUserAnswers.selectTaxYear).thenReturn(None)
-
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
