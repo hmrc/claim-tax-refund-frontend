@@ -197,7 +197,7 @@ POST       /what_were_the_details_of_your_employment_or_pension             cont
 GET        /change_what_were_the_details_of_your_employment_or_pension      controllers.DetailsOfEmploymentOrPensionController.onPageLoad(mode: Mode = CheckMode)
 POST       /change_what_were_the_details_of_your_employment_or_pension      controllers.DetailsOfEmploymentOrPensionController.onSubmit(mode: Mode = CheckMode)
 
-GET        /howMuchInvestmentOrDividend               controllers.HowMuchInvestmentOrDividendController.onPageLoad(mode: Mode = NormalMode)
-POST       /howMuchInvestmentOrDividend               controllers.HowMuchInvestmentOrDividendController.onSubmit(mode: Mode = NormalMode)
-GET        /changeHowMuchInvestmentOrDividend                        controllers.HowMuchInvestmentOrDividendController.onPageLoad(mode: Mode = CheckMode)
-POST       /changeHowMuchInvestmentOrDividend                        controllers.HowMuchInvestmentOrDividendController.onSubmit(mode: Mode = CheckMode)
+GET        /how-much-investment-or-dividend                                 controllers.HowMuchInvestmentOrDividendController.onPageLoad(mode: Mode = NormalMode)
+POST       /how-much-investment-or-dividend                                 controllers.HowMuchInvestmentOrDividendController.onSubmit(mode: Mode = NormalMode)
+GET        /change-how-much-investment-or-dividend                          controllers.HowMuchInvestmentOrDividendController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-how-much-investment-or-dividend                          controllers.HowMuchInvestmentOrDividendController.onSubmit(mode: Mode = CheckMode)

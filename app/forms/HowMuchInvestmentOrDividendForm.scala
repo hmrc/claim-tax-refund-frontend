@@ -24,7 +24,11 @@ import play.api.data.Forms._
 
 class HowMuchInvestmentOrDividendForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 
-  private val howMuchInvestmentOrDividendBlankKey = "error.required"
+  private val currencyRegex = appConfig.currencyRegex
+  private val errorKeyInvalid = "howMuchInvestmentOrDividend.invalid"
+  private val errorKeyBlank = "howMuchInvestmentOrDividend.blank"
 
-  def apply(): Form[String] = Form("value" -> text.verifying(nonEmpty(howMuchInvestmentOrDividendBlankKey)))
+  def apply(): Form[String] = Form(
+    "value" -> text.verifying(firstError(nonEmpty(errorKeyBlank), regexValidation(currencyRegex, errorKeyInvalid)))
+  )
 }
