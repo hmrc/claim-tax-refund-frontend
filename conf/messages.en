@@ -375,3 +375,8 @@ detailsOfEmploymentOrPension.hintText = Tell us the name of your employer or pen
 detailsOfEmploymentOrPension.checkYourAnswersLabel = Details of employment or pension
 detailsOfEmploymentOrPension.blank = Enter details of your employment or pension
 detailsOfEmploymentOrPension.tooLong = Details of employment or pension exceeds the maximum 500 characters
+
+howMuchInvestmentOrDividend.title = howMuchInvestmentOrDividend
+howMuchInvestmentOrDividend.heading = howMuchInvestmentOrDividend
+howMuchInvestmentOrDividend.checkYourAnswersLabel = howMuchInvestmentOrDividend
+howMuchInvestmentOrDividend.blank = howMuchInvestmentOrDividend
