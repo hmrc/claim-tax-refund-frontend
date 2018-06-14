@@ -50,17 +50,30 @@ class HowMuchInvestmentOrDividendController @Inject()(
         case None => form
         case Some(value) => form.fill(value)
       }
-      Ok(howMuchInvestmentOrDividend(appConfig, preparedForm, mode, "taxYear"))
+
+      request.userAnswers.selectTaxYear.map{
+        selectedTaxYear =>
+          val taxYear = selectedTaxYear.asString
+          Ok(howMuchInvestmentOrDividend(appConfig, preparedForm, mode, taxYear))
+      }.getOrElse{
+        Redirect(routes.SessionExpiredController.onPageLoad())
+      }
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      form.bindFromRequest().fold(
-        (formWithErrors: Form[_]) =>
-          Future.successful(BadRequest(howMuchInvestmentOrDividend(appConfig, formWithErrors, mode, "taxYear"))),
-        (value) =>
-          dataCacheConnector.save[String](request.externalId, HowMuchInvestmentOrDividendId.toString, value).map(cacheMap =>
-            Redirect(navigator.nextPage(HowMuchInvestmentOrDividendId, mode)(new UserAnswers(cacheMap))))
-      )
+      request.userAnswers.selectTaxYear.map {
+        selectedTaxYear =>
+          val taxYear = selectedTaxYear.asString
+          form.bindFromRequest().fold(
+            (formWithErrors: Form[_]) =>
+              Future.successful(BadRequest(howMuchInvestmentOrDividend(appConfig, formWithErrors, mode, taxYear))),
+            (value) =>
+              dataCacheConnector.save[String](request.externalId, HowMuchInvestmentOrDividendId.toString, value).map(cacheMap =>
+                Redirect(navigator.nextPage(HowMuchInvestmentOrDividendId, mode)(new UserAnswers(cacheMap))))
+          )
+      }.getOrElse {
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+      }
   }
 }
