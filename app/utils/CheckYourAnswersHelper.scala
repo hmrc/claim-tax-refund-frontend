@@ -33,6 +33,10 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
     x => AnswerRow("howMuchInvestmentOrDividend.checkYourAnswersLabel", s"$x", false, routes.HowMuchInvestmentOrDividendController.onPageLoad(CheckMode).url)
   }
 
+  def selectTaxableIncome: Option[AnswerRow] = userAnswers.selectTaxableIncome map {
+    x => AnswerRow("selectTaxableIncome.checkYourAnswersLabel", s"$x", false, routes.SelectTaxableIncomeController.onPageLoad(CheckMode).url)
+  }
+
   def detailsOfEmploymentOrPension: Option[AnswerRow] = userAnswers.detailsOfEmploymentOrPension map {
     x => AnswerRow("detailsOfEmploymentOrPension.checkYourAnswersLabel", s"$x", false, routes.DetailsOfEmploymentOrPensionController.onPageLoad(CheckMode).url)
   }
