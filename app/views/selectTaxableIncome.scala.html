@@ -18,12 +18,12 @@
 @import uk.gov.hmrc.play.views.html._
 @import controllers.routes._
 @import models.Mode
-@import viewmodels.InputViewModel
+@import forms.SelectTaxableIncomeForm
 
-@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, year: String)(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: String)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("selectTaxableIncome.title"),
+    title = messages("selectTaxableIncome.title") + s" $taxYear" + messages("global.questionMark"),
     appConfig = appConfig,
     bodyClasses = None) {
 
@@ -33,9 +33,14 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading("selectTaxableIncome.heading")
+        @components.heading("selectTaxableIncome.heading", dynamicHeading = Some(s"$taxYear" + messages("global.questionMark")), secondaryHeaderKey = Some("index.title"))
 
-        @components.input_text(InputViewModel("value", form), label = messages("selectTaxableIncome.heading"), labelClass=Some("visually-hidden"))
+        @components.input_check_box(
+            form("value"),
+            legend = messages("selectTaxableIncome.heading"),
+            legendClass = Some("visually-hidden"),
+            inputs = SelectTaxableIncomeForm.options
+        )
 
         @components.submit_button()
     }

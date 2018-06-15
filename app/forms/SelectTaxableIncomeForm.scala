@@ -27,7 +27,6 @@ object SelectTaxableIncomeForm extends FormErrorHelper {
   private def selectTaxableBenefitsFormatter = new Formatter[TaxableIncome.Value] {
     def bind(key: String, data: Map[String, String]) = data.get(key) match {
       case Some(s) if optionIsValid(s) => Right(TaxableIncome.withName(s))
-      case None => produceError(key, "selectTaxableIncome.blank")
       case _ => produceError(key, "error.unknown")
     }
 
@@ -50,6 +49,6 @@ object SelectTaxableIncomeForm extends FormErrorHelper {
 
   def options: Map[String, String] = TaxableIncome.values.map {
     value =>
-      s"selectCompanyBenefits.$value" -> value.toString
+      s"selectTaxableIncome.$value" -> value.toString
   }.toMap
 }
