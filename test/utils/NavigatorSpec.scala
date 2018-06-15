@@ -64,9 +64,16 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(SelectTaxYearId, NormalMode)(answers) mustBe routes.EmploymentDetailsController.onPageLoad(NormalMode)
       }
 
-      "go to AnyBenefits from EmploymentDetails" in {
+      "go to AnyBenefits from AnyOtherTaxableBenefit when Yes is selected" in {
         val answers = mock[UserAnswers]
+        when(answers.employmentDetails) thenReturn Some(true)
         navigator.nextPage(EmploymentDetailsId, NormalMode)(answers) mustBe routes.AnyBenefitsController.onPageLoad(NormalMode)
+      }
+
+      "go to enter paye reference from employmentDetails when no is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.employmentDetails) thenReturn Some(false)
+        navigator.nextPage(EmploymentDetailsId, NormalMode)(answers) mustBe routes.EnterPayeReferenceController.onPageLoad(NormalMode)
       }
 
       "go to OtherIncome from AnyBenefits when No is selected" in {

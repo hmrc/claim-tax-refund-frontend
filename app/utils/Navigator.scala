@@ -28,7 +28,7 @@ class Navigator @Inject()() {
 
   private val routeMap: Map[Identifier, UserAnswers => Call] = Map(
     SelectTaxYearId -> (_ => routes.EmploymentDetailsController.onPageLoad(NormalMode)),
-    EmploymentDetailsId -> (_ => routes.AnyBenefitsController.onPageLoad(NormalMode)),
+    EmploymentDetailsId -> employmentDetails,
     AnyBenefitsId -> anyBenefits,
     HowMuchStatePensionId -> (_ => routes.AnyOtherTaxableBenefitsController.onPageLoad(NormalMode)),
     AnyOtherTaxableBenefitsId -> anyOtherBenefits,
@@ -48,6 +48,12 @@ class Navigator @Inject()() {
   private val editRouteMap: Map[Identifier, UserAnswers => Call] = Map(
 
   )
+
+  private def employmentDetails(userAnswers: UserAnswers) = userAnswers.employmentDetails match {
+    case Some(true) => routes.AnyBenefitsController.onPageLoad(NormalMode)
+    case Some(false) => routes.EnterPayeReferenceController.onPageLoad(NormalMode)
+    case None => routes.SessionExpiredController.onPageLoad()
+  }
 
   private def anyBenefits(userAnswers: UserAnswers) = userAnswers.anyBenefits match {
     case Some(true) => ???
