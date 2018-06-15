@@ -16,15 +16,40 @@
 
 package forms
 
-import com.google.inject.Inject
-import config.FrontendAppConfig
-import forms.mappings.Constraints
+import models.TaxableIncome
 import play.api.data.Form
 import play.api.data.Forms._
+import play.api.data.format.Formatter
+import play.api.data.validation.{Constraint, Invalid, Valid}
 
-class SelectTaxableIncomeForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
+object SelectTaxableIncomeForm extends FormErrorHelper {
 
-  private val selectTaxableIncomeBlankKey = "error.required"
+  private def selectTaxableBenefitsFormatter = new Formatter[TaxableIncome.Value] {
+    def bind(key: String, data: Map[String, String]) = data.get(key) match {
+      case Some(s) if optionIsValid(s) => Right(TaxableIncome.withName(s))
+      case None => produceError(key, "selectTaxableIncome.blank")
+      case _ => produceError(key, "error.unknown")
+    }
 
-  def apply(): Form[String] = Form("value" -> text.verifying(nonEmpty(selectTaxableIncomeBlankKey)))
+    def unbind(key: String, value: TaxableIncome.Value) = Map(key -> value.toString)
+  }
+
+  private def optionIsValid(value: String): Boolean = options.values.toSeq.contains(value)
+
+  private def constraint: Constraint[Set[TaxableIncome.Value]] = Constraint {
+    case set if set.nonEmpty =>
+      Valid
+    case _ =>
+      Invalid("selectTaxableIncome.blank")
+  }
+
+  def apply(): Form[Set[TaxableIncome.Value]] =
+    Form(
+      "value" -> set(of(selectTaxableBenefitsFormatter)).verifying(constraint)
+    )
+
+  def options: Map[String, String] = TaxableIncome.values.map {
+    value =>
+      s"selectCompanyBenefits.$value" -> value.toString
+  }.toMap
 }

@@ -26,7 +26,7 @@ import controllers.actions._
 import config.FrontendAppConfig
 import forms.SelectTaxableIncomeForm
 import identifiers.SelectTaxableIncomeId
-import models.Mode
+import models.{Mode, TaxableIncome}
 import utils.{Navigator, UserAnswers}
 import views.html.selectTaxableIncome
 
@@ -39,27 +39,24 @@ class SelectTaxableIncomeController @Inject()(
                                         navigator: Navigator,
                                         authenticate: AuthAction,
                                         getData: DataRetrievalAction,
-                                        requireData: DataRequiredAction,
-                                        formBuilder: SelectTaxableIncomeForm) extends FrontendController with I18nSupport {
-
-  private val form: Form[String] = formBuilder()
+                                        requireData: DataRequiredAction) extends FrontendController with I18nSupport {
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.selectTaxableIncome match {
-        case None => form
-        case Some(value) => form.fill(value)
+        case None => SelectTaxableIncomeForm()
+        case Some(value) => SelectTaxableIncomeForm().fill(value)
       }
-      Ok(selectTaxableIncome(appConfig, preparedForm, mode))
+      Ok(selectTaxableIncome(appConfig, preparedForm, mode, "2016"))
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      form.bindFromRequest().fold(
+      SelectTaxableIncomeForm().bindFromRequest().fold(
         (formWithErrors: Form[_]) =>
-          Future.successful(BadRequest(selectTaxableIncome(appConfig, formWithErrors, mode))),
+          Future.successful(BadRequest(selectTaxableIncome(appConfig, formWithErrors, mode, "2016"))),
         (value) =>
-          dataCacheConnector.save[String](request.externalId, SelectTaxableIncomeId.toString, value).map(cacheMap =>
+          dataCacheConnector.save[Set[TaxableIncome.Value]](request.externalId, SelectTaxableIncomeId.toString, value).map(cacheMap =>
             Redirect(navigator.nextPage(SelectTaxableIncomeId, mode)(new UserAnswers(cacheMap))))
       )
   }
