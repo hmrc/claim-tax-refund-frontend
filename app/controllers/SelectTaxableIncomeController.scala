@@ -47,17 +47,30 @@ class SelectTaxableIncomeController @Inject()(
         case None => SelectTaxableIncomeForm()
         case Some(value) => SelectTaxableIncomeForm().fill(value)
       }
-      Ok(selectTaxableIncome(appConfig, preparedForm, mode, "2016"))
+
+      request.userAnswers.selectTaxYear.map {
+        selectedTaxYear =>
+          val taxYear = selectedTaxYear.asString
+          Ok(selectTaxableIncome(appConfig, preparedForm, mode, taxYear))
+      }.getOrElse {
+        Redirect(routes.SessionExpiredController.onPageLoad())
+      }
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      SelectTaxableIncomeForm().bindFromRequest().fold(
-        (formWithErrors: Form[_]) =>
-          Future.successful(BadRequest(selectTaxableIncome(appConfig, formWithErrors, mode, "2016"))),
-        (value) =>
-          dataCacheConnector.save[Set[TaxableIncome.Value]](request.externalId, SelectTaxableIncomeId.toString, value).map(cacheMap =>
-            Redirect(navigator.nextPage(SelectTaxableIncomeId, mode)(new UserAnswers(cacheMap))))
-      )
+      request.userAnswers.selectTaxYear.map {
+        selectedTaxYear =>
+          val taxYear = selectedTaxYear.asString
+          SelectTaxableIncomeForm().bindFromRequest().fold(
+            (formWithErrors: Form[_]) =>
+              Future.successful(BadRequest(selectTaxableIncome(appConfig, formWithErrors, mode, taxYear))),
+            (value) =>
+              dataCacheConnector.save[Set[TaxableIncome.Value]](request.externalId, SelectTaxableIncomeId.toString, value).map(cacheMap =>
+                Redirect(navigator.nextPage(SelectTaxableIncomeId, mode)(new UserAnswers(cacheMap))))
+          )
+      }.getOrElse {
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+      }
   }
 }
