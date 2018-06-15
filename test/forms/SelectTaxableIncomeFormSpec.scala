@@ -16,30 +16,21 @@
 
 package forms
 
-import config.FrontendAppConfig
-import forms.behaviours.FormBehaviours
-import models.MandatoryField
-import org.scalatest.mockito.MockitoSugar
-import org.mockito.Mockito._
-import play.api.data.Form
+import forms.behaviours.CheckboxBehaviours
+import models.TaxableIncome
 
-class SelectTaxableIncomeFormSpec extends FormBehaviours with MockitoSugar {
+class SelectTaxableIncomeFormSpec extends CheckboxBehaviours[TaxableIncome.Value] {
 
-  val errorKeyBlank = "error.required"
+  override val validOptions: Set[TaxableIncome.Value] = TaxableIncome.values
 
-  def appConfig: FrontendAppConfig = {
-    val instance = mock[FrontendAppConfig]
-    instance
+  override val fieldName = "value"
+
+  val form = SelectTaxableIncomeForm()
+
+  "SelectTaxableIncome form" must {
+    behave like aCheckboxForm(invalid = "error.unknown")
+
+    behave like aMandatoryCheckboxForm("selectTaxableIncome.blank")
   }
 
-  val validData: Map[String, String] = Map("value" -> "test answer")
-
-  override val form: Form[_] = new SelectTaxableIncomeForm(appConfig)()
-
-  "SelectTaxableIncome Form" must {
-
-    behave like formWithMandatoryTextFields(
-      MandatoryField("value", errorKeyBlank)
-    )
-  }
 }

@@ -16,32 +16,44 @@
 
 package views
 
-import config.FrontendAppConfig
-import play.api.data.Form
-import controllers.routes
 import forms.SelectTaxableIncomeForm
-import models.NormalMode
-import org.scalatest.mockito.MockitoSugar
-import views.behaviours.StringViewBehaviours
+import models.SelectTaxYear.CYMinus2
+import models.{NormalMode, TaxableIncome}
+import play.api.data.Form
+import play.twirl.api.Html
+import views.behaviours.{CheckboxViewBehaviours, ViewBehaviours}
 import views.html.selectTaxableIncome
 
-class SelectTaxableIncomeViewSpec extends StringViewBehaviours with MockitoSugar {
+class SelectTaxableIncomeViewSpec extends ViewBehaviours with CheckboxViewBehaviours[TaxableIncome.Value] {
 
   val messageKeyPrefix = "selectTaxableIncome"
+  val fieldKey = "value"
+  val errorMessage = "error.invalid"
+  val taxYear: String = CYMinus2.asString
 
-  val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
-  override val form: Form[String] = new SelectTaxableIncomeForm(appConfig)()
+  val values: Map[String, TaxableIncome.Value] =
+    SelectTaxableIncomeForm.options.map {
+      case (k, v) => k -> TaxableIncome.withName(v)
+    }
 
-  def createView = () => selectTaxableIncome(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def form: Form[Set[TaxableIncome.Value]] = SelectTaxableIncomeForm()
 
-  def createViewUsingForm = (form: Form[String]) => selectTaxableIncome(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  override def createView(): Html = createView(form)
+
+  def createView(form: Form[Set[TaxableIncome.Value]]): Html =
+    selectTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+
+  def createViewUsingForm = (form: Form[_]) => selectTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "SelectTaxableIncome view" must {
-    behave like normalPage(createView, messageKeyPrefix)
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, " " + taxYear, messages("global.questionMark"))
 
     behave like pageWithBackLink(createView)
 
-    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.SelectTaxableIncomeController.onSubmit(NormalMode).url)
+    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+
+    behave like checkboxPage(legend = Some(messages(s"$messageKeyPrefix.heading")))
+
   }
 }

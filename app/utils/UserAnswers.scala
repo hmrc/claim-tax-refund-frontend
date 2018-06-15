@@ -22,7 +22,7 @@ import models.templates._
 import uk.gov.hmrc.http.cache.client.CacheMap
 
 class UserAnswers(val cacheMap: CacheMap) {
-  def selectTaxableIncome: Option[String] = cacheMap.getEntry[String](SelectTaxableIncomeId.toString)
+  def selectTaxableIncome: Option[Set[TaxableIncome.Value]] = cacheMap.getEntry[Set[TaxableIncome.Value]](SelectTaxableIncomeId.toString)
 
   def howMuchTaxPaidOnOtherIncome: Option[String] = cacheMap.getEntry[String](HowMuchTaxPaidOnOtherIncomeId.toString)
 

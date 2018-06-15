@@ -17,62 +17,62 @@
 package controllers
 
 import play.api.data.Form
-import play.api.libs.json.JsString
-import uk.gov.hmrc.http.cache.client.CacheMap
-import utils.FakeNavigator
+import utils.{FakeNavigator, MockUserAnswers}
 import connectors.FakeDataCacheConnector
 import controllers.actions._
-import play.api.test.Helpers._
 import forms.SelectTaxableIncomeForm
-import identifiers.SelectTaxableIncomeId
-import models.NormalMode
+import play.api.test.Helpers._
+import models.{NormalMode, TaxableIncome}
+import models.SelectTaxYear.CYMinus2
+import org.mockito.Mockito.when
 import views.html.selectTaxableIncome
+
 
 class SelectTaxableIncomeControllerSpec extends ControllerSpecBase {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
+  val taxYear: String = CYMinus2.asString
+  private val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
+
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new SelectTaxableIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, new SelectTaxableIncomeForm(frontendAppConfig))
+      dataRetrievalAction, new DataRequiredActionImpl)
 
-  val testAnswer = "answer"
-  val form = new SelectTaxableIncomeForm(frontendAppConfig)()
-
-  def viewAsString(form: Form[_] = form) = selectTaxableIncome(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = SelectTaxableIncomeForm()) =
+    selectTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
 
   "SelectTaxableIncome Controller" must {
 
     "return OK and the correct view for a GET" in {
-      val result = controller().onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(fakeDataRetrievalAction()).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe OK
       contentAsString(result) mustBe viewAsString()
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      val validData = Map(SelectTaxableIncomeId.toString -> JsString(testAnswer))
-      val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validData)))
+      when(mockUserAnswers.selectTaxableIncome).thenReturn(Some(Set(TaxableIncome(0))))
 
-      val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
-      contentAsString(result) mustBe viewAsString(form.fill(testAnswer))
+      contentAsString(result) mustBe viewAsString(SelectTaxableIncomeForm().fill(Set(TaxableIncome(0))))
     }
 
     "redirect to the next page when valid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", testAnswer))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value[0]", TaxableIncome(0).toString))
 
-      val result = controller().onSubmit(NormalMode)(postRequest)
+      val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(onwardRoute.url)
     }
 
     "return a Bad Request and errors when invalid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", ""))
-      val boundForm = form.bind(Map("value" -> ""))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
+      val boundForm = SelectTaxableIncomeForm().bind(Map("value" -> "invalid value"))
 
-      val result = controller().onSubmit(NormalMode)(postRequest)
+      val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe BAD_REQUEST
       contentAsString(result) mustBe viewAsString(boundForm)
@@ -86,8 +86,26 @@ class SelectTaxableIncomeControllerSpec extends ControllerSpecBase {
     }
 
     "redirect to Session Expired for a POST if no existing data is found" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", testAnswer))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", ""))
       val result = controller(dontGetAnyData).onSubmit(NormalMode)(postRequest)
+
+      status(result) mustBe SEE_OTHER
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+    }
+
+    "redirect to Session Expired if no taxYears have been selected" in {
+      when(mockUserAnswers.selectTaxYear).thenReturn(None)
+
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
+
+      status(result) mustBe SEE_OTHER
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+    }
+
+    "redirect to Session Expired if no taxYears have been selected on submit" in {
+      when(mockUserAnswers.selectTaxYear).thenReturn(None)
+
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
