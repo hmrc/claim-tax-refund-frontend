@@ -26,8 +26,8 @@ class TelephoneOptionSpec extends SpecBase {
   "write" must {
 
     "contain true and agent ref" in {
-      Json.toJson(TelephoneOption.Yes("AB1234")) mustBe
-        Json.obj(AnyTelephoneId.toString -> JsBoolean(true), TelephoneNumberId.toString -> JsString("AB1234"))
+      Json.toJson(TelephoneOption.Yes("0191 1111 111")) mustBe
+        Json.obj(AnyTelephoneId.toString -> JsBoolean(true), TelephoneNumberId.toString -> JsString("0191 1111 111"))
     }
 
     "contain false and no agent ref" in {

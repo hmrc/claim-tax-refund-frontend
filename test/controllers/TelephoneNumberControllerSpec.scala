@@ -19,62 +19,76 @@ package controllers
 import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.TelephoneNumberForm
-import identifiers.TelephoneNumberId
-import models.NormalMode
+import identifiers.{AnyTelephoneId, TelephoneNumberId}
+import models.{NormalMode, TelephoneOption}
+import org.mockito.Mockito.when
 import play.api.data.Form
-import play.api.libs.json.JsString
+import play.api.libs.json.{JsBoolean, JsString, Json}
 import play.api.test.Helpers._
-import uk.gov.hmrc.http.cache.client.CacheMap
-import utils.FakeNavigator
+import utils.{FakeNavigator, MockUserAnswers}
 import views.html.telephoneNumber
 
 class TelephoneNumberControllerSpec extends ControllerSpecBase {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
+  val testAnswer = "0191 111 1111"
+  val formProvider = new TelephoneNumberForm()
+  val form = formProvider()
+  val validYesData = Map(AnyTelephoneId.toString -> Json.obj(AnyTelephoneId.toString -> JsBoolean(true), TelephoneNumberId.toString -> JsString(testAnswer)))
+  val validNoData = Map(AnyTelephoneId.toString -> Json.obj(AnyTelephoneId.toString -> JsBoolean(false)))
+  private val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
+
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new TelephoneNumberController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, new TelephoneNumberForm(frontendAppConfig))
-
-  val testRegex = """^\+?[0-9\s\(\)]{1,20}$"""
-  val testAnswer = "0191 111 1111"
-
-  val form = new TelephoneNumberForm(frontendAppConfig)()
+      dataRetrievalAction, new DataRequiredActionImpl, formProvider)
 
   def viewAsString(form: Form[_] = form) = telephoneNumber(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
 
-  "TelephoneNumber Controller" must {
+  "TelephoneNumberController" must {
 
     "return OK and the correct view for a GET" in {
-      val result = controller().onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(fakeDataRetrievalAction()).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe OK
       contentAsString(result) mustBe viewAsString()
     }
 
-    "populate the view correctly on a GET when the question has previously been answered" in {
-      val validData = Map(TelephoneNumberId.toString -> JsString(testAnswer))
-      val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validData)))
+    "populate the view correctly on a GET when YES has previously been answered" in {
+      when(mockUserAnswers.anyTelephoneNumber).thenReturn(Some(TelephoneOption.Yes(testAnswer)))
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
-      val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)
-
-      contentAsString(result) mustBe viewAsString(form.fill(testAnswer))
+      contentAsString(result) mustBe viewAsString(form.fill(TelephoneOption.Yes(testAnswer)))
     }
 
-    "redirect to the next page when valid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", testAnswer))
+    "populate the view correctly on a GET when NO has previously been answered" in {
+      when(mockUserAnswers.anyTelephoneNumber).thenReturn(Some(TelephoneOption.No))
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
-      val result = controller().onSubmit(NormalMode)(postRequest)
+      contentAsString(result) mustBe viewAsString(form.fill(TelephoneOption.No))
+    }
+
+    "redirect to the next page when valid YES data is submitted" in {
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("telephone.anyTelephoneNumber", "true"),("telephone.telephoneNumber", testAnswer))
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(postRequest)
+
+      status(result) mustBe SEE_OTHER
+      redirectLocation(result) mustBe Some(onwardRoute.url)
+    }
+
+    "redirect to the next page when valid NO data is submitted" in {
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("telephone.anyTelephoneNumber", "false"))
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(onwardRoute.url)
     }
 
     "return a Bad Request and errors when invalid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", ""))
-      val boundForm = form.bind(Map("value" -> ""))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
+      val boundForm = form.bind(Map("value" -> "invalid value"))
 
-      val result = controller().onSubmit(NormalMode)(postRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe BAD_REQUEST
       contentAsString(result) mustBe viewAsString(boundForm)
@@ -88,7 +102,7 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase {
     }
 
     "redirect to Session Expired for a POST if no existing data is found" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", testAnswer))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
       val result = controller(dontGetAnyData).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
