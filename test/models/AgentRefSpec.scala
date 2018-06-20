@@ -18,7 +18,8 @@ package models
 
 import base.SpecBase
 import identifiers.{AgentRefId, AnyAgentRefId}
-import play.api.libs.json.{JsBoolean, JsString, Json}
+import play.api.data.validation.ValidationError
+import play.api.libs.json._
 
 class AgentRefSpec extends SpecBase {
 
@@ -31,6 +32,32 @@ class AgentRefSpec extends SpecBase {
 
     "contain false and no agent ref" in {
       Json.toJson(AgentRef.No) mustBe Json.obj(AnyAgentRefId.toString -> JsBoolean(false))
+    }
+  }
+
+  "reads" must {
+
+    "successfully read true" in {
+      val json = Json.obj("anyAgentRef" -> true, "agentRef" -> "1234567")
+
+      Json.fromJson[AgentRef](json).asOpt.value mustEqual AgentRef.Yes("1234567")
+    }
+
+    "successfully read false" in {
+      val json = Json.obj("anyAgentRef" -> false)
+
+      Json.fromJson[AgentRef](json).asOpt.value mustEqual AgentRef.No
+    }
+
+    "return failure for true without agent ref" in {
+      val json = Json.obj("anyAgentRef" -> true)
+
+      Json.fromJson[AgentRef](json) mustEqual JsError("AgentRef value expected")
+    }
+
+    "return failure for when no input given" in {
+      val json = Json.obj("anyAgentRef" -> "notABoolean")
+      Json.fromJson[AgentRef](json) mustEqual JsError(Seq((JsPath \ "anyAgentRef", Seq(ValidationError(Seq("error.expected.jsboolean"))))))
     }
   }
 }
