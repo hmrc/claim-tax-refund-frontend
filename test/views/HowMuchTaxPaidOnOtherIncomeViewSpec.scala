@@ -21,6 +21,7 @@ import play.api.data.Form
 import controllers.routes
 import forms.HowMuchTaxPaidOnOtherIncomeForm
 import models.NormalMode
+import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
 import views.behaviours.StringViewBehaviours
 import views.html.howMuchTaxPaidOnOtherIncome
@@ -28,20 +29,24 @@ import views.html.howMuchTaxPaidOnOtherIncome
 class HowMuchTaxPaidOnOtherIncomeViewSpec extends StringViewBehaviours with MockitoSugar {
 
   val messageKeyPrefix = "howMuchTaxPaidOnOtherIncome"
+  def taxYear = CYMinus2.asString
 
   val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
   override val form: Form[String] = new HowMuchTaxPaidOnOtherIncomeForm(appConfig)()
 
-  def createView = () => howMuchTaxPaidOnOtherIncome(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createView = () => howMuchTaxPaidOnOtherIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) => howMuchTaxPaidOnOtherIncome(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[String]) => howMuchTaxPaidOnOtherIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "HowMuchTaxPaidOnOtherIncome view" must {
-    behave like normalPage(createView, messageKeyPrefix)
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, " " + taxYear, messages("global.questionMark"))
 
     behave like pageWithBackLink(createView)
 
+    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+
     behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.HowMuchTaxPaidOnOtherIncomeController.onSubmit(NormalMode).url)
+
   }
 }
