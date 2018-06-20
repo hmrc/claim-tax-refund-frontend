@@ -17,44 +17,48 @@
 package controllers
 
 import play.api.data.Form
-import play.api.libs.json.JsString
-import uk.gov.hmrc.http.cache.client.CacheMap
-import utils.FakeNavigator
+import utils.{FakeNavigator, MockUserAnswers}
 import connectors.FakeDataCacheConnector
 import controllers.actions._
 import play.api.test.Helpers._
 import forms.HowMuchTaxPaidOnOtherIncomeForm
-import identifiers.HowMuchTaxPaidOnOtherIncomeId
 import models.NormalMode
+import models.SelectTaxYear.CYMinus2
+import org.mockito.Mockito.when
 import views.html.howMuchTaxPaidOnOtherIncome
+
 
 class HowMuchTaxPaidOnOtherIncomeControllerSpec extends ControllerSpecBase {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new HowMuchTaxPaidOnOtherIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+    new HowMuchTaxPaidOnOtherIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector,
+      new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, new HowMuchTaxPaidOnOtherIncomeForm(frontendAppConfig))
 
-  val testAnswer = "answer"
+  val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
+
+  val testAnswer = "9,999.99"
+  def taxYear = CYMinus2.asString
+
   val form = new HowMuchTaxPaidOnOtherIncomeForm(frontendAppConfig)()
 
-  def viewAsString(form: Form[_] = form) = howMuchTaxPaidOnOtherIncome(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = form) = howMuchTaxPaidOnOtherIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
 
   "HowMuchTaxPaidOnOtherIncome Controller" must {
 
     "return OK and the correct view for a GET" in {
-      val result = controller().onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(someData).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe OK
       contentAsString(result) mustBe viewAsString()
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      val validData = Map(HowMuchTaxPaidOnOtherIncomeId.toString -> JsString(testAnswer))
-      val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validData)))
+      when (mockUserAnswers.howMuchTaxPaidOnOtherIncome).thenReturn(Some(testAnswer))
 
-      val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
       contentAsString(result) mustBe viewAsString(form.fill(testAnswer))
     }
@@ -62,7 +66,7 @@ class HowMuchTaxPaidOnOtherIncomeControllerSpec extends ControllerSpecBase {
     "redirect to the next page when valid data is submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", testAnswer))
 
-      val result = controller().onSubmit(NormalMode)(postRequest)
+      val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(onwardRoute.url)
@@ -72,7 +76,7 @@ class HowMuchTaxPaidOnOtherIncomeControllerSpec extends ControllerSpecBase {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", ""))
       val boundForm = form.bind(Map("value" -> ""))
 
-      val result = controller().onSubmit(NormalMode)(postRequest)
+      val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe BAD_REQUEST
       contentAsString(result) mustBe viewAsString(boundForm)
@@ -92,5 +96,23 @@ class HowMuchTaxPaidOnOtherIncomeControllerSpec extends ControllerSpecBase {
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
     }
+  }
+
+  "redirect to Session Expired if no taxYears have been selected" in {
+    when(mockUserAnswers.selectTaxYear).thenReturn(None)
+
+    val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
+
+    status(result) mustBe SEE_OTHER
+    redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+  }
+
+  "redirect to Session Expired if no taxYears have been selected on submit" in {
+    when(mockUserAnswers.selectTaxYear).thenReturn(None)
+
+    val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(fakeRequest)
+
+    status(result) mustBe SEE_OTHER
+    redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
   }
 }

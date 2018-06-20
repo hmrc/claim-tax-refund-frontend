@@ -20,10 +20,10 @@
 @import models.Mode
 @import viewmodels.InputViewModel
 
-@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: String)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("howMuchTaxPaidOnOtherIncome.title"),
+    title = messages("howMuchTaxPaidOnOtherIncome.title") + s" $taxYear" + messages("global.questionMark"),
     appConfig = appConfig,
     bodyClasses = None) {
 
@@ -33,7 +33,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading("howMuchTaxPaidOnOtherIncome.heading")
+        @components.heading("howMuchTaxPaidOnOtherIncome.heading", dynamicHeading = Some(s"$taxYear" + messages("global.questionMark")), secondaryHeaderKey = Some("index.title"))
 
         @components.input_text(InputViewModel("value", form), label = messages("howMuchTaxPaidOnOtherIncome.heading"), labelClass=Some("visually-hidden"))
 
