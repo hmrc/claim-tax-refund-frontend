@@ -17,18 +17,18 @@
 package forms
 
 import com.google.inject.Inject
-import config.FrontendAppConfig
-import forms.mappings.Constraints
+import forms.mappings.TelephoneOptionMapping
+import models.TelephoneOption
 import play.api.data.Form
-import play.api.data.Forms._
 
-class TelephoneNumberForm @Inject()(appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 
-  private val telephoneRegex = appConfig.telephoneRegex
-  private val errorKeyInvalid = "telephoneNumber.invalid"
-  private val errorKeyBlank = "telephoneNumber.blank"
+class TelephoneNumberForm @Inject() extends TelephoneOptionMapping {
 
-  def apply(): Form[String] = Form(
-    "value" -> text.verifying(firstError(nonEmpty(errorKeyBlank), regexValidation(telephoneRegex, errorKeyInvalid)))
+  def apply(): Form[TelephoneOption] = Form(
+    "telephone" -> telephoneOptionMapping(
+      requiredKey = "telephoneNumber.notSelected",
+      requiredTelephoneKey = "telephoneNumber.blank",
+      telephoneInvalidKey = "telephoneNumber.invalid"
+    )
   )
 }
