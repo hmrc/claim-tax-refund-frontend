@@ -34,6 +34,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
     answers = MockUserAnswers.nothingAnswered
     helper = new CheckYourAnswersHelper(answers)(messages: Messages)
   }
+
   "sections to show" must {
 
     "give the right sections in the minimal valid journey" in {
@@ -85,11 +86,6 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       sections.incomeDetails.headingKey mustBe Some("checkYourAnswers.incomeDetailsSection")
     }
 
-    "have the right section title for Benefit Details" in {
-      val sections = new CheckYourAnswersSections(helper, MockUserAnswers.benefitsWithNoIncome)
-      sections.benefitDetails.headingKey mustBe Some("checkYourAnswers.benefitDetailsSection")
-    }
-
     "have the right section title for Company Benefits Details" in {
       val sections = new CheckYourAnswersSections(helper, MockUserAnswers.companyBenefits)
       sections.companyBenefitDetails.headingKey mustBe Some("checkYourAnswers.companyBenefitsDetailsSection")
@@ -116,10 +112,10 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       when(answers.anyCompanyBenefits) thenReturn Some(true)
       when(answers.selectCompanyBenefits) thenReturn Some(
         Set(CompanyBenefits.COMPANY_CAR_BENEFIT,
-            CompanyBenefits.MEDICAL_BENEFIT,
-            CompanyBenefits.FUEL_BENEFIT,
-            CompanyBenefits.OTHER_COMPANY_BENEFIT)
-        )
+          CompanyBenefits.MEDICAL_BENEFIT,
+          CompanyBenefits.FUEL_BENEFIT,
+          CompanyBenefits.OTHER_COMPANY_BENEFIT)
+      )
       when(answers.howMuchCarBenefits) thenReturn Some("1234")
       when(answers.howMuchMedicalBenefits) thenReturn Some("1234")
       when(answers.howMuchFuelBenefit) thenReturn Some("1234")
@@ -183,6 +179,55 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
 
       rows.size mustBe 1
       rows.head.label.key mustBe "telephoneNumber.checkYourAnswersLabel"
+    }
+  }
+
+  "AnyBenefits section" must {
+    "have the right section title for Benefit Details" in {
+      val sections = new CheckYourAnswersSections(helper, MockUserAnswers.benefitsWithNoIncome)
+      sections.benefitDetails.headingKey mustBe Some("checkYourAnswers.benefitDetailsSection")
+    }
+
+    "have the correct rows in the right order of Any Benefits Section" in {
+      when(answers.anyBenefits) thenReturn Some(true)
+
+      when(answers.selectBenefits) thenReturn Some(
+        Set(Benefits.CARERS_ALLOWANCE,
+          Benefits.BEREAVEMENT_ALLOWANCE,
+          Benefits.INCAPACITY_BENEFIT,
+          Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE,
+          Benefits.JOBSEEKERS_ALLOWANCE,
+          Benefits.OTHER_TAXABLE_BENEFIT,
+          Benefits.STATE_PENSION
+        )
+      )
+
+      when(answers.howMuchBereavementAllowance) thenReturn Some("1234")
+      when(answers.howMuchCarersAllowance) thenReturn Some("1234")
+      when(answers.howMuchJobseekersAllowance) thenReturn Some("1234")
+      when(answers.howMuchEmploymentAndSupportAllowance) thenReturn Some("1234")
+      when(answers.howMuchIncapacityBenefit) thenReturn Some("1234")
+      when(answers.howMuchStatePension) thenReturn Some("1234")
+      when(answers.anyOtherTaxableIncome) thenReturn Some(true)
+      when(answers.otherBenefitsDetails) thenReturn Some("Other")
+      when(answers.howMuchOtherBenefit) thenReturn Some("1234")
+
+      val sections = new CheckYourAnswersSections(helper, answers)
+      val rows = sections.benefitDetails.rows
+
+      rows.size mustBe 11
+      rows.head.label.key mustBe "anyBenefits.checkYourAnswersLabel"
+      rows(1).label.key mustBe "selectBenefits.checkYourAnswersLabel"
+      rows(2).label.key mustBe "howMuchBereavementAllowance.checkYourAnswersLabel"
+      rows(3).label.key mustBe "howMuchCarersAllowance.checkYourAnswersLabel"
+      rows(4).label.key mustBe "howMuchJobseekersAllowance.checkYourAnswersLabel"
+      rows(5).label.key mustBe "howMuchEmploymentAndSupportAllowance.checkYourAnswersLabel"
+      rows(6).label.key mustBe "howMuchIncapacityBenefit.checkYourAnswersLabel"
+      rows(7).label.key mustBe "howMuchStatePension.checkYourAnswersLabel"
+      rows(8).label.key mustBe "anyOtherTaxableIncome.checkYourAnswersLabel"
+      rows(9).label.key mustBe "otherBenefitsDetails.checkYourAnswersLabel"
+      rows(10).label.key mustBe "howMuchOtherBenefit.checkYourAnswersLabel"
+
     }
   }
 }
