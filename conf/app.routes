@@ -201,3 +201,8 @@ GET        /how-much-investment-or-dividend                                 cont
 POST       /how-much-investment-or-dividend                                 controllers.HowMuchInvestmentOrDividendController.onSubmit(mode: Mode = NormalMode)
 GET        /change-how-much-investment-or-dividend                          controllers.HowMuchInvestmentOrDividendController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-how-much-investment-or-dividend                          controllers.HowMuchInvestmentOrDividendController.onSubmit(mode: Mode = CheckMode)
+
+GET        /howMuchTaxPaidOnOtherIncome               controllers.HowMuchTaxPaidOnOtherIncomeController.onPageLoad(mode: Mode = NormalMode)
+POST       /howMuchTaxPaidOnOtherIncome               controllers.HowMuchTaxPaidOnOtherIncomeController.onSubmit(mode: Mode = NormalMode)
+GET        /changeHowMuchTaxPaidOnOtherIncome                        controllers.HowMuchTaxPaidOnOtherIncomeController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeHowMuchTaxPaidOnOtherIncome                        controllers.HowMuchTaxPaidOnOtherIncomeController.onSubmit(mode: Mode = CheckMode)
