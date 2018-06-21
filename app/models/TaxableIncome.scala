@@ -35,6 +35,12 @@ object TaxableIncome extends Enumeration {
   implicit def enumFormats: Format[Value] = EnumUtils.enumFormat(TaxableIncome)
 
   val sortedTaxableIncome =
-    mutable.LinkedHashMap()
+    mutable.LinkedHashMap(
+      s"selectTaxableIncome.$RENTAL_INCOME" -> RENTAL_INCOME.toString,
+      s"selectTaxableIncome.$BANK_OR_BUILDING_SOCIETY_INTEREST" -> BANK_OR_BUILDING_SOCIETY_INTEREST.toString,
+      s"selectTaxableIncome.$INVESTMENT_OR_DIVIDENDS" -> INVESTMENT_OR_DIVIDENDS.toString,
+      s"selectTaxableIncome.$FOREIGN_INCOME" -> FOREIGN_INCOME.toString,
+      s"selectTaxableIncome.$OTHER_TAXABLE_INCOME" -> OTHER_TAXABLE_INCOME.toString
+    )
 
 }

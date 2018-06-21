@@ -38,6 +38,15 @@ object Benefits extends Enumeration {
   implicit def enumFormats: Format[Value] = EnumUtils.enumFormat(Benefits)
 
   val sortedBenefits =
-    mutable.LinkedHashMap()
+    mutable.LinkedHashMap(
+      s"selectBenefits.$BEREAVEMENT_ALLOWANCE" -> BEREAVEMENT_ALLOWANCE.toString,
+      s"selectBenefits.$CARERS_ALLOWANCE" -> CARERS_ALLOWANCE.toString,
+      s"selectBenefits.$JOBSEEKERS_ALLOWANCE" -> JOBSEEKERS_ALLOWANCE.toString,
+      s"selectBenefits.$INCAPACITY_BENEFIT" -> INCAPACITY_BENEFIT.toString,
+      s"selectBenefits.$EMPLOYMENT_AND_SUPPORT_ALLOWANCE" -> EMPLOYMENT_AND_SUPPORT_ALLOWANCE.toString,
+      s"selectBenefits.$STATE_PENSION" -> STATE_PENSION.toString,
+      s"selectBenefits.$OTHER_TAXABLE_BENEFIT" -> OTHER_TAXABLE_BENEFIT.toString
+
+  )
 }
 

@@ -27,10 +27,10 @@ class CompanyBenefitsSpec extends WordSpec with MustMatchers with MockitoSugar {
   "CompanyBenefits model" must {
     "Return map in correct order" in {
 
-      CompanyBenefits.sortedCompanyBenefits.toSeq.head mustBe CompanyBenefits.COMPANY_CAR_BENEFIT.toString
-      CompanyBenefits.sortedCompanyBenefits.toSeq(1) mustBe CompanyBenefits.FUEL_BENEFIT.toString
-      CompanyBenefits.sortedCompanyBenefits.toSeq(2) mustBe CompanyBenefits.MEDICAL_BENEFIT.toString
-      CompanyBenefits.sortedCompanyBenefits.toSeq(3) mustBe CompanyBenefits.OTHER_COMPANY_BENEFIT.toString
+      CompanyBenefits.sortedCompanyBenefits.head._2 mustBe CompanyBenefits.COMPANY_CAR_BENEFIT.toString
+      CompanyBenefits.sortedCompanyBenefits.toSeq(1)._2 mustBe CompanyBenefits.FUEL_BENEFIT.toString
+      CompanyBenefits.sortedCompanyBenefits.toSeq(2)._2 mustBe CompanyBenefits.MEDICAL_BENEFIT.toString
+      CompanyBenefits.sortedCompanyBenefits.toSeq(3)._2 mustBe CompanyBenefits.OTHER_COMPANY_BENEFIT.toString
     }
   }
 }
