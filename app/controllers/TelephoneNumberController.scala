@@ -22,10 +22,10 @@ import controllers.actions._
 import forms.TelephoneNumberForm
 import identifiers.{AnyTelephoneId, TelephoneNumberId}
 import javax.inject.Inject
-
 import models.{Mode, TelephoneOption}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import utils.{Navigator, UserAnswers}
 import views.html.telephoneNumber
@@ -44,7 +44,7 @@ class TelephoneNumberController @Inject()(
 
   private val form: Form[TelephoneOption] = formBuilder()
 
-  def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.anyTelephoneNumber match {
         case None => form
@@ -53,12 +53,12 @@ class TelephoneNumberController @Inject()(
       Ok(telephoneNumber(appConfig, preparedForm, mode))
   }
 
-  def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
       form.bindFromRequest().fold(
         (formWithErrors: Form[_]) =>
           Future.successful(BadRequest(telephoneNumber(appConfig, formWithErrors, mode))),
-        (value) =>
+        value =>
           dataCacheConnector.save[TelephoneOption](request.externalId, AnyTelephoneId.toString, value).map(cacheMap =>
             Redirect(navigator.nextPage(TelephoneNumberId, mode)(new UserAnswers(cacheMap))))
       )
