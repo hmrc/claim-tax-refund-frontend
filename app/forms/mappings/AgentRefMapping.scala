@@ -16,7 +16,7 @@
 
 package forms.mappings
 
-import models.AgentRef
+import models.AnyAgentRef
 import play.api.data.Forms.tuple
 import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfTrue
 import play.api.data.Mapping
@@ -26,27 +26,31 @@ trait AgentRefMapping extends Mappings {
   def agentRefMapping(requiredKey: String,
                     requiredAgentRefKey: String,
                     agentRefLengthKey: String):
-  Mapping[AgentRef] = {
+  Mapping[AnyAgentRef] = {
     val agentRefMaxLength = 160
 
-    def fromAgentRef(agentRef: AgentRef): (Boolean, Option[String]) = {
-      agentRef match {
-        case AgentRef.Yes(agentRefNo) => (true, Some(agentRefNo))
-        case AgentRef.No =>  (false, None)
+    def fromAgentRef(anyAgentRef: AnyAgentRef): (Boolean, Option[String]) = {
+      anyAgentRef match {
+        case AnyAgentRef.Yes(agentRef) => (true, Some(agentRef))
+        case AnyAgentRef.No =>  (false, None)
       }
     }
 
     def toAgentRef(agentRefTuple: (Boolean, Option[String])) = {
 
       agentRefTuple match {
-        case (true, Some(agentRef))  => AgentRef.Yes(agentRef)
-        case (false, None)  => AgentRef.No
+        case (true, Some(agentRef))  => AnyAgentRef.Yes(agentRef)
+        case (false, None)  => AnyAgentRef.No
         case _ => throw new RuntimeException("Invalid selection")
       }
     }
 
     tuple("anyAgentRef" -> boolean(requiredKey),
-      "agentRef" -> mandatoryIfTrue("agentRef.anyAgentRef", text(requiredAgentRefKey).verifying(maxLength(agentRefMaxLength,agentRefLengthKey))))
+      "agentRef" -> mandatoryIfTrue(
+        "anyAgentRef",
+        text(requiredAgentRefKey).verifying(maxLength(agentRefMaxLength, agentRefLengthKey))
+      )
+    )
       .transform(toAgentRef, fromAgentRef)
   }
 

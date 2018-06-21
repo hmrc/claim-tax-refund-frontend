@@ -20,7 +20,7 @@ import controllers.routes
 import identifiers._
 import javax.inject.{Inject, Singleton}
 import models.WhereToSendPayment.{Myself, Nominee}
-import models.{AgentRef, CheckMode, Mode, NormalMode}
+import models.{AnyAgentRef, CheckMode, Mode, NormalMode}
 import play.api.mvc.Call
 
 @Singleton
@@ -86,9 +86,9 @@ class Navigator @Inject()() {
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
-  private def anyAgentRef(userAnswers: UserAnswers): Option[Call] = userAnswers.anyAgentRef map {
-    case AgentRef.Yes(agentRef) => ???
-    case AgentRef.No => routes.IsPaymentAddressInTheUKController.onPageLoad(NormalMode)
+  private def anyAgentRef(userAnswers: UserAnswers) = userAnswers.anyAgentRef map {
+    case AnyAgentRef.Yes(agentRef) => ???
+    case AnyAgentRef.No => routes.IsPaymentAddressInTheUKController.onPageLoad(NormalMode)
     case _ => routes.SessionExpiredController.onPageLoad()
   }
 

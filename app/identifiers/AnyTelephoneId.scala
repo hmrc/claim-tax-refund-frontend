@@ -14,21 +14,8 @@
  * limitations under the License.
  */
 
-package forms
+package identifiers
 
-import com.google.inject.Inject
-import forms.mappings.TelephoneOptionMapping
-import models.TelephoneOption
-import play.api.data.Form
-
-
-class TelephoneNumberForm @Inject() extends TelephoneOptionMapping {
-
-  def apply(): Form[TelephoneOption] = Form(
-    telephoneOptionMapping(
-      requiredKey = "telephoneNumber.notSelected",
-      requiredTelephoneKey = "telephoneNumber.blank",
-      telephoneInvalidKey = "telephoneNumber.invalid"
-    )
-  )
+case object AnyTelephoneId extends Identifier {
+  override def toString: String = "anyTelephone"
 }

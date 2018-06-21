@@ -22,6 +22,10 @@ import models.templates._
 import uk.gov.hmrc.http.cache.client.CacheMap
 
 class UserAnswers(val cacheMap: CacheMap) {
+  def selectTaxableIncome: Option[Set[TaxableIncome.Value]] = cacheMap.getEntry[Set[TaxableIncome.Value]](SelectTaxableIncomeId.toString)
+
+  def howMuchTaxPaidOnOtherIncome: Option[String] = cacheMap.getEntry[String](HowMuchTaxPaidOnOtherIncomeId.toString)
+
   def howMuchInvestmentOrDividend: Option[String] = cacheMap.getEntry[String](HowMuchInvestmentOrDividendId.toString)
 
   def detailsOfEmploymentOrPension: Option[String] = cacheMap.getEntry[String](DetailsOfEmploymentOrPensionId.toString)
@@ -66,7 +70,7 @@ class UserAnswers(val cacheMap: CacheMap) {
 
   def whereToSendPayment: Option[WhereToSendPayment] = cacheMap.getEntry[WhereToSendPayment](WhereToSendPaymentId.toString)
 
-  def anyAgentRef: Option[AgentRef] = cacheMap.getEntry[AgentRef](AnyAgentRefId.toString)
+  def anyAgentRef: Option[AnyAgentRef] = cacheMap.getEntry[AnyAgentRef](AnyAgentRefId.toString)
 
   def agentReferenceNumber: Option[String] = cacheMap.getEntry[String](AgentRefId.toString)
 
@@ -101,6 +105,8 @@ class UserAnswers(val cacheMap: CacheMap) {
   def selectTaxYear: Option[SelectTaxYear] = cacheMap.getEntry[SelectTaxYear](SelectTaxYearId.toString)
 
   def telephoneNumber: Option[String] = cacheMap.getEntry[String](TelephoneNumberId.toString)
+
+  def anyTelephoneNumber: Option[TelephoneOption] = cacheMap.getEntry[TelephoneOption](AnyTelephoneId.toString)
 
   def ukAddress: Option[UkAddress] = cacheMap.getEntry[UkAddress](UkAddressId.toString)
 

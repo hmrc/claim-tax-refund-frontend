@@ -20,7 +20,7 @@ import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.AnyAgentReferenceForm
 import identifiers.{AgentRefId, AnyAgentRefId}
-import models.{AgentRef, NormalMode}
+import models.{AnyAgentRef, NormalMode}
 import org.mockito.Mockito.when
 import play.api.data.Form
 import play.api.libs.json._
@@ -58,22 +58,22 @@ class AnyAgentRefControllerSpec extends ControllerSpecBase {
 
     "populate the view correctly on a GET when YES has previously been answered" in {
       when(mockUserAnswers.nomineeFullName).thenReturn(Some(nomineeName))
-      when(mockUserAnswers.anyAgentRef).thenReturn(Some(AgentRef.Yes("AB1234")))
+      when(mockUserAnswers.anyAgentRef).thenReturn(Some(AnyAgentRef.Yes("AB1234")))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
-      contentAsString(result) mustBe viewAsString(form.fill(AgentRef.Yes("AB1234")))
+      contentAsString(result) mustBe viewAsString(form.fill(AnyAgentRef.Yes("AB1234")))
     }
 
     "populate the view correctly on a GET when NO has previously been answered" in {
       when(mockUserAnswers.nomineeFullName).thenReturn(Some(nomineeName))
-      when(mockUserAnswers.anyAgentRef).thenReturn(Some(AgentRef.No))
+      when(mockUserAnswers.anyAgentRef).thenReturn(Some(AnyAgentRef.No))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
-      contentAsString(result) mustBe viewAsString(form.fill(AgentRef.No))
+      contentAsString(result) mustBe viewAsString(form.fill(AnyAgentRef.No))
     }
 
     "redirect to the next page when valid YES data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("agentRef.anyAgentRef", "true"),("agentRef.agentRef", "AB1234"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("anyAgentRef", "true"),("agentRef", "AB1234"))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
@@ -81,7 +81,7 @@ class AnyAgentRefControllerSpec extends ControllerSpecBase {
     }
 
     "redirect to the next page when valid NO data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("agentRef.anyAgentRef", "false"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("anyAgentRef", "false"))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER

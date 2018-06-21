@@ -14,21 +14,14 @@
  * limitations under the License.
  */
 
-package forms
+package generators
 
-import com.google.inject.Inject
-import forms.mappings.TelephoneOptionMapping
-import models.TelephoneOption
-import play.api.data.Form
+import org.scalacheck.Arbitrary.arbitrary
+import org.scalacheck.Gen
 
+trait Generators {
 
-class TelephoneNumberForm @Inject() extends TelephoneOptionMapping {
+  def stringsLongerThan(minLength: Int): Gen[String] =
+    arbitrary[String] suchThat (_.length > minLength)
 
-  def apply(): Form[TelephoneOption] = Form(
-    telephoneOptionMapping(
-      requiredKey = "telephoneNumber.notSelected",
-      requiredTelephoneKey = "telephoneNumber.blank",
-      telephoneInvalidKey = "telephoneNumber.invalid"
-    )
-  )
 }
