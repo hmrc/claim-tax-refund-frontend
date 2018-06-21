@@ -16,18 +16,15 @@
 
 package controllers
 
-import play.api.data.Form
-import play.api.libs.json.JsString
-import uk.gov.hmrc.http.cache.client.CacheMap
-import utils.{FakeNavigator, MockUserAnswers}
 import connectors.FakeDataCacheConnector
 import controllers.actions._
-import play.api.test.Helpers._
 import forms.DetailsOfEmploymentOrPensionForm
-import identifiers.DetailsOfEmploymentOrPensionId
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.mockito.Mockito.when
+import play.api.data.Form
+import play.api.test.Helpers._
+import utils.{FakeNavigator, MockUserAnswers}
 import views.html.detailsOfEmploymentOrPension
 
 class DetailsOfEmploymentOrPensionControllerSpec extends ControllerSpecBase {
@@ -93,6 +90,24 @@ class DetailsOfEmploymentOrPensionControllerSpec extends ControllerSpecBase {
     "redirect to Session Expired for a POST if no existing data is found" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", testAnswer))
       val result = controller(dontGetAnyData).onSubmit(NormalMode)(postRequest)
+
+      status(result) mustBe SEE_OTHER
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+    }
+
+    "redirect to Session Expired if no taxYears have been selected" in {
+      when(mockUserAnswers.selectTaxYear).thenReturn(None)
+
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
+
+      status(result) mustBe SEE_OTHER
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+    }
+
+    "redirect to Session Expired if no taxYears have been selected on submit" in {
+      when(mockUserAnswers.selectTaxYear).thenReturn(None)
+
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
