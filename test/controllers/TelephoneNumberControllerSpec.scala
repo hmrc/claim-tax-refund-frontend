@@ -69,7 +69,7 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase {
     }
 
     "redirect to the next page when valid YES data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("telephone.anyTelephoneNumber", "true"),("telephone.telephoneNumber", testAnswer))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("anyTelephoneNumber", "true"),("telephoneNumber", testAnswer))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
@@ -77,7 +77,7 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase {
     }
 
     "redirect to the next page when valid NO data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("telephone.anyTelephoneNumber", "false"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("anyTelephoneNumber", "false"))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER

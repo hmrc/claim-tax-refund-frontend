@@ -25,7 +25,7 @@ import play.api.data.Form
 class AnyAgentReferenceForm @Inject() extends AgentRefMapping {
 
   def apply(): Form[AgentRef] = Form(
-    "agentRef" -> agentRefMapping(
+    agentRefMapping(
       requiredKey = "anyAgentRef.blank",
       requiredAgentRefKey = "anyAgentRef.blankAgentRef",
       agentRefLengthKey = "anyAgentRef.maxLength"

@@ -46,7 +46,7 @@ trait AgentRefMapping extends Mappings {
     }
 
     tuple("anyAgentRef" -> boolean(requiredKey),
-      "agentRef" -> mandatoryIfTrue("agentRef.anyAgentRef", text(requiredAgentRefKey).verifying(maxLength(agentRefMaxLength,agentRefLengthKey))))
+      "agentRef" -> mandatoryIfTrue("anyAgentRef", text(requiredAgentRefKey).verifying(maxLength(agentRefMaxLength,agentRefLengthKey))))
       .transform(toAgentRef, fromAgentRef)
   }
 

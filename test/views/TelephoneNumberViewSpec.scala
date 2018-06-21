@@ -64,14 +64,14 @@ class TelephoneNumberViewSpec extends QuestionViewBehaviours[TelephoneOption]{
 
           "contain an input for the value" in {
             val doc = asDocument(createView(form))
-            assertRenderedById(doc, "telephone.anyTelephoneNumber-yes")
-            assertRenderedById(doc, "telephone.anyTelephoneNumber-no")
+            assertRenderedById(doc, "anyTelephoneNumber-yes")
+            assertRenderedById(doc, "anyTelephoneNumber-no")
           }
 
           "have no values checked when rendered with no form" in {
             val doc = asDocument(createView(form))
-            assert(!doc.getElementById("telephone.anyTelephoneNumber-yes").hasAttr("checked"))
-            assert(!doc.getElementById("telephone.anyTelephoneNumber-no").hasAttr("checked"))
+            assert(!doc.getElementById("anyTelephoneNumber-yes").hasAttr("checked"))
+            assert(!doc.getElementById("anyTelephoneNumber-no").hasAttr("checked"))
           }
 
           "not render an error summary" in {
@@ -95,7 +95,7 @@ class TelephoneNumberViewSpec extends QuestionViewBehaviours[TelephoneOption]{
           }
 
           "show an error in the value field's label" in {
-            val doc = asDocument(createView(form.withError(FormError("telephone.anyTelephoneNumber", "Please enter a valid number"))))
+            val doc = asDocument(createView(form.withError(FormError("anyTelephoneNumber", "Please enter a valid number"))))
             val errorSpan = doc.getElementsByClass("error-notification").first
             errorSpan.text mustBe messages(errorMessage)
           }
@@ -108,14 +108,14 @@ class TelephoneNumberViewSpec extends QuestionViewBehaviours[TelephoneOption]{
 
       "have only the correct value checked when yes selected" in {
         val doc = asDocument(createView(form.fill(TelephoneOption.Yes("0191 1111 111"))))
-        assert(doc.getElementById("telephone.anyTelephoneNumber-yes").hasAttr("checked"))
-        assert(!doc.getElementById("telephone.anyTelephoneNumber-no").hasAttr("checked"))
+        assert(doc.getElementById("anyTelephoneNumber-yes").hasAttr("checked"))
+        assert(!doc.getElementById("anyTelephoneNumber-no").hasAttr("checked"))
       }
 
       "have only the correct value checked when no selected" in {
         val doc = asDocument(createView(form.fill(TelephoneOption.No)))
-        assert(!doc.getElementById("telephone.anyTelephoneNumber-yes").hasAttr("checked"))
-        assert(doc.getElementById("telephone.anyTelephoneNumber-no").hasAttr("checked"))
+        assert(!doc.getElementById("anyTelephoneNumber-yes").hasAttr("checked"))
+        assert(doc.getElementById("anyTelephoneNumber-no").hasAttr("checked"))
       }
 
       "not render an error summary" in {
