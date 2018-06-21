@@ -25,7 +25,7 @@ import play.api.data.Form
 class TelephoneNumberForm @Inject() extends TelephoneOptionMapping {
 
   def apply(): Form[TelephoneOption] = Form(
-    "telephone" -> telephoneOptionMapping(
+    telephoneOptionMapping(
       requiredKey = "telephoneNumber.notSelected",
       requiredTelephoneKey = "telephoneNumber.blank",
       telephoneInvalidKey = "telephoneNumber.invalid"

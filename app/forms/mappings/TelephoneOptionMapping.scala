@@ -46,7 +46,7 @@ trait TelephoneOptionMapping extends Mappings {
     }
 
     tuple("anyTelephoneNumber" -> boolean(requiredKey),
-      "telephoneNumber" -> mandatoryIfTrue("telephone.anyTelephoneNumber",
+      "telephoneNumber" -> mandatoryIfTrue("anyTelephoneNumber",
         text(requiredTelephoneKey).verifying(regexValidation(telephoneRegex,telephoneInvalidKey))))
       .transform(toTelephone, fromTelephone)
   }
