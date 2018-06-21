@@ -18,32 +18,33 @@ package models
 
 import play.api.libs.json._
 
-sealed trait AgentRef
+sealed trait TelephoneOption
 
-object AgentRef {
+object TelephoneOption {
 
-  case class Yes(agentRef: String) extends AgentRef
-  case object No extends AgentRef
+  case class Yes(number: String) extends TelephoneOption
+  case object No extends TelephoneOption
 
-  implicit val reads: Reads[AgentRef] = {
-    (JsPath \ "anyAgentRef").read[Boolean].flatMap {
+  implicit val reads: Reads[TelephoneOption] = {
+    (JsPath \ "anyTelephone").read[Boolean].flatMap {
       case true =>
-        (JsPath \ "agentRef").read[String]
-          .map[AgentRef](Yes.apply)
-          .orElse(Reads[AgentRef](_ => JsError("AgentRef value expected")))
+        (JsPath \ "telephoneNumber").read[String]
+          .map[TelephoneOption](Yes.apply)
+          .orElse(Reads[TelephoneOption](_ => JsError("TelephoneOption value expected")))
       case false =>
         Reads.pure(No)
     }
   }
 
-  implicit lazy val writes = new Writes[AgentRef] {
-    def writes(agentRefObject: AgentRef): JsObject = {
-      agentRefObject match {
-        case Yes(agentRef) =>
-          Json.obj("anyAgentRef" -> true, "agentRef" -> agentRef)
+  implicit lazy val writes = new Writes[TelephoneOption] {
+    def writes(telephoneObject: TelephoneOption): JsObject = {
+      telephoneObject match {
+        case Yes(number) =>
+          Json.obj("anyTelephone" -> true, "telephoneNumber" -> number)
         case _ =>
-          Json.obj("anyAgentRef" ->false)
+          Json.obj("anyTelephone" ->false)
       }
     }
   }
+
 }

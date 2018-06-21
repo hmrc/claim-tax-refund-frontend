@@ -73,7 +73,7 @@ class AnyAgentRefControllerSpec extends ControllerSpecBase {
     }
 
     "redirect to the next page when valid YES data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("agentRef.anyAgentRef", "true"),("agentRef.agentRef", "AB1234"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("anyAgentRef", "true"),("agentRef", "AB1234"))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
@@ -81,7 +81,7 @@ class AnyAgentRefControllerSpec extends ControllerSpecBase {
     }
 
     "redirect to the next page when valid NO data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("agentRef.anyAgentRef", "false"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("anyAgentRef", "false"))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER

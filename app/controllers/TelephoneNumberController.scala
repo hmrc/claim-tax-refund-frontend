@@ -20,9 +20,10 @@ import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.TelephoneNumberForm
-import identifiers.TelephoneNumberId
+import identifiers.{AnyTelephoneId, TelephoneNumberId}
 import javax.inject.Inject
-import models.Mode
+
+import models.{Mode, TelephoneOption}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
@@ -41,11 +42,11 @@ class TelephoneNumberController @Inject()(
                                            requireData: DataRequiredAction,
                                            formBuilder: TelephoneNumberForm) extends FrontendController with I18nSupport {
 
-  private val form: Form[String] = formBuilder()
+  private val form: Form[TelephoneOption] = formBuilder()
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val preparedForm = request.userAnswers.telephoneNumber match {
+      val preparedForm = request.userAnswers.anyTelephoneNumber match {
         case None => form
         case Some(value) => form.fill(value)
       }
@@ -58,7 +59,7 @@ class TelephoneNumberController @Inject()(
         (formWithErrors: Form[_]) =>
           Future.successful(BadRequest(telephoneNumber(appConfig, formWithErrors, mode))),
         (value) =>
-          dataCacheConnector.save[String](request.externalId, TelephoneNumberId.toString, value).map(cacheMap =>
+          dataCacheConnector.save[TelephoneOption](request.externalId, AnyTelephoneId.toString, value).map(cacheMap =>
             Redirect(navigator.nextPage(TelephoneNumberId, mode)(new UserAnswers(cacheMap))))
       )
   }
