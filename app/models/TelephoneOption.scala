@@ -37,8 +37,8 @@ object TelephoneOption {
   }
 
   implicit lazy val writes = new Writes[TelephoneOption] {
-    def writes(o: TelephoneOption): JsObject = {
-      o match {
+    def writes(telephoneObject: TelephoneOption): JsObject = {
+      telephoneObject match {
         case Yes(number) =>
           Json.obj("anyTelephone" -> true, "telephoneNumber" -> number)
         case _ =>
