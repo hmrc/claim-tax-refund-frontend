@@ -25,13 +25,13 @@ class BenefitsSpec extends WordSpec with MustMatchers with MockitoSugar {
     "Benefits model" must {
       "Return map in correct order" in {
 
-        Benefits.sortedBenefits.head mustBe Benefits.BEREAVEMENT_ALLOWANCE.toString
-        Benefits.sortedBenefits.toSeq(1) mustBe Benefits.CARERS_ALLOWANCE.toString
-        Benefits.sortedBenefits.toSeq(2) mustBe Benefits.JOBSEEKERS_ALLOWANCE.toString
-        Benefits.sortedBenefits.toSeq(3) mustBe Benefits.INCAPACITY_BENEFIT.toString
-        Benefits.sortedBenefits.toSeq(4) mustBe Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE.toString
-        Benefits.sortedBenefits.toSeq(5) mustBe Benefits.STATE_PENSION.toString
-        Benefits.sortedBenefits.toSeq(6) mustBe Benefits.OTHER_TAXABLE_BENEFIT.toString
+        Benefits.sortedBenefits.head._2 mustBe Benefits.BEREAVEMENT_ALLOWANCE.toString
+        Benefits.sortedBenefits.toSeq(1)._2 mustBe Benefits.CARERS_ALLOWANCE.toString
+        Benefits.sortedBenefits.toSeq(2)._2 mustBe Benefits.JOBSEEKERS_ALLOWANCE.toString
+        Benefits.sortedBenefits.toSeq(3)._2 mustBe Benefits.INCAPACITY_BENEFIT.toString
+        Benefits.sortedBenefits.toSeq(4)._2 mustBe Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE.toString
+        Benefits.sortedBenefits.toSeq(5)._2 mustBe Benefits.STATE_PENSION.toString
+        Benefits.sortedBenefits.toSeq(6)._2 mustBe Benefits.OTHER_TAXABLE_BENEFIT.toString
 
       }
     }

@@ -44,5 +44,10 @@ object CompanyBenefits extends Enumeration {
   }
 
   val sortedCompanyBenefits =
-    mutable.LinkedHashMap()
+    mutable.LinkedHashMap(
+      s"selectCompanyBenefits.$COMPANY_CAR_BENEFIT" -> COMPANY_CAR_BENEFIT.toString,
+      s"selectCompanyBenefits.$FUEL_BENEFIT" -> FUEL_BENEFIT.toString,
+      s"selectCompanyBenefits.$MEDICAL_BENEFIT" -> MEDICAL_BENEFIT.toString,
+      s"selectCompanyBenefits.$OTHER_COMPANY_BENEFIT" -> OTHER_COMPANY_BENEFIT.toString
+    )
 }
