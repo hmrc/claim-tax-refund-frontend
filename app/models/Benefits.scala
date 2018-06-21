@@ -19,6 +19,8 @@ package models
 import play.api.libs.json.{Format, Reads, Writes}
 import utils.EnumUtils
 
+import scala.collection.mutable
+
 object Benefits extends Enumeration {
 
   val BEREAVEMENT_ALLOWANCE = Value("bereavement-allowance")
@@ -34,5 +36,8 @@ object Benefits extends Enumeration {
   val writes: Writes[Value] = EnumUtils.enumWrites
 
   implicit def enumFormats: Format[Value] = EnumUtils.enumFormat(Benefits)
+
+  val sortedBenefits =
+    mutable.LinkedHashMap()
 }
 
