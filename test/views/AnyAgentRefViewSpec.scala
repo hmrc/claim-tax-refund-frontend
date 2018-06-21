@@ -107,6 +107,12 @@ class AnyAgentRefViewSpec extends QuestionViewBehaviours[AnyAgentRef]{
     def answeredYesNoPage(createView: (Form[AnyAgentRef]) => HtmlFormat.Appendable, answer: Boolean) = {
 
       "have only the correct value checked when yes selected" in {
+        val doc = asDocument(createView(form.fill(AnyAgentRef.Yes("AB1234"))))
+        assert(doc.getElementById("anyAgentRef-yes").hasAttr("checked"))
+        assert(!doc.getElementById("anyAgentRef-no").hasAttr("checked"))
+      }
+
+      "have only the correct value checked when no selected" in {
         val doc = asDocument(createView(form.fill(AnyAgentRef.No)))
         assert(!doc.getElementById("anyAgentRef-yes").hasAttr("checked"))
         assert(doc.getElementById("anyAgentRef-no").hasAttr("checked"))
