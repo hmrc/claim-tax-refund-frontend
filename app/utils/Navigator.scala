@@ -20,7 +20,7 @@ import controllers.routes
 import identifiers._
 import javax.inject.{Inject, Singleton}
 import models.WhereToSendPayment.{Myself, Nominee}
-import models.{AnyAgentRef, CheckMode, Mode, NormalMode}
+import models._
 import play.api.mvc.Call
 
 @Singleton
@@ -43,56 +43,56 @@ class Navigator @Inject()() {
     IsPaymentAddressInTheUKId -> isPaymentAddressInUkRoute,
     PaymentUKAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
     PaymentInternationalAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
-    TelephoneNumberId -> (_ => routes.CheckYourAnswersController.onPageLoad())
+    TelephoneNumberId -> (_ => routes.WhereToSendPaymentController.onPageLoad(NormalMode))
   )
 
   private val editRouteMap: Map[Identifier, UserAnswers => Call] = Map(
 
   )
 
-  private def employmentDetails(userAnswers: UserAnswers) = userAnswers.employmentDetails match {
+  private def employmentDetails(userAnswers: UserAnswers): Call = userAnswers.employmentDetails match {
     case Some(true) => routes.AnyBenefitsController.onPageLoad(NormalMode)
     case Some(false) => routes.EnterPayeReferenceController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
-  private def anyBenefits(userAnswers: UserAnswers) = userAnswers.anyBenefits match {
-    case Some(true) => ???
+  private def anyBenefits(userAnswers: UserAnswers): Call = userAnswers.anyBenefits match {
+    case Some(true) => routes.SelectBenefitsController.onPageLoad(NormalMode)
     case Some(false) => routes.OtherIncomeController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
-  private def anyOtherBenefits(userAnswers: UserAnswers) = userAnswers.anyOtherTaxableBenefits match {
+  private def anyOtherBenefits(userAnswers: UserAnswers): Call = userAnswers.anyOtherTaxableBenefits match {
     case Some(true) => routes.OtherBenefitsDetailsAndAmountController.onPageLoad(NormalMode)
     case Some(false) => routes.OtherIncomeController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
-  private def otherTaxableIncome(userAnswers: UserAnswers) = userAnswers.otherIncome match {
-    case Some(true) => ???
-    case Some(false) => routes.WhereToSendPaymentController.onPageLoad(NormalMode)
+  private def otherTaxableIncome(userAnswers: UserAnswers): Call = userAnswers.otherIncome match {
+    case Some(true) => routes.SelectTaxableIncomeController.onPageLoad(NormalMode)
+    case Some(false) => routes.TelephoneNumberController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
-  private def anyOtherTaxableIncome(userAnswers: UserAnswers) = userAnswers.anyOtherTaxableIncome match {
+  private def anyOtherTaxableIncome(userAnswers: UserAnswers): Call = userAnswers.anyOtherTaxableIncome match {
     case Some(true) => routes.OtherIncomeDetailsAndAmountController.onPageLoad(NormalMode)
     case Some(false) => routes.WhereToSendPaymentController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
-  private def whereToSendPayment(userAnswers: UserAnswers) = userAnswers.whereToSendPayment match {
+  private def whereToSendPayment(userAnswers: UserAnswers): Call = userAnswers.whereToSendPayment match {
     case Some(Nominee) => routes.NomineeFullNameController.onPageLoad(NormalMode)
     case Some(Myself) => routes.TelephoneNumberController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
-  private def anyAgentRef(userAnswers: UserAnswers) = userAnswers.anyAgentRef map {
+  private def anyAgentRef(userAnswers: UserAnswers): Option[Call] = userAnswers.anyAgentRef map {
     case AnyAgentRef.Yes(agentRef) => ???
     case AnyAgentRef.No => routes.IsPaymentAddressInTheUKController.onPageLoad(NormalMode)
     case _ => routes.SessionExpiredController.onPageLoad()
   }
 
-  private def isPaymentAddressInUkRoute(userAnswers: UserAnswers) = userAnswers.isPaymentAddressInTheUK match {
+  private def isPaymentAddressInUkRoute(userAnswers: UserAnswers): Call = userAnswers.isPaymentAddressInTheUK match {
     case Some(true) => routes.PaymentUKAddressController.onPageLoad(NormalMode)
     case Some(false) => routes.PaymentInternationalAddressController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()

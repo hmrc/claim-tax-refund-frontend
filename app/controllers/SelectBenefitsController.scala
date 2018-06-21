@@ -17,7 +17,6 @@
 package controllers
 
 import javax.inject.Inject
-
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
@@ -27,6 +26,7 @@ import config.FrontendAppConfig
 import forms.SelectBenefitsForm
 import identifiers.SelectBenefitsId
 import models.{Benefits, Mode}
+import play.api.mvc.{Action, AnyContent}
 import utils.{Navigator, UserAnswers}
 import views.html.selectBenefits
 
@@ -41,7 +41,7 @@ class SelectBenefitsController @Inject()(
                                           getData: DataRetrievalAction,
                                           requireData: DataRequiredAction) extends FrontendController with I18nSupport {
 
-  def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.selectBenefits match {
         case None => SelectBenefitsForm()
@@ -57,7 +57,7 @@ class SelectBenefitsController @Inject()(
       }
   }
 
-  def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
@@ -65,7 +65,7 @@ class SelectBenefitsController @Inject()(
           SelectBenefitsForm().bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
               Future.successful(BadRequest(selectBenefits(appConfig, formWithErrors, mode, taxYear))),
-            (value) =>
+            value =>
               dataCacheConnector.save[Set[Benefits.Value]](request.externalId, SelectBenefitsId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(SelectBenefitsId, mode)(new UserAnswers(cacheMap))))
           )
