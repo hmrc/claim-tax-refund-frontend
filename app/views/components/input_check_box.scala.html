@@ -23,7 +23,7 @@
         inputs: Map[String, String]
 )(implicit messages: Messages)
 
-<div class="form-field @if(field.hasErrors){form-field--error}">
+<div class="form-group @if(field.hasErrors){form-field--error}">
     <fieldset id="@{field.id}">
         <legend class="bold-small @legendClass">@legend</legend>
         @hint.map { hint =>
