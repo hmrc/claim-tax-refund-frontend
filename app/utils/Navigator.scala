@@ -20,7 +20,7 @@ import controllers.routes
 import identifiers._
 import javax.inject.{Inject, Singleton}
 import models.WhereToSendPayment.{Myself, Nominee}
-import models.{AnyAgentRef, CheckMode, Mode, NormalMode}
+import models._
 import play.api.mvc.Call
 
 @Singleton
@@ -43,7 +43,7 @@ class Navigator @Inject()() {
     IsPaymentAddressInTheUKId -> isPaymentAddressInUkRoute,
     PaymentUKAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
     PaymentInternationalAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
-    TelephoneNumberId -> (_ => routes.CheckYourAnswersController.onPageLoad())
+    TelephoneNumberId -> (_ => routes.WhereToSendPaymentController.onPageLoad(NormalMode))
   )
 
   private val editRouteMap: Map[Identifier, UserAnswers => Call] = Map(
@@ -69,8 +69,8 @@ class Navigator @Inject()() {
   }
 
   private def otherTaxableIncome(userAnswers: UserAnswers): Call = userAnswers.otherIncome match {
-    case Some(true) => ???
-    case Some(false) => routes.WhereToSendPaymentController.onPageLoad(NormalMode)
+    case Some(true) => routes.SelectTaxableIncomeController.onPageLoad(NormalMode)
+    case Some(false) => routes.TelephoneNumberController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
@@ -86,7 +86,7 @@ class Navigator @Inject()() {
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
-  private def anyAgentRef(userAnswers: UserAnswers) = userAnswers.anyAgentRef map {
+  private def anyAgentRef(userAnswers: UserAnswers): Option[Call] = userAnswers.anyAgentRef map {
     case AnyAgentRef.Yes(agentRef) => ???
     case AnyAgentRef.No => routes.IsPaymentAddressInTheUKController.onPageLoad(NormalMode)
     case _ => routes.SessionExpiredController.onPageLoad()
