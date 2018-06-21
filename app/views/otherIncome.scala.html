@@ -36,6 +36,10 @@
 
         @components.heading("otherIncome.heading", secondaryHeaderKey = Some("index.title"))
 
+        <p>@messages(messages("otherIncome.listHeading"))</p>
+
+        @components.list("otherIncome", Seq("list1", "list2", "list3", "list4", "list5"))
+
         @components.input_yes_no(
             InputViewModel("value", form),
             label = messages("otherIncome.heading"),

@@ -17,7 +17,6 @@
 package controllers
 
 import javax.inject.Inject
-
 import config.FrontendAppConfig
 import connectors.{DataCacheConnector, TaiConnector}
 import controllers.actions._
@@ -26,6 +25,7 @@ import identifiers.AnyBenefitsId
 import models.Mode
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import utils.{Navigator, UserAnswers}
 import views.html.anyBenefits
@@ -45,7 +45,7 @@ class AnyBenefitsController @Inject()(appConfig: FrontendAppConfig,
   private val errorKey = "anyBenefits.blank"
   val form: Form[Boolean] = formProvider(errorKey)
 
-  def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.anyBenefits match {
         case None => form
@@ -61,7 +61,7 @@ class AnyBenefitsController @Inject()(appConfig: FrontendAppConfig,
       }
   }
 
-  def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
 
       request.userAnswers.selectTaxYear.map{
@@ -70,7 +70,7 @@ class AnyBenefitsController @Inject()(appConfig: FrontendAppConfig,
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
               Future.successful(BadRequest(anyBenefits(appConfig, formWithErrors, mode, taxYear))),
-            (value) =>
+            value =>
               dataCacheConnector.save[Boolean](request.externalId, AnyBenefitsId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(AnyBenefitsId, mode)(new UserAnswers(cacheMap))))
           )
