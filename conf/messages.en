@@ -381,3 +381,9 @@ howMuchInvestmentOrDividend.heading = How much tax did you pay on investment or 
 howMuchInvestmentOrDividend.checkYourAnswersLabel = Investment or dividend
 howMuchInvestmentOrDividend.blank = Enter a valid amount of tax you paid on investment or dividend
 howMuchInvestmentOrDividend.invalid = Enter a valid amount of tax you paid on investment or dividend
+
+howMuchTaxPaidOnOtherIncome.title = How much tax did you pay on your income between
+howMuchTaxPaidOnOtherIncome.heading = How much tax did you pay on your income between
+howMuchTaxPaidOnOtherIncome.checkYourAnswersLabel = How much tax did you pay on your income
+howMuchTaxPaidOnOtherIncome.blank = Enter a valid amount of tax you paid on other income
+howMuchTaxPaidOnOtherIncome.invalid = Enter a valid amount of tax you paid on other income
