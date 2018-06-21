@@ -179,8 +179,8 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
   def anyAgentRef: Option[AnswerRow] = userAnswers.anyAgentRef map {
     x => AnswerRow("anyAgentRef.checkYourAnswersLabel",
     x match {
-      case AgentRef.Yes(agentRef) => "site.yes"
-      case AgentRef.No => "site.no"
+      case AnyAgentRef.Yes(agentRef) => "site.yes"
+      case AnyAgentRef.No => "site.no"
     }, true, routes.AnyAgentRefController.onPageLoad(CheckMode).url)
   }
 

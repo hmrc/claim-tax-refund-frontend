@@ -18,7 +18,7 @@ package forms
 
 import forms.mappings.AgentRefMapping
 import generators.Generators
-import models.AgentRef
+import models.AnyAgentRef
 import org.scalatest.prop.PropertyChecks
 import play.api.data.FormError
 
@@ -34,13 +34,13 @@ class AnyAgentReferenceFormSpec extends FormSpec with AgentRefMapping with Prope
     "bind successfully when yes and agentRef is valid" in {
       val result = form.bind(Map(anyAgentRef -> "true", agentRef -> testAgentRef))
       result.errors.size shouldBe 0
-      result.get shouldBe AgentRef.Yes(testAgentRef)
+      result.get shouldBe AnyAgentRef.Yes(testAgentRef)
     }
 
     "bind successfully when no" in {
       val result = form.bind(Map(anyAgentRef -> "false"))
       result.errors.size shouldBe 0
-      result.get shouldBe AgentRef.No
+      result.get shouldBe AnyAgentRef.No
     }
 
     "fail to bind" when {
@@ -59,12 +59,12 @@ class AnyAgentReferenceFormSpec extends FormSpec with AgentRefMapping with Prope
     }
 
     "Successfully unbind 'AgentRef.Yes'" in {
-      val result = form.fill(AgentRef.Yes(testAgentRef)).data
+      val result = form.fill(AnyAgentRef.Yes(testAgentRef)).data
       result should contain(anyAgentRef -> "true")
       result should contain(agentRef -> testAgentRef)
     }
     "Successfully unbind 'AgentRef.No'" in {
-      val result = form.fill(AgentRef.No).data
+      val result = form.fill(AnyAgentRef.No).data
       result should contain(anyAgentRef -> "false")
     }
   }
