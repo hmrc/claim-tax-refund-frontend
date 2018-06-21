@@ -37,8 +37,8 @@ object AgentRef {
   }
 
   implicit lazy val writes = new Writes[AgentRef] {
-    def writes(o: AgentRef): JsObject = {
-      o match {
+    def writes(agentRefObject: AgentRef): JsObject = {
+      agentRefObject match {
         case Yes(agentRef) =>
           Json.obj("anyAgentRef" -> true, "agentRef" -> agentRef)
         case _ =>
