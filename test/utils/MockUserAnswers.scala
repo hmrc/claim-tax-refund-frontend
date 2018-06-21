@@ -103,13 +103,27 @@ object MockUserAnswers extends MockitoSugar {
   def benefitsUserAnswers: UserAnswers = {
 
     val answers = nothingAnswered
+    yourDetailsUserAnswers
+    when(answers.anyBenefits) thenReturn Some(true)
+    when(answers.selectBenefits) thenReturn Some(
+      Set(Benefits.CARERS_ALLOWANCE,
+        Benefits.BEREAVEMENT_ALLOWANCE,
+        Benefits.INCAPACITY_BENEFIT,
+        Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE,
+        Benefits.JOBSEEKERS_ALLOWANCE,
+        Benefits.OTHER_TAXABLE_BENEFIT,
+        Benefits.STATE_PENSION
+      )
+    )
 
-    when(answers.howMuchJobseekersAllowance) thenReturn Some("123123")
-    when(answers.howMuchIncapacityBenefit) thenReturn Some("123123")
-    when(answers.howMuchEmploymentAndSupportAllowance) thenReturn Some("123123")
-    when(answers.howMuchStatePension) thenReturn Some("123123")
-    when(answers.anyOtherTaxableBenefits) thenReturn Some(true)
-    when(answers.otherBenefitsDetailsAndAmount) thenReturn Some("123123")
+    when (answers.howMuchBereavementAllowance) thenReturn Some("1234")
+    when (answers.howMuchCarersAllowance) thenReturn Some("1234")
+    when (answers.howMuchJobseekersAllowance) thenReturn Some("1234")
+    when (answers.howMuchEmploymentAndSupportAllowance) thenReturn Some("1234")
+    when (answers.howMuchIncapacityBenefit) thenReturn Some("1234")
+    when (answers.howMuchStatePension) thenReturn Some("1234")
+    when (answers.otherBenefitsDetails) thenReturn  Some("Other")
+    when (answers.howMuchOtherBenefit) thenReturn Some("1234")
 
     answers
   }
