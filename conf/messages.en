@@ -376,6 +376,16 @@ detailsOfEmploymentOrPension.checkYourAnswersLabel = Details of employment or pe
 detailsOfEmploymentOrPension.blank = Enter details of your employment or pension
 detailsOfEmploymentOrPension.tooLong = Details of employment or pension exceeds the maximum 500 characters
 
+selectTaxableIncome.title = Which taxable income you have got between
+selectTaxableIncome.heading = Which taxable income you have got between
+selectTaxableIncome.checkYourAnswersLabel = Did you get any taxable income in the tax year that your claim relates to?
+selectTaxableIncome.blank = Select a taxable income
+selectTaxableIncome.rental-income = Rental income
+selectTaxableIncome.bank-or-building-society-interest = Bank or Building Society Interest
+selectTaxableIncome.investment-or-dividends = Investments or dividends
+selectTaxableIncome.foreign-income = Foreign income
+selectTaxableIncome.other-taxable-income = Other taxable income
+
 howMuchInvestmentOrDividend.title = How much tax did you pay on investment or dividend income between
 howMuchInvestmentOrDividend.heading = How much tax did you pay on investment or dividend income between
 howMuchInvestmentOrDividend.checkYourAnswersLabel = Investment or dividend
