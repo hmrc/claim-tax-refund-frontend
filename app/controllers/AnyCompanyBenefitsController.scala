@@ -17,7 +17,6 @@
 package controllers
 
 import javax.inject.Inject
-
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
@@ -27,6 +26,7 @@ import config.FrontendAppConfig
 import forms.BooleanForm
 import identifiers.AnyCompanyBenefitsId
 import models.Mode
+import play.api.mvc.{Action, AnyContent}
 import utils.{Navigator, UserAnswers}
 import views.html.anyCompanyBenefits
 
@@ -45,7 +45,7 @@ class AnyCompanyBenefitsController @Inject()(appConfig: FrontendAppConfig,
   val form: Form[Boolean] = formProvider(errorKey)
 
 
-  def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.anyCompanyBenefits match {
         case None => form
@@ -61,7 +61,7 @@ class AnyCompanyBenefitsController @Inject()(appConfig: FrontendAppConfig,
       }
   }
 
-  def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
 
       request.userAnswers.selectTaxYear.map{
@@ -70,7 +70,7 @@ class AnyCompanyBenefitsController @Inject()(appConfig: FrontendAppConfig,
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
               Future.successful(BadRequest(anyCompanyBenefits(appConfig, formWithErrors, mode, taxYear))),
-            (value) =>
+            value =>
               dataCacheConnector.save[Boolean](request.externalId, AnyCompanyBenefitsId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(AnyCompanyBenefitsId, mode)(new UserAnswers(cacheMap))))
           )

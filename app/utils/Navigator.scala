@@ -31,6 +31,7 @@ class Navigator @Inject()() {
     EmploymentDetailsId -> employmentDetails,
     EnterPayeReferenceId -> (_ => routes.DetailsOfEmploymentOrPensionController.onPageLoad(NormalMode)),
     AnyBenefitsId -> anyBenefits,
+    AnyCompanyBenefitsId -> anyCompanyBenefits,
     HowMuchStatePensionId -> (_ => routes.AnyOtherTaxableBenefitsController.onPageLoad(NormalMode)),
     AnyOtherTaxableBenefitsId -> anyOtherBenefits,
     OtherBenefitsDetailsAndAmountId -> (_ => routes.OtherIncomeController.onPageLoad(NormalMode)),
@@ -58,6 +59,12 @@ class Navigator @Inject()() {
 
   private def anyBenefits(userAnswers: UserAnswers): Call = userAnswers.anyBenefits match {
     case Some(true) => routes.SelectBenefitsController.onPageLoad(NormalMode)
+    case Some(false) => routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
+    case None => routes.SessionExpiredController.onPageLoad()
+  }
+
+  private def anyCompanyBenefits(userAnswers: UserAnswers): Call = userAnswers.anyCompanyBenefits match {
+    case Some(true) => routes.SelectCompanyBenefitsController.onPageLoad(NormalMode)
     case Some(false) => routes.OtherIncomeController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
