@@ -18,26 +18,26 @@ package models
 
 import play.api.libs.json._
 
-sealed trait AgentRef
+sealed trait AnyAgentRef
 
-object AgentRef {
+object AnyAgentRef {
 
-  case class Yes(agentRef: String) extends AgentRef
-  case object No extends AgentRef
+  case class Yes(agentRef: String) extends AnyAgentRef
+  case object No extends AnyAgentRef
 
-  implicit val reads: Reads[AgentRef] = {
+  implicit val reads: Reads[AnyAgentRef] = {
     (JsPath \ "anyAgentRef").read[Boolean].flatMap {
       case true =>
         (JsPath \ "agentRef").read[String]
-          .map[AgentRef](Yes.apply)
-          .orElse(Reads[AgentRef](_ => JsError("AgentRef value expected")))
+          .map[AnyAgentRef](Yes.apply)
+          .orElse(Reads[AnyAgentRef](_ => JsError("AgentRef value expected")))
       case false =>
         Reads.pure(No)
     }
   }
 
-  implicit lazy val writes = new Writes[AgentRef] {
-    def writes(agentRefObject: AgentRef): JsObject = {
+  implicit lazy val writes = new Writes[AnyAgentRef] {
+    def writes(agentRefObject: AnyAgentRef): JsObject = {
       agentRefObject match {
         case Yes(agentRef) =>
           Json.obj("anyAgentRef" -> true, "agentRef" -> agentRef)

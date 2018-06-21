@@ -21,17 +21,17 @@ import identifiers.{AgentRefId, AnyAgentRefId}
 import play.api.data.validation.ValidationError
 import play.api.libs.json._
 
-class AgentRefSpec extends SpecBase {
+class AnyAgentRefSpec extends SpecBase {
 
   "write" must {
 
     "contain true and agent ref" in {
-      Json.toJson(AgentRef.Yes("AB1234")) mustBe
+      Json.toJson(AnyAgentRef.Yes("AB1234")) mustBe
         Json.obj(AnyAgentRefId.toString -> JsBoolean(true), AgentRefId.toString -> JsString("AB1234"))
     }
 
     "contain false and no agent ref" in {
-      Json.toJson(AgentRef.No) mustBe Json.obj(AnyAgentRefId.toString -> JsBoolean(false))
+      Json.toJson(AnyAgentRef.No) mustBe Json.obj(AnyAgentRefId.toString -> JsBoolean(false))
     }
   }
 
@@ -40,24 +40,24 @@ class AgentRefSpec extends SpecBase {
     "successfully read true" in {
       val json = Json.obj("anyAgentRef" -> true, "agentRef" -> "1234567")
 
-      Json.fromJson[AgentRef](json).asOpt.value mustEqual AgentRef.Yes("1234567")
+      Json.fromJson[AnyAgentRef](json).asOpt.value mustEqual AnyAgentRef.Yes("1234567")
     }
 
     "successfully read false" in {
       val json = Json.obj("anyAgentRef" -> false)
 
-      Json.fromJson[AgentRef](json).asOpt.value mustEqual AgentRef.No
+      Json.fromJson[AnyAgentRef](json).asOpt.value mustEqual AnyAgentRef.No
     }
 
     "return failure for true without agent ref" in {
       val json = Json.obj("anyAgentRef" -> true)
 
-      Json.fromJson[AgentRef](json) mustEqual JsError("AgentRef value expected")
+      Json.fromJson[AnyAgentRef](json) mustEqual JsError("AgentRef value expected")
     }
 
     "return failure for when no input given" in {
       val json = Json.obj("anyAgentRef" -> "notABoolean")
-      Json.fromJson[AgentRef](json) mustEqual JsError(Seq((JsPath \ "anyAgentRef", Seq(ValidationError(Seq("error.expected.jsboolean"))))))
+      Json.fromJson[AnyAgentRef](json) mustEqual JsError(Seq((JsPath \ "anyAgentRef", Seq(ValidationError(Seq("error.expected.jsboolean"))))))
     }
   }
 }
