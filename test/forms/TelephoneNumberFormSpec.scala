@@ -16,35 +16,50 @@
 
 package forms
 
-import config.FrontendAppConfig
-import forms.behaviours.FormBehaviours
-import models.{MandatoryField, RegexField}
-import org.mockito.Mockito._
-import org.scalatest.mockito.MockitoSugar
-import play.api.data.Form
+import forms.mappings.TelephoneOptionMapping
+import models.TelephoneOption
+import org.scalatest.prop.PropertyChecks
+import play.api.data.FormError
 
-class TelephoneNumberFormSpec extends FormBehaviours with MockitoSugar {
+class TelephoneNumberFormSpec extends FormSpec with TelephoneOptionMapping with PropertyChecks {
 
-  private val errorKeyInvalid = "telephoneNumber.invalid"
-  private val errorKeyBlank = "telephoneNumber.blank"
-  private val testRegex = """^\+?[0-9\s\(\)]{1,20}$"""
+  "TelephoneNumber form" must {
+    val form = new TelephoneNumberForm()()
+    val anyTelephoneNumber = "anyTelephoneNumber"
+    val telephoneNumber = "telephoneNumber"
+    val testTelephoneNumber = "0191 1111 111"
 
-  def appConfig: FrontendAppConfig = {
-    val instance = mock[FrontendAppConfig]
-    when(instance.telephoneRegex) thenReturn testRegex
-    instance
-  }
+    "bind successfully when yes and telephone is valid" in {
+      val result = form.bind(Map(anyTelephoneNumber -> "true", telephoneNumber -> testTelephoneNumber))
+      result.errors.size shouldBe 0
+      result.get shouldBe TelephoneOption.Yes(testTelephoneNumber)
+    }
 
-  val validData: Map[String, String] = Map("value" -> "01963 123456")
+    "bind successfully when no" in {
+      val result = form.bind(Map(anyTelephoneNumber -> "false"))
+      result.errors.size shouldBe 0
+      result.get shouldBe TelephoneOption.No
+    }
 
-  override val form: Form[_] = new TelephoneNumberForm(appConfig)()
+    "fail to bind" when {
+      "yes is selected but telephone number is not provided" in {
+        val result = form.bind(Map(anyTelephoneNumber -> "true"))
+        result.errors shouldBe Seq(FormError(telephoneNumber, "telephoneNumber.blank"))
+      }
+      "Telephone is invalid" in {
+        val result = form.bind(Map(anyTelephoneNumber -> "true", telephoneNumber -> "test"))
+        result.errors shouldBe Seq(FormError(telephoneNumber, "telephoneNumber.invalid"))
+      }
+    }
 
-  "TelephoneNumber Form" must {
-
-    behave like questionForm("01963 123456")
-
-    behave like formWithMandatoryTextFields(MandatoryField("value", errorKeyBlank))
-
-    behave like formWithRegex(RegexField("value", errorKeyInvalid, testRegex))
+    "Successfully unbind 'telephone.anyTelephoneNumber.Yes'" in {
+      val result = form.fill(TelephoneOption.Yes(testTelephoneNumber)).data
+      result should contain(anyTelephoneNumber -> "true")
+      result should contain(telephoneNumber -> testTelephoneNumber)
+    }
+    "Successfully unbind 'telephone.anyTelephoneNumber.No'" in {
+      val result = form.fill(TelephoneOption.No).data
+      result should contain(anyTelephoneNumber -> "false")
+    }
   }
 }

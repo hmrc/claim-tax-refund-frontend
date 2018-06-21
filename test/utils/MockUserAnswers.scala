@@ -31,6 +31,7 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.isTheAddressInTheUK) thenReturn None
     when(answers.ukAddress) thenReturn None
     when(answers.internationalAddress) thenReturn None
+    when(answers.anyTelephoneNumber) thenReturn None
     when(answers.telephoneNumber) thenReturn None
     when(answers.selectTaxYear) thenReturn None
     when(answers.employmentDetails) thenReturn None

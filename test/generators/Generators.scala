@@ -14,21 +14,14 @@
  * limitations under the License.
  */
 
-package forms
+package generators
 
-import javax.inject.Inject
+import org.scalacheck.Arbitrary.arbitrary
+import org.scalacheck.Gen
 
-import forms.mappings.AgentRefMapping
-import models.AgentRef
-import play.api.data.Form
+trait Generators {
 
-class AnyAgentReferenceForm @Inject() extends AgentRefMapping {
+  def stringsLongerThan(minLength: Int): Gen[String] =
+    arbitrary[String] suchThat (_.length > minLength)
 
-  def apply(): Form[AgentRef] = Form(
-    agentRefMapping(
-      requiredKey = "anyAgentRef.blank",
-      requiredAgentRefKey = "anyAgentRef.blankAgentRef",
-      agentRefLengthKey = "anyAgentRef.maxLength"
-    )
-  )
 }

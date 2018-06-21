@@ -14,21 +14,8 @@
  * limitations under the License.
  */
 
-package forms
+package identifiers
 
-import javax.inject.Inject
-
-import forms.mappings.AgentRefMapping
-import models.AgentRef
-import play.api.data.Form
-
-class AnyAgentReferenceForm @Inject() extends AgentRefMapping {
-
-  def apply(): Form[AgentRef] = Form(
-    agentRefMapping(
-      requiredKey = "anyAgentRef.blank",
-      requiredAgentRefKey = "anyAgentRef.blankAgentRef",
-      agentRefLengthKey = "anyAgentRef.maxLength"
-    )
-  )
+case object AnyTelephoneId extends Identifier {
+  override def toString: String = "anyTelephone"
 }

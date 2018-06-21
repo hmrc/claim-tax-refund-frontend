@@ -106,6 +106,8 @@ class UserAnswers(val cacheMap: CacheMap) {
 
   def telephoneNumber: Option[String] = cacheMap.getEntry[String](TelephoneNumberId.toString)
 
+  def anyTelephoneNumber: Option[TelephoneOption] = cacheMap.getEntry[TelephoneOption](AnyTelephoneId.toString)
+
   def ukAddress: Option[UkAddress] = cacheMap.getEntry[UkAddress](UkAddressId.toString)
 
   def internationalAddress: Option[InternationalAddress] = cacheMap.getEntry[InternationalAddress](InternationalAddressId.toString)

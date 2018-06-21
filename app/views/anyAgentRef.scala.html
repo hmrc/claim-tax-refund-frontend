@@ -37,13 +37,15 @@
         @components.heading("anyAgentRef.heading", dynamicHeading = Some(nomineeName), dynamicHeadingSuffix = Some("anyAgentRef.headingSuffix"), secondaryHeaderKey = Some("index.title"))
 
         @components.input_yes_no(
-            InputViewModel("agentRef.anyAgentRef", form),
+            InputViewModel("anyAgentRef", form),
             label = messages("anyAgentRef.heading"),
             labelClass = Some("visually-hidden"),
             yesAssoc = Some("yesAgentRef")
         )
 
-        @components.conditional_input_text(form("agentRef.agentRef"), messages("anyAgentRef.agentRefField"), "yesAgentRef")
+        <div id="yesAgentRef" class="js-hidden">
+            @components.input_text(InputViewModel("agentRef", form), messages("anyAgentRef.agentRefField"), Some("panel"))
+        </div>
 
         @components.submit_button()
     }
