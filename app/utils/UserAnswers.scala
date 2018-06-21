@@ -70,7 +70,7 @@ class UserAnswers(val cacheMap: CacheMap) {
 
   def whereToSendPayment: Option[WhereToSendPayment] = cacheMap.getEntry[WhereToSendPayment](WhereToSendPaymentId.toString)
 
-  def anyAgentRef: Option[AgentRef] = cacheMap.getEntry[AgentRef](AnyAgentRefId.toString)
+  def anyAgentRef: Option[AnyAgentRef] = cacheMap.getEntry[AnyAgentRef](AnyAgentRefId.toString)
 
   def agentReferenceNumber: Option[String] = cacheMap.getEntry[String](AgentRefId.toString)
 

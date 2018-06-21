@@ -19,7 +19,7 @@ package utils
 import base.SpecBase
 import models.SelectTaxYear._
 import models.WhereToSendPayment._
-import models.{AgentRef, InternationalAddress, UkAddress, UserDetails}
+import models.{AnyAgentRef, InternationalAddress, UkAddress, UserDetails}
 import org.mockito.Mockito.when
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.mockito.MockitoSugar
@@ -256,14 +256,14 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
 
   "Is anyAgentRef (true)" must {
     s"have the correct label" in {
-      when(answers.anyAgentRef) thenReturn Some(AgentRef.Yes("AB12345"))
+      when(answers.anyAgentRef) thenReturn Some(AnyAgentRef.Yes("AB12345"))
       helper.anyAgentRef.get.label.key mustBe s"anyAgentRef.checkYourAnswersLabel"
     }
   }
 
   "Is anyAgentRef (false)" must {
     s"have the correct label" in {
-      when(answers.anyAgentRef) thenReturn Some(AgentRef.No)
+      when(answers.anyAgentRef) thenReturn Some(AnyAgentRef.No)
       helper.anyAgentRef.get.label.key mustBe s"anyAgentRef.checkYourAnswersLabel"
     }
   }
