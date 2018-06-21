@@ -14,20 +14,19 @@
  * limitations under the License.
  */
 
-package forms.behaviours
+package forms
 
 import forms.mappings.TelephoneOptionMapping
-import forms.{FormSpec, TelephoneNumberForm}
 import models.TelephoneOption
 import org.scalatest.prop.PropertyChecks
 import play.api.data.FormError
 
-trait TelephoneNumberFormSpec extends FormSpec with TelephoneOptionMapping with PropertyChecks {
+class TelephoneNumberFormSpec extends FormSpec with TelephoneOptionMapping with PropertyChecks {
 
   "TelephoneNumber form" must {
     val form = new TelephoneNumberForm()()
-    val anyTelephoneNumber = "telephone.anyTelephoneNumber"
-    val telephoneNumber = "telephone.telephoneNumber"
+    val anyTelephoneNumber = "anyTelephoneNumber"
+    val telephoneNumber = "telephoneNumber"
     val testTelephoneNumber = "0191 1111 111"
 
     "bind successfully when yes and telephone is valid" in {
