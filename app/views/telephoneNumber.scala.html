@@ -45,7 +45,9 @@
             yesAssoc = Some("yesTelephoneNumber")
         )
 
-        @components.conditional_input_text(form("telephoneNumber"), messages("telephoneNumber.telephoneNumberField"), "yesTelephoneNumber")
+        <div id="yesTelephoneNumber" class="js-hidden">
+            @components.input_text(InputViewModel("telephoneNumber", form), messages("telephoneNumber.telephoneNumberField"), Some("panel"))
+        </div>
 
         @components.submit_button()
     }

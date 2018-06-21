@@ -43,7 +43,9 @@
             yesAssoc = Some("yesAgentRef")
         )
 
-        @components.conditional_input_text(form("agentRef"), messages("anyAgentRef.agentRefField"), "yesAgentRef")
+        <div id="yesAgentRef" class="js-hidden">
+            @components.input_text(InputViewModel("agentRef", form), messages("anyAgentRef.agentRefField"), Some("panel"))
+        </div>
 
         @components.submit_button()
     }
