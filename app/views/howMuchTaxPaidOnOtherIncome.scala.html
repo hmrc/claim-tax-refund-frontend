@@ -20,34 +20,22 @@
 @import models.Mode
 @import viewmodels.InputViewModel
 
-@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: String)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("telephoneNumber.title"),
+    title = messages("howMuchTaxPaidOnOtherIncome.title") + s" $taxYear" + messages("global.questionMark"),
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @helpers.form(action = TelephoneNumberController.onSubmit(mode), 'autoComplete -> "off") {
+    @helpers.form(action = HowMuchTaxPaidOnOtherIncomeController.onSubmit(mode), 'autoComplete -> "off") {
 
         @components.back_link()
 
         @components.error_summary(form.errors)
 
-        @components.heading("telephoneNumber.heading", secondaryHeaderKey = Some("index.title"))
+        @components.heading("howMuchTaxPaidOnOtherIncome.heading", dynamicHeading = Some(s"$taxYear" + messages("global.questionMark")), secondaryHeaderKey = Some("index.title"))
 
-        <p>@messages("telephoneNumber.hintPara1")</p>
-        <p>@messages("telephoneNumber.hintPara2")</p>
-
-        @components.input_yes_no(
-            InputViewModel("anyTelephoneNumber", form),
-            label = messages("telephoneNumber.heading"),
-            labelClass = Some("visually-hidden"),
-            yesAssoc = Some("yesTelephoneNumber")
-        )
-
-        <div id="yesTelephoneNumber" class="js-hidden">
-            @components.input_text(InputViewModel("telephoneNumber", form), messages("telephoneNumber.telephoneNumberField"), Some("panel"))
-        </div>
+        @components.input_text(InputViewModel("value", form), label = messages("howMuchTaxPaidOnOtherIncome.heading"), labelClass=Some("visually-hidden"))
 
         @components.submit_button()
     }

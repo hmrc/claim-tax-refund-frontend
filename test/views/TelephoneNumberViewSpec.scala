@@ -16,27 +16,24 @@
 
 package views
 
-import config.FrontendAppConfig
 import controllers.routes
 import forms.TelephoneNumberForm
-import models.NormalMode
-import org.scalatest.mockito.MockitoSugar
-import play.api.data.Form
-import views.behaviours.StringViewBehaviours
+import models.{NormalMode, TelephoneOption}
+import play.api.data.{Form, FormError}
+import play.twirl.api.HtmlFormat
+import views.behaviours.QuestionViewBehaviours
 import views.html.telephoneNumber
 
-class TelephoneNumberViewSpec extends StringViewBehaviours with MockitoSugar {
+class TelephoneNumberViewSpec extends QuestionViewBehaviours[TelephoneOption]{
 
   private val messageKeyPrefix = "telephoneNumber"
-  private val testRegex = """^\+?[0-9\s\(\)]{1,20}$"""
 
-  private val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
-
-  override val form: Form[String] = new TelephoneNumberForm(appConfig)()
+  val formProvider = new TelephoneNumberForm()
+  val form = formProvider()
 
   def createView = () => telephoneNumber(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) => telephoneNumber(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[_]) => telephoneNumber(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
   "TelephoneNumber view" must {
     behave like normalPage(createView, messageKeyPrefix)
@@ -45,6 +42,86 @@ class TelephoneNumberViewSpec extends StringViewBehaviours with MockitoSugar {
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.TelephoneNumberController.onSubmit(NormalMode).url)
+    yesNoPage(createViewUsingForm, messageKeyPrefix, routes.TelephoneNumberController.onSubmit(NormalMode).url)
+
+    def yesNoPage(createView: (Form[TelephoneOption]) => HtmlFormat.Appendable,
+                  messageKeyPrefix: String,
+                  expectedFormAction: String,
+                  expectedHintText: Option[String] = None) = {
+
+      "behave like a page with a Yes/No question" when {
+        "rendered" must {
+          "contain a legend for the question" in {
+            val doc = asDocument(createView(form))
+            val legends = doc.getElementsByTag("legend")
+            legends.size mustBe 1
+          }
+
+          "contain a heading" in {
+            val doc = asDocument(createView(form))
+            assertContainsText(doc, messages(s"$messageKeyPrefix.heading"))
+          }
+
+          "contain an input for the value" in {
+            val doc = asDocument(createView(form))
+            assertRenderedById(doc, "anyTelephoneNumber-yes")
+            assertRenderedById(doc, "anyTelephoneNumber-no")
+          }
+
+          "have no values checked when rendered with no form" in {
+            val doc = asDocument(createView(form))
+            assert(!doc.getElementById("anyTelephoneNumber-yes").hasAttr("checked"))
+            assert(!doc.getElementById("anyTelephoneNumber-no").hasAttr("checked"))
+          }
+
+          "not render an error summary" in {
+            val doc = asDocument(createView(form))
+            assertNotRenderedById(doc, "error-summary_header")
+          }
+        }
+
+        "rendered with a value of true" must {
+          behave like answeredYesNoPage(createView, true)
+        }
+
+        "rendered with a value of false" must {
+          behave like answeredYesNoPage(createView, false)
+        }
+
+        "rendered with an error" must {
+          "show an error summary" in {
+            val doc = asDocument(createView(form.withError(error)))
+            assertRenderedById(doc, "error-summary-heading")
+          }
+
+          "show an error in the value field's label" in {
+            val doc = asDocument(createView(form.withError(FormError("anyTelephoneNumber", "Please enter a valid number"))))
+            val errorSpan = doc.getElementsByClass("error-notification").first
+            errorSpan.text mustBe messages(errorMessage)
+          }
+        }
+      }
+    }
+
+
+    def answeredYesNoPage(createView: (Form[TelephoneOption]) => HtmlFormat.Appendable, answer: Boolean) = {
+
+      "have only the correct value checked when yes selected" in {
+        val doc = asDocument(createView(form.fill(TelephoneOption.Yes("0191 1111 111"))))
+        assert(doc.getElementById("anyTelephoneNumber-yes").hasAttr("checked"))
+        assert(!doc.getElementById("anyTelephoneNumber-no").hasAttr("checked"))
+      }
+
+      "have only the correct value checked when no selected" in {
+        val doc = asDocument(createView(form.fill(TelephoneOption.No)))
+        assert(!doc.getElementById("anyTelephoneNumber-yes").hasAttr("checked"))
+        assert(doc.getElementById("anyTelephoneNumber-no").hasAttr("checked"))
+      }
+
+      "not render an error summary" in {
+        val doc = asDocument(createView(form.fill(TelephoneOption.Yes("0191 1111 111"))))
+        assertNotRenderedById(doc, "error-summary_header")
+      }
+    }
   }
 }

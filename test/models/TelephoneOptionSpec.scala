@@ -17,47 +17,47 @@
 package models
 
 import base.SpecBase
-import identifiers.{AgentRefId, AnyAgentRefId}
+import identifiers.{AnyTelephoneId, TelephoneNumberId}
 import play.api.data.validation.ValidationError
 import play.api.libs.json._
 
-class AgentRefSpec extends SpecBase {
+class TelephoneOptionSpec extends SpecBase {
 
   "write" must {
 
     "contain true and agent ref" in {
-      Json.toJson(AgentRef.Yes("AB1234")) mustBe
-        Json.obj(AnyAgentRefId.toString -> JsBoolean(true), AgentRefId.toString -> JsString("AB1234"))
+      Json.toJson(TelephoneOption.Yes("0191 1111 111")) mustBe
+        Json.obj(AnyTelephoneId.toString -> JsBoolean(true), TelephoneNumberId.toString -> JsString("0191 1111 111"))
     }
 
     "contain false and no agent ref" in {
-      Json.toJson(AgentRef.No) mustBe Json.obj(AnyAgentRefId.toString -> JsBoolean(false))
+      Json.toJson(TelephoneOption.No) mustBe Json.obj(AnyTelephoneId.toString -> JsBoolean(false))
     }
   }
 
   "reads" must {
 
     "successfully read true" in {
-      val json = Json.obj("anyAgentRef" -> true, "agentRef" -> "1234567")
+      val json = Json.obj("anyTelephone" -> true, "telephoneNumber" -> "1234567")
 
-      Json.fromJson[AgentRef](json).asOpt.value mustEqual AgentRef.Yes("1234567")
+      Json.fromJson[TelephoneOption](json).asOpt.value mustEqual TelephoneOption.Yes("1234567")
     }
 
     "successfully read false" in {
-      val json = Json.obj("anyAgentRef" -> false)
+      val json = Json.obj("anyTelephone" -> false)
 
-      Json.fromJson[AgentRef](json).asOpt.value mustEqual AgentRef.No
+      Json.fromJson[TelephoneOption](json).asOpt.value mustEqual TelephoneOption.No
     }
 
     "return failure for true without agent ref" in {
-      val json = Json.obj("anyAgentRef" -> true)
+      val json = Json.obj("anyTelephone" -> true)
 
-      Json.fromJson[AgentRef](json) mustEqual JsError("AgentRef value expected")
+      Json.fromJson[TelephoneOption](json) mustEqual JsError("TelephoneOption value expected")
     }
 
     "return failure for when no input given" in {
-      val json = Json.obj("anyAgentRef" -> "notABoolean")
-      Json.fromJson[AgentRef](json) mustEqual JsError(Seq((JsPath \ "anyAgentRef", Seq(ValidationError(Seq("error.expected.jsboolean"))))))
+      val json = Json.obj("anyTelephone" -> "notABoolean")
+      Json.fromJson[TelephoneOption](json) mustEqual JsError(Seq((JsPath \ "anyTelephone", Seq(ValidationError(Seq("error.expected.jsboolean"))))))
     }
   }
 }

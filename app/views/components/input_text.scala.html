@@ -19,6 +19,7 @@
 @(
 viewModel: InputViewModelBase,
 label: String,
+divClass: Option[String] = None,
 inputClass: Option[String] = None,
 hintLine1: Option[String] = None,
 hintLine2: Option[String] = None,
@@ -26,7 +27,7 @@ labelClass: Option[String] = None,
 prefix: Option[String] = None
 )(implicit messages: Messages)
 
-<div class="form-field @if(viewModel.errorKey.nonEmpty){form-field--error}">
+<div class="form-group @if(divClass.nonEmpty){@divClass} @if(viewModel.errorKey.nonEmpty){form-field--error}">
     <label class="form-label" for="@{viewModel.id}">
         <span class="bold @if(labelClass.nonEmpty){@labelClass}">@label</span>
         @if(hintLine1.nonEmpty){

@@ -16,53 +16,51 @@
 
 package controllers
 
+import play.api.data.Form
+import utils.{FakeNavigator, MockUserAnswers}
 import connectors.FakeDataCacheConnector
 import controllers.actions._
-import forms.DetailsOfEmploymentOrPensionForm
-import models.NormalMode
+import forms.SelectTaxableIncomeForm
+import play.api.test.Helpers._
+import models.{NormalMode, TaxableIncome}
 import models.SelectTaxYear.CYMinus2
 import org.mockito.Mockito.when
-import play.api.data.Form
-import play.api.test.Helpers._
-import utils.{FakeNavigator, MockUserAnswers}
-import views.html.detailsOfEmploymentOrPension
+import views.html.selectTaxableIncome
 
-class DetailsOfEmploymentOrPensionControllerSpec extends ControllerSpecBase {
+
+class SelectTaxableIncomeControllerSpec extends ControllerSpecBase {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
+  val taxYear: String = CYMinus2.asString
+  private val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
+
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new DetailsOfEmploymentOrPensionController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, new DetailsOfEmploymentOrPensionForm(frontendAppConfig))
+    new SelectTaxableIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+      dataRetrievalAction, new DataRequiredActionImpl)
 
-  val testAnswer = "This is some sample text"
-  val form = new DetailsOfEmploymentOrPensionForm(frontendAppConfig)()
-  val taxYear = CYMinus2.asString
-  val characterLimit = 500
-  val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
+  def viewAsString(form: Form[_] = SelectTaxableIncomeForm()) =
+    selectTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
 
-
-  def viewAsString(form: Form[_] = form) = detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages).toString
-
-  "DetailsOfEmploymentOrPension Controller" must {
+  "SelectTaxableIncome Controller" must {
 
     "return OK and the correct view for a GET" in {
-      val result = controller(someData).onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(fakeDataRetrievalAction()).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe OK
       contentAsString(result) mustBe viewAsString()
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      when (mockUserAnswers.detailsOfEmploymentOrPension).thenReturn(Some(testAnswer))
+      when(mockUserAnswers.selectTaxableIncome).thenReturn(Some(Set(TaxableIncome(0))))
 
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
-      contentAsString(result) mustBe viewAsString(form.fill(testAnswer))
+      contentAsString(result) mustBe viewAsString(SelectTaxableIncomeForm().fill(Set(TaxableIncome(0))))
     }
 
     "redirect to the next page when valid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", testAnswer))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value[0]", TaxableIncome(0).toString))
 
       val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode)(postRequest)
 
@@ -71,8 +69,8 @@ class DetailsOfEmploymentOrPensionControllerSpec extends ControllerSpecBase {
     }
 
     "return a Bad Request and errors when invalid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", ""))
-      val boundForm = form.bind(Map("value" -> ""))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
+      val boundForm = SelectTaxableIncomeForm().bind(Map("value" -> "invalid value"))
 
       val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode)(postRequest)
 
@@ -88,7 +86,7 @@ class DetailsOfEmploymentOrPensionControllerSpec extends ControllerSpecBase {
     }
 
     "redirect to Session Expired for a POST if no existing data is found" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", testAnswer))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", ""))
       val result = controller(dontGetAnyData).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER

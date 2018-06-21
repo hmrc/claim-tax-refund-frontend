@@ -17,18 +17,23 @@
 package forms
 
 import com.google.inject.Inject
-import forms.mappings.TelephoneOptionMapping
-import models.TelephoneOption
+import config.FrontendAppConfig
+import forms.mappings.Constraints
 import play.api.data.Form
+import play.api.data.Forms._
 
+class HowMuchTaxPaidOnOtherIncomeForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 
-class TelephoneNumberForm @Inject() extends TelephoneOptionMapping {
+  private val howMuchTaxPaidOnOtherIncomeBlankKey = "howMuchTaxPaidOnOtherIncome.blank"
+  private val howMuchTaxPaidOnOtherIncomeInvalidKey = "howMuchTaxPaidOnOtherIncome.invalid"
+  private val currencyRegex = appConfig.currencyRegex
 
-  def apply(): Form[TelephoneOption] = Form(
-    telephoneOptionMapping(
-      requiredKey = "telephoneNumber.notSelected",
-      requiredTelephoneKey = "telephoneNumber.blank",
-      telephoneInvalidKey = "telephoneNumber.invalid"
+  def apply(): Form[String] = Form(
+    "value" -> text.verifying(
+      firstError(
+        nonEmpty(howMuchTaxPaidOnOtherIncomeBlankKey),
+        regexValidation(currencyRegex, howMuchTaxPaidOnOtherIncomeInvalidKey)
+      )
     )
   )
 }

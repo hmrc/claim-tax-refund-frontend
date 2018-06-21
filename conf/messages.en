@@ -262,11 +262,15 @@ whereToSendPayment.nominee = Nominee
 whereToSendPayment.checkYourAnswersLabel = Who would you like us to make the payment to?
 whereToSendPayment.blank = Select who you would like us to make the payment to
 
-telephoneNumber.title = What is your telephone number?
-telephoneNumber.heading = What is your telephone number?
+telephoneNumber.title = Can we contact you by phone if we need more information?
+telephoneNumber.heading = Can we contact you by phone if we need more information?
 telephoneNumber.checkYourAnswersLabel = Your telephone number
 telephoneNumber.invalid = Enter a valid telephone number
-telephoneNumber.blank = Enter a telephone number
+telephoneNumber.notSelected = Select yes if we can call you if we need more information
+telephoneNumber.blank = Enter the telephone number you wish to be contacted on
+telephoneNumber.telephoneNumberField = Telephone Number
+telephoneNumber.hintPara1 = We will only call you if we need more information about your claim. It is the quickest way to resolve any problems.
+telephoneNumber.hintPara2 = If you select ''No'' we will contact you by letter. For security reasons we can not ask for more information by email.
 
 employmentDetails.title = Employment details
 employmentDetails.heading = Employment details
@@ -382,8 +386,24 @@ detailsOfEmploymentOrPension.checkYourAnswersLabel = Details of employment or pe
 detailsOfEmploymentOrPension.blank = Enter details of your employment or pension
 detailsOfEmploymentOrPension.tooLong = Details of employment or pension exceeds the maximum 500 characters
 
+selectTaxableIncome.title = Which taxable income you have got between
+selectTaxableIncome.heading = Which taxable income you have got between
+selectTaxableIncome.checkYourAnswersLabel = Did you get any taxable income in the tax year that your claim relates to?
+selectTaxableIncome.blank = Select a taxable income
+selectTaxableIncome.rental-income = Rental income
+selectTaxableIncome.bank-or-building-society-interest = Bank or Building Society Interest
+selectTaxableIncome.investment-or-dividends = Investments or dividends
+selectTaxableIncome.foreign-income = Foreign income
+selectTaxableIncome.other-taxable-income = Other taxable income
+
 howMuchInvestmentOrDividend.title = How much tax did you pay on investment or dividend income between
 howMuchInvestmentOrDividend.heading = How much tax did you pay on investment or dividend income between
 howMuchInvestmentOrDividend.checkYourAnswersLabel = Investment or dividend
 howMuchInvestmentOrDividend.blank = Enter a valid amount of tax you paid on investment or dividend
 howMuchInvestmentOrDividend.invalid = Enter a valid amount of tax you paid on investment or dividend
+
+howMuchTaxPaidOnOtherIncome.title = How much tax did you pay on your income between
+howMuchTaxPaidOnOtherIncome.heading = How much tax did you pay on your income between
+howMuchTaxPaidOnOtherIncome.checkYourAnswersLabel = How much tax did you pay on your income
+howMuchTaxPaidOnOtherIncome.blank = Enter a valid amount of tax you paid on other income
+howMuchTaxPaidOnOtherIncome.invalid = Enter a valid amount of tax you paid on other income

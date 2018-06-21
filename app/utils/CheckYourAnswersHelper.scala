@@ -25,8 +25,16 @@ import viewmodels.AnswerRow
 
 class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messages){
 
+  def howMuchTaxPaidOnOtherIncome: Option[AnswerRow] = userAnswers.howMuchTaxPaidOnOtherIncome map {
+    x => AnswerRow("howMuchTaxPaidOnOtherIncome.checkYourAnswersLabel", s"$x", false, routes.HowMuchTaxPaidOnOtherIncomeController.onPageLoad(CheckMode).url)
+  }
+
   def howMuchInvestmentOrDividend: Option[AnswerRow] = userAnswers.howMuchInvestmentOrDividend map {
     x => AnswerRow("howMuchInvestmentOrDividend.checkYourAnswersLabel", s"$x", false, routes.HowMuchInvestmentOrDividendController.onPageLoad(CheckMode).url)
+  }
+
+  def selectTaxableIncome: Option[AnswerRow] = userAnswers.selectTaxableIncome map {
+    x => AnswerRow("selectTaxableIncome.checkYourAnswersLabel", s"$x", false, routes.SelectTaxableIncomeController.onPageLoad(CheckMode).url)
   }
 
   def detailsOfEmploymentOrPension: Option[AnswerRow] = userAnswers.detailsOfEmploymentOrPension map {
@@ -171,8 +179,8 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
   def anyAgentRef: Option[AnswerRow] = userAnswers.anyAgentRef map {
     x => AnswerRow("anyAgentRef.checkYourAnswersLabel",
     x match {
-      case AgentRef.Yes(agentRef) => "site.yes"
-      case AgentRef.No => "site.no"
+      case AnyAgentRef.Yes(agentRef) => "site.yes"
+      case AnyAgentRef.No => "site.no"
     }, true, routes.AnyAgentRefController.onPageLoad(CheckMode).url)
   }
 

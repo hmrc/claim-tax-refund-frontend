@@ -16,19 +16,21 @@
 
 package forms
 
-import com.google.inject.Inject
-import forms.mappings.TelephoneOptionMapping
-import models.TelephoneOption
-import play.api.data.Form
+import forms.behaviours.CheckboxBehaviours
+import models.TaxableIncome
 
+class SelectTaxableIncomeFormSpec extends CheckboxBehaviours[TaxableIncome.Value] {
 
-class TelephoneNumberForm @Inject() extends TelephoneOptionMapping {
+  override val validOptions: Set[TaxableIncome.Value] = TaxableIncome.values
 
-  def apply(): Form[TelephoneOption] = Form(
-    telephoneOptionMapping(
-      requiredKey = "telephoneNumber.notSelected",
-      requiredTelephoneKey = "telephoneNumber.blank",
-      telephoneInvalidKey = "telephoneNumber.invalid"
-    )
-  )
+  override val fieldName = "value"
+
+  val form = SelectTaxableIncomeForm()
+
+  "SelectTaxableIncome form" must {
+    behave like aCheckboxForm(invalid = "error.unknown")
+
+    behave like aMandatoryCheckboxForm("selectTaxableIncome.blank")
+  }
+
 }

@@ -18,13 +18,13 @@ package views
 
 import controllers.routes
 import forms.AnyAgentReferenceForm
-import models.{AgentRef, NormalMode}
+import models.{AnyAgentRef, NormalMode}
 import play.api.data.{Form, FormError}
 import play.twirl.api.HtmlFormat
 import views.behaviours.QuestionViewBehaviours
 import views.html.anyAgentRef
 
-class AnyAgentRefViewSpec extends QuestionViewBehaviours[AgentRef]{
+class AnyAgentRefViewSpec extends QuestionViewBehaviours[AnyAgentRef]{
 
   val messageKeyPrefix = "anyAgentRef"
   val nomineeName = "Test Nominee"
@@ -44,7 +44,7 @@ class AnyAgentRefViewSpec extends QuestionViewBehaviours[AgentRef]{
 
     yesNoPage(createViewUsingForm, messageKeyPrefix, routes.AnyAgentRefController.onSubmit(NormalMode).url)
 
-    def yesNoPage(createView: (Form[AgentRef]) => HtmlFormat.Appendable,
+    def yesNoPage(createView: (Form[AnyAgentRef]) => HtmlFormat.Appendable,
                   messageKeyPrefix: String,
                   expectedFormAction: String,
                   expectedHintText: Option[String] = None) = {
@@ -64,14 +64,14 @@ class AnyAgentRefViewSpec extends QuestionViewBehaviours[AgentRef]{
 
           "contain an input for the value" in {
             val doc = asDocument(createView(form))
-            assertRenderedById(doc, "agentRef.anyAgentRef-yes")
-            assertRenderedById(doc, "agentRef.anyAgentRef-no")
+            assertRenderedById(doc, "anyAgentRef-yes")
+            assertRenderedById(doc, "anyAgentRef-no")
           }
 
           "have no values checked when rendered with no form" in {
             val doc = asDocument(createView(form))
-            assert(!doc.getElementById("agentRef.anyAgentRef-yes").hasAttr("checked"))
-            assert(!doc.getElementById("agentRef.anyAgentRef-no").hasAttr("checked"))
+            assert(!doc.getElementById("anyAgentRef-yes").hasAttr("checked"))
+            assert(!doc.getElementById("anyAgentRef-no").hasAttr("checked"))
           }
 
           "not render an error summary" in {
@@ -95,7 +95,7 @@ class AnyAgentRefViewSpec extends QuestionViewBehaviours[AgentRef]{
           }
 
           "show an error in the value field's label" in {
-            val doc = asDocument(createView(form.withError(FormError("agentRef.anyAgentRef", "Please enter a valid number"))))
+            val doc = asDocument(createView(form.withError(FormError("anyAgentRef", "Please enter a valid number"))))
             val errorSpan = doc.getElementsByClass("error-notification").first
             errorSpan.text mustBe messages(errorMessage)
           }
@@ -104,23 +104,23 @@ class AnyAgentRefViewSpec extends QuestionViewBehaviours[AgentRef]{
     }
 
 
-    def answeredYesNoPage(createView: (Form[AgentRef]) => HtmlFormat.Appendable, answer: Boolean) = {
+    def answeredYesNoPage(createView: (Form[AnyAgentRef]) => HtmlFormat.Appendable, answer: Boolean) = {
 
       "have only the correct value checked when yes selected" in {
-        val doc = asDocument(createView(form.fill(AgentRef.Yes("AB1234"))))
-        assert(doc.getElementById("agentRef.anyAgentRef-yes").hasAttr("checked"))
-        assert(!doc.getElementById("agentRef.anyAgentRef-no").hasAttr("checked"))
+        val doc = asDocument(createView(form.fill(AnyAgentRef.Yes("AB1234"))))
+        assert(doc.getElementById("anyAgentRef-yes").hasAttr("checked"))
+        assert(!doc.getElementById("anyAgentRef-no").hasAttr("checked"))
       }
 
       "have only the correct value checked when no selected" in {
-        val doc = asDocument(createView(form.fill(AgentRef.No)))
-        assert(!doc.getElementById("agentRef.anyAgentRef-yes").hasAttr("checked"))
-        assert(doc.getElementById("agentRef.anyAgentRef-no").hasAttr("checked"))
+        val doc = asDocument(createView(form.fill(AnyAgentRef.No)))
+        assert(!doc.getElementById("anyAgentRef-yes").hasAttr("checked"))
+        assert(doc.getElementById("anyAgentRef-no").hasAttr("checked"))
       }
 
 
       "not render an error summary" in {
-        val doc = asDocument(createView(form.fill(AgentRef.Yes("AB1234"))))
+        val doc = asDocument(createView(form.fill(AnyAgentRef.Yes("AB1234"))))
         assertNotRenderedById(doc, "error-summary_header")
       }
     }

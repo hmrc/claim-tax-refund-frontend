@@ -50,13 +50,17 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
   ).flatten)
 
   def benefitDetails = AnswerSection(Some("checkYourAnswers.benefitDetailsSection"), Seq(
-    cyaHelper.selectCompanyBenefits,
+    cyaHelper.anyBenefits,
+    cyaHelper.selectBenefits,
+    cyaHelper.howMuchBereavementAllowance,
+    cyaHelper.howMuchCarersAllowance,
     cyaHelper.howMuchJobseekersAllowance,
-    cyaHelper.howMuchIncapacityBenefit,
     cyaHelper.howMuchEmploymentAndSupportAllowance,
+    cyaHelper.howMuchIncapacityBenefit,
     cyaHelper.howMuchStatePension,
-    cyaHelper.anyOtherTaxableBenefits,
-    cyaHelper.otherBenefitsDetailsAndAmount
+    cyaHelper.anyOtherTaxableIncome,
+    cyaHelper.otherBenefitsDetails,
+    cyaHelper.howMuchOtherBenefit
   ).flatten)
 
   def companyBenefitDetails = AnswerSection(Some("checkYourAnswers.companyBenefitsDetailsSection"), Seq(

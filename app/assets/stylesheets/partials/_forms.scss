@@ -72,6 +72,14 @@ Taken from GDS Elements
 Error styling to bring in line with GDS
 =====================================
 */
+
+.panel .form-field--error {
+    margin-left: 0;
+}
+.panel.form-field--error {
+    margin-left: 0;
+    border-left: 4px solid #b10e1e;
+}
 .form-field--error {
     margin-left: -0.84211em;
 }
