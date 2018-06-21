@@ -19,12 +19,12 @@ package forms
 import javax.inject.Inject
 
 import forms.mappings.AgentRefMapping
-import models.AgentRef
+import models.AnyAgentRef
 import play.api.data.Form
 
 class AnyAgentReferenceForm @Inject() extends AgentRefMapping {
 
-  def apply(): Form[AgentRef] = Form(
+  def apply(): Form[AnyAgentRef] = Form(
     agentRefMapping(
       requiredKey = "anyAgentRef.blank",
       requiredAgentRefKey = "anyAgentRef.blankAgentRef",
