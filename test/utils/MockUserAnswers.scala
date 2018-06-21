@@ -68,6 +68,7 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.howMuchForeignIncome) thenReturn None
     when(answers.detailsOfEmploymentOrPension) thenReturn None
     when(answers.howMuchInvestmentOrDividend) thenReturn None
+    when(answers.howMuchTaxPaidOnOtherIncome) thenReturn None
 
     answers
   }
