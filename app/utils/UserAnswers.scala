@@ -98,7 +98,7 @@ class UserAnswers(val cacheMap: CacheMap) {
 
   def howMuchCarBenefits: Option[String] = cacheMap.getEntry[String](HowMuchCarBenefitsId.toString)
 
-  def otherIncome: Option[Boolean] = cacheMap.getEntry[Boolean](OtherIncomeId.toString)
+  def anyTaxableIncome: Option[Boolean] = cacheMap.getEntry[Boolean](AnyTaxableIncomeId.toString)
 
   def anyBenefits: Option[Boolean] = cacheMap.getEntry[Boolean](AnyBenefitsId.toString)
 
