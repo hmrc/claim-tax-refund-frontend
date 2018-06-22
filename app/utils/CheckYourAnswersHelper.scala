@@ -202,12 +202,6 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
         s"$x", false, routes.OtherIncomeDetailsAndAmountController.onPageLoad(CheckMode).url)
   }
 
-  def otherBenefitsDetailsAndAmount: Option[AnswerRow] = userAnswers.otherBenefitsDetailsAndAmount map {
-    x =>
-      AnswerRow("otherBenefitsDetailsAndAmount.checkYourAnswersLabel",
-        s"$x", false, routes.OtherBenefitsDetailsAndAmountController.onPageLoad(CheckMode).url)
-  }
-
   def anyOtherTaxableIncome: Option[AnswerRow] = userAnswers.anyOtherTaxableIncome map {
     x =>
       AnswerRow("anyOtherTaxableIncome.checkYourAnswersLabel",
