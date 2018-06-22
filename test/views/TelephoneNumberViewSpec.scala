@@ -114,13 +114,13 @@ class TelephoneNumberViewSpec extends QuestionViewBehaviours[TelephoneOption]{
 
     def answeredYesNoPage(createView: (Form[TelephoneOption]) => HtmlFormat.Appendable, answer: Boolean) = {
 
-      "have only the correct value checked and display telephone text box when yes selected" in {
+      "have only the correct value checked when yes selected" in {
         val doc = asDocument(createView(form.fill(TelephoneOption.Yes(testPhoneNumber))))
         assert(doc.getElementById("anyTelephoneNumber-yes").hasAttr("checked"))
         assert(!doc.getElementById("anyTelephoneNumber-no").hasAttr("checked"))
       }
 
-      "have only the correct value checked and display hint text when no selected" in {
+      "have only the correct value checked when no selected" in {
         val doc = asDocument(createView(form.fill(TelephoneOption.No)))
         assert(!doc.getElementById("anyTelephoneNumber-yes").hasAttr("checked"))
         assert(doc.getElementById("anyTelephoneNumber-no").hasAttr("checked"))
