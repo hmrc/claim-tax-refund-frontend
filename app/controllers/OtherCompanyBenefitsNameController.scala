@@ -24,15 +24,15 @@ import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import connectors.DataCacheConnector
 import controllers.actions._
 import config.FrontendAppConfig
-import forms.OtherCompanyBenefitsDetailsForm
-import identifiers.OtherCompanyBenefitsDetailsId
+import forms.OtherCompanyBenefitsNameForm
+import identifiers.OtherCompanyBenefitsNameId
 import models.Mode
 import utils.{Navigator, UserAnswers}
-import views.html.otherCompanyBenefitsDetails
+import views.html.otherCompanyBenefitsName
 
 import scala.concurrent.Future
 
-class OtherCompanyBenefitsDetailsController @Inject()(
+class OtherCompanyBenefitsNameController @Inject()(
                                         appConfig: FrontendAppConfig,
                                         override val messagesApi: MessagesApi,
                                         dataCacheConnector: DataCacheConnector,
@@ -40,13 +40,13 @@ class OtherCompanyBenefitsDetailsController @Inject()(
                                         authenticate: AuthAction,
                                         getData: DataRetrievalAction,
                                         requireData: DataRequiredAction,
-                                        formBuilder: OtherCompanyBenefitsDetailsForm) extends FrontendController with I18nSupport {
+                                        formBuilder: OtherCompanyBenefitsNameForm) extends FrontendController with I18nSupport {
 
   private val form: Form[String] = formBuilder()
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val preparedForm = request.userAnswers.otherCompanyBenefitsDetails match {
+      val preparedForm = request.userAnswers.otherCompanyBenefitsName match {
         case None => form
         case Some(value) => form.fill(value)
       }
@@ -54,7 +54,7 @@ class OtherCompanyBenefitsDetailsController @Inject()(
       request.userAnswers.selectTaxYear.map{
         selectedTaxYear =>
           val taxYear = selectedTaxYear.asString
-          Ok(otherCompanyBenefitsDetails(appConfig, preparedForm, mode, taxYear))
+          Ok(otherCompanyBenefitsName(appConfig, preparedForm, mode, taxYear))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
@@ -67,10 +67,10 @@ class OtherCompanyBenefitsDetailsController @Inject()(
           val taxYear = selectedTaxYear.asString
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(otherCompanyBenefitsDetails(appConfig, formWithErrors, mode, taxYear))),
+              Future.successful(BadRequest(otherCompanyBenefitsName(appConfig, formWithErrors, mode, taxYear))),
             (value) =>
-              dataCacheConnector.save[String](request.externalId, OtherCompanyBenefitsDetailsId.toString, value).map(cacheMap =>
-                Redirect(navigator.nextPage(OtherCompanyBenefitsDetailsId, mode)(new UserAnswers(cacheMap))))
+              dataCacheConnector.save[String](request.externalId, OtherCompanyBenefitsNameId.toString, value).map(cacheMap =>
+                Redirect(navigator.nextPage(OtherCompanyBenefitsNameId, mode)(new UserAnswers(cacheMap))))
           )
       }.getOrElse{
         Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))

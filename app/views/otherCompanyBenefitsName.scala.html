@@ -23,19 +23,19 @@
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: String)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("otherCompanyBenefitsDetails.title") + s" $taxYear" + messages("global.questionMark"),
+    title = messages("otherCompanyBenefitsName.title") + s" $taxYear" + messages("global.questionMark"),
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @helpers.form(action = OtherCompanyBenefitsDetailsController.onSubmit(mode), 'autoComplete -> "off") {
+    @helpers.form(action = OtherCompanyBenefitsNameController.onSubmit(mode), 'autoComplete -> "off") {
 
         @components.back_link()
 
         @components.error_summary(form.errors)
 
-        @components.heading("otherCompanyBenefitsDetails.heading", dynamicHeading = Some(s"$taxYear" + messages("global.questionMark")), secondaryHeaderKey = Some("index.title"))
+        @components.heading("otherCompanyBenefitsName.heading", dynamicHeading = Some(s"$taxYear" + messages("global.questionMark")), secondaryHeaderKey = Some("index.title"))
 
-        @components.input_text(InputViewModel("value", form), label = messages("otherCompanyBenefitsDetails.heading"), labelClass=Some("visually-hidden"))
+        @components.input_text(InputViewModel("value", form), label = messages("otherCompanyBenefitsName.heading"), labelClass=Some("visually-hidden"))
 
         @components.submit_button()
     }
