@@ -209,7 +209,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       when(answers.howMuchIncapacityBenefit) thenReturn Some("1234")
       when(answers.howMuchStatePension) thenReturn Some("1234")
       when(answers.anyOtherTaxableIncome) thenReturn Some(true)
-      when(answers.otherBenefitsDetails) thenReturn Some("Other")
+      when(answers.otherBenefitsName) thenReturn Some("Other")
       when(answers.howMuchOtherBenefit) thenReturn Some("1234")
 
       val sections = new CheckYourAnswersSections(helper, answers)
@@ -225,7 +225,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       rows(6).label.key mustBe "howMuchIncapacityBenefit.checkYourAnswersLabel"
       rows(7).label.key mustBe "howMuchStatePension.checkYourAnswersLabel"
       rows(8).label.key mustBe "anyOtherTaxableIncome.checkYourAnswersLabel"
-      rows(9).label.key mustBe "otherBenefitsDetails.checkYourAnswersLabel"
+      rows(9).label.key mustBe "otherBenefitsName.checkYourAnswersLabel"
       rows(10).label.key mustBe "howMuchOtherBenefit.checkYourAnswersLabel"
 
     }

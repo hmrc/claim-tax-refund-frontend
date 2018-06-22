@@ -21,28 +21,28 @@ import utils.{FakeNavigator, MockUserAnswers}
 import connectors.FakeDataCacheConnector
 import controllers.actions._
 import play.api.test.Helpers._
-import forms.OtherBenefitsDetailsForm
+import forms.OtherBenefitsNameForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.mockito.Mockito.when
-import views.html.otherBenefitsDetails
+import views.html.otherBenefitsName
 
-class OtherBenefitsDetailsControllerSpec extends ControllerSpecBase {
+class OtherBenefitsNameControllerSpec extends ControllerSpecBase {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
   val testAnswer = "answer"
-  val form = new OtherBenefitsDetailsForm(frontendAppConfig)()
+  val form = new OtherBenefitsNameForm(frontendAppConfig)()
   val taxYear: String = CYMinus2.asString
   private val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new OtherBenefitsDetailsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, new OtherBenefitsDetailsForm(frontendAppConfig))
+    new OtherBenefitsNameController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+      dataRetrievalAction, new DataRequiredActionImpl, new OtherBenefitsNameForm(frontendAppConfig))
 
-  def viewAsString(form: Form[_] = form) = otherBenefitsDetails(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = form) = otherBenefitsName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
 
-  "OtherBenefitsDetails Controller" must {
+  "OtherBenefitsName Controller" must {
 
     "return OK and the correct view for a GET" in {
       val result = controller(fakeDataRetrievalAction()).onPageLoad(NormalMode)(fakeRequest)
@@ -52,7 +52,7 @@ class OtherBenefitsDetailsControllerSpec extends ControllerSpecBase {
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      when(mockUserAnswers.otherBenefitsDetails).thenReturn(Some(testAnswer))
+      when(mockUserAnswers.otherBenefitsName).thenReturn(Some(testAnswer))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
       contentAsString(result) mustBe viewAsString(form.fill(testAnswer))

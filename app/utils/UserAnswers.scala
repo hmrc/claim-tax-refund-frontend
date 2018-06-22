@@ -38,7 +38,7 @@ class UserAnswers(val cacheMap: CacheMap) {
 
   def howMuchOtherBenefit: Option[String] = cacheMap.getEntry[String](HowMuchOtherBenefitId.toString)
 
-  def otherBenefitsDetails: Option[String] = cacheMap.getEntry[String](OtherBenefitsDetailsId.toString)
+  def otherBenefitsName: Option[String] = cacheMap.getEntry[String](OtherBenefitsNameId.toString)
 
   def howMuchBereavementAllowance: Option[String] = cacheMap.getEntry[String](HowMuchBereavementAllowanceId.toString)
 
