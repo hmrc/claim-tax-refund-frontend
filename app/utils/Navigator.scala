@@ -16,9 +16,10 @@
 
 package utils
 
-import controllers.routes
 import identifiers._
 import javax.inject.{Inject, Singleton}
+
+import controllers.routes
 import models.WhereToSendPayment.{Myself, Nominee}
 import models._
 import play.api.mvc.Call
@@ -33,7 +34,6 @@ class Navigator @Inject()() {
     AnyBenefitsId -> anyBenefits,
     HowMuchStatePensionId -> (_ => routes.AnyOtherBenefitsController.onPageLoad(NormalMode)),
     AnyOtherBenefitsId -> anyOtherBenefits,
-    OtherBenefitsDetailsAndAmountId -> (_ => routes.AnyTaxableIncomeController.onPageLoad(NormalMode)),
     AnyTaxableIncomeId -> otherTaxableIncome,
     HowMuchMedicalBenefitsId -> (_ => routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)),
     AnyOtherTaxableIncomeId -> anyOtherTaxableIncome,
@@ -63,7 +63,7 @@ class Navigator @Inject()() {
   }
 
   private def anyOtherBenefits(userAnswers: UserAnswers): Call = userAnswers.anyOtherBenefits match {
-    case Some(true) => routes.OtherBenefitsDetailsAndAmountController.onPageLoad(NormalMode)
+    case Some(true) => ???
     case Some(false) => routes.AnyTaxableIncomeController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }

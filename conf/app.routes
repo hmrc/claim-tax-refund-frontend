@@ -77,11 +77,6 @@ POST       /did-you-get-any-other-income                                    cont
 GET        /change-if-you-got-any-other-income                              controllers.AnyOtherTaxableIncomeController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-if-you-got-any-other-income                              controllers.AnyOtherTaxableIncomeController.onSubmit(mode: Mode = CheckMode)
 
-GET        /what-other-benefits                                             controllers.OtherBenefitsDetailsAndAmountController.onPageLoad(mode: Mode = NormalMode)
-POST       /what-other-benefits                                             controllers.OtherBenefitsDetailsAndAmountController.onSubmit(mode: Mode = NormalMode)
-GET        /change-other-benefits                                           controllers.OtherBenefitsDetailsAndAmountController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-other-benefits                                           controllers.OtherBenefitsDetailsAndAmountController.onSubmit(mode: Mode = CheckMode)
-
 GET        /what-other-income                                               controllers.OtherIncomeDetailsAndAmountController.onPageLoad(mode: Mode = NormalMode)
 POST       /what-other-income                                               controllers.OtherIncomeDetailsAndAmountController.onSubmit(mode: Mode = NormalMode)
 GET        /change-other-income                                             controllers.OtherIncomeDetailsAndAmountController.onPageLoad(mode: Mode = CheckMode)

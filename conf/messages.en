@@ -212,12 +212,6 @@ anyOtherTaxableIncome.heading = Did you get any other taxable income in the tax 
 anyOtherTaxableIncome.checkYourAnswersLabel = Did you get any other taxable income in the tax year your claim is for?
 anyOtherTaxableIncome.blank = Select yes if you got any other taxable income in the tax year your claim is for
 
-otherBenefitsDetailsAndAmount.title = What other taxable benefits did you get in the tax year your claim is for?
-otherBenefitsDetailsAndAmount.heading = What other taxable benefits did you get in the tax year your claim is for?
-otherBenefitsDetailsAndAmount.checkYourAnswersLabel = Other taxable benefits you got in the tax year your claim is for
-otherBenefitsDetailsAndAmount.blank = Enter the other taxable benefits you got in the tax year your claim is for
-otherBenefitsDetailsAndAmount.hint = Enter the type of benefits and the amounts you got.
-
 otherIncomeDetailsAndAmount.title = What other taxable income did you get in the tax year your claim is for?
 otherIncomeDetailsAndAmount.heading = What other taxable income did you get in the tax year your claim is for?
 otherIncomeDetailsAndAmount.checkYourAnswersLabel = Other taxable income you got in the tax year your claim is for
