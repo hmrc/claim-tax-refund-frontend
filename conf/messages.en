@@ -212,12 +212,6 @@ anyOtherTaxableIncome.heading = Did you get any other taxable income in the tax 
 anyOtherTaxableIncome.checkYourAnswersLabel = Did you get any other taxable income in the tax year your claim is for?
 anyOtherTaxableIncome.blank = Select yes if you got any other taxable income in the tax year your claim is for
 
-otherIncomeDetailsAndAmount.title = What other taxable income did you get in the tax year your claim is for?
-otherIncomeDetailsAndAmount.heading = What other taxable income did you get in the tax year your claim is for?
-otherIncomeDetailsAndAmount.checkYourAnswersLabel = Other taxable income you got in the tax year your claim is for
-otherIncomeDetailsAndAmount.blank = Enter the other taxable income you got in the tax year your claim is for
-otherIncomeDetailsAndAmount.hint = Enter the type of income and the amounts you got.
-
 nomineeFullName.title = What is the full name of the person you want us to send any payment to?
 nomineeFullName.heading = What is the full name of the person you want us to send any payment to?
 nomineeFullName.checkYourAnswersLabel = Full name of the person you want us to send any payment to
