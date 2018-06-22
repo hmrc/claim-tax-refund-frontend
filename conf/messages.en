@@ -343,10 +343,10 @@ howMuchCarersAllowance.checkYourAnswersLabel = Carers Allowance
 howMuchCarersAllowance.blank = Enter the amount of carers allowance
 howMuchCarersAllowance.invalid = Enter a valid amount of carers allowance
 
-otherBenefitsDetails.title = What is the name of the taxable benefit you were getting between
-otherBenefitsDetails.heading = What is the name of the taxable benefit you were getting between
-otherBenefitsDetails.checkYourAnswersLabel = Other benefits name
-otherBenefitsDetails.blank = Enter the name of the taxable benefit you got
+otherBenefitsName.title = What is the name of the taxable benefit you were getting between
+otherBenefitsName.heading = What is the name of the taxable benefit you were getting between
+otherBenefitsName.checkYourAnswersLabel = Other benefits name
+otherBenefitsName.blank = Enter the name of the taxable benefit you got
 
 howMuchOtherBenefit.title = How much did you get between
 howMuchOtherBenefit.heading = How much did you get between

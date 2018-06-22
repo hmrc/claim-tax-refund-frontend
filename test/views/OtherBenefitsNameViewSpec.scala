@@ -19,34 +19,34 @@ package views
 import config.FrontendAppConfig
 import play.api.data.Form
 import controllers.routes
-import forms.OtherBenefitsDetailsForm
+import forms.OtherBenefitsNameForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
 import views.behaviours.StringViewBehaviours
-import views.html.otherBenefitsDetails
+import views.html.otherBenefitsName
 
-class OtherBenefitsDetailsViewSpec extends StringViewBehaviours with MockitoSugar {
+class OtherBenefitsNameViewSpec extends StringViewBehaviours with MockitoSugar {
 
-  val messageKeyPrefix = "otherBenefitsDetails"
+  val messageKeyPrefix = "otherBenefitsName"
 
   private val taxYear = CYMinus2.asString
 
   val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
-  override val form: Form[String] = new OtherBenefitsDetailsForm(appConfig)()
+  override val form: Form[String] = new OtherBenefitsNameForm(appConfig)()
 
-  def createView = () => otherBenefitsDetails(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createView = () => otherBenefitsName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) => otherBenefitsDetails(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[String]) => otherBenefitsName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
-  "OtherBenefitsDetails view" must {
+  "OtherBenefitsName view" must {
     behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, " " + taxYear, messages("global.questionMark"))
 
     behave like pageWithBackLink(createView)
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.OtherBenefitsDetailsController.onSubmit(NormalMode).url)
+    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.OtherBenefitsNameController.onSubmit(NormalMode).url)
   }
 }

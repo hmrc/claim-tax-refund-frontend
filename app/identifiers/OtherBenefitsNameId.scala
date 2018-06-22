@@ -14,17 +14,8 @@
  * limitations under the License.
  */
 
-package forms
+package identifiers
 
-import com.google.inject.Inject
-import config.FrontendAppConfig
-import forms.mappings.Constraints
-import play.api.data.Form
-import play.api.data.Forms._
-
-class OtherBenefitsDetailsForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
-
-  private val errorBlankKey = "otherBenefitsDetails.blank"
-
-  def apply(): Form[String] = Form("value" -> text.verifying(nonEmpty(errorBlankKey)))
+case object OtherBenefitsNameId extends Identifier {
+  override def toString: String = "otherBenefitsName"
 }
