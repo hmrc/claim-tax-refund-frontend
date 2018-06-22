@@ -41,7 +41,7 @@ class OtherBenefitsNameViewSpec extends StringViewBehaviours with MockitoSugar {
   def createViewUsingForm = (form: Form[String]) => otherBenefitsName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "OtherBenefitsName view" must {
-    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, " " + taxYear, messages("global.questionMark"))
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, " " + taxYear, "?")
 
     behave like pageWithBackLink(createView)
 

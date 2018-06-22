@@ -41,7 +41,7 @@ class HowMuchBereavementAllowanceViewSpec extends StringViewBehaviours with Mock
 
   "HowMuchBereavementAllowance view" must {
 
-    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, " " + taxYear, messages("global.questionMark"))
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, " " + taxYear, "?")
 
     behave like pageWithBackLink(createView)
 

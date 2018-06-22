@@ -47,7 +47,6 @@ global.postcode.blank = Enter a postcode
 global.postcode.invalid = Enter a valid postcode
 
 global.poundSign = £
-global.questionMark = ?
 global.colon = :
 
 index.title = Claim a tax refund
