@@ -23,14 +23,15 @@ import forms.HowMuchInvestmentOrDividendForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
+import play.api.i18n.Messages
 import views.behaviours.StringViewBehaviours
 import views.html.howMuchInvestmentOrDividend
 
-class HowMuchInvestmentOrDividendViewSpec extends StringViewBehaviours with MockitoSugar {
+class HowMuchInvestmentOrDividendViewSpec(implicit messages: Messages) extends StringViewBehaviours with MockitoSugar {
 
   val messageKeyPrefix = "howMuchInvestmentOrDividend"
 
-  private val taxYear = CYMinus2.asString
+  private val taxYear = CYMinus2
 
   val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
@@ -41,7 +42,7 @@ class HowMuchInvestmentOrDividendViewSpec extends StringViewBehaviours with Mock
   def createViewUsingForm = (form: Form[String]) => howMuchInvestmentOrDividend(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "HowMuchInvestmentOrDividend view" must {
-    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, " " + taxYear, "?")
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, s"${taxYear.asString}?")
 
     behave like pageWithBackLink(createView)
 

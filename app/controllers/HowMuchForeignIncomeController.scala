@@ -53,7 +53,7 @@ class HowMuchForeignIncomeController @Inject()(
 
       request.userAnswers.selectTaxYear.map{
         selectedTaxYear =>
-          val taxYear = selectedTaxYear.asString
+          val taxYear = selectedTaxYear
           Ok(howMuchForeignIncome(appConfig, preparedForm, mode, taxYear))
       }.getOrElse{
         Redirect(routes.SessionExpiredController.onPageLoad())
@@ -64,7 +64,7 @@ class HowMuchForeignIncomeController @Inject()(
     implicit request =>
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
-          val taxYear = selectedTaxYear.asString
+          val taxYear = selectedTaxYear
         form.bindFromRequest().fold(
           (formWithErrors: Form[_]) =>
             Future.successful(BadRequest(howMuchForeignIncome(appConfig, formWithErrors, mode, taxYear))),

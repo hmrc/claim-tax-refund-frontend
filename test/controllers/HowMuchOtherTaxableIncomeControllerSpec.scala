@@ -40,7 +40,7 @@ class HowMuchOtherTaxableIncomeControllerSpec extends ControllerSpecBase {
   val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
 
   val testAnswer = "9,999.99"
-  def taxYear = CYMinus2.asString
+  private val taxYear = CYMinus2
 
   val form = new HowMuchOtherTaxableIncomeForm(frontendAppConfig)()
 

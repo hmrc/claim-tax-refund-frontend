@@ -23,14 +23,15 @@ import forms.HowMuchOtherCompanyBenefitForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
+import play.api.i18n.Messages
 import views.behaviours.StringViewBehaviours
 import views.html.howMuchOtherCompanyBenefit
 
-class HowMuchOtherCompanyBenefitViewSpec extends StringViewBehaviours with MockitoSugar {
+class HowMuchOtherCompanyBenefitViewSpec(implicit messages: Messages) extends StringViewBehaviours with MockitoSugar {
 
   val messageKeyPrefix = "howMuchOtherCompanyBenefit"
 
-  private val taxYear = CYMinus2.asString
+  private val taxYear = CYMinus2
   private val otherBenefitName = "test benefit"
 
   val appConfig: FrontendAppConfig = mock[FrontendAppConfig]

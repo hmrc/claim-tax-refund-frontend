@@ -59,7 +59,7 @@ class EmploymentDetailsController @Inject()(appConfig: FrontendAppConfig,
 
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
-          val taxYear = selectedTaxYear.asString
+          val taxYear = selectedTaxYear
           val results = taiConnector.taiEmployments(request.nino, selectedTaxYear.year)
 
           results.map(
@@ -79,7 +79,7 @@ class EmploymentDetailsController @Inject()(appConfig: FrontendAppConfig,
 
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
-          val taxYear = selectedTaxYear.asString
+          val taxYear = selectedTaxYear
           val results = taiConnector.taiEmployments(request.nino, selectedTaxYear.year)
 
           results.flatMap {
