@@ -27,6 +27,13 @@ object CompanyBenefits extends Enumeration {
   val MEDICAL_BENEFIT = Value("medical-benefit")
   val OTHER_COMPANY_BENEFIT = Value("other-company-benefit")
 
+  val options:Seq[String] = Seq(
+    COMPANY_CAR_BENEFIT.toString,
+    FUEL_BENEFIT.toString,
+    MEDICAL_BENEFIT.toString,
+    OTHER_COMPANY_BENEFIT.toString
+  )
+
   val reads: Reads[Value] = EnumUtils.enumReads(CompanyBenefits)
   val writes: Writes[Value] = EnumUtils.enumWrites
 

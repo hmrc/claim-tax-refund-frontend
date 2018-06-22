@@ -27,6 +27,14 @@ object TaxableIncome extends Enumeration {
   val FOREIGN_INCOME = Value("foreign-income")
   val OTHER_TAXABLE_INCOME = Value("other-taxable-income")
 
+  val options: Seq[String] = Seq(
+    RENTAL_INCOME.toString,
+    BANK_OR_BUILDING_SOCIETY_INTEREST.toString,
+    INVESTMENT_OR_DIVIDENDS.toString,
+    FOREIGN_INCOME.toString,
+    OTHER_TAXABLE_INCOME.toString
+  )
+
   val reads: Reads[Value] = EnumUtils.enumReads(TaxableIncome)
   val writes: Writes[Value] = EnumUtils.enumWrites
 

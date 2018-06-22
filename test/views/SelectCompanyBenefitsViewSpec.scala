@@ -32,7 +32,7 @@ class SelectCompanyBenefitsViewSpec extends ViewBehaviours with CheckboxViewBeha
   val taxYear: String = CYMinus2.asString
 
 
-  val values: Map[String, CompanyBenefits.Value] =
+  val values: Seq[(String, CompanyBenefits.Value)] =
     SelectCompanyBenefitsForm.options.map {
       case (k, v) => k -> CompanyBenefits.withName(v)
     }

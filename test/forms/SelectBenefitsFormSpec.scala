@@ -21,7 +21,7 @@ import models.Benefits
 
 class SelectBenefitsFormSpec extends CheckboxBehaviours[Benefits.Value] {
 
-  override val validOptions: Set[Benefits.Value] = Benefits.values
+  override val validOptions: Seq[Benefits.Value] = Benefits.options
 
   override val fieldName = "value"
 

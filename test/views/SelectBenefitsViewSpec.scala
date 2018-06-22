@@ -31,7 +31,7 @@ class SelectBenefitsViewSpec extends ViewBehaviours with CheckboxViewBehaviours[
   val errorMessage = "error.invalid"
   val taxYear: String = CYMinus2.asString
 
-  val values: Map[String, Benefits.Value] =
+  val values: Seq[(String, Benefits.Value)] =
     SelectBenefitsForm.options.map {
       case (k, v) => k -> Benefits.withName(v)
     }

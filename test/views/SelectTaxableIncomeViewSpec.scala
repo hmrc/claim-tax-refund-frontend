@@ -32,7 +32,7 @@ class SelectTaxableIncomeViewSpec extends ViewBehaviours with CheckboxViewBehavi
   val taxYear: String = CYMinus2.asString
 
 
-  val values: Map[String, TaxableIncome.Value] =
+  val values: Seq[(String, TaxableIncome.Value)] =
     SelectTaxableIncomeForm.options.map {
       case (k, v) => k -> TaxableIncome.withName(v)
     }

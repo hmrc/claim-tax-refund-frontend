@@ -17,15 +17,15 @@
 package forms
 
 import models.TaxableIncome
-import play.api.data.Form
+import play.api.data.{Form, FormError}
 import play.api.data.Forms._
 import play.api.data.format.Formatter
 import play.api.data.validation.{Constraint, Invalid, Valid}
 
 object SelectTaxableIncomeForm extends FormErrorHelper {
 
-  private def selectTaxableBenefitsFormatter = new Formatter[TaxableIncome.Value] {
-    def bind(key: String, data: Map[String, String]) = data.get(key) match {
+  private def selectTaxableBenefitsFormatter: Formatter[TaxableIncome.Value] = new Formatter[TaxableIncome.Value] {
+    def bind(key: String, data: Map[String, String]): Either[Seq[FormError], TaxableIncome.Value] = data.get(key) match {
       case Some(s) if optionIsValid(s) => Right(TaxableIncome.withName(s))
       case _ => produceError(key, "error.unknown")
     }
@@ -33,7 +33,7 @@ object SelectTaxableIncomeForm extends FormErrorHelper {
     def unbind(key: String, value: TaxableIncome.Value) = Map(key -> value.toString)
   }
 
-  private def optionIsValid(value: String): Boolean = options.values.toSeq.contains(value)
+  private def optionIsValid(value: String): Boolean = options.contains(value)
 
   private def constraint: Constraint[Set[TaxableIncome.Value]] = Constraint {
     case set if set.nonEmpty =>
@@ -47,8 +47,8 @@ object SelectTaxableIncomeForm extends FormErrorHelper {
       "value" -> set(of(selectTaxableBenefitsFormatter)).verifying(constraint)
     )
 
-  def options: Map[String, String] = TaxableIncome.values.map {
+  def options: Seq[(String, String)] = TaxableIncome.options.map {
     value =>
-      s"selectTaxableIncome.$value" -> value.toString
-  }.toMap
+      s"selectTaxableIncome.$value" -> value
+  }
 }

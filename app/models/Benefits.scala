@@ -29,6 +29,15 @@ object Benefits extends Enumeration {
   val STATE_PENSION = Value("state-pension")
   val OTHER_TAXABLE_BENEFIT = Value("other-taxable-benefit")
 
+  val options: Seq[Benefits.Value] = Seq(
+    BEREAVEMENT_ALLOWANCE,
+    CARERS_ALLOWANCE,
+    JOBSEEKERS_ALLOWANCE,
+    INCAPACITY_BENEFIT,
+    EMPLOYMENT_AND_SUPPORT_ALLOWANCE,
+    STATE_PENSION,
+    OTHER_TAXABLE_BENEFIT
+  )
 
   val reads: Reads[Value] = EnumUtils.enumReads(Benefits)
   val writes: Writes[Value] = EnumUtils.enumWrites

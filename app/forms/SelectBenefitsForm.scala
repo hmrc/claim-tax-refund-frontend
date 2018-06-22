@@ -17,15 +17,15 @@
 package forms
 
 import models.Benefits
-import play.api.data.Form
-import play.api.data.Forms._
+import play.api.data.{Form, FormError}
+import play.api.data.Forms._anyBe
 import play.api.data.format.Formatter
 import play.api.data.validation.{Constraint, Invalid, Valid}
 
 object SelectBenefitsForm extends FormErrorHelper {
 
-  private def selectBenefitsFormatter = new Formatter[Benefits.Value] {
-    def bind(key: String, data: Map[String, String]) = data.get(key) match {
+  private def selectBenefitsFormatter: Formatter[Benefits.Value] = new Formatter[Benefits.Value] {
+    def bind(key: String, data: Map[String, String]): Either[Seq[FormError], Benefits.Value] = data.get(key) match {
       case Some(s) if optionIsValid(s) => Right(Benefits.withName(s))
       case None => produceError(key, "selectBenefits.blank")
       case _ => produceError(key, "error.unknown")
@@ -34,7 +34,7 @@ object SelectBenefitsForm extends FormErrorHelper {
     def unbind(key: String, value: Benefits.Value) = Map(key -> value.toString)
   }
 
-  private def optionIsValid(value: String): Boolean = options.values.toSeq.contains(value)
+  private def optionIsValid(value: String): Boolean = options.contains(value)
 
   private def constraint: Constraint[Set[Benefits.Value]] = Constraint {
     case set if set.nonEmpty =>
@@ -48,8 +48,8 @@ object SelectBenefitsForm extends FormErrorHelper {
       "value" -> set(of(selectBenefitsFormatter)).verifying(constraint)
     )
 
-  def options: Map[String, String] = Benefits.values.map {
+  def options: Seq[(String, Benefits.Value)] = Benefits.options.map {
     value =>
-      s"selectBenefits.$value" -> value.toString
-  }.toMap
+      s"selectBenefits.$value" -> value
+  }
 }

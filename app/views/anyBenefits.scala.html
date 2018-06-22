@@ -15,10 +15,9 @@
  *@
 
 @import config.FrontendAppConfig
-@import uk.gov.hmrc.play.views.html._
 @import controllers.routes._
 @import models.Mode
-@import utils.FormHelpers
+@import uk.gov.hmrc.play.views.html._
 @import viewmodels.InputViewModel
 
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: String)(implicit request: Request[_], messages: Messages)
@@ -38,7 +37,7 @@
 
         <p>@messages(messages("anyBenefits.listHeading"))</p>
 
-        @components.list("anyBenefits", Seq("list1", "list2", "list3", "list4", "list5", "list6", "list7"))
+        @components.list("anyBenefits", Benefits.options)
 
         @components.input_yes_no(
             InputViewModel("value", form),
