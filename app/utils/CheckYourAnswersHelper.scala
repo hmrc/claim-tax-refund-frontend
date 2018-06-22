@@ -196,12 +196,6 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
         s"$x", false, routes.NomineeFullNameController.onPageLoad(CheckMode).url)
   }
 
-  def otherIncomeDetailsAndAmount: Option[AnswerRow] = userAnswers.otherIncomeDetailsAndAmount map {
-    x =>
-      AnswerRow("otherIncomeDetailsAndAmount.checkYourAnswersLabel",
-        s"$x", false, routes.OtherIncomeDetailsAndAmountController.onPageLoad(CheckMode).url)
-  }
-
   def anyOtherTaxableIncome: Option[AnswerRow] = userAnswers.anyOtherTaxableIncome map {
     x =>
       AnswerRow("anyOtherTaxableIncome.checkYourAnswersLabel",

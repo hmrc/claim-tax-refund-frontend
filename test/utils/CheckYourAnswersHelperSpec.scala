@@ -219,13 +219,6 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     }
   }
 
-  "Other taxable income details and amount" must {
-    s"have the correct label" in {
-      when(answers.otherIncomeDetailsAndAmount) thenReturn Some("9,999.99")
-      helper.otherIncomeDetailsAndAmount.get.label.key mustBe s"otherIncomeDetailsAndAmount.checkYourAnswersLabel"
-    }
-  }
-
   "Is WhereToSendPayment yourself" must {
     s"have the correct label" in {
       when(answers.whereToSendPayment) thenReturn Some(Myself)
