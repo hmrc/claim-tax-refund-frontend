@@ -21,19 +21,19 @@ import forms.BooleanForm
 import models.NormalMode
 import play.api.data.Form
 import views.behaviours.YesNoViewBehaviours
-import views.html.otherIncome
+import views.html.anyTaxableIncome
 
 class OtherIncomeViewSpec extends YesNoViewBehaviours {
 
-  val messageKeyPrefix = "otherIncome"
+  val messageKeyPrefix = "anyTaxableIncome"
 
   override val form = new BooleanForm()()
 
-  def createView = () => otherIncome(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createView = () => anyTaxableIncome(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[_]) => otherIncome(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[_]) => anyTaxableIncome(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
-  "OtherIncome view" must {
+  "AnyTaxableIncome view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -41,6 +41,6 @@ class OtherIncomeViewSpec extends YesNoViewBehaviours {
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.OtherIncomeController.onSubmit(NormalMode).url)
+    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.AnyTaxableIncomeController.onSubmit(NormalMode).url)
   }
 }

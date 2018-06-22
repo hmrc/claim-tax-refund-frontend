@@ -24,25 +24,25 @@
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("otherIncome.title"),
+    title = messages("anyTaxableIncome.title"),
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @helpers.form(action = OtherIncomeController.onSubmit(mode), 'autoComplete -> "off") {
+    @helpers.form(action = AnyTaxableIncomeController.onSubmit(mode), 'autoComplete -> "off") {
 
         @components.back_link()
 
         @components.error_summary(form.errors)
 
-        @components.heading("otherIncome.heading", secondaryHeaderKey = Some("index.title"))
+        @components.heading("anyTaxableIncome.heading", secondaryHeaderKey = Some("index.title"))
 
-        <p>@messages(messages("otherIncome.listHeading"))</p>
+        <p>@messages(messages("anyTaxableIncome.listHeading"))</p>
 
-        @components.list("otherIncome", Seq("list1", "list2", "list3", "list4", "list5"))
+        @components.list("anyTaxableIncome", Seq("list1", "list2", "list3", "list4", "list5"))
 
         @components.input_yes_no(
             InputViewModel("value", form),
-            label = messages("otherIncome.heading"),
+            label = messages("anyTaxableIncome.heading"),
             labelClass = Some("visually-hidden")
         )
 

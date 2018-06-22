@@ -149,16 +149,16 @@ anyBenefits.list5 = incapacity benefit
 anyBenefits.list6 = state pension
 anyBenefits.list7 = other taxable benefit
 
-otherIncome.title = Did you get any other income in the tax year your claim is for?
-otherIncome.heading = Did you get any other income in the tax year your claim is for?
-otherIncome.listHeading = Taxable income can be something like:
-otherIncome.list1 = rental income
-otherIncome.list2 = bank or building society interest
-otherIncome.list3 = investments or dividends
-otherIncome.list4 = foreign income
-otherIncome.list5 = other incomes
-otherIncome.checkYourAnswersLabel = Did you get any other income in the tax year your claim is for?
-otherIncome.blank = Select yes if you got any other income in the tax year your claim is for
+anyTaxableIncome.title = Did you get any other income in the tax year your claim is for?
+anyTaxableIncome.heading = Did you get any other income in the tax year your claim is for?
+anyTaxableIncome.listHeading = Taxable income can be something like:
+anyTaxableIncome.list1 = rental income
+anyTaxableIncome.list2 = bank or building society interest
+anyTaxableIncome.list3 = investments or dividends
+anyTaxableIncome.list4 = foreign income
+anyTaxableIncome.list5 = other incomes
+anyTaxableIncome.checkYourAnswersLabel = Did you get any other income in the tax year your claim is for?
+anyTaxableIncome.blank = Select yes if you got any other income in the tax year your claim is for
 
 howMuchCarBenefits.title = How much did you get for the company car between
 howMuchCarBenefits.heading = How much did you get for the company car between

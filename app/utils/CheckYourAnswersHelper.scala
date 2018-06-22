@@ -264,11 +264,11 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
         s"$x", false, routes.HowMuchCarBenefitsController.onPageLoad(CheckMode).url)
   }
 
-  def otherIncome: Option[AnswerRow] = userAnswers.otherIncome map {
+  def anyTaxableIncome: Option[AnswerRow] = userAnswers.anyTaxableIncome map {
     x =>
-      AnswerRow("otherIncome.checkYourAnswersLabel",
+      AnswerRow("anyTaxableIncome.checkYourAnswersLabel",
         if (x) "site.yes" else "site.no",
-        true, routes.OtherIncomeController.onPageLoad(CheckMode).url)
+        true, routes.AnyTaxableIncomeController.onPageLoad(CheckMode).url)
   }
 
   def anyBenefits: Option[AnswerRow] = userAnswers.anyBenefits map {

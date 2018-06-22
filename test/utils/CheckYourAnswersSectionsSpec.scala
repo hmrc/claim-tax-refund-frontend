@@ -159,7 +159,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       when(answers.selectTaxYear) thenReturn Some(CYMinus2)
       when(answers.employmentDetails) thenReturn Some(false)
       when(answers.anyBenefits) thenReturn Some(false)
-      when(answers.otherIncome) thenReturn Some(false)
+      when(answers.anyTaxableIncome) thenReturn Some(false)
 
       val sections = new CheckYourAnswersSections(helper, MockUserAnswers.minimalValidUserAnswers)
       val rows = sections.incomeDetails.rows
@@ -168,7 +168,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       rows.head.label.key mustBe "selectTaxYear.checkYourAnswersLabel"
       rows(1).label.key mustBe "employmentDetails.checkYourAnswersLabel"
       rows(2).label.key mustBe "anyBenefits.checkYourAnswersLabel"
-      rows(3).label.key mustBe "otherIncome.checkYourAnswersLabel"
+      rows(3).label.key mustBe "anyTaxableIncome.checkYourAnswersLabel"
     }
 
     "have the correct rows in the right order in the Contact Details section" in {
