@@ -172,10 +172,10 @@ howMuchRentalIncome.checkYourAnswersLabel = Amount of rental income you got in t
 howMuchRentalIncome.blank = Enter the amount of rental income you got in the tax year your claim is for
 howMuchRentalIncome.invalid = Enter a valid amount of rental income you got in the tax year your claim is for
 
-anyOtherTaxableBenefits.title = Did you get any other taxable benefits in the tax year your claim is for?
-anyOtherTaxableBenefits.heading = Did you get any other taxable benefits in the tax year your claim is for?
-anyOtherTaxableBenefits.blank = Select yes if you got any other taxable benefits in the tax year your claim is for
-anyOtherTaxableBenefits.checkYourAnswersLabel = Did you get any other taxable benefits in the tax year your claim is for?
+anyOtherBenefits.title = Did you get any other taxable benefits in the tax year your claim is for?
+anyOtherBenefits.heading = Did you get any other taxable benefits in the tax year your claim is for?
+anyOtherBenefits.blank = Select yes if you got any other taxable benefits in the tax year your claim is for
+anyOtherBenefits.checkYourAnswersLabel = Did you get any other taxable benefits in the tax year your claim is for?
 
 howMuchJobseekersAllowance.title = How much Jobseeker''s Allowance did you get in the tax year your claim is for?
 howMuchJobseekersAllowance.heading = How much Jobseeker''s Allowance did you get in the tax year your claim is for?
