@@ -19,34 +19,34 @@ package views
 import config.FrontendAppConfig
 import play.api.data.Form
 import controllers.routes
-import forms.OtherCompanyBenefitsDetailsForm
+import forms.OtherCompanyBenefitsNameForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
 import views.behaviours.StringViewBehaviours
-import views.html.otherCompanyBenefitsDetails
+import views.html.otherCompanyBenefitsName
 
-class OtherCompanyBenefitsDetailsViewSpec extends StringViewBehaviours with MockitoSugar {
+class OtherCompanyBenefitsNameViewSpec extends StringViewBehaviours with MockitoSugar {
 
-  val messageKeyPrefix = "otherCompanyBenefitsDetails"
+  val messageKeyPrefix = "otherCompanyBenefitsName"
 
   private val taxYear = CYMinus2.asString
 
   val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
-  override val form: Form[String] = new OtherCompanyBenefitsDetailsForm(appConfig)()
+  override val form: Form[String] = new OtherCompanyBenefitsNameForm(appConfig)()
 
-  def createView = () => otherCompanyBenefitsDetails(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createView = () => otherCompanyBenefitsName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) => otherCompanyBenefitsDetails(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[String]) => otherCompanyBenefitsName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
-  "OtherCompanyBenefitsDetails view" must {
+  "OtherCompanyBenefitsName view" must {
     behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, " " + taxYear, messages("global.questionMark"))
 
     behave like pageWithBackLink(createView)
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.OtherCompanyBenefitsDetailsController.onSubmit(NormalMode).url)
+    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.OtherCompanyBenefitsNameController.onSubmit(NormalMode).url)
   }
 }
