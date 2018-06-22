@@ -19,16 +19,16 @@ package controllers
 import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.BooleanForm
-import identifiers.AnyOtherTaxableBenefitsId
+import identifiers.AnyOtherBenefitsId
 import models.NormalMode
 import play.api.data.Form
 import play.api.libs.json.JsBoolean
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
 import utils.FakeNavigator
-import views.html.anyOtherTaxableBenefits
+import views.html.anyOtherBenefits
 
-class AnyOtherTaxableBenefitsControllerSpec extends ControllerSpecBase {
+class AnyOtherBenefitsControllerSpec extends ControllerSpecBase {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
@@ -36,12 +36,12 @@ class AnyOtherTaxableBenefitsControllerSpec extends ControllerSpecBase {
   val form = formProvider()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new AnyOtherTaxableBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+    new AnyOtherBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, formProvider)
 
-  def viewAsString(form: Form[_] = form) = anyOtherTaxableBenefits(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = form) = anyOtherBenefits(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
 
-  "AnyOtherTaxableBenefits Controller" must {
+  "AnyOtherBenefits Controller" must {
 
     "return OK and the correct view for a GET" in {
       val result = controller().onPageLoad(NormalMode)(fakeRequest)
@@ -51,7 +51,7 @@ class AnyOtherTaxableBenefitsControllerSpec extends ControllerSpecBase {
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      val validData = Map(AnyOtherTaxableBenefitsId.toString -> JsBoolean(true))
+      val validData = Map(AnyOtherBenefitsId.toString -> JsBoolean(true))
       val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validData)))
 
       val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)
