@@ -39,7 +39,7 @@
             form("value"),
             legend = messages("selectTaxableIncome.heading"),
             legendClass = Some("visually-hidden"),
-            inputs = SelectTaxableIncomeForm.options
+            inputs = TaxableIncome.sortedTaxableIncome
         )
 
         @components.submit_button()

@@ -20,12 +20,14 @@ import play.api.data.{Form, FormError}
 import play.twirl.api.Html
 import views.ViewSpecBase
 
+import scala.collection.mutable
+
 trait CheckboxViewBehaviours[A] extends ViewSpecBase {
 
   def form: Form[Set[A]]
   def createView(form: Form[Set[A]]): Html
   def createView(): Html = createView(form)
-  def values: Map[String, A]
+  def values: mutable.LinkedHashMap[String, String]
 
   def fieldKey: String
   def errorMessage: String
