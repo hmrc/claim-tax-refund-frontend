@@ -20,18 +20,18 @@ import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.BooleanForm
-import identifiers.AnyOtherTaxableBenefitsId
+import identifiers.AnyOtherBenefitsId
 import javax.inject.Inject
 import models.Mode
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import utils.{Navigator, UserAnswers}
-import views.html.anyOtherTaxableBenefits
+import views.html.anyOtherBenefits
 
 import scala.concurrent.Future
 
-class AnyOtherTaxableBenefitsController @Inject()(appConfig: FrontendAppConfig,
+class AnyOtherBenefitsController @Inject()(appConfig: FrontendAppConfig,
                                                   override val messagesApi: MessagesApi,
                                                   dataCacheConnector: DataCacheConnector,
                                                   navigator: Navigator,
@@ -40,26 +40,26 @@ class AnyOtherTaxableBenefitsController @Inject()(appConfig: FrontendAppConfig,
                                                   requireData: DataRequiredAction,
                                                   formProvider: BooleanForm) extends FrontendController with I18nSupport {
 
-  private val errorKey = "anyOtherTaxableBenefits.blank"
+  private val errorKey = "anyOtherBenefits.blank"
   val form: Form[Boolean] = formProvider(errorKey)
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val preparedForm = request.userAnswers.anyOtherTaxableBenefits match {
+      val preparedForm = request.userAnswers.anyOtherBenefits match {
         case None => form
         case Some(value) => form.fill(value)
       }
-      Ok(anyOtherTaxableBenefits(appConfig, preparedForm, mode))
+      Ok(anyOtherBenefits(appConfig, preparedForm, mode))
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
       form.bindFromRequest().fold(
         (formWithErrors: Form[_]) =>
-          Future.successful(BadRequest(anyOtherTaxableBenefits(appConfig, formWithErrors, mode))),
+          Future.successful(BadRequest(anyOtherBenefits(appConfig, formWithErrors, mode))),
         (value) =>
-          dataCacheConnector.save[Boolean](request.externalId, AnyOtherTaxableBenefitsId.toString, value).map(cacheMap =>
-            Redirect(navigator.nextPage(AnyOtherTaxableBenefitsId, mode)(new UserAnswers(cacheMap))))
+          dataCacheConnector.save[Boolean](request.externalId, AnyOtherBenefitsId.toString, value).map(cacheMap =>
+            Redirect(navigator.nextPage(AnyOtherBenefitsId, mode)(new UserAnswers(cacheMap))))
       )
   }
 }

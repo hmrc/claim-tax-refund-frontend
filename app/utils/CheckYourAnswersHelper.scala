@@ -239,11 +239,11 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
         s"$x", false, routes.HowMuchJobseekersAllowanceController.onPageLoad(CheckMode).url)
   }
 
-  def anyOtherTaxableBenefits: Option[AnswerRow] = userAnswers.anyOtherTaxableBenefits map {
+  def anyOtherBenefits: Option[AnswerRow] = userAnswers.anyOtherBenefits map {
     x =>
-      AnswerRow("anyOtherTaxableBenefits.checkYourAnswersLabel",
+      AnswerRow("anyOtherBenefits.checkYourAnswersLabel",
         if (x) "site.yes" else "site.no",
-        true, routes.AnyOtherTaxableBenefitsController.onPageLoad(CheckMode).url)
+        true, routes.AnyOtherBenefitsController.onPageLoad(CheckMode).url)
   }
 
   def howMuchMedicalBenefits: Option[AnswerRow] = userAnswers.howMuchMedicalBenefits map {

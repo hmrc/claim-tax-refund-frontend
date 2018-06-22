@@ -24,21 +24,21 @@
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("anyOtherTaxableBenefits.title"),
+    title = messages("anyOtherBenefits.title"),
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @helpers.form(action = AnyOtherTaxableBenefitsController.onSubmit(mode), 'autoComplete -> "off") {
+    @helpers.form(action = AnyOtherBenefitsController.onSubmit(mode), 'autoComplete -> "off") {
 
         @components.back_link()
 
         @components.error_summary(form.errors)
 
-        @components.heading("anyOtherTaxableBenefits.heading")
+        @components.heading("anyOtherBenefits.heading")
 
         @components.input_yes_no(
             InputViewModel("value", form),
-            label = messages("anyOtherTaxableBenefits.heading"),
+            label = messages("anyOtherBenefits.heading"),
             labelClass = Some("visually-hidden")
         )
 

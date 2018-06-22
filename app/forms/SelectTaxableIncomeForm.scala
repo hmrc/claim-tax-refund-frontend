@@ -24,7 +24,7 @@ import play.api.data.validation.{Constraint, Invalid, Valid}
 
 object SelectTaxableIncomeForm extends FormErrorHelper {
 
-  private def selectTaxableBenefitsFormatter = new Formatter[TaxableIncome.Value] {
+  private def selectBenefitsFormatter = new Formatter[TaxableIncome.Value] {
     def bind(key: String, data: Map[String, String]) = data.get(key) match {
       case Some(s) if optionIsValid(s) => Right(TaxableIncome.withName(s))
       case _ => produceError(key, "error.unknown")
@@ -44,7 +44,7 @@ object SelectTaxableIncomeForm extends FormErrorHelper {
 
   def apply(): Form[Set[TaxableIncome.Value]] =
     Form(
-      "value" -> set(of(selectTaxableBenefitsFormatter)).verifying(constraint)
+      "value" -> set(of(selectBenefitsFormatter)).verifying(constraint)
     )
 
   def options: Map[String, String] = TaxableIncome.values.map {
