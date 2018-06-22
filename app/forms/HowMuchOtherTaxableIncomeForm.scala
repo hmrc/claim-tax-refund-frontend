@@ -22,17 +22,17 @@ import forms.mappings.Constraints
 import play.api.data.Form
 import play.api.data.Forms._
 
-class HowMuchTaxPaidOnOtherIncomeForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
+class HowMuchOtherTaxableIncomeForm @Inject()(appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 
-  private val howMuchTaxPaidOnOtherIncomeBlankKey = "howMuchTaxPaidOnOtherIncome.blank"
-  private val howMuchTaxPaidOnOtherIncomeInvalidKey = "howMuchTaxPaidOnOtherIncome.invalid"
+  private val howMuchOtherTaxableIncomeBlankKey = "howMuchOtherTaxableIncome.blank"
+  private val howMuchOtherTaxableIncomeInvalidKey = "howMuchOtherTaxableIncome.invalid"
   private val currencyRegex = appConfig.currencyRegex
 
   def apply(): Form[String] = Form(
     "value" -> text.verifying(
       firstError(
-        nonEmpty(howMuchTaxPaidOnOtherIncomeBlankKey),
-        regexValidation(currencyRegex, howMuchTaxPaidOnOtherIncomeInvalidKey)
+        nonEmpty(howMuchOtherTaxableIncomeBlankKey),
+        regexValidation(currencyRegex, howMuchOtherTaxableIncomeInvalidKey)
       )
     )
   )

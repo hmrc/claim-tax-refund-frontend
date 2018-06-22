@@ -24,15 +24,15 @@ import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import connectors.DataCacheConnector
 import controllers.actions._
 import config.FrontendAppConfig
-import forms.HowMuchTaxPaidOnOtherIncomeForm
-import identifiers.HowMuchTaxPaidOnOtherIncomeId
+import forms.HowMuchOtherTaxableIncomeForm
+import identifiers.HowMuchOtherTaxableIncomeId
 import models.Mode
 import utils.{Navigator, UserAnswers}
-import views.html.howMuchTaxPaidOnOtherIncome
+import views.html.howMuchOtherTaxableIncome
 
 import scala.concurrent.Future
 
-class HowMuchTaxPaidOnOtherIncomeController @Inject()(
+class HowMuchOtherTaxableIncomeController @Inject()(
                                         appConfig: FrontendAppConfig,
                                         override val messagesApi: MessagesApi,
                                         dataCacheConnector: DataCacheConnector,
@@ -40,13 +40,13 @@ class HowMuchTaxPaidOnOtherIncomeController @Inject()(
                                         authenticate: AuthAction,
                                         getData: DataRetrievalAction,
                                         requireData: DataRequiredAction,
-                                        formBuilder: HowMuchTaxPaidOnOtherIncomeForm) extends FrontendController with I18nSupport {
+                                        formBuilder: HowMuchOtherTaxableIncomeForm) extends FrontendController with I18nSupport {
 
   private val form: Form[String] = formBuilder()
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val preparedForm = request.userAnswers.howMuchTaxPaidOnOtherIncome match {
+      val preparedForm = request.userAnswers.howMuchOtherTaxableIncome match {
         case None => form
         case Some(value) => form.fill(value)
       }
@@ -54,7 +54,7 @@ class HowMuchTaxPaidOnOtherIncomeController @Inject()(
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
           val taxYear = selectedTaxYear.asString
-          Ok(howMuchTaxPaidOnOtherIncome(appConfig, preparedForm, mode, taxYear))
+          Ok(howMuchOtherTaxableIncome(appConfig, preparedForm, mode, taxYear))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
@@ -67,10 +67,10 @@ class HowMuchTaxPaidOnOtherIncomeController @Inject()(
           val taxYear = selectedTaxYear.asString
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(howMuchTaxPaidOnOtherIncome(appConfig, formWithErrors, mode, taxYear))),
+              Future.successful(BadRequest(howMuchOtherTaxableIncome(appConfig, formWithErrors, mode, taxYear))),
             value =>
-              dataCacheConnector.save[String](request.externalId, HowMuchTaxPaidOnOtherIncomeId.toString, value).map(cacheMap =>
-                Redirect(navigator.nextPage(HowMuchTaxPaidOnOtherIncomeId, mode)(new UserAnswers(cacheMap))))
+              dataCacheConnector.save[String](request.externalId, HowMuchOtherTaxableIncomeId.toString, value).map(cacheMap =>
+                Redirect(navigator.nextPage(HowMuchOtherTaxableIncomeId, mode)(new UserAnswers(cacheMap))))
           )
       }.getOrElse {
         Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
