@@ -135,8 +135,8 @@ partialClaimAmount.blank = Enter the amount you want to claim
 partialClaimAmount.invalid = Enter a valid amount you want to claim
 partialClaimAmount.hintLine1 = Enter an amount that is less than the amount you overpaid.
 
-anyBenefits.title = Did you get any of these benefits between
-anyBenefits.heading = Did you get any of these benefits between
+anyBenefits.title = Did you get any of these benefits between {0}?
+anyBenefits.heading = Did you get any of these benefits between {0}?
 anyBenefits.checkYourAnswersLabel = Did you get any taxable benefits in the tax year that your claim relates to?
 anyBenefits.blank = Select yes if you got any taxable benefits in the tax year that your claim relates to
 anyBenefits.listHeading = A benefit can be something like:
@@ -159,8 +159,8 @@ anyTaxableIncome.list5 = other incomes
 anyTaxableIncome.checkYourAnswersLabel = Did you get any other income in the tax year your claim is for?
 anyTaxableIncome.blank = Select yes if you got any other income in the tax year your claim is for
 
-howMuchCarBenefits.title = How much did you get for the company car between
-howMuchCarBenefits.heading = How much did you get for the company car between
+howMuchCarBenefits.title = How much did you get for the company car between {0}?
+howMuchCarBenefits.heading = How much did you get for the company car between {0}?
 howMuchCarBenefits.checkYourAnswersLabel = Company car benefit
 howMuchCarBenefits.blank = Enter the amount you got for the company car benefit
 howMuchCarBenefits.invalid = Enter a valid amount you got in company car benefit
@@ -217,10 +217,8 @@ nomineeFullName.checkYourAnswersLabel = Full name of the person you want us to s
 nomineeFullName.blank = Enter the full name of the person you want us to send any payment to
 nomineeFullName.tooLong = Full name of the person you want us to send any payment to can only be up to 30 characters
 
-anyAgentRef.title = Does
-anyAgentRef.titleSuffix = have an agent reference?
-anyAgentRef.heading = Does
-anyAgentRef.headingSuffix = have an agent reference?
+anyAgentRef.title = Does {0} have an agent reference?
+anyAgentRef.heading = Does {0} have an agent reference?
 anyAgentRef.checkYourAnswersLabel = Does have an agent reference?
 anyAgentRef.blank = Select yes if the person you want us to send any payment to has an agent reference
 anyAgentRef.agentRefField = Agent reference
@@ -278,8 +276,8 @@ selectCompanyBenefits.fuel-benefit = Fuel benefit
 selectCompanyBenefits.medical-benefit = Medical benefit
 selectCompanyBenefits.other-company-benefit = Other company benefits
 
-anyCompanyBenefits.title = Did you get any company benefits from your employer between
-anyCompanyBenefits.heading = Did you get any company benefits from your employer between
+anyCompanyBenefits.title = Did you get any company benefits from your employer between {0}?
+anyCompanyBenefits.heading = Did you get any company benefits from your employer between {0}?
 anyCompanyBenefits.checkYourAnswersLabel = Did you get any taxable company benefits in the tax year that your claim relates to?
 anyCompanyBenefits.blank =  Select yes if you claimed any company benefits from
 anyCompanyBenefits.listHeading = A company benefit can be something like:
@@ -288,8 +286,8 @@ anyCompanyBenefits.list2 = fuel benefit
 anyCompanyBenefits.list3 = medical benefit
 anyCompanyBenefits.list4 = other company benefits from your employer
 
-howMuchFuelBenefit.title = How much fuel benefit did you get between
-howMuchFuelBenefit.heading = How much fuel benefit did you get between
+howMuchFuelBenefit.title = How much fuel benefit did you get between {0}?
+howMuchFuelBenefit.heading = How much fuel benefit did you get between {0}?
 howMuchFuelBenefit.checkYourAnswersLabel = Fuel benefit
 howMuchFuelBenefit.blank = Enter the amount you got for fuel benefit
 howMuchFuelBenefit.invalid = Enter a valid amount you got in fuel benefit
@@ -330,51 +328,51 @@ anyOtherCompanyBenefits.heading = Did you get any other company benefits between
 anyOtherCompanyBenefits.checkYourAnswersLabel = Did you get any other company benefits?
 anyOtherCompanyBenefits.blank = Did you get any other company benefits in the tax year your claim is for?
 
-howMuchBereavementAllowance.title = How much bereavement allowance did you get between
-howMuchBereavementAllowance.heading = How much bereavement allowance did you get between
+howMuchBereavementAllowance.title = How much bereavement allowance did you get between {0}?
+howMuchBereavementAllowance.heading = How much bereavement allowance did you get between {0}?
 howMuchBereavementAllowance.checkYourAnswersLabel = Bereavement allowance
 howMuchBereavementAllowance.blank = Enter the amount you got in bereavement allowance
 howMuchBereavementAllowance.invalid = Enter a valid amount of bereavement allowance
 
-howMuchCarersAllowance.title = How much carers allowance did you get between
-howMuchCarersAllowance.heading = How much carers allowance did you get between
+howMuchCarersAllowance.title = How much carers allowance did you get between {0}?
+howMuchCarersAllowance.heading = How much carers allowance did you get between {0}?
 howMuchCarersAllowance.checkYourAnswersLabel = Carers Allowance
 howMuchCarersAllowance.blank = Enter the amount of carers allowance
 howMuchCarersAllowance.invalid = Enter a valid amount of carers allowance
 
-otherBenefitsName.title = What is the name of the taxable benefit you were getting between
-otherBenefitsName.heading = What is the name of the taxable benefit you were getting between
+otherBenefitsName.title = What is the name of the taxable benefit you were getting between {0}?
+otherBenefitsName.heading = What is the name of the taxable benefit you were getting between {0}?
 otherBenefitsName.checkYourAnswersLabel = Other benefits name
 otherBenefitsName.blank = Enter the name of the taxable benefit you got
 
-howMuchOtherBenefit.title = How much did you get between
-howMuchOtherBenefit.heading = How much did you get between
+howMuchOtherBenefit.title = How much did you get between {0}?
+howMuchOtherBenefit.heading = How much did you get between {0}?
 howMuchOtherBenefit.checkYourAnswersLabel = Other benefit
 howMuchOtherBenefit.blank = Enter the amount you got for this benefit
 howMuchOtherBenefit.invalid = Enter a valid amount you got for this benefit
 
-howMuchForeignIncome.title = How much tax did you pay on Foreign income between
-howMuchForeignIncome.heading = How much tax did you pay on Foreign income between
+howMuchForeignIncome.title = How much tax did you pay on Foreign income between {0}?
+howMuchForeignIncome.heading = How much tax did you pay on Foreign income between {0}?
 howMuchForeignIncome.checkYourAnswersLabel = Foreign income
 howMuchForeignIncome.blank = Enter the amount of tax you paid on foreign income
 howMuchForeignIncome.invalid = Enter a valid amount of tax you paid on foreign income
 
-howMuchBankInterest.title = How much tax did you pay on bank or building society interest income between
-howMuchBankInterest.heading = How much tax did you pay on bank or building society interest income between
+howMuchBankInterest.title = How much tax did you pay on bank or building society interest income between {0}?
+howMuchBankInterest.heading = How much tax did you pay on bank or building society interest income between {0}?
 howMuchBankInterest.hint = This may be shown on an annual statement from your bank or building society.
 howMuchBankInterest.checkYourAnswersLabel = Bank or building society interest
 howMuchBankInterest.blank = Enter the amount of tax you paid on bank or building society interest
 howMuchBankInterest.invalid = Enter a valid amount of tax you paid on bank or building society interest
 
-detailsOfEmploymentOrPension.title = What were the details of your employment or pension between
-detailsOfEmploymentOrPension.heading = What were the details of your employment or pension between
+detailsOfEmploymentOrPension.title = What were the details of your employment or pension between {0}?
+detailsOfEmploymentOrPension.heading = What were the details of your employment or pension between {0}?
 detailsOfEmploymentOrPension.hintText = Tell us the name of your employer or pension provider and the start and end dates
 detailsOfEmploymentOrPension.checkYourAnswersLabel = Details of employment or pension
 detailsOfEmploymentOrPension.blank = Enter details of your employment or pension
 detailsOfEmploymentOrPension.tooLong = Details of employment or pension exceeds the maximum 500 characters
 
-selectTaxableIncome.title = Which taxable income you have got between
-selectTaxableIncome.heading = Which taxable income you have got between
+selectTaxableIncome.title = Which taxable income you have got between {0}?
+selectTaxableIncome.heading = Which taxable income you have got between {0}?
 selectTaxableIncome.checkYourAnswersLabel = Did you get any taxable income in the tax year that your claim relates to?
 selectTaxableIncome.blank = Select a taxable income
 selectTaxableIncome.rental-income = Rental income
@@ -383,14 +381,14 @@ selectTaxableIncome.investment-or-dividends = Investments or dividends
 selectTaxableIncome.foreign-income = Foreign income
 selectTaxableIncome.other-taxable-income = Other taxable income
 
-howMuchInvestmentOrDividend.title = How much tax did you pay on investment or dividend income between
-howMuchInvestmentOrDividend.heading = How much tax did you pay on investment or dividend income between
+howMuchInvestmentOrDividend.title = How much tax did you pay on investment or dividend income between {0}?
+howMuchInvestmentOrDividend.heading = How much tax did you pay on investment or dividend income between {0}?
 howMuchInvestmentOrDividend.checkYourAnswersLabel = Investment or dividend
 howMuchInvestmentOrDividend.blank = Enter a valid amount of tax you paid on investment or dividend
 howMuchInvestmentOrDividend.invalid = Enter a valid amount of tax you paid on investment or dividend
 
-howMuchOtherTaxableIncome.title = How much tax did you pay on your income between
-howMuchOtherTaxableIncome.heading = How much tax did you pay on your income between
+howMuchOtherTaxableIncome.title = How much tax did you pay on your income between {0}?
+howMuchOtherTaxableIncome.heading = How much tax did you pay on your income between {0}?
 howMuchOtherTaxableIncome.checkYourAnswersLabel = How much tax did you pay on your income
 howMuchOtherTaxableIncome.blank = Enter a valid amount of tax you paid on other income
 howMuchOtherTaxableIncome.invalid = Enter a valid amount of tax you paid on other income

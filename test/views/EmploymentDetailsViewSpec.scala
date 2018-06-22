@@ -22,9 +22,10 @@ import forms.BooleanForm
 import models.SelectTaxYear.CYMinus2
 import views.behaviours.YesNoViewBehaviours
 import models.{Employment, NormalMode}
+import play.api.i18n.Messages
 import views.html.employmentDetails
 
-class EmploymentDetailsViewSpec extends YesNoViewBehaviours {
+class EmploymentDetailsViewSpec(implicit messages: Messages) extends YesNoViewBehaviours {
 
   val messageKeyPrefix = "employmentDetails"
 
@@ -32,7 +33,7 @@ class EmploymentDetailsViewSpec extends YesNoViewBehaviours {
 
   val fakeEmployments = Seq(Employment("AVIVA PENSIONS", "754", "AZ00070"))
 
-  def taxYear = CYMinus2.asString
+  private val taxYear = CYMinus2
 
 
   def createViewUsingForm = (form: Form[_]) => employmentDetails(frontendAppConfig, form, NormalMode, fakeEmployments, taxYear)(fakeRequest, messages)

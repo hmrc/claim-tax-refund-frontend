@@ -19,6 +19,7 @@ package utils
 import identifiers._
 import models._
 import models.templates._
+import play.api.i18n.Messages
 import uk.gov.hmrc.http.cache.client.CacheMap
 
 class UserAnswers(val cacheMap: CacheMap) {
@@ -114,7 +115,7 @@ class UserAnswers(val cacheMap: CacheMap) {
 
   def metadata: Option[Metadata] = cacheMap.getEntry[Metadata]("metadata")
 
-  def getSelectedTaxYear: String = {
+  def getSelectedTaxYear(implicit messages: Messages): String = {
     this.selectTaxYear.map {
       selectedTaxYear =>
         selectedTaxYear.asString

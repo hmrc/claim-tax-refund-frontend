@@ -34,7 +34,7 @@ class OtherCompanyBenefitsNameControllerSpec extends ControllerSpecBase with Moc
 
   val testAnswer = "answer"
   val form = new OtherCompanyBenefitsNameForm(frontendAppConfig)()
-  val taxYear: String = CYMinus2.asString
+  private val taxYear = CYMinus2
   private val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =

@@ -20,16 +20,17 @@ import forms.SelectTaxableIncomeForm
 import models.SelectTaxYear.CYMinus2
 import models.{NormalMode, TaxableIncome}
 import play.api.data.Form
+import play.api.i18n.Messages
 import play.twirl.api.Html
 import views.behaviours.{CheckboxViewBehaviours, ViewBehaviours}
 import views.html.selectTaxableIncome
 
-class SelectTaxableIncomeViewSpec extends ViewBehaviours with CheckboxViewBehaviours[TaxableIncome.Value] {
+class SelectTaxableIncomeViewSpec(implicit messages: Messages) extends ViewBehaviours with CheckboxViewBehaviours[TaxableIncome.Value] {
 
   val messageKeyPrefix = "selectTaxableIncome"
   val fieldKey = "value"
   val errorMessage = "error.invalid"
-  val taxYear: String = CYMinus2.asString
+  private val taxYear = CYMinus2
 
 
   val values: Map[String, TaxableIncome.Value] =
@@ -47,7 +48,7 @@ class SelectTaxableIncomeViewSpec extends ViewBehaviours with CheckboxViewBehavi
   def createViewUsingForm = (form: Form[_]) => selectTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "SelectTaxableIncome view" must {
-    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, " " + taxYear, "?")
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, s"${taxYear.asString}?")
 
     behave like pageWithBackLink(createView)
 

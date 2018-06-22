@@ -33,7 +33,7 @@ class HowMuchOtherBenefitControllerSpec extends ControllerSpecBase {
 
   val testAnswer = "9,999.99"
   val form = new HowMuchOtherBenefitForm(frontendAppConfig)()
-  private val taxYear = CYMinus2.asString
+  private val taxYear = CYMinus2
   private val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =

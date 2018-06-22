@@ -16,19 +16,16 @@
 
 package controllers
 
-import play.api.data.Form
-import play.api.libs.json.JsString
-import uk.gov.hmrc.http.cache.client.CacheMap
-import utils.{FakeNavigator, MockUserAnswers}
 import connectors.FakeDataCacheConnector
 import controllers.actions._
-import play.api.test.Helpers._
 import forms.HowMuchBereavementAllowanceForm
-import identifiers.HowMuchBereavementAllowanceId
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
-import views.html.howMuchBereavementAllowance
 import org.mockito.Mockito.when
+import play.api.data.Form
+import play.api.test.Helpers._
+import utils.{FakeNavigator, MockUserAnswers}
+import views.html.howMuchBereavementAllowance
 
 
 class HowMuchBereavementAllowanceControllerSpec extends ControllerSpecBase {
@@ -43,7 +40,7 @@ class HowMuchBereavementAllowanceControllerSpec extends ControllerSpecBase {
   val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
 
   val testAnswer = "9,999.99"
-  val taxYear = CYMinus2.asString
+  private val taxYear = CYMinus2
   val form = new HowMuchBereavementAllowanceForm(frontendAppConfig)()
 
   def viewAsString(form: Form[_] = form) = howMuchBereavementAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString

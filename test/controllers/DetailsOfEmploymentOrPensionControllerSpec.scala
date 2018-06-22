@@ -37,7 +37,7 @@ class DetailsOfEmploymentOrPensionControllerSpec extends ControllerSpecBase {
 
   val testAnswer = "This is some sample text"
   val form = new DetailsOfEmploymentOrPensionForm(frontendAppConfig)()
-  val taxYear = CYMinus2.asString
+  private val taxYear = CYMinus2
   val characterLimit = 500
   val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
 

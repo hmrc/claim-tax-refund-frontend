@@ -33,7 +33,7 @@ class HowMuchBankInterestControllerSpec extends ControllerSpecBase {
 
   private val testAnswer = "9,999.99"
   private val form = new HowMuchBankInterestForm(frontendAppConfig)()
-  private val taxYear: String = CYMinus2.asString
+  private val taxYear = CYMinus2
   private val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =

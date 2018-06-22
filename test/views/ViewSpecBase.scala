@@ -28,8 +28,8 @@ trait ViewSpecBase extends SpecBase {
   def assertEqualsMessage(doc: Document, cssSelector: String, expectedMessageKey: String) =
     assertEqualsValue(doc, cssSelector, messages(expectedMessageKey))
 
-  def assertEqualsDynamicMessage(doc: Document, cssSelector: String, expectedMessageKey: String, dynamicText: String, dynamicTextSuffix: String) =
-    assertEqualsValue(doc, cssSelector, messages(expectedMessageKey) + dynamicText + dynamicTextSuffix)
+  def assertEqualsDynamicMessage(doc: Document, cssSelector: String, expectedMessageKey: String, args: Any*) =
+    assertEqualsValue(doc, cssSelector, messages(expectedMessageKey, args: _*))
 
   def assertEqualsValue(doc: Document, cssSelector: String, expectedValue: String) = {
     val elements = doc.select(cssSelector)
@@ -46,10 +46,10 @@ trait ViewSpecBase extends SpecBase {
     headers.first.text.replaceAll("\u00a0", " ") mustBe messages(expectedMessageKey, args: _*).replaceAll("&nbsp;", " ")
   }
 
-  def assertDynamicPageTitleEqualsMessage(doc: Document, expectedMessageKey: String, dynamicHeading: String, dynamicHeadingSuffix: String, args: Any*) = {
+  def assertDynamicPageTitleEqualsMessage(doc: Document, expectedMessageKey: String, args: Any*) = {
     val headers = doc.getElementsByTag("h1")
     headers.size mustBe 1
-    headers.first.text.replaceAll("\u00a0", " ") mustBe (messages(expectedMessageKey, args: _*).replaceAll("&nbsp;", " ") + dynamicHeading + messages(dynamicHeadingSuffix))
+    headers.first.text.replaceAll("\u00a0", " ") mustBe messages(expectedMessageKey, args: _*).replaceAll("&nbsp;", " ")
   }
 
   def assertContainsText(doc: Document, text: String) = assert(doc.toString.contains(text), "\n\ntext " + text + " was not rendered on the page.\n")
