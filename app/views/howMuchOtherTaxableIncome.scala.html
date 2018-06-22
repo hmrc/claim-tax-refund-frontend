@@ -23,19 +23,19 @@
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: String)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("howMuchTaxPaidOnOtherIncome.title") + s" $taxYear" + messages("global.questionMark"),
+    title = messages("howMuchOtherTaxableIncome.title") + s" $taxYear" + messages("global.questionMark"),
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @helpers.form(action = HowMuchTaxPaidOnOtherIncomeController.onSubmit(mode), 'autoComplete -> "off") {
+    @helpers.form(action = HowMuchOtherTaxableIncomeController.onSubmit(mode), 'autoComplete -> "off") {
 
         @components.back_link()
 
         @components.error_summary(form.errors)
 
-        @components.heading("howMuchTaxPaidOnOtherIncome.heading", dynamicHeading = Some(s"$taxYear" + messages("global.questionMark")), secondaryHeaderKey = Some("index.title"))
+        @components.heading("howMuchOtherTaxableIncome.heading", dynamicHeading = Some(s"$taxYear" + messages("global.questionMark")), secondaryHeaderKey = Some("index.title"))
 
-        @components.input_text(InputViewModel("value", form), label = messages("howMuchTaxPaidOnOtherIncome.heading"), labelClass=Some("visually-hidden"))
+        @components.input_text(InputViewModel("value", form), label = messages("howMuchOtherTaxableIncome.heading"), labelClass=Some("visually-hidden"))
 
         @components.submit_button()
     }
