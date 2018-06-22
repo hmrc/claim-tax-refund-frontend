@@ -36,18 +36,20 @@
         @components.heading("telephoneNumber.heading", secondaryHeaderKey = Some("index.title"))
 
         <p>@messages("telephoneNumber.hintPara1")</p>
-        <p>@messages("telephoneNumber.hintPara2")</p>
 
         @components.input_yes_no(
             InputViewModel("anyTelephoneNumber", form),
             label = messages("telephoneNumber.heading"),
             labelClass = Some("visually-hidden"),
-            yesAssoc = Some("yesTelephoneNumber")
+            yesAssoc = Some("yesTelephoneNumber"),
+            noAssoc = Some("noTelephoneNumber")
         )
 
         <div id="yesTelephoneNumber" class="js-hidden">
             @components.input_text(InputViewModel("telephoneNumber", form), messages("telephoneNumber.telephoneNumberField"), Some("panel"))
         </div>
+
+        <p id="noTelephoneNumber" class="panel js-hidden">@messages("telephoneNumber.hintPara2")</p>
 
         @components.submit_button()
     }
