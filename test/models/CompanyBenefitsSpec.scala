@@ -19,9 +19,6 @@ package models
 import org.scalatest.{MustMatchers, WordSpec}
 import org.scalatest.mockito.MockitoSugar
 
-/**
-  * Created by matthew on 21/06/18.
-  */
 class CompanyBenefitsSpec extends WordSpec with MustMatchers with MockitoSugar {
 
   "CompanyBenefits model" must {

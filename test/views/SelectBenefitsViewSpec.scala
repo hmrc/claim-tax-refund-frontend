@@ -32,10 +32,7 @@ class SelectBenefitsViewSpec(implicit messages: Messages) extends ViewBehaviours
   val errorMessage = "error.invalid"
   private val taxYear = CYMinus2
 
-  val values: Map[String, Benefits.Value] =
-    SelectBenefitsForm.options.map {
-      case (k, v) => k -> Benefits.withName(v)
-    }
+  val values: mutable.LinkedHashMap[String, String] = Benefits.sortedBenefits
 
   def form: Form[Set[Benefits.Value]] = SelectBenefitsForm()
 

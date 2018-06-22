@@ -14,13 +14,14 @@
  * limitations under the License.
  *@
 
+@import scala.collection.mutable
 @(
         field: Field,
         legend: String,
         legendClass: Option[String] = None,
         hint: Option[String] = None,
         trackGa: Boolean = false,
-        inputs: Map[String, String]
+        inputs: mutable.LinkedHashMap[String, String]
 )(implicit messages: Messages)
 
 <div class="form-group @if(field.hasErrors){form-field--error}">
