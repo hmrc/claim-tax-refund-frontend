@@ -41,7 +41,7 @@ class HowMuchCarersAllowanceViewSpec extends StringViewBehaviours with MockitoSu
 
   "HowMuchCarersAllowance view" must {
 
-    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, " " + taxYear, messages("global.questionMark"))
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, " " + taxYear, "?")
 
     behave like pageWithBackLink(createView)
 

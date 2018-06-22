@@ -42,7 +42,7 @@ class DetailsOfEmploymentOrPensionViewSpec extends StringViewBehaviours with Moc
   def createViewUsingForm = (form: Form[String]) => detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages)
 
   "DetailsOfEmploymentOrPension view" must {
-    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, " " + taxYear, messages("global.questionMark"))
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, " " + taxYear, "?")
 
     behave like pageWithBackLink(createView)
 
