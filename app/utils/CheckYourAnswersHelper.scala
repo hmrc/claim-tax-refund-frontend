@@ -25,8 +25,8 @@ import viewmodels.AnswerRow
 
 class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messages){
 
-  def howMuchTaxPaidOnOtherIncome: Option[AnswerRow] = userAnswers.howMuchTaxPaidOnOtherIncome map {
-    x => AnswerRow("howMuchTaxPaidOnOtherIncome.checkYourAnswersLabel", s"$x", false, routes.HowMuchTaxPaidOnOtherIncomeController.onPageLoad(CheckMode).url)
+  def howMuchOtherTaxableIncome: Option[AnswerRow] = userAnswers.howMuchOtherTaxableIncome map {
+    x => AnswerRow("howMuchOtherTaxableIncome.checkYourAnswersLabel", s"$x", false, routes.HowMuchOtherTaxableIncomeController.onPageLoad(CheckMode).url)
   }
 
   def howMuchInvestmentOrDividend: Option[AnswerRow] = userAnswers.howMuchInvestmentOrDividend map {
@@ -264,11 +264,11 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
         s"$x", false, routes.HowMuchCarBenefitsController.onPageLoad(CheckMode).url)
   }
 
-  def otherIncome: Option[AnswerRow] = userAnswers.otherIncome map {
+  def anyTaxableIncome: Option[AnswerRow] = userAnswers.anyTaxableIncome map {
     x =>
-      AnswerRow("otherIncome.checkYourAnswersLabel",
+      AnswerRow("anyTaxableIncome.checkYourAnswersLabel",
         if (x) "site.yes" else "site.no",
-        true, routes.OtherIncomeController.onPageLoad(CheckMode).url)
+        true, routes.AnyTaxableIncomeController.onPageLoad(CheckMode).url)
   }
 
   def anyBenefits: Option[AnswerRow] = userAnswers.anyBenefits map {

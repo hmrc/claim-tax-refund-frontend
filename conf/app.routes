@@ -27,10 +27,10 @@ POST       /did-you-get-any-benefits                                        cont
 GET        /change-if-you-got-benefits                                      controllers.AnyBenefitsController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-if-you-got-benefits                                      controllers.AnyBenefitsController.onSubmit(mode: Mode = CheckMode)
 
-GET        /did-you-get-other-income                                        controllers.OtherIncomeController.onPageLoad(mode: Mode = NormalMode)
-POST       /did-you-get-other-income                                        controllers.OtherIncomeController.onSubmit(mode: Mode = NormalMode)
-GET        /change-if-you-got-other-income                                  controllers.OtherIncomeController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-if-you-got-other-income                                  controllers.OtherIncomeController.onSubmit(mode: Mode = CheckMode)
+GET        /did-you-get-any-taxable-income                                  controllers.AnyTaxableIncomeController.onPageLoad(mode: Mode = NormalMode)
+POST       /did-you-get-any-taxable-income                                  controllers.AnyTaxableIncomeController.onSubmit(mode: Mode = NormalMode)
+GET        /change-if-you-got-any-taxable-income                            controllers.AnyTaxableIncomeController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-if-you-got-any-taxable-income                            controllers.AnyTaxableIncomeController.onSubmit(mode: Mode = CheckMode)
 
 GET        /how-much-car-benefit                                            controllers.HowMuchCarBenefitsController.onPageLoad(mode: Mode = NormalMode)
 POST       /how-much-car-benefit                                            controllers.HowMuchCarBenefitsController.onSubmit(mode: Mode = NormalMode)
@@ -207,7 +207,7 @@ POST       /select-taxable-income                                           cont
 GET        /change-select-taxable-income                                    controllers.SelectTaxableIncomeController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-select-taxable-income                                    controllers.SelectTaxableIncomeController.onSubmit(mode: Mode = CheckMode)
 
-GET        /how-much-tax-paid-on-other-income                               controllers.HowMuchTaxPaidOnOtherIncomeController.onPageLoad(mode: Mode = NormalMode)
-POST       /how-much-tax-paid-on-other-income                               controllers.HowMuchTaxPaidOnOtherIncomeController.onSubmit(mode: Mode = NormalMode)
-GET        /change-how-much-tax-paid-on-other-income                        controllers.HowMuchTaxPaidOnOtherIncomeController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-how-much-tax-paid-on-other-income                        controllers.HowMuchTaxPaidOnOtherIncomeController.onSubmit(mode: Mode = CheckMode)
+GET        /how-much-other-taxable-income                                   controllers.HowMuchOtherTaxableIncomeController.onPageLoad(mode: Mode = NormalMode)
+POST       /how-much-other-taxable-income                                   controllers.HowMuchOtherTaxableIncomeController.onSubmit(mode: Mode = NormalMode)
+GET        /change-how-much-other-taxable-income                            controllers.HowMuchOtherTaxableIncomeController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-how-much-other-taxable-income                            controllers.HowMuchOtherTaxableIncomeController.onSubmit(mode: Mode = CheckMode)

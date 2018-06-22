@@ -21,11 +21,11 @@ import viewmodels.AnswerSection
 class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: UserAnswers) {
 
   def sectionsToShow: Seq[AnswerSection] = {
-    if (userAnswers.anyBenefits == Some(true) && userAnswers.otherIncome == Some(false)) {
+    if (userAnswers.anyBenefits == Some(true) && userAnswers.anyTaxableIncome == Some(false)) {
       Seq(incomeDetails, benefitDetails, paymentDetails, contactDetails)
-    } else if (userAnswers.otherIncome == Some(true) && userAnswers.anyBenefits == Some(false)) {
+    } else if (userAnswers.anyTaxableIncome == Some(true) && userAnswers.anyBenefits == Some(false)) {
       Seq(incomeDetails, otherIncomeDetails, paymentDetails, contactDetails)
-    } else if (userAnswers.otherIncome == Some(true) && userAnswers.anyBenefits == Some(true)) {
+    } else if (userAnswers.anyTaxableIncome == Some(true) && userAnswers.anyBenefits == Some(true)) {
       Seq(incomeDetails, benefitDetails, otherIncomeDetails, paymentDetails, contactDetails)
     } else {
       Seq(incomeDetails, paymentDetails, contactDetails)
@@ -36,7 +36,7 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
     cyaHelper.selectTaxYear,
     cyaHelper.employmentDetails,
     cyaHelper.anyBenefits,
-    cyaHelper.otherIncome
+    cyaHelper.anyTaxableIncome
   ).flatten)
 
   def paymentDetails = AnswerSection(Some("checkYourAnswers.paymentDetailsSection"), Seq(

@@ -23,10 +23,10 @@ import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito._
 import play.api.data.Form
 
-class HowMuchTaxPaidOnOtherIncomeFormSpec extends FormBehaviours with MockitoSugar {
+class HowMuchOtherTaxableIncomeFormSpec extends FormBehaviours with MockitoSugar {
 
-  val errorKeyBlank = "howMuchTaxPaidOnOtherIncome.blank"
-  val errorKeyInvalid = "howMuchTaxPaidOnOtherIncome.invalid"
+  val errorKeyBlank = "howMuchOtherTaxableIncome.blank"
+  val errorKeyInvalid = "howMuchOtherTaxableIncome.invalid"
   val testRegex = """(?=.)^\$?(([1-9][0-9]{0,2}(,[0-9]{3})*)|[0-9]+)?(\.[0-9]{1,2})?$"""
 
   def appConfig: FrontendAppConfig = {
@@ -37,9 +37,9 @@ class HowMuchTaxPaidOnOtherIncomeFormSpec extends FormBehaviours with MockitoSug
 
   val validData: Map[String, String] = Map("value" -> "9,999.99")
 
-  override val form: Form[_] = new HowMuchTaxPaidOnOtherIncomeForm(appConfig)()
+  override val form: Form[_] = new HowMuchOtherTaxableIncomeForm(appConfig)()
 
-  "HowMuchTaxPaidOnOtherIncome Form" must {
+  "howMuchOtherTaxableIncome Form" must {
 
     behave like formWithMandatoryTextFields(MandatoryField("value", errorKeyBlank))
 
