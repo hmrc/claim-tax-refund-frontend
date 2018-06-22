@@ -41,7 +41,7 @@ class HowMuchForeignIncomeViewSpec extends StringViewBehaviours with MockitoSuga
   def createViewUsingForm = (form: Form[String]) => howMuchForeignIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "HowMuchForeignIncome view" must {
-    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, " " + taxYear, messages("global.questionMark"))
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, " " + taxYear, "?")
 
     behave like pageWithBackLink(createView)
 

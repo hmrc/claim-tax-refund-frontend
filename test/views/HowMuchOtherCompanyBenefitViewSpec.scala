@@ -42,7 +42,7 @@ class HowMuchOtherCompanyBenefitViewSpec extends StringViewBehaviours with Mocki
   def createViewUsingForm = (form: Form[String]) => howMuchOtherCompanyBenefit(frontendAppConfig, form, NormalMode, taxYear, otherBenefitName)(fakeRequest, messages)
 
   "HowMuchOtherCompanyBenefit view" must {
-    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, s" $otherBenefitName " + messages("howMuchOtherCompanyBenefit.heading2") + s" $taxYear", messages("global.questionMark"))
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, s" $otherBenefitName " + messages("howMuchOtherCompanyBenefit.heading2") + s" $taxYear", "?")
 
     behave like pageWithBackLink(createView)
 
