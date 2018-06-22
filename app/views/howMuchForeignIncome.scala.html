@@ -23,7 +23,7 @@
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: String)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("howMuchForeignIncome.title") + s" $taxYear" + messages("global.questionMark"),
+    title = messages("howMuchForeignIncome.title") + s" $taxYear?",
     appConfig = appConfig,
     bodyClasses = None) {
 
@@ -35,7 +35,7 @@
 
         @components.heading(
             "howMuchForeignIncome.heading",
-            dynamicHeading = Some(s"$taxYear" + messages("global.questionMark")),
+            dynamicHeading = Some(s"$taxYear?"),
             secondaryHeaderKey = Some("index.title")
         )
 

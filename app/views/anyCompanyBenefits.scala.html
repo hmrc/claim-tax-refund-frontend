@@ -24,7 +24,7 @@
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: String)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("anyCompanyBenefits.title") + s" $taxYear" + messages("global.questionMark"),
+    title = messages("anyCompanyBenefits.title") + s" $taxYear?",
     appConfig = appConfig,
     bodyClasses = None) {
 
@@ -34,7 +34,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading(s"anyCompanyBenefits.heading", dynamicHeading = Some(s"$taxYear" + messages("global.questionMark")), secondaryHeaderKey = Some("index.title"))
+        @components.heading(s"anyCompanyBenefits.heading", dynamicHeading = Some(s"$taxYear?"), secondaryHeaderKey = Some("index.title"))
 
         <p>@messages(messages("anyCompanyBenefits.listHeading"))</p>
 
