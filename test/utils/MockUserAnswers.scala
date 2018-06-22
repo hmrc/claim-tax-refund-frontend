@@ -42,7 +42,7 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.howMuchStatePension) thenReturn None
     when(answers.anyOtherBenefits) thenReturn None
     when(answers.otherBenefitsDetailsAndAmount) thenReturn None
-    when(answers.otherIncome) thenReturn None
+    when(answers.anyTaxableIncome) thenReturn None
     when(answers.howMuchCarBenefits) thenReturn None
     when(answers.howMuchRentalIncome) thenReturn None
     when(answers.howMuchBankInterest) thenReturn None
@@ -70,7 +70,7 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.detailsOfEmploymentOrPension) thenReturn None
     when(answers.selectTaxableIncome) thenReturn None
     when(answers.howMuchInvestmentOrDividend) thenReturn None
-    when(answers.howMuchTaxPaidOnOtherIncome) thenReturn None
+    when(answers.howMuchOtherTaxableIncome) thenReturn None
 
     answers
   }
@@ -92,7 +92,7 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.selectTaxYear) thenReturn Some(SelectTaxYear.CYMinus2)
     when(answers.employmentDetails) thenReturn Some(true)
     when(answers.anyBenefits) thenReturn Some(false)
-    when(answers.otherIncome) thenReturn Some(false)
+    when(answers.anyTaxableIncome) thenReturn Some(false)
     when(answers.whereToSendPayment) thenReturn Some(WhereToSendPayment.Myself)
     when(answers.telephoneNumber) thenReturn Some("123456789")
 
@@ -151,7 +151,7 @@ object MockUserAnswers extends MockitoSugar {
     yourDetailsUserAnswers
     when(answers.anyBenefits) thenReturn Some(true)
     benefitsUserAnswers
-    when(answers.otherIncome) thenReturn Some(false)
+    when(answers.anyTaxableIncome) thenReturn Some(false)
 
     answers
   }
@@ -162,7 +162,7 @@ object MockUserAnswers extends MockitoSugar {
 
     yourDetailsUserAnswers
     when(answers.anyBenefits) thenReturn Some(false)
-    when(answers.otherIncome) thenReturn Some(true)
+    when(answers.anyTaxableIncome) thenReturn Some(true)
     incomeUserAnswers
 
     answers
@@ -175,7 +175,7 @@ object MockUserAnswers extends MockitoSugar {
     yourDetailsUserAnswers
     when(answers.anyBenefits) thenReturn Some(true)
     benefitsUserAnswers
-    when(answers.otherIncome) thenReturn Some(true)
+    when(answers.anyTaxableIncome) thenReturn Some(true)
     incomeUserAnswers
 
     answers

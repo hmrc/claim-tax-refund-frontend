@@ -24,7 +24,7 @@ import uk.gov.hmrc.http.cache.client.CacheMap
 class UserAnswers(val cacheMap: CacheMap) {
   def selectTaxableIncome: Option[Set[TaxableIncome.Value]] = cacheMap.getEntry[Set[TaxableIncome.Value]](SelectTaxableIncomeId.toString)
 
-  def howMuchTaxPaidOnOtherIncome: Option[String] = cacheMap.getEntry[String](HowMuchTaxPaidOnOtherIncomeId.toString)
+  def howMuchOtherTaxableIncome: Option[String] = cacheMap.getEntry[String](HowMuchOtherTaxableIncomeId.toString)
 
   def howMuchInvestmentOrDividend: Option[String] = cacheMap.getEntry[String](HowMuchInvestmentOrDividendId.toString)
 
@@ -98,7 +98,7 @@ class UserAnswers(val cacheMap: CacheMap) {
 
   def howMuchCarBenefits: Option[String] = cacheMap.getEntry[String](HowMuchCarBenefitsId.toString)
 
-  def otherIncome: Option[Boolean] = cacheMap.getEntry[Boolean](OtherIncomeId.toString)
+  def anyTaxableIncome: Option[Boolean] = cacheMap.getEntry[Boolean](AnyTaxableIncomeId.toString)
 
   def anyBenefits: Option[Boolean] = cacheMap.getEntry[Boolean](AnyBenefitsId.toString)
 

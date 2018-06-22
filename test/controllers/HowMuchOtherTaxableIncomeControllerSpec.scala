@@ -21,32 +21,32 @@ import utils.{FakeNavigator, MockUserAnswers}
 import connectors.FakeDataCacheConnector
 import controllers.actions._
 import play.api.test.Helpers._
-import forms.HowMuchTaxPaidOnOtherIncomeForm
+import forms.HowMuchOtherTaxableIncomeForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.mockito.Mockito.when
-import views.html.howMuchTaxPaidOnOtherIncome
+import views.html.howMuchOtherTaxableIncome
 
 
-class HowMuchTaxPaidOnOtherIncomeControllerSpec extends ControllerSpecBase {
+class HowMuchOtherTaxableIncomeControllerSpec extends ControllerSpecBase {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new HowMuchTaxPaidOnOtherIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector,
+    new HowMuchOtherTaxableIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector,
       new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, new HowMuchTaxPaidOnOtherIncomeForm(frontendAppConfig))
+      dataRetrievalAction, new DataRequiredActionImpl, new HowMuchOtherTaxableIncomeForm(frontendAppConfig))
 
   val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
 
   val testAnswer = "9,999.99"
   def taxYear = CYMinus2.asString
 
-  val form = new HowMuchTaxPaidOnOtherIncomeForm(frontendAppConfig)()
+  val form = new HowMuchOtherTaxableIncomeForm(frontendAppConfig)()
 
-  def viewAsString(form: Form[_] = form) = howMuchTaxPaidOnOtherIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = form) = howMuchOtherTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
 
-  "HowMuchTaxPaidOnOtherIncome Controller" must {
+  "howMuchOtherTaxableIncome Controller" must {
 
     "return OK and the correct view for a GET" in {
       val result = controller(someData).onPageLoad(NormalMode)(fakeRequest)
@@ -56,7 +56,7 @@ class HowMuchTaxPaidOnOtherIncomeControllerSpec extends ControllerSpecBase {
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      when (mockUserAnswers.howMuchTaxPaidOnOtherIncome).thenReturn(Some(testAnswer))
+      when (mockUserAnswers.howMuchOtherTaxableIncome).thenReturn(Some(testAnswer))
 
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 

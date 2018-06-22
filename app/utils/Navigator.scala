@@ -33,8 +33,8 @@ class Navigator @Inject()() {
     AnyBenefitsId -> anyBenefits,
     HowMuchStatePensionId -> (_ => routes.AnyOtherBenefitsController.onPageLoad(NormalMode)),
     AnyOtherBenefitsId -> anyOtherBenefits,
-    OtherBenefitsDetailsAndAmountId -> (_ => routes.OtherIncomeController.onPageLoad(NormalMode)),
-    OtherIncomeId -> otherTaxableIncome,
+    OtherBenefitsDetailsAndAmountId -> (_ => routes.AnyTaxableIncomeController.onPageLoad(NormalMode)),
+    AnyTaxableIncomeId -> otherTaxableIncome,
     HowMuchMedicalBenefitsId -> (_ => routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)),
     AnyOtherTaxableIncomeId -> anyOtherTaxableIncome,
     OtherIncomeDetailsAndAmountId -> (_ => routes.WhereToSendPaymentController.onPageLoad(NormalMode)),
@@ -58,17 +58,17 @@ class Navigator @Inject()() {
 
   private def anyBenefits(userAnswers: UserAnswers): Call = userAnswers.anyBenefits match {
     case Some(true) => routes.SelectBenefitsController.onPageLoad(NormalMode)
-    case Some(false) => routes.OtherIncomeController.onPageLoad(NormalMode)
+    case Some(false) => routes.AnyTaxableIncomeController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
   private def anyOtherBenefits(userAnswers: UserAnswers): Call = userAnswers.anyOtherBenefits match {
     case Some(true) => routes.OtherBenefitsDetailsAndAmountController.onPageLoad(NormalMode)
-    case Some(false) => routes.OtherIncomeController.onPageLoad(NormalMode)
+    case Some(false) => routes.AnyTaxableIncomeController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
-  private def otherTaxableIncome(userAnswers: UserAnswers): Call = userAnswers.otherIncome match {
+  private def otherTaxableIncome(userAnswers: UserAnswers): Call = userAnswers.anyTaxableIncome match {
     case Some(true) => routes.SelectTaxableIncomeController.onPageLoad(NormalMode)
     case Some(false) => routes.TelephoneNumberController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()

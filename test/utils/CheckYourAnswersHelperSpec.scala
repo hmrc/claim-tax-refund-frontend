@@ -123,15 +123,15 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
 
   "Is other income (true)" must {
     s"have the correct label" in {
-      when(answers.otherIncome) thenReturn Some(true)
-      helper.otherIncome.get.label.key mustBe s"otherIncome.checkYourAnswersLabel"
+      when(answers.anyTaxableIncome) thenReturn Some(true)
+      helper.anyTaxableIncome.get.label.key mustBe s"anyTaxableIncome.checkYourAnswersLabel"
     }
   }
 
   "Is other income (false)" must {
     s"have the correct label" in {
-      when(answers.otherIncome) thenReturn Some(false)
-      helper.otherIncome.get.label.key mustBe s"otherIncome.checkYourAnswersLabel"
+      when(answers.anyTaxableIncome) thenReturn Some(false)
+      helper.anyTaxableIncome.get.label.key mustBe s"anyTaxableIncome.checkYourAnswersLabel"
     }
   }
 

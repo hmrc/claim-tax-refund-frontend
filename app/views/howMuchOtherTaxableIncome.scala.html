@@ -18,33 +18,24 @@
 @import uk.gov.hmrc.play.views.html._
 @import controllers.routes._
 @import models.Mode
-@import utils.FormHelpers
 @import viewmodels.InputViewModel
 
-@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: String)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("otherIncome.title"),
+    title = messages("howMuchOtherTaxableIncome.title") + s" $taxYear" + messages("global.questionMark"),
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @helpers.form(action = OtherIncomeController.onSubmit(mode), 'autoComplete -> "off") {
+    @helpers.form(action = HowMuchOtherTaxableIncomeController.onSubmit(mode), 'autoComplete -> "off") {
 
         @components.back_link()
 
         @components.error_summary(form.errors)
 
-        @components.heading("otherIncome.heading", secondaryHeaderKey = Some("index.title"))
+        @components.heading("howMuchOtherTaxableIncome.heading", dynamicHeading = Some(s"$taxYear" + messages("global.questionMark")), secondaryHeaderKey = Some("index.title"))
 
-        <p>@messages(messages("otherIncome.listHeading"))</p>
-
-        @components.list("otherIncome", Seq("list1", "list2", "list3", "list4", "list5"))
-
-        @components.input_yes_no(
-            InputViewModel("value", form),
-            label = messages("otherIncome.heading"),
-            labelClass = Some("visually-hidden")
-        )
+        @components.input_text(InputViewModel("value", form), label = messages("howMuchOtherTaxableIncome.heading"), labelClass=Some("visually-hidden"))
 
         @components.submit_button()
     }

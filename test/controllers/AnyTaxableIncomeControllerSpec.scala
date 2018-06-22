@@ -19,14 +19,14 @@ package controllers
 import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.BooleanForm
-import identifiers.OtherIncomeId
+import identifiers.AnyTaxableIncomeId
 import models.NormalMode
 import play.api.data.Form
 import play.api.libs.json.JsBoolean
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
 import utils.FakeNavigator
-import views.html.otherIncome
+import views.html.anyTaxableIncome
 
 class OtherIncomeControllerSpec extends ControllerSpecBase {
 
@@ -36,12 +36,12 @@ class OtherIncomeControllerSpec extends ControllerSpecBase {
   val form = formProvider()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new OtherIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+    new AnyTaxableIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, formProvider)
 
-  def viewAsString(form: Form[_] = form) = otherIncome(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = form) = anyTaxableIncome(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
 
-  "OtherIncome Controller" must {
+  "AnyTaxableIncome Controller" must {
 
     "return OK and the correct view for a GET" in {
       val result = controller().onPageLoad(NormalMode)(fakeRequest)
@@ -51,7 +51,7 @@ class OtherIncomeControllerSpec extends ControllerSpecBase {
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      val validData = Map(OtherIncomeId.toString -> JsBoolean(true))
+      val validData = Map(AnyTaxableIncomeId.toString -> JsBoolean(true))
       val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validData)))
 
       val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)
