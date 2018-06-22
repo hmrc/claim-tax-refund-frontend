@@ -27,6 +27,7 @@ import views.html.telephoneNumber
 class TelephoneNumberViewSpec extends QuestionViewBehaviours[TelephoneOption]{
 
   private val messageKeyPrefix = "telephoneNumber"
+  private val testPhoneNumber = "0191 1111 111"
 
   val formProvider = new TelephoneNumberForm()
   val form = formProvider()
@@ -49,7 +50,7 @@ class TelephoneNumberViewSpec extends QuestionViewBehaviours[TelephoneOption]{
                   expectedFormAction: String,
                   expectedHintText: Option[String] = None) = {
 
-      "behave like a page with a Yes/No question" when {
+      "behave like a page with a Yes/No question and revealing content" when {
         "rendered" must {
           "contain a legend for the question" in {
             val doc = asDocument(createView(form))
@@ -66,12 +67,19 @@ class TelephoneNumberViewSpec extends QuestionViewBehaviours[TelephoneOption]{
             val doc = asDocument(createView(form))
             assertRenderedById(doc, "anyTelephoneNumber-yes")
             assertRenderedById(doc, "anyTelephoneNumber-no")
+            assertRenderedById(doc, "yesTelephoneNumber")
+            assertRenderedById(doc, "noTelephoneNumber")
           }
 
           "have no values checked when rendered with no form" in {
             val doc = asDocument(createView(form))
             assert(!doc.getElementById("anyTelephoneNumber-yes").hasAttr("checked"))
             assert(!doc.getElementById("anyTelephoneNumber-no").hasAttr("checked"))
+          }
+
+          "include the form's value in the value input" in {
+            val doc = asDocument(createView(form.fill(TelephoneOption.Yes(testPhoneNumber))))
+            doc.getElementById("telephoneNumber").attr("value") mustBe testPhoneNumber
           }
 
           "not render an error summary" in {
@@ -107,7 +115,7 @@ class TelephoneNumberViewSpec extends QuestionViewBehaviours[TelephoneOption]{
     def answeredYesNoPage(createView: (Form[TelephoneOption]) => HtmlFormat.Appendable, answer: Boolean) = {
 
       "have only the correct value checked when yes selected" in {
-        val doc = asDocument(createView(form.fill(TelephoneOption.Yes("0191 1111 111"))))
+        val doc = asDocument(createView(form.fill(TelephoneOption.Yes(testPhoneNumber))))
         assert(doc.getElementById("anyTelephoneNumber-yes").hasAttr("checked"))
         assert(!doc.getElementById("anyTelephoneNumber-no").hasAttr("checked"))
       }
@@ -119,7 +127,7 @@ class TelephoneNumberViewSpec extends QuestionViewBehaviours[TelephoneOption]{
       }
 
       "not render an error summary" in {
-        val doc = asDocument(createView(form.fill(TelephoneOption.Yes("0191 1111 111"))))
+        val doc = asDocument(createView(form.fill(TelephoneOption.Yes(testPhoneNumber))))
         assertNotRenderedById(doc, "error-summary_header")
       }
     }
