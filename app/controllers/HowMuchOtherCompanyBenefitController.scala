@@ -54,7 +54,7 @@ class HowMuchOtherCompanyBenefitController @Inject()(
 
       val details: Option[Result] = for(
         selectedTaxYear <- request.userAnswers.selectTaxYear;
-        otherBenefitName <- request.userAnswers.otherCompanyBenefitsDetails
+        otherBenefitName <- request.userAnswers.otherCompanyBenefitsName
       ) yield {
         val taxYear = selectedTaxYear.asString
         Ok(howMuchOtherCompanyBenefit(appConfig, preparedForm, mode, taxYear, otherBenefitName))
@@ -69,7 +69,7 @@ class HowMuchOtherCompanyBenefitController @Inject()(
       request.userAnswers.selectTaxYear.flatMap {
         selectedTaxYear =>
           val taxYear = selectedTaxYear.asString
-          request.userAnswers.otherCompanyBenefitsDetails.map {
+          request.userAnswers.otherCompanyBenefitsName.map {
             benefitName =>
               form.bindFromRequest().fold(
                 (formWithErrors: Form[_]) =>
