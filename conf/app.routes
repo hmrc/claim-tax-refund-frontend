@@ -47,10 +47,10 @@ POST       /how-much-medical-benefit                                        cont
 GET        /change-how-much-medical-benefit                                 controllers.HowMuchMedicalBenefitsController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-how-much-medical-benefit                                 controllers.HowMuchMedicalBenefitsController.onSubmit(mode: Mode = CheckMode)
 
-GET        /did-you-get-other-benefits                                      controllers.AnyOtherTaxableBenefitsController.onPageLoad(mode: Mode = NormalMode)
-POST       /did-you-get-other-benefits                                      controllers.AnyOtherTaxableBenefitsController.onSubmit(mode: Mode = NormalMode)
-GET        /change-if-you-got-other-benefits                                controllers.AnyOtherTaxableBenefitsController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-if-you-got-other-benefits                                controllers.AnyOtherTaxableBenefitsController.onSubmit(mode: Mode = CheckMode)
+GET        /did-you-get-other-benefits                                      controllers.AnyOtherBenefitsController.onPageLoad(mode: Mode = NormalMode)
+POST       /did-you-get-other-benefits                                      controllers.AnyOtherBenefitsController.onSubmit(mode: Mode = NormalMode)
+GET        /change-if-you-got-other-benefits                                controllers.AnyOtherBenefitsController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-if-you-got-other-benefits                                controllers.AnyOtherBenefitsController.onSubmit(mode: Mode = CheckMode)
 
 GET        /how-much-jobseekers-allowance                                   controllers.HowMuchJobseekersAllowanceController.onPageLoad(mode: Mode = NormalMode)
 POST       /how-much-jobseekers-allowance                                   controllers.HowMuchJobseekersAllowanceController.onSubmit(mode: Mode = NormalMode)

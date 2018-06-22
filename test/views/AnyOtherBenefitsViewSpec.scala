@@ -21,24 +21,24 @@ import forms.BooleanForm
 import models.NormalMode
 import play.api.data.Form
 import views.behaviours.YesNoViewBehaviours
-import views.html.anyOtherTaxableBenefits
+import views.html.anyOtherBenefits
 
-class AnyOtherTaxableBenefitsViewSpec extends YesNoViewBehaviours {
+class AnyOtherBenefitsViewSpec extends YesNoViewBehaviours {
 
-  val messageKeyPrefix = "anyOtherTaxableBenefits"
+  val messageKeyPrefix = "anyOtherBenefits"
 
   override val form = new BooleanForm()()
 
-  def createView = () => anyOtherTaxableBenefits(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createView = () => anyOtherBenefits(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[_]) => anyOtherTaxableBenefits(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[_]) => anyOtherBenefits(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
-  "AnyOtherTaxableBenefits view" must {
+  "AnyOtherBenefits view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
     behave like pageWithBackLink(createView)
 
-    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.AnyOtherTaxableBenefitsController.onSubmit(NormalMode).url)
+    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.AnyOtherBenefitsController.onSubmit(NormalMode).url)
   }
 }
