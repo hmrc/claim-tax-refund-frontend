@@ -22,9 +22,9 @@ import forms.mappings.Constraints
 import play.api.data.Form
 import play.api.data.Forms._
 
-class OtherCompanyBenefitsDetailsForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
+class OtherCompanyBenefitsNameForm @Inject()(appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 
-  private val errorBlankKey = "otherCompanyBenefitsDetails.blank"
+  private val errorBlankKey = "otherCompanyBenefitsName.blank"
 
   def apply(): Form[String] = Form("value" -> text.verifying(nonEmpty(errorBlankKey)))
 }

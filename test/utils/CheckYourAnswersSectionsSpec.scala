@@ -120,7 +120,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       when(answers.howMuchMedicalBenefits) thenReturn Some("1234")
       when(answers.howMuchFuelBenefit) thenReturn Some("1234")
       when(answers.anyOtherCompanyBenefits) thenReturn Some(true)
-      when(answers.otherCompanyBenefitsDetails) thenReturn Some("data")
+      when(answers.otherCompanyBenefitsName) thenReturn Some("data")
       when(answers.howMuchOtherCompanyBenefit) thenReturn Some("1234")
 
       val sections = new CheckYourAnswersSections(helper, MockUserAnswers.companyBenefits)
@@ -133,7 +133,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       rows(3).label.key mustBe "howMuchFuelBenefit.checkYourAnswersLabel"
       rows(4).label.key mustBe "howMuchMedicalBenefits.checkYourAnswersLabel"
       rows(5).label.key mustBe "anyOtherCompanyBenefits.checkYourAnswersLabel"
-      rows(6).label.key mustBe "otherCompanyBenefitsDetails.checkYourAnswersLabel"
+      rows(6).label.key mustBe "otherCompanyBenefitsName.checkYourAnswersLabel"
       rows(7).label.key mustBe "howMuchOtherCompanyBenefit.checkYourAnswersLabel"
     }
 
