@@ -24,7 +24,7 @@ import play.api.data.Forms._
 
 class OtherTaxableIncomeNameForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 
-  private val otherTaxableIncomeNameBlankKey = "error.required"
+  private val errorBlankKey = "otherTaxableIncomeName.blank"
 
-  def apply(): Form[String] = Form("value" -> text.verifying(nonEmpty(otherTaxableIncomeNameBlankKey)))
+  def apply(): Form[String] = Form("value" -> text.verifying(nonEmpty(errorBlankKey)))
 }

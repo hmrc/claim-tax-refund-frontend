@@ -21,26 +21,32 @@ import play.api.data.Form
 import controllers.routes
 import forms.OtherTaxableIncomeNameForm
 import models.NormalMode
+import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
+import play.api.i18n.Messages
 import views.behaviours.StringViewBehaviours
 import views.html.otherTaxableIncomeName
 
-class OtherTaxableIncomeNameViewSpec extends StringViewBehaviours with MockitoSugar {
+class OtherTaxableIncomeNameViewSpec(implicit messages: Messages) extends StringViewBehaviours with MockitoSugar {
 
   val messageKeyPrefix = "otherTaxableIncomeName"
+
+  private val taxYear = CYMinus2
 
   val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
   override val form: Form[String] = new OtherTaxableIncomeNameForm(appConfig)()
 
-  def createView = () => otherTaxableIncomeName(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createView = () => otherTaxableIncomeName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) => otherTaxableIncomeName(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[String]) => otherTaxableIncomeName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "OtherTaxableIncomeName view" must {
-    behave like normalPage(createView, messageKeyPrefix)
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, s"${taxYear.asString}?")
 
     behave like pageWithBackLink(createView)
+
+    behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
     behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.OtherTaxableIncomeNameController.onSubmit(NormalMode).url)
   }

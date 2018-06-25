@@ -25,7 +25,7 @@ import play.api.data.Form
 
 class OtherTaxableIncomeNameFormSpec extends FormBehaviours with MockitoSugar {
 
-  val errorKeyBlank = "error.required"
+  val errorKeyBlank = "otherTaxableIncomeName.blank"
 
   def appConfig: FrontendAppConfig = {
     val instance = mock[FrontendAppConfig]
