@@ -26,7 +26,8 @@ import controllers.actions._
 import config.FrontendAppConfig
 import forms.HowMuchOtherTaxableIncomeForm
 import identifiers.HowMuchOtherTaxableIncomeId
-import models.Mode
+import models.{Mode, SelectTaxYear}
+import play.api.mvc.{Action, AnyContent, Result}
 import utils.{Navigator, UserAnswers}
 import views.html.howMuchOtherTaxableIncome
 
@@ -44,35 +45,39 @@ class HowMuchOtherTaxableIncomeController @Inject()(
 
   private val form: Form[String] = formBuilder()
 
-  def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.howMuchOtherTaxableIncome match {
         case None => form
         case Some(value) => form.fill(value)
       }
 
-      request.userAnswers.selectTaxYear.map {
-        selectedTaxYear =>
-          val taxYear = selectedTaxYear
-          Ok(howMuchOtherTaxableIncome(appConfig, preparedForm, mode, taxYear))
-      }.getOrElse {
+      val details: Option[Result] = for(
+        selectedTaxYear: SelectTaxYear <- request.userAnswers.selectTaxYear;
+        taxableIncomeName: String <- request.userAnswers.otherTaxableIncomeName
+      ) yield {
+        Ok(howMuchOtherTaxableIncome(appConfig, preparedForm, mode, selectedTaxYear, taxableIncomeName))
+      }
+      details.getOrElse{
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
   }
 
-  def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      request.userAnswers.selectTaxYear.map {
-        selectedTaxYear =>
-          val taxYear = selectedTaxYear
-          form.bindFromRequest().fold(
-            (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(howMuchOtherTaxableIncome(appConfig, formWithErrors, mode, taxYear))),
-            value =>
-              dataCacheConnector.save[String](request.externalId, HowMuchOtherTaxableIncomeId.toString, value).map(cacheMap =>
-                Redirect(navigator.nextPage(HowMuchOtherTaxableIncomeId, mode)(new UserAnswers(cacheMap))))
-          )
-      }.getOrElse {
+      val details: Option[Future[Result]] = for(
+        selectedTaxYear: SelectTaxYear <- request.userAnswers.selectTaxYear;
+        taxableIncomeName: String <- request.userAnswers.otherTaxableIncomeName
+      ) yield {
+        form.bindFromRequest().fold(
+          (formWithErrors: Form[_]) =>
+            Future.successful(BadRequest(howMuchOtherTaxableIncome(appConfig, formWithErrors, mode, selectedTaxYear, taxableIncomeName))),
+          value =>
+            dataCacheConnector.save[String](request.externalId, HowMuchOtherTaxableIncomeId.toString, value).map(cacheMap =>
+              Redirect(navigator.nextPage(HowMuchOtherTaxableIncomeId, mode)(new UserAnswers(cacheMap))))
+        )
+      }
+      details.getOrElse{
         Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
       }
   }
