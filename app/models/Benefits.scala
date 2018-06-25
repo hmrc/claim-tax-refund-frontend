@@ -19,8 +19,6 @@ package models
 import play.api.libs.json.{Format, Reads, Writes}
 import utils.EnumUtils
 
-import scala.collection.mutable
-
 object Benefits extends Enumeration {
 
   val BEREAVEMENT_ALLOWANCE = Value("bereavement-allowance")
@@ -38,14 +36,14 @@ object Benefits extends Enumeration {
   implicit def enumFormats: Format[Value] = EnumUtils.enumFormat(Benefits)
 
   val sortedBenefits =
-    mutable.LinkedHashMap(
-      s"selectBenefits.$BEREAVEMENT_ALLOWANCE" -> BEREAVEMENT_ALLOWANCE.toString,
-      s"selectBenefits.$CARERS_ALLOWANCE" -> CARERS_ALLOWANCE.toString,
-      s"selectBenefits.$JOBSEEKERS_ALLOWANCE" -> JOBSEEKERS_ALLOWANCE.toString,
-      s"selectBenefits.$INCAPACITY_BENEFIT" -> INCAPACITY_BENEFIT.toString,
-      s"selectBenefits.$EMPLOYMENT_AND_SUPPORT_ALLOWANCE" -> EMPLOYMENT_AND_SUPPORT_ALLOWANCE.toString,
-      s"selectBenefits.$STATE_PENSION" -> STATE_PENSION.toString,
-      s"selectBenefits.$OTHER_TAXABLE_BENEFIT" -> OTHER_TAXABLE_BENEFIT.toString
+    Seq(
+      BEREAVEMENT_ALLOWANCE,
+      CARERS_ALLOWANCE,
+      JOBSEEKERS_ALLOWANCE,
+      INCAPACITY_BENEFIT,
+      EMPLOYMENT_AND_SUPPORT_ALLOWANCE,
+      STATE_PENSION,
+      OTHER_TAXABLE_BENEFIT
 
   )
 }

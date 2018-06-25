@@ -38,7 +38,7 @@
 
         <p>@messages(messages("anyBenefits.listHeading"))</p>
 
-        @components.list("anyBenefits", Seq("list1", "list2", "list3", "list4", "list5", "list6", "list7"))
+        @components.list("selectBenefits", Benefits.sortedBenefits.map(_.toString))
 
         @components.input_yes_no(
             InputViewModel("value", form),

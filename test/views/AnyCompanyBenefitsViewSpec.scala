@@ -20,7 +20,7 @@ import play.api.data.Form
 import controllers.routes
 import forms.BooleanForm
 import views.behaviours.YesNoViewBehaviours
-import models.NormalMode
+import models.{Benefits, NormalMode}
 import models.SelectTaxYear.CYMinus2
 import play.api.i18n.Messages
 import views.html.anyCompanyBenefits
@@ -47,6 +47,13 @@ class AnyCompanyBenefitsViewSpec(implicit messages: Messages) extends YesNoViewB
 
     behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.AnyBenefitsController.onSubmit(NormalMode).url, Some(s"$messageKeyPrefix.hint"))
 
-    behave like pageWithList(createView, messageKeyPrefix, Seq("list1","list2","list3"))
+    behave like pageWithList(createView, messageKeyPrefix,
+      Seq(
+        "company-car-benefit",
+        "fuel-benefit",
+        "medical-benefit",
+        "other-company-benefit"
+      )
+    )
   }
 }

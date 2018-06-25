@@ -42,5 +42,15 @@ class OtherIncomeViewSpec extends YesNoViewBehaviours {
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
     behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.AnyTaxableIncomeController.onSubmit(NormalMode).url)
+
+    behave like pageWithList(createView, messageKeyPrefix,
+      Seq(
+        "rental-income",
+        "bank-or-building-society-interest",
+        "investment-or-dividends",
+        "foreign-income",
+        "other-taxable-income"
+      )
+    )
   }
 }

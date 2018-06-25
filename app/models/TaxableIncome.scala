@@ -19,8 +19,6 @@ package models
 import play.api.libs.json.{Format, Reads, Writes}
 import utils.EnumUtils
 
-import scala.collection.mutable
-
 object TaxableIncome extends Enumeration {
 
   val RENTAL_INCOME = Value("rental-income")
@@ -35,12 +33,11 @@ object TaxableIncome extends Enumeration {
   implicit def enumFormats: Format[Value] = EnumUtils.enumFormat(TaxableIncome)
 
   val sortedTaxableIncome =
-    mutable.LinkedHashMap(
-      s"selectTaxableIncome.$RENTAL_INCOME" -> RENTAL_INCOME.toString,
-      s"selectTaxableIncome.$BANK_OR_BUILDING_SOCIETY_INTEREST" -> BANK_OR_BUILDING_SOCIETY_INTEREST.toString,
-      s"selectTaxableIncome.$INVESTMENT_OR_DIVIDENDS" -> INVESTMENT_OR_DIVIDENDS.toString,
-      s"selectTaxableIncome.$FOREIGN_INCOME" -> FOREIGN_INCOME.toString,
-      s"selectTaxableIncome.$OTHER_TAXABLE_INCOME" -> OTHER_TAXABLE_INCOME.toString
+    Seq(
+      RENTAL_INCOME,
+      BANK_OR_BUILDING_SOCIETY_INTEREST,
+      INVESTMENT_OR_DIVIDENDS,
+      FOREIGN_INCOME,
+      OTHER_TAXABLE_INCOME
     )
-
 }

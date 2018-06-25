@@ -21,6 +21,7 @@ import play.api.data.Form
 import play.api.data.Forms._
 import play.api.data.format.Formatter
 import play.api.data.validation.{Constraint, Invalid, Valid}
+import scala.collection.SortedSet
 
 object SelectBenefitsForm extends FormErrorHelper {
 
@@ -34,7 +35,7 @@ object SelectBenefitsForm extends FormErrorHelper {
     def unbind(key: String, value: Benefits.Value) = Map(key -> value.toString)
   }
 
-  private def optionIsValid(value: String): Boolean = options.values.toSeq.contains(value)
+  private def optionIsValid(value: String): Boolean = Benefits.sortedBenefits.map(_.toString).contains(value)
 
   private def constraint: Constraint[Set[Benefits.Value]] = Constraint {
     case set if set.nonEmpty =>
@@ -48,8 +49,8 @@ object SelectBenefitsForm extends FormErrorHelper {
       "value" -> set(of(selectBenefitsFormatter)).verifying(constraint)
     )
 
-  def options: Map[String, String] = Benefits.values.map {
+  def options: Seq[(String, String)] = Benefits.sortedBenefits.map {
     value =>
       s"selectBenefits.$value" -> value.toString
-  }.toMap
+  }
 }

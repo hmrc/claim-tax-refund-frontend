@@ -27,7 +27,7 @@ trait CheckboxViewBehaviours[A] extends ViewSpecBase {
   def form: Form[Set[A]]
   def createView(form: Form[Set[A]]): Html
   def createView(): Html = createView(form)
-  def values: mutable.LinkedHashMap[String, String]
+  def values: Seq[(String, String)]
 
   def fieldKey: String
   def errorMessage: String
@@ -47,7 +47,7 @@ trait CheckboxViewBehaviours[A] extends ViewSpecBase {
 
       "contain an input for the value" in {
         val doc = asDocument(createView())
-        for { (value, i) <- values.values.zipWithIndex } yield {
+        for { (value, i) <- values.zipWithIndex } yield {
           assertRenderedById(doc, form(fieldKey)(s"[$i]").id)
         }
       }
@@ -62,16 +62,16 @@ trait CheckboxViewBehaviours[A] extends ViewSpecBase {
 
       "have no values checked when rendered with no form" in {
         val doc = asDocument(createView())
-        for { (value, i) <- values.values.zipWithIndex } yield {
+        for { (value, i) <- values.zipWithIndex } yield {
           assert(!doc.getElementById(form(fieldKey)(s"[$i]").id).hasAttr("checked"))
         }
       }
 
-      values.values.zipWithIndex.foreach {
+      values.zipWithIndex.foreach {
         case (v, i) =>
           s"has correct value checked when value `$v` is given" in {
             val data: Map[String, String] = Map(
-              s"$fieldKey[$i]" -> v.toString
+              s"$fieldKey[$i]" -> v._2
             )
 
             val doc = asDocument(createView(form.bind(data)))
@@ -79,7 +79,7 @@ trait CheckboxViewBehaviours[A] extends ViewSpecBase {
 
             assert(doc.getElementById(field.id).hasAttr("checked"), s"${field.id} is not checked")
 
-            values.values.zipWithIndex.foreach {
+            values.zipWithIndex.foreach {
               case (value, j) =>
                 if (value != v) {
                   val field = form(fieldKey)(s"[$j]")

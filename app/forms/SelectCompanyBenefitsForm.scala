@@ -34,7 +34,7 @@ object SelectCompanyBenefitsForm extends FormErrorHelper {
     def unbind(key: String, value: CompanyBenefits.Value) = Map(key -> value.toString)
   }
 
-  private def optionIsValid(value: String): Boolean = options.values.toSeq.contains(value)
+  private def optionIsValid(value: String): Boolean = CompanyBenefits.sortedCompanyBenefits.map(_.toString).contains(value)
 
   private def constraint: Constraint[Set[CompanyBenefits.Value]] = Constraint {
     case set if set.nonEmpty =>
@@ -48,8 +48,8 @@ object SelectCompanyBenefitsForm extends FormErrorHelper {
       "value" -> set(of(selectCompanyBenefitsFormatter)).verifying(constraint)
     )
 
-  def options: Map[String, String] = CompanyBenefits.values.map {
+  def options: Seq[(String, String)] = CompanyBenefits.sortedCompanyBenefits.map {
     value =>
       s"selectCompanyBenefits.$value" -> value.toString
-  }.toMap
+  }
 }

@@ -39,7 +39,7 @@
             form("value"),
             legend = messages("selectCompanyBenefits.heading"),
             legendClass = Some("visually-hidden"),
-            inputs = CompanyBenefits.sortedCompanyBenefits
+            inputs = SelectCompanyBenefitsForm.options
         )
 
         @components.submit_button()
