@@ -23,7 +23,7 @@
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: SelectTaxYear, benefitName: String)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("howMuchOtherCompanyBenefit.title") + s" $benefitName " + messages("howMuchOtherCompanyBenefit.title2") + s" ${taxYear.asString}?",
+    title = messages("howMuchOtherCompanyBenefit.title") + s" $benefitName " + messages("howMuchOtherCompanyBenefit.title2",s" ${taxYear.asString}"),
     appConfig = appConfig,
     bodyClasses = None) {
 
@@ -34,7 +34,7 @@
         @components.error_summary(form.errors)
 
         @components.heading("howMuchOtherCompanyBenefit.heading",
-            dynamicHeading = Some(s" $benefitName " + messages("howMuchOtherCompanyBenefit.heading2") + s" ${taxYear.asString}?"),
+            dynamicHeading = Some(s" $benefitName " + messages("howMuchOtherCompanyBenefit.heading2",s" ${taxYear.asString}")),
             secondaryHeaderKey = Some("index.title"))
 
         @components.input_text(InputViewModel("value", form),

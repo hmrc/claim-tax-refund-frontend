@@ -106,7 +106,7 @@ trait ViewBehaviours extends ViewSpecBase {
 
         "display the correct page title" in {
           val doc = asDocument(view())
-          assertDynamicPageTitleEqualsMessage(doc, s"$messageKeyPrefix.heading", dynamicHeader)
+          assertPageTitleEqualsMessage(doc, s"$messageKeyPrefix.heading", dynamicHeader)
         }
 
         "display the correct guidance" in {
