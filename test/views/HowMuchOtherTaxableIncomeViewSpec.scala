@@ -31,17 +31,18 @@ class HowMuchOtherTaxableIncomeViewSpec(implicit messages: Messages) extends Str
 
   val messageKeyPrefix = "howMuchOtherTaxableIncome"
   private val taxYear = CYMinus2
+  private val testIncome = "Test income"
 
   val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
   override val form: Form[String] = new HowMuchOtherTaxableIncomeForm(appConfig)()
 
-  def createView = () => howMuchOtherTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createView = () => howMuchOtherTaxableIncome(frontendAppConfig, form, NormalMode, taxYear, testIncome)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) => howMuchOtherTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[String]) => howMuchOtherTaxableIncome(frontendAppConfig, form, NormalMode, taxYear, testIncome)(fakeRequest, messages)
 
   "howMuchOtherTaxableIncome view" must {
-    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, s"${taxYear.asString}?")
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, (testIncome, taxYear.asString))
 
     behave like pageWithBackLink(createView)
 
