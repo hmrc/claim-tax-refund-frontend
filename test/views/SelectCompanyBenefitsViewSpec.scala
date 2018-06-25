@@ -33,7 +33,7 @@ class SelectCompanyBenefitsViewSpec(implicit messages: Messages) extends ViewBeh
   private val taxYear = CYMinus2
 
 
-  val values: mutable.LinkedHashMap[String, String] = CompanyBenefits.sortedCompanyBenefits
+  val values: Seq[(String, String)] = SelectCompanyBenefitsForm.options
 
   def form: Form[Set[CompanyBenefits.Value]] = SelectCompanyBenefitsForm()
 

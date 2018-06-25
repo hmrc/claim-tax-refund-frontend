@@ -24,11 +24,11 @@ class TaxableIncomeSpec extends WordSpec with MustMatchers with MockitoSugar {
   "TaxableIncome model" must {
     "Return map in correct order" in {
 
-      TaxableIncome.sortedTaxableIncome.head._2 mustBe TaxableIncome.RENTAL_INCOME.toString
-      TaxableIncome.sortedTaxableIncome.toSeq(1)._2 mustBe TaxableIncome.BANK_OR_BUILDING_SOCIETY_INTEREST.toString
-      TaxableIncome.sortedTaxableIncome.toSeq(2)._2 mustBe TaxableIncome.INVESTMENT_OR_DIVIDENDS.toString
-      TaxableIncome.sortedTaxableIncome.toSeq(3)._2 mustBe TaxableIncome.FOREIGN_INCOME.toString
-      TaxableIncome.sortedTaxableIncome.toSeq(4)._2 mustBe TaxableIncome.OTHER_TAXABLE_INCOME.toString
+      TaxableIncome.sortedTaxableIncome.head mustBe TaxableIncome.RENTAL_INCOME
+      TaxableIncome.sortedTaxableIncome(1)mustBe TaxableIncome.BANK_OR_BUILDING_SOCIETY_INTEREST
+      TaxableIncome.sortedTaxableIncome(2) mustBe TaxableIncome.INVESTMENT_OR_DIVIDENDS
+      TaxableIncome.sortedTaxableIncome(3) mustBe TaxableIncome.FOREIGN_INCOME
+      TaxableIncome.sortedTaxableIncome(4) mustBe TaxableIncome.OTHER_TAXABLE_INCOME
     }
   }
 }

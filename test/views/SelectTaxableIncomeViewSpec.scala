@@ -33,7 +33,7 @@ class SelectTaxableIncomeViewSpec(implicit messages: Messages) extends ViewBehav
   private val taxYear = CYMinus2
 
 
-  val values: mutable.LinkedHashMap[String, String] = TaxableIncome.sortedTaxableIncome
+  val values: Seq[(String, String)] = SelectTaxableIncomeForm.options
 
   def form: Form[Set[TaxableIncome.Value]] = SelectTaxableIncomeForm()
 

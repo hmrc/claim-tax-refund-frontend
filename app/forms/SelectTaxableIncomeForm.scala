@@ -33,7 +33,7 @@ object SelectTaxableIncomeForm extends FormErrorHelper {
     def unbind(key: String, value: TaxableIncome.Value) = Map(key -> value.toString)
   }
 
-  private def optionIsValid(value: String): Boolean = options.values.toSeq.contains(value)
+  private def optionIsValid(value: String): Boolean = TaxableIncome.sortedTaxableIncome.map(_.toString).contains(value)
 
   private def constraint: Constraint[Set[TaxableIncome.Value]] = Constraint {
     case set if set.nonEmpty =>
@@ -47,8 +47,9 @@ object SelectTaxableIncomeForm extends FormErrorHelper {
       "value" -> set(of(selectBenefitsFormatter)).verifying(constraint)
     )
 
-  def options: Map[String, String] = TaxableIncome.values.map {
+  def options: Seq[(String, String)] = TaxableIncome.sortedTaxableIncome.map {
     value =>
       s"selectTaxableIncome.$value" -> value.toString
-  }.toMap
+  }
+
 }

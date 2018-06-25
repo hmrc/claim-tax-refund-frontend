@@ -20,8 +20,6 @@ import identifiers.{HowMuchCarBenefitsId, HowMuchFuelBenefitId, HowMuchMedicalBe
 import play.api.libs.json.{Format, Reads, Writes}
 import utils.EnumUtils
 
-import scala.collection.mutable
-
 object CompanyBenefits extends Enumeration {
 
   val COMPANY_CAR_BENEFIT = Value("company-car-benefit")
@@ -44,10 +42,10 @@ object CompanyBenefits extends Enumeration {
   }
 
   val sortedCompanyBenefits =
-    mutable.LinkedHashMap(
-      s"selectCompanyBenefits.$COMPANY_CAR_BENEFIT" -> COMPANY_CAR_BENEFIT.toString,
-      s"selectCompanyBenefits.$FUEL_BENEFIT" -> FUEL_BENEFIT.toString,
-      s"selectCompanyBenefits.$MEDICAL_BENEFIT" -> MEDICAL_BENEFIT.toString,
-      s"selectCompanyBenefits.$OTHER_COMPANY_BENEFIT" -> OTHER_COMPANY_BENEFIT.toString
+    Seq(
+      COMPANY_CAR_BENEFIT,
+      FUEL_BENEFIT,
+      MEDICAL_BENEFIT,
+      OTHER_COMPANY_BENEFIT
     )
 }
