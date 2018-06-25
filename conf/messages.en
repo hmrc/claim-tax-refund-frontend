@@ -369,11 +369,11 @@ howMuchInvestmentOrDividend.checkYourAnswersLabel = Investments or dividends inc
 howMuchInvestmentOrDividend.blank = Enter the amount of income you got from investments or dividends
 howMuchInvestmentOrDividend.invalid = Enter a valid amount of income you got from investments or dividends
 
-howMuchOtherTaxableIncome.title = How much tax did you pay on your income between {0}?
-howMuchOtherTaxableIncome.heading = How much tax did you pay on your income between {0}?
-howMuchOtherTaxableIncome.checkYourAnswersLabel = How much tax did you pay on your income
-howMuchOtherTaxableIncome.blank = Enter a valid amount of tax you paid on other income
-howMuchOtherTaxableIncome.invalid = Enter a valid amount of tax you paid on other income
+howMuchOtherTaxableIncome.title = How much {0} did you get between {1}?
+howMuchOtherTaxableIncome.heading = How much {0} did you get between {1}?
+howMuchOtherTaxableIncome.checkYourAnswersLabel =  How much {0} did you get between {1}?
+howMuchOtherTaxableIncome.blank = Enter the amount you got in this other taxable income
+howMuchOtherTaxableIncome.invalid = Enter a valid amount for this other taxable income
 
 otherTaxableIncomeName.title = What is the name of the other taxable income you were getting between {0}?
 otherTaxableIncomeName.heading = What is the name of the other taxable income you were getting between {0}?
