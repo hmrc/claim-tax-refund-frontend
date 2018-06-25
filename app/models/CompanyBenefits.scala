@@ -40,4 +40,12 @@ object CompanyBenefits extends Enumeration {
       case "other-company-benefit" => HowMuchOtherCompanyBenefitId
     }
   }
+
+  val sortedCompanyBenefits =
+    Seq(
+      COMPANY_CAR_BENEFIT,
+      FUEL_BENEFIT,
+      MEDICAL_BENEFIT,
+      OTHER_COMPANY_BENEFIT
+    )
 }

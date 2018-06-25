@@ -27,6 +27,11 @@ POST       /did-you-get-any-benefits                                        cont
 GET        /change-if-you-got-benefits                                      controllers.AnyBenefitsController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-if-you-got-benefits                                      controllers.AnyBenefitsController.onSubmit(mode: Mode = CheckMode)
 
+GET        /did-you-get-any-company-benefits                                controllers.AnyCompanyBenefitsController.onPageLoad(mode: Mode = NormalMode)
+POST       /did-you-get-any-company-benefits                                controllers.AnyCompanyBenefitsController.onSubmit(mode: Mode = NormalMode)
+GET        /change-if-you-got-company-benefits                              controllers.AnyCompanyBenefitsController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-if-you-got-company-benefits                              controllers.AnyCompanyBenefitsController.onSubmit(mode: Mode = CheckMode)
+
 GET        /did-you-get-any-taxable-income                                  controllers.AnyTaxableIncomeController.onPageLoad(mode: Mode = NormalMode)
 POST       /did-you-get-any-taxable-income                                  controllers.AnyTaxableIncomeController.onSubmit(mode: Mode = NormalMode)
 GET        /change-if-you-got-any-taxable-income                            controllers.AnyTaxableIncomeController.onPageLoad(mode: Mode = CheckMode)
@@ -116,11 +121,6 @@ GET        /select-company-benefits                                         cont
 POST       /select-company-benefits                                         controllers.SelectCompanyBenefitsController.onSubmit(mode: Mode = NormalMode)
 GET        /change-select-company-benefits                                  controllers.SelectCompanyBenefitsController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-select-company-benefits                                  controllers.SelectCompanyBenefitsController.onSubmit(mode: Mode = CheckMode)
-
-GET        /any-company-benefits                                            controllers.AnyCompanyBenefitsController.onPageLoad(mode: Mode = NormalMode)
-POST       /any-company-benefits                                            controllers.AnyCompanyBenefitsController.onSubmit(mode: Mode = NormalMode)
-GET        /change-any-company-benefits                                     controllers.AnyCompanyBenefitsController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-any-company-benefits                                     controllers.AnyCompanyBenefitsController.onSubmit(mode: Mode = CheckMode)
 
 GET        /enter-paye-reference                                            controllers.EnterPayeReferenceController.onPageLoad(mode: Mode = NormalMode)
 POST       /enter-paye-reference                                            controllers.EnterPayeReferenceController.onSubmit(mode: Mode = NormalMode)

@@ -34,5 +34,17 @@ object Benefits extends Enumeration {
   val writes: Writes[Value] = EnumUtils.enumWrites
 
   implicit def enumFormats: Format[Value] = EnumUtils.enumFormat(Benefits)
+
+  val sortedBenefits =
+    Seq(
+      BEREAVEMENT_ALLOWANCE,
+      CARERS_ALLOWANCE,
+      JOBSEEKERS_ALLOWANCE,
+      INCAPACITY_BENEFIT,
+      EMPLOYMENT_AND_SUPPORT_ALLOWANCE,
+      STATE_PENSION,
+      OTHER_TAXABLE_BENEFIT
+
+  )
 }
 

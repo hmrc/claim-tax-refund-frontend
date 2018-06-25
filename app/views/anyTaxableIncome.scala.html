@@ -38,7 +38,7 @@
 
         <p>@messages(messages("anyTaxableIncome.listHeading"))</p>
 
-        @components.list("anyTaxableIncome", Seq("list1", "list2", "list3", "list4", "list5"))
+        @components.list("selectTaxableIncome", TaxableIncome.sortedTaxableIncome.map(_.toString))
 
         @components.input_yes_no(
             InputViewModel("value", form),
