@@ -25,12 +25,12 @@ class TelephoneOptionSpec extends SpecBase {
 
   "write" must {
 
-    "contain true and agent ref" in {
+    "contain true and telephone number" in {
       Json.toJson(TelephoneOption.Yes("0191 1111 111")) mustBe
         Json.obj(AnyTelephoneId.toString -> JsBoolean(true), TelephoneNumberId.toString -> JsString("0191 1111 111"))
     }
 
-    "contain false and no agent ref" in {
+    "contain false and no telephone number" in {
       Json.toJson(TelephoneOption.No) mustBe Json.obj(AnyTelephoneId.toString -> JsBoolean(false))
     }
   }
@@ -49,7 +49,7 @@ class TelephoneOptionSpec extends SpecBase {
       Json.fromJson[TelephoneOption](json).asOpt.value mustEqual TelephoneOption.No
     }
 
-    "return failure for true without agent ref" in {
+    "return failure for true without telephone number" in {
       val json = Json.obj("anyTelephone" -> true)
 
       Json.fromJson[TelephoneOption](json) mustEqual JsError("TelephoneOption value expected")
