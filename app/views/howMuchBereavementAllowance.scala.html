@@ -33,7 +33,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading("howMuchBereavementAllowance.heading", dynamicHeading = Some(taxYear.asString), secondaryHeaderKey = Some("index.title"))
+        @components.heading(messages("howMuchBereavementAllowance.heading", taxYear.asString))
 
         @components.input_text(InputViewModel("value", form), label = messages("howMuchBereavementAllowance.heading"), labelClass=Some("visually-hidden"))
 

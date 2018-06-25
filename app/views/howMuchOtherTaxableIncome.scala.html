@@ -33,7 +33,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading("howMuchOtherTaxableIncome.heading", dynamicHeading = Some(taxYear.asString), secondaryHeaderKey = Some("index.title"))
+        @components.heading(messages("howMuchOtherTaxableIncome.heading", taxYear.asString))
 
         @components.input_text(InputViewModel("value", form), label = messages("howMuchOtherTaxableIncome.heading"), labelClass=Some("visually-hidden"))
 

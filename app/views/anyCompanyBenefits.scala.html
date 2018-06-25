@@ -34,7 +34,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading(s"anyCompanyBenefits.heading", dynamicHeading = Some(taxYear.asString), secondaryHeaderKey = Some("index.title"))
+        @components.heading(messages(s"anyCompanyBenefits.heading", taxYear.asString))
 
         <p>@messages(messages("anyCompanyBenefits.listHeading"))</p>
 
