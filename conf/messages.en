@@ -333,11 +333,11 @@ howMuchOtherBenefit.checkYourAnswersLabel = Other benefit
 howMuchOtherBenefit.blank = Enter the amount you got for this benefit
 howMuchOtherBenefit.invalid = Enter a valid amount you got for this benefit
 
-howMuchForeignIncome.title = How much tax did you pay on Foreign income between {0}?
-howMuchForeignIncome.heading = How much tax did you pay on Foreign income between {0}?
+howMuchForeignIncome.title = How much did you get in Foreign income between {0}?
+howMuchForeignIncome.heading = How much did you get in Foreign income between {0}?
 howMuchForeignIncome.checkYourAnswersLabel = Foreign income
-howMuchForeignIncome.blank = Enter the amount of tax you paid on foreign income
-howMuchForeignIncome.invalid = Enter a valid amount of tax you paid on foreign income
+howMuchForeignIncome.blank = Enter the amount you got in foreign income
+howMuchForeignIncome.invalid = Enter a valid amount you got in foreign income
 
 howMuchBankInterest.title = How much did you get in bank or building society interest income between {0}?
 howMuchBankInterest.heading = How much did you get in bank or building society interest income between {0}?
@@ -363,11 +363,11 @@ selectTaxableIncome.investment-or-dividends = Investments or dividends
 selectTaxableIncome.foreign-income = Foreign income
 selectTaxableIncome.other-taxable-income = Other taxable income
 
-howMuchInvestmentOrDividend.title = How much tax did you pay on investment or dividend income between {0}?
-howMuchInvestmentOrDividend.heading = How much tax did you pay on investment or dividend income between {0}?
-howMuchInvestmentOrDividend.checkYourAnswersLabel = Investment or dividend
-howMuchInvestmentOrDividend.blank = Enter a valid amount of tax you paid on investment or dividend
-howMuchInvestmentOrDividend.invalid = Enter a valid amount of tax you paid on investment or dividend
+howMuchInvestmentOrDividend.title = How much income did you get from investments or dividends between {0}?
+howMuchInvestmentOrDividend.heading = How much income did you get from investments or dividends between {0}?
+howMuchInvestmentOrDividend.checkYourAnswersLabel = Investments or dividends income
+howMuchInvestmentOrDividend.blank = Enter the amount of income you got from investments or dividends
+howMuchInvestmentOrDividend.invalid = Enter a valid amount of income you got from investments or dividends
 
 howMuchOtherTaxableIncome.title = How much tax did you pay on your income between {0}?
 howMuchOtherTaxableIncome.heading = How much tax did you pay on your income between {0}?
