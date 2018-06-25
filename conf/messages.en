@@ -375,7 +375,7 @@ howMuchOtherTaxableIncome.checkYourAnswersLabel = How much tax did you pay on yo
 howMuchOtherTaxableIncome.blank = Enter a valid amount of tax you paid on other income
 howMuchOtherTaxableIncome.invalid = Enter a valid amount of tax you paid on other income
 
-otherTaxableIncomeName.title = otherTaxableIncomeName
-otherTaxableIncomeName.heading = otherTaxableIncomeName
-otherTaxableIncomeName.checkYourAnswersLabel = otherTaxableIncomeName
-otherTaxableIncomeName.blank = otherTaxableIncomeName
+otherTaxableIncomeName.title = What is the name of the other taxable income you were getting between {0}?
+otherTaxableIncomeName.heading = What is the name of the other taxable income you were getting between {0}?
+otherTaxableIncomeName.checkYourAnswersLabel = Other taxable income name
+otherTaxableIncomeName.blank = Enter the name of the other taxable income you got
