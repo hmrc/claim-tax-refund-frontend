@@ -153,11 +153,11 @@ howMuchCarBenefits.checkYourAnswersLabel = Company car benefit
 howMuchCarBenefits.blank = Enter the amount you got for the company car benefit
 howMuchCarBenefits.invalid = Enter a valid amount you got in company car benefit
 
-howMuchRentalIncome.title = How much rental income did you get in the tax year your claim is for?
-howMuchRentalIncome.heading = How much rental income did you get in the tax year your claim is for?
-howMuchRentalIncome.checkYourAnswersLabel = Amount of rental income you got in the tax year your claim is for
-howMuchRentalIncome.blank = Enter the amount of rental income you got in the tax year your claim is for
-howMuchRentalIncome.invalid = Enter a valid amount of rental income you got in the tax year your claim is for
+howMuchRentalIncome.title = How much property rental income did you get between {0}?
+howMuchRentalIncome.heading = How much property rental income did you get between {0}?
+howMuchRentalIncome.checkYourAnswersLabel = Rental income
+howMuchRentalIncome.blank = Enter the amount of rental income
+howMuchRentalIncome.invalid = Enter a valid amount of rental income
 
 anyOtherBenefits.title = Did you get any other taxable benefits in the tax year your claim is for?
 anyOtherBenefits.heading = Did you get any other taxable benefits in the tax year your claim is for?
@@ -207,7 +207,7 @@ nomineeFullName.tooLong = Full name of the person you want us to send any paymen
 
 anyAgentRef.title = Does {0} have an agent reference?
 anyAgentRef.heading = Does {0} have an agent reference?
-anyAgentRef.checkYourAnswersLabel = Does have an agent reference?
+anyAgentRef.checkYourAnswersLabel = Agent reference
 anyAgentRef.blank = Select yes if the person you want us to send any payment to has an agent reference
 anyAgentRef.agentRefField = Agent reference
 anyAgentRef.blankAgentRef = Enter the agent reference of the person you want us to send any payment to

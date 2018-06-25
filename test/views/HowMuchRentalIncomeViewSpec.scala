@@ -20,25 +20,29 @@ import config.FrontendAppConfig
 import controllers.routes
 import forms.HowMuchRentalIncomeForm
 import models.NormalMode
+import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
+import play.api.i18n.Messages
 import views.behaviours.StringViewBehaviours
 import views.html.howMuchRentalIncome
 
-class HowMuchRentalIncomeViewSpec extends StringViewBehaviours with MockitoSugar {
+class HowMuchRentalIncomeViewSpec(implicit messages: Messages) extends StringViewBehaviours with MockitoSugar {
 
   val messageKeyPrefix = "howMuchRentalIncome"
+
+  private val taxYear = CYMinus2
 
   val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
   override val form: Form[String] = new HowMuchRentalIncomeForm(appConfig)()
 
-  def createView = () => howMuchRentalIncome(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createView = () => howMuchRentalIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) => howMuchRentalIncome(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[String]) => howMuchRentalIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "HowMuchRentalIncome view" must {
-    behave like normalPage(createView, messageKeyPrefix)
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, s"${taxYear.asString}?")
 
     behave like pageWithBackLink(createView)
 
