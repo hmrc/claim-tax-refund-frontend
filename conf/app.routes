@@ -201,3 +201,8 @@ GET        /how-much-other-taxable-income                                   cont
 POST       /how-much-other-taxable-income                                   controllers.HowMuchOtherTaxableIncomeController.onSubmit(mode: Mode = NormalMode)
 GET        /change-how-much-other-taxable-income                            controllers.HowMuchOtherTaxableIncomeController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-how-much-other-taxable-income                            controllers.HowMuchOtherTaxableIncomeController.onSubmit(mode: Mode = CheckMode)
+
+GET        /otherTaxableIncomeName               controllers.OtherTaxableIncomeNameController.onPageLoad(mode: Mode = NormalMode)
+POST       /otherTaxableIncomeName               controllers.OtherTaxableIncomeNameController.onSubmit(mode: Mode = NormalMode)
+GET        /changeOtherTaxableIncomeName                        controllers.OtherTaxableIncomeNameController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeOtherTaxableIncomeName                        controllers.OtherTaxableIncomeNameController.onSubmit(mode: Mode = CheckMode)
