@@ -23,7 +23,7 @@
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: SelectTaxYear, characterLimit: Int)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("detailsOfEmploymentOrPension.title") + s" ${taxYear.asString}?",
+    title = messages("detailsOfEmploymentOrPension.title",s" ${taxYear.asString}"),
     appConfig = appConfig,
     bodyClasses = None) {
 
