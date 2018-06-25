@@ -34,7 +34,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading("anyAgentRef.heading", dynamicHeading = Some(s"$nomineeName"), secondaryHeaderKey = Some("index.title"))
+        @components.heading(messages("anyAgentRef.heading", s"$nomineeName"))
 
         @components.input_yes_no(
             InputViewModel("anyAgentRef", form),

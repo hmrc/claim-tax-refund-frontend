@@ -33,7 +33,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading("detailsOfEmploymentOrPension.heading", dynamicHeading = Some(taxYear.asString), secondaryHeaderKey = Some("index.title"))
+        @components.heading(messages("detailsOfEmploymentOrPension.heading", taxYear.asString))
 
         @components.input_textarea(InputViewModel("value", form), label = messages("detailsOfEmploymentOrPension.heading"), labelClass=Some("visually-hidden"), hint = Some(messages("detailsOfEmploymentOrPension.hintText")), charLimit=Some(characterLimit))
 
