@@ -39,7 +39,7 @@ class EmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSug
   val formProvider = new BooleanForm()
   val form = formProvider()
   val mockTaiConnector = mock[TaiConnector]
-  val taxYear: String = CYMinus2.asString
+  private val taxYear = CYMinus2
   private val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =

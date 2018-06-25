@@ -20,10 +20,10 @@
 @import models.Mode
 @import viewmodels.InputViewModel
 
-@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: String)(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: SelectTaxYear)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("howMuchCarBenefits.title") + s" $taxYear?",
+    title = messages("howMuchCarBenefits.title",s" ${taxYear.asString}"),
     appConfig = appConfig,
     bodyClasses = None) {
 
@@ -33,7 +33,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading("howMuchCarBenefits.heading", dynamicHeading = Some(s"$taxYear?"), secondaryHeaderKey = Some("index.title"))
+        @components.heading(messages("howMuchCarBenefits.heading", taxYear.asString))
 
         @components.input_text(InputViewModel("value", form),
             label = messages("howMuchCarBenefits.heading"),

@@ -23,14 +23,15 @@ import forms.HowMuchBankInterestForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
+import play.api.i18n.Messages
 import views.behaviours.StringViewBehaviours
 import views.html.howMuchBankInterest
 
-class HowMuchBankInterestViewSpec extends StringViewBehaviours with MockitoSugar {
+class HowMuchBankInterestViewSpec(implicit messages: Messages) extends StringViewBehaviours with MockitoSugar {
 
   val messageKeyPrefix = "howMuchBankInterest"
 
-  private val taxYear = CYMinus2.asString
+  private val taxYear = CYMinus2
 
   val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
@@ -41,7 +42,7 @@ class HowMuchBankInterestViewSpec extends StringViewBehaviours with MockitoSugar
   def createViewUsingForm = (form: Form[String]) => howMuchBankInterest(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "HowMuchBankInterest view" must {
-    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, " " + taxYear, "?")
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, s"${taxYear.asString}?")
 
     behave like pageWithBackLink(createView)
 

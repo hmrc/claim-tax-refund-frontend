@@ -40,7 +40,7 @@ class HowMuchCarersAllowanceControllerSpec extends ControllerSpecBase {
       dataRetrievalAction, new DataRequiredActionImpl, new HowMuchCarersAllowanceForm(frontendAppConfig))
 
   val testAnswer = "9,999.99"
-  val taxYear = CYMinus2.asString
+  private val taxYear = CYMinus2
   val form = new HowMuchCarersAllowanceForm(frontendAppConfig)()
   val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
 

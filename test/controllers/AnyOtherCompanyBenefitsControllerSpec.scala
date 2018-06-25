@@ -33,7 +33,7 @@ class AnyOtherCompanyBenefitsControllerSpec extends ControllerSpecBase {
 
   val formProvider = new BooleanForm()
   val form = formProvider()
-  val taxYear: String = CYMinus2.asString
+  private val taxYear = CYMinus2
   private val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =

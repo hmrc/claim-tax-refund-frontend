@@ -34,7 +34,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading("paymentInternationalAddress.heading", secondaryHeaderKey = Some("index.title"))
+        @components.heading(messages("paymentInternationalAddress.heading"))
 
         @components.input_text(InputViewModel[InternationalAddress]("addressLine1", form), label = messages("global.addressLine1"))
 

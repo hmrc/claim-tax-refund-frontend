@@ -38,7 +38,7 @@ class AnyAgentRefViewSpec extends QuestionViewBehaviours[AnyAgentRef]{
 
   "AnyAgentRef view" must {
 
-    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, s" $nomineeName ", messages(messageKeyPrefix+".headingSuffix"))
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, s"$nomineeName")
 
     behave like pageWithBackLink(createView)
 

@@ -87,8 +87,7 @@ trait ViewBehaviours extends ViewSpecBase {
 
   def normalPageWithDynamicHeader(view: () => HtmlFormat.Appendable,
                                   messageKeyPrefix: String,
-                                  dynamicHeader: String,
-                                  dynamicHeaderSuffix: String,
+                                  dynamicHeader: Any,
                                   expectedGuidanceKeys: String*) = {
 
     "behave like a normal dynamic page" when {
@@ -102,12 +101,12 @@ trait ViewBehaviours extends ViewSpecBase {
 
         "display the correct browser title" in {
           val doc = asDocument(view())
-          assertEqualsDynamicMessage(doc, "title", s"$messageKeyPrefix.title", dynamicHeader, dynamicHeaderSuffix)
+          assertEqualsDynamicMessage(doc, "title", s"$messageKeyPrefix.title", dynamicHeader)
         }
 
         "display the correct page title" in {
           val doc = asDocument(view())
-          assertDynamicPageTitleEqualsMessage(doc, s"$messageKeyPrefix.heading", dynamicHeader, dynamicHeaderSuffix)
+          assertPageTitleEqualsMessage(doc, s"$messageKeyPrefix.heading", dynamicHeader)
         }
 
         "display the correct guidance" in {

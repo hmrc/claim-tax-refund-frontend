@@ -20,16 +20,17 @@ import forms.SelectCompanyBenefitsForm
 import models.SelectTaxYear.CYMinus2
 import models.{CompanyBenefits, NormalMode}
 import play.api.data.Form
+import play.api.i18n.Messages
 import play.twirl.api.Html
 import views.behaviours.{CheckboxViewBehaviours, ViewBehaviours}
 import views.html.selectCompanyBenefits
 
-class SelectCompanyBenefitsViewSpec extends ViewBehaviours with CheckboxViewBehaviours[CompanyBenefits.Value] {
+class SelectCompanyBenefitsViewSpec(implicit messages: Messages) extends ViewBehaviours with CheckboxViewBehaviours[CompanyBenefits.Value] {
 
   val messageKeyPrefix = "selectCompanyBenefits"
   val fieldKey = "value"
   val errorMessage = "error.invalid"
-  val taxYear: String = CYMinus2.asString
+  private val taxYear = CYMinus2
 
 
   val values: Map[String, CompanyBenefits.Value] =
@@ -47,7 +48,7 @@ class SelectCompanyBenefitsViewSpec extends ViewBehaviours with CheckboxViewBeha
   def createViewUsingForm = (form: Form[_]) => selectCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "SelectCompanyBenefits view" must {
-    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, " " + taxYear, "?")
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, s"${taxYear.asString}?")
 
     behave like pageWithBackLink(createView)
 

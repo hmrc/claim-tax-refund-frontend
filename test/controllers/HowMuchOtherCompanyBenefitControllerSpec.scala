@@ -33,7 +33,7 @@ class HowMuchOtherCompanyBenefitControllerSpec extends ControllerSpecBase {
 
   val testAnswer = "9,999.99"
   val form = new HowMuchOtherCompanyBenefitForm(frontendAppConfig)()
-  private val taxYear = CYMinus2.asString
+  private val taxYear = CYMinus2
   private val otherBenefitName = "test benefit"
   private val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
 

@@ -37,7 +37,7 @@ class HowMuchInvestmentOrDividendControllerSpec extends ControllerSpecBase {
       dataRetrievalAction, new DataRequiredActionImpl, new HowMuchInvestmentOrDividendForm(frontendAppConfig))
 
   private val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
-  private val taxYear = CYMinus2.asString
+  private val taxYear = CYMinus2
   val testAnswer = "9,999.99"
   val form = new HowMuchInvestmentOrDividendForm(frontendAppConfig)()
 

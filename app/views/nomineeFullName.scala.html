@@ -33,7 +33,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading("nomineeFullName.heading", secondaryHeaderKey = Some("index.title"))
+        @components.heading(messages("nomineeFullName.heading"))
 
         @components.input_text(InputViewModel("value", form), label = messages("nomineeFullName.heading"), labelClass=Some("visually-hidden"))
 

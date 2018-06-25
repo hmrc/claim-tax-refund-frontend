@@ -23,14 +23,15 @@ import forms.DetailsOfEmploymentOrPensionForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
+import play.api.i18n.Messages
 import views.behaviours.StringViewBehaviours
 import views.html.detailsOfEmploymentOrPension
 
-class DetailsOfEmploymentOrPensionViewSpec extends StringViewBehaviours with MockitoSugar {
+class DetailsOfEmploymentOrPensionViewSpec(implicit messages: Messages) extends StringViewBehaviours with MockitoSugar {
 
   val messageKeyPrefix = "detailsOfEmploymentOrPension"
 
-  def taxYear = CYMinus2.asString
+  private val taxYear = CYMinus2
   def characterLimit = 500
 
   val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
@@ -42,7 +43,7 @@ class DetailsOfEmploymentOrPensionViewSpec extends StringViewBehaviours with Moc
   def createViewUsingForm = (form: Form[String]) => detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages)
 
   "DetailsOfEmploymentOrPension view" must {
-    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, " " + taxYear, "?")
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, s"${taxYear.asString}?")
 
     behave like pageWithBackLink(createView)
 
