@@ -255,8 +255,8 @@ employmentDetails.employer = Employer
 employmentDetails.staffNumber = Staff Number
 employmentDetails.hintText = Your employer or pension provider might use a different trading name. Check with them if you don't recognise any of the names.
 
-selectCompanyBenefits.title = Select the company benefits you have claimed from
-selectCompanyBenefits.heading = Select the company benefits you have claimed from
+selectCompanyBenefits.title = Select the company benefits you have claimed between {0}?
+selectCompanyBenefits.heading = Select the company benefits you have claimed between {0}?
 selectCompanyBenefits.checkYourAnswersLabel = Company benefits
 selectCompanyBenefits.blank = Select a company benefit
 selectCompanyBenefits.company-car-benefit = Company car benefit
