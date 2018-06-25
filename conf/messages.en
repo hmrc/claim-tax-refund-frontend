@@ -309,10 +309,8 @@ selectBenefits.other-taxable-benefit = Other taxable benefit
 selectBenefits.bereavement-allowance = Bereavement Allowance
 selectBenefits.carers-allowance = Carer''s Allowance
 
-howMuchOtherCompanyBenefit.title = How much
-howMuchOtherCompanyBenefit.title2 = did you get between
-howMuchOtherCompanyBenefit.heading = How much
-howMuchOtherCompanyBenefit.heading2 = did you get between
+howMuchOtherCompanyBenefit.title = How much {0} did you get between {1}?
+howMuchOtherCompanyBenefit.heading = How much {0} did you get between {1}?
 howMuchOtherCompanyBenefit.checkYourAnswersLabel = Other company benefit
 howMuchOtherCompanyBenefit.blank = Enter the amount you got for this benefit
 howMuchOtherCompanyBenefit.invalid = Enter a valid amount you got for this benefit
