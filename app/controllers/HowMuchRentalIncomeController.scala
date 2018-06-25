@@ -49,17 +49,28 @@ class HowMuchRentalIncomeController @Inject()(
         case None => form
         case Some(value) => form.fill(value)
       }
-      Ok(howMuchRentalIncome(appConfig, preparedForm, mode))
+
+      request.userAnswers.selectTaxYear.map{
+        selectedTaxYear =>
+          Ok(howMuchRentalIncome(appConfig, preparedForm, mode, selectedTaxYear))
+      }.getOrElse{
+        Redirect(routes.SessionExpiredController.onPageLoad())
+      }
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      form.bindFromRequest().fold(
-        (formWithErrors: Form[_]) =>
-          Future.successful(BadRequest(howMuchRentalIncome(appConfig, formWithErrors, mode))),
-        (value) =>
-          dataCacheConnector.save[String](request.externalId, HowMuchRentalIncomeId.toString, value).map(cacheMap =>
-            Redirect(navigator.nextPage(HowMuchRentalIncomeId, mode)(new UserAnswers(cacheMap))))
-      )
+      request.userAnswers.selectTaxYear.map {
+        selectedTaxYear =>
+        form.bindFromRequest().fold(
+          (formWithErrors: Form[_]) =>
+            Future.successful(BadRequest(howMuchRentalIncome(appConfig, formWithErrors, mode, selectedTaxYear))),
+          (value) =>
+            dataCacheConnector.save[String](request.externalId, HowMuchRentalIncomeId.toString, value).map(cacheMap =>
+              Redirect(navigator.nextPage(HowMuchRentalIncomeId, mode)(new UserAnswers(cacheMap))))
+        )
+      }.getOrElse{
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+      }
   }
 }
