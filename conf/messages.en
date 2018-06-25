@@ -339,12 +339,12 @@ howMuchForeignIncome.checkYourAnswersLabel = Foreign income
 howMuchForeignIncome.blank = Enter the amount of tax you paid on foreign income
 howMuchForeignIncome.invalid = Enter a valid amount of tax you paid on foreign income
 
-howMuchBankInterest.title = How much tax did you pay on bank or building society interest income between {0}?
-howMuchBankInterest.heading = How much tax did you pay on bank or building society interest income between {0}?
+howMuchBankInterest.title = How much did you get in bank or building society interest income between {0}?
+howMuchBankInterest.heading = How much did you get in bank or building society interest income between {0}?
 howMuchBankInterest.hint = This may be shown on an annual statement from your bank or building society.
 howMuchBankInterest.checkYourAnswersLabel = Bank or building society interest
-howMuchBankInterest.blank = Enter the amount of tax you paid on bank or building society interest
-howMuchBankInterest.invalid = Enter a valid amount of tax you paid on bank or building society interest
+howMuchBankInterest.blank = Enter the amount you got for bank or building society interest
+howMuchBankInterest.invalid = Enter a valid amount you got for bank or building society interest
 
 detailsOfEmploymentOrPension.title = What were the details of your employment or pension between {0}?
 detailsOfEmploymentOrPension.heading = What were the details of your employment or pension between {0}?
