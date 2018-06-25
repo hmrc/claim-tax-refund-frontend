@@ -33,10 +33,7 @@ class SelectTaxableIncomeViewSpec(implicit messages: Messages) extends ViewBehav
   private val taxYear = CYMinus2
 
 
-  val values: Map[String, TaxableIncome.Value] =
-    SelectTaxableIncomeForm.options.map {
-      case (k, v) => k -> TaxableIncome.withName(v)
-    }
+  val values: Seq[(String, String)] = SelectTaxableIncomeForm.options
 
   def form: Form[Set[TaxableIncome.Value]] = SelectTaxableIncomeForm()
 

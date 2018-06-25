@@ -47,7 +47,15 @@ class AnyBenefitsViewSpec(implicit messages: Messages) extends YesNoViewBehaviou
 
     behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.AnyBenefitsController.onSubmit(NormalMode).url, Some(s"$messageKeyPrefix.hint"))
 
-    behave like pageWithList(createView, messageKeyPrefix, Seq("list1","list2","list3"))
-    
+    behave like pageWithList(createView, messageKeyPrefix,
+      Seq(
+        "bereavement-allowance",
+        "carers-allowance",
+        "jobseekers-allowance",
+        "incapacity-benefit",
+        "employment-and-support-allowance",
+        "state-pension",
+        "other-taxable-benefit"
+      ))
   }
 }

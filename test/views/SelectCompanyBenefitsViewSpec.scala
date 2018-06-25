@@ -33,10 +33,7 @@ class SelectCompanyBenefitsViewSpec(implicit messages: Messages) extends ViewBeh
   private val taxYear = CYMinus2
 
 
-  val values: Map[String, CompanyBenefits.Value] =
-    SelectCompanyBenefitsForm.options.map {
-      case (k, v) => k -> CompanyBenefits.withName(v)
-    }
+  val values: Seq[(String, String)] = SelectCompanyBenefitsForm.options
 
   def form: Form[Set[CompanyBenefits.Value]] = SelectCompanyBenefitsForm()
 

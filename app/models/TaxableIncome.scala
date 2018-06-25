@@ -31,4 +31,13 @@ object TaxableIncome extends Enumeration {
   val writes: Writes[Value] = EnumUtils.enumWrites
 
   implicit def enumFormats: Format[Value] = EnumUtils.enumFormat(TaxableIncome)
+
+  val sortedTaxableIncome =
+    Seq(
+      RENTAL_INCOME,
+      BANK_OR_BUILDING_SOCIETY_INTEREST,
+      INVESTMENT_OR_DIVIDENDS,
+      FOREIGN_INCOME,
+      OTHER_TAXABLE_INCOME
+    )
 }
