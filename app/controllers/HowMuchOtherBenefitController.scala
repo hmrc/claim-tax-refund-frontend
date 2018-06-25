@@ -53,7 +53,7 @@ class HowMuchOtherBenefitController @Inject()(
 
       request.userAnswers.selectTaxYear.map{
         selectedTaxYear =>
-          val taxYear = selectedTaxYear.asString
+          val taxYear = selectedTaxYear
           Ok(howMuchOtherBenefit(appConfig, preparedForm, mode, taxYear))
       }.getOrElse{
         Redirect(routes.SessionExpiredController.onPageLoad())
@@ -64,7 +64,7 @@ class HowMuchOtherBenefitController @Inject()(
     implicit request =>
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
-          val taxYear = selectedTaxYear.asString
+          val taxYear = selectedTaxYear
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
               Future.successful(BadRequest(howMuchOtherBenefit(appConfig, formWithErrors, mode, taxYear))),

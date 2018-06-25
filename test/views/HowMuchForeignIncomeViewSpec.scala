@@ -23,14 +23,15 @@ import forms.HowMuchForeignIncomeForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
+import play.api.i18n.Messages
 import views.behaviours.StringViewBehaviours
 import views.html.howMuchForeignIncome
 
-class HowMuchForeignIncomeViewSpec extends StringViewBehaviours with MockitoSugar {
+class HowMuchForeignIncomeViewSpec(implicit messages: Messages) extends StringViewBehaviours with MockitoSugar {
 
   val messageKeyPrefix = "howMuchForeignIncome"
 
-  private val taxYear = CYMinus2.asString
+  private val taxYear = CYMinus2
 
   val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
@@ -41,7 +42,7 @@ class HowMuchForeignIncomeViewSpec extends StringViewBehaviours with MockitoSuga
   def createViewUsingForm = (form: Form[String]) => howMuchForeignIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "HowMuchForeignIncome view" must {
-    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, " " + taxYear, "?")
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, s"${taxYear.asString}?")
 
     behave like pageWithBackLink(createView)
 

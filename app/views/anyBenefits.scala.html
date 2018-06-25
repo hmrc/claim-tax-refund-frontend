@@ -21,10 +21,10 @@
 @import utils.FormHelpers
 @import viewmodels.InputViewModel
 
-@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: String)(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: SelectTaxYear)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("anyBenefits.title") + s" $taxYear?",
+    title = messages("anyBenefits.title", s"${taxYear.asString}"),
     appConfig = appConfig,
     bodyClasses = None) {
 
@@ -34,7 +34,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading(s"anyBenefits.heading", dynamicHeading = Some(s"$taxYear?"), secondaryHeaderKey = Some("index.title"))
+        @components.heading(messages(s"anyBenefits.heading", taxYear.asString))
 
         <p>@messages(messages("anyBenefits.listHeading"))</p>
 

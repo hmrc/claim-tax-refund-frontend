@@ -16,15 +16,14 @@
 
 package models
 
-import models.SelectTaxYear.dateFormat
-import org.scalatest.{MustMatchers, WordSpec}
+import models.SelectTaxYear.{CYMinus1, CYMinus2, CYMinus3, CYMinus4, CYMinus5, dateFormat}
 import org.scalatest.mockito.MockitoSugar
+import org.scalatest.{MustMatchers, WordSpec}
+import play.api.i18n.Messages
 import uk.gov.hmrc.time.TaxYearResolver
 
 
-class SelectTaxYearSpec extends WordSpec with MustMatchers with MockitoSugar {
-
-  val mockSelectTaxYear = mock[SelectTaxYear]
+class SelectTaxYearSpec(implicit messages: Messages) extends WordSpec with MustMatchers with MockitoSugar {
 
   "SelectTaxYear model" must {
     "return the currect tax year for CYMinus1" in {
@@ -50,28 +49,33 @@ class SelectTaxYearSpec extends WordSpec with MustMatchers with MockitoSugar {
 
     "return the currect tax year for CYMinus1 as String" in {
       val taxYear = SelectTaxYear.CYMinus1
-      taxYear.asString mustBe TaxYearResolver.startOfCurrentTaxYear.minusYears(1).toString(dateFormat) + " to " +
-        TaxYearResolver.endOfCurrentTaxYear.minusYears(1).toString(dateFormat)
+      taxYear.asString mustBe messages(s"selectTaxYear.${CYMinus1.toString}",
+        TaxYearResolver.startOfCurrentTaxYear.minusYears(1).toString(dateFormat),
+        TaxYearResolver.endOfCurrentTaxYear.minusYears(1).toString(dateFormat))
     }
     "return the currect tax year for CYMinus2 as String" in {
       val taxYear = SelectTaxYear.CYMinus2
-      taxYear.asString mustBe TaxYearResolver.startOfCurrentTaxYear.minusYears(2).toString(dateFormat) + " to " +
-        TaxYearResolver.endOfCurrentTaxYear.minusYears(2).toString(dateFormat)
+      taxYear.asString mustBe messages(s"selectTaxYear.${CYMinus2.toString}",
+        TaxYearResolver.startOfCurrentTaxYear.minusYears(2).toString(dateFormat),
+        TaxYearResolver.endOfCurrentTaxYear.minusYears(2).toString(dateFormat))
     }
     "return the currect tax year for CYMinus3 as String" in {
       val taxYear = SelectTaxYear.CYMinus3
-      taxYear.asString mustBe TaxYearResolver.startOfCurrentTaxYear.minusYears(3).toString(dateFormat) + " to " +
-        TaxYearResolver.endOfCurrentTaxYear.minusYears(3).toString(dateFormat)
+      taxYear.asString mustBe messages(s"selectTaxYear.${CYMinus3.toString}",
+        TaxYearResolver.startOfCurrentTaxYear.minusYears(3).toString(dateFormat),
+        TaxYearResolver.endOfCurrentTaxYear.minusYears(3).toString(dateFormat))
     }
     "return the currect tax year for CYMinus4 as String" in {
       val taxYear = SelectTaxYear.CYMinus4
-      taxYear.asString mustBe TaxYearResolver.startOfCurrentTaxYear.minusYears(4).toString(dateFormat) + " to " +
-        TaxYearResolver.endOfCurrentTaxYear.minusYears(4).toString(dateFormat)
+      taxYear.asString mustBe messages(s"selectTaxYear.${CYMinus4.toString}",
+        TaxYearResolver.startOfCurrentTaxYear.minusYears(4).toString(dateFormat),
+        TaxYearResolver.endOfCurrentTaxYear.minusYears(4).toString(dateFormat))
     }
     "return the currect tax year for CYMinus5 as String" in {
       val taxYear = SelectTaxYear.CYMinus5
-      taxYear.asString mustBe TaxYearResolver.startOfCurrentTaxYear.minusYears(5).toString(dateFormat) + " to " +
-        TaxYearResolver.endOfCurrentTaxYear.minusYears(5).toString(dateFormat)
+      taxYear.asString mustBe messages(s"selectTaxYear.${CYMinus5.toString}",
+        TaxYearResolver.startOfCurrentTaxYear.minusYears(5).toString(dateFormat),
+        TaxYearResolver.endOfCurrentTaxYear.minusYears(5).toString(dateFormat))
     }
   }
 }

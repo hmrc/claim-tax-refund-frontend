@@ -23,13 +23,14 @@ import forms.HowMuchCarersAllowanceForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
+import play.api.i18n.Messages
 import views.behaviours.StringViewBehaviours
 import views.html.howMuchCarersAllowance
 
-class HowMuchCarersAllowanceViewSpec extends StringViewBehaviours with MockitoSugar {
+class HowMuchCarersAllowanceViewSpec(implicit messages: Messages) extends StringViewBehaviours with MockitoSugar {
 
   val messageKeyPrefix = "howMuchCarersAllowance"
-  def taxYear = CYMinus2.asString
+  private val taxYear = CYMinus2
 
   val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
@@ -41,7 +42,7 @@ class HowMuchCarersAllowanceViewSpec extends StringViewBehaviours with MockitoSu
 
   "HowMuchCarersAllowance view" must {
 
-    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, " " + taxYear, "?")
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, s"${taxYear.asString}?")
 
     behave like pageWithBackLink(createView)
 

@@ -52,7 +52,7 @@ class HowMuchCarersAllowanceController @Inject()(
 
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
-          val taxYear = selectedTaxYear.asString
+          val taxYear = selectedTaxYear
           Ok(howMuchCarersAllowance(appConfig, preparedForm, mode, taxYear))
       }.getOrElse{
         Redirect(routes.SessionExpiredController.onPageLoad())
@@ -64,7 +64,7 @@ class HowMuchCarersAllowanceController @Inject()(
      implicit request =>
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
-          val taxYear = selectedTaxYear.asString
+          val taxYear = selectedTaxYear
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
               Future.successful(BadRequest(howMuchCarersAllowance(appConfig, formWithErrors, mode, taxYear))),

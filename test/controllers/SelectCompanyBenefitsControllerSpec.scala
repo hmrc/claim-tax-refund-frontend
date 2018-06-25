@@ -32,7 +32,7 @@ class SelectCompanyBenefitsControllerSpec extends ControllerSpecBase with Mockit
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
-  val taxYear: String = CYMinus2.asString
+  private val taxYear = CYMinus2
   private val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =

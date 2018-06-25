@@ -53,7 +53,7 @@ class AnyOtherCompanyBenefitsController @Inject()(appConfig: FrontendAppConfig,
 
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
-          val taxYear = selectedTaxYear.asString
+          val taxYear = selectedTaxYear
           Ok(anyOtherCompanyBenefits(appConfig, preparedForm, mode, taxYear))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
@@ -64,7 +64,7 @@ class AnyOtherCompanyBenefitsController @Inject()(appConfig: FrontendAppConfig,
     implicit request =>
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
-          val taxYear = selectedTaxYear.asString
+          val taxYear = selectedTaxYear
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
               Future.successful(BadRequest(anyOtherCompanyBenefits(appConfig, formWithErrors, mode, taxYear))),

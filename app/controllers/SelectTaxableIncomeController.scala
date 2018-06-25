@@ -50,7 +50,7 @@ class SelectTaxableIncomeController @Inject()(
 
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
-          val taxYear = selectedTaxYear.asString
+          val taxYear = selectedTaxYear
           Ok(selectTaxableIncome(appConfig, preparedForm, mode, taxYear))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
@@ -61,7 +61,7 @@ class SelectTaxableIncomeController @Inject()(
     implicit request =>
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
-          val taxYear = selectedTaxYear.asString
+          val taxYear = selectedTaxYear
           SelectTaxableIncomeForm().bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
               Future.successful(BadRequest(selectTaxableIncome(appConfig, formWithErrors, mode, taxYear))),

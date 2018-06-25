@@ -56,7 +56,7 @@ class HowMuchOtherCompanyBenefitController @Inject()(
         selectedTaxYear <- request.userAnswers.selectTaxYear;
         otherBenefitName <- request.userAnswers.otherCompanyBenefitsName
       ) yield {
-        val taxYear = selectedTaxYear.asString
+        val taxYear = selectedTaxYear
         Ok(howMuchOtherCompanyBenefit(appConfig, preparedForm, mode, taxYear, otherBenefitName))
       }
       details.getOrElse{
@@ -68,7 +68,7 @@ class HowMuchOtherCompanyBenefitController @Inject()(
     implicit request =>
       request.userAnswers.selectTaxYear.flatMap {
         selectedTaxYear =>
-          val taxYear = selectedTaxYear.asString
+          val taxYear = selectedTaxYear
           request.userAnswers.otherCompanyBenefitsName.map {
             benefitName =>
               form.bindFromRequest().fold(

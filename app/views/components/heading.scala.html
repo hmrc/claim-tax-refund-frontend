@@ -14,15 +14,21 @@
  * limitations under the License.
  *@
 
-@(headingKey: String, dynamicHeading: Option[String] = None, dynamicHeadingSuffix: Option[String] = None, headingSize: String = "heading-xlarge", secondaryHeaderKey: Option[String] = None, subSecHeader:Option[String] = None)(implicit messages: Messages)
+@(
+    heading: String,
+    headingSize: String = "heading-xlarge",
+    secondaryHeaderKey: Option[String] = Some("index.title"),
+    subSecHeader: Option[String] = None
+)(implicit messages: Messages)
 
 <header class="page-header">
- <h1 class="@headingSize">@messages(headingKey) @dynamicHeading @if(dynamicHeadingSuffix.nonEmpty){@messages(dynamicHeadingSuffix.get)}</h1>
+    <h1 class="@headingSize">@heading</h1>
     @secondaryHeaderKey.map { secHeader =>
-    <p class="heading-secondary"><span class="visuallyhidden">This section is: </span>@messages(secHeader)
-        @subSecHeader.map { subSecHeader =>
-        @subSecHeader
+        <p class="heading-secondary">
+            <span class="visuallyhidden">This section is: </span>@messages(secHeader)
+            @subSecHeader.map { subSecHeader =>
+                @subSecHeader
+            }
+        </p>
     }
-    </p>
- }
 </header>
