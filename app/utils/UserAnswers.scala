@@ -24,6 +24,8 @@ import uk.gov.hmrc.http.cache.client.CacheMap
 
 class UserAnswers(val cacheMap: CacheMap) {
 
+  def anyTaxableBankInterest: Option[AnyTaxPaid] = cacheMap.getEntry[AnyTaxPaid](AnyTaxableBankInterestId.toString)
+
   def anyTaxableRentalIncome: Option[AnyTaxPaid] = cacheMap.getEntry[AnyTaxPaid](AnyTaxableRentalIncomeId.toString)
 
   def otherTaxableIncomeName: Option[String] = cacheMap.getEntry[String](OtherTaxableIncomeNameId.toString)
