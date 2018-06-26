@@ -32,6 +32,7 @@ class Navigator @Inject()() {
     EmploymentDetailsId -> employmentDetails,
     EnterPayeReferenceId -> (_ => routes.DetailsOfEmploymentOrPensionController.onPageLoad(NormalMode)),
     AnyBenefitsId -> anyBenefits,
+    SelectBenefitsId -> selectBenefits,
     HowMuchStatePensionId -> (_ => routes.AnyOtherBenefitsController.onPageLoad(NormalMode)),
     AnyOtherBenefitsId -> anyOtherBenefits,
     AnyTaxableIncomeId -> otherTaxableIncome,
@@ -59,6 +60,11 @@ class Navigator @Inject()() {
     case Some(true) => routes.SelectBenefitsController.onPageLoad(NormalMode)
     case Some(false) => routes.AnyTaxableIncomeController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
+  }
+
+  private def selectBenefits(userAnswers: UserAnswers): Call = userAnswers.selectBenefits.flatMap {
+    selected =>
+      selected.contains("bereavement-allowance")
   }
 
   private def anyOtherBenefits(userAnswers: UserAnswers): Call = userAnswers.anyOtherBenefits match {

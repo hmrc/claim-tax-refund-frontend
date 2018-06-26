@@ -19,10 +19,13 @@ package utils
 import base.SpecBase
 import controllers.routes
 import identifiers._
-import models.WhereToSendPayment.{Nominee, Myself}
+import models.Benefits.BEREAVEMENT_ALLOWANCE
+import models.WhereToSendPayment.{Myself, Nominee}
 import models._
 import org.mockito.Mockito._
 import org.scalatest.mockito.MockitoSugar
+import play.api.libs.json.JsString
+import uk.gov.hmrc.http.cache.client.CacheMap
 
 class NavigatorSpec extends SpecBase with MockitoSugar {
 
@@ -63,6 +66,17 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         val answers = mock[UserAnswers]
         when(answers.anyBenefits) thenReturn Some(true)
         navigator.nextPage(AnyBenefitsId, NormalMode)(answers) mustBe routes.SelectBenefitsController.onPageLoad(NormalMode)
+      }
+
+      "go to HowMuchBereavementAllowance from SelectBenefits when bereavement-allowance checkbox selected" in {
+        navigator.nextPage(SelectBenefitsId, CheckMode)(
+          new UserAnswers(cacheMap = CacheMap(
+            "",
+            Map(
+              BEREAVEMENT_ALLOWANCE.toString -> JsString(BEREAVEMENT_ALLOWANCE.toString)
+            )
+          ))
+        ) mustBe routes.HowMuchBereavementAllowanceController.onPageLoad(NormalMode)
       }
 
       "go to AnyTaxableIncome from AnyBenefits when No is selected" in {
