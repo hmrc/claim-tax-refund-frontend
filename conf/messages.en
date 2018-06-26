@@ -379,3 +379,11 @@ otherTaxableIncomeName.title = What is the name of the other taxable income you 
 otherTaxableIncomeName.heading = What is the name of the other taxable income you were getting between {0}?
 otherTaxableIncomeName.checkYourAnswersLabel = Other taxable income name
 otherTaxableIncomeName.blank = Enter the name of the other taxable income you got
+
+anyTaxableRentalIncome.title = Did you pay tax on property rental income between {0}?
+anyTaxableRentalIncome.heading = Did you pay tax on property rental income between {0}?
+anyTaxableRentalIncome.checkYourAnswersLabel = Taxable property rental income
+anyTaxableRentalIncome.invalid = Enter a valid amount for property rental income
+anyTaxableRentalIncome.notSelected = Select yes if you paid tax on property rental income
+anyTaxableRentalIncome.blank = Enter the amount of tax paid on property rental income
+anyTaxableRentalIncome.anyTaxPaidAmountField = How much tax did you pay on property rental income?
