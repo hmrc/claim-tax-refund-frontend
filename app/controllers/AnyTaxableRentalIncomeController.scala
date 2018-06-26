@@ -57,8 +57,7 @@ class AnyTaxableRentalIncomeController @Inject()(appConfig: FrontendAppConfig,
 
         request.userAnswers.selectTaxYear.map{
           selectedTaxYear =>
-            val taxYear = selectedTaxYear
-            Ok(anyTaxableRentalIncome(appConfig, preparedForm, mode, taxYear))
+            Ok(anyTaxableRentalIncome(appConfig, preparedForm, mode, selectedTaxYear))
         }.getOrElse{
           Redirect(routes.SessionExpiredController.onPageLoad())
         }
@@ -68,10 +67,9 @@ class AnyTaxableRentalIncomeController @Inject()(appConfig: FrontendAppConfig,
       implicit request =>
         request.userAnswers.selectTaxYear.map {
           selectedTaxYear =>
-            val taxYear = selectedTaxYear
             form.bindFromRequest().fold(
               (formWithErrors: Form[_]) =>
-                Future.successful(BadRequest(anyTaxableRentalIncome(appConfig, formWithErrors, mode, taxYear))),
+                Future.successful(BadRequest(anyTaxableRentalIncome(appConfig, formWithErrors, mode, selectedTaxYear))),
               (value) =>
                 dataCacheConnector.save[AnyTaxPaid](request.externalId, AnyTaxableRentalIncomeId.toString, value).map(cacheMap =>
                   Redirect(navigator.nextPage(TaxPaidAmountId, mode)(new UserAnswers(cacheMap))))            )
