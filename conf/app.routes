@@ -211,3 +211,8 @@ GET        /any-taxable-rental-income                                       cont
 POST       /any-taxable-rental-income                                       controllers.AnyTaxableRentalIncomeController.onSubmit(mode: Mode = NormalMode)
 GET        /change-any-taxable-rental-income                                controllers.AnyTaxableRentalIncomeController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-any-taxable-rental-income                                controllers.AnyTaxableRentalIncomeController.onSubmit(mode: Mode = CheckMode)
+
+GET        /any-taxable-bank-interest                                       controllers.AnyTaxableBankInterestController.onPageLoad(mode: Mode = NormalMode)
+POST       /any-taxable-bank-interest                                       controllers.AnyTaxableBankInterestController.onSubmit(mode: Mode = NormalMode)
+GET        /change-any-taxable-bank-interest                                controllers.AnyTaxableBankInterestController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-any-taxable-bank-interest                                controllers.AnyTaxableBankInterestController.onSubmit(mode: Mode = CheckMode)
