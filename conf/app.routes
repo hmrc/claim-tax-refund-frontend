@@ -206,3 +206,8 @@ GET        /other-taxable-income-name                                       cont
 POST       /other-taxable-income-name                                       controllers.OtherTaxableIncomeNameController.onSubmit(mode: Mode = NormalMode)
 GET        /change-other-taxable-income-name                                controllers.OtherTaxableIncomeNameController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-other-taxable-income-name                                controllers.OtherTaxableIncomeNameController.onSubmit(mode: Mode = CheckMode)
+
+GET        /any-taxable-rental-income                                       controllers.AnyTaxableRentalIncomeController.onPageLoad(mode: Mode = NormalMode)
+POST       /any-taxable-rental-income                                       controllers.AnyTaxableRentalIncomeController.onSubmit(mode: Mode = NormalMode)
+GET        /change-any-taxable-rental-income                                controllers.AnyTaxableRentalIncomeController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-any-taxable-rental-income                                controllers.AnyTaxableRentalIncomeController.onSubmit(mode: Mode = CheckMode)

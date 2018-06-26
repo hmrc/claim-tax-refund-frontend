@@ -25,6 +25,11 @@ import viewmodels.AnswerRow
 
 class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messages){
 
+  def anyTaxableRentalIncome: Option[AnswerRow] = userAnswers.anyTaxableRentalIncome map {
+    x => AnswerRow("anyTaxableRentalIncome.checkYourAnswersLabel",
+      s"$x", false, routes.AnyTaxableRentalIncomeController.onPageLoad(CheckMode).url)
+  }
+
   def otherTaxableIncomeName: Option[AnswerRow] = userAnswers.otherTaxableIncomeName map {
     x => AnswerRow("otherTaxableIncomeName.checkYourAnswersLabel", s"$x", false, routes.OtherTaxableIncomeNameController.onPageLoad(CheckMode).url)
   }
