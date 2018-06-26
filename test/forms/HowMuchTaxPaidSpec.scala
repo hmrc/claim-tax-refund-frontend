@@ -23,8 +23,13 @@ import play.api.data.FormError
 
 class HowMuchTaxPaidSpec extends FormSpec with AnyTaxPaidMapping with PropertyChecks {
 
+  val notSelectedKey = "Value not selected"
+  val blankKey = "Value not entered"
+  val invalidKey = "Invalid value"
+
   "AnyTaxPaid form" must {
-    val form = new AnyTaxPaidForm("", "failed blank", "failed invalid")()
+
+    val form = new AnyTaxPaidForm()(notSelectedKey, blankKey, invalidKey)
     val anyTaxPaid = "anyTaxPaid"
     val taxPaidAmount = "taxPaidAmount"
     val testTaxAmount = "9,999.99"
@@ -44,11 +49,11 @@ class HowMuchTaxPaidSpec extends FormSpec with AnyTaxPaidMapping with PropertyCh
     "fail to bind" when {
       "yes is selected but taxPaidAmount is not provided" in {
         val result = form.bind(Map(anyTaxPaid -> "true"))
-        result.errors shouldBe Seq(FormError(taxPaidAmount, "failed blank"))
+        result.errors shouldBe Seq(FormError(taxPaidAmount, blankKey))
       }
       "taxPaidAmount is invalid" in {
         val result = form.bind(Map(anyTaxPaid -> "true", taxPaidAmount -> "test"))
-        result.errors shouldBe Seq(FormError(taxPaidAmount, "failed invalid"))
+        result.errors shouldBe Seq(FormError(taxPaidAmount, invalidKey))
       }
     }
 

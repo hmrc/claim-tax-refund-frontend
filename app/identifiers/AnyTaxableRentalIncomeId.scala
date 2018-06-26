@@ -14,18 +14,8 @@
  * limitations under the License.
  */
 
-package forms
+package identifiers
 
-import com.google.inject.Inject
-import forms.mappings.AnyTaxPaidMapping
-import models.AnyTaxPaid
-import play.api.data.Form
-
-class AnyTaxPaidForm @Inject() extends AnyTaxPaidMapping {
-
-  def apply(requiredKey: String, requiredTaxAmountKey: String, taxAmountInvalidKey: String): Form[AnyTaxPaid] = Form(
-    anyTaxPaidMapping(
-      requiredKey, requiredTaxAmountKey, taxAmountInvalidKey
-    )
-  )
+case object AnyTaxableRentalIncomeId extends Identifier {
+  override def toString: String = "anyTaxableRentalIncome"
 }

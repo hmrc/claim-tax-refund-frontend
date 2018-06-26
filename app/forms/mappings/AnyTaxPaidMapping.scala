@@ -46,8 +46,11 @@ trait AnyTaxPaidMapping extends Mappings {
     }
 
     tuple("anyTaxPaid" -> boolean(requiredKey),
-      "taxPaidAmount" -> mandatoryIfTrue("anyTaxPaid",
-        text(requiredTaxAmountKey).verifying(regexValidation(currencyRegex,taxAmountInvalidKey))))
+      "taxPaidAmount" -> mandatoryIfTrue(
+        "anyTaxPaid",
+        text(requiredTaxAmountKey).verifying(regexValidation(currencyRegex,taxAmountInvalidKey))
+      )
+    )
       .transform(toTaxPaid, fromTaxPaid)
   }
 
