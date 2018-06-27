@@ -38,7 +38,7 @@
 
         @components.input_yes_no(
             InputViewModel("anyTaxPaid", form),
-            label = messages("anyTaxableInvestments.heading"),
+            label = messages("anyTaxableInvestments.heading", taxYear.asString),
             labelClass = Some("visually-hidden"),
             yesAssoc = Some("yesAnyTaxPaid"),
             noAssoc = Some("noAnyTaxPaid")
