@@ -72,6 +72,7 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.otherTaxableIncomeName) thenReturn None
     when(answers.anyTaxableRentalIncome) thenReturn None
     when(answers.anyTaxableBankInterest) thenReturn None
+    when(answers.anyTaxableInvestments) thenReturn None
 
     answers
   }

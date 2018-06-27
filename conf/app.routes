@@ -216,3 +216,8 @@ GET        /any-taxable-bank-interest                                       cont
 POST       /any-taxable-bank-interest                                       controllers.AnyTaxableBankInterestController.onSubmit(mode: Mode = NormalMode)
 GET        /change-any-taxable-bank-interest                                controllers.AnyTaxableBankInterestController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-any-taxable-bank-interest                                controllers.AnyTaxableBankInterestController.onSubmit(mode: Mode = CheckMode)
+
+GET        /any-taxable-investments                                         controllers.AnyTaxableInvestmentsController.onPageLoad(mode: Mode = NormalMode)
+POST       /any-taxable-investments                                         controllers.AnyTaxableInvestmentsController.onSubmit(mode: Mode = NormalMode)
+GET        /change-any-taxable-investments                                  controllers.AnyTaxableInvestmentsController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-any-taxable-investments                                  controllers.AnyTaxableInvestmentsController.onSubmit(mode: Mode = CheckMode)
