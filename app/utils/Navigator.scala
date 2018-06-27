@@ -18,7 +18,6 @@ package utils
 
 import identifiers._
 import javax.inject.{Inject, Singleton}
-
 import controllers.routes
 import models.WhereToSendPayment.{Myself, Nominee}
 import models._
@@ -42,7 +41,9 @@ class Navigator @Inject()() {
     IsPaymentAddressInTheUKId -> isPaymentAddressInUkRoute,
     PaymentUKAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
     PaymentInternationalAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
-    TelephoneNumberId -> (_ => routes.WhereToSendPaymentController.onPageLoad(NormalMode))
+    TelephoneNumberId -> (_ => routes.WhereToSendPaymentController.onPageLoad(NormalMode)),
+    OtherBenefitsNameId -> (_ => routes.HowMuchOtherBenefitController.onPageLoad(NormalMode)),
+    HowMuchOtherBenefitId -> (_ => routes.AnyOtherBenefitsController.onPageLoad(NormalMode))
   )
 
   private val editRouteMap: Map[Identifier, UserAnswers => Call] = Map(
@@ -62,8 +63,8 @@ class Navigator @Inject()() {
   }
 
   private def anyOtherBenefits(userAnswers: UserAnswers): Call = userAnswers.anyOtherBenefits match {
-    case Some(true) => ???
-    case Some(false) => routes.AnyTaxableIncomeController.onPageLoad(NormalMode)
+    case Some(true) => routes.OtherBenefitsNameController.onPageLoad(NormalMode)
+    case Some(false) => routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
