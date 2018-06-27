@@ -383,7 +383,15 @@ otherTaxableIncomeName.blank = Enter the name of the other taxable income you go
 anyTaxableRentalIncome.title = Did you pay tax on property rental income between {0}?
 anyTaxableRentalIncome.heading = Did you pay tax on property rental income between {0}?
 anyTaxableRentalIncome.checkYourAnswersLabel = Taxable property rental income
-anyTaxableRentalIncome.invalid = Enter a valid amount for property rental income
+anyTaxableRentalIncome.invalid = Enter a valid amount of tax paid for property rental income
 anyTaxableRentalIncome.notSelected = Select yes if you paid tax on property rental income
 anyTaxableRentalIncome.blank = Enter the amount of tax paid on property rental income
 anyTaxableRentalIncome.anyTaxPaidAmountField = How much tax did you pay on property rental income?
+
+anyTaxableBankInterest.title = Did you pay tax on bank or building society interest between {0}?
+anyTaxableBankInterest.heading = Did you pay tax on bank or building society interest between {0}?
+anyTaxableBankInterest.checkYourAnswersLabel = Taxable bank or building society interest
+anyTaxableBankInterest.invalid = Enter a valid amount of tax paid for bank or building society interest
+anyTaxableBankInterest.notSelected = Select yes if you paid tax on bank or building society interest
+anyTaxableBankInterest.blank = Enter the amount of tax paid on bank or building society interest
+anyTaxableBankInterest.anyTaxPaidAmountField = How much tax did you pay on bank or building society interest?
