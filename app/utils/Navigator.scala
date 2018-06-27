@@ -20,7 +20,7 @@ import identifiers._
 import javax.inject.{Inject, Singleton}
 import controllers.routes
 import models.WhereToSendPayment.{Myself, Nominee}
-import models._
+import models.{Benefits, _}
 import play.api.mvc.Call
 
 @Singleton
@@ -31,6 +31,7 @@ class Navigator @Inject()() {
     EmploymentDetailsId -> employmentDetails,
     EnterPayeReferenceId -> (_ => routes.DetailsOfEmploymentOrPensionController.onPageLoad(NormalMode)),
     AnyBenefitsId -> anyBenefits,
+    SelectBenefitsId -> selectBenefits,
     HowMuchStatePensionId -> (_ => routes.AnyOtherBenefitsController.onPageLoad(NormalMode)),
     AnyOtherBenefitsId -> anyOtherBenefits,
     AnyTaxableIncomeId -> otherTaxableIncome,
@@ -60,6 +61,17 @@ class Navigator @Inject()() {
     case Some(true) => routes.SelectBenefitsController.onPageLoad(NormalMode)
     case Some(false) => routes.AnyTaxableIncomeController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
+  }
+
+  private def selectBenefits(userAnswers: UserAnswers): Call = userAnswers.selectBenefits.head.head match {
+    case Benefits.BEREAVEMENT_ALLOWANCE => routes.HowMuchBereavementAllowanceController.onPageLoad(NormalMode)
+    case Benefits.CARERS_ALLOWANCE => routes.HowMuchCarersAllowanceController.onPageLoad(NormalMode)
+    case Benefits.JOBSEEKERS_ALLOWANCE => routes.HowMuchJobseekersAllowanceController.onPageLoad(NormalMode)
+    case Benefits.INCAPACITY_BENEFIT => routes.HowMuchIncapacityBenefitController.onPageLoad(NormalMode)
+    case Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE => routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(NormalMode)
+    case Benefits.STATE_PENSION => routes.HowMuchStatePensionController.onPageLoad(NormalMode)
+    case Benefits.OTHER_TAXABLE_BENEFIT => routes.OtherBenefitsNameController.onPageLoad(NormalMode)
+    case _ => routes.SessionExpiredController.onPageLoad()
   }
 
   private def anyOtherBenefits(userAnswers: UserAnswers): Call = userAnswers.anyOtherBenefits match {
