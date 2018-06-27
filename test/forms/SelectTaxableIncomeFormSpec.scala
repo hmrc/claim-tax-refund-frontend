@@ -21,7 +21,7 @@ import models.TaxableIncome
 
 class SelectTaxableIncomeFormSpec extends CheckboxBehaviours[TaxableIncome.Value] {
 
-  override val validOptions: Set[TaxableIncome.Value] = TaxableIncome.values
+  override val validOptions: Seq[TaxableIncome.Value] = TaxableIncome.values.toSeq
 
   override val fieldName = "value"
 

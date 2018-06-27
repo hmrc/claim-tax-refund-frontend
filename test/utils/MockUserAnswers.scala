@@ -108,7 +108,7 @@ object MockUserAnswers extends MockitoSugar {
     yourDetailsUserAnswers
     when(answers.anyBenefits) thenReturn Some(true)
     when(answers.selectBenefits) thenReturn Some(
-      Set(Benefits.CARERS_ALLOWANCE,
+      Seq(Benefits.CARERS_ALLOWANCE,
         Benefits.BEREAVEMENT_ALLOWANCE,
         Benefits.INCAPACITY_BENEFIT,
         Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE,
@@ -197,7 +197,7 @@ object MockUserAnswers extends MockitoSugar {
     yourDetailsUserAnswers
     when(answers.anyCompanyBenefits) thenReturn Some(true)
     when(answers.selectCompanyBenefits) thenReturn Some(
-      Set(CompanyBenefits.COMPANY_CAR_BENEFIT,
+      Seq(CompanyBenefits.COMPANY_CAR_BENEFIT,
         CompanyBenefits.MEDICAL_BENEFIT,
         CompanyBenefits.FUEL_BENEFIT,
         CompanyBenefits.OTHER_COMPANY_BENEFIT)

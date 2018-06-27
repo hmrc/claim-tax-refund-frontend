@@ -52,11 +52,11 @@ class SelectTaxableIncomeControllerSpec extends ControllerSpecBase {
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      when(mockUserAnswers.selectTaxableIncome).thenReturn(Some(Set(TaxableIncome(0))))
+      when(mockUserAnswers.selectTaxableIncome).thenReturn(Some(Seq(TaxableIncome(0))))
 
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
-      contentAsString(result) mustBe viewAsString(SelectTaxableIncomeForm().fill(Set(TaxableIncome(0))))
+      contentAsString(result) mustBe viewAsString(SelectTaxableIncomeForm().fill(Seq(TaxableIncome(0))))
     }
 
     "redirect to the next page when valid data is submitted" in {

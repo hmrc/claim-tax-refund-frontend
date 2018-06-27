@@ -21,10 +21,10 @@ import forms.FormSpec
 
 trait CheckboxBehaviours[A] extends FormSpec {
 
-  def validOptions: Set[A]
+  def validOptions: Seq[A]
   def invalidValue: String = "invalid value"
   def fieldName: String
-  def form: Form[Set[A]]
+  def form: Form[Seq[A]]
 
   def aCheckboxForm(invalid: String = "error.invalid"): Unit = {
     for {
@@ -33,7 +33,7 @@ trait CheckboxBehaviours[A] extends FormSpec {
       val data = Map(
         s"$fieldName[$i]" -> value.toString
       )
-      form.bind(data).get shouldEqual Set(value)
+      form.bind(data).get shouldEqual Seq(value)
     }
 
     "fail to bind when the answer is invalid" in {
