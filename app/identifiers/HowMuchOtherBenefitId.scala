@@ -16,6 +16,12 @@
 
 package identifiers
 
+import controllers.routes
+import models.{Benefits, NormalMode}
+import play.api.mvc.Call
+
 case object HowMuchOtherBenefitId extends Identifier {
   override def toString: String = "howMuchOtherBenefit"
+  def cyaId: String = Benefits.OTHER_TAXABLE_BENEFIT.toString
+  def route: Call = routes.OtherBenefitsNameController.onPageLoad(NormalMode)
 }

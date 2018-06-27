@@ -18,7 +18,7 @@ package utils
 
 import base.SpecBase
 import controllers.routes
-import identifiers.{AnyOtherBenefitsId, HowMuchOtherBenefitId, OtherBenefitsNameId, SelectBenefitsId}
+import identifiers._
 import models.{Benefits, NormalMode}
 import org.mockito.Mockito._
 import org.scalatest.mockito.MockitoSugar
@@ -135,6 +135,56 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
           navigator.nextPage(SelectBenefitsId, NormalMode)(answers) mustBe routes.OtherBenefitsNameController.onPageLoad(NormalMode)
         }
       }
+
+      "Navigating from HowMuchBereavementAllowance" must {
+        "go to HowMuchCarersAllowance if this option was selected on SelectBenefits" in {
+          val answers = mock[UserAnswers]
+          when(answers.selectBenefits) thenReturn Some(Seq(Benefits.CARERS_ALLOWANCE))
+          navigator.nextPage(HowMuchBereavementAllowanceId, NormalMode)(answers) mustBe routes.HowMuchCarersAllowanceController.onPageLoad(NormalMode)
+        }
+
+        "go to HowMuchJobseekersAllowance if this option was selected on SelectBenefits" in {
+          val answers = mock[UserAnswers]
+          when(answers.selectBenefits) thenReturn Some(Seq(Benefits.JOBSEEKERS_ALLOWANCE))
+          navigator.nextPage(HowMuchBereavementAllowanceId, NormalMode)(answers) mustBe routes.HowMuchJobseekersAllowanceController.onPageLoad(NormalMode)
+        }
+
+        "go to HowMuchIncapacityBenefit if this option was selected on SelectBenefits" in {
+          val answers = mock[UserAnswers]
+          when(answers.selectBenefits) thenReturn Some(Seq(Benefits.INCAPACITY_BENEFIT))
+          navigator.nextPage(HowMuchBereavementAllowanceId, NormalMode)(answers) mustBe routes.HowMuchIncapacityBenefitController.onPageLoad(NormalMode)
+        }
+
+        "go to HowMuchEmploymentAndSupportAllowance if this option was selected on SelectBenefits" in {
+          val answers = mock[UserAnswers]
+          when(answers.selectBenefits) thenReturn Some(Seq(Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE))
+          navigator.nextPage(HowMuchBereavementAllowanceId, NormalMode)(answers) mustBe routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(NormalMode)
+        }
+
+        "go to HowMuchStatePension if this option was selected on SelectBenefits" in {
+          val answers = mock[UserAnswers]
+          when(answers.selectBenefits) thenReturn Some(Seq(Benefits.STATE_PENSION))
+          navigator.nextPage(HowMuchBereavementAllowanceId, NormalMode)(answers) mustBe routes.HowMuchStatePensionController.onPageLoad(NormalMode)
+        }
+
+        "go to OtherBenefitsName if this option was selected on SelectBenefits" in {
+          val answers = mock[UserAnswers]
+          when(answers.selectBenefits) thenReturn Some(Seq(Benefits.OTHER_TAXABLE_BENEFIT))
+          navigator.nextPage(HowMuchBereavementAllowanceId, NormalMode)(answers) mustBe routes.OtherBenefitsNameController.onPageLoad(NormalMode)
+        }
+
+        "go to AnyCompanyBenefits once all benefits have been completed" in {
+          val answers = mock[UserAnswers]
+          when(answers.selectBenefits) thenReturn Some(Seq(Benefits.CARERS_ALLOWANCE))
+          navigator.nextPage(HowMuchBereavementAllowanceId, NormalMode)(answers) mustBe routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
+        }
+      }
+
+//      "" must {
+//        "" in {
+//
+//        }
+//      }
 
       // onwards route from OtherBenefitsName always follows the same pattern
 
