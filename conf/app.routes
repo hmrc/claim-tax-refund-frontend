@@ -221,3 +221,8 @@ GET        /any-taxable-investments                                         cont
 POST       /any-taxable-investments                                         controllers.AnyTaxableInvestmentsController.onSubmit(mode: Mode = NormalMode)
 GET        /change-any-taxable-investments                                  controllers.AnyTaxableInvestmentsController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-any-taxable-investments                                  controllers.AnyTaxableInvestmentsController.onSubmit(mode: Mode = CheckMode)
+
+GET        /any-taxable-foreign-income                                      controllers.AnyTaxableForeignIncomeController.onPageLoad(mode: Mode = NormalMode)
+POST       /any-taxable-foreign-income                                      controllers.AnyTaxableForeignIncomeController.onSubmit(mode: Mode = NormalMode)
+GET        /change-any-taxable-foreign-income                               controllers.AnyTaxableForeignIncomeController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-any-taxable-foreign-income                               controllers.AnyTaxableForeignIncomeController.onSubmit(mode: Mode = CheckMode)
