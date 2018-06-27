@@ -68,17 +68,6 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(AnyBenefitsId, NormalMode)(answers) mustBe routes.SelectBenefitsController.onPageLoad(NormalMode)
       }
 
-      "go to HowMuchBereavementAllowance from SelectBenefits when bereavement-allowance checkbox selected" in {
-        navigator.nextPage(SelectBenefitsId, CheckMode)(
-          new UserAnswers(cacheMap = CacheMap(
-            "",
-            Map(
-              BEREAVEMENT_ALLOWANCE.toString -> JsString(BEREAVEMENT_ALLOWANCE.toString)
-            )
-          ))
-        ) mustBe routes.HowMuchBereavementAllowanceController.onPageLoad(NormalMode)
-      }
-
       "go to AnyTaxableIncome from AnyBenefits when No is selected" in {
         val answers = mock[UserAnswers]
         when(answers.anyBenefits) thenReturn Some(false)

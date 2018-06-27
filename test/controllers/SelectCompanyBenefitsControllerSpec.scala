@@ -52,11 +52,11 @@ class SelectCompanyBenefitsControllerSpec extends ControllerSpecBase with Mockit
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      when(mockUserAnswers.selectCompanyBenefits).thenReturn(Some(Set(CompanyBenefits(0))))
+      when(mockUserAnswers.selectCompanyBenefits).thenReturn(Some(Seq(CompanyBenefits(0))))
 
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
-      contentAsString(result) mustBe viewAsString(SelectCompanyBenefitsForm().fill(Set(CompanyBenefits(0))))
+      contentAsString(result) mustBe viewAsString(SelectCompanyBenefitsForm().fill(Seq(CompanyBenefits(0))))
     }
 
     "redirect to the next page when valid data is submitted" in {

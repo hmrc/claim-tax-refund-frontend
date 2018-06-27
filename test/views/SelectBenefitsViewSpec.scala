@@ -34,11 +34,11 @@ class SelectBenefitsViewSpec(implicit messages: Messages) extends ViewBehaviours
 
   val values: Seq[(String, String)] = SelectBenefitsForm.options
 
-  def form: Form[Set[Benefits.Value]] = SelectBenefitsForm()
+  def form: Form[Seq[Benefits.Value]] = SelectBenefitsForm()
 
   override def createView(): Html = createView(form)
 
-  def createView(form: Form[Set[Benefits.Value]]): Html =
+  def createView(form: Form[Seq[Benefits.Value]]): Html =
     selectBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[_]) => selectBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
