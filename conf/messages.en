@@ -414,8 +414,8 @@ anyTaxableForeignIncome.anyTaxPaidAmountField = How much income tax did you pay 
 
 anyTaxableOtherIncome.title = Did you pay income tax on {0} between {1}?
 anyTaxableOtherIncome.heading = Did you pay income tax on {0} between {1}?
-anyTaxableOtherIncome.checkYourAnswersLabel = Taxable other income
-anyTaxableOtherIncome.invalid = Enter a valid amount of income tax paid for your other income
-anyTaxableOtherIncome.notSelected = Select yes if you paid income tax on your other income
-anyTaxableOtherIncome.blank = Enter the amount of income tax paid on your other income
+anyTaxableOtherIncome.checkYourAnswersLabel = Other taxable income
+anyTaxableOtherIncome.invalid = Enter a valid amount of income tax you paid on this income
+anyTaxableOtherIncome.notSelected = Select yes if you paid income tax on this income
+anyTaxableOtherIncome.blank = Enter the amount of income tax paid on this income
 anyTaxableOtherIncome.anyTaxPaidAmountField = How much income tax did you pay on {0}?
