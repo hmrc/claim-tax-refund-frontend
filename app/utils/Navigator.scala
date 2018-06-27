@@ -22,6 +22,7 @@ import controllers.routes
 import models.WhereToSendPayment.{Myself, Nominee}
 import models.{Benefits, _}
 import play.api.mvc.Call
+import play.libs.F.Tuple
 
 @Singleton
 class Navigator @Inject()() {
@@ -32,7 +33,12 @@ class Navigator @Inject()() {
     EnterPayeReferenceId -> (_ => routes.DetailsOfEmploymentOrPensionController.onPageLoad(NormalMode)),
     AnyBenefitsId -> anyBenefits,
     SelectBenefitsId -> selectBenefits,
-    HowMuchStatePensionId -> (_ => routes.AnyOtherBenefitsController.onPageLoad(NormalMode)),
+    HowMuchBereavementAllowanceId -> benefitRouter(HowMuchBereavementAllowanceId.cyaId),
+    HowMuchCarersAllowanceId -> benefitRouter(HowMuchCarersAllowanceId.cyaId),
+    HowMuchJobseekersAllowanceId -> benefitRouter(HowMuchJobseekersAllowanceId.cyaId),
+    HowMuchIncapacityBenefitId -> benefitRouter(HowMuchIncapacityBenefitId.cyaId),
+    HowMuchEmploymentAndSupportAllowanceId -> benefitRouter(HowMuchEmploymentAndSupportAllowanceId.cyaId),
+    HowMuchStatePensionId -> benefitRouter(HowMuchStatePensionId.cyaId),
     AnyOtherBenefitsId -> anyOtherBenefits,
     AnyTaxableIncomeId -> otherTaxableIncome,
     HowMuchMedicalBenefitsId -> (_ => routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)),
@@ -73,6 +79,27 @@ class Navigator @Inject()() {
     case Benefits.OTHER_TAXABLE_BENEFIT => routes.OtherBenefitsNameController.onPageLoad(NormalMode)
     case _ => routes.SessionExpiredController.onPageLoad()
   }
+
+  private def benefitRouter(identifier: String)(userAnswers: UserAnswers): Call = {
+    val total: Int = userAnswers.selectBenefits.head.length
+    val currentIndex: Int = userAnswers.selectBenefits.head.map(_.toString) indexOf identifier
+
+    println(s"#################################\n\n\n\n\n\n\ntotal:- $total current:- $currentIndex")
+    if (currentIndex < total) {
+      userAnswers.selectBenefits.head(currentIndex + 1) match {
+        case Benefits.CARERS_ALLOWANCE => HowMuchCarersAllowanceId.route
+        case Benefits.JOBSEEKERS_ALLOWANCE => HowMuchJobseekersAllowanceId.route
+        case Benefits.INCAPACITY_BENEFIT => HowMuchIncapacityBenefitId.route
+        case Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE => HowMuchEmploymentAndSupportAllowanceId.route
+        case Benefits.STATE_PENSION => HowMuchStatePensionId.route
+        case Benefits.OTHER_TAXABLE_BENEFIT => OtherBenefitsNameId.route
+      }
+    } else {
+      routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
+    }
+
+  }
+
 
   private def anyOtherBenefits(userAnswers: UserAnswers): Call = userAnswers.anyOtherBenefits match {
     case Some(true) => routes.OtherBenefitsNameController.onPageLoad(NormalMode)

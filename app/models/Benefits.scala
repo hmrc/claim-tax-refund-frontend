@@ -44,7 +44,6 @@ object Benefits extends Enumeration {
       EMPLOYMENT_AND_SUPPORT_ALLOWANCE,
       STATE_PENSION,
       OTHER_TAXABLE_BENEFIT
-
   )
 }
 
