@@ -19,25 +19,30 @@ package views
 import controllers.routes
 import forms.BooleanForm
 import models.NormalMode
+import models.SelectTaxYear.CYMinus2
 import play.api.data.Form
+import play.api.i18n.Messages
 import views.behaviours.YesNoViewBehaviours
 import views.html.anyOtherTaxableIncome
 
-class AnyOtherTaxableIncomeViewSpec extends YesNoViewBehaviours {
+class AnyOtherTaxableIncomeViewSpec(implicit messages: Messages) extends YesNoViewBehaviours {
 
-  val messageKeyPrefix = "anyOtherTaxableIncome"
+  private val messageKeyPrefix = "anyOtherTaxableIncome"
+  private val taxYear = CYMinus2
 
   override val form = new BooleanForm()()
 
-  def createView = () => anyOtherTaxableIncome(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createView = () => anyOtherTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[_]) => anyOtherTaxableIncome(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[_]) => anyOtherTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "AnyOtherTaxableIncome view" must {
 
-    behave like normalPage(createView, messageKeyPrefix)
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, taxYear.asString)
 
     behave like pageWithBackLink(createView)
+
+    behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
     behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.AnyOtherTaxableIncomeController.onSubmit(NormalMode).url)
   }

@@ -49,17 +49,28 @@ class HowMuchMedicalBenefitsController @Inject()(
         case None => form
         case Some(value) => form.fill(value)
       }
-      Ok(howMuchMedicalBenefits(appConfig, preparedForm, mode))
+
+      request.userAnswers.selectTaxYear.map {
+        taxYear =>
+          Ok(howMuchMedicalBenefits(appConfig, preparedForm, mode, taxYear))
+      }.getOrElse {
+        Redirect(routes.SessionExpiredController.onPageLoad())
+      }
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      form.bindFromRequest().fold(
-        (formWithErrors: Form[_]) =>
-          Future.successful(BadRequest(howMuchMedicalBenefits(appConfig, formWithErrors, mode))),
-        (value) =>
-          dataCacheConnector.save[String](request.externalId, HowMuchMedicalBenefitsId.toString, value).map(cacheMap =>
-            Redirect(navigator.nextPage(HowMuchMedicalBenefitsId, mode)(new UserAnswers(cacheMap))))
-      )
+      request.userAnswers.selectTaxYear.map {
+        taxYear =>
+          form.bindFromRequest().fold(
+            (formWithErrors: Form[_]) =>
+              Future.successful(BadRequest(howMuchMedicalBenefits(appConfig, formWithErrors, mode, taxYear))),
+            (value) =>
+              dataCacheConnector.save[String](request.externalId, HowMuchMedicalBenefitsId.toString, value).map(cacheMap =>
+                Redirect(navigator.nextPage(HowMuchMedicalBenefitsId, mode)(new UserAnswers(cacheMap))))
+          )
+      }.getOrElse {
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+      }
   }
 }

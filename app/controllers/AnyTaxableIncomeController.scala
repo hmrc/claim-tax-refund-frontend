@@ -33,13 +33,13 @@ import views.html.anyTaxableIncome
 import scala.concurrent.Future
 
 class AnyTaxableIncomeController @Inject()(appConfig: FrontendAppConfig,
-                                      override val messagesApi: MessagesApi,
-                                      dataCacheConnector: DataCacheConnector,
-                                      navigator: Navigator,
-                                      authenticate: AuthAction,
-                                      getData: DataRetrievalAction,
-                                      requireData: DataRequiredAction,
-                                      formProvider: BooleanForm) extends FrontendController with I18nSupport {
+                                           override val messagesApi: MessagesApi,
+                                           dataCacheConnector: DataCacheConnector,
+                                           navigator: Navigator,
+                                           authenticate: AuthAction,
+                                           getData: DataRetrievalAction,
+                                           requireData: DataRequiredAction,
+                                           formProvider: BooleanForm) extends FrontendController with I18nSupport {
 
   private val errorKey = "anyTaxableIncome.blank"
   val form: Form[Boolean] = formProvider(errorKey)
@@ -50,17 +50,28 @@ class AnyTaxableIncomeController @Inject()(appConfig: FrontendAppConfig,
         case None => form
         case Some(value) => form.fill(value)
       }
-      Ok(anyTaxableIncome(appConfig, preparedForm, mode))
+
+      request.userAnswers.selectTaxYear.map {
+        taxYear =>
+          Ok(anyTaxableIncome(appConfig, preparedForm, mode, taxYear))
+      }.getOrElse {
+        Redirect(routes.SessionExpiredController.onPageLoad())
+      }
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      form.bindFromRequest().fold(
-        (formWithErrors: Form[_]) =>
-          Future.successful(BadRequest(anyTaxableIncome(appConfig, formWithErrors, mode))),
-        value =>
-          dataCacheConnector.save[Boolean](request.externalId, AnyTaxableIncomeId.toString, value).map(cacheMap =>
-            Redirect(navigator.nextPage(AnyTaxableIncomeId, mode)(new UserAnswers(cacheMap))))
-      )
+      request.userAnswers.selectTaxYear.map {
+        taxYear =>
+          form.bindFromRequest().fold(
+            (formWithErrors: Form[_]) =>
+              Future.successful(BadRequest(anyTaxableIncome(appConfig, formWithErrors, mode, taxYear))),
+            value =>
+              dataCacheConnector.save[Boolean](request.externalId, AnyTaxableIncomeId.toString, value).map(cacheMap =>
+                Redirect(navigator.nextPage(AnyTaxableIncomeId, mode)(new UserAnswers(cacheMap))))
+          )
+      }.getOrElse {
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+      }
   }
 }

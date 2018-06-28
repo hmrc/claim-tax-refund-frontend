@@ -42,7 +42,7 @@ class OtherCompanyBenefitsNameViewSpec(implicit messages: Messages) extends Stri
   def createViewUsingForm = (form: Form[String]) => otherCompanyBenefitsName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "OtherCompanyBenefitsName view" must {
-    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, s"${taxYear.asString}?")
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, taxYear.asString)
 
     behave like pageWithBackLink(createView)
 

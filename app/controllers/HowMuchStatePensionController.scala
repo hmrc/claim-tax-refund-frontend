@@ -49,17 +49,28 @@ class HowMuchStatePensionController @Inject()(
         case None => form
         case Some(value) => form.fill(value)
       }
-      Ok(howMuchStatePension(appConfig, preparedForm, mode))
+
+      request.userAnswers.selectTaxYear.map {
+        taxYear =>
+          Ok(howMuchStatePension(appConfig, preparedForm, mode, taxYear))
+      }.getOrElse {
+        Redirect(routes.SessionExpiredController.onPageLoad())
+      }
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      form.bindFromRequest().fold(
-        (formWithErrors: Form[_]) =>
-          Future.successful(BadRequest(howMuchStatePension(appConfig, formWithErrors, mode))),
-        (value) =>
-          dataCacheConnector.save[String](request.externalId, HowMuchStatePensionId.toString, value).map(cacheMap =>
-            Redirect(navigator.nextPage(HowMuchStatePensionId, mode)(new UserAnswers(cacheMap))))
-      )
+      request.userAnswers.selectTaxYear.map {
+        taxYear =>
+          form.bindFromRequest().fold(
+            (formWithErrors: Form[_]) =>
+              Future.successful(BadRequest(howMuchStatePension(appConfig, formWithErrors, mode, taxYear))),
+            (value) =>
+              dataCacheConnector.save[String](request.externalId, HowMuchStatePensionId.toString, value).map(cacheMap =>
+                Redirect(navigator.nextPage(HowMuchStatePensionId, mode)(new UserAnswers(cacheMap))))
+          )
+      }.getOrElse {
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+      }
   }
 }
