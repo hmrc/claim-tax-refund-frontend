@@ -69,36 +69,41 @@ class Navigator @Inject()() {
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
-  private def selectBenefits(userAnswers: UserAnswers): Call = userAnswers.selectBenefits.head.head match {
-    case Benefits.BEREAVEMENT_ALLOWANCE => routes.HowMuchBereavementAllowanceController.onPageLoad(NormalMode)
-    case Benefits.CARERS_ALLOWANCE => routes.HowMuchCarersAllowanceController.onPageLoad(NormalMode)
-    case Benefits.JOBSEEKERS_ALLOWANCE => routes.HowMuchJobseekersAllowanceController.onPageLoad(NormalMode)
-    case Benefits.INCAPACITY_BENEFIT => routes.HowMuchIncapacityBenefitController.onPageLoad(NormalMode)
-    case Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE => routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(NormalMode)
-    case Benefits.STATE_PENSION => routes.HowMuchStatePensionController.onPageLoad(NormalMode)
-    case Benefits.OTHER_TAXABLE_BENEFIT => routes.OtherBenefitsNameController.onPageLoad(NormalMode)
-    case _ => routes.SessionExpiredController.onPageLoad()
-  }
-
-  private def benefitRouter(identifier: String)(userAnswers: UserAnswers): Call = {
-    val total: Int = userAnswers.selectBenefits.head.length
-    val currentIndex: Int = userAnswers.selectBenefits.head.map(_.toString) indexOf identifier
-
-    println(s"#################################\n\n\n\n\n\n\ntotal:- $total current:- $currentIndex")
-    if (currentIndex < total) {
-      userAnswers.selectBenefits.head(currentIndex + 1) match {
-        case Benefits.CARERS_ALLOWANCE => HowMuchCarersAllowanceId.route
-        case Benefits.JOBSEEKERS_ALLOWANCE => HowMuchJobseekersAllowanceId.route
-        case Benefits.INCAPACITY_BENEFIT => HowMuchIncapacityBenefitId.route
-        case Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE => HowMuchEmploymentAndSupportAllowanceId.route
-        case Benefits.STATE_PENSION => HowMuchStatePensionId.route
-        case Benefits.OTHER_TAXABLE_BENEFIT => OtherBenefitsNameId.route
+  private def selectBenefits(userAnswers: UserAnswers): Call = userAnswers.selectBenefits match {
+    case Some(benefits) =>
+      benefits.head match {
+        case Benefits.BEREAVEMENT_ALLOWANCE => routes.HowMuchBereavementAllowanceController.onPageLoad(NormalMode)
+        case Benefits.CARERS_ALLOWANCE => routes.HowMuchCarersAllowanceController.onPageLoad(NormalMode)
+        case Benefits.JOBSEEKERS_ALLOWANCE => routes.HowMuchJobseekersAllowanceController.onPageLoad(NormalMode)
+        case Benefits.INCAPACITY_BENEFIT => routes.HowMuchIncapacityBenefitController.onPageLoad(NormalMode)
+        case Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE => routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(NormalMode)
+        case Benefits.STATE_PENSION => routes.HowMuchStatePensionController.onPageLoad(NormalMode)
+        case Benefits.OTHER_TAXABLE_BENEFIT => routes.OtherBenefitsNameController.onPageLoad(NormalMode)
       }
-    } else {
-      routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
-    }
-
+    case None =>
+      routes.SessionExpiredController.onPageLoad()
   }
+
+  private def benefitRouter(currentPageId: String)(userAnswers: UserAnswers): Call = userAnswers.selectBenefits match {
+    case Some(benefits) =>
+      val nextPageIndex: Int = (benefits.map(_.toString) indexOf currentPageId) + 1
+
+      if (nextPageIndex < benefits.length) {
+        benefits(nextPageIndex) match {
+          case Benefits.CARERS_ALLOWANCE => routes.HowMuchCarersAllowanceController.onPageLoad(NormalMode)
+          case Benefits.JOBSEEKERS_ALLOWANCE => routes.HowMuchJobseekersAllowanceController.onPageLoad(NormalMode)
+          case Benefits.INCAPACITY_BENEFIT => routes.HowMuchIncapacityBenefitController.onPageLoad(NormalMode)
+          case Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE => routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(NormalMode)
+          case Benefits.STATE_PENSION => routes.HowMuchStatePensionController.onPageLoad(NormalMode)
+          case Benefits.OTHER_TAXABLE_BENEFIT => routes.OtherBenefitsNameController.onPageLoad(NormalMode)
+        }
+      } else {
+        routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
+      }
+    case None =>
+      routes.SessionExpiredController.onPageLoad()
+  }
+
 
 
   private def anyOtherBenefits(userAnswers: UserAnswers): Call = userAnswers.anyOtherBenefits match {

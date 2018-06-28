@@ -23,5 +23,4 @@ import play.api.mvc.Call
 case object HowMuchJobseekersAllowanceId extends Identifier {
   override def toString: String = "howMuchJobseekersAllowance"
   def cyaId: String = Benefits.JOBSEEKERS_ALLOWANCE.toString
-  def route: Call = routes.HowMuchJobseekersAllowanceController.onPageLoad(NormalMode)
 }
