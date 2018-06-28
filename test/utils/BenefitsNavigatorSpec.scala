@@ -173,18 +173,32 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
           navigator.nextPage(HowMuchBereavementAllowanceId, NormalMode)(answers) mustBe routes.OtherBenefitsNameController.onPageLoad(NormalMode)
         }
 
-        "go to AnyCompanyBenefits once all benefits have been completed" in {
-          val answers = mock[UserAnswers]
-          when(answers.selectBenefits) thenReturn Some(Seq(Benefits.CARERS_ALLOWANCE))
-          navigator.nextPage(HowMuchBereavementAllowanceId, NormalMode)(answers) mustBe routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
-        }
       }
 
-//      "" must {
-//        "" in {
-//
-//        }
-//      }
+      "go to AnyCompanyBenefits once all benefits have been completed" in {
+        val answers = mock[UserAnswers]
+        when(answers.selectBenefits) thenReturn Some(Seq(
+          Benefits.BEREAVEMENT_ALLOWANCE,
+          Benefits.CARERS_ALLOWANCE,
+          Benefits.JOBSEEKERS_ALLOWANCE,
+          Benefits.INCAPACITY_BENEFIT,
+          Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE,
+          Benefits.STATE_PENSION
+        ))
+        navigator.nextPage(HowMuchStatePensionId, NormalMode)(answers) mustBe routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
+      }
+
+      "go to SessionExpired if answers.selectBenefits is None on SelectBenefits page" in {
+        val answers = mock[UserAnswers]
+        when(answers.selectBenefits) thenReturn None
+        navigator.nextPage(SelectBenefitsId, NormalMode)(answers) mustBe routes.SessionExpiredController.onPageLoad()
+      }
+
+      "go to SessionExpired if answers.selectBenefits is None on other benefit pages" in {
+        val answers = mock[UserAnswers]
+        when(answers.selectBenefits) thenReturn None
+        navigator.nextPage(HowMuchBereavementAllowanceId, NormalMode)(answers) mustBe routes.SessionExpiredController.onPageLoad()
+      }
 
       // onwards route from OtherBenefitsName always follows the same pattern
 
