@@ -213,20 +213,18 @@ anyAgentRef.agentRefField = Agent reference
 anyAgentRef.blankAgentRef = Enter the agent reference of the person you want us to send any payment to
 anyAgentRef.maxLength = Agent reference can only be up to 160 characters
 
-isPaymentAddressInTheUK.title = Is the address of the person you want us to send any payment to in the UK?
-isPaymentAddressInTheUK.heading = Is the address of the person you want us to send any payment to in the UK?
-isPaymentAddressInTheUK.checkYourAnswersLabel = Is the address of the person you want us to send any payment to in the UK?
-isPaymentAddressInTheUK.blank = Select yes if the address of the person you want us to send any payment to is in the UK
+isPaymentAddressInTheUK.title = Is the address you want us to send any payment to in the UK?
+isPaymentAddressInTheUK.heading = Is the address you want us to send any payment to in the UK?
+isPaymentAddressInTheUK.checkYourAnswersLabel = Is the address you want us to send any payment to in the UK?
+isPaymentAddressInTheUK.blank = Select yes if the address you want us to send any payment to is in the UK
 
-paymentInternationalAddress.title = What is the address of the person you want us to send any payment to?
-paymentInternationalAddress.heading = What is the address of the person you want us to send any payment to?
+paymentInternationalAddress.title = What is the address you us to send any payment to?
+paymentInternationalAddress.heading = What is the address you us to send any payment to?
 paymentInternationalAddress.checkYourAnswersLabel = Address of the person you want us to send any payment to
 
-paymentUKAddress.title = What is the address of the person you want us to send any payment to?
-paymentUKAddress.heading = What is the address of the person you want us to send any payment to?
+paymentUKAddress.title = What is the address you us to send any payment to?
+paymentUKAddress.heading = What is the address you us to send any payment to?
 paymentUKAddress.checkYourAnswersLabel = Address of the person you want us to send any payment to
-paymentUKAddress.postcode.invalid = Enter a valid postcode
-paymentUKAddress.postcode.blank = Enter a postcode
 
 whereToSendPayment.title = Who would you like us to make the payment to?
 whereToSendPayment.heading = Who would you like us to make the payment to?
