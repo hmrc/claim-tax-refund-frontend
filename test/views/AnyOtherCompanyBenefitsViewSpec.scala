@@ -39,7 +39,7 @@ class AnyOtherCompanyBenefitsViewSpec(implicit messages: Messages) extends YesNo
 
   "AnyOtherCompanyBenefits view" must {
 
-    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, s"${taxYear.asString}?")
+    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, taxYear.asString)
 
     behave like pageWithBackLink(createView)
 
