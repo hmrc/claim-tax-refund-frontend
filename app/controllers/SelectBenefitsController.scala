@@ -49,8 +49,7 @@ class SelectBenefitsController @Inject()(
       }
 
       request.userAnswers.selectTaxYear.map {
-        selectedTaxYear =>
-          val taxYear = selectedTaxYear
+        taxYear =>
           Ok(selectBenefits(appConfig, preparedForm, mode, taxYear))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
@@ -60,8 +59,7 @@ class SelectBenefitsController @Inject()(
   def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
       request.userAnswers.selectTaxYear.map {
-        selectedTaxYear =>
-          val taxYear = selectedTaxYear
+        taxYear =>
           SelectBenefitsForm().bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
               Future.successful(BadRequest(selectBenefits(appConfig, formWithErrors, mode, taxYear))),

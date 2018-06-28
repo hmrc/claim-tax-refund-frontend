@@ -281,9 +281,9 @@ otherCompanyBenefitsName.heading = What is the name of the company benefit you g
 otherCompanyBenefitsName.checkYourAnswersLabel = Other company benefits name
 otherCompanyBenefitsName.blank = Enter the name of taxable benefit you got
 
-selectBenefits.title = Select the benefits you have claimed between
-selectBenefits.heading = Select the benefits you have claimed between
-selectBenefits.checkYourAnswersLabel = Benefits
+selectBenefits.title = Which benefits did you get between {0}?
+selectBenefits.heading = Which benefits did you get between {0}?
+selectBenefits.checkYourAnswersLabel = Which benefits did you get?
 selectBenefits.blank = Select a benefit
 selectBenefits.jobseekers-allowance = Contribution-based Jobseeker''s Allowance
 selectBenefits.incapacity-benefit = Incapacity benefit
