@@ -188,11 +188,11 @@ howMuchStatePension.checkYourAnswersLabel = Amount of State Pension
 howMuchStatePension.blank = Enter the amount of State Pension you got in the tax year that your claim relates to
 howMuchStatePension.invalid = Enter a valid amount of State Pension you got in the tax year that your claim relates to
 
-howMuchMedicalBenefits.title = How much medical benefit did you get in the tax year your claim is for?
-howMuchMedicalBenefits.heading = How much medical benefit did you get in the tax year your claim is for?
+howMuchMedicalBenefits.title = How much medical benefit did you get between {0}?
+howMuchMedicalBenefits.heading = How much medical benefit did you get between {0}?
 howMuchMedicalBenefits.checkYourAnswersLabel = Medical benefit
-howMuchMedicalBenefits.blank = Enter the amount you got in medical benefits in the tax year your claim is for
-howMuchMedicalBenefits.invalid = Enter a valid amount you got in medical benefits in the tax year your claim is for
+howMuchMedicalBenefits.blank = Enter the amount of medical benefits you got
+howMuchMedicalBenefits.invalid = Enter a valid amount of medical benefits you got
 
 anyOtherTaxableIncome.title = Did you get any other taxable income in the tax year your claim is for?
 anyOtherTaxableIncome.heading = Did you get any other taxable income in the tax year your claim is for?
