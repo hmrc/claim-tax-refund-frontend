@@ -194,10 +194,10 @@ howMuchMedicalBenefits.checkYourAnswersLabel = Medical benefit
 howMuchMedicalBenefits.blank = Enter the amount of medical benefits you got
 howMuchMedicalBenefits.invalid = Enter a valid amount of medical benefits you got
 
-anyOtherTaxableIncome.title = Did you get any other taxable income in the tax year your claim is for?
-anyOtherTaxableIncome.heading = Did you get any other taxable income in the tax year your claim is for?
-anyOtherTaxableIncome.checkYourAnswersLabel = Did you get any other taxable income in the tax year your claim is for?
-anyOtherTaxableIncome.blank = Select yes if you got any other taxable income in the tax year your claim is for
+anyOtherTaxableIncome.title = Did you get any other taxable income between {0}?
+anyOtherTaxableIncome.heading = Did you get any other taxable income between {0}?
+anyOtherTaxableIncome.checkYourAnswersLabel = Did you get any other taxable income?
+anyOtherTaxableIncome.blank = Select yes if you got any other taxable income
 
 nomineeFullName.title = What is the full name of the person you want us to send any payment to?
 nomineeFullName.heading = What is the full name of the person you want us to send any payment to?
