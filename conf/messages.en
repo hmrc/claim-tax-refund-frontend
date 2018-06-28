@@ -417,3 +417,8 @@ anyTaxableOtherIncome.invalid = Enter a valid amount of income tax you paid on t
 anyTaxableOtherIncome.notSelected = Select yes if you paid income tax on this income
 anyTaxableOtherIncome.blank = Enter the amount of income tax paid on this income
 anyTaxableOtherIncome.anyTaxPaidAmountField = How much income tax did you pay on {0}?
+
+paymentAddressCorrect.title = Do you want to send payment to this address?
+paymentAddressCorrect.heading = Do you want to send payment to this address?
+paymentAddressCorrect.checkYourAnswersLabel = Do you want to send payment to this address?
+paymentAddressCorrect.blank = Select yes if you want to send payment to this address
