@@ -182,11 +182,11 @@ howMuchEmploymentAndSupportAllowance.checkYourAnswersLabel = Amount of Employmen
 howMuchEmploymentAndSupportAllowance.blank = Enter the amount of Employment and Support Allowance you got in the tax year that your claim relates to
 howMuchEmploymentAndSupportAllowance.invalid = Enter a valid amount of Employment and Support Allowance you got in the tax year that your claim relates to
 
-howMuchStatePension.title = How much State Pension did you get in the tax year your claim is for?
-howMuchStatePension.heading = How much State Pension did you get in the tax year your claim is for?
-howMuchStatePension.checkYourAnswersLabel = Amount of State Pension you got in the tax year your claim is for
-howMuchStatePension.blank = Enter the amount of State Pension you got in the tax year your claim is for
-howMuchStatePension.invalid = Enter a valid amount of State Pension you got in the tax year your claim is for
+howMuchStatePension.title = How much State Pension did you get between {0}?
+howMuchStatePension.heading = How much State Pension did you get between {0}?
+howMuchStatePension.checkYourAnswersLabel = Amount of State Pension
+howMuchStatePension.blank = Enter the amount of State Pension you got in the tax year that your claim relates to
+howMuchStatePension.invalid = Enter a valid amount of State Pension you got in the tax year that your claim relates to
 
 howMuchMedicalBenefits.title = How much medical benefit did you get in the tax year your claim is for?
 howMuchMedicalBenefits.heading = How much medical benefit did you get in the tax year your claim is for?
