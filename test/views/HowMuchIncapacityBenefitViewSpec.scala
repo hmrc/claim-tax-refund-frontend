@@ -20,25 +20,28 @@ import config.FrontendAppConfig
 import controllers.routes
 import forms.HowMuchIncapacityBenefitForm
 import models.NormalMode
+import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
+import play.api.i18n.Messages
 import views.behaviours.StringViewBehaviours
 import views.html.howMuchIncapacityBenefit
 
-class HowMuchIncapacityBenefitViewSpec extends StringViewBehaviours with MockitoSugar {
+class HowMuchIncapacityBenefitViewSpec(implicit messages: Messages) extends StringViewBehaviours with MockitoSugar {
 
-  val messageKeyPrefix = "howMuchIncapacityBenefit"
+  private val messageKeyPrefix = "howMuchIncapacityBenefit"
+  private val taxYear = CYMinus2
 
   val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
   override val form: Form[String] = new HowMuchIncapacityBenefitForm(appConfig)()
 
-  def createView = () => howMuchIncapacityBenefit(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createView = () => howMuchIncapacityBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) => howMuchIncapacityBenefit(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[String]) => howMuchIncapacityBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "HowMuchIncapacityBenefit view" must {
-    behave like normalPage(createView, messageKeyPrefix)
+    behave like normalPage(createView, messageKeyPrefix, taxYear.asString)
 
     behave like pageWithBackLink(createView)
 
