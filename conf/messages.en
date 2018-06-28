@@ -276,8 +276,8 @@ howMuchFuelBenefit.checkYourAnswersLabel = Fuel benefit
 howMuchFuelBenefit.blank = Enter the amount you got for fuel benefit
 howMuchFuelBenefit.invalid = Enter a valid amount you got in fuel benefit
 
-otherCompanyBenefitsName.title = What is the name of the company benefit you got between
-otherCompanyBenefitsName.heading = What is the name of the company benefit you got between
+otherCompanyBenefitsName.title = What is the name of the company benefit you got between {0}?
+otherCompanyBenefitsName.heading = What is the name of the company benefit you got between {0}?
 otherCompanyBenefitsName.checkYourAnswersLabel = Other company benefits name
 otherCompanyBenefitsName.blank = Enter the name of taxable benefit you got
 
