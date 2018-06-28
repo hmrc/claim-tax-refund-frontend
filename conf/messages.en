@@ -305,10 +305,10 @@ enterPayeReference.hint = For example 123/AB456. You can find this on your paysl
 enterPayeReference.blank = Enter your employer or pension provider's PAYE reference
 enterPayeReference.invalid = Enter a valid PAYE reference
 
-anyOtherCompanyBenefits.title = Did you get any other company benefits between
-anyOtherCompanyBenefits.heading = Did you get any other company benefits between
+anyOtherCompanyBenefits.title = Did you get any other company benefits between {0}?
+anyOtherCompanyBenefits.heading = Did you get any other company benefits between {0}?
 anyOtherCompanyBenefits.checkYourAnswersLabel = Did you get any other company benefits?
-anyOtherCompanyBenefits.blank = Did you get any other company benefits in the tax year your claim is for?
+anyOtherCompanyBenefits.blank = Did you get any other company benefits?
 
 howMuchBereavementAllowance.title = How much bereavement allowance did you get between {0}?
 howMuchBereavementAllowance.heading = How much bereavement allowance did you get between {0}?
