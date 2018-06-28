@@ -211,3 +211,23 @@ GET        /any-taxable-rental-income                                       cont
 POST       /any-taxable-rental-income                                       controllers.AnyTaxableRentalIncomeController.onSubmit(mode: Mode = NormalMode)
 GET        /change-any-taxable-rental-income                                controllers.AnyTaxableRentalIncomeController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-any-taxable-rental-income                                controllers.AnyTaxableRentalIncomeController.onSubmit(mode: Mode = CheckMode)
+
+GET        /any-taxable-bank-interest                                       controllers.AnyTaxableBankInterestController.onPageLoad(mode: Mode = NormalMode)
+POST       /any-taxable-bank-interest                                       controllers.AnyTaxableBankInterestController.onSubmit(mode: Mode = NormalMode)
+GET        /change-any-taxable-bank-interest                                controllers.AnyTaxableBankInterestController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-any-taxable-bank-interest                                controllers.AnyTaxableBankInterestController.onSubmit(mode: Mode = CheckMode)
+
+GET        /any-taxable-investments                                         controllers.AnyTaxableInvestmentsController.onPageLoad(mode: Mode = NormalMode)
+POST       /any-taxable-investments                                         controllers.AnyTaxableInvestmentsController.onSubmit(mode: Mode = NormalMode)
+GET        /change-any-taxable-investments                                  controllers.AnyTaxableInvestmentsController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-any-taxable-investments                                  controllers.AnyTaxableInvestmentsController.onSubmit(mode: Mode = CheckMode)
+
+GET        /any-taxable-foreign-income                                      controllers.AnyTaxableForeignIncomeController.onPageLoad(mode: Mode = NormalMode)
+POST       /any-taxable-foreign-income                                      controllers.AnyTaxableForeignIncomeController.onSubmit(mode: Mode = NormalMode)
+GET        /change-any-taxable-foreign-income                               controllers.AnyTaxableForeignIncomeController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-any-taxable-foreign-income                               controllers.AnyTaxableForeignIncomeController.onSubmit(mode: Mode = CheckMode)
+
+GET        /any-taxable-other-income                                        controllers.AnyTaxableOtherIncomeController.onPageLoad(mode: Mode = NormalMode)
+POST       /any-taxable-other-income                                        controllers.AnyTaxableOtherIncomeController.onSubmit(mode: Mode = NormalMode)
+GET        /change-any-taxable-other-income                                 controllers.AnyTaxableOtherIncomeController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-any-taxable-other-income                                 controllers.AnyTaxableOtherIncomeController.onSubmit(mode: Mode = CheckMode)

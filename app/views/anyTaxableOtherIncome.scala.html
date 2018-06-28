@@ -20,25 +20,25 @@
 @import models.Mode
 @import viewmodels.InputViewModel
 
-@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: SelectTaxYear)(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: SelectTaxYear, incomeName: String)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("anyTaxableRentalIncome.title", taxYear.asString),
+    title = messages("anyTaxableOtherIncome.title", incomeName, taxYear.asString),
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @helpers.form(action = AnyTaxableRentalIncomeController.onSubmit(mode), 'autoComplete -> "off") {
+    @helpers.form(action = AnyTaxableOtherIncomeController.onSubmit(mode), 'autoComplete -> "off") {
 
         @components.back_link()
 
         @components.error_summary(form.errors)
 
-        @components.heading(messages("anyTaxableRentalIncome.heading", taxYear.asString))
+        @components.heading(messages("anyTaxableOtherIncome.heading", incomeName, taxYear.asString))
 
 
         @components.input_yes_no(
             InputViewModel("anyTaxPaid", form),
-            label = messages("anyTaxableRentalIncome.heading", taxYear.asString),
+            label = messages("anyTaxableOtherIncome.heading", incomeName, taxYear.asString),
             labelClass = Some("visually-hidden"),
             yesAssoc = Some("yesAnyTaxPaid"),
             noAssoc = Some("noAnyTaxPaid")
@@ -46,7 +46,7 @@
 
         <div id="yesAnyTaxPaid" class="js-hidden">
         @components.input_text(InputViewModel("taxPaidAmount", form),
-            messages("anyTaxableRentalIncome.anyTaxPaidAmountField"),
+            messages("anyTaxableOtherIncome.anyTaxPaidAmountField", incomeName),
             Some("panel"),
             prefix = Some(messages("global.poundSign")))
         </div>
