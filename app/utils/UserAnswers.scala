@@ -23,6 +23,8 @@ import play.api.i18n.Messages
 import uk.gov.hmrc.http.cache.client.CacheMap
 
 class UserAnswers(val cacheMap: CacheMap) {
+  def paymentAddressCorrect: Option[Boolean] = cacheMap.getEntry[Boolean](PaymentAddressCorrectId.toString)
+
 
   def anyTaxableOtherIncome: Option[AnyTaxPaid] = cacheMap.getEntry[AnyTaxPaid](AnyTaxableOtherIncomeId.toString)
 
