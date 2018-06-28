@@ -164,11 +164,11 @@ anyOtherBenefits.heading = Did you get any other taxable benefits between {0}?
 anyOtherBenefits.blank = Select yes if you got any other taxable benefits in the tax year that your claim relates to
 anyOtherBenefits.checkYourAnswersLabel = Did you get any other taxable benefits?
 
-howMuchJobseekersAllowance.title = How much Jobseeker''s Allowance did you get in the tax year your claim is for?
-howMuchJobseekersAllowance.heading = How much Jobseeker''s Allowance did you get in the tax year your claim is for?
-howMuchJobseekersAllowance.checkYourAnswersLabel = Amount of Jobseeker''s Allowance you got in the tax year your claim is for
-howMuchJobseekersAllowance.blank = Enter the amount of Jobseeker''s Allowance you got in the tax year your claim is for
-howMuchJobseekersAllowance.invalid = Enter a valid amount of Jobseeker''s Allowance you got in the tax year your claim is for
+howMuchJobseekersAllowance.title = How much contribution-based Jobseeker''s Allowance did you get between {0}?
+howMuchJobseekersAllowance.heading = How much contribution-based Jobseeker''s Allowance did you get between {0}?
+howMuchJobseekersAllowance.checkYourAnswersLabel = Amount of Jobseeker''s Allowance
+howMuchJobseekersAllowance.blank = Enter the amount of Jobseeker''s Allowance you got in the tax year that your claim relates to
+howMuchJobseekersAllowance.invalid = Enter a valid amount of Jobseeker''s Allowance you got in the tax year that your claim relates to
 
 howMuchIncapacityBenefit.title = How much Incapacity Benefit did you get in the tax year your claim is for?
 howMuchIncapacityBenefit.heading = How much Incapacity Benefit did you get in the tax year your claim is for?
