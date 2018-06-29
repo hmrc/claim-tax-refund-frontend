@@ -25,6 +25,10 @@ import viewmodels.AnswerRow
 
 class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messages){
 
+  def paymentAddressCorrect: Option[AnswerRow] = userAnswers.paymentAddressCorrect map {
+    x => AnswerRow("paymentAddressCorrect.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.PaymentAddressCorrectController.onPageLoad(CheckMode).url)
+  }
+
   def anyTaxableOtherIncome: Option[AnswerRow] = userAnswers.anyTaxableOtherIncome map {
     x => AnswerRow("anyTaxableOtherIncome.checkYourAnswersLabel",
       s"$x", false, routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode).url)

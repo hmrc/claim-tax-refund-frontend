@@ -22,6 +22,7 @@ import org.scalatestplus.play.guice._
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.Injector
 import play.api.test.FakeRequest
+import uk.gov.hmrc.auth.core.retrieve.ItmpAddress
 
 trait SpecBase extends PlaySpec with GuiceOneAppPerSuite {
 
@@ -34,4 +35,15 @@ trait SpecBase extends PlaySpec with GuiceOneAppPerSuite {
   def fakeRequest = FakeRequest("", "")
 
   def messages: Messages = messagesApi.preferred(fakeRequest)
+
+  val itmpAddress = ItmpAddress(
+    Some("Line1"),
+    Some("Line2"),
+    Some("Line3"),
+    Some("Line4"),
+    Some("Line5"),
+    Some("AB1 2CD"),
+    Some("United Kingdom"),
+    Some("UK")
+  )
 }
