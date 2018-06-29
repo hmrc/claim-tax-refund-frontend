@@ -21,17 +21,29 @@ import controllers.routes
 import forms.BooleanForm
 import views.behaviours.YesNoViewBehaviours
 import models.NormalMode
+import play.api.i18n.Messages
+import uk.gov.hmrc.auth.core.retrieve.ItmpAddress
 import views.html.paymentAddressCorrect
 
-class PaymentAddressCorrectViewSpec extends YesNoViewBehaviours {
+class PaymentAddressCorrectViewSpec(implicit messages: Messages) extends YesNoViewBehaviours {
 
-  val messageKeyPrefix = "paymentAddressCorrect"
+  private val messageKeyPrefix = "paymentAddressCorrect"
+  private val testAddress = ItmpAddress(
+    Some("Line 1"),
+    Some("Line 2"),
+    Some("Line 3"),
+    None,
+    None,
+    Some("AB12 3AB"),
+    None,
+    None
+  )
 
   override val form = new BooleanForm()()
 
-  def createView = () => paymentAddressCorrect(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createView = () => paymentAddressCorrect(frontendAppConfig, form, NormalMode, testAddress)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[_]) => paymentAddressCorrect(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[_]) => paymentAddressCorrect(frontendAppConfig, form, NormalMode, testAddress)(fakeRequest, messages)
 
   "PaymentAddressCorrect view" must {
 
@@ -42,5 +54,16 @@ class PaymentAddressCorrectViewSpec extends YesNoViewBehaviours {
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
     behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.PaymentAddressCorrectController.onSubmit(NormalMode).url)
+
+    "render the section for the users address" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertRenderedById(doc, "usersAddress")
+    }
+
+    "contain the correct users address" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsText(doc, testAddress.toString)
+    }
+
   }
 }

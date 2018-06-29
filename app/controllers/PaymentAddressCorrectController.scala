@@ -18,15 +18,15 @@ package controllers
 
 import javax.inject.Inject
 
+import config.FrontendAppConfig
+import connectors.DataCacheConnector
+import controllers.actions._
+import forms.BooleanForm
+import identifiers.PaymentAddressCorrectId
+import models.{Mode, NormalMode}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
-import connectors.DataCacheConnector
-import controllers.actions._
-import config.FrontendAppConfig
-import forms.BooleanForm
-import identifiers.PaymentAddressCorrectId
-import models.Mode
 import utils.{Navigator, UserAnswers}
 import views.html.paymentAddressCorrect
 
@@ -50,17 +50,26 @@ class PaymentAddressCorrectController @Inject()(appConfig: FrontendAppConfig,
         case None => form
         case Some(value) => form.fill(value)
       }
-      Ok(paymentAddressCorrect(appConfig, preparedForm, mode))
+
+      if(request.address.line1.exists(_.trim.nonEmpty)){
+        Ok(paymentAddressCorrect(appConfig, preparedForm, mode, request.address))
+      } else {
+        Redirect(routes.IsPaymentAddressInTheUKController.onPageLoad(NormalMode))
+      }
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      form.bindFromRequest().fold(
-        (formWithErrors: Form[_]) =>
-          Future.successful(BadRequest(paymentAddressCorrect(appConfig, formWithErrors, mode))),
-        (value) =>
-          dataCacheConnector.save[Boolean](request.externalId, PaymentAddressCorrectId.toString, value).map(cacheMap =>
-            Redirect(navigator.nextPage(PaymentAddressCorrectId, mode)(new UserAnswers(cacheMap))))
-      )
+      if(request.address.line1.exists(_.trim.nonEmpty)){
+        form.bindFromRequest().fold(
+          (formWithErrors: Form[_]) =>
+            Future.successful(BadRequest(paymentAddressCorrect(appConfig, formWithErrors, mode, request.address))),
+          (value) =>
+            dataCacheConnector.save[Boolean](request.externalId, PaymentAddressCorrectId.toString, value).map(cacheMap =>
+              Redirect(navigator.nextPage(PaymentAddressCorrectId, mode)(new UserAnswers(cacheMap))))
+        )
+      } else {
+        Future.successful(Redirect(routes.IsPaymentAddressInTheUKController.onPageLoad(NormalMode)))
+      }
   }
 }
