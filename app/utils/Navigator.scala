@@ -40,6 +40,9 @@ class Navigator @Inject()() {
     HowMuchStatePensionId -> benefitRouter(HowMuchStatePensionId.cyaId),
     AnyOtherBenefitsId -> anyOtherBenefits,
     AnyCompanyBenefitsId -> anyCompanyBenefits,
+    HowMuchCarBenefitsId -> companyBenefitRouter(HowMuchCarBenefitsId.cyaId),
+    HowMuchFuelBenefitId -> companyBenefitRouter(HowMuchFuelBenefitId.cyaId),
+    HowMuchMedicalBenefitsId -> companyBenefitRouter(HowMuchMedicalBenefitsId.cyaId),
     SelectCompanyBenefitsId -> selectCompanyBenefits,
     AnyTaxableIncomeId -> otherTaxableIncome,
     HowMuchMedicalBenefitsId -> (_ => routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)),
@@ -118,6 +121,23 @@ class Navigator @Inject()() {
         case CompanyBenefits.FUEL_BENEFIT => routes.HowMuchFuelBenefitController.onPageLoad(NormalMode)
         case CompanyBenefits.MEDICAL_BENEFIT => routes.HowMuchMedicalBenefitsController.onPageLoad(NormalMode)
         case CompanyBenefits.OTHER_COMPANY_BENEFIT => routes.OtherCompanyBenefitsNameController.onPageLoad(NormalMode)
+      }
+    case None =>
+      routes.SessionExpiredController.onPageLoad()
+  }
+
+  private def companyBenefitRouter(currentPageId: String)(userAnswers: UserAnswers): Call = userAnswers.selectCompanyBenefits match {
+    case Some(benefits) =>
+      val nextPageIndex: Int = (benefits.map(_.toString) indexOf currentPageId) + 1
+
+      if (nextPageIndex < benefits.length) {
+        benefits(nextPageIndex) match {
+          case CompanyBenefits.FUEL_BENEFIT => routes.HowMuchFuelBenefitController.onPageLoad(NormalMode)
+          case CompanyBenefits.MEDICAL_BENEFIT => routes.HowMuchMedicalBenefitsController.onPageLoad(NormalMode)
+          case CompanyBenefits.OTHER_COMPANY_BENEFIT => routes.OtherCompanyBenefitsNameController.onPageLoad(NormalMode)
+        }
+      } else {
+        routes.AnyTaxableIncomeController.onPageLoad(NormalMode)
       }
     case None =>
       routes.SessionExpiredController.onPageLoad()
