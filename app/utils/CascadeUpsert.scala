@@ -55,13 +55,11 @@ class CascadeUpsert {
     val mapToStore = cacheMap.data.get(SelectCompanyBenefitsId.toString).map {
       _.as[JsArray].value.foldLeft(cacheMap) {
         (cm, benefit) =>
-          if (!selectedBenefits.as[JsArray].value.contains(JsString(CompanyBenefits.OTHER_COMPANY_BENEFIT.toString))) {
-            cm copy (data = cacheMap.data - (OtherCompanyBenefitsNameId.toString, HowMuchOtherCompanyBenefitId.toString, AnyOtherCompanyBenefitsId.toString))
-          }
-          if (!selectedBenefits.as[JsArray].value.contains(benefit)) {
+          if (!selectedBenefits.as[JsArray].value.contains(benefit) && benefit != JsString(CompanyBenefits.OTHER_COMPANY_BENEFIT.toString)) {
             cm copy (data = cacheMap.data - CompanyBenefits.getIdString(benefit.as[String]))
-          }
-          else {
+          } else if (!selectedBenefits.as[JsArray].value.contains(JsString(CompanyBenefits.OTHER_COMPANY_BENEFIT.toString))) {
+            cm copy (data = cacheMap.data - (OtherCompanyBenefitsNameId.toString, HowMuchOtherCompanyBenefitId.toString, AnyOtherCompanyBenefitsId.toString))
+          } else {
             cm
           }
       }
@@ -75,13 +73,11 @@ class CascadeUpsert {
     val mapToStore = cacheMap.data.get(SelectBenefitsId.toString).map {
       _.as[JsArray].value.foldLeft(cacheMap) {
         (cm, benefit) =>
-          if (!selectedBenefits.as[JsArray].value.contains(benefit)) {
+          if (!selectedBenefits.as[JsArray].value.contains(benefit) && benefit != JsString(Benefits.OTHER_TAXABLE_BENEFIT.toString)) {
             cm copy (data = cacheMap.data - Benefits.getIdString(benefit.as[String]))
-          }
-          if (!selectedBenefits.as[JsArray].value.contains(JsString(Benefits.OTHER_TAXABLE_BENEFIT.toString))) {
+          } else if (!selectedBenefits.as[JsArray].value.contains(JsString(Benefits.OTHER_TAXABLE_BENEFIT.toString))) {
             cm copy (data = cacheMap.data - (OtherBenefitsNameId.toString, HowMuchOtherBenefitId.toString, AnyOtherBenefitsId.toString))
-          }
-          else {
+          } else {
             cm
           }
       }
