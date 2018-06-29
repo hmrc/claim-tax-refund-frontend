@@ -26,6 +26,7 @@ import identifiers.PaymentAddressCorrectId
 import models.{Mode, NormalMode}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import utils.{Navigator, UserAnswers}
 import views.html.paymentAddressCorrect
@@ -44,7 +45,7 @@ class PaymentAddressCorrectController @Inject()(appConfig: FrontendAppConfig,
   private val errorKey = "paymentAddressCorrect.blank"
   val form: Form[Boolean] = formProvider(errorKey)
 
-  def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.paymentAddressCorrect match {
         case None => form
@@ -58,13 +59,13 @@ class PaymentAddressCorrectController @Inject()(appConfig: FrontendAppConfig,
       }
   }
 
-  def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
       if(request.address.line1.exists(_.trim.nonEmpty)){
         form.bindFromRequest().fold(
           (formWithErrors: Form[_]) =>
             Future.successful(BadRequest(paymentAddressCorrect(appConfig, formWithErrors, mode, request.address))),
-          (value) =>
+          value =>
             dataCacheConnector.save[Boolean](request.externalId, PaymentAddressCorrectId.toString, value).map(cacheMap =>
               Redirect(navigator.nextPage(PaymentAddressCorrectId, mode)(new UserAnswers(cacheMap))))
         )
