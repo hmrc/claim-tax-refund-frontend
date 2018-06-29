@@ -16,13 +16,12 @@
 
 package utils
 
+import controllers.routes
 import identifiers._
 import javax.inject.{Inject, Singleton}
-import controllers.routes
 import models.WhereToSendPayment.{Myself, Nominee}
 import models.{Benefits, _}
 import play.api.mvc.Call
-import play.libs.F.Tuple
 
 @Singleton
 class Navigator @Inject()() {
