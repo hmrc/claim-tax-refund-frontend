@@ -102,6 +102,32 @@ class TaxableIncomeNavigatorSpec extends SpecBase with MockitoSugar {
           navigator.nextPage(SelectTaxableIncomeId, NormalMode)(answers) mustBe routes.OtherTaxableIncomeNameController.onPageLoad(NormalMode)
         }
       }
+
+      "Navigating from HowMuchRentalIncome" must {
+        "go to HowMuchBankOrBuildingSociety if this option was selected on SelectTaxableIncome" in {
+          val answers = mock[UserAnswers]
+          when(answers.selectTaxableIncome) thenReturn Some(Seq(TaxableIncome.BANK_OR_BUILDING_SOCIETY_INTEREST))
+          navigator.nextPage(HowMuchRentalIncomeId, NormalMode)(answers) mustBe routes.HowMuchBankInterestController.onPageLoad(NormalMode)
+        }
+
+        "go to HowMuchInvestmentOrDividends if this option was selected on SelectTaxableIncome" in {
+          val answers = mock[UserAnswers]
+          when(answers.selectTaxableIncome) thenReturn Some(Seq(TaxableIncome.INVESTMENT_OR_DIVIDENDS))
+          navigator.nextPage(HowMuchRentalIncomeId, NormalMode)(answers) mustBe routes.HowMuchInvestmentOrDividendController.onPageLoad(NormalMode)
+        }
+
+        "go to HowMuchForeignIncome if this option was selected on SelectTaxableIncome" in {
+          val answers = mock[UserAnswers]
+          when(answers.selectTaxableIncome) thenReturn Some(Seq(TaxableIncome.FOREIGN_INCOME))
+          navigator.nextPage(HowMuchRentalIncomeId, NormalMode)(answers) mustBe routes.HowMuchForeignIncomeController.onPageLoad(NormalMode)
+        }
+
+        "go to HowMuchOtherTaxableIncome if this option was selected on SelectTaxableIncome" in {
+          val answers = mock[UserAnswers]
+          when(answers.selectTaxableIncome) thenReturn Some(Seq(TaxableIncome.OTHER_TAXABLE_INCOME))
+          navigator.nextPage(HowMuchRentalIncomeId, NormalMode)(answers) mustBe routes.OtherTaxableIncomeNameController.onPageLoad(NormalMode)
+        }
+      }
     }
   }
 
