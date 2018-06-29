@@ -45,7 +45,6 @@ class Navigator @Inject()() {
     HowMuchMedicalBenefitsId -> companyBenefitRouter(HowMuchMedicalBenefitsId.cyaId),
     SelectCompanyBenefitsId -> selectCompanyBenefits,
     AnyTaxableIncomeId -> otherTaxableIncome,
-    HowMuchMedicalBenefitsId -> (_ => routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)),
     AnyOtherTaxableIncomeId -> anyOtherTaxableIncome,
     WhereToSendPaymentId -> whereToSendPayment,
     NomineeFullNameId -> (_ => routes.AnyAgentRefController.onPageLoad(NormalMode)),
@@ -54,7 +53,10 @@ class Navigator @Inject()() {
     PaymentInternationalAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
     TelephoneNumberId -> (_ => routes.WhereToSendPaymentController.onPageLoad(NormalMode)),
     OtherBenefitsNameId -> (_ => routes.HowMuchOtherBenefitController.onPageLoad(NormalMode)),
-    HowMuchOtherBenefitId -> (_ => routes.AnyOtherBenefitsController.onPageLoad(NormalMode))
+    HowMuchOtherBenefitId -> (_ => routes.AnyOtherBenefitsController.onPageLoad(NormalMode)),
+    OtherCompanyBenefitsNameId -> (_ => routes.HowMuchOtherCompanyBenefitController.onPageLoad(NormalMode)),
+    HowMuchOtherCompanyBenefitId -> (_ => routes.AnyOtherCompanyBenefitsController.onPageLoad(NormalMode)),
+    AnyOtherCompanyBenefitsId -> anyOtherCompanyBenefits
   )
 
   private val editRouteMap: Map[Identifier, UserAnswers => Call] = Map(
@@ -149,6 +151,12 @@ class Navigator @Inject()() {
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
+  private def anyOtherCompanyBenefits(userAnswers: UserAnswers): Call = userAnswers.anyOtherCompanyBenefits match {
+    case Some(true) => routes.OtherCompanyBenefitsNameController.onPageLoad(NormalMode)
+    case Some(false) => routes.AnyTaxableIncomeController.onPageLoad(NormalMode)
+    case None => routes.SessionExpiredController.onPageLoad()
+  }
+
   private def otherTaxableIncome(userAnswers: UserAnswers): Call = userAnswers.anyTaxableIncome match {
     case Some(true) => routes.SelectTaxableIncomeController.onPageLoad(NormalMode)
     case Some(false) => routes.TelephoneNumberController.onPageLoad(NormalMode)
@@ -156,8 +164,8 @@ class Navigator @Inject()() {
   }
 
   private def anyOtherTaxableIncome(userAnswers: UserAnswers): Call = userAnswers.anyOtherTaxableIncome match {
-    case Some(true) => ???
-    case Some(false) => routes.WhereToSendPaymentController.onPageLoad(NormalMode)
+    case Some(true) => routes.HowMuchOtherCompanyBenefitController.onPageLoad(NormalMode)
+    case Some(false) => routes.AnyTaxableIncomeController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
 

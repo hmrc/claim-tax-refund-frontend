@@ -36,12 +36,6 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(UnknownIdentifier, NormalMode)(mock[UserAnswers]) mustBe routes.IndexController.onPageLoad()
       }
 
-      "go to WhereToSendPayment from AnyOtherTaxableIncome when no is selected" in {
-        val answers = mock[UserAnswers]
-        when(answers.anyOtherTaxableIncome) thenReturn Some(false)
-        navigator.nextPage(AnyOtherTaxableIncomeId, NormalMode)(answers) mustBe routes.WhereToSendPaymentController.onPageLoad(NormalMode)
-      }
-
       "go to NomineeFullName from WhereToSendPayment when SomeoneElse is selected" in {
         val answers = mock[UserAnswers]
         when(answers.whereToSendPayment) thenReturn Some(Nominee)
@@ -109,11 +103,6 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
       "go to DetailsOfEmploymentOrPension from EnterPayeReference" in {
         val answers = mock[UserAnswers]
         navigator.nextPage(EnterPayeReferenceId, NormalMode)(answers) mustBe routes.DetailsOfEmploymentOrPensionController.onPageLoad(NormalMode)
-      }
-
-      "go to AnyOtherTaxableIncome from HowMuchMedicalBenefits" in {
-        val answers = mock[UserAnswers]
-        navigator.nextPage(HowMuchMedicalBenefitsId, NormalMode)(answers) mustBe routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)
       }
 
       "go to AnyAgentRef from NomineeFullName" in {
