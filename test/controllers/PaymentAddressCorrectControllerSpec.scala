@@ -16,17 +16,21 @@
 
 package controllers
 
-import play.api.data.Form
-import play.api.libs.json.JsBoolean
-import uk.gov.hmrc.http.cache.client.CacheMap
-import utils.FakeNavigator
 import connectors.FakeDataCacheConnector
 import controllers.actions._
-import play.api.test.Helpers._
 import forms.BooleanForm
 import identifiers.PaymentAddressCorrectId
 import models.NormalMode
+import models.requests.{AuthenticatedRequest, OptionalDataRequest}
+import play.api.data.Form
+import play.api.libs.json.JsBoolean
+import play.api.test.Helpers._
+import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
+import uk.gov.hmrc.http.cache.client.CacheMap
+import utils.{FakeNavigator, MockUserAnswers, UserAnswers}
 import views.html.paymentAddressCorrect
+
+import scala.concurrent.Future
 
 class PaymentAddressCorrectControllerSpec extends ControllerSpecBase {
 
@@ -39,7 +43,15 @@ class PaymentAddressCorrectControllerSpec extends ControllerSpecBase {
     new PaymentAddressCorrectController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, formProvider)
 
-  def viewAsString(form: Form[_] = form) = paymentAddressCorrect(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
+  def fakeDataRetrievalActionNoAddress(mockUserAnswers: UserAnswers = MockUserAnswers.yourDetailsUserAnswers) = new DataRetrievalAction {
+    override protected def transform[A](request: AuthenticatedRequest[A]): Future[OptionalDataRequest[A]] = {
+      Future.successful(OptionalDataRequest(request, "123123", ItmpName(Some("sdadsad"), Some("sdfasfad"), Some("adfsdfa")), "AB123456A",
+        ItmpAddress(None, None, None, None, None, None, None, None),
+        Some(mockUserAnswers)))
+    }
+  }
+
+  def viewAsString(form: Form[_] = form) = paymentAddressCorrect(frontendAppConfig, form, NormalMode, itmpAddress)(fakeRequest, messages).toString
 
   "PaymentAddressCorrect Controller" must {
 
@@ -92,9 +104,19 @@ class PaymentAddressCorrectControllerSpec extends ControllerSpecBase {
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
     }
+
+    "redirect to is address in UK if no itmp address information is present" in {
+      val result = controller(fakeDataRetrievalActionNoAddress()).onPageLoad(NormalMode)(fakeRequest)
+
+      status(result) mustBe SEE_OTHER
+      redirectLocation(result) mustBe Some(routes.IsPaymentAddressInTheUKController.onPageLoad(NormalMode).url)
+    }
+
+    "redirect to is address in UK if no itmp address information is present on submit" in {
+      val result = controller(fakeDataRetrievalActionNoAddress()).onSubmit(NormalMode)(fakeRequest)
+
+      status(result) mustBe SEE_OTHER
+      redirectLocation(result) mustBe Some(routes.IsPaymentAddressInTheUKController.onPageLoad(NormalMode).url)
+    }
   }
 }
-
-
-
-
