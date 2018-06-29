@@ -46,6 +46,10 @@ class Navigator @Inject()() {
     SelectCompanyBenefitsId -> selectCompanyBenefits,
     AnyTaxableIncomeId -> otherTaxableIncome,
     SelectTaxableIncomeId -> selectTaxableIncome,
+    HowMuchRentalIncomeId -> taxableIncomeRouter(HowMuchRentalIncomeId.cyaId),
+    HowMuchBankInterestId -> taxableIncomeRouter(HowMuchBankInterestId.cyaId),
+    HowMuchInvestmentOrDividendId -> taxableIncomeRouter(HowMuchInvestmentOrDividendId.cyaId),
+    HowMuchForeignIncomeId -> taxableIncomeRouter(HowMuchForeignIncomeId.cyaId),
     HowMuchMedicalBenefitsId -> (_ => routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)),
     AnyOtherTaxableIncomeId -> anyOtherTaxableIncome,
     WhereToSendPaymentId -> whereToSendPayment,
@@ -129,6 +133,24 @@ class Navigator @Inject()() {
     case Some(true) => routes.SelectCompanyBenefitsController.onPageLoad(NormalMode)
     case Some(false) => routes.AnyTaxableIncomeController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
+  }
+  private def taxableIncomeRouter(currentPageId: String)(userAnswers: UserAnswers): Call = userAnswers.selectTaxableIncome match {
+    case Some(taxableIncome) =>
+      val nextPageIndex: Int = (taxableIncome.map(_.toString) indexOf currentPageId) + 1
+
+      if (nextPageIndex < taxableIncome.length) {
+        taxableIncome(nextPageIndex) match {
+          case TaxableIncome.RENTAL_INCOME => routes.HowMuchRentalIncomeController.onPageLoad(NormalMode)
+          case TaxableIncome.BANK_OR_BUILDING_SOCIETY_INTEREST => routes.HowMuchBankInterestController.onPageLoad(NormalMode)
+          case TaxableIncome.INVESTMENT_OR_DIVIDENDS => routes.HowMuchInvestmentOrDividendController.onPageLoad(NormalMode)
+          case TaxableIncome.FOREIGN_INCOME => routes.HowMuchForeignIncomeController.onPageLoad(NormalMode)
+          case TaxableIncome.OTHER_TAXABLE_INCOME => routes.OtherTaxableIncomeNameController.onPageLoad(NormalMode)
+        }
+      } else {
+        routes.TelephoneNumberController.onPageLoad(NormalMode)
+      }
+    case None =>
+      routes.SessionExpiredController.onPageLoad()
   }
 
   private def selectCompanyBenefits(userAnswers: UserAnswers): Call = userAnswers.selectCompanyBenefits match {
