@@ -18,7 +18,7 @@ package utils
 
 import base.SpecBase
 import controllers.routes
-import identifiers.{HowMuchCarBenefitsId, SelectCompanyBenefitsId}
+import identifiers._
 import models.{CompanyBenefits, NormalMode}
 import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito._
@@ -102,6 +102,30 @@ class CompanyBenefitsNavigatorSpec extends SpecBase with MockitoSugar {
             when(answers.selectCompanyBenefits) thenReturn Some(Seq(CompanyBenefits.OTHER_COMPANY_BENEFIT))
             navigator.nextPage(HowMuchCarBenefitsId, NormalMode)(answers) mustBe routes.OtherCompanyBenefitsNameController.onPageLoad(NormalMode)
           }
+        }
+
+        // onwards route from OtherCompanyBenefitsName always follows the same pattern
+
+        "go to HowMuchOtherCompanyBenefit from OtherCompanyBenefitsName" in {
+          val answers = mock[UserAnswers]
+          navigator.nextPage(OtherCompanyBenefitsNameId, NormalMode)(answers) mustBe routes.HowMuchOtherCompanyBenefitController.onPageLoad(NormalMode)
+        }
+
+        "go to AnyOtherCompanyBenefits from HowMuchOtherCompanyBenefit" in {
+          val answers = mock[UserAnswers]
+          navigator.nextPage(HowMuchOtherCompanyBenefitId, NormalMode)(answers) mustBe routes.AnyOtherCompanyBenefitsController.onPageLoad(NormalMode)
+        }
+
+        "go to AnyTaxableIncome from AnyOtherCompanyBenefits when answer is no" in {
+          val answers = mock[UserAnswers]
+          when(answers.anyOtherCompanyBenefits) thenReturn Some(false)
+          navigator.nextPage(AnyOtherCompanyBenefitsId, NormalMode)(answers) mustBe routes.AnyTaxableIncomeController.onPageLoad(NormalMode)
+        }
+
+        "go to OtherCompanyBenefitsName from AnyOtherCompanyBenefits when answer is yes" in {
+          val answers = mock[UserAnswers]
+          when(answers.anyOtherCompanyBenefits) thenReturn Some(true)
+          navigator.nextPage(AnyOtherCompanyBenefitsId, NormalMode)(answers) mustBe routes.OtherCompanyBenefitsNameController.onPageLoad(NormalMode)
         }
       }
     }
