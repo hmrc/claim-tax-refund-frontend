@@ -53,7 +53,6 @@ class TaxableIncomeNavigatorSpec extends SpecBase with MockitoSugar {
 
           when(answers.selectTaxableIncome) thenReturn Some(
             Seq(
-              TaxableIncome.RENTAL_INCOME,
               TaxableIncome.BANK_OR_BUILDING_SOCIETY_INTEREST,
               TaxableIncome.INVESTMENT_OR_DIVIDENDS,
               TaxableIncome.FOREIGN_INCOME,
@@ -69,8 +68,6 @@ class TaxableIncomeNavigatorSpec extends SpecBase with MockitoSugar {
 
           when(answers.selectTaxableIncome) thenReturn Some(
             Seq(
-              TaxableIncome.RENTAL_INCOME,
-              TaxableIncome.BANK_OR_BUILDING_SOCIETY_INTEREST,
               TaxableIncome.INVESTMENT_OR_DIVIDENDS,
               TaxableIncome.FOREIGN_INCOME,
               TaxableIncome.OTHER_TAXABLE_INCOME
@@ -85,9 +82,6 @@ class TaxableIncomeNavigatorSpec extends SpecBase with MockitoSugar {
 
           when(answers.selectTaxableIncome) thenReturn Some(
             Seq(
-              TaxableIncome.RENTAL_INCOME,
-              TaxableIncome.BANK_OR_BUILDING_SOCIETY_INTEREST,
-              TaxableIncome.INVESTMENT_OR_DIVIDENDS,
               TaxableIncome.FOREIGN_INCOME,
               TaxableIncome.OTHER_TAXABLE_INCOME
             )
@@ -101,10 +95,6 @@ class TaxableIncomeNavigatorSpec extends SpecBase with MockitoSugar {
 
           when(answers.selectTaxableIncome) thenReturn Some(
             Seq(
-              TaxableIncome.RENTAL_INCOME,
-              TaxableIncome.BANK_OR_BUILDING_SOCIETY_INTEREST,
-              TaxableIncome.INVESTMENT_OR_DIVIDENDS,
-              TaxableIncome.FOREIGN_INCOME,
               TaxableIncome.OTHER_TAXABLE_INCOME
             )
           )
