@@ -35,11 +35,11 @@ class SelectCompanyBenefitsViewSpec(implicit messages: Messages) extends ViewBeh
 
   val values: Seq[(String, String)] = SelectCompanyBenefitsForm.options
 
-  def form: Form[Set[CompanyBenefits.Value]] = SelectCompanyBenefitsForm()
+  def form: Form[Seq[CompanyBenefits.Value]] = SelectCompanyBenefitsForm()
 
   override def createView(): Html = createView(form)
 
-  def createView(form: Form[Set[CompanyBenefits.Value]]): Html =
+  def createView(form: Form[Seq[CompanyBenefits.Value]]): Html =
     selectCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[_]) => selectCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)

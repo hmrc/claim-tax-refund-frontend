@@ -66,7 +66,7 @@ class SelectTaxableIncomeController @Inject()(
             (formWithErrors: Form[_]) =>
               Future.successful(BadRequest(selectTaxableIncome(appConfig, formWithErrors, mode, taxYear))),
             (value) =>
-              dataCacheConnector.save[Set[TaxableIncome.Value]](request.externalId, SelectTaxableIncomeId.toString, value).map(cacheMap =>
+              dataCacheConnector.save[Seq[TaxableIncome.Value]](request.externalId, SelectTaxableIncomeId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(SelectTaxableIncomeId, mode)(new UserAnswers(cacheMap))))
           )
       }.getOrElse {

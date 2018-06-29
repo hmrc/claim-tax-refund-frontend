@@ -35,11 +35,11 @@ class SelectTaxableIncomeViewSpec(implicit messages: Messages) extends ViewBehav
 
   val values: Seq[(String, String)] = SelectTaxableIncomeForm.options
 
-  def form: Form[Set[TaxableIncome.Value]] = SelectTaxableIncomeForm()
+  def form: Form[Seq[TaxableIncome.Value]] = SelectTaxableIncomeForm()
 
   override def createView(): Html = createView(form)
 
-  def createView(form: Form[Set[TaxableIncome.Value]]): Html =
+  def createView(form: Form[Seq[TaxableIncome.Value]]): Html =
     selectTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[_]) => selectTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)

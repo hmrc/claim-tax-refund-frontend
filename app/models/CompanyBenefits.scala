@@ -16,7 +16,7 @@
 
 package models
 
-import identifiers.{HowMuchCarBenefitsId, HowMuchFuelBenefitId, HowMuchMedicalBenefitsId, HowMuchOtherCompanyBenefitId}
+import identifiers._
 import play.api.libs.json.{Format, Reads, Writes}
 import utils.EnumUtils
 
@@ -32,12 +32,12 @@ object CompanyBenefits extends Enumeration {
 
   implicit def enumFormats: Format[Value] = EnumUtils.enumFormat(CompanyBenefits)
 
-  def getIdString(benefitValue: String) = {
+  def getIdString(benefitValue: String): String = {
     benefitValue match {
-      case "company-car-benefit" => HowMuchCarBenefitsId
-      case "fuel-benefit" => HowMuchFuelBenefitId
-      case "medical-benefit" => HowMuchMedicalBenefitsId
-      case "other-company-benefit" => HowMuchOtherCompanyBenefitId
+      case "company-car-benefit" => HowMuchCarBenefitsId.toString
+      case "fuel-benefit" => HowMuchFuelBenefitId.toString
+      case "medical-benefit" => HowMuchMedicalBenefitsId.toString
+      case "other-company-benefit" => OtherCompanyBenefitsNameId.toString
     }
   }
 

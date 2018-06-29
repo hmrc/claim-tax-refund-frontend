@@ -52,11 +52,11 @@ class SelectBenefitsControllerSpec extends ControllerSpecBase with MockitoSugar 
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      when(mockUserAnswers.selectBenefits).thenReturn(Some(Set(Benefits(0))))
+      when(mockUserAnswers.selectBenefits).thenReturn(Some(Seq(Benefits(0))))
 
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
-      contentAsString(result) mustBe viewAsString(SelectBenefitsForm().fill(Set(Benefits(0))))
+      contentAsString(result) mustBe viewAsString(SelectBenefitsForm().fill(Seq(Benefits(0))))
     }
 
     "redirect to the next page when valid data is submitted" in {

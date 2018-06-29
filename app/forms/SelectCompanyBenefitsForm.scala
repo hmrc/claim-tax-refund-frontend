@@ -36,16 +36,16 @@ object SelectCompanyBenefitsForm extends FormErrorHelper {
 
   private def optionIsValid(value: String): Boolean = CompanyBenefits.sortedCompanyBenefits.map(_.toString).contains(value)
 
-  private def constraint: Constraint[Set[CompanyBenefits.Value]] = Constraint {
+  private def constraint: Constraint[Seq[CompanyBenefits.Value]] = Constraint {
     case set if set.nonEmpty =>
       Valid
     case _ =>
       Invalid("selectCompanyBenefits.blank")
   }
 
-  def apply(): Form[Set[CompanyBenefits.Value]] =
+  def apply(): Form[Seq[CompanyBenefits.Value]] =
     Form(
-      "value" -> set(of(selectCompanyBenefitsFormatter)).verifying(constraint)
+      "value" -> seq(of(selectCompanyBenefitsFormatter)).verifying(constraint)
     )
 
   def options: Seq[(String, String)] = CompanyBenefits.sortedCompanyBenefits.map {
