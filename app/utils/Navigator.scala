@@ -45,6 +45,8 @@ class Navigator @Inject()() {
     HowMuchMedicalBenefitsId -> companyBenefitRouter(HowMuchMedicalBenefitsId.cyaId),
     SelectCompanyBenefitsId -> selectCompanyBenefits,
     AnyTaxableIncomeId -> otherTaxableIncome,
+    SelectTaxableIncomeId -> selectTaxableIncome,
+    HowMuchMedicalBenefitsId -> (_ => routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)),
     AnyOtherTaxableIncomeId -> anyOtherTaxableIncome,
     WhereToSendPaymentId -> whereToSendPayment,
     NomineeFullNameId -> (_ => routes.AnyAgentRefController.onPageLoad(NormalMode)),
@@ -85,6 +87,19 @@ class Navigator @Inject()() {
         case Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE => routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(NormalMode)
         case Benefits.STATE_PENSION => routes.HowMuchStatePensionController.onPageLoad(NormalMode)
         case Benefits.OTHER_TAXABLE_BENEFIT => routes.OtherBenefitsNameController.onPageLoad(NormalMode)
+      }
+    case None =>
+      routes.SessionExpiredController.onPageLoad()
+  }
+
+  private def selectTaxableIncome(userAnswers: UserAnswers): Call = userAnswers.selectTaxableIncome match {
+    case Some(taxableIncome) =>
+      taxableIncome.head match {
+        case TaxableIncome.RENTAL_INCOME => routes.HowMuchRentalIncomeController.onPageLoad(NormalMode)
+        case TaxableIncome.BANK_OR_BUILDING_SOCIETY_INTEREST => routes.HowMuchBankInterestController.onPageLoad(NormalMode)
+        case TaxableIncome.INVESTMENT_OR_DIVIDENDS => routes.HowMuchInvestmentOrDividendController.onPageLoad(NormalMode)
+        case TaxableIncome.FOREIGN_INCOME => routes.HowMuchForeignIncomeController.onPageLoad(NormalMode)
+        case TaxableIncome.OTHER_TAXABLE_INCOME => routes.OtherTaxableIncomeNameController.onPageLoad(NormalMode)
       }
     case None =>
       routes.SessionExpiredController.onPageLoad()
