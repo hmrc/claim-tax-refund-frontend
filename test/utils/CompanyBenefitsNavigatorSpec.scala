@@ -18,7 +18,7 @@ package utils
 
 import base.SpecBase
 import controllers.routes
-import identifiers.SelectCompanyBenefitsId
+import identifiers.{HowMuchCarBenefitsId, SelectCompanyBenefitsId}
 import models.{CompanyBenefits, NormalMode}
 import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito._
@@ -82,6 +82,26 @@ class CompanyBenefitsNavigatorSpec extends SpecBase with MockitoSugar {
           )
 
           navigator.nextPage(SelectCompanyBenefitsId, NormalMode)(answers) mustBe routes.OtherCompanyBenefitsNameController.onPageLoad(NormalMode)
+        }
+
+        "Navigating from HowMuchHowMuchCarBenefits" must {
+          "go to HowMuchFuelBenefit if this option was selected on SelectCompanyBenefit" in {
+            val answers = mock[UserAnswers]
+            when(answers.selectCompanyBenefits) thenReturn Some(Seq(CompanyBenefits.FUEL_BENEFIT))
+            navigator.nextPage(HowMuchCarBenefitsId, NormalMode)(answers) mustBe routes.HowMuchFuelBenefitController.onPageLoad(NormalMode)
+          }
+
+          "go to HowMuchMedicalBenefit if this option was selected on SelectCompanyBenefit" in {
+            val answers = mock[UserAnswers]
+            when(answers.selectCompanyBenefits) thenReturn Some(Seq(CompanyBenefits.MEDICAL_BENEFIT))
+            navigator.nextPage(HowMuchCarBenefitsId, NormalMode)(answers) mustBe routes.HowMuchMedicalBenefitsController.onPageLoad(NormalMode)
+          }
+
+          "go to OtherCompanyBenefitsName if this option was selected on SelectCompanyBenefit" in {
+            val answers = mock[UserAnswers]
+            when(answers.selectCompanyBenefits) thenReturn Some(Seq(CompanyBenefits.OTHER_COMPANY_BENEFIT))
+            navigator.nextPage(HowMuchCarBenefitsId, NormalMode)(answers) mustBe routes.OtherCompanyBenefitsNameController.onPageLoad(NormalMode)
+          }
         }
       }
     }
