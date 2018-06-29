@@ -16,9 +16,7 @@
 
 package identifiers
 
-import controllers.routes
-import models.{Benefits, NormalMode}
-import play.api.mvc.Call
+import models.Benefits
 
 case object HowMuchStatePensionId extends Identifier {
   override def toString: String = "howMuchStatePension"
