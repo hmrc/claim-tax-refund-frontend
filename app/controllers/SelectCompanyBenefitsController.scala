@@ -17,7 +17,6 @@
 package controllers
 
 import javax.inject.Inject
-
 import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
@@ -26,6 +25,7 @@ import identifiers.SelectCompanyBenefitsId
 import models.{CompanyBenefits, Mode}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import utils.{Navigator, UserAnswers}
 import views.html.selectCompanyBenefits
@@ -41,7 +41,7 @@ class SelectCompanyBenefitsController @Inject()(
                                                  getData: DataRetrievalAction,
                                                  requireData: DataRequiredAction) extends FrontendController with I18nSupport {
 
-  def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.selectCompanyBenefits match {
         case None => SelectCompanyBenefitsForm()
@@ -57,7 +57,7 @@ class SelectCompanyBenefitsController @Inject()(
       }
   }
 
-  def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
@@ -65,8 +65,8 @@ class SelectCompanyBenefitsController @Inject()(
           SelectCompanyBenefitsForm().bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
               Future.successful(BadRequest(selectCompanyBenefits(appConfig, formWithErrors, mode, taxYear))),
-            (value) =>
-              dataCacheConnector.save[Set[CompanyBenefits.Value]](request.externalId, SelectCompanyBenefitsId.toString, value).map(cacheMap =>
+            value =>
+              dataCacheConnector.save[Seq[CompanyBenefits.Value]](request.externalId, SelectCompanyBenefitsId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(SelectCompanyBenefitsId, mode)(new UserAnswers(cacheMap))))
           )
       }.getOrElse {

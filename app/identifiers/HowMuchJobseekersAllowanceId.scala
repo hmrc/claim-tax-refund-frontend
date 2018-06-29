@@ -16,6 +16,9 @@
 
 package identifiers
 
+import models.Benefits
+
 case object HowMuchJobseekersAllowanceId extends Identifier {
   override def toString: String = "howMuchJobseekersAllowance"
+  def cyaId: String = Benefits.JOBSEEKERS_ALLOWANCE.toString
 }

@@ -64,7 +64,7 @@ class SelectBenefitsController @Inject()(
             (formWithErrors: Form[_]) =>
               Future.successful(BadRequest(selectBenefits(appConfig, formWithErrors, mode, taxYear))),
             value =>
-              dataCacheConnector.save[Set[Benefits.Value]](request.externalId, SelectBenefitsId.toString, value).map(cacheMap =>
+              dataCacheConnector.save[Seq[Benefits.Value]](request.externalId, SelectBenefitsId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(SelectBenefitsId, mode)(new UserAnswers(cacheMap))))
           )
       }.getOrElse {

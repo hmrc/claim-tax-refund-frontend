@@ -24,8 +24,8 @@ import scala.collection.mutable
 
 trait CheckboxViewBehaviours[A] extends ViewSpecBase {
 
-  def form: Form[Set[A]]
-  def createView(form: Form[Set[A]]): Html
+  def form: Form[Seq[A]]
+  def createView(form: Form[Seq[A]]): Html
   def createView(): Html = createView(form)
   def values: Seq[(String, String)]
 

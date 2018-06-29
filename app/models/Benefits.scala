@@ -16,6 +16,7 @@
 
 package models
 
+import identifiers._
 import play.api.libs.json.{Format, Reads, Writes}
 import utils.EnumUtils
 
@@ -35,6 +36,18 @@ object Benefits extends Enumeration {
 
   implicit def enumFormats: Format[Value] = EnumUtils.enumFormat(Benefits)
 
+  def getIdString(benefitValue: String): String = {
+    benefitValue match {
+      case "bereavement-allowance" => HowMuchBereavementAllowanceId.toString
+      case "carers-allowance" => HowMuchCarersAllowanceId.toString
+      case "jobseekers-allowance" => HowMuchJobseekersAllowanceId.toString
+      case "incapacity-benefit" => HowMuchIncapacityBenefitId.toString
+      case "employment-and-support-allowance" => HowMuchEmploymentAndSupportAllowanceId.toString
+      case "state-pension" => HowMuchStatePensionId.toString
+      case "other-taxable-benefit" => OtherBenefitsNameId.toString
+    }
+  }
+
   val sortedBenefits =
     Seq(
       BEREAVEMENT_ALLOWANCE,
@@ -44,7 +57,6 @@ object Benefits extends Enumeration {
       EMPLOYMENT_AND_SUPPORT_ALLOWANCE,
       STATE_PENSION,
       OTHER_TAXABLE_BENEFIT
-
   )
 }
 

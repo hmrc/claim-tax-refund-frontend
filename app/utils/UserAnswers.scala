@@ -36,7 +36,7 @@ class UserAnswers(val cacheMap: CacheMap) {
 
   def otherTaxableIncomeName: Option[String] = cacheMap.getEntry[String](OtherTaxableIncomeNameId.toString)
 
-  def selectTaxableIncome: Option[Set[TaxableIncome.Value]] = cacheMap.getEntry[Set[TaxableIncome.Value]](SelectTaxableIncomeId.toString)
+  def selectTaxableIncome: Option[Seq[TaxableIncome.Value]] = cacheMap.getEntry[Seq[TaxableIncome.Value]](SelectTaxableIncomeId.toString)
 
   def howMuchOtherTaxableIncome: Option[String] = cacheMap.getEntry[String](HowMuchOtherTaxableIncomeId.toString)
 
@@ -60,7 +60,7 @@ class UserAnswers(val cacheMap: CacheMap) {
 
   def enterPayeReference: Option[String] = cacheMap.getEntry[String](EnterPayeReferenceId.toString)
 
-  def selectBenefits: Option[Set[Benefits.Value]] = cacheMap.getEntry[Set[Benefits.Value]](SelectBenefitsId.toString)
+  def selectBenefits: Option[Seq[Benefits.Value]] = cacheMap.getEntry[Seq[Benefits.Value]](SelectBenefitsId.toString)
 
   def howMuchOtherCompanyBenefit: Option[String] = cacheMap.getEntry[String](HowMuchOtherCompanyBenefitId.toString)
 
@@ -68,7 +68,7 @@ class UserAnswers(val cacheMap: CacheMap) {
 
   def howMuchFuelBenefit: Option[String] = cacheMap.getEntry[String](HowMuchFuelBenefitId.toString)
 
-  def selectCompanyBenefits: Option[Set[CompanyBenefits.Value]] = cacheMap.getEntry[Set[CompanyBenefits.Value]](SelectCompanyBenefitsId.toString)
+  def selectCompanyBenefits: Option[Seq[CompanyBenefits.Value]] = cacheMap.getEntry[Seq[CompanyBenefits.Value]](SelectCompanyBenefitsId.toString)
 
   def anyCompanyBenefits: Option[Boolean] = cacheMap.getEntry[Boolean](AnyCompanyBenefitsId.toString)
 

@@ -17,9 +17,8 @@
 package utils
 
 import javax.inject.Singleton
-
 import identifiers._
-import models.CompanyBenefits
+import models.{Benefits, CompanyBenefits}
 import play.api.libs.json._
 import uk.gov.hmrc.http.cache.client.CacheMap
 
@@ -28,7 +27,8 @@ class CascadeUpsert {
 
   val funcMap: Map[String, (JsValue, CacheMap) => CacheMap] =
     Map(
-      SelectCompanyBenefitsId.toString -> storeCompanyBenefit
+      SelectCompanyBenefitsId.toString -> storeCompanyBenefit,
+      SelectBenefitsId.toString -> storeBenefit
     )
 
   def apply[A](key: String, value: A, originalCacheMap: CacheMap)(implicit fmt: Format[A]): CacheMap =
@@ -42,7 +42,7 @@ class CascadeUpsert {
   private def store[A](key: String, value: A, cacheMap: CacheMap)(implicit fmt: Format[A]) =
     cacheMap copy (data = cacheMap.data + (key -> Json.toJson(value)))
 
-  private def clearIfFalse[A](key: String, value: A, keysToRemove: Set[String], cacheMap: CacheMap)(implicit fmt: Format[A]): CacheMap = {
+  private def clearIfFalse[A](key: String, value: A, keysToRemove: Seq[String], cacheMap: CacheMap)(implicit fmt: Format[A]): CacheMap = {
     val mapToStore = value match {
       case JsBoolean(false) => cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemove.contains(s)))
       case _ => cacheMap
@@ -51,18 +51,38 @@ class CascadeUpsert {
   }
 
   private def storeCompanyBenefit(selectedBenefits: JsValue, cacheMap: CacheMap): CacheMap = {
-    cacheMap.data.get(SelectCompanyBenefitsId.toString) match {
-      case Some(savedBenefits) if savedBenefits != selectedBenefits =>
-        var mapToStore = cacheMap
-        savedBenefits.as[JsArray].value.foreach {
-          benefit =>
-            if (!selectedBenefits.as[JsArray].value.contains(benefit)) {
-              mapToStore = cacheMap copy (data = cacheMap.data - CompanyBenefits.getIdString(benefit.as[String]).toString)
-            }
-        }
-        store(SelectCompanyBenefitsId.toString, selectedBenefits, mapToStore)
-      case _ =>
-        store(SelectCompanyBenefitsId.toString, selectedBenefits, cacheMap)
-    }
+
+    val mapToStore = cacheMap.data.get(SelectCompanyBenefitsId.toString).map {
+      _.as[JsArray].value.foldLeft(cacheMap) {
+        (cm, benefit) =>
+          if (!selectedBenefits.as[JsArray].value.contains(benefit) && benefit != JsString(CompanyBenefits.OTHER_COMPANY_BENEFIT.toString)) {
+            cm copy (data = cacheMap.data - CompanyBenefits.getIdString(benefit.as[String]))
+          } else if (!selectedBenefits.as[JsArray].value.contains(JsString(CompanyBenefits.OTHER_COMPANY_BENEFIT.toString))) {
+            cm copy (data = cacheMap.data - (OtherCompanyBenefitsNameId.toString, HowMuchOtherCompanyBenefitId.toString, AnyOtherCompanyBenefitsId.toString))
+          } else {
+            cm
+          }
+      }
+    }.getOrElse(cacheMap)
+
+    store(SelectCompanyBenefitsId.toString, selectedBenefits, mapToStore)
+  }
+
+  private def storeBenefit(selectedBenefits: JsValue, cacheMap: CacheMap): CacheMap = {
+
+    val mapToStore = cacheMap.data.get(SelectBenefitsId.toString).map {
+      _.as[JsArray].value.foldLeft(cacheMap) {
+        (cm, benefit) =>
+          if (!selectedBenefits.as[JsArray].value.contains(benefit) && benefit != JsString(Benefits.OTHER_TAXABLE_BENEFIT.toString)) {
+            cm copy (data = cacheMap.data - Benefits.getIdString(benefit.as[String]))
+          } else if (!selectedBenefits.as[JsArray].value.contains(JsString(Benefits.OTHER_TAXABLE_BENEFIT.toString))) {
+            cm copy (data = cacheMap.data - (OtherBenefitsNameId.toString, HowMuchOtherBenefitId.toString, AnyOtherBenefitsId.toString))
+          } else {
+            cm
+          }
+      }
+    }.getOrElse(cacheMap)
+
+    store(SelectBenefitsId.toString, selectedBenefits, mapToStore)
   }
 }

@@ -35,16 +35,16 @@ object SelectTaxableIncomeForm extends FormErrorHelper {
 
   private def optionIsValid(value: String): Boolean = TaxableIncome.sortedTaxableIncome.map(_.toString).contains(value)
 
-  private def constraint: Constraint[Set[TaxableIncome.Value]] = Constraint {
+  private def constraint: Constraint[Seq[TaxableIncome.Value]] = Constraint {
     case set if set.nonEmpty =>
       Valid
     case _ =>
       Invalid("selectTaxableIncome.blank")
   }
 
-  def apply(): Form[Set[TaxableIncome.Value]] =
+  def apply(): Form[Seq[TaxableIncome.Value]] =
     Form(
-      "value" -> set(of(selectBenefitsFormatter)).verifying(constraint)
+      "value" -> seq(of(selectBenefitsFormatter)).verifying(constraint)
     )
 
   def options: Seq[(String, String)] = TaxableIncome.sortedTaxableIncome.map {
