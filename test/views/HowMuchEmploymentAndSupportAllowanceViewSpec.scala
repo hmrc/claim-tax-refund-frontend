@@ -20,25 +20,27 @@ import config.FrontendAppConfig
 import controllers.routes
 import forms.HowMuchEmploymentAndSupportAllowanceForm
 import models.NormalMode
+import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
+import play.api.i18n.Messages
 import views.behaviours.StringViewBehaviours
 import views.html.howMuchEmploymentAndSupportAllowance
 
-class HowMuchEmploymentAndSupportAllowanceViewSpec extends StringViewBehaviours with MockitoSugar {
+class HowMuchEmploymentAndSupportAllowanceViewSpec(implicit messages: Messages) extends StringViewBehaviours with MockitoSugar {
 
-  val messageKeyPrefix = "howMuchEmploymentAndSupportAllowance"
-
-  val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
+  private val messageKeyPrefix = "howMuchEmploymentAndSupportAllowance"
+  private val taxYear = CYMinus2
+  private val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
   override val form: Form[String] = new HowMuchEmploymentAndSupportAllowanceForm(appConfig)()
 
-  def createView = () => howMuchEmploymentAndSupportAllowance(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createView = () => howMuchEmploymentAndSupportAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) => howMuchEmploymentAndSupportAllowance(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[String]) => howMuchEmploymentAndSupportAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "HowMuchEmploymentAndSupportAllowance view" must {
-    behave like normalPage(createView, messageKeyPrefix)
+    behave like normalPage(createView, messageKeyPrefix, taxYear.asString)
 
     behave like pageWithBackLink(createView)
 

@@ -42,8 +42,8 @@ class PaymentUKAddressFormSpec extends FormBehaviours with MockitoSugar {
   private val addressLine3TooLong = "global.addressLine3.tooLong"
   private val addressLine4TooLong = "global.addressLine4.tooLong"
   private val addressLine5TooLong = "global.addressLine5.tooLong"
-  private val postcodeInvalid = "ukAddress.postcode.invalid"
-  private val postcodeBlank = "ukAddress.postcode.blank"
+  private val postcodeInvalid = "global.postcode.invalid"
+  private val postcodeBlank = "global.postcode.blank"
 
   val validData: Map[String, String] = Map(
     "addressLine1" -> "line 1",
