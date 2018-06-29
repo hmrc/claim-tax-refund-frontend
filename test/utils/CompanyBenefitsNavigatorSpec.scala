@@ -56,7 +56,7 @@ class CompanyBenefitsNavigatorSpec extends SpecBase with MockitoSugar {
             )
           )
 
-          navigator.nextPage(SelectCompanyBenefitsId, NormalMode)(answers) mustBe routes.HowMuchMedicalBenefitsController.onPageLoad(NormalMode)
+          navigator.nextPage(SelectCompanyBenefitsId, NormalMode)(answers) mustBe routes.HowMuchFuelBenefitController.onPageLoad(NormalMode)
         }
 
         "go to MEDICAL_BENEFIT when medical-benefit checkbox is the first answer selected" in {

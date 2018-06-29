@@ -40,6 +40,7 @@ class Navigator @Inject()() {
     HowMuchStatePensionId -> benefitRouter(HowMuchStatePensionId.cyaId),
     AnyOtherBenefitsId -> anyOtherBenefits,
     AnyCompanyBenefitsId -> anyCompanyBenefits,
+    SelectCompanyBenefitsId -> selectCompanyBenefits,
     AnyTaxableIncomeId -> otherTaxableIncome,
     HowMuchMedicalBenefitsId -> (_ => routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)),
     AnyOtherTaxableIncomeId -> anyOtherTaxableIncome,
@@ -108,6 +109,18 @@ class Navigator @Inject()() {
     case Some(true) => routes.SelectCompanyBenefitsController.onPageLoad(NormalMode)
     case Some(false) => routes.AnyTaxableIncomeController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
+  }
+
+  private def selectCompanyBenefits(userAnswers: UserAnswers): Call = userAnswers.selectCompanyBenefits match {
+    case Some(benefits) =>
+      benefits.head match {
+        case CompanyBenefits.COMPANY_CAR_BENEFIT => routes.HowMuchCarBenefitsController.onPageLoad(NormalMode)
+        case CompanyBenefits.FUEL_BENEFIT => routes.HowMuchFuelBenefitController.onPageLoad(NormalMode)
+        case CompanyBenefits.MEDICAL_BENEFIT => routes.HowMuchMedicalBenefitsController.onPageLoad(NormalMode)
+        case CompanyBenefits.OTHER_COMPANY_BENEFIT => routes.OtherCompanyBenefitsNameController.onPageLoad(NormalMode)
+      }
+    case None =>
+      routes.SessionExpiredController.onPageLoad()
   }
 
   private def anyOtherBenefits(userAnswers: UserAnswers): Call = userAnswers.anyOtherBenefits match {
