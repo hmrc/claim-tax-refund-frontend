@@ -24,7 +24,7 @@
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: SelectTaxYear)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("anyOtherCompanyBenefits.title",s" ${taxYear.asString}"),
+    title = messages("anyOtherCompanyBenefits.title", taxYear.asString),
     appConfig = appConfig,
     bodyClasses = None) {
 
@@ -38,7 +38,7 @@
 
         @components.input_yes_no(
             InputViewModel("value", form),
-            label = messages("anyOtherCompanyBenefits.heading"),
+            label = messages("anyOtherCompanyBenefits.heading", taxYear.asString),
             labelClass = Some("visually-hidden")
         )
 

@@ -141,11 +141,11 @@ anyBenefits.checkYourAnswersLabel = Did you get any taxable benefits in the tax 
 anyBenefits.blank = Select yes if you got any taxable benefits in the tax year that your claim relates to
 anyBenefits.listHeading = A benefit can be something like:
 
-anyTaxableIncome.title = Did you get any other income in the tax year your claim is for?
-anyTaxableIncome.heading = Did you get any other income in the tax year your claim is for?
+anyTaxableIncome.title = Did you get any other taxable income between {0}?
+anyTaxableIncome.heading = Did you get any other taxable income between {0}?
 anyTaxableIncome.listHeading = Taxable income can be something like:
-anyTaxableIncome.checkYourAnswersLabel = Did you get any other income in the tax year your claim is for?
-anyTaxableIncome.blank = Select yes if you got any other income in the tax year your claim is for
+anyTaxableIncome.checkYourAnswersLabel = Did you get any other taxable income?
+anyTaxableIncome.blank = Select yes if you got any other taxable income in the tax year that your claim relates to
 
 howMuchCarBenefits.title = How much did you get for the company car between {0}?
 howMuchCarBenefits.heading = How much did you get for the company car between {0}?
@@ -159,45 +159,45 @@ howMuchRentalIncome.checkYourAnswersLabel = Rental income
 howMuchRentalIncome.blank = Enter the amount of rental income
 howMuchRentalIncome.invalid = Enter a valid amount of rental income
 
-anyOtherBenefits.title = Did you get any other taxable benefits in the tax year your claim is for?
-anyOtherBenefits.heading = Did you get any other taxable benefits in the tax year your claim is for?
-anyOtherBenefits.blank = Select yes if you got any other taxable benefits in the tax year your claim is for
-anyOtherBenefits.checkYourAnswersLabel = Did you get any other taxable benefits in the tax year your claim is for?
+anyOtherBenefits.title = Did you get any other taxable benefits between {0}?
+anyOtherBenefits.heading = Did you get any other taxable benefits between {0}?
+anyOtherBenefits.blank = Select yes if you got any other taxable benefits in the tax year that your claim relates to
+anyOtherBenefits.checkYourAnswersLabel = Did you get any other taxable benefits?
 
-howMuchJobseekersAllowance.title = How much Jobseeker''s Allowance did you get in the tax year your claim is for?
-howMuchJobseekersAllowance.heading = How much Jobseeker''s Allowance did you get in the tax year your claim is for?
-howMuchJobseekersAllowance.checkYourAnswersLabel = Amount of Jobseeker''s Allowance you got in the tax year your claim is for
-howMuchJobseekersAllowance.blank = Enter the amount of Jobseeker''s Allowance you got in the tax year your claim is for
-howMuchJobseekersAllowance.invalid = Enter a valid amount of Jobseeker''s Allowance you got in the tax year your claim is for
+howMuchJobseekersAllowance.title = How much contribution-based Jobseeker''s Allowance did you get between {0}?
+howMuchJobseekersAllowance.heading = How much contribution-based Jobseeker''s Allowance did you get between {0}?
+howMuchJobseekersAllowance.checkYourAnswersLabel = Amount of Jobseeker''s Allowance
+howMuchJobseekersAllowance.blank = Enter the amount of Jobseeker''s Allowance you got in the tax year that your claim relates to
+howMuchJobseekersAllowance.invalid = Enter a valid amount of Jobseeker''s Allowance you got in the tax year that your claim relates to
 
-howMuchIncapacityBenefit.title = How much Incapacity Benefit did you get in the tax year your claim is for?
-howMuchIncapacityBenefit.heading = How much Incapacity Benefit did you get in the tax year your claim is for?
-howMuchIncapacityBenefit.checkYourAnswersLabel = Amount of Incapacity Benefit you got in the tax year your claim is for
-howMuchIncapacityBenefit.blank = Enter the amount of Incapacity Benefit you got in the tax year your claim is for
-howMuchIncapacityBenefit.invalid = Enter a valid amount of Incapacity Benefit you got in the tax year your claim is for
+howMuchIncapacityBenefit.title = How much Incapacity Benefit did you get between {0}?
+howMuchIncapacityBenefit.heading = How much Incapacity Benefit did you get between {0}?
+howMuchIncapacityBenefit.checkYourAnswersLabel = Amount of Incapacity Benefit
+howMuchIncapacityBenefit.blank = Enter the amount of Incapacity Benefit you got in the tax year that your claim relates to
+howMuchIncapacityBenefit.invalid = Enter a valid amount of Incapacity Benefit you got in the tax year that your claim relates to
 
-howMuchEmploymentAndSupportAllowance.title = How much Employment and Support Allowance did you get in the tax year your claim is for?
-howMuchEmploymentAndSupportAllowance.heading = How much Employment and Support Allowance did you get in the tax year your claim is for?
-howMuchEmploymentAndSupportAllowance.checkYourAnswersLabel = Amount of Employment and Support Allowance you got in the tax year your claim is for
-howMuchEmploymentAndSupportAllowance.blank = Enter the amount of Employment and Support Allowance you got in the tax year your claim is for
-howMuchEmploymentAndSupportAllowance.invalid = Enter a valid amount of Employment and Support Allowance you got in the tax year your claim is for
+howMuchEmploymentAndSupportAllowance.title = How much Employment and Support Allowance did you get between {0}?
+howMuchEmploymentAndSupportAllowance.heading = How much Employment and Support Allowance did you get between {0}?
+howMuchEmploymentAndSupportAllowance.checkYourAnswersLabel = Amount of Employment and Support Allowance
+howMuchEmploymentAndSupportAllowance.blank = Enter the amount of Employment and Support Allowance you got in the tax year that your claim relates to
+howMuchEmploymentAndSupportAllowance.invalid = Enter a valid amount of Employment and Support Allowance you got in the tax year that your claim relates to
 
-howMuchStatePension.title = How much State Pension did you get in the tax year your claim is for?
-howMuchStatePension.heading = How much State Pension did you get in the tax year your claim is for?
-howMuchStatePension.checkYourAnswersLabel = Amount of State Pension you got in the tax year your claim is for
-howMuchStatePension.blank = Enter the amount of State Pension you got in the tax year your claim is for
-howMuchStatePension.invalid = Enter a valid amount of State Pension you got in the tax year your claim is for
+howMuchStatePension.title = How much State Pension did you get between {0}?
+howMuchStatePension.heading = How much State Pension did you get between {0}?
+howMuchStatePension.checkYourAnswersLabel = Amount of State Pension
+howMuchStatePension.blank = Enter the amount of State Pension you got in the tax year that your claim relates to
+howMuchStatePension.invalid = Enter a valid amount of State Pension you got in the tax year that your claim relates to
 
-howMuchMedicalBenefits.title = How much medical benefit did you get in the tax year your claim is for?
-howMuchMedicalBenefits.heading = How much medical benefit did you get in the tax year your claim is for?
+howMuchMedicalBenefits.title = How much medical benefit did you get between {0}?
+howMuchMedicalBenefits.heading = How much medical benefit did you get between {0}?
 howMuchMedicalBenefits.checkYourAnswersLabel = Medical benefit
-howMuchMedicalBenefits.blank = Enter the amount you got in medical benefits in the tax year your claim is for
-howMuchMedicalBenefits.invalid = Enter a valid amount you got in medical benefits in the tax year your claim is for
+howMuchMedicalBenefits.blank = Enter the amount of medical benefits you got
+howMuchMedicalBenefits.invalid = Enter a valid amount of medical benefits you got
 
-anyOtherTaxableIncome.title = Did you get any other taxable income in the tax year your claim is for?
-anyOtherTaxableIncome.heading = Did you get any other taxable income in the tax year your claim is for?
-anyOtherTaxableIncome.checkYourAnswersLabel = Did you get any other taxable income in the tax year your claim is for?
-anyOtherTaxableIncome.blank = Select yes if you got any other taxable income in the tax year your claim is for
+anyOtherTaxableIncome.title = Did you get any other taxable income between {0}?
+anyOtherTaxableIncome.heading = Did you get any other taxable income between {0}?
+anyOtherTaxableIncome.checkYourAnswersLabel = Did you get any other taxable income?
+anyOtherTaxableIncome.blank = Select yes if you got any other taxable income
 
 nomineeFullName.title = What is the full name of the person you want us to send any payment to?
 nomineeFullName.heading = What is the full name of the person you want us to send any payment to?
@@ -213,20 +213,18 @@ anyAgentRef.agentRefField = Agent reference
 anyAgentRef.blankAgentRef = Enter the agent reference of the person you want us to send any payment to
 anyAgentRef.maxLength = Agent reference can only be up to 160 characters
 
-isPaymentAddressInTheUK.title = Is the address of the person you want us to send any payment to in the UK?
-isPaymentAddressInTheUK.heading = Is the address of the person you want us to send any payment to in the UK?
-isPaymentAddressInTheUK.checkYourAnswersLabel = Is the address of the person you want us to send any payment to in the UK?
-isPaymentAddressInTheUK.blank = Select yes if the address of the person you want us to send any payment to is in the UK
+isPaymentAddressInTheUK.title = Is the address you want us to send any payment to in the UK?
+isPaymentAddressInTheUK.heading = Is the address you want us to send any payment to in the UK?
+isPaymentAddressInTheUK.checkYourAnswersLabel = Is the address you want us to send any payment to in the UK?
+isPaymentAddressInTheUK.blank = Select yes if the address you want us to send any payment to is in the UK
 
-paymentInternationalAddress.title = What is the address of the person you want us to send any payment to?
-paymentInternationalAddress.heading = What is the address of the person you want us to send any payment to?
+paymentInternationalAddress.title = What is the address you us to send any payment to?
+paymentInternationalAddress.heading = What is the address you us to send any payment to?
 paymentInternationalAddress.checkYourAnswersLabel = Address of the person you want us to send any payment to
 
-paymentUKAddress.title = What is the address of the person you want us to send any payment to?
-paymentUKAddress.heading = What is the address of the person you want us to send any payment to?
+paymentUKAddress.title = What is the address you us to send any payment to?
+paymentUKAddress.heading = What is the address you us to send any payment to?
 paymentUKAddress.checkYourAnswersLabel = Address of the person you want us to send any payment to
-paymentUKAddress.postcode.invalid = Enter a valid postcode
-paymentUKAddress.postcode.blank = Enter a postcode
 
 whereToSendPayment.title = Who would you like us to make the payment to?
 whereToSendPayment.heading = Who would you like us to make the payment to?
@@ -276,14 +274,14 @@ howMuchFuelBenefit.checkYourAnswersLabel = Fuel benefit
 howMuchFuelBenefit.blank = Enter the amount you got for fuel benefit
 howMuchFuelBenefit.invalid = Enter a valid amount you got in fuel benefit
 
-otherCompanyBenefitsName.title = What is the name of the company benefit you got between
-otherCompanyBenefitsName.heading = What is the name of the company benefit you got between
+otherCompanyBenefitsName.title = What is the name of the company benefit you got between {0}?
+otherCompanyBenefitsName.heading = What is the name of the company benefit you got between {0}?
 otherCompanyBenefitsName.checkYourAnswersLabel = Other company benefits name
 otherCompanyBenefitsName.blank = Enter the name of taxable benefit you got
 
-selectBenefits.title = Select the benefits you have claimed between
-selectBenefits.heading = Select the benefits you have claimed between
-selectBenefits.checkYourAnswersLabel = Benefits
+selectBenefits.title = Which benefits did you get between {0}?
+selectBenefits.heading = Which benefits did you get between {0}?
+selectBenefits.checkYourAnswersLabel = Which benefits did you get?
 selectBenefits.blank = Select a benefit
 selectBenefits.jobseekers-allowance = Contribution-based Jobseeker''s Allowance
 selectBenefits.incapacity-benefit = Incapacity benefit
@@ -305,10 +303,10 @@ enterPayeReference.hint = For example 123/AB456. You can find this on your paysl
 enterPayeReference.blank = Enter your employer or pension provider's PAYE reference
 enterPayeReference.invalid = Enter a valid PAYE reference
 
-anyOtherCompanyBenefits.title = Did you get any other company benefits between
-anyOtherCompanyBenefits.heading = Did you get any other company benefits between
+anyOtherCompanyBenefits.title = Did you get any other company benefits between {0}?
+anyOtherCompanyBenefits.heading = Did you get any other company benefits between {0}?
 anyOtherCompanyBenefits.checkYourAnswersLabel = Did you get any other company benefits?
-anyOtherCompanyBenefits.blank = Did you get any other company benefits in the tax year your claim is for?
+anyOtherCompanyBenefits.blank = Did you get any other company benefits?
 
 howMuchBereavementAllowance.title = How much bereavement allowance did you get between {0}?
 howMuchBereavementAllowance.heading = How much bereavement allowance did you get between {0}?

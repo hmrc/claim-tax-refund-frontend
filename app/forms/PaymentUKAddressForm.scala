@@ -35,8 +35,8 @@ class PaymentUKAddressForm @Inject()(appConfig: FrontendAppConfig) extends FormE
   private val addressLine3KeyTooLong = "global.addressLine3.tooLong"
   private val addressLine4KeyTooLong = "global.addressLine4.tooLong"
   private val addressLine5KeyTooLong = "global.addressLine5.tooLong"
-  private val postcodeKeyInvalid = "ukAddress.postcode.invalid"
-  private val postcodeKeyBlank = "ukAddress.postcode.blank"
+  private val postcodeKeyInvalid = "global.postcode.invalid"
+  private val postcodeKeyBlank = "global.postcode.blank"
 
 
   def apply(): Form[UkAddress] = {
