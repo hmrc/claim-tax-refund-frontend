@@ -18,7 +18,7 @@ package utils
 
 import base.SpecBase
 import identifiers._
-import models.{Benefits, CompanyBenefits}
+import models.{AnyTaxPaid, Benefits, CompanyBenefits, TaxableIncome}
 import org.scalacheck.{Gen, Shrink}
 import play.api.libs.json._
 import uk.gov.hmrc.http.cache.client.CacheMap
@@ -45,6 +45,15 @@ class CascadeUpsertSpec extends SpecBase with PropertyChecks {
       Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE,
       Benefits.STATE_PENSION,
       Benefits.OTHER_TAXABLE_BENEFIT
+    ))
+
+  private val arbitraryTaxableIncome: Gen[Seq[TaxableIncome.Value]] =
+    Gen.containerOf[Seq, TaxableIncome.Value](Gen.oneOf(
+      TaxableIncome.RENTAL_INCOME,
+      TaxableIncome.BANK_OR_BUILDING_SOCIETY_INTEREST,
+      TaxableIncome.INVESTMENT_OR_DIVIDENDS,
+      TaxableIncome.FOREIGN_INCOME,
+      TaxableIncome.OTHER_TAXABLE_INCOME
     ))
 
   "using the apply method for a key that has no special function" when {
@@ -318,5 +327,100 @@ class CascadeUpsertSpec extends SpecBase with PropertyChecks {
       }
     }
 
+    "removing values from taxable income checkbox" when {
+      "unselecting RENTAL_INCOME" must {
+        "remove the figure, name and AnyTaxable values from userAnswers" in {
+          forAll(Gen.numStr, arbitraryTaxableIncome) {
+            (amount, taxableIncome) =>
+
+              val originalCacheMap = new CacheMap("", Map(
+                SelectTaxableIncomeId.toString -> Json.toJson(taxableIncome :+ TaxableIncome.RENTAL_INCOME),
+                HowMuchRentalIncomeId.toString -> JsString(amount),
+                AnyTaxableRentalIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes(amount))
+              ))
+              val cascadeUpsert = new CascadeUpsert
+              val result = cascadeUpsert(SelectTaxableIncomeId.toString, taxableIncome.filterNot(_ == TaxableIncome.RENTAL_INCOME), originalCacheMap)
+              result.data mustEqual Map(SelectTaxableIncomeId.toString -> Json.toJson(taxableIncome.filterNot(_ == TaxableIncome.RENTAL_INCOME)))
+          }
+        }
+      }
+
+      "unselecting BANK_OR_BUILDING_SOCIETY_INTEREST" must {
+        "remove the figure, name and AnyTaxable values from userAnswers" in {
+          forAll(Gen.numStr, arbitraryTaxableIncome) {
+            (amount, taxableIncome) =>
+
+              val originalCacheMap = new CacheMap("", Map(
+                SelectTaxableIncomeId.toString -> Json.toJson(taxableIncome :+ TaxableIncome.BANK_OR_BUILDING_SOCIETY_INTEREST),
+                HowMuchBankInterestId.toString -> JsString(amount),
+                AnyTaxableBankInterestId.toString -> Json.toJson(AnyTaxPaid.Yes(amount))
+              ))
+              val cascadeUpsert = new CascadeUpsert
+              val result = cascadeUpsert(SelectTaxableIncomeId.toString,
+                taxableIncome.filterNot(_ == TaxableIncome.BANK_OR_BUILDING_SOCIETY_INTEREST), originalCacheMap)
+              result.data mustEqual Map(SelectTaxableIncomeId.toString ->
+                Json.toJson(taxableIncome.filterNot(_ == TaxableIncome.BANK_OR_BUILDING_SOCIETY_INTEREST)))
+          }
+        }
+      }
+
+      "unselecting INVESTMENT_OR_DIVIDENDS" must {
+        "remove the figure, name and AnyTaxable values from userAnswers" in {
+          forAll(Gen.numStr, arbitraryTaxableIncome) {
+            (amount, taxableIncome) =>
+
+              val originalCacheMap = new CacheMap("", Map(
+                SelectTaxableIncomeId.toString -> Json.toJson(taxableIncome :+ TaxableIncome.INVESTMENT_OR_DIVIDENDS),
+                HowMuchInvestmentOrDividendId.toString -> JsString(amount),
+                AnyTaxableInvestmentsId.toString -> Json.toJson(AnyTaxPaid.Yes(amount))
+              ))
+              val cascadeUpsert = new CascadeUpsert
+              val result = cascadeUpsert(SelectTaxableIncomeId.toString,
+                taxableIncome.filterNot(_ == TaxableIncome.INVESTMENT_OR_DIVIDENDS), originalCacheMap)
+              result.data mustEqual Map(SelectTaxableIncomeId.toString ->
+                Json.toJson(taxableIncome.filterNot(_ == TaxableIncome.INVESTMENT_OR_DIVIDENDS)))
+          }
+        }
+      }
+
+      "unselecting FOREIGN_INCOME" must {
+        "remove the figure, name and AnyTaxable values from userAnswers" in {
+          forAll(Gen.numStr, arbitraryTaxableIncome) {
+            (amount, taxableIncome) =>
+
+              val originalCacheMap = new CacheMap("", Map(
+                SelectTaxableIncomeId.toString -> Json.toJson(taxableIncome :+ TaxableIncome.FOREIGN_INCOME),
+                HowMuchForeignIncomeId.toString -> JsString(amount),
+                AnyTaxableForeignIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes(amount))
+              ))
+              val cascadeUpsert = new CascadeUpsert
+              val result = cascadeUpsert(SelectTaxableIncomeId.toString,
+                taxableIncome.filterNot(_ == TaxableIncome.FOREIGN_INCOME), originalCacheMap)
+              result.data mustEqual Map(SelectTaxableIncomeId.toString ->
+                Json.toJson(taxableIncome.filterNot(_ == TaxableIncome.FOREIGN_INCOME)))
+          }
+        }
+      }
+
+      "unselecting OTHER_TAXABLE_INCOME" must {
+        "remove the figure, name and AnyTaxable values from userAnswers" in {
+          forAll(Gen.numStr, arbitraryTaxableIncome) {
+            (amount, taxableIncome) =>
+
+              val originalCacheMap = new CacheMap("", Map(
+                SelectTaxableIncomeId.toString -> Json.toJson(taxableIncome :+ TaxableIncome.OTHER_TAXABLE_INCOME),
+                OtherTaxableIncomeNameId.toString -> JsString("qwerty"),
+                HowMuchOtherTaxableIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes(amount)),
+                AnyOtherTaxableIncomeId.toString -> JsBoolean(false)
+              ))
+              val cascadeUpsert = new CascadeUpsert
+              val result = cascadeUpsert(SelectTaxableIncomeId.toString,
+                taxableIncome.filterNot(_ == TaxableIncome.OTHER_TAXABLE_INCOME), originalCacheMap)
+              result.data mustEqual Map(SelectTaxableIncomeId.toString ->
+                Json.toJson(taxableIncome.filterNot(_ == TaxableIncome.OTHER_TAXABLE_INCOME)))
+          }
+        }
+      }
+    }
   }
 }
