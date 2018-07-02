@@ -72,7 +72,7 @@ class AnyTaxableRentalIncomeController @Inject()(appConfig: FrontendAppConfig,
                 Future.successful(BadRequest(anyTaxableRentalIncome(appConfig, formWithErrors, mode, selectedTaxYear))),
               (value) =>
                 dataCacheConnector.save[AnyTaxPaid](request.externalId, AnyTaxableRentalIncomeId.toString, value).map(cacheMap =>
-                  Redirect(navigator.nextPage(TaxPaidAmountId, mode)(new UserAnswers(cacheMap))))            )
+                  Redirect(navigator.nextPage(AnyTaxableRentalIncomeId, mode)(new UserAnswers(cacheMap))))            )
         }.getOrElse {
           Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
         }

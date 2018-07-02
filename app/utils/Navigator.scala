@@ -46,11 +46,17 @@ class Navigator @Inject()() {
     SelectCompanyBenefitsId -> selectCompanyBenefits,
     AnyTaxableIncomeId -> otherTaxableIncome,
     SelectTaxableIncomeId -> selectTaxableIncome,
-    HowMuchRentalIncomeId -> taxableIncomeRouter(HowMuchRentalIncomeId.cyaId),
-    HowMuchBankInterestId -> taxableIncomeRouter(HowMuchBankInterestId.cyaId),
-    HowMuchInvestmentOrDividendId -> taxableIncomeRouter(HowMuchInvestmentOrDividendId.cyaId),
-    HowMuchForeignIncomeId -> taxableIncomeRouter(HowMuchForeignIncomeId.cyaId),
-    HowMuchMedicalBenefitsId -> (_ => routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)),
+    HowMuchRentalIncomeId -> (_ => routes.AnyTaxableRentalIncomeController.onPageLoad(NormalMode)),
+    AnyTaxableRentalIncomeId -> taxableIncomeRouter(HowMuchRentalIncomeId.cyaId),
+    HowMuchBankInterestId -> (_ => routes.AnyTaxableBankInterestController.onPageLoad(NormalMode)),
+    AnyTaxableBankInterestId -> taxableIncomeRouter(HowMuchBankInterestId.cyaId),
+    HowMuchInvestmentOrDividendId ->  (_ => routes.AnyTaxableInvestmentsController.onPageLoad(NormalMode)),
+    AnyTaxableInvestmentsId -> taxableIncomeRouter(HowMuchInvestmentOrDividendId.cyaId),
+    HowMuchForeignIncomeId ->  (_ => routes.AnyTaxableForeignIncomeController.onPageLoad(NormalMode)),
+    AnyTaxableForeignIncomeId -> taxableIncomeRouter(HowMuchForeignIncomeId.cyaId),
+    OtherTaxableIncomeNameId -> (_ => routes.HowMuchOtherTaxableIncomeController.onPageLoad(NormalMode)),
+    HowMuchOtherTaxableIncomeId -> (_ => routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)),
+    OtherTaxableIncomeNameId -> (_ => routes.HowMuchOtherTaxableIncomeController.onPageLoad(NormalMode)),
     AnyOtherTaxableIncomeId -> anyOtherTaxableIncome,
     WhereToSendPaymentId -> whereToSendPayment,
     NomineeFullNameId -> (_ => routes.AnyAgentRefController.onPageLoad(NormalMode)),
@@ -147,7 +153,7 @@ class Navigator @Inject()() {
           case TaxableIncome.OTHER_TAXABLE_INCOME => routes.OtherTaxableIncomeNameController.onPageLoad(NormalMode)
         }
       } else {
-        routes.TelephoneNumberController.onPageLoad(NormalMode)
+        routes.WhereToSendPaymentController.onPageLoad(NormalMode)
       }
     case None =>
       routes.SessionExpiredController.onPageLoad()

@@ -72,7 +72,7 @@ class AnyTaxableBankInterestController @Inject()(appConfig: FrontendAppConfig,
               Future.successful(BadRequest(anyTaxableBankInterest(appConfig, formWithErrors, mode, selectedTaxYear))),
             (value) =>
               dataCacheConnector.save[AnyTaxPaid](request.externalId, AnyTaxableBankInterestId.toString, value).map(cacheMap =>
-                Redirect(navigator.nextPage(TaxPaidAmountId, mode)(new UserAnswers(cacheMap))))            )
+                Redirect(navigator.nextPage(AnyTaxableBankInterestId, mode)(new UserAnswers(cacheMap))))            )
       }.getOrElse {
         Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
       }

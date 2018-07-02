@@ -101,6 +101,53 @@ class TaxableIncomeNavigatorSpec extends SpecBase with MockitoSugar {
 
           navigator.nextPage(SelectTaxableIncomeId, NormalMode)(answers) mustBe routes.OtherTaxableIncomeNameController.onPageLoad(NormalMode)
         }
+
+        "go to AnyTaxableRentalIncome from HowMuchRentalIncome" in {
+          val answers = mock[UserAnswers]
+          navigator.nextPage(HowMuchRentalIncomeId, NormalMode)(answers) mustBe routes.AnyTaxableRentalIncomeController.onPageLoad(NormalMode)
+        }
+
+        "go to AnyTaxableBankInterest from HowMuchBankInterest" in {
+          val answers = mock[UserAnswers]
+          navigator.nextPage(HowMuchBankInterestId, NormalMode)(answers) mustBe routes.AnyTaxableBankInterestController.onPageLoad(NormalMode)
+        }
+
+        "go to AnyTaxableInvestmentOrDividends from HowMuchInvestmentOrDividends" in {
+          val answers = mock[UserAnswers]
+          navigator.nextPage(HowMuchInvestmentOrDividendId, NormalMode)(answers) mustBe routes.AnyTaxableInvestmentsController.onPageLoad(NormalMode)
+        }
+
+        "go to AnyTaxableForeignIncome from HowMuchForeignIncome" in {
+          val answers = mock[UserAnswers]
+          navigator.nextPage(HowMuchForeignIncomeId, NormalMode)(answers) mustBe routes.AnyTaxableForeignIncomeController.onPageLoad(NormalMode)
+        }
+
+        "go to HowMuchOtherTaxableIncome from OtherTaxableIncomeName" in {
+          val answers = mock[UserAnswers]
+          navigator.nextPage(OtherTaxableIncomeNameId, NormalMode)(answers) mustBe routes.HowMuchOtherTaxableIncomeController.onPageLoad(NormalMode)
+        }
+
+        "go to AnyTaxableOtherIncome from HowMuchOtherTaxableIncome" in {
+          val answers = mock[UserAnswers]
+          navigator.nextPage(HowMuchOtherTaxableIncomeId, NormalMode)(answers) mustBe routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)
+        }
+
+        "go to WhereToSendPayment once all taxableIncome have been completed" in {
+          val answers = mock[UserAnswers]
+          when(answers.selectTaxableIncome) thenReturn Some(Seq(
+            TaxableIncome.RENTAL_INCOME,
+            TaxableIncome.BANK_OR_BUILDING_SOCIETY_INTEREST,
+            TaxableIncome.INVESTMENT_OR_DIVIDENDS,
+            TaxableIncome.FOREIGN_INCOME
+          ))
+          navigator.nextPage(AnyTaxableForeignIncomeId, NormalMode)(answers) mustBe routes.WhereToSendPaymentController.onPageLoad(NormalMode)
+        }
+
+        "go to SessionExpired if answers.selectTaxableIncome is None on SelectTaxableIncome page" in {
+          val answers = mock[UserAnswers]
+          when(answers.selectTaxableIncome) thenReturn None
+          navigator.nextPage(SelectTaxableIncomeId, NormalMode)(answers) mustBe routes.SessionExpiredController.onPageLoad()
+        }
       }
 
       "Navigating from AnyTaxableRentalIncome" must {
@@ -129,54 +176,38 @@ class TaxableIncomeNavigatorSpec extends SpecBase with MockitoSugar {
         }
       }
 
-
-        "go to AnyTaxableBankInterest from HowMuchBankInterest" in {
+      "Navigating from AnyTaxableBankOrBuildingSociety" must {
+        "go to HowMuchInvestmentOrDividends if this option was selected on SelectTaxableIncome" in {
           val answers = mock[UserAnswers]
-          navigator.nextPage(HowMuchBankInterestId, NormalMode)(answers) mustBe routes.AnyTaxableBankInterestController.onPageLoad(NormalMode)
+          when(answers.selectTaxableIncome) thenReturn Some(Seq(TaxableIncome.INVESTMENT_OR_DIVIDENDS))
+          navigator.nextPage(AnyTaxableBankInterestId, NormalMode)(answers) mustBe routes.HowMuchInvestmentOrDividendController.onPageLoad(NormalMode)
         }
 
-        "go to AnyTaxableInvestmentOrDividends from HowMuchInvestmentOrDividends" in {
+        "go to HowMuchForeignIncome if this option was selected on SelectTaxableIncome" in {
           val answers = mock[UserAnswers]
-          navigator.nextPage(HowMuchInvestmentOrDividendId, NormalMode)(answers) mustBe routes.AnyTaxableInvestmentsController.onPageLoad(NormalMode)
+          when(answers.selectTaxableIncome) thenReturn Some(Seq(TaxableIncome.FOREIGN_INCOME))
+          navigator.nextPage(AnyTaxableBankInterestId, NormalMode)(answers) mustBe routes.HowMuchForeignIncomeController.onPageLoad(NormalMode)
         }
 
-        "go to AnyTaxableForeignIncome from HowMuchForeignIncome" in {
+        "go to HowMuchOtherTaxableIncome if this option was selected on SelectTaxableIncome" in {
           val answers = mock[UserAnswers]
-          navigator.nextPage(HowMuchForeignIncomeId, NormalMode)(answers) mustBe routes.AnyTaxableForeignIncomeController.onPageLoad(NormalMode)
+          when(answers.selectTaxableIncome) thenReturn Some(Seq(TaxableIncome.OTHER_TAXABLE_INCOME))
+          navigator.nextPage(AnyTaxableBankInterestId, NormalMode)(answers) mustBe routes.OtherTaxableIncomeNameController.onPageLoad(NormalMode)
         }
-
-        "go to HowMuchOtherTaxableIncome from OtherTaxableIncomeName" in {
-          val answers = mock[UserAnswers]
-          navigator.nextPage(OtherTaxableIncomeNameId, NormalMode)(answers) mustBe routes.HowMuchOtherTaxableIncomeController.onPageLoad(NormalMode)
-        }
-
-        "got to AnyTaxableOtherIncome from HowMuchOtherTaxableIncome" in {
-          val answers = mock[UserAnswers]
-          navigator.nextPage(HowMuchOtherTaxableIncomeId, NormalMode)(answers) mustBe routes.AnyTaxableOtherIncomeController.onPageLoad(NormalMode)
-        }
-
-
-        "go to TelephoneNumber once all taxableIncome have been completed" in {
-        val answers = mock[UserAnswers]
-        when(answers.selectTaxableIncome) thenReturn Some(Seq(
-          TaxableIncome.RENTAL_INCOME,
-          TaxableIncome.BANK_OR_BUILDING_SOCIETY_INTEREST,
-          TaxableIncome.INVESTMENT_OR_DIVIDENDS,
-          TaxableIncome.FOREIGN_INCOME
-        ))
-        navigator.nextPage(HowMuchForeignIncomeId, NormalMode)(answers) mustBe routes.TelephoneNumberController.onPageLoad(NormalMode)
       }
 
-      "go to SessionExpired if answers.selectTaxableIncome is None on SelectTaxableIncome page" in {
-        val answers = mock[UserAnswers]
-        when(answers.selectTaxableIncome) thenReturn None
-        navigator.nextPage(SelectTaxableIncomeId, NormalMode)(answers) mustBe routes.SessionExpiredController.onPageLoad()
-      }
+      "Navigating from AnyTaxableInvestments" must {
+        "go to HowMuchForeignIncome if this option was selected on SelectTaxableIncome" in {
+          val answers = mock[UserAnswers]
+          when(answers.selectTaxableIncome) thenReturn Some(Seq(TaxableIncome.FOREIGN_INCOME))
+          navigator.nextPage(AnyTaxableInvestmentsId, NormalMode)(answers) mustBe routes.HowMuchForeignIncomeController.onPageLoad(NormalMode)
+        }
 
-      "go to SessionExpired if answers.selectBenefits is None on other SelectTaxableIncome pages" in {
-        val answers = mock[UserAnswers]
-        when(answers.selectTaxableIncome) thenReturn None
-        navigator.nextPage(HowMuchRentalIncomeId, NormalMode)(answers) mustBe routes.SessionExpiredController.onPageLoad()
+        "go to HowMuchOtherTaxableIncome if this option was selected on SelectTaxableIncome" in {
+          val answers = mock[UserAnswers]
+          when(answers.selectTaxableIncome) thenReturn Some(Seq(TaxableIncome.OTHER_TAXABLE_INCOME))
+          navigator.nextPage(AnyTaxableInvestmentsId, NormalMode)(answers) mustBe routes.OtherTaxableIncomeNameController.onPageLoad(NormalMode)
+        }
       }
     }
   }
