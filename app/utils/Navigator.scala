@@ -52,8 +52,8 @@ class Navigator @Inject()() {
     PaymentUKAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
     PaymentInternationalAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
     TelephoneNumberId -> (_ => routes.WhereToSendPaymentController.onPageLoad(NormalMode)),
-    OtherBenefitsNameId -> (_ => routes.HowMuchOtherBenefitController.onPageLoad(NormalMode)),
-    HowMuchOtherBenefitId -> (_ => routes.AnyOtherBenefitsController.onPageLoad(NormalMode)),
+    OtherBenefitsNameId -> (_ => routes.HowMuchOtherTaxableBenefitController.onPageLoad(NormalMode)),
+    HowMuchOtherTaxableBenefitId -> (_ => routes.AnyOtherBenefitsController.onPageLoad(NormalMode)),
     OtherCompanyBenefitsNameId -> (_ => routes.HowMuchOtherCompanyBenefitController.onPageLoad(NormalMode)),
     HowMuchOtherCompanyBenefitId -> (_ => routes.AnyOtherCompanyBenefitsController.onPageLoad(NormalMode)),
     AnyOtherCompanyBenefitsId -> anyOtherCompanyBenefits

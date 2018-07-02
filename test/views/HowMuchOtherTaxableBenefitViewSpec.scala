@@ -19,34 +19,34 @@ package views
 import config.FrontendAppConfig
 import play.api.data.Form
 import controllers.routes
-import forms.HowMuchOtherBenefitForm
+import forms.HowMuchOtherTaxableBenefitForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
 import play.api.i18n.Messages
 import views.behaviours.StringViewBehaviours
-import views.html.howMuchOtherBenefit
+import views.html.howMuchOtherTaxableBenefit
 
-class HowMuchOtherBenefitViewSpec(implicit messages: Messages) extends StringViewBehaviours with MockitoSugar {
+class HowMuchOtherTaxableBenefitViewSpec(implicit messages: Messages) extends StringViewBehaviours with MockitoSugar {
 
-  val messageKeyPrefix = "howMuchOtherBenefit"
+  val messageKeyPrefix = "howMuchOtherTaxableBenefit"
   private val taxYear = CYMinus2
 
   val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
-  override val form: Form[String] = new HowMuchOtherBenefitForm(appConfig)()
+  override val form: Form[String] = new HowMuchOtherTaxableBenefitForm(appConfig)()
 
-  def createView = () => howMuchOtherBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createView = () => howMuchOtherTaxableBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) => howMuchOtherBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[String]) => howMuchOtherTaxableBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
-  "HowMuchOtherBenefit view" must {
+  "HowMuchOtherTaxableBenefit view" must {
     behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, s"${taxYear.asString}?")
 
     behave like pageWithBackLink(createView)
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.HowMuchOtherBenefitController.onSubmit(NormalMode).url)
+    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.HowMuchOtherTaxableBenefitController.onSubmit(NormalMode).url)
   }
 }

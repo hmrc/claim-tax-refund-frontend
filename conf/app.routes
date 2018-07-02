@@ -167,10 +167,10 @@ POST       /other-benefits-name                                             cont
 GET        /change-other-benefits-name                                      controllers.OtherBenefitsNameController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-other-benefits-name                                      controllers.OtherBenefitsNameController.onSubmit(mode: Mode = CheckMode)
 
-GET        /how-much-other-benefit                                          controllers.HowMuchOtherBenefitController.onPageLoad(mode: Mode = NormalMode)
-POST       /how-much-other-benefit                                          controllers.HowMuchOtherBenefitController.onSubmit(mode: Mode = NormalMode)
-GET        /change-how-much-other-benefit                                   controllers.HowMuchOtherBenefitController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-how-much-other-benefit                                   controllers.HowMuchOtherBenefitController.onSubmit(mode: Mode = CheckMode)
+GET        /how-much-other-benefit                                          controllers.HowMuchOtherTaxableBenefitController.onPageLoad(mode: Mode = NormalMode)
+POST       /how-much-other-benefit                                          controllers.HowMuchOtherTaxableBenefitController.onSubmit(mode: Mode = NormalMode)
+GET        /change-how-much-other-benefit                                   controllers.HowMuchOtherTaxableBenefitController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-how-much-other-benefit                                   controllers.HowMuchOtherTaxableBenefitController.onSubmit(mode: Mode = CheckMode)
 
 GET        /how-much-foreign-income                                         controllers.HowMuchForeignIncomeController.onPageLoad(mode: Mode = NormalMode)
 POST       /how-much-foreign-income                                         controllers.HowMuchForeignIncomeController.onSubmit(mode: Mode = NormalMode)

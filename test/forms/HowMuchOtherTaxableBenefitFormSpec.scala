@@ -23,11 +23,11 @@ import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito._
 import play.api.data.Form
 
-class HowMuchOtherBenefitFormSpec extends FormBehaviours with MockitoSugar {
+class HowMuchOtherTaxableBenefitFormSpec extends FormBehaviours with MockitoSugar {
 
   private val testRegex = """(?=.)^\$?(([1-9][0-9]{0,2}(,[0-9]{3})*)|[0-9]+)?(\.[0-9]{1,2})?$"""
-  private val errorKeyInvalid = "howMuchOtherBenefit.invalid"
-  private val errorKeyBlank = "howMuchOtherBenefit.blank"
+  private val errorKeyInvalid = "howMuchOtherTaxableBenefit.invalid"
+  private val errorKeyBlank = "howMuchOtherTaxableBenefit.blank"
 
   def appConfig: FrontendAppConfig = {
     val instance = mock[FrontendAppConfig]
@@ -37,9 +37,9 @@ class HowMuchOtherBenefitFormSpec extends FormBehaviours with MockitoSugar {
 
   val validData: Map[String, String] = Map("value" -> "9,999.99")
 
-  override val form: Form[_] = new HowMuchOtherBenefitForm(appConfig)()
+  override val form: Form[_] = new HowMuchOtherTaxableBenefitForm(appConfig)()
 
-  "HowMuchOtherBenefit Form" must {
+  "HowMuchOtherTaxableBenefit Form" must {
 
     behave like questionForm("""9,999.99""")
 

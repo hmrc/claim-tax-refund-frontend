@@ -60,7 +60,7 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
     cyaHelper.howMuchStatePension,
     cyaHelper.anyOtherTaxableIncome,
     cyaHelper.otherBenefitsName,
-    cyaHelper.howMuchOtherBenefit
+    cyaHelper.howMuchOtherTaxableBenefit
   ).flatten)
 
   def companyBenefitDetails = AnswerSection(Some("checkYourAnswers.companyBenefitsDetailsSection"), Seq(

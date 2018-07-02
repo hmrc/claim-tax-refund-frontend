@@ -202,14 +202,14 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
 
       // onwards route from OtherBenefitsName always follows the same pattern
 
-      "go to HowMuchOtherBenefit from OtherBenefitsName" in {
+      "go to HowMuchOtherTaxableBenefit from OtherBenefitsName" in {
         val answers = mock[UserAnswers]
-        navigator.nextPage(OtherBenefitsNameId, NormalMode)(answers) mustBe routes.HowMuchOtherBenefitController.onPageLoad(NormalMode)
+        navigator.nextPage(OtherBenefitsNameId, NormalMode)(answers) mustBe routes.HowMuchOtherTaxableBenefitController.onPageLoad(NormalMode)
       }
 
-      "go to AnyOtherBenefits from HowMuchOtherBenefit" in {
+      "go to AnyOtherBenefits from HowMuchOtherTaxableBenefit" in {
         val answers = mock[UserAnswers]
-        navigator.nextPage(HowMuchOtherBenefitId, NormalMode)(answers) mustBe routes.AnyOtherBenefitsController.onPageLoad(NormalMode)
+        navigator.nextPage(HowMuchOtherTaxableBenefitId, NormalMode)(answers) mustBe routes.AnyOtherBenefitsController.onPageLoad(NormalMode)
       }
 
       "go to AnyCompanyBenefits from AnyOtherBenefits when answer is no" in {

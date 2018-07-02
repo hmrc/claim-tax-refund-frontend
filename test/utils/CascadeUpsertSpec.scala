@@ -293,7 +293,7 @@ class CascadeUpsertSpec extends SpecBase with PropertyChecks {
             val originalCacheMap = new CacheMap("", Map(
               SelectBenefitsId.toString -> Json.toJson(benefits :+ Benefits.OTHER_TAXABLE_BENEFIT),
               OtherBenefitsNameId.toString -> JsString("qwerty"),
-              HowMuchOtherBenefitId.toString -> JsString(amount),
+              HowMuchOtherTaxableBenefitId.toString -> JsString(amount),
               AnyOtherBenefitsId.toString -> JsBoolean(false)
             ))
             val cascadeUpsert = new CascadeUpsert
