@@ -56,8 +56,8 @@ class Navigator @Inject()() {
     HowMuchForeignIncomeId ->  (_ => routes.AnyTaxableForeignIncomeController.onPageLoad(NormalMode)),
     AnyTaxableForeignIncomeId -> taxableIncomeRouter(HowMuchForeignIncomeId.cyaId),
     OtherTaxableIncomeNameId -> (_ => routes.HowMuchOtherTaxableIncomeController.onPageLoad(NormalMode)),
-    HowMuchOtherTaxableIncomeId -> (_ => routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)),
-    OtherTaxableIncomeNameId -> (_ => routes.HowMuchOtherTaxableIncomeController.onPageLoad(NormalMode)),
+    HowMuchOtherTaxableIncomeId -> (_ => routes.AnyTaxableOtherIncomeController.onPageLoad(NormalMode)),
+    AnyTaxableOtherIncomeId -> (_ => routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)),
     AnyOtherTaxableIncomeId -> anyOtherTaxableIncome,
     OtherBenefitsNameId -> (_ => routes.HowMuchOtherBenefitController.onPageLoad(NormalMode)),
     HowMuchOtherBenefitId -> (_ => routes.AnyOtherBenefitsController.onPageLoad(NormalMode)),
@@ -210,8 +210,8 @@ class Navigator @Inject()() {
   }
 
   private def anyOtherTaxableIncome(userAnswers: UserAnswers): Call = userAnswers.anyOtherTaxableIncome match {
-    case Some(true) => routes.HowMuchOtherCompanyBenefitController.onPageLoad(NormalMode)
-    case Some(false) => routes.AnyTaxableIncomeController.onPageLoad(NormalMode)
+    case Some(true) => routes.OtherTaxableIncomeNameController.onPageLoad(NormalMode)
+    case Some(false) => routes.WhereToSendPaymentController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
