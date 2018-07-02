@@ -16,6 +16,9 @@
 
 package identifiers
 
+import models.TaxableIncome
+
 case object HowMuchForeignIncomeId extends Identifier {
   override def toString: String = "howMuchForeignIncome"
+  def cyaId: String = TaxableIncome.FOREIGN_INCOME.toString
 }
