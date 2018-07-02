@@ -16,6 +16,7 @@
 
 package models
 
+import identifiers._
 import play.api.libs.json.{Format, Reads, Writes}
 import utils.EnumUtils
 
@@ -31,6 +32,16 @@ object TaxableIncome extends Enumeration {
   val writes: Writes[Value] = EnumUtils.enumWrites
 
   implicit def enumFormats: Format[Value] = EnumUtils.enumFormat(TaxableIncome)
+
+  def getIdString(taxableIncomeValue: String): String = {
+    taxableIncomeValue match {
+      case "rental-income" => HowMuchRentalIncomeId.toString
+      case "bank-or-building-society-interest" => HowMuchBankInterestId.toString
+      case "investment-or-dividends" => HowMuchInvestmentOrDividendId.toString
+      case "foreign-income" => HowMuchForeignIncomeId.toString
+      case "other-taxable-income" => OtherTaxableIncomeNameId.toString
+    }
+  }
 
   val sortedTaxableIncome =
     Seq(
