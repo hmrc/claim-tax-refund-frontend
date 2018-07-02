@@ -32,7 +32,8 @@ class CascadeUpsert {
       SelectBenefitsId.toString -> storeBenefit,
       SelectTaxableIncomeId.toString -> storeTaxableIncome,
       AnyCompanyBenefitsId.toString -> anyCompanyBenefits,
-      AnyTaxableIncomeId.toString -> anyTaxableIncome
+      AnyTaxableIncomeId.toString -> anyTaxableIncome,
+      AnyBenefitsId.toString -> anyBenefits
     )
 
   def apply[A](key: String, value: A, originalCacheMap: CacheMap)(implicit fmt: Format[A]): CacheMap =
@@ -53,6 +54,24 @@ class CascadeUpsert {
     }
     store(key, value, mapToStore)
   }
+
+  private def anyBenefits(value: JsValue, cacheMap: CacheMap): CacheMap =
+    if (value.as[Boolean]) {
+      store(AnyBenefitsId.toString, value, cacheMap)
+    } else {
+      store(AnyBenefitsId.toString, value, cacheMap.copy(data = cacheMap.data - (
+        SelectBenefitsId.toString,
+        HowMuchBereavementAllowanceId.toString,
+        HowMuchCarersAllowanceId.toString,
+        HowMuchJobseekersAllowanceId.toString,
+        HowMuchIncapacityBenefitId.toString,
+        HowMuchEmploymentAndSupportAllowanceId.toString,
+        HowMuchStatePensionId.toString,
+        OtherBenefitsNameId.toString,
+        HowMuchOtherBenefitId.toString,
+        AnyOtherBenefitsId.toString
+      )))
+    }
 
   private def anyCompanyBenefits(value: JsValue, cacheMap: CacheMap): CacheMap =
     if (value.as[Boolean]) {

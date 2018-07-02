@@ -95,6 +95,39 @@ class CascadeUpsertSpec extends SpecBase with PropertyChecks {
       }
     }
 
+    "answering 'no' to anyBenefits" must {
+      "remove all associated data" in {
+        forAll(arbitraryBenefits) {
+          benefits =>
+            val originalCacheMap = new CacheMap("id", Map(
+              SelectBenefitsId.toString -> Json.toJson(benefits),
+              HowMuchBereavementAllowanceId.toString -> JsString("1234"),
+              HowMuchCarersAllowanceId.toString -> JsString("1234"),
+              HowMuchJobseekersAllowanceId.toString -> JsString("1234"),
+              HowMuchIncapacityBenefitId.toString -> JsString("1234"),
+              HowMuchEmploymentAndSupportAllowanceId.toString -> JsString("1234"),
+              HowMuchStatePensionId.toString -> JsString("1234"),
+              OtherBenefitsNameId.toString -> JsString("qwerty"),
+              HowMuchOtherBenefitId.toString -> JsString("1234"),
+              AnyOtherBenefitsId.toString -> JsString("1234")
+            ))
+            val cascadeUpsert = new CascadeUpsert
+            val result = cascadeUpsert(AnyBenefitsId.toString, JsBoolean(false), originalCacheMap)
+            result.data.size mustBe 1
+            result.data.contains(SelectBenefitsId.toString) mustBe false
+            result.data.contains(HowMuchBereavementAllowanceId.toString) mustBe false
+            result.data.contains(HowMuchCarersAllowanceId.toString) mustBe false
+            result.data.contains(HowMuchJobseekersAllowanceId.toString) mustBe false
+            result.data.contains(HowMuchIncapacityBenefitId.toString) mustBe false
+            result.data.contains(HowMuchEmploymentAndSupportAllowanceId.toString) mustBe false
+            result.data.contains(HowMuchStatePensionId.toString) mustBe false
+            result.data.contains(OtherBenefitsNameId.toString) mustBe false
+            result.data.contains(HowMuchOtherBenefitId.toString) mustBe false
+            result.data.contains(AnyOtherBenefitsId.toString) mustBe false
+        }
+      }
+    }
+
     "answering 'no' to anyCompanyBenefits" must {
       "remove all associated data" in {
         forAll(arbitraryCompanyBenefits) {
