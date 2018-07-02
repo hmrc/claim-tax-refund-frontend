@@ -86,6 +86,33 @@ class CascadeUpsertSpec extends SpecBase with PropertyChecks {
       }
     }
 
+    "answering 'no' to anyCompanyBenefits" must {
+      "remove all associated data" in {
+        forAll(arbitraryCompanyBenefits) {
+          companyBenefits =>
+            val originalCacheMap = new CacheMap("id", Map(
+              SelectCompanyBenefitsId.toString -> Json.toJson(companyBenefits),
+              HowMuchCarBenefitsId.toString -> JsString("1234"),
+              HowMuchFuelBenefitId.toString -> JsString("1234"),
+              HowMuchMedicalBenefitsId.toString -> JsString("1234"),
+              OtherCompanyBenefitsNameId.toString -> JsString("qwerty"),
+              HowMuchOtherCompanyBenefitId.toString ->  JsString("1234"),
+              AnyOtherCompanyBenefitsId.toString -> JsBoolean(false)
+            ))
+            val cascadeUpsert = new CascadeUpsert
+            val result = cascadeUpsert(AnyCompanyBenefitsId.toString, JsBoolean(false), originalCacheMap)
+            result.data.size mustBe 1
+            result.data.contains(SelectCompanyBenefitsId.toString) mustBe false
+            result.data.contains(HowMuchCarBenefitsId.toString) mustBe false
+            result.data.contains(HowMuchFuelBenefitId.toString) mustBe false
+            result.data.contains(HowMuchMedicalBenefitsId.toString) mustBe false
+            result.data.contains(OtherCompanyBenefitsNameId.toString) mustBe false
+            result.data.contains(HowMuchOtherCompanyBenefitId.toString) mustBe false
+            result.data.contains(AnyOtherCompanyBenefitsId.toString) mustBe false
+        }
+      }
+    }
+
     "unselecting fuel benefit" must {
 
       "remove amount of fuel benefit" in {

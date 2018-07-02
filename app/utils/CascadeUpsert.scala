@@ -28,7 +28,8 @@ class CascadeUpsert {
   val funcMap: Map[String, (JsValue, CacheMap) => CacheMap] =
     Map(
       SelectCompanyBenefitsId.toString -> storeCompanyBenefit,
-      SelectBenefitsId.toString -> storeBenefit
+      SelectBenefitsId.toString -> storeBenefit,
+      AnyCompanyBenefitsId.toString -> anyCompanyBenefits
     )
 
   def apply[A](key: String, value: A, originalCacheMap: CacheMap)(implicit fmt: Format[A]): CacheMap =
@@ -49,6 +50,21 @@ class CascadeUpsert {
     }
     store(key, value, mapToStore)
   }
+
+  private def anyCompanyBenefits(value: JsValue, cacheMap: CacheMap): CacheMap =
+    if (value.as[Boolean]) {
+      store(AnyCompanyBenefitsId.toString, value, cacheMap)
+    } else {
+      store(AnyCompanyBenefitsId.toString, value, cacheMap.copy(data = cacheMap.data - (
+        SelectCompanyBenefitsId.toString,
+        HowMuchCarBenefitsId.toString,
+        HowMuchFuelBenefitId.toString,
+        HowMuchMedicalBenefitsId.toString,
+        OtherCompanyBenefitsNameId.toString,
+        HowMuchOtherCompanyBenefitId.toString,
+        AnyOtherCompanyBenefitsId.toString
+      )))
+    }
 
   private def storeCompanyBenefit(selectedBenefits: JsValue, cacheMap: CacheMap): CacheMap = {
 
