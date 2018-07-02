@@ -122,6 +122,46 @@ class CascadeUpsertSpec extends SpecBase with PropertyChecks {
       }
     }
 
+    "answering 'no' to taxable income" must {
+      "remove all associated data" in {
+        forAll(arbitraryTaxableIncome) {
+          taxableIncome =>
+            val originalCacheMap = new CacheMap("id", Map(
+              SelectTaxableIncomeId.toString -> Json.toJson(taxableIncome),
+              HowMuchRentalIncomeId.toString ->  JsString("1234"),
+              AnyTaxableRentalIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+              HowMuchBankInterestId.toString ->  JsString("1234"),
+              AnyTaxableBankInterestId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+              HowMuchInvestmentOrDividendId.toString ->  JsString("1234"),
+              AnyTaxableInvestmentsId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+              HowMuchForeignIncomeId.toString ->  JsString("1234"),
+              AnyTaxableForeignIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+              OtherTaxableIncomeNameId.toString ->  JsString("qwerty"),
+              HowMuchOtherTaxableIncomeId.toString -> Json.toJson("123"),
+              AnyTaxableOtherIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+              AnyOtherTaxableIncomeId.toString -> JsBoolean(false)
+
+            ))
+            val cascadeUpsert = new CascadeUpsert
+            val result = cascadeUpsert(AnyTaxableIncomeId.toString, JsBoolean(false), originalCacheMap)
+            result.data.size mustBe 1
+            result.data.contains(SelectTaxableIncomeId.toString) mustBe false
+            result.data.contains(HowMuchRentalIncomeId.toString) mustBe false
+            result.data.contains(HowMuchBankInterestId.toString) mustBe false
+            result.data.contains(AnyTaxableBankInterestId.toString) mustBe false
+            result.data.contains(HowMuchInvestmentOrDividendId.toString) mustBe false
+            result.data.contains(AnyTaxableInvestmentsId.toString) mustBe false
+            result.data.contains(HowMuchForeignIncomeId.toString) mustBe false
+            result.data.contains(AnyTaxableForeignIncomeId.toString) mustBe false
+            result.data.contains(OtherTaxableIncomeNameId.toString) mustBe false
+            result.data.contains(HowMuchOtherTaxableIncomeId.toString) mustBe false
+            result.data.contains(AnyTaxableOtherIncomeId.toString) mustBe false
+            result.data.contains(AnyOtherTaxableIncomeId.toString) mustBe false
+
+        }
+      }
+    }
+
     "unselecting fuel benefit" must {
 
       "remove amount of fuel benefit" in {
