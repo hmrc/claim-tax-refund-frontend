@@ -123,7 +123,7 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
           navigator.nextPage(SelectBenefitsId, NormalMode)(answers) mustBe routes.HowMuchStatePensionController.onPageLoad(NormalMode)
         }
 
-        "go to OtherBenefitsName when other-taxable-benefit checkbox is the first answer selected" in {
+        "go to OtherTaxableBenefitsName when other-taxable-benefit checkbox is the first answer selected" in {
           val answers = mock[UserAnswers]
 
           when(answers.selectBenefits) thenReturn Some(
@@ -132,7 +132,7 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
             )
           )
 
-          navigator.nextPage(SelectBenefitsId, NormalMode)(answers) mustBe routes.OtherBenefitsNameController.onPageLoad(NormalMode)
+          navigator.nextPage(SelectBenefitsId, NormalMode)(answers) mustBe routes.OtherTaxableBenefitsNameController.onPageLoad(NormalMode)
         }
       }
 
@@ -167,10 +167,10 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
           navigator.nextPage(HowMuchBereavementAllowanceId, NormalMode)(answers) mustBe routes.HowMuchStatePensionController.onPageLoad(NormalMode)
         }
 
-        "go to OtherBenefitsName if this option was selected on SelectBenefits" in {
+        "go to OtherTaxableBenefitsName if this option was selected on SelectBenefits" in {
           val answers = mock[UserAnswers]
           when(answers.selectBenefits) thenReturn Some(Seq(Benefits.OTHER_TAXABLE_BENEFIT))
-          navigator.nextPage(HowMuchBereavementAllowanceId, NormalMode)(answers) mustBe routes.OtherBenefitsNameController.onPageLoad(NormalMode)
+          navigator.nextPage(HowMuchBereavementAllowanceId, NormalMode)(answers) mustBe routes.OtherTaxableBenefitsNameController.onPageLoad(NormalMode)
         }
 
       }
@@ -200,28 +200,28 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(HowMuchBereavementAllowanceId, NormalMode)(answers) mustBe routes.SessionExpiredController.onPageLoad()
       }
 
-      // onwards route from OtherBenefitsName always follows the same pattern
+      // onwards route from OtherTaxableBenefit always follows the same pattern
 
-      "go to HowMuchOtherTaxableBenefit from OtherBenefitsName" in {
+      "go to HowMuchOtherTaxableBenefit from OtherTaxableBenefitsName" in {
         val answers = mock[UserAnswers]
-        navigator.nextPage(OtherBenefitsNameId, NormalMode)(answers) mustBe routes.HowMuchOtherTaxableBenefitController.onPageLoad(NormalMode)
+        navigator.nextPage(OtherTaxableBenefitsNameId, NormalMode)(answers) mustBe routes.HowMuchOtherTaxableBenefitController.onPageLoad(NormalMode)
       }
 
-      "go to AnyOtherBenefits from HowMuchOtherTaxableBenefit" in {
+      "go to AnyOtherTaxableBenefits from HowMuchOtherTaxableBenefit" in {
         val answers = mock[UserAnswers]
-        navigator.nextPage(HowMuchOtherTaxableBenefitId, NormalMode)(answers) mustBe routes.AnyOtherBenefitsController.onPageLoad(NormalMode)
+        navigator.nextPage(HowMuchOtherTaxableBenefitId, NormalMode)(answers) mustBe routes.AnyOtherTaxableBenefitsController.onPageLoad(NormalMode)
       }
 
-      "go to AnyCompanyBenefits from AnyOtherBenefits when answer is no" in {
+      "go to AnyCompanyBenefits from AnyOtherTaxableBenefits when answer is no" in {
         val answers = mock[UserAnswers]
-        when(answers.anyOtherBenefits) thenReturn Some(false)
-        navigator.nextPage(AnyOtherBenefitsId, NormalMode)(answers) mustBe routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
+        when(answers.anyOtherTaxableBenefits) thenReturn Some(false)
+        navigator.nextPage(AnyOtherTaxableBenefitsId, NormalMode)(answers) mustBe routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
       }
 
-      "go to OtherBenefitsName from AnyOtherBenefits when answer is yes" in {
+      "go to OtherTaxableBenefitsName from AnyOtherTaxableBenefits when answer is yes" in {
         val answers = mock[UserAnswers]
-        when(answers.anyOtherBenefits) thenReturn Some(true)
-        navigator.nextPage(AnyOtherBenefitsId, NormalMode)(answers) mustBe routes.OtherBenefitsNameController.onPageLoad(NormalMode)
+        when(answers.anyOtherTaxableBenefits) thenReturn Some(true)
+        navigator.nextPage(AnyOtherTaxableBenefitsId, NormalMode)(answers) mustBe routes.OtherTaxableBenefitsNameController.onPageLoad(NormalMode)
       }
     }
   }

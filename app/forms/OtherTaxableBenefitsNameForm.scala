@@ -14,8 +14,17 @@
  * limitations under the License.
  */
 
-package identifiers
+package forms
 
-case object OtherBenefitsNameId extends Identifier {
-  override def toString: String = "otherBenefitsName"
+import com.google.inject.Inject
+import config.FrontendAppConfig
+import forms.mappings.Constraints
+import play.api.data.Form
+import play.api.data.Forms._
+
+class OtherTaxableBenefitsNameForm @Inject()(appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
+
+  private val errorBlankKey = "otherTaxableBenefitsName.blank"
+
+  def apply(): Form[String] = Form("value" -> text.verifying(nonEmpty(errorBlankKey)))
 }

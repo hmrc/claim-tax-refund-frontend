@@ -20,12 +20,11 @@ import config.FrontendAppConfig
 import forms.behaviours.FormBehaviours
 import models.MandatoryField
 import org.scalatest.mockito.MockitoSugar
-import org.mockito.Mockito._
 import play.api.data.Form
 
-class OtherBenefitsNameFormSpec extends FormBehaviours with MockitoSugar {
+class OtherTaxableBenefitsNameFormSpec extends FormBehaviours with MockitoSugar {
 
-  val errorKeyBlank = "otherBenefitsName.blank"
+  val errorKeyBlank = "otherTaxableBenefitsName.blank"
 
   def appConfig: FrontendAppConfig = {
     val instance = mock[FrontendAppConfig]
@@ -34,9 +33,9 @@ class OtherBenefitsNameFormSpec extends FormBehaviours with MockitoSugar {
 
   val validData: Map[String, String] = Map("value" -> "test answer")
 
-  override val form: Form[_] = new OtherBenefitsNameForm(appConfig)()
+  override val form: Form[_] = new OtherTaxableBenefitsNameForm(appConfig)()
 
-  "OtherBenefitsName Form" must {
+  "OtherTaxableBenefitsName Form" must {
 
     behave like formWithMandatoryTextFields(
       MandatoryField("value", errorKeyBlank)

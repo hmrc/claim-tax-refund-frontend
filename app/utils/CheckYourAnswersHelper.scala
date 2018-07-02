@@ -90,8 +90,8 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
     x => AnswerRow("howMuchOtherTaxableBenefit.checkYourAnswersLabel", s"$x", false, routes.HowMuchOtherTaxableBenefitController.onPageLoad(CheckMode).url)
   }
 
-  def otherBenefitsName: Option[AnswerRow] = userAnswers.otherBenefitsName map {
-    x => AnswerRow("otherBenefitsName.checkYourAnswersLabel", s"$x", false, routes.OtherBenefitsNameController.onPageLoad(CheckMode).url)
+  def otherTaxableBenefitsName: Option[AnswerRow] = userAnswers.otherTaxableBenefitsName map {
+    x => AnswerRow("otherTaxableBenefitsName.checkYourAnswersLabel", s"$x", false, routes.OtherTaxableBenefitsNameController.onPageLoad(CheckMode).url)
   }
 
   def howMuchBereavementAllowance: Option[AnswerRow] = userAnswers.howMuchBereavementAllowance map {
@@ -260,11 +260,11 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
         s"$x", false, routes.HowMuchJobseekersAllowanceController.onPageLoad(CheckMode).url)
   }
 
-  def anyOtherBenefits: Option[AnswerRow] = userAnswers.anyOtherBenefits map {
+  def anyOtherTaxableBenefits: Option[AnswerRow] = userAnswers.anyOtherTaxableBenefits map {
     x =>
-      AnswerRow("anyOtherBenefits.checkYourAnswersLabel",
+      AnswerRow("anyOtherTaxableBenefits.checkYourAnswersLabel",
         if (x) "site.yes" else "site.no",
-        true, routes.AnyOtherBenefitsController.onPageLoad(CheckMode).url)
+        true, routes.AnyOtherTaxableBenefitsController.onPageLoad(CheckMode).url)
   }
 
   def howMuchMedicalBenefits: Option[AnswerRow] = userAnswers.howMuchMedicalBenefits map {

@@ -16,33 +16,33 @@
 
 package controllers
 
+import play.api.data.Form
+import utils.{FakeNavigator, MockUserAnswers}
 import connectors.FakeDataCacheConnector
 import controllers.actions._
-import forms.BooleanForm
+import play.api.test.Helpers._
+import forms.OtherTaxableBenefitsNameForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.mockito.Mockito.when
-import play.api.data.Form
-import play.api.test.Helpers._
-import utils.{FakeNavigator, MockUserAnswers}
-import views.html.anyOtherBenefits
+import views.html.otherTaxableBenefitsName
 
-class AnyOtherBenefitsControllerSpec extends ControllerSpecBase {
+class OtherTaxableBenefitsNameControllerSpec extends ControllerSpecBase {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
-  val formProvider = new BooleanForm()
-  val form = formProvider()
+  val testAnswer = "answer"
+  val form = new OtherTaxableBenefitsNameForm(frontendAppConfig)()
   private val taxYear = CYMinus2
   private val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new AnyOtherBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, formProvider)
+    new OtherTaxableBenefitsNameController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+      dataRetrievalAction, new DataRequiredActionImpl, new OtherTaxableBenefitsNameForm(frontendAppConfig))
 
-  def viewAsString(form: Form[_] = form) = anyOtherBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = form) = otherTaxableBenefitsName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
 
-  "AnyOtherBenefits Controller" must {
+  "OtherTaxableBenefitsName Controller" must {
 
     "return OK and the correct view for a GET" in {
       val result = controller(fakeDataRetrievalAction()).onPageLoad(NormalMode)(fakeRequest)
@@ -52,15 +52,14 @@ class AnyOtherBenefitsControllerSpec extends ControllerSpecBase {
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      when(mockUserAnswers.anyOtherBenefits).thenReturn(Some(true))
+      when(mockUserAnswers.otherTaxableBenefitsName).thenReturn(Some(testAnswer))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
-      contentAsString(result) mustBe viewAsString(form.fill(true))
+      contentAsString(result) mustBe viewAsString(form.fill(testAnswer))
     }
 
     "redirect to the next page when valid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
-
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", testAnswer))
       val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
@@ -68,8 +67,8 @@ class AnyOtherBenefitsControllerSpec extends ControllerSpecBase {
     }
 
     "return a Bad Request and errors when invalid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
-      val boundForm = form.bind(Map("value" -> "invalid value"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", ""))
+      val boundForm = form.bind(Map("value" -> ""))
 
       val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode)(postRequest)
 
@@ -85,7 +84,7 @@ class AnyOtherBenefitsControllerSpec extends ControllerSpecBase {
     }
 
     "redirect to Session Expired for a POST if no existing data is found" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", testAnswer))
       val result = controller(dontGetAnyData).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
@@ -111,7 +110,3 @@ class AnyOtherBenefitsControllerSpec extends ControllerSpecBase {
     }
   }
 }
-
-
-
-
