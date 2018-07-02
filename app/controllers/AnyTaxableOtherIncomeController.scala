@@ -77,7 +77,7 @@ class AnyTaxableOtherIncomeController @Inject()(appConfig: FrontendAppConfig,
             Future.successful(BadRequest(anyTaxableOtherIncome(appConfig, formWithErrors, mode, selectedTaxYear, taxableIncomeName))),
           value =>
             dataCacheConnector.save[AnyTaxPaid](request.externalId, AnyTaxableOtherIncomeId.toString, value).map(cacheMap =>
-              Redirect(navigator.nextPage(TaxPaidAmountId, mode)(new UserAnswers(cacheMap))))
+              Redirect(navigator.nextPage(AnyTaxableOtherIncomeId, mode)(new UserAnswers(cacheMap))))
         )
       }
       details.getOrElse {
