@@ -231,3 +231,8 @@ GET        /any-taxable-other-income                                        cont
 POST       /any-taxable-other-income                                        controllers.AnyTaxableOtherIncomeController.onSubmit(mode: Mode = NormalMode)
 GET        /change-any-taxable-other-income                                 controllers.AnyTaxableOtherIncomeController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-any-taxable-other-income                                 controllers.AnyTaxableOtherIncomeController.onSubmit(mode: Mode = CheckMode)
+
+GET        /payment-address-correct                                         controllers.PaymentAddressCorrectController.onPageLoad(mode: Mode = NormalMode)
+POST       /payment-address-correct                                         controllers.PaymentAddressCorrectController.onSubmit(mode: Mode = NormalMode)
+GET        /change-payment-address-correct                                  controllers.PaymentAddressCorrectController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-payment-address-correct                                  controllers.PaymentAddressCorrectController.onSubmit(mode: Mode = CheckMode)

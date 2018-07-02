@@ -23,7 +23,7 @@ import identifiers.SelectTaxYearId
 import models.SelectTaxYear
 import models.requests.{AuthenticatedRequest, OptionalDataRequest}
 import play.api.libs.json.Json
-import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
+import uk.gov.hmrc.auth.core.retrieve.ItmpName
 import uk.gov.hmrc.http.cache.client.CacheMap
 import utils.{MockUserAnswers, UserAnswers}
 
@@ -45,7 +45,7 @@ trait ControllerSpecBase extends SpecBase {
   def fakeDataRetrievalAction(mockUserAnswers: UserAnswers = MockUserAnswers.yourDetailsUserAnswers) = new DataRetrievalAction {
     override protected def transform[A](request: AuthenticatedRequest[A]): Future[OptionalDataRequest[A]] = {
       Future.successful(OptionalDataRequest(request, "123123", ItmpName(Some("sdadsad"), Some("sdfasfad"), Some("adfsdfa")), "AB123456A",
-        ItmpAddress(None, None, None, None, None, None, None, None),
+        itmpAddress,
         Some(mockUserAnswers)))
     }
   }
