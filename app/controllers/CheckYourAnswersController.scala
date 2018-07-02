@@ -23,13 +23,12 @@ import controllers.actions.{AuthAction, DataRequiredAction, DataRetrievalAction}
 import models.SubmissionSuccessful
 import models.templates.Metadata
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.libs.json.Json
+import services.SubmissionService
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.HeaderCarrierConverter
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import utils.{CheckYourAnswersHelper, CheckYourAnswersSections}
 import views.html.{check_your_answers, pdf_check_your_answers}
-import services.SubmissionService
 
 class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
                                            override val messagesApi: MessagesApi,
