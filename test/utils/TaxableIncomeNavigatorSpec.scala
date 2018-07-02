@@ -90,7 +90,7 @@ class TaxableIncomeNavigatorSpec extends SpecBase with MockitoSugar {
           navigator.nextPage(SelectTaxableIncomeId, NormalMode)(answers) mustBe routes.HowMuchForeignIncomeController.onPageLoad(NormalMode)
         }
 
-        "go to HowMuchOtherTaxableIncome when other-taxable-income is the first answer selected" in {
+        "go to OtherTaxableIncomeName when other-taxable-income is the first answer selected" in {
           val answers = mock[UserAnswers]
 
           when(answers.selectTaxableIncome) thenReturn Some(
@@ -129,7 +129,12 @@ class TaxableIncomeNavigatorSpec extends SpecBase with MockitoSugar {
 
         "go to AnyTaxableOtherIncome from HowMuchOtherTaxableIncome" in {
           val answers = mock[UserAnswers]
-          navigator.nextPage(HowMuchOtherTaxableIncomeId, NormalMode)(answers) mustBe routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)
+          navigator.nextPage(HowMuchOtherTaxableIncomeId, NormalMode)(answers) mustBe routes.AnyTaxableOtherIncomeController.onPageLoad(NormalMode)
+        }
+
+        "go to AnyOtherTaxableIncome from AnyTaxableOtherIncome" in {
+          val answers = mock[UserAnswers]
+          navigator.nextPage(AnyTaxableOtherIncomeId, NormalMode)(answers) mustBe routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)
         }
 
         "go to WhereToSendPayment once all taxableIncome have been completed" in {
@@ -169,7 +174,7 @@ class TaxableIncomeNavigatorSpec extends SpecBase with MockitoSugar {
           navigator.nextPage(AnyTaxableRentalIncomeId, NormalMode)(answers) mustBe routes.HowMuchForeignIncomeController.onPageLoad(NormalMode)
         }
 
-        "go to HowMuchOtherTaxableIncome if this option was selected on SelectTaxableIncome" in {
+        "go to OtherTaxableIncomeName if this option was selected on SelectTaxableIncome" in {
           val answers = mock[UserAnswers]
           when(answers.selectTaxableIncome) thenReturn Some(Seq(TaxableIncome.OTHER_TAXABLE_INCOME))
           navigator.nextPage(AnyTaxableRentalIncomeId, NormalMode)(answers) mustBe routes.OtherTaxableIncomeNameController.onPageLoad(NormalMode)
@@ -189,7 +194,7 @@ class TaxableIncomeNavigatorSpec extends SpecBase with MockitoSugar {
           navigator.nextPage(AnyTaxableBankInterestId, NormalMode)(answers) mustBe routes.HowMuchForeignIncomeController.onPageLoad(NormalMode)
         }
 
-        "go to HowMuchOtherTaxableIncome if this option was selected on SelectTaxableIncome" in {
+        "go to OtherTaxableIncomeName if this option was selected on SelectTaxableIncome" in {
           val answers = mock[UserAnswers]
           when(answers.selectTaxableIncome) thenReturn Some(Seq(TaxableIncome.OTHER_TAXABLE_INCOME))
           navigator.nextPage(AnyTaxableBankInterestId, NormalMode)(answers) mustBe routes.OtherTaxableIncomeNameController.onPageLoad(NormalMode)
@@ -203,7 +208,7 @@ class TaxableIncomeNavigatorSpec extends SpecBase with MockitoSugar {
           navigator.nextPage(AnyTaxableInvestmentsId, NormalMode)(answers) mustBe routes.HowMuchForeignIncomeController.onPageLoad(NormalMode)
         }
 
-        "go to HowMuchOtherTaxableIncome if this option was selected on SelectTaxableIncome" in {
+        "go to OtherTaxableIncomeName if this option was selected on SelectTaxableIncome" in {
           val answers = mock[UserAnswers]
           when(answers.selectTaxableIncome) thenReturn Some(Seq(TaxableIncome.OTHER_TAXABLE_INCOME))
           navigator.nextPage(AnyTaxableInvestmentsId, NormalMode)(answers) mustBe routes.OtherTaxableIncomeNameController.onPageLoad(NormalMode)
