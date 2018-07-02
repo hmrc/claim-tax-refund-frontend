@@ -39,7 +39,7 @@ class Navigator @Inject()() {
     HowMuchIncapacityBenefitId -> benefitRouter(HowMuchIncapacityBenefitId.cyaId),
     HowMuchEmploymentAndSupportAllowanceId -> benefitRouter(HowMuchEmploymentAndSupportAllowanceId.cyaId),
     HowMuchStatePensionId -> benefitRouter(HowMuchStatePensionId.cyaId),
-    AnyOtherBenefitsId -> anyOtherBenefits,
+    AnyOtherTaxableBenefitsId -> anyOtherTaxableBenefits,
     AnyCompanyBenefitsId -> anyCompanyBenefits,
     HowMuchCarBenefitsId -> companyBenefitRouter(HowMuchCarBenefitsId.cyaId),
     HowMuchFuelBenefitId -> companyBenefitRouter(HowMuchFuelBenefitId.cyaId),
@@ -59,8 +59,8 @@ class Navigator @Inject()() {
     HowMuchOtherTaxableIncomeId -> (_ => routes.AnyTaxableOtherIncomeController.onPageLoad(NormalMode)),
     AnyTaxableOtherIncomeId -> (_ => routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)),
     AnyOtherTaxableIncomeId -> anyOtherTaxableIncome,
-    OtherBenefitsNameId -> (_ => routes.HowMuchOtherBenefitController.onPageLoad(NormalMode)),
-    HowMuchOtherBenefitId -> (_ => routes.AnyOtherBenefitsController.onPageLoad(NormalMode)),
+    OtherTaxableBenefitsNameId -> (_ => routes.HowMuchOtherTaxableBenefitController.onPageLoad(NormalMode)),
+    HowMuchOtherTaxableBenefitId -> (_ => routes.AnyOtherTaxableBenefitsController.onPageLoad(NormalMode)),
     OtherCompanyBenefitsNameId -> (_ => routes.HowMuchOtherCompanyBenefitController.onPageLoad(NormalMode)),
     HowMuchOtherCompanyBenefitId -> (_ => routes.AnyOtherCompanyBenefitsController.onPageLoad(NormalMode)),
     AnyOtherCompanyBenefitsId -> anyOtherCompanyBenefits,
@@ -71,7 +71,10 @@ class Navigator @Inject()() {
     IsPaymentAddressInTheUKId -> isPaymentAddressInUkRoute,
     PaymentUKAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
     PaymentInternationalAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
-    TelephoneNumberId -> (_ => routes.CheckYourAnswersController.onPageLoad())
+    TelephoneNumberId -> (_ => routes.WhereToSendPaymentController.onPageLoad(NormalMode)),
+    OtherCompanyBenefitsNameId -> (_ => routes.HowMuchOtherCompanyBenefitController.onPageLoad(NormalMode)),
+    HowMuchOtherCompanyBenefitId -> (_ => routes.AnyOtherCompanyBenefitsController.onPageLoad(NormalMode)),
+    AnyOtherCompanyBenefitsId -> anyOtherCompanyBenefits
   )
 
   private val editRouteMap: Map[Identifier, UserAnswers => Call] = Map(
@@ -99,7 +102,7 @@ class Navigator @Inject()() {
         case Benefits.INCAPACITY_BENEFIT => routes.HowMuchIncapacityBenefitController.onPageLoad(NormalMode)
         case Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE => routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(NormalMode)
         case Benefits.STATE_PENSION => routes.HowMuchStatePensionController.onPageLoad(NormalMode)
-        case Benefits.OTHER_TAXABLE_BENEFIT => routes.OtherBenefitsNameController.onPageLoad(NormalMode)
+        case Benefits.OTHER_TAXABLE_BENEFIT => routes.OtherTaxableBenefitsNameController.onPageLoad(NormalMode)
       }
     case None =>
       routes.SessionExpiredController.onPageLoad()
@@ -129,7 +132,7 @@ class Navigator @Inject()() {
           case Benefits.INCAPACITY_BENEFIT => routes.HowMuchIncapacityBenefitController.onPageLoad(NormalMode)
           case Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE => routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(NormalMode)
           case Benefits.STATE_PENSION => routes.HowMuchStatePensionController.onPageLoad(NormalMode)
-          case Benefits.OTHER_TAXABLE_BENEFIT => routes.OtherBenefitsNameController.onPageLoad(NormalMode)
+          case Benefits.OTHER_TAXABLE_BENEFIT => routes.OtherTaxableBenefitsNameController.onPageLoad(NormalMode)
         }
       } else {
         routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
@@ -191,8 +194,8 @@ class Navigator @Inject()() {
       routes.SessionExpiredController.onPageLoad()
   }
 
-  private def anyOtherBenefits(userAnswers: UserAnswers): Call = userAnswers.anyOtherBenefits match {
-    case Some(true) => routes.OtherBenefitsNameController.onPageLoad(NormalMode)
+  private def anyOtherTaxableBenefits(userAnswers: UserAnswers): Call = userAnswers.anyOtherTaxableBenefits match {
+    case Some(true) => routes.OtherTaxableBenefitsNameController.onPageLoad(NormalMode)
     case Some(false) => routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }

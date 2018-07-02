@@ -159,10 +159,10 @@ howMuchRentalIncome.checkYourAnswersLabel = Rental income
 howMuchRentalIncome.blank = Enter the amount of rental income
 howMuchRentalIncome.invalid = Enter a valid amount of rental income
 
-anyOtherBenefits.title = Did you get any other taxable benefits between {0}?
-anyOtherBenefits.heading = Did you get any other taxable benefits between {0}?
-anyOtherBenefits.blank = Select yes if you got any other taxable benefits in the tax year that your claim relates to
-anyOtherBenefits.checkYourAnswersLabel = Did you get any other taxable benefits?
+anyOtherTaxableBenefits.title = Did you get any other taxable benefits between {0}?
+anyOtherTaxableBenefits.heading = Did you get any other taxable benefits between {0}?
+anyOtherTaxableBenefits.blank = Select yes if you got any other taxable benefits in the tax year that your claim relates to
+anyOtherTaxableBenefits.checkYourAnswersLabel = Did you get any other taxable benefits?
 
 howMuchJobseekersAllowance.title = How much contribution-based Jobseeker''s Allowance did you get between {0}?
 howMuchJobseekersAllowance.heading = How much contribution-based Jobseeker''s Allowance did you get between {0}?
@@ -320,16 +320,16 @@ howMuchCarersAllowance.checkYourAnswersLabel = Carers Allowance
 howMuchCarersAllowance.blank = Enter the amount of carers allowance
 howMuchCarersAllowance.invalid = Enter a valid amount of carers allowance
 
-otherBenefitsName.title = What is the name of the taxable benefit you were getting between {0}?
-otherBenefitsName.heading = What is the name of the taxable benefit you were getting between {0}?
-otherBenefitsName.checkYourAnswersLabel = Other benefits name
-otherBenefitsName.blank = Enter the name of the taxable benefit you got
+otherTaxableBenefitsName.title = What is the name of the taxable benefit you were getting between {0}?
+otherTaxableBenefitsName.heading = What is the name of the taxable benefit you were getting between {0}?
+otherTaxableBenefitsName.checkYourAnswersLabel = Other benefits name
+otherTaxableBenefitsName.blank = Enter the name of the taxable benefit you got
 
-howMuchOtherBenefit.title = How much did you get between {0}?
-howMuchOtherBenefit.heading = How much did you get between {0}?
-howMuchOtherBenefit.checkYourAnswersLabel = Other benefit
-howMuchOtherBenefit.blank = Enter the amount you got for this benefit
-howMuchOtherBenefit.invalid = Enter a valid amount you got for this benefit
+howMuchOtherTaxableBenefit.title = How much did you get between {0}?
+howMuchOtherTaxableBenefit.heading = How much did you get between {0}?
+howMuchOtherTaxableBenefit.checkYourAnswersLabel = Other benefit
+howMuchOtherTaxableBenefit.blank = Enter the amount you got for this benefit
+howMuchOtherTaxableBenefit.invalid = Enter a valid amount you got for this benefit
 
 howMuchForeignIncome.title = How much did you get in Foreign income between {0}?
 howMuchForeignIncome.heading = How much did you get in Foreign income between {0}?

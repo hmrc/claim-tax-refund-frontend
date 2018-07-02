@@ -17,22 +17,22 @@
 package controllers
 
 import javax.inject.Inject
-
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import connectors.DataCacheConnector
 import controllers.actions._
 import config.FrontendAppConfig
-import forms.HowMuchOtherBenefitForm
-import identifiers.HowMuchOtherBenefitId
+import forms.HowMuchOtherTaxableBenefitForm
+import identifiers.HowMuchOtherTaxableBenefitId
 import models.Mode
+import play.api.mvc.{Action, AnyContent}
 import utils.{Navigator, UserAnswers}
-import views.html.howMuchOtherBenefit
+import views.html.howMuchOtherTaxableBenefit
 
 import scala.concurrent.Future
 
-class HowMuchOtherBenefitController @Inject()(
+class HowMuchOtherTaxableBenefitController @Inject()(
                                         appConfig: FrontendAppConfig,
                                         override val messagesApi: MessagesApi,
                                         dataCacheConnector: DataCacheConnector,
@@ -40,13 +40,13 @@ class HowMuchOtherBenefitController @Inject()(
                                         authenticate: AuthAction,
                                         getData: DataRetrievalAction,
                                         requireData: DataRequiredAction,
-                                        formBuilder: HowMuchOtherBenefitForm) extends FrontendController with I18nSupport {
+                                        formBuilder: HowMuchOtherTaxableBenefitForm) extends FrontendController with I18nSupport {
 
   private val form: Form[String] = formBuilder()
 
-  def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val preparedForm = request.userAnswers.howMuchOtherBenefit match {
+      val preparedForm = request.userAnswers.howMuchOtherTaxableBenefit match {
         case None => form
         case Some(value) => form.fill(value)
       }
@@ -54,23 +54,23 @@ class HowMuchOtherBenefitController @Inject()(
       request.userAnswers.selectTaxYear.map{
         selectedTaxYear =>
           val taxYear = selectedTaxYear
-          Ok(howMuchOtherBenefit(appConfig, preparedForm, mode, taxYear))
+          Ok(howMuchOtherTaxableBenefit(appConfig, preparedForm, mode, taxYear))
       }.getOrElse{
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
   }
 
-  def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
           val taxYear = selectedTaxYear
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(howMuchOtherBenefit(appConfig, formWithErrors, mode, taxYear))),
-            (value) =>
-              dataCacheConnector.save[String](request.externalId, HowMuchOtherBenefitId.toString, value).map(cacheMap =>
-                Redirect(navigator.nextPage(HowMuchOtherBenefitId, mode)(new UserAnswers(cacheMap))))
+              Future.successful(BadRequest(howMuchOtherTaxableBenefit(appConfig, formWithErrors, mode, taxYear))),
+            value =>
+              dataCacheConnector.save[String](request.externalId, HowMuchOtherTaxableBenefitId.toString, value).map(cacheMap =>
+                Redirect(navigator.nextPage(HowMuchOtherTaxableBenefitId, mode)(new UserAnswers(cacheMap))))
           )
       }.getOrElse {
         Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))

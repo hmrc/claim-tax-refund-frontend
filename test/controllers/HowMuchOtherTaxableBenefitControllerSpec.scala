@@ -21,28 +21,29 @@ import utils.{FakeNavigator, MockUserAnswers}
 import connectors.FakeDataCacheConnector
 import controllers.actions._
 import play.api.test.Helpers._
-import forms.OtherBenefitsNameForm
+import forms.HowMuchOtherTaxableBenefitForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.mockito.Mockito.when
-import views.html.otherBenefitsName
+import views.html.howMuchOtherTaxableBenefit
 
-class OtherBenefitsNameControllerSpec extends ControllerSpecBase {
+class HowMuchOtherTaxableBenefitControllerSpec extends ControllerSpecBase {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
-  val testAnswer = "answer"
-  val form = new OtherBenefitsNameForm(frontendAppConfig)()
+  val testAnswer = "9,999.99"
+  val form = new HowMuchOtherTaxableBenefitForm(frontendAppConfig)()
   private val taxYear = CYMinus2
   private val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new OtherBenefitsNameController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, new OtherBenefitsNameForm(frontendAppConfig))
+    new HowMuchOtherTaxableBenefitController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+      dataRetrievalAction, new DataRequiredActionImpl, new HowMuchOtherTaxableBenefitForm(frontendAppConfig))
 
-  def viewAsString(form: Form[_] = form) = otherBenefitsName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = form) = howMuchOtherTaxableBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
 
-  "OtherBenefitsName Controller" must {
+
+  "HowMuchOtherTaxableBenefit Controller" must {
 
     "return OK and the correct view for a GET" in {
       val result = controller(fakeDataRetrievalAction()).onPageLoad(NormalMode)(fakeRequest)
@@ -52,7 +53,7 @@ class OtherBenefitsNameControllerSpec extends ControllerSpecBase {
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      when(mockUserAnswers.otherBenefitsName).thenReturn(Some(testAnswer))
+      when(mockUserAnswers.howMuchOtherTaxableBenefit).thenReturn(Some(testAnswer))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
       contentAsString(result) mustBe viewAsString(form.fill(testAnswer))
@@ -60,7 +61,7 @@ class OtherBenefitsNameControllerSpec extends ControllerSpecBase {
 
     "redirect to the next page when valid data is submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", testAnswer))
-      val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode)(postRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(onwardRoute.url)
@@ -70,7 +71,7 @@ class OtherBenefitsNameControllerSpec extends ControllerSpecBase {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", ""))
       val boundForm = form.bind(Map("value" -> ""))
 
-      val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode)(postRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe BAD_REQUEST
       contentAsString(result) mustBe viewAsString(boundForm)

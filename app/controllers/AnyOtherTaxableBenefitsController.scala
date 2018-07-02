@@ -20,18 +20,19 @@ import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.BooleanForm
-import identifiers.AnyOtherBenefitsId
+import identifiers.AnyOtherTaxableBenefitsId
 import javax.inject.Inject
 import models.Mode
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import utils.{Navigator, UserAnswers}
-import views.html.anyOtherBenefits
+import views.html.anyOtherTaxableBenefits
 
 import scala.concurrent.Future
 
-class AnyOtherBenefitsController @Inject()(appConfig: FrontendAppConfig,
+class AnyOtherTaxableBenefitsController @Inject()(appConfig: FrontendAppConfig,
                                                   override val messagesApi: MessagesApi,
                                                   dataCacheConnector: DataCacheConnector,
                                                   navigator: Navigator,
@@ -40,33 +41,33 @@ class AnyOtherBenefitsController @Inject()(appConfig: FrontendAppConfig,
                                                   requireData: DataRequiredAction,
                                                   formProvider: BooleanForm) extends FrontendController with I18nSupport {
 
-  private val errorKey = "anyOtherBenefits.blank"
+  private val errorKey = "anyOtherTaxableBenefits.blank"
   val form: Form[Boolean] = formProvider(errorKey)
 
-  def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val preparedForm = request.userAnswers.anyOtherBenefits match {
+      val preparedForm = request.userAnswers.anyOtherTaxableBenefits match {
         case None => form
         case Some(value) => form.fill(value)
       }
       request.userAnswers.selectTaxYear.map {
         taxYear =>
-          Ok(anyOtherBenefits(appConfig, preparedForm, mode, taxYear))
+          Ok(anyOtherTaxableBenefits(appConfig, preparedForm, mode, taxYear))
       }.getOrElse{
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
   }
 
-  def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
       request.userAnswers.selectTaxYear.map{
         taxYear =>
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(anyOtherBenefits(appConfig, formWithErrors, mode, taxYear))),
-            (value) =>
-              dataCacheConnector.save[Boolean](request.externalId, AnyOtherBenefitsId.toString, value).map(cacheMap =>
-                Redirect(navigator.nextPage(AnyOtherBenefitsId, mode)(new UserAnswers(cacheMap))))
+              Future.successful(BadRequest(anyOtherTaxableBenefits(appConfig, formWithErrors, mode, taxYear))),
+            value =>
+              dataCacheConnector.save[Boolean](request.externalId, AnyOtherTaxableBenefitsId.toString, value).map(cacheMap =>
+                Redirect(navigator.nextPage(AnyOtherTaxableBenefitsId, mode)(new UserAnswers(cacheMap))))
           )
       }.getOrElse{
         Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))

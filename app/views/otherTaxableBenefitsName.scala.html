@@ -18,29 +18,24 @@
 @import uk.gov.hmrc.play.views.html._
 @import controllers.routes._
 @import models.Mode
-@import utils.FormHelpers
 @import viewmodels.InputViewModel
 
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: SelectTaxYear)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("anyOtherBenefits.title", taxYear.asString),
+    title = messages("otherTaxableBenefitsName.title",s" ${taxYear.asString}"),
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @helpers.form(action = AnyOtherBenefitsController.onSubmit(mode), 'autoComplete -> "off") {
+    @helpers.form(action = OtherTaxableBenefitsNameController.onSubmit(mode), 'autoComplete -> "off") {
 
         @components.back_link()
 
         @components.error_summary(form.errors)
 
-        @components.heading(messages("anyOtherBenefits.heading", taxYear.asString))
+        @components.heading(messages("otherTaxableBenefitsName.heading", taxYear.asString))
 
-        @components.input_yes_no(
-            InputViewModel("value", form),
-            label = messages("anyOtherBenefits.heading", taxYear.asString),
-            labelClass = Some("visually-hidden")
-        )
+        @components.input_text(InputViewModel("value", form), label = messages("otherTaxableBenefitsName.heading"), labelClass=Some("visually-hidden"))
 
         @components.submit_button()
     }

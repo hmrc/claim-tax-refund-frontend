@@ -23,20 +23,20 @@ import models.SelectTaxYear.CYMinus2
 import play.api.data.Form
 import play.api.i18n.Messages
 import views.behaviours.YesNoViewBehaviours
-import views.html.anyOtherBenefits
+import views.html.anyOtherTaxableBenefits
 
-class AnyOtherBenefitsViewSpec(implicit messages: Messages) extends YesNoViewBehaviours {
+class AnyOtherTaxableBenefitsViewSpec(implicit messages: Messages) extends YesNoViewBehaviours {
 
-  val messageKeyPrefix = "anyOtherBenefits"
+  val messageKeyPrefix = "anyOtherTaxableBenefits"
   private val taxYear = CYMinus2
 
   override val form = new BooleanForm()()
 
-  def createView = () => anyOtherBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createView = () => anyOtherTaxableBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[_]) => anyOtherBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[_]) => anyOtherTaxableBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
-  "AnyOtherBenefits view" must {
+  "AnyOtherTaxableBenefits view" must {
 
     behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, taxYear.asString)
 
@@ -44,6 +44,6 @@ class AnyOtherBenefitsViewSpec(implicit messages: Messages) extends YesNoViewBeh
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.AnyOtherBenefitsController.onSubmit(NormalMode).url)
+    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.AnyOtherTaxableBenefitsController.onSubmit(NormalMode).url)
   }
 }

@@ -107,9 +107,9 @@ class CascadeUpsertSpec extends SpecBase with PropertyChecks {
               HowMuchIncapacityBenefitId.toString -> JsString("1234"),
               HowMuchEmploymentAndSupportAllowanceId.toString -> JsString("1234"),
               HowMuchStatePensionId.toString -> JsString("1234"),
-              OtherBenefitsNameId.toString -> JsString("qwerty"),
-              HowMuchOtherBenefitId.toString -> JsString("1234"),
-              AnyOtherBenefitsId.toString -> JsString("1234")
+              OtherTaxableBenefitsNameId.toString -> JsString("qwerty"),
+              HowMuchOtherTaxableBenefitId.toString -> JsString("1234"),
+              AnyOtherTaxableBenefitsId.toString -> JsString("1234")
             ))
             val cascadeUpsert = new CascadeUpsert
             val result = cascadeUpsert(AnyBenefitsId.toString, JsBoolean(false), originalCacheMap)
@@ -121,9 +121,9 @@ class CascadeUpsertSpec extends SpecBase with PropertyChecks {
             result.data.contains(HowMuchIncapacityBenefitId.toString) mustBe false
             result.data.contains(HowMuchEmploymentAndSupportAllowanceId.toString) mustBe false
             result.data.contains(HowMuchStatePensionId.toString) mustBe false
-            result.data.contains(OtherBenefitsNameId.toString) mustBe false
-            result.data.contains(HowMuchOtherBenefitId.toString) mustBe false
-            result.data.contains(AnyOtherBenefitsId.toString) mustBe false
+            result.data.contains(OtherTaxableBenefitsNameId.toString) mustBe false
+            result.data.contains(HowMuchOtherTaxableBenefitId.toString) mustBe false
+            result.data.contains(AnyOtherTaxableBenefitsId.toString) mustBe false
         }
       }
     }
@@ -374,9 +374,9 @@ class CascadeUpsertSpec extends SpecBase with PropertyChecks {
 
             val originalCacheMap = new CacheMap("", Map(
               SelectBenefitsId.toString -> Json.toJson(benefits :+ Benefits.OTHER_TAXABLE_BENEFIT),
-              OtherBenefitsNameId.toString -> JsString("qwerty"),
-              HowMuchOtherBenefitId.toString -> JsString(amount),
-              AnyOtherBenefitsId.toString -> JsBoolean(false)
+              OtherTaxableBenefitsNameId.toString -> JsString("qwerty"),
+              HowMuchOtherTaxableBenefitId.toString -> JsString(amount),
+              AnyOtherTaxableBenefitsId.toString -> JsBoolean(false)
             ))
             val cascadeUpsert = new CascadeUpsert
             val result = cascadeUpsert(SelectBenefitsId.toString, benefits.filterNot(_ == Benefits.OTHER_TAXABLE_BENEFIT), originalCacheMap)

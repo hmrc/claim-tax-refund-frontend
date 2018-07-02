@@ -163,17 +163,17 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     }
   }
 
-  "Is anyOtherBenefits (true)" must {
+  "Is anyOtherTaxableBenefits (true)" must {
     s"have the correct label" in {
-      when(answers.anyOtherBenefits) thenReturn Some(true)
-      helper.anyOtherBenefits.get.label.key mustBe s"anyOtherBenefits.checkYourAnswersLabel"
+      when(answers.anyOtherTaxableBenefits) thenReturn Some(true)
+      helper.anyOtherTaxableBenefits.get.label.key mustBe s"anyOtherTaxableBenefits.checkYourAnswersLabel"
     }
   }
 
-  "Is anyOtherBenefits (false)" must {
+  "Is anyOtherTaxableBenefits (false)" must {
     s"have the correct label" in {
-      when(answers.anyOtherBenefits) thenReturn Some(false)
-      helper.anyOtherBenefits.get.label.key mustBe s"anyOtherBenefits.checkYourAnswersLabel"
+      when(answers.anyOtherTaxableBenefits) thenReturn Some(false)
+      helper.anyOtherTaxableBenefits.get.label.key mustBe s"anyOtherTaxableBenefits.checkYourAnswersLabel"
     }
   }
 

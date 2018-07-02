@@ -22,13 +22,9 @@ import forms.mappings.Constraints
 import play.api.data.Form
 import play.api.data.Forms._
 
-class HowMuchOtherBenefitForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
+class OtherTaxableBenefitsNameForm @Inject()(appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
 
-  private val currencyRegex = appConfig.currencyRegex
-  private val errorKeyInvalid = "howMuchOtherBenefit.invalid"
-  private val errorKeyBlank = "howMuchOtherBenefit.blank"
+  private val errorBlankKey = "otherTaxableBenefitsName.blank"
 
-  def apply(): Form[String] = Form(
-    "value" -> text.verifying(firstError(nonEmpty(errorKeyBlank), regexValidation(currencyRegex, errorKeyInvalid)))
-  )
+  def apply(): Form[String] = Form("value" -> text.verifying(nonEmpty(errorBlankKey)))
 }

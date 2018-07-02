@@ -23,20 +23,20 @@
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: SelectTaxYear)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("howMuchOtherBenefit.title",s" ${taxYear.asString}"),
+    title = messages("howMuchOtherTaxableBenefit.title",s" ${taxYear.asString}"),
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @helpers.form(action = HowMuchOtherBenefitController.onSubmit(mode), 'autoComplete -> "off") {
+    @helpers.form(action = HowMuchOtherTaxableBenefitController.onSubmit(mode), 'autoComplete -> "off") {
 
         @components.back_link()
 
         @components.error_summary(form.errors)
 
-        @components.heading(messages("howMuchOtherBenefit.heading", taxYear.asString))
+        @components.heading(messages("howMuchOtherTaxableBenefit.heading", taxYear.asString))
 
         @components.input_text(InputViewModel("value", form),
-            label = messages("howMuchOtherBenefit.heading"),
+            label = messages("howMuchOtherTaxableBenefit.heading"),
             labelClass=Some("visually-hidden"),
             prefix = Some(messages("global.poundSign")))
 
