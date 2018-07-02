@@ -85,6 +85,7 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
   ).flatten)
 
   def contactDetails = AnswerSection(Some("checkYourAnswers.contactDetailsSection"), Seq(
+    cyaHelper.anyTelephoneNumber,
     cyaHelper.telephoneNumber
   ).flatten)
 }

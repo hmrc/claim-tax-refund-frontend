@@ -328,9 +328,25 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
       true, routes.EmploymentDetailsController.onPageLoad(CheckMode).url)
   }
 
-  def telephoneNumber: Option[AnswerRow] = userAnswers.telephoneNumber map {
+  def anyTelephoneNumber: Option[AnswerRow] = userAnswers.anyTelephoneNumber map {
     x =>
-      AnswerRow("telephoneNumber.checkYourAnswersLabel",
-        s"$x", false, routes.TelephoneNumberController.onPageLoad(CheckMode).url)
+      AnswerRow("telephoneNumberOption.checkYourAnswersLabel",
+        x match {
+          case TelephoneOption.Yes(number) => "site.yes"
+          case TelephoneOption.No => "site.no"
+        },
+        false,
+        routes.TelephoneNumberController.onPageLoad(CheckMode).url
+      )
+  }
+
+  def telephoneNumber: Option[AnswerRow] = userAnswers.anyTelephoneNumber match {
+    case Some(TelephoneOption.Yes(number)) =>
+      Some(AnswerRow("telephoneNumber.checkYourAnswersLabel",
+        s"$number",
+        false,
+        routes.TelephoneNumberController.onPageLoad(CheckMode).url
+      ))
+    case _ => None
   }
 }

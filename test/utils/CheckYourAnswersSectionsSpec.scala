@@ -172,13 +172,14 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
     }
 
     "have the correct rows in the right order in the Contact Details section" in {
-      when(answers.telephoneNumber) thenReturn Some("0191666666")
+      when(answers.anyTelephoneNumber) thenReturn Some(TelephoneOption.Yes("0191123123"))
 
       val sections = new CheckYourAnswersSections(helper, MockUserAnswers.minimalValidUserAnswers)
       val rows = sections.contactDetails.rows
 
-      rows.size mustBe 1
-      rows.head.label.key mustBe "telephoneNumber.checkYourAnswersLabel"
+      rows.size mustBe 2
+      rows.head.label.key mustBe "telephoneNumberOption.checkYourAnswersLabel"
+      rows(1).label.key mustBe "telephoneNumber.checkYourAnswersLabel"
     }
   }
 

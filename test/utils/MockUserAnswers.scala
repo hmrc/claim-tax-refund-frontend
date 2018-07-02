@@ -32,7 +32,6 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.ukAddress) thenReturn None
     when(answers.internationalAddress) thenReturn None
     when(answers.anyTelephoneNumber) thenReturn None
-    when(answers.telephoneNumber) thenReturn None
     when(answers.selectTaxYear) thenReturn None
     when(answers.employmentDetails) thenReturn None
     when(answers.anyBenefits) thenReturn None
@@ -99,7 +98,7 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.anyBenefits) thenReturn Some(false)
     when(answers.anyTaxableIncome) thenReturn Some(false)
     when(answers.whereToSendPayment) thenReturn Some(WhereToSendPayment.Myself)
-    when(answers.telephoneNumber) thenReturn Some("123456789")
+    when(answers.anyTelephoneNumber) thenReturn Some(TelephoneOption.Yes("0191123123"))
 
     when(answers.pdfHtml) thenReturn Some ("<html>Test result</html>")
     when(answers.metadata) thenReturn Some (metadata)
@@ -190,7 +189,7 @@ object MockUserAnswers extends MockitoSugar {
 
     val answers = nothingAnswered
 
-    when(answers.telephoneNumber) thenReturn Some("983475894357934")
+    when(answers.anyTelephoneNumber) thenReturn Some(TelephoneOption.Yes("0191123123"))
 
     answers
   }

@@ -19,7 +19,7 @@ package utils
 import base.SpecBase
 import models.SelectTaxYear._
 import models.WhereToSendPayment._
-import models.{AnyAgentRef, InternationalAddress, UkAddress, UserDetails}
+import models._
 import org.mockito.Mockito.when
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.mockito.MockitoSugar
@@ -41,7 +41,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
 
   "Change link" must {
     "be shown when set to true" in {
-      when(answers.telephoneNumber) thenReturn Some("01912134587")
+      when(answers.anyTelephoneNumber) thenReturn Some(TelephoneOption.Yes("0191123123"))
       helper.telephoneNumber.get.changeLink mustBe true
     }
 
@@ -53,7 +53,8 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
 
   "Telephone number" must {
     s"have the correct label" in {
-      when(answers.telephoneNumber) thenReturn Some("01912134587")
+      when(answers.anyTelephoneNumber) thenReturn Some(TelephoneOption.Yes("0191123123"))
+      helper.anyTelephoneNumber.get.label.key mustBe s"telephoneNumberOption.checkYourAnswersLabel"
       helper.telephoneNumber.get.label.key mustBe s"telephoneNumber.checkYourAnswersLabel"
     }
   }

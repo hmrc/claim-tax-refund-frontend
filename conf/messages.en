@@ -235,7 +235,8 @@ whereToSendPayment.blank = Select who you would like us to make the payment to
 
 telephoneNumber.title = Can we contact you by phone if we need more information?
 telephoneNumber.heading = Can we contact you by phone if we need more information?
-telephoneNumber.checkYourAnswersLabel = Your phone number
+telephoneNumberOption.checkYourAnswersLabel = Can we contact you by phone?
+telephoneNumber.checkYourAnswersLabel = Phone number
 telephoneNumber.invalid = Enter a valid phone number
 telephoneNumber.notSelected = Select yes if we can call you if we need more information
 telephoneNumber.blank = Enter the phone number we can contact you on
