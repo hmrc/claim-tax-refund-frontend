@@ -87,8 +87,6 @@ class UserAnswers(val cacheMap: CacheMap) {
 
   def anyAgentRef: Option[AnyAgentRef] = cacheMap.getEntry[AnyAgentRef](AnyAgentRefId.toString)
 
-  def agentReferenceNumber: Option[String] = cacheMap.getEntry[String](AgentRefId.toString)
-
   def nomineeFullName: Option[String] = cacheMap.getEntry[String](NomineeFullNameId.toString)
 
   def anyOtherTaxableIncome: Option[Boolean] = cacheMap.getEntry[Boolean](AnyOtherTaxableIncomeId.toString)
@@ -116,10 +114,6 @@ class UserAnswers(val cacheMap: CacheMap) {
   def selectTaxYear: Option[SelectTaxYear] = cacheMap.getEntry[SelectTaxYear](SelectTaxYearId.toString)
 
   def anyTelephoneNumber: Option[TelephoneOption] = cacheMap.getEntry[TelephoneOption](AnyTelephoneId.toString)
-
-  def ukAddress: Option[UkAddress] = cacheMap.getEntry[UkAddress](UkAddressId.toString)
-
-  def internationalAddress: Option[InternationalAddress] = cacheMap.getEntry[InternationalAddress](InternationalAddressId.toString)
 
   def isTheAddressInTheUK: Option[Boolean] = cacheMap.getEntry[Boolean](IsTheAddressInTheUKId.toString)
 
