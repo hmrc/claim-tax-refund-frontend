@@ -49,9 +49,26 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
       s"$x", false, routes.AnyTaxableBankInterestController.onPageLoad(CheckMode).url)
   }
 
-  def anyTaxableRentalIncome: Option[AnswerRow] = userAnswers.anyTaxableRentalIncome map {
-    x => AnswerRow("anyTaxableRentalIncome.checkYourAnswersLabel",
-      s"$x", false, routes.AnyTaxableRentalIncomeController.onPageLoad(CheckMode).url)
+  def anyTaxableIncome(label: String, answer: Option[AnyTaxPaid], route: String): Option[AnswerRow] = answer map {
+    x =>
+      AnswerRow(s"$label.checkYourAnswersLabel",
+        x match {
+          case AnyTaxPaid.Yes(amount) => "site.yes"
+          case AnyTaxPaid.No => "site.no"
+        },
+        false,
+        route
+      )
+  }
+
+  def taxableIncome(label: String, answer: Option[AnyTaxPaid], route: String): Option[AnswerRow] = answer match {
+    case Some(AnyTaxPaid.Yes(amount)) =>
+    Some(AnswerRow(s"$label.checkYourAnswersLabel",
+      s"$amount",
+      false,
+      route
+    ))
+    case _ => None
   }
 
   def otherTaxableIncomeName: Option[AnswerRow] = userAnswers.otherTaxableIncomeName map {
@@ -210,17 +227,21 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
   }
 
   def anyAgentRef: Option[AnswerRow] = userAnswers.anyAgentRef map {
-    x => AnswerRow("anyAgentRef.checkYourAnswersLabel",
+    x => AnswerRow("anyAgentRefOption.checkYourAnswersLabel",
     x match {
       case AnyAgentRef.Yes(agentRef) => "site.yes"
       case AnyAgentRef.No => "site.no"
     }, true, routes.AnyAgentRefController.onPageLoad(CheckMode).url)
   }
 
-  def agentReferenceNumber: Option[AnswerRow] = userAnswers.agentReferenceNumber map {
-    x =>
-      AnswerRow("anyAgentRef.agentRefField",
-        s"$x", false, routes.AnyAgentRefController.onPageLoad(CheckMode).url)
+  def agentReferenceNumber: Option[AnswerRow] = userAnswers.anyAgentRef match {
+    case Some(AnyAgentRef.Yes(number)) =>
+      Some(AnswerRow("anyAgentRef.checkYourAnswersLabel",
+        s"$number",
+        false,
+        routes.AnyAgentRefController.onPageLoad(CheckMode).url
+      ))
+    case _ => None
   }
 
   def nomineeFullName: Option[AnswerRow] = userAnswers.nomineeFullName map {

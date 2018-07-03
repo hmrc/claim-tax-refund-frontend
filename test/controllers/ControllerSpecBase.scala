@@ -42,7 +42,7 @@ trait ControllerSpecBase extends SpecBase {
   def someData = new FakeDataRetrievalAction(
     Some(CacheMap(cacheMapId, Map(SelectTaxYearId.toString -> Json.toJson(SelectTaxYear.CYMinus2)))))
 
-  def fakeDataRetrievalAction(mockUserAnswers: UserAnswers = MockUserAnswers.yourDetailsUserAnswers) = new DataRetrievalAction {
+  def fakeDataRetrievalAction(mockUserAnswers: UserAnswers = MockUserAnswers.claimDetailsUserAnswers) = new DataRetrievalAction {
     override protected def transform[A](request: AuthenticatedRequest[A]): Future[OptionalDataRequest[A]] = {
       Future.successful(OptionalDataRequest(request, "123123", ItmpName(Some("sdadsad"), Some("sdfasfad"), Some("adfsdfa")), "AB123456A",
         itmpAddress,

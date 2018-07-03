@@ -37,7 +37,7 @@ class AnyOtherTaxableIncomeControllerSpec extends ControllerSpecBase {
   private val formProvider = new BooleanForm()
   private val form = formProvider()
   private val taxYear = CYMinus2
-  private val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
+  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyOtherTaxableIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,

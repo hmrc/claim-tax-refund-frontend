@@ -40,7 +40,7 @@ class EmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSug
   val form = formProvider()
   val mockTaiConnector = mock[TaiConnector]
   private val taxYear = CYMinus2
-  private val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
+  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new EmploymentDetailsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,

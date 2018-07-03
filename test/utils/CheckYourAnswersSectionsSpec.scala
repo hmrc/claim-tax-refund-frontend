@@ -48,7 +48,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
     }
 
     "give the right sections when PAYE claim and have benefits but no income" in {
-      val sections = new CheckYourAnswersSections(helper, MockUserAnswers.benefitsWithNoIncome)
+      val sections = new CheckYourAnswersSections(helper, MockUserAnswers.benefitsUserAnswers)
 
       sections.sectionsToShow mustBe Seq(
         sections.incomeDetails,
@@ -59,7 +59,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
     }
 
     "give the right sections when PAYE claim and have income but no benefits" in {
-      val sections = new CheckYourAnswersSections(helper, MockUserAnswers.incomeWithNoBenefits)
+      val sections = new CheckYourAnswersSections(helper, MockUserAnswers.benefitsUserAnswers)
 
       sections.sectionsToShow mustBe Seq(
         sections.incomeDetails,
@@ -70,7 +70,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
     }
 
     "give the right sections when PAYE claim and have income and benefits" in {
-      val sections = new CheckYourAnswersSections(helper, MockUserAnswers.benefitsWithIncome)
+      val sections = new CheckYourAnswersSections(helper, MockUserAnswers.benefitsUserAnswers)
 
       sections.sectionsToShow mustBe Seq(
         sections.incomeDetails,
@@ -87,17 +87,17 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
     }
 
     "have the right section title for Company Benefits Details" in {
-      val sections = new CheckYourAnswersSections(helper, MockUserAnswers.companyBenefits)
+      val sections = new CheckYourAnswersSections(helper, MockUserAnswers.benefitsUserAnswers)
       sections.companyBenefitDetails.headingKey mustBe Some("checkYourAnswers.companyBenefitsDetailsSection")
     }
 
     "have the right section title for Other Income Details" in {
-      val sections = new CheckYourAnswersSections(helper, MockUserAnswers.benefitsWithIncome)
+      val sections = new CheckYourAnswersSections(helper, MockUserAnswers.benefitsUserAnswers)
       sections.otherIncomeDetails.headingKey mustBe Some("checkYourAnswers.otherIncomeDetailsSection")
     }
 
     "have the right section title for Other Payment Details" in {
-      val sections = new CheckYourAnswersSections(helper, MockUserAnswers.benefitsWithIncome)
+      val sections = new CheckYourAnswersSections(helper, MockUserAnswers.benefitsUserAnswers)
       sections.paymentDetails.headingKey mustBe Some("checkYourAnswers.paymentDetailsSection")
     }
 
@@ -123,7 +123,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       when(answers.otherCompanyBenefitsName) thenReturn Some("data")
       when(answers.howMuchOtherCompanyBenefit) thenReturn Some("1234")
 
-      val sections = new CheckYourAnswersSections(helper, MockUserAnswers.companyBenefits)
+      val sections = new CheckYourAnswersSections(helper, MockUserAnswers.companyBenefitsUserAnswers)
       val rows = sections.companyBenefitDetails.rows
 
       rows.size mustBe 8
@@ -185,7 +185,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
 
   "AnyBenefits section" must {
     "have the right section title for Benefit Details" in {
-      val sections = new CheckYourAnswersSections(helper, MockUserAnswers.benefitsWithNoIncome)
+      val sections = new CheckYourAnswersSections(helper, MockUserAnswers.benefitsUserAnswers)
       sections.benefitDetails.headingKey mustBe Some("checkYourAnswers.benefitDetailsSection")
     }
 

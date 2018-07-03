@@ -36,7 +36,7 @@ class HowMuchInvestmentOrDividendControllerSpec extends ControllerSpecBase {
       frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, new HowMuchInvestmentOrDividendForm(frontendAppConfig))
 
-  private val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
+  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
   private val taxYear = CYMinus2
   val testAnswer = "9,999.99"
   val form = new HowMuchInvestmentOrDividendForm(frontendAppConfig)()
