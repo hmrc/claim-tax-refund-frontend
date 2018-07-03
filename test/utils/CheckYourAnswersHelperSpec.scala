@@ -339,13 +339,13 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have correct label (yes)" in {
       when(answers.anyTaxableRentalIncome) thenReturn Some(AnyTaxPaid.Yes("123"))
       val answer = answers.anyTaxableRentalIncome
-      helper.anyTaxableIncome(labelOption, answer, route).get.label.key mustBe s"$labelOption.checkYourAnswersLabel"
-      helper.taxableIncome(label, answer, route).get.label.key mustBe s"$label.checkYourAnswersLabel"
+      helper.anyTaxPaid(labelOption, answer, route).get.label.key mustBe s"$labelOption.checkYourAnswersLabel"
+      helper.taxPaid(label, answer, route).get.label.key mustBe s"$label.checkYourAnswersLabel"
     }
     s"have correct label (no)" in {
       when(answers.anyTaxableRentalIncome) thenReturn Some(AnyTaxPaid.No)
       val answer = answers.anyTaxableRentalIncome
-      helper.anyTaxableIncome(labelOption, answer, route).get.label.key mustBe s"$labelOption.checkYourAnswersLabel"
+      helper.anyTaxPaid(labelOption, answer, route).get.label.key mustBe s"$labelOption.checkYourAnswersLabel"
     }
   }
 
@@ -364,13 +364,13 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have correct label (yes)" in {
       when(answers.anyTaxableBankInterest) thenReturn Some(AnyTaxPaid.Yes("123"))
       val answer = answers.anyTaxableBankInterest
-      helper.anyTaxableIncome(labelOption, answer, route).get.label.key mustBe s"$labelOption.checkYourAnswersLabel"
-      helper.taxableIncome(label, answer, route).get.label.key mustBe s"$label.checkYourAnswersLabel"
+      helper.anyTaxPaid(labelOption, answer, route).get.label.key mustBe s"$labelOption.checkYourAnswersLabel"
+      helper.taxPaid(label, answer, route).get.label.key mustBe s"$label.checkYourAnswersLabel"
     }
     s"have correct label (no)" in {
       when(answers.anyTaxableBankInterest) thenReturn Some(AnyTaxPaid.No)
       val answer = answers.anyTaxableBankInterest
-      helper.anyTaxableIncome(labelOption, answer, route).get.label.key mustBe s"$labelOption.checkYourAnswersLabel"
+      helper.anyTaxPaid(labelOption, answer, route).get.label.key mustBe s"$labelOption.checkYourAnswersLabel"
     }
   }
 
@@ -389,13 +389,13 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have correct label (yes)" in {
       when(answers.anyTaxableInvestments) thenReturn Some(AnyTaxPaid.Yes("123"))
       val answer = answers.anyTaxableInvestments
-      helper.anyTaxableIncome(labelOption, answer, route).get.label.key mustBe s"$labelOption.checkYourAnswersLabel"
-      helper.taxableIncome(label, answer, route).get.label.key mustBe s"$label.checkYourAnswersLabel"
+      helper.anyTaxPaid(labelOption, answer, route).get.label.key mustBe s"$labelOption.checkYourAnswersLabel"
+      helper.taxPaid(label, answer, route).get.label.key mustBe s"$label.checkYourAnswersLabel"
     }
     s"have correct label (no)" in {
       when(answers.anyTaxableBankInterest) thenReturn Some(AnyTaxPaid.No)
       val answer = answers.anyTaxableBankInterest
-      helper.anyTaxableIncome(labelOption, answer, route).get.label.key mustBe s"$labelOption.checkYourAnswersLabel"
+      helper.anyTaxPaid(labelOption, answer, route).get.label.key mustBe s"$labelOption.checkYourAnswersLabel"
     }
   }
 
@@ -414,13 +414,13 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have correct label (yes)" in {
       when(answers.anyTaxableForeignIncome) thenReturn Some(AnyTaxPaid.Yes("123"))
       val answer = answers.anyTaxableForeignIncome
-      helper.anyTaxableIncome(labelOption, answer, route).get.label.key mustBe s"$labelOption.checkYourAnswersLabel"
-      helper.taxableIncome(label, answer, route).get.label.key mustBe s"$label.checkYourAnswersLabel"
+      helper.anyTaxPaid(labelOption, answer, route).get.label.key mustBe s"$labelOption.checkYourAnswersLabel"
+      helper.taxPaid(label, answer, route).get.label.key mustBe s"$label.checkYourAnswersLabel"
     }
     s"have correct label (no)" in {
       when(answers.anyTaxableForeignIncome) thenReturn Some(AnyTaxPaid.No)
       val answer = answers.anyTaxableForeignIncome
-      helper.anyTaxableIncome(labelOption, answer, route).get.label.key mustBe s"$labelOption.checkYourAnswersLabel"
+      helper.anyTaxPaid(labelOption, answer, route).get.label.key mustBe s"$labelOption.checkYourAnswersLabel"
     }
   }
 
@@ -446,13 +446,13 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have correct label (yes)" in {
       when(answers.anyTaxableOtherIncome) thenReturn Some(AnyTaxPaid.Yes("123"))
       val answer = answers.anyTaxableOtherIncome
-      helper.anyTaxableIncome(labelOption, answer, route).get.label.key mustBe s"$labelOption.checkYourAnswersLabel"
-      helper.taxableIncome(label, answer, route).get.label.key mustBe s"$label.checkYourAnswersLabel"
+      helper.anyTaxPaid(labelOption, answer, route).get.label.key mustBe s"$labelOption.checkYourAnswersLabel"
+      helper.taxPaid(label, answer, route).get.label.key mustBe s"$label.checkYourAnswersLabel"
     }
     s"have correct label (no)" in {
       when(answers.anyTaxableOtherIncome) thenReturn Some(AnyTaxPaid.No)
       val answer = answers.anyTaxableOtherIncome
-      helper.anyTaxableIncome(labelOption, answer, route).get.label.key mustBe s"$labelOption.checkYourAnswersLabel"
+      helper.anyTaxPaid(labelOption, answer, route).get.label.key mustBe s"$labelOption.checkYourAnswersLabel"
     }
   }
 
