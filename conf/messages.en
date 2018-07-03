@@ -70,14 +70,12 @@ site.textarea.char_limit = (Limit is {0} characters)
 checkYourAnswers.title = Check Your Answers
 checkYourAnswers.heading = Check Your Answers
 checkYourAnswers.guidance = Guidance for check your answers
-
-checkYourAnswers.yourDetailsSection = Your details
-checkYourAnswers.incomeDetailsSection = Income details
-checkYourAnswers.benefitDetailsSection = Benefit details
-checkYourAnswers.companyBenefitsDetailsSection = Company benefits details
-checkYourAnswers.otherIncomeDetailsSection = Other income details
-checkYourAnswers.paymentDetailsSection = Payment details
-checkYourAnswers.contactDetailsSection = Contact details
+checkYourAnswers.claimSection = Claim details
+checkYourAnswers.benefitsSection = Benefit details
+checkYourAnswers.companyBenefitsSection = Company benefits details
+checkYourAnswers.taxableIncomeSection = Taxable income details
+checkYourAnswers.paymentSection = Payment details
+checkYourAnswers.contactSection = Contact details
 
 unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account

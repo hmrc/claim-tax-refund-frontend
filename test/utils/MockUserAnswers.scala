@@ -16,6 +16,8 @@
 
 package utils
 
+import models.SelectTaxYear.CYMinus2
+import models.WhereToSendPayment.{Myself, Nominee}
 import models._
 import models.templates.Metadata
 import org.mockito.Mockito.when
@@ -90,12 +92,12 @@ object MockUserAnswers extends MockitoSugar {
     val answers = nothingAnswered
     val metadata = new Metadata("test_case")
 
-    when(answers.selectTaxYear) thenReturn Some(SelectTaxYear.CYMinus2)
+    when(answers.selectTaxYear) thenReturn Some(CYMinus2)
     when(answers.employmentDetails) thenReturn Some(true)
     when(answers.anyBenefits) thenReturn Some(false)
     when(answers.anyCompanyBenefits) thenReturn Some(false)
     when(answers.anyTaxableIncome) thenReturn Some(false)
-    when(answers.whereToSendPayment) thenReturn Some(WhereToSendPayment.Myself)
+    when(answers.whereToSendPayment) thenReturn Some(Myself)
     when(answers.paymentAddressCorrect) thenReturn Some(true)
     when(answers.anyTelephoneNumber) thenReturn Some(TelephoneOption.No)
 
@@ -109,7 +111,7 @@ object MockUserAnswers extends MockitoSugar {
   def claimDetailsUserAnswers: UserAnswers = {
     val answers = nothingAnswered
 
-    when(answers.selectTaxYear) thenReturn Some(SelectTaxYear.CYMinus2)
+    when(answers.selectTaxYear) thenReturn Some(CYMinus2)
     when(answers.employmentDetails) thenReturn Some(false)
     when(answers.enterPayeReference) thenReturn Some("AB12345")
     when(answers.detailsOfEmploymentOrPension) thenReturn Some("Details of employment")
@@ -158,10 +160,7 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.howMuchCarBenefits) thenReturn Some("1234")
     when(answers.howMuchMedicalBenefits) thenReturn Some("1234")
     when(answers.howMuchFuelBenefit) thenReturn Some("1234")
-    when(answers.anyOtherCompanyBenefits) thenReturn Some(true)
     when(answers.otherCompanyBenefitsName) thenReturn Some("other company benefit")
-    when(answers.howMuchOtherCompanyBenefit) thenReturn Some("1234")
-    when(answers.otherCompanyBenefitsName) thenReturn Some("1234")
     when(answers.howMuchOtherCompanyBenefit) thenReturn Some("1234")
     when(answers.anyOtherCompanyBenefits) thenReturn Some(false)
 
@@ -182,16 +181,16 @@ object MockUserAnswers extends MockitoSugar {
       )
     )
     when(answers.howMuchRentalIncome) thenReturn Some("1234")
-    when(answers.anyTaxableRentalIncome) thenReturn Some(AnyTaxPaid.No)
+    when(answers.anyTaxableRentalIncome) thenReturn Some(AnyTaxPaid.Yes("1234"))
     when(answers.howMuchBankInterest) thenReturn Some("1234")
-    when(answers.anyTaxableBankInterest) thenReturn Some(AnyTaxPaid.No)
+    when(answers.anyTaxableBankInterest) thenReturn Some(AnyTaxPaid.Yes("1234"))
     when(answers.howMuchInvestmentOrDividend) thenReturn Some("other company benefit")
-    when(answers.anyTaxableInvestments) thenReturn Some(AnyTaxPaid.No)
+    when(answers.anyTaxableInvestments) thenReturn Some(AnyTaxPaid.Yes("1234"))
     when(answers.howMuchForeignIncome) thenReturn Some("1234")
-    when(answers.anyTaxableForeignIncome) thenReturn Some(AnyTaxPaid.No)
+    when(answers.anyTaxableForeignIncome) thenReturn Some(AnyTaxPaid.Yes("1234"))
     when(answers.otherTaxableIncomeName) thenReturn Some("1234")
     when(answers.howMuchOtherTaxableIncome) thenReturn Some("1234")
-    when(answers.anyTaxableOtherIncome) thenReturn Some(AnyTaxPaid.No)
+    when(answers.anyTaxableOtherIncome) thenReturn Some(AnyTaxPaid.Yes("1234"))
     when(answers.anyOtherTaxableIncome) thenReturn Some(false)
 
     answers
@@ -200,7 +199,7 @@ object MockUserAnswers extends MockitoSugar {
   def selfPaymentDetailsUserAnswers: UserAnswers = {
     val answers = nothingAnswered
 
-    when(answers.whereToSendPayment) thenReturn Some(WhereToSendPayment.Myself)
+    when(answers.whereToSendPayment) thenReturn Some(Myself)
     when(answers.paymentAddressCorrect) thenReturn Some(false)
     when(answers.isPaymentAddressInTheUK) thenReturn Some(true)
     when(answers.paymentUKAddress) thenReturn Some(UkAddress("1","2",None,None,None,"AA11 11A"))
@@ -211,9 +210,9 @@ object MockUserAnswers extends MockitoSugar {
   def nomineePaymentDetailsUserAnswers: UserAnswers = {
     val answers = nothingAnswered
 
-    when(answers.whereToSendPayment) thenReturn Some(WhereToSendPayment.Nominee)
+    when(answers.whereToSendPayment) thenReturn Some(Nominee)
     when(answers.nomineeFullName) thenReturn Some("Nominee")
-    when(answers.anyAgentRef) thenReturn Some(AnyAgentRef.No)
+    when(answers.anyAgentRef) thenReturn Some(AnyAgentRef.Yes("12341234"))
     when(answers.isPaymentAddressInTheUK) thenReturn Some(false)
     when(answers.paymentInternationalAddress) thenReturn Some(InternationalAddress("1","2",None,None,None,"Country"))
 

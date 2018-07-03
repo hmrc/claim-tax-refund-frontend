@@ -41,8 +41,8 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
   def onPageLoad() = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val cyaHelper = new CheckYourAnswersHelper(request.userAnswers)
-      val sections = new CheckYourAnswersSections(cyaHelper, request.userAnswers)
-      Ok(check_your_answers(appConfig, sections.sectionsToShow))
+      val cyaSections = new CheckYourAnswersSections(cyaHelper, request.userAnswers)
+      Ok(check_your_answers(appConfig, cyaSections.sections))
   }
 
   def onSubmit() = (authenticate andThen getData andThen requireData).async {
@@ -51,8 +51,8 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
       implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromHeadersAndSession(request.headers, Some(request.session))
 
       val cyaHelper = new CheckYourAnswersHelper(request.userAnswers)
-      val sections = new CheckYourAnswersSections(cyaHelper, request.userAnswers)
-      val pdfHtml = pdf_check_your_answers(appConfig, sections.sectionsToShow)
+      val cyaSections = new CheckYourAnswersSections(cyaHelper, request.userAnswers)
+      val pdfHtml = pdf_check_your_answers(appConfig, cyaSections.sections)
       dataCacheConnector.save[String](request.externalId, "pdfHtml", pdfHtml.toString())
 
       implicit val metadata = new Metadata()
