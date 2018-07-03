@@ -51,9 +51,13 @@ class UserAnswers(val cacheMap: CacheMap) {
 
   def howMuchCarersAllowance: Option[String] = cacheMap.getEntry[String](HowMuchCarersAllowanceId.toString)
 
-  def howMuchOtherBenefit: Option[String] = cacheMap.getEntry[String](HowMuchOtherBenefitId.toString)
+  def anyOtherBenefits: Option[Boolean] = cacheMap.getEntry[Boolean](AnyOtherBenefitsId.toString)
 
   def otherBenefitsName: Option[String] = cacheMap.getEntry[String](OtherBenefitsNameId.toString)
+
+  def howMuchOtherBenefit: Option[String] = cacheMap.getEntry[String](HowMuchOtherBenefitId.toString)
+
+  def otherBenefits: Option[Seq[OtherBenefit]] = cacheMap.getEntry[Seq[OtherBenefit]](OtherBenefitsId.toString)
 
   def howMuchBereavementAllowance: Option[String] = cacheMap.getEntry[String](HowMuchBereavementAllowanceId.toString)
 
@@ -100,8 +104,6 @@ class UserAnswers(val cacheMap: CacheMap) {
   def howMuchIncapacityBenefit: Option[String] = cacheMap.getEntry[String](HowMuchIncapacityBenefitId.toString)
 
   def howMuchJobseekersAllowance: Option[String] = cacheMap.getEntry[String](HowMuchJobseekersAllowanceId.toString)
-
-  def anyOtherBenefits: Option[Boolean] = cacheMap.getEntry[Boolean](AnyOtherBenefitsId.toString)
 
   def howMuchMedicalBenefits: Option[String] = cacheMap.getEntry[String](HowMuchMedicalBenefitsId.toString)
 
