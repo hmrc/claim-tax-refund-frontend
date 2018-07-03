@@ -16,17 +16,17 @@
 
 package controllers
 
-import javax.inject.Inject
-
-import play.api.data.Form
-import play.api.i18n.{I18nSupport, MessagesApi}
-import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
-import config.FrontendAppConfig
 import forms.HowMuchOtherBenefitForm
-import identifiers.HowMuchOtherBenefitId
-import models.Mode
+import identifiers.{HowMuchOtherBenefitId, OtherBenefitsId}
+import javax.inject.Inject
+import models.{Mode, OtherBenefit, SelectTaxYear}
+import play.api.data.Form
+import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.mvc.{Action, AnyContent}
+import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import utils.{Navigator, UserAnswers}
 import views.html.howMuchOtherBenefit
 
@@ -44,7 +44,7 @@ class HowMuchOtherBenefitController @Inject()(
 
   private val form: Form[String] = formBuilder()
 
-  def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.howMuchOtherBenefit match {
         case None => form
@@ -60,19 +60,27 @@ class HowMuchOtherBenefitController @Inject()(
       }
   }
 
-  def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      request.userAnswers.selectTaxYear.map {
-        selectedTaxYear =>
-          val taxYear = selectedTaxYear
+      val req = for {
+        selectedTaxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
+        otherBenefitName: String <- request.userAnswers.otherBenefitsName
+      } yield {
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(howMuchOtherBenefit(appConfig, formWithErrors, mode, taxYear))),
-            (value) =>
-              dataCacheConnector.save[String](request.externalId, HowMuchOtherBenefitId.toString, value).map(cacheMap =>
-                Redirect(navigator.nextPage(HowMuchOtherBenefitId, mode)(new UserAnswers(cacheMap))))
+              Future.successful(BadRequest(howMuchOtherBenefit(appConfig, formWithErrors, mode, selectedTaxYear))),
+            value => {
+              val otherBenefits: Seq[OtherBenefit] = request.userAnswers.otherBenefits.getOrElse(Seq(OtherBenefit(otherBenefitName, value)))
+              if (otherBenefits.forall(p => !p.name.contains(otherBenefitName))) {
+                otherBenefits :+ OtherBenefit(otherBenefitName, value)
+              }
+              dataCacheConnector.save[Seq[OtherBenefit]](request.externalId, OtherBenefitsId.toString, otherBenefits).map(
+                cacheMap =>
+                  Redirect(navigator.nextPage(HowMuchOtherBenefitId, mode)(new UserAnswers(cacheMap))))
+            }
           )
-      }.getOrElse {
+      }
+      req.getOrElse {
         Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
       }
   }

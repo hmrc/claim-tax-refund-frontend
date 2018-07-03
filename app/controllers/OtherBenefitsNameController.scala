@@ -17,7 +17,6 @@
 package controllers
 
 import javax.inject.Inject
-
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
@@ -27,6 +26,7 @@ import config.FrontendAppConfig
 import forms.OtherBenefitsNameForm
 import identifiers.OtherBenefitsNameId
 import models.Mode
+import play.api.mvc.{Action, AnyContent}
 import utils.{Navigator, UserAnswers}
 import views.html.otherBenefitsName
 
@@ -44,7 +44,7 @@ class OtherBenefitsNameController @Inject()(
 
   private val form: Form[String] = formBuilder()
 
-  def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.otherBenefitsName match {
         case None => form
@@ -60,7 +60,7 @@ class OtherBenefitsNameController @Inject()(
       }
   }
 
-  def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
@@ -68,7 +68,7 @@ class OtherBenefitsNameController @Inject()(
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
               Future.successful(BadRequest(otherBenefitsName(appConfig, formWithErrors, mode, taxYear))),
-            (value) =>
+            value =>
               dataCacheConnector.save[String](request.externalId, OtherBenefitsNameId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(OtherBenefitsNameId, mode)(new UserAnswers(cacheMap))))
           )
