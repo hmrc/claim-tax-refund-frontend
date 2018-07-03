@@ -440,7 +440,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
 
   "anyTaxableOtherIncome" must {
     val labelOption = "anyTaxableOtherIncomeOption"
-    val label = "vanyTaxableOtherIncome"
+    val label = "anyTaxableOtherIncome"
     val route = routes.AnyOtherTaxableIncomeController.onPageLoad(CheckMode).url
 
     s"have correct label (yes)" in {

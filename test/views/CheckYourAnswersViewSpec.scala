@@ -19,24 +19,21 @@ package views
 import base.SpecBase
 import org.scalatest.mockito.MockitoSugar
 import play.api.i18n.Messages
-import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, MockUserAnswers, UserAnswers}
+import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, MockUserAnswers}
 import views.behaviours.ViewBehaviours
 import views.html.check_your_answers
 
 class CheckYourAnswersViewSpec (implicit messages: Messages) extends SpecBase with ViewBehaviours with MockitoSugar {
 
-  val messageKeyPrefix = "checkYourAnswers"
+  private val messageKeyPrefix = "checkYourAnswers"
+  private val answers = MockUserAnswers.minimalValidUserAnswers
+  private val helper = new CheckYourAnswersHelper(answers)
+  private val cyaSection = new CheckYourAnswersSections(helper, answers)
+  private val sections = cyaSection.sections
 
   def view = () => check_your_answers(frontendAppConfig, sections)(fakeRequest, messages)
 
-  private var answers = mock[UserAnswers]
-  answers = MockUserAnswers.minimalValidUserAnswers
-
-  val helper = new CheckYourAnswersHelper(answers)
-  val section = new CheckYourAnswersSections(helper, MockUserAnswers.minimalValidUserAnswers)
-  val sections = Seq(section.contactDetails)
-
-  "Check you answers view" must {
+  "Check your answers view" must {
     behave like normalPage(view, messageKeyPrefix)
   }
 
