@@ -88,36 +88,6 @@ userDetails.checkYourAnswersLabel.name = Name
 userDetails.checkYourAnswersLabel.nino = National insurance number
 userDetails.checkYourAnswersLabel.address = Address
 
-typeOfClaim.title = What kind of tax refund do you want to claim?
-typeOfClaim.heading = What kind of tax refund do you want to claim?
-typeOfClaim.optionSA = Self assessment
-typeOfClaim.optionPAYE = Pay As You Earn
-typeOfClaim.checkYourAnswersLabel = Type of refund you want to claim
-typeOfClaim.blank = Select the type of refund you want to claim
-
-uniqueTaxpayerReference.title = What is your Unique Taxpayer Reference number?
-uniqueTaxpayerReference.heading = What is your Unique Taxpayer Reference number?
-uniqueTaxpayerReference.checkYourAnswersLabel = Your Unique Taxpayer Reference number
-uniqueTaxpayerReference.invalid = Enter a valid Unique Taxpayer Reference number
-uniqueTaxpayerReference.blank = Enter a Unique Taxpayer Reference number
-uniqueTaxpayerReference.hintLine1 = This is a 10 digit number, like 1234567890.
-uniqueTaxpayerReference.hintLine2 = You can find this on your tax return, statement of accounts or any other self-assessment calculations.
-
-payAsYouEarn.title = What is your Pay As You Earn reference number?
-payAsYouEarn.heading = What is your Pay As You Earn reference number?
-payAsYouEarn.checkYourAnswersLabel = Your Pay As You Earn reference number
-payAsYouEarn.blank = Enter your Pay As You Earn reference number
-payAsYouEarn.invalid = Enter a valid Pay As You Earn reference number
-payAsYouEarn.hintLine1 = This is a 3 digit tax office number followed by a forward slash and your tax office employer reference, like 123/AB456.
-payAsYouEarn.hintLine2 = You can find this on your payslip or P60.
-
-fullOrPartialClaim.title = How much of the amount that you overpaid do you want to claim?
-fullOrPartialClaim.heading = How much of the amount that you overpaid do you want to claim?
-fullOrPartialClaim.allAmount = All of it
-fullOrPartialClaim.someAmount = Some of it
-fullOrPartialClaim.checkYourAnswersLabel = How much of the amount that you overpaid do you want to claim?
-fullOrPartialClaim.blank = Select whether you want to claim all some of the amount you overpaid
-
 selectTaxYear.title = Which tax year does your claim apply to?
 selectTaxYear.heading = Which tax year does your claim apply to?
 selectTaxYear.current-year-minus-1 = {0} to {1}
@@ -127,13 +97,6 @@ selectTaxYear.current-year-minus-4 = {0} to {1}
 selectTaxYear.current-year-minus-5 = {0} to {1}
 selectTaxYear.checkYourAnswersLabel = The tax year your claim applies to
 selectTaxYear.blank = Select a tax year
-
-partialClaimAmount.title = How much do you want to claim?
-partialClaimAmount.heading = How much do you want to claim?
-partialClaimAmount.checkYourAnswersLabel = Amount you want to claim
-partialClaimAmount.blank = Enter the amount you want to claim
-partialClaimAmount.invalid = Enter a valid amount you want to claim
-partialClaimAmount.hintLine1 = Enter an amount that is less than the amount you overpaid.
 
 anyBenefits.title = Did you get any of these benefits between {0}?
 anyBenefits.heading = Did you get any of these benefits between {0}?
@@ -207,6 +170,7 @@ nomineeFullName.tooLong = Full name of the person you want us to send any paymen
 
 anyAgentRef.title = Does {0} have an agent reference?
 anyAgentRef.heading = Does {0} have an agent reference?
+anyAgentRefOption.checkYourAnswersLabel = Any agent reference
 anyAgentRef.checkYourAnswersLabel = Agent reference
 anyAgentRef.blank = Select yes if the person you want us to send any payment to has an agent reference
 anyAgentRef.agentRefField = Agent reference
@@ -300,6 +264,7 @@ howMuchOtherCompanyBenefit.invalid = Enter a valid amount you got for this benef
 
 enterPayeReference.title = Enter your employer or pension provider's PAYE reference
 enterPayeReference.heading = Enter your employer or pension provider's PAYE reference
+enterPayeReference.checkYourAnswersLabel = PAYE reference
 enterPayeReference.hint = For example 123/AB456. You can find this on your payslip or P60
 enterPayeReference.blank = Enter your employer or pension provider's PAYE reference
 enterPayeReference.invalid = Enter a valid PAYE reference
@@ -381,6 +346,7 @@ otherTaxableIncomeName.blank = Enter the name of the other taxable income you go
 
 anyTaxableRentalIncome.title = Did you pay income tax on property rental income between {0}?
 anyTaxableRentalIncome.heading = Did you pay income tax on property rental income between {0}?
+anyTaxableRentalIncomeOption.checkYourAnswersLabel = Any taxable property rental income
 anyTaxableRentalIncome.checkYourAnswersLabel = Taxable property rental income
 anyTaxableRentalIncome.invalid = Enter a valid amount of income tax paid for property rental income
 anyTaxableRentalIncome.notSelected = Select yes if you paid income tax on property rental income
@@ -390,14 +356,17 @@ anyTaxableRentalIncome.anyTaxPaidAmountField = How much income tax did you pay o
 anyTaxableBankInterest.title = Did you pay income tax on bank or building society interest between {0}?
 anyTaxableBankInterest.heading = Did you pay income tax on bank or building society interest between {0}?
 anyTaxableBankInterest.checkYourAnswersLabel = Taxable bank or building society interest
+anyTaxableBankInterestOption.checkYourAnswersLabel = Any taxable bank or building society interest
 anyTaxableBankInterest.invalid = Enter a valid amount of income tax paid for bank or building society interest
 anyTaxableBankInterest.notSelected = Select yes if you paid income tax on bank or building society interest
 anyTaxableBankInterest.blank = Enter the amount of income tax paid on bank or building society interest
 anyTaxableBankInterest.anyTaxPaidAmountField = How much income tax did you pay on bank or building society interest?
 
+
 anyTaxableInvestments.title = Did you pay income tax on investments or dividends between {0}?
 anyTaxableInvestments.heading = Did you pay income tax on investments or dividends between {0}?
 anyTaxableInvestments.checkYourAnswersLabel = Taxable investments or dividends
+anyTaxableInvestmentsOption.checkYourAnswersLabel = Any taxable investments or dividends
 anyTaxableInvestments.invalid = Enter a valid amount of income tax paid for investments or dividends
 anyTaxableInvestments.notSelected = Select yes if you paid income tax on investments or dividends
 anyTaxableInvestments.blank = Enter the amount of income tax paid on investments or dividends
@@ -406,6 +375,7 @@ anyTaxableInvestments.anyTaxPaidAmountField = How much income tax did you pay on
 anyTaxableForeignIncome.title = Did you pay income tax on foreign income between {0}?
 anyTaxableForeignIncome.heading = Did you pay income tax on foreign income between {0}?
 anyTaxableForeignIncome.checkYourAnswersLabel = Taxable foreign income
+anyTaxableForeignIncomeOption.checkYourAnswersLabel = Any taxable foreign income
 anyTaxableForeignIncome.invalid = Enter a valid amount of income tax paid for foreign income
 anyTaxableForeignIncome.notSelected = Select yes if you paid income tax on foreign income
 anyTaxableForeignIncome.blank = Enter the amount of income tax paid on foreign income
@@ -414,6 +384,7 @@ anyTaxableForeignIncome.anyTaxPaidAmountField = How much income tax did you pay 
 anyTaxableOtherIncome.title = Did you pay income tax on {0} between {1}?
 anyTaxableOtherIncome.heading = Did you pay income tax on {0} between {1}?
 anyTaxableOtherIncome.checkYourAnswersLabel = Other taxable income
+anyTaxableOtherIncomeOption.checkYourAnswersLabel = Any other taxable income
 anyTaxableOtherIncome.invalid = Enter a valid amount of income tax you paid on this income
 anyTaxableOtherIncome.notSelected = Select yes if you paid income tax on this income
 anyTaxableOtherIncome.blank = Enter the amount of income tax paid on this income

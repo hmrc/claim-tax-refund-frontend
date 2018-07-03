@@ -34,7 +34,7 @@ class OtherBenefitsNameControllerSpec extends ControllerSpecBase {
   val testAnswer = "answer"
   val form = new OtherBenefitsNameForm(frontendAppConfig)()
   private val taxYear = CYMinus2
-  private val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
+  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new OtherBenefitsNameController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,

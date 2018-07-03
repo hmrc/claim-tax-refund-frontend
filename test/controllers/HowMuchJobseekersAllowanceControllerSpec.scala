@@ -35,7 +35,7 @@ class HowMuchJobseekersAllowanceControllerSpec extends ControllerSpecBase {
   private val testAnswer = "9,999.99"
   private val form = new HowMuchJobseekersAllowanceForm(frontendAppConfig)()
   private val taxYear = CYMinus2
-  private val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
+  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
 
   def onwardRoute = routes.IndexController.onPageLoad()
 

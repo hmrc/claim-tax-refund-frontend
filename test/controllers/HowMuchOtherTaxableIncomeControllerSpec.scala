@@ -33,7 +33,7 @@ class HowMuchOtherTaxableIncomeControllerSpec extends ControllerSpecBase {
   def onwardRoute = routes.IndexController.onPageLoad()
 
   val form = new HowMuchOtherTaxableIncomeForm(frontendAppConfig)()
-  private val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
+  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
   private val testAnswer = "9,999.99"
   private val testIncome = "Test income"
   private val taxYear = CYMinus2

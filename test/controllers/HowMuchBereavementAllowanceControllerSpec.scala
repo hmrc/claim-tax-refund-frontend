@@ -37,7 +37,7 @@ class HowMuchBereavementAllowanceControllerSpec extends ControllerSpecBase {
       frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, new HowMuchBereavementAllowanceForm(frontendAppConfig))
 
-  val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
+  val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
 
   val testAnswer = "9,999.99"
   private val taxYear = CYMinus2

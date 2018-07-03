@@ -43,7 +43,6 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
     cyaHelper.whereToSendPayment,
     cyaHelper.nomineeFullName,
     cyaHelper.anyAgentRef,
-    cyaHelper.agentReferenceNumber,
     cyaHelper.isPaymentAddressInTheUK,
     cyaHelper.paymentUKAddress,
     cyaHelper.paymentInternationalAddress
