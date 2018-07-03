@@ -23,15 +23,15 @@ import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, MockUserAnswers}
 import views.behaviours.ViewBehaviours
 import views.html.check_your_answers
 
-class CheckYourAnswersViewSpec (implicit messages: Messages) extends SpecBase with ViewBehaviours with MockitoSugar {
+class CheckYourAnswersViewSpec extends SpecBase with ViewBehaviours with MockitoSugar {
 
   private val messageKeyPrefix = "checkYourAnswers"
   private val answers = MockUserAnswers.minimalValidUserAnswers
-  private val helper = new CheckYourAnswersHelper(answers)
+  private val helper = new CheckYourAnswersHelper(answers)(messages: Messages)
   private val cyaSection = new CheckYourAnswersSections(helper, answers)
   private val sections = cyaSection.sections
 
-  def view = () => check_your_answers(frontendAppConfig, sections)(fakeRequest, messages)
+  def view = () => check_your_answers(frontendAppConfig, sections)(fakeRequest, messages: Messages)
 
   "Check your answers view" must {
     behave like normalPage(view, messageKeyPrefix)
@@ -39,7 +39,11 @@ class CheckYourAnswersViewSpec (implicit messages: Messages) extends SpecBase wi
 
   "Page should display correct sections" in {
     val doc = asDocument(view())
-    assertContainsText(doc, messagesApi("checkYourAnswers.yourDetailsSection"))
-    assertContainsText(doc, messagesApi("checkYourAnswers.contactDetailsSection"))
+    assertContainsText(doc, messagesApi("checkYourAnswers.claimSection"))
+    assertContainsText(doc, messagesApi("checkYourAnswers.benefitsSection"))
+    assertContainsText(doc, messagesApi("checkYourAnswers.companyBenefitsSection"))
+    assertContainsText(doc, messagesApi("checkYourAnswers.taxableIncomeSection"))
+    assertContainsText(doc, messagesApi("checkYourAnswers.paymentSection"))
+    assertContainsText(doc, messagesApi("checkYourAnswers.contactSection"))
   }
 }
