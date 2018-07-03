@@ -16,100 +16,110 @@
 
 package utils
 
-import models.SelectTaxYear.CYMinus2
-import models.templates.Metadata
 import models._
+import models.templates.Metadata
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
 
 object MockUserAnswers extends MockitoSugar {
 
   def nothingAnswered: UserAnswers = {
-
     val answers = mock[UserAnswers]
-    when(answers.userDetails) thenReturn None
-    when(answers.isTheAddressInTheUK) thenReturn None
-    when(answers.ukAddress) thenReturn None
-    when(answers.internationalAddress) thenReturn None
-    when(answers.anyTelephoneNumber) thenReturn None
+
+    //claim details
     when(answers.selectTaxYear) thenReturn None
     when(answers.employmentDetails) thenReturn None
+    when(answers.enterPayeReference) thenReturn None
+    when(answers.detailsOfEmploymentOrPension) thenReturn None
+
+    //benefits details
     when(answers.anyBenefits) thenReturn None
+    when(answers.selectBenefits) thenReturn None
+    when(answers.howMuchBereavementAllowance) thenReturn None
+    when(answers.howMuchCarersAllowance) thenReturn None
     when(answers.howMuchJobseekersAllowance) thenReturn None
     when(answers.howMuchIncapacityBenefit) thenReturn None
     when(answers.howMuchEmploymentAndSupportAllowance) thenReturn None
     when(answers.howMuchStatePension) thenReturn None
+    when(answers.otherBenefitsName) thenReturn None
+    when(answers.howMuchOtherBenefit) thenReturn None
     when(answers.anyOtherBenefits) thenReturn None
-    when(answers.anyTaxableIncome) thenReturn None
+
+    //company benefits details
+    when(answers.anyCompanyBenefits) thenReturn None
+    when(answers.selectCompanyBenefits) thenReturn None
     when(answers.howMuchCarBenefits) thenReturn None
-    when(answers.howMuchRentalIncome) thenReturn None
-    when(answers.howMuchBankInterest) thenReturn None
+    when(answers.howMuchFuelBenefit) thenReturn None
     when(answers.howMuchMedicalBenefits) thenReturn None
+    when(answers.otherCompanyBenefitsName) thenReturn None
+    when(answers.howMuchOtherCompanyBenefit) thenReturn None
+    when(answers.anyOtherCompanyBenefits) thenReturn None
+
+    //taxable income details
+    when(answers.anyTaxableIncome) thenReturn None
+    when(answers.selectTaxableIncome) thenReturn None
+    when(answers.howMuchRentalIncome) thenReturn None
+    when(answers.anyTaxableRentalIncome) thenReturn None
+    when(answers.howMuchBankInterest) thenReturn None
+    when(answers.anyTaxableBankInterest) thenReturn None
+    when(answers.howMuchInvestmentOrDividend) thenReturn None
+    when(answers.anyTaxableInvestments) thenReturn None
+    when(answers.howMuchForeignIncome) thenReturn None
+    when(answers.anyTaxableForeignIncome) thenReturn None
+    when(answers.otherTaxableIncomeName) thenReturn None
+    when(answers.howMuchOtherTaxableIncome) thenReturn None
+    when(answers.anyTaxableOtherIncome) thenReturn None
     when(answers.anyOtherTaxableIncome) thenReturn None
+
+    //payment details
     when(answers.whereToSendPayment) thenReturn None
+    when(answers.paymentAddressCorrect) thenReturn None
     when(answers.nomineeFullName) thenReturn None
     when(answers.anyAgentRef) thenReturn None
-    when(answers.agentReferenceNumber) thenReturn None
     when(answers.isPaymentAddressInTheUK) thenReturn None
     when(answers.paymentUKAddress) thenReturn None
     when(answers.paymentInternationalAddress) thenReturn None
-    when(answers.howMuchFuelBenefit) thenReturn None
-    when(answers.selectBenefits) thenReturn None
-    when(answers.selectCompanyBenefits) thenReturn None
-    when(answers.otherCompanyBenefitsName) thenReturn None
-    when(answers.anyOtherCompanyBenefits) thenReturn None
-    when(answers.howMuchOtherCompanyBenefit) thenReturn None
-    when(answers.howMuchBereavementAllowance) thenReturn None
-    when(answers.howMuchCarersAllowance) thenReturn None
-    when(answers.otherBenefitsName) thenReturn None
-    when(answers.howMuchOtherBenefit) thenReturn None
-    when(answers.howMuchForeignIncome) thenReturn None
-    when(answers.detailsOfEmploymentOrPension) thenReturn None
-    when(answers.selectTaxableIncome) thenReturn None
-    when(answers.howMuchInvestmentOrDividend) thenReturn None
-    when(answers.howMuchOtherTaxableIncome) thenReturn None
-    when(answers.otherTaxableIncomeName) thenReturn None
-    when(answers.anyTaxableRentalIncome) thenReturn None
-    when(answers.anyTaxableBankInterest) thenReturn None
-    when(answers.anyTaxableInvestments) thenReturn None
-    when(answers.anyTaxableForeignIncome) thenReturn None
-    when(answers.anyTaxableOtherIncome) thenReturn None
-    when(answers.paymentAddressCorrect) thenReturn None
 
-    answers
-  }
-
-  def yourDetailsUserAnswers: UserAnswers = {
-
-    val answers = nothingAnswered
-
-    when(answers.selectTaxYear) thenReturn Some(CYMinus2)
+    //contact details
+    when(answers.anyTelephoneNumber) thenReturn None
 
     answers
   }
 
   def minimalValidUserAnswers: UserAnswers = {
-
     val answers = nothingAnswered
     val metadata = new Metadata("test_case")
 
     when(answers.selectTaxYear) thenReturn Some(SelectTaxYear.CYMinus2)
     when(answers.employmentDetails) thenReturn Some(true)
     when(answers.anyBenefits) thenReturn Some(false)
+    when(answers.anyCompanyBenefits) thenReturn Some(false)
     when(answers.anyTaxableIncome) thenReturn Some(false)
     when(answers.whereToSendPayment) thenReturn Some(WhereToSendPayment.Myself)
-    when(answers.anyTelephoneNumber) thenReturn Some(TelephoneOption.Yes("0191123123"))
+    when(answers.paymentAddressCorrect) thenReturn Some(true)
+    when(answers.anyTelephoneNumber) thenReturn Some(TelephoneOption.No)
 
-    when(answers.pdfHtml) thenReturn Some ("<html>Test result</html>")
-    when(answers.metadata) thenReturn Some (metadata)
+
+    when(answers.pdfHtml) thenReturn Some("<html>Test result</html>")
+    when(answers.metadata) thenReturn Some(metadata)
+
+    answers
+  }
+
+  def claimDetailsUserAnswers: UserAnswers = {
+    val answers = nothingAnswered
+
+    when(answers.selectTaxYear) thenReturn Some(SelectTaxYear.CYMinus2)
+    when(answers.employmentDetails) thenReturn Some(false)
+    when(answers.enterPayeReference) thenReturn Some("AB12345")
+    when(answers.detailsOfEmploymentOrPension) thenReturn Some("Details of employment")
 
     answers
   }
 
   def benefitsUserAnswers: UserAnswers = {
-
     val answers = nothingAnswered
-    yourDetailsUserAnswers
+
     when(answers.anyBenefits) thenReturn Some(true)
     when(answers.selectBenefits) thenReturn Some(
       Seq(Benefits.CARERS_ALLOWANCE,
@@ -121,87 +131,26 @@ object MockUserAnswers extends MockitoSugar {
         Benefits.STATE_PENSION
       )
     )
-
-    when (answers.howMuchBereavementAllowance) thenReturn Some("1234")
-    when (answers.howMuchCarersAllowance) thenReturn Some("1234")
-    when (answers.howMuchJobseekersAllowance) thenReturn Some("1234")
-    when (answers.howMuchEmploymentAndSupportAllowance) thenReturn Some("1234")
-    when (answers.howMuchIncapacityBenefit) thenReturn Some("1234")
-    when (answers.howMuchStatePension) thenReturn Some("1234")
-    when (answers.otherBenefitsName) thenReturn  Some("Other")
-    when (answers.howMuchOtherBenefit) thenReturn Some("1234")
-
-    answers
-  }
-
-  def incomeUserAnswers: UserAnswers = {
-
-    val answers = nothingAnswered
-
-    when(answers.howMuchCarBenefits) thenReturn Some("123123")
-    when(answers.howMuchRentalIncome) thenReturn Some("123123")
-    when(answers.howMuchBankInterest) thenReturn Some("123123")
-    when(answers.howMuchMedicalBenefits) thenReturn Some("123123")
-    when(answers.anyOtherTaxableIncome) thenReturn Some(true)
-    when(answers.howMuchEmploymentAndSupportAllowance) thenReturn Some("123123")
+    when(answers.howMuchBereavementAllowance) thenReturn Some("1234")
+    when(answers.howMuchCarersAllowance) thenReturn Some("1234")
+    when(answers.howMuchJobseekersAllowance) thenReturn Some("1234")
+    when(answers.howMuchEmploymentAndSupportAllowance) thenReturn Some("1234")
+    when(answers.howMuchIncapacityBenefit) thenReturn Some("1234")
+    when(answers.howMuchStatePension) thenReturn Some("1234")
+    when(answers.otherBenefitsName) thenReturn Some("Other")
+    when(answers.howMuchOtherBenefit) thenReturn Some("1234")
+    when(answers.anyOtherBenefits) thenReturn Some(false)
 
     answers
   }
 
-  def benefitsWithNoIncome: UserAnswers = {
-
+  def companyBenefitsUserAnswers: UserAnswers = {
     val answers = nothingAnswered
 
-    yourDetailsUserAnswers
-    when(answers.anyBenefits) thenReturn Some(true)
-    benefitsUserAnswers
-    when(answers.anyTaxableIncome) thenReturn Some(false)
-
-    answers
-  }
-
-  def incomeWithNoBenefits: UserAnswers = {
-
-    val answers = nothingAnswered
-
-    yourDetailsUserAnswers
-    when(answers.anyBenefits) thenReturn Some(false)
-    when(answers.anyTaxableIncome) thenReturn Some(true)
-    incomeUserAnswers
-
-    answers
-  }
-
-  def benefitsWithIncome: UserAnswers = {
-
-    val answers = nothingAnswered
-
-    yourDetailsUserAnswers
-    when(answers.anyBenefits) thenReturn Some(true)
-    benefitsUserAnswers
-    when(answers.anyTaxableIncome) thenReturn Some(true)
-    incomeUserAnswers
-
-    answers
-  }
-
-  def contactDetails: UserAnswers = {
-
-    val answers = nothingAnswered
-
-    when(answers.anyTelephoneNumber) thenReturn Some(TelephoneOption.Yes("0191123123"))
-
-    answers
-  }
-
-  def companyBenefits: UserAnswers = {
-
-    val answers = nothingAnswered
-
-    yourDetailsUserAnswers
     when(answers.anyCompanyBenefits) thenReturn Some(true)
     when(answers.selectCompanyBenefits) thenReturn Some(
-      Seq(CompanyBenefits.COMPANY_CAR_BENEFIT,
+      Seq(
+        CompanyBenefits.COMPANY_CAR_BENEFIT,
         CompanyBenefits.MEDICAL_BENEFIT,
         CompanyBenefits.FUEL_BENEFIT,
         CompanyBenefits.OTHER_COMPANY_BENEFIT)
@@ -212,6 +161,69 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.anyOtherCompanyBenefits) thenReturn Some(true)
     when(answers.otherCompanyBenefitsName) thenReturn Some("other company benefit")
     when(answers.howMuchOtherCompanyBenefit) thenReturn Some("1234")
+    when(answers.otherCompanyBenefitsName) thenReturn Some("1234")
+    when(answers.howMuchOtherCompanyBenefit) thenReturn Some("1234")
+    when(answers.anyOtherCompanyBenefits) thenReturn Some(false)
+
+    answers
+  }
+
+  def taxableIncomeUserAnswers: UserAnswers = {
+    val answers = nothingAnswered
+
+    when(answers.anyTaxableIncome) thenReturn Some(true)
+    when(answers.selectTaxableIncome) thenReturn Some(
+      Seq(
+        TaxableIncome.RENTAL_INCOME,
+        TaxableIncome.BANK_OR_BUILDING_SOCIETY_INTEREST,
+        TaxableIncome.INVESTMENT_OR_DIVIDENDS,
+        TaxableIncome.FOREIGN_INCOME,
+        TaxableIncome.OTHER_TAXABLE_INCOME
+      )
+    )
+    when(answers.howMuchRentalIncome) thenReturn Some("1234")
+    when(answers.anyTaxableRentalIncome) thenReturn Some(AnyTaxPaid.No)
+    when(answers.howMuchBankInterest) thenReturn Some("1234")
+    when(answers.anyTaxableBankInterest) thenReturn Some(AnyTaxPaid.No)
+    when(answers.howMuchInvestmentOrDividend) thenReturn Some("other company benefit")
+    when(answers.anyTaxableInvestments) thenReturn Some(AnyTaxPaid.No)
+    when(answers.howMuchForeignIncome) thenReturn Some("1234")
+    when(answers.anyTaxableForeignIncome) thenReturn Some(AnyTaxPaid.No)
+    when(answers.otherTaxableIncomeName) thenReturn Some("1234")
+    when(answers.howMuchOtherTaxableIncome) thenReturn Some("1234")
+    when(answers.anyTaxableOtherIncome) thenReturn Some(AnyTaxPaid.No)
+    when(answers.anyOtherTaxableIncome) thenReturn Some(false)
+
+    answers
+  }
+
+  def selfPaymentDetailsUserAnswers: UserAnswers = {
+    val answers = nothingAnswered
+
+    when(answers.whereToSendPayment) thenReturn Some(WhereToSendPayment.Myself)
+    when(answers.paymentAddressCorrect) thenReturn Some(false)
+    when(answers.isPaymentAddressInTheUK) thenReturn Some(true)
+    when(answers.paymentUKAddress) thenReturn Some(UkAddress("1","2",None,None,None,"AA11 11A"))
+
+    answers
+  }
+
+  def nomineePaymentDetailsUserAnswers: UserAnswers = {
+    val answers = nothingAnswered
+
+    when(answers.whereToSendPayment) thenReturn Some(WhereToSendPayment.Nominee)
+    when(answers.nomineeFullName) thenReturn Some("Nominee")
+    when(answers.anyAgentRef) thenReturn Some(AnyAgentRef.No)
+    when(answers.isPaymentAddressInTheUK) thenReturn Some(false)
+    when(answers.paymentInternationalAddress) thenReturn Some(InternationalAddress("1","2",None,None,None,"Country"))
+
+    answers
+  }
+
+  def contactDetailsUserAnswers: UserAnswers = {
+    val answers = nothingAnswered
+
+    when(answers.anyTelephoneNumber) thenReturn Some(TelephoneOption.Yes("0191123123"))
 
     answers
   }
