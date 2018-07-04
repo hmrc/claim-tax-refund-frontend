@@ -16,25 +16,21 @@
 
 package views
 
-import config.FrontendAppConfig
-import play.api.data.Form
 import controllers.routes
 import forms.HowMuchBereavementAllowanceForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
-import play.api.i18n.Messages
+import play.api.data.Form
 import views.behaviours.StringViewBehaviours
 import views.html.howMuchBereavementAllowance
 
-class HowMuchBereavementAllowanceViewSpec(implicit messages: Messages) extends StringViewBehaviours with MockitoSugar {
+class HowMuchBereavementAllowanceViewSpec extends StringViewBehaviours with MockitoSugar {
 
-  val messageKeyPrefix = "howMuchBereavementAllowance"
+  private val messageKeyPrefix = "howMuchBereavementAllowance"
   private val taxYear = CYMinus2
 
-  val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
-
-  override val form: Form[String] = new HowMuchBereavementAllowanceForm(appConfig)()
+  override val form: Form[String] = new HowMuchBereavementAllowanceForm(frontendAppConfig)()
 
   def createView = () => howMuchBereavementAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
@@ -42,12 +38,21 @@ class HowMuchBereavementAllowanceViewSpec(implicit messages: Messages) extends S
 
   "HowMuchBereavementAllowance view" must {
 
-    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, s"${taxYear.asString}?")
+    behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))
 
     behave like pageWithBackLink(createView)
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.HowMuchBereavementAllowanceController.onSubmit(NormalMode).url)
+    behave like stringPage(
+      createView = createViewUsingForm,
+      messageKeyPrefix = messageKeyPrefix,
+      expectedFormAction = routes.HowMuchBereavementAllowanceController.onSubmit(NormalMode).url,
+      expectedHintKeyLine1 = None,
+      expectedHintKeyLine2 = None,
+      expectedPrefix = Some(messages("global.poundSign")),
+      args = taxYear.asString(messages)
+    )
+
   }
 }

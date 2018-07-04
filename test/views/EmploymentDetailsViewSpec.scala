@@ -16,25 +16,21 @@
 
 package views
 
-import play.api.data.Form
 import controllers.routes
 import forms.BooleanForm
 import models.SelectTaxYear.CYMinus2
-import views.behaviours.YesNoViewBehaviours
 import models.{Employment, NormalMode}
-import play.api.i18n.Messages
+import play.api.data.Form
+import views.behaviours.YesNoViewBehaviours
 import views.html.employmentDetails
 
-class EmploymentDetailsViewSpec(implicit messages: Messages) extends YesNoViewBehaviours {
+class EmploymentDetailsViewSpec extends YesNoViewBehaviours {
 
-  val messageKeyPrefix = "employmentDetails"
-
-  override val form = new BooleanForm()()
-
-  val fakeEmployments = Seq(Employment("AVIVA PENSIONS", "754", "AZ00070"))
-
+  private val messageKeyPrefix = "employmentDetails"
+  private val fakeEmployments = Seq(Employment("AVIVA PENSIONS", "754", "AZ00070"))
   private val taxYear = CYMinus2
 
+  override val form = new BooleanForm()()
 
   def createViewUsingForm = (form: Form[_]) => employmentDetails(frontendAppConfig, form, NormalMode, fakeEmployments, taxYear)(fakeRequest, messages)
 
@@ -42,12 +38,19 @@ class EmploymentDetailsViewSpec(implicit messages: Messages) extends YesNoViewBe
 
   "EmploymentDetails view" must {
 
-    behave like normalPage(createView, messageKeyPrefix)
+    behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))
 
     behave like pageWithBackLink(createView)
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.EmploymentDetailsController.onSubmit(NormalMode).url)
+    behave like yesNoPage(
+      createView = createViewUsingForm,
+      messageKeyPrefix = messageKeyPrefix,
+      expectedFormAction = routes.EmploymentDetailsController.onSubmit(NormalMode).url,
+      expectedHintText = None,
+      args = taxYear.asString(messages)
+    )
+
   }
 }

@@ -16,37 +16,42 @@
 
 package views
 
-import config.FrontendAppConfig
 import controllers.routes
 import forms.HowMuchStatePensionForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
-import play.api.i18n.Messages
 import views.behaviours.StringViewBehaviours
 import views.html.howMuchStatePension
 
-class HowMuchStatePensionViewSpec(implicit messages: Messages) extends StringViewBehaviours with MockitoSugar {
+class HowMuchStatePensionViewSpec extends StringViewBehaviours with MockitoSugar {
 
   private val messageKeyPrefix = "howMuchStatePension"
   private val taxYear = CYMinus2
-  private val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
-  override val form: Form[String] = new HowMuchStatePensionForm(appConfig)()
+  override val form: Form[String] = new HowMuchStatePensionForm(frontendAppConfig)()
 
   def createView = () => howMuchStatePension(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[String]) => howMuchStatePension(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "HowMuchStatePension view" must {
-    behave like normalPage(createView, messageKeyPrefix, taxYear.asString)
+    behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))
 
     behave like pageWithBackLink(createView)
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    behave like stringPage(createViewUsingForm, messageKeyPrefix,
-      routes.HowMuchStatePensionController.onSubmit(NormalMode).url, None, None, Some(messages("global.poundSign")))
+    behave like stringPage(
+      createView = createViewUsingForm,
+      messageKeyPrefix = messageKeyPrefix,
+      expectedFormAction = routes.HowMuchStatePensionController.onSubmit(NormalMode).url,
+      expectedHintKeyLine1 = None,
+      expectedHintKeyLine2 = None,
+      expectedPrefix = Some(messages("global.poundSign")),
+      args = taxYear.asString(messages)
+    )
+
   }
 }

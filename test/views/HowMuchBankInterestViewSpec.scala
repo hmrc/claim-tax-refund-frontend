@@ -16,38 +16,42 @@
 
 package views
 
-import config.FrontendAppConfig
-import play.api.data.Form
 import controllers.routes
 import forms.HowMuchBankInterestForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
-import play.api.i18n.Messages
+import play.api.data.Form
 import views.behaviours.StringViewBehaviours
 import views.html.howMuchBankInterest
 
-class HowMuchBankInterestViewSpec(implicit messages: Messages) extends StringViewBehaviours with MockitoSugar {
+class HowMuchBankInterestViewSpec extends StringViewBehaviours with MockitoSugar {
 
-  val messageKeyPrefix = "howMuchBankInterest"
-
+  private val messageKeyPrefix = "howMuchBankInterest"
   private val taxYear = CYMinus2
 
-  val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
-
-  override val form: Form[String] = new HowMuchBankInterestForm(appConfig)()
+  override val form: Form[String] = new HowMuchBankInterestForm(frontendAppConfig)()
 
   def createView = () => howMuchBankInterest(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[String]) => howMuchBankInterest(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "HowMuchBankInterest view" must {
-    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, s"${taxYear.asString}?")
+    behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))
 
     behave like pageWithBackLink(createView)
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.HowMuchBankInterestController.onSubmit(NormalMode).url)
+    behave like stringPage(
+      createView = createViewUsingForm,
+      messageKeyPrefix = messageKeyPrefix,
+      expectedFormAction = routes.HowMuchBankInterestController.onSubmit(NormalMode).url,
+      expectedHintKeyLine1 = None,
+      expectedHintKeyLine2 = None,
+      expectedPrefix = Some(messages("global.poundSign")),
+      args = taxYear.asString(messages)
+    )
+
   }
 }

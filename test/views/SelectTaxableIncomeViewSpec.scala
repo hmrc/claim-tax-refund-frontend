@@ -20,18 +20,16 @@ import forms.SelectTaxableIncomeForm
 import models.SelectTaxYear.CYMinus2
 import models.{NormalMode, TaxableIncome}
 import play.api.data.Form
-import play.api.i18n.Messages
 import play.twirl.api.Html
 import views.behaviours.{CheckboxViewBehaviours, ViewBehaviours}
 import views.html.selectTaxableIncome
 
-class SelectTaxableIncomeViewSpec(implicit messages: Messages) extends ViewBehaviours with CheckboxViewBehaviours[TaxableIncome.Value] {
+class SelectTaxableIncomeViewSpec extends ViewBehaviours with CheckboxViewBehaviours[TaxableIncome.Value] {
 
   val messageKeyPrefix = "selectTaxableIncome"
   val fieldKey = "value"
   val errorMessage = "error.invalid"
   private val taxYear = CYMinus2
-
 
   val values: Seq[(String, String)] = SelectTaxableIncomeForm.options
 
@@ -45,13 +43,13 @@ class SelectTaxableIncomeViewSpec(implicit messages: Messages) extends ViewBehav
   def createViewUsingForm = (form: Form[_]) => selectTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "SelectTaxableIncome view" must {
-    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, s"${taxYear.asString}?")
+    behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))
 
     behave like pageWithBackLink(createView)
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    behave like checkboxPage(legend = Some(messages(s"$messageKeyPrefix.heading")))
+    behave like checkboxPage(legend = Some(messages(s"$messageKeyPrefix.heading", taxYear.asString(messages))))
 
   }
 }

@@ -16,37 +16,42 @@
 
 package views
 
-import config.FrontendAppConfig
 import controllers.routes
 import forms.HowMuchEmploymentAndSupportAllowanceForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
-import play.api.i18n.Messages
 import views.behaviours.StringViewBehaviours
 import views.html.howMuchEmploymentAndSupportAllowance
 
-class HowMuchEmploymentAndSupportAllowanceViewSpec(implicit messages: Messages) extends StringViewBehaviours with MockitoSugar {
+class HowMuchEmploymentAndSupportAllowanceViewSpec extends StringViewBehaviours with MockitoSugar {
 
   private val messageKeyPrefix = "howMuchEmploymentAndSupportAllowance"
   private val taxYear = CYMinus2
-  private val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
-  override val form: Form[String] = new HowMuchEmploymentAndSupportAllowanceForm(appConfig)()
+  override val form: Form[String] = new HowMuchEmploymentAndSupportAllowanceForm(frontendAppConfig)()
 
   def createView = () => howMuchEmploymentAndSupportAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[String]) => howMuchEmploymentAndSupportAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "HowMuchEmploymentAndSupportAllowance view" must {
-    behave like normalPage(createView, messageKeyPrefix, taxYear.asString)
+    behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))
 
     behave like pageWithBackLink(createView)
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    behave like stringPage(createViewUsingForm, messageKeyPrefix,
-      routes.HowMuchEmploymentAndSupportAllowanceController.onSubmit(NormalMode).url, None, None, Some(messages("global.poundSign")))
+    behave like stringPage(
+      createView = createViewUsingForm,
+      messageKeyPrefix = messageKeyPrefix,
+      expectedFormAction = routes.HowMuchEmploymentAndSupportAllowanceController.onSubmit(NormalMode).url,
+      expectedHintKeyLine1 = None,
+      expectedHintKeyLine2 = None,
+      expectedPrefix = Some(messages("global.poundSign")),
+      args = taxYear.asString(messages)
+    )
+
   }
 }

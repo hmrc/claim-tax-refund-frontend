@@ -21,13 +21,12 @@ import forms.BooleanForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import play.api.data.Form
-import play.api.i18n.Messages
 import views.behaviours.YesNoViewBehaviours
 import views.html.anyTaxableIncome
 
-class AnyTaxableIncomeViewSpec(implicit messages: Messages) extends YesNoViewBehaviours {
+class AnyTaxableIncomeViewSpec extends YesNoViewBehaviours {
 
-  val messageKeyPrefix = "anyTaxableIncome"
+  private val messageKeyPrefix = "anyTaxableIncome"
   private val taxYear = CYMinus2
 
   override val form = new BooleanForm()()
@@ -38,13 +37,19 @@ class AnyTaxableIncomeViewSpec(implicit messages: Messages) extends YesNoViewBeh
 
   "AnyTaxableIncome view" must {
 
-    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, taxYear.asString)
+    behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))
 
     behave like pageWithBackLink(createView)
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.AnyTaxableIncomeController.onSubmit(NormalMode).url)
+    behave like yesNoPage(
+      createView = createViewUsingForm,
+      messageKeyPrefix = messageKeyPrefix,
+      expectedFormAction = routes.AnyTaxableIncomeController.onSubmit(NormalMode).url,
+      expectedHintText = None,
+      args = taxYear.asString(messages)
+    )
 
     behave like pageWithList(createView, messageKeyPrefix,
       Seq(

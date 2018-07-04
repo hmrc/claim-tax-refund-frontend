@@ -16,27 +16,26 @@
 
 package views
 
-import play.api.data.Form
 import controllers.routes
 import forms.BooleanForm
-import views.behaviours.YesNoViewBehaviours
 import models.NormalMode
-import play.api.i18n.Messages
+import play.api.data.Form
 import uk.gov.hmrc.auth.core.retrieve.ItmpAddress
+import views.behaviours.YesNoViewBehaviours
 import views.html.paymentAddressCorrect
 
-class PaymentAddressCorrectViewSpec(implicit messages: Messages) extends YesNoViewBehaviours {
+class PaymentAddressCorrectViewSpec extends YesNoViewBehaviours {
 
   private val messageKeyPrefix = "paymentAddressCorrect"
   private val testAddress = ItmpAddress(
     Some("Line 1"),
     Some("Line 2"),
     Some("Line 3"),
-    None,
-    None,
+    Some("Line 4"),
+    Some("Line 5"),
     Some("AB12 3AB"),
-    None,
-    None
+    Some("England"),
+    Some("UK")
   )
 
   override val form = new BooleanForm()()
@@ -47,13 +46,18 @@ class PaymentAddressCorrectViewSpec(implicit messages: Messages) extends YesNoVi
 
   "PaymentAddressCorrect view" must {
 
-    behave like normalPage(createView, messageKeyPrefix)
+    behave like normalPage(createView, messageKeyPrefix, None)
 
     behave like pageWithBackLink(createView)
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.PaymentAddressCorrectController.onSubmit(NormalMode).url)
+    behave like yesNoPage(
+      createView = createViewUsingForm,
+      messageKeyPrefix = messageKeyPrefix,
+      expectedFormAction = routes.PaymentAddressCorrectController.onSubmit(NormalMode).url,
+      expectedHintText = None
+    )
 
     "render the section for the users address" in {
       val doc = asDocument(createViewUsingForm(form))
@@ -62,7 +66,14 @@ class PaymentAddressCorrectViewSpec(implicit messages: Messages) extends YesNoVi
 
     "contain the correct users address" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertContainsText(doc, testAddress.toString)
+      assertContainsText(doc, testAddress.line1.get)
+      assertContainsText(doc, testAddress.line2.get)
+      assertContainsText(doc, testAddress.line3.get)
+      assertContainsText(doc, testAddress.line4.get)
+      assertContainsText(doc, testAddress.line5.get)
+      assertContainsText(doc, testAddress.postCode.get)
+      assertContainsText(doc, testAddress.countryName.get)
+      assertContainsText(doc, testAddress.countryCode.get)
     }
 
   }
