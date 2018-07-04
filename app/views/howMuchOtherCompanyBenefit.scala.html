@@ -23,7 +23,7 @@
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: SelectTaxYear, benefitName: String)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("howMuchOtherCompanyBenefit.title", s" $benefitName " , s" ${taxYear.asString}"),
+    title = messages("howMuchOtherCompanyBenefit.title", benefitName, taxYear.asString),
     appConfig = appConfig,
     bodyClasses = None) {
 
@@ -34,11 +34,11 @@
         @components.error_summary(form.errors)
 
         @components.heading(
-            messages("howMuchOtherCompanyBenefit.title", s"$benefitName" , s"${taxYear.asString}")
+            messages("howMuchOtherCompanyBenefit.title", benefitName, taxYear.asString)
         )
 
         @components.input_text(InputViewModel("value", form),
-            label = messages("howMuchOtherCompanyBenefit.heading"),
+            label = messages("howMuchOtherCompanyBenefit.heading", taxYear.asString),
             labelClass=Some("visually-hidden"),
             prefix = Some(messages("global.poundSign")))
         @components.submit_button()
