@@ -39,7 +39,7 @@ class DetailsOfEmploymentOrPensionControllerSpec extends ControllerSpecBase {
   val form = new DetailsOfEmploymentOrPensionForm(frontendAppConfig)()
   private val taxYear = CYMinus2
   val characterLimit = 500
-  val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
+  val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
 
 
   def viewAsString(form: Form[_] = form) = detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages).toString

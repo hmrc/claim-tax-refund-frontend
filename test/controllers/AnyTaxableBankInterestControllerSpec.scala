@@ -40,7 +40,7 @@ class AnyTaxableBankInterestControllerSpec extends ControllerSpecBase {
   val testAnswer = "9,999.00"
   val validYesData = Map(AnyTaxPaidId.toString -> Json.obj(AnyTaxPaidId.toString -> JsBoolean(true), TaxPaidAmountId.toString -> JsString(testAnswer)))
   val validNoData = Map(AnyTaxPaidId.toString -> Json.obj(AnyTaxPaidId.toString -> JsBoolean(false)))
-  private val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
+  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
   private val taxYear = CYMinus2
 
   val formProvider = new AnyTaxPaidForm
