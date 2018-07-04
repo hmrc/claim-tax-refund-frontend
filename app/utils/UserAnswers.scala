@@ -57,7 +57,7 @@ class UserAnswers(val cacheMap: CacheMap) {
 
   def howMuchOtherBenefit: Option[String] = cacheMap.getEntry[String](HowMuchOtherBenefitId.toString)
 
-  def otherBenefits: Option[Seq[OtherBenefit]] = cacheMap.getEntry[Seq[OtherBenefit]](OtherBenefitsId.toString)
+  def otherBenefits: Option[Seq[OtherBenefit]] = ???
 
   def howMuchBereavementAllowance: Option[String] = cacheMap.getEntry[String](HowMuchBereavementAllowanceId.toString)
 
@@ -135,5 +135,4 @@ class UserAnswers(val cacheMap: CacheMap) {
         selectedTaxYear.asString
     }.orNull
   }
-
 }
