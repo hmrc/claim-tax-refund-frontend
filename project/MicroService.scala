@@ -2,6 +2,7 @@ import sbt.Keys._
 import sbt.Tests.{Group, SubProcess}
 import sbt._
 import scoverage.ScoverageKeys
+import play.sbt.PlayImport.PlayKeys
 import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin._
 
 import com.typesafe.sbt.web.Import._
@@ -47,7 +48,8 @@ trait MicroService {
       scalacOptions ++= Seq("-Xfatal-warnings", "-feature"),
       libraryDependencies ++= appDependencies,
       retrieveManaged := true,
-      evictionWarningOptions in update := EvictionWarningOptions.default.withWarnScalaVersionEviction(false)
+      evictionWarningOptions in update := EvictionWarningOptions.default.withWarnScalaVersionEviction(false),
+      PlayKeys.devSettings += "play.server.http.port" -> "9969"
     )
     .configs(IntegrationTest)
     .settings(inConfig(IntegrationTest)(Defaults.itSettings): _*)
