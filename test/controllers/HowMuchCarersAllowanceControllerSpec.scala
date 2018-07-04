@@ -42,7 +42,7 @@ class HowMuchCarersAllowanceControllerSpec extends ControllerSpecBase {
   val testAnswer = "9,999.99"
   private val taxYear = CYMinus2
   val form = new HowMuchCarersAllowanceForm(frontendAppConfig)()
-  val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
+  val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
 
   def viewAsString(form: Form[_] = form) = howMuchCarersAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
 

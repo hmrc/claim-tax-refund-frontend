@@ -35,7 +35,7 @@ class HowMuchCarBenefitsControllerSpec extends ControllerSpecBase with MockitoSu
   val testAnswer = "9,999.99"
   val form = new HowMuchCarBenefitsForm(frontendAppConfig)()
   private val taxYear = CYMinus2
-  private val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
+  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new HowMuchCarBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,

@@ -34,7 +34,7 @@ class HowMuchRentalIncomeControllerSpec extends ControllerSpecBase {
   val testAnswer = "9,999.99"
   val form = new HowMuchRentalIncomeForm(frontendAppConfig)()
   private val taxYear = CYMinus2
-  private val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
+  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new HowMuchRentalIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,

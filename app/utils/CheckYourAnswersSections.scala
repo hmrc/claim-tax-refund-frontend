@@ -16,40 +16,24 @@
 
 package utils
 
+import controllers.routes
+import models.CheckMode
 import viewmodels.AnswerSection
 
 class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: UserAnswers) {
 
-  def sectionsToShow: Seq[AnswerSection] = {
-    if (userAnswers.anyBenefits == Some(true) && userAnswers.anyTaxableIncome == Some(false)) {
-      Seq(incomeDetails, benefitDetails, paymentDetails, contactDetails)
-    } else if (userAnswers.anyTaxableIncome == Some(true) && userAnswers.anyBenefits == Some(false)) {
-      Seq(incomeDetails, otherIncomeDetails, paymentDetails, contactDetails)
-    } else if (userAnswers.anyTaxableIncome == Some(true) && userAnswers.anyBenefits == Some(true)) {
-      Seq(incomeDetails, benefitDetails, otherIncomeDetails, paymentDetails, contactDetails)
-    } else {
-      Seq(incomeDetails, paymentDetails, contactDetails)
-    }
+  def sections: Seq[AnswerSection] = {
+    Seq(claimSection, benefitSection, companyBenefitSection, taxableIncomeSection, paymentSection, contactSection)
   }
 
-  def incomeDetails = AnswerSection(Some("checkYourAnswers.incomeDetailsSection"), Seq(
+  def claimSection = AnswerSection(Some("checkYourAnswers.claimSection"), Seq(
     cyaHelper.selectTaxYear,
     cyaHelper.employmentDetails,
-    cyaHelper.anyBenefits,
-    cyaHelper.anyTaxableIncome
+    cyaHelper.enterPayeReference,
+    cyaHelper.detailsOfEmploymentOrPension
   ).flatten)
 
-  def paymentDetails = AnswerSection(Some("checkYourAnswers.paymentDetailsSection"), Seq(
-    cyaHelper.whereToSendPayment,
-    cyaHelper.nomineeFullName,
-    cyaHelper.anyAgentRef,
-    cyaHelper.agentReferenceNumber,
-    cyaHelper.isPaymentAddressInTheUK,
-    cyaHelper.paymentUKAddress,
-    cyaHelper.paymentInternationalAddress
-  ).flatten)
-
-  def benefitDetails = AnswerSection(Some("checkYourAnswers.benefitDetailsSection"), Seq(
+  def benefitSection = AnswerSection(Some("checkYourAnswers.benefitsSection"), Seq(
     cyaHelper.anyBenefits,
     cyaHelper.selectBenefits,
     cyaHelper.howMuchBereavementAllowance,
@@ -58,33 +42,97 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
     cyaHelper.howMuchEmploymentAndSupportAllowance,
     cyaHelper.howMuchIncapacityBenefit,
     cyaHelper.howMuchStatePension,
-    cyaHelper.anyOtherTaxableIncome,
     cyaHelper.otherBenefitsName,
-    cyaHelper.howMuchOtherBenefit
+    cyaHelper.howMuchOtherBenefit,
+    cyaHelper.anyOtherBenefits
   ).flatten)
 
-  def companyBenefitDetails = AnswerSection(Some("checkYourAnswers.companyBenefitsDetailsSection"), Seq(
-    cyaHelper.anyOtherCompanyBenefits,
+  def companyBenefitSection = AnswerSection(Some("checkYourAnswers.companyBenefitsSection"), Seq(
+    cyaHelper.anyCompanyBenefits,
     cyaHelper.selectCompanyBenefits,
     cyaHelper.howMuchCarBenefits,
     cyaHelper.howMuchFuelBenefit,
     cyaHelper.howMuchMedicalBenefits,
-    cyaHelper.anyOtherCompanyBenefits,
     cyaHelper.otherCompanyBenefitsName,
-    cyaHelper.howMuchOtherCompanyBenefit
+    cyaHelper.howMuchOtherCompanyBenefit,
+    cyaHelper.anyOtherCompanyBenefits
   ).flatten)
 
 
-  def otherIncomeDetails = AnswerSection(Some("checkYourAnswers.otherIncomeDetailsSection"), Seq(
+  def taxableIncomeSection = AnswerSection(Some("checkYourAnswers.taxableIncomeSection"), Seq(
     cyaHelper.anyTaxableIncome,
-    cyaHelper.howMuchCarBenefits,
+    cyaHelper.selectTaxableIncome,
     cyaHelper.howMuchRentalIncome,
+    cyaHelper.anyTaxPaid(
+      "anyTaxableRentalIncomeOption",
+      userAnswers.anyTaxableRentalIncome,
+      routes.AnyOtherTaxableIncomeController.onPageLoad(CheckMode).url
+    ),
+    cyaHelper.taxPaid(
+      "anyTaxableRentalIncome",
+      userAnswers.anyTaxableRentalIncome,
+      routes.AnyOtherTaxableIncomeController.onPageLoad(CheckMode).url
+    ),
     cyaHelper.howMuchBankInterest,
-    cyaHelper.howMuchMedicalBenefits,
+    cyaHelper.anyTaxPaid(
+      "anyTaxableBankInterestOption",
+      userAnswers.anyTaxableBankInterest,
+      routes.AnyTaxableBankInterestController.onPageLoad(CheckMode).url
+    ),
+    cyaHelper.taxPaid(
+      "anyTaxableBankInterest",
+      userAnswers.anyTaxableBankInterest,
+      routes.AnyTaxableBankInterestController.onPageLoad(CheckMode).url
+    ),
+    cyaHelper.howMuchInvestmentOrDividend,
+    cyaHelper.anyTaxPaid(
+      "anyTaxableInvestmentsOption",
+      userAnswers.anyTaxableInvestments,
+      routes.AnyTaxableInvestmentsController.onPageLoad(CheckMode).url
+    ),
+    cyaHelper.taxPaid(
+      "anyTaxableInvestments",
+      userAnswers.anyTaxableInvestments,
+      routes.AnyTaxableInvestmentsController.onPageLoad(CheckMode).url
+    ),
+    cyaHelper.howMuchForeignIncome,
+    cyaHelper.anyTaxPaid(
+      "anyTaxableForeignIncomeOption",
+      userAnswers.anyTaxableForeignIncome,
+      routes.AnyTaxableForeignIncomeController.onPageLoad(CheckMode).url
+    ),
+    cyaHelper.taxPaid(
+      "anyTaxableForeignIncome",
+      userAnswers.anyTaxableForeignIncome,
+      routes.AnyTaxableForeignIncomeController.onPageLoad(CheckMode).url
+    ),
+    cyaHelper.otherTaxableIncomeName,
+    cyaHelper.howMuchOtherTaxableIncome,
+    cyaHelper.anyTaxPaid(
+      "anyTaxableOtherIncomeOption",
+      userAnswers.anyTaxableOtherIncome,
+      routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode).url
+    ),
+    cyaHelper.taxPaid(
+      "anyTaxableOtherIncome",
+      userAnswers.anyTaxableOtherIncome,
+      routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode).url
+    ),
     cyaHelper.anyOtherTaxableIncome
   ).flatten)
 
-  def contactDetails = AnswerSection(Some("checkYourAnswers.contactDetailsSection"), Seq(
+  def paymentSection = AnswerSection(Some("checkYourAnswers.paymentSection"), Seq(
+    cyaHelper.whereToSendPayment,
+    cyaHelper.paymentAddressCorrect,
+    cyaHelper.nomineeFullName,
+    cyaHelper.anyAgentRef,
+    cyaHelper.agentReferenceNumber,
+    cyaHelper.isPaymentAddressInTheUK,
+    cyaHelper.paymentUKAddress,
+    cyaHelper.paymentInternationalAddress
+  ).flatten)
+
+  def contactSection = AnswerSection(Some("checkYourAnswers.contactSection"), Seq(
     cyaHelper.anyTelephoneNumber,
     cyaHelper.telephoneNumber
   ).flatten)
