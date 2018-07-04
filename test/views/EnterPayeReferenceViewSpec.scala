@@ -47,7 +47,7 @@ class EnterPayeReferenceViewSpec extends StringViewBehaviours with MockitoSugar 
       createView = createViewUsingForm,
       messageKeyPrefix = messageKeyPrefix,
       expectedFormAction = routes.EnterPayeReferenceController.onSubmit(NormalMode).url,
-      expectedHintKeyLine1 = None,
+      expectedHintKeyLine1 = Some("enterPayeReference.hint"),
       expectedHintKeyLine2 = None,
       expectedPrefix = None
     )
