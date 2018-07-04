@@ -48,7 +48,7 @@ class OtherBenefitsNameController @Inject()(
     implicit request =>
       val preparedForm = request.userAnswers.otherBenefitsName match {
         case None => form
-        case Some(value) => form.fill(value)
+        case Some(value) => form.fill(value(index))
       }
 
       request.userAnswers.selectTaxYear.map {

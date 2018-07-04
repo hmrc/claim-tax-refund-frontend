@@ -17,6 +17,7 @@
 package utils
 
 import base.SpecBase
+import controllers.routes
 import models.SelectTaxYear._
 import models.WhereToSendPayment._
 import models._
@@ -24,20 +25,12 @@ import org.mockito.Mockito.when
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.mockito.MockitoSugar
 import play.api.i18n.Messages
-import viewmodels.AnswerRow
 
 class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeAndAfterEach {
 
-  private var answers = mock[UserAnswers]
-  private var answerRow = mock[AnswerRow]
-  private var helper = new CheckYourAnswersHelper(answers)(messages: Messages)
+  private val answers = MockUserAnswers.nothingAnswered
+  private val helper = new CheckYourAnswersHelper(answers)(messages: Messages)
 
-
-  override def beforeEach = {
-    super.beforeEach()
-    answers = MockUserAnswers.nothingAnswered
-    helper = new CheckYourAnswersHelper(answers)(messages: Messages)
-  }
 
   "Change link" must {
     "be shown when set to true" in {
@@ -51,13 +44,8 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     }
   }
 
-  "Telephone number" must {
-    s"have the correct label" in {
-      when(answers.anyTelephoneNumber) thenReturn Some(TelephoneOption.Yes("0191123123"))
-      helper.anyTelephoneNumber.get.label.key mustBe s"telephoneNumberOption.checkYourAnswersLabel"
-      helper.telephoneNumber.get.label.key mustBe s"telephoneNumber.checkYourAnswersLabel"
-    }
-  }
+  //Claim details
+  //------------------------------------------------------------------------------
 
   "Select current year minus 1" must {
     s"have correct label" in {
@@ -108,117 +96,370 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     }
   }
 
-  "Is any benefits (true)" must {
+  "Enter PAYE Ref" must {
+    s"have correct label" in {
+      when(answers.enterPayeReference) thenReturn Some("AB12345")
+      helper.enterPayeReference.get.label.key mustBe s"enterPayeReference.checkYourAnswersLabel"
+    }
+  }
+
+  "Details of employment or pension" must {
+    s"have correct label" in {
+      when(answers.detailsOfEmploymentOrPension) thenReturn Some("Details of employment or pension")
+      helper.detailsOfEmploymentOrPension.get.label.key mustBe s"detailsOfEmploymentOrPension.checkYourAnswersLabel"
+    }
+  }
+
+  //Benefits details
+  //------------------------------------------------------------------------------
+
+  "Any benefits (true)" must {
     s"have the correct label" in {
       when(answers.anyBenefits) thenReturn Some(true)
       helper.anyBenefits.get.label.key mustBe s"anyBenefits.checkYourAnswersLabel"
     }
   }
 
-  "Is any benefits (false)" must {
+  "Any benefits (false)" must {
     s"have the correct label" in {
       when(answers.anyBenefits) thenReturn Some(false)
       helper.anyBenefits.get.label.key mustBe s"anyBenefits.checkYourAnswersLabel"
     }
   }
 
-  "Is other income (true)" must {
-    s"have the correct label" in {
-      when(answers.anyTaxableIncome) thenReturn Some(true)
-      helper.anyTaxableIncome.get.label.key mustBe s"anyTaxableIncome.checkYourAnswersLabel"
+  "selectBenefits" must {
+    s"have correct label" in {
+      when(answers.selectBenefits) thenReturn Some(
+        Seq(
+          Benefits.BEREAVEMENT_ALLOWANCE,
+          Benefits.CARERS_ALLOWANCE,
+          Benefits.JOBSEEKERS_ALLOWANCE,
+          Benefits.INCAPACITY_BENEFIT,
+          Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE,
+          Benefits.STATE_PENSION,
+          Benefits.OTHER_TAXABLE_BENEFIT
+        ))
+      helper.selectBenefits.get.label.key mustBe s"selectBenefits.checkYourAnswersLabel"
     }
   }
 
-  "Is other income (false)" must {
+  "howMuchBereavementAllowance" must {
     s"have the correct label" in {
-      when(answers.anyTaxableIncome) thenReturn Some(false)
-      helper.anyTaxableIncome.get.label.key mustBe s"anyTaxableIncome.checkYourAnswersLabel"
+      when(answers.howMuchBereavementAllowance) thenReturn Some("1234")
+      helper.howMuchBereavementAllowance.get.label.key mustBe s"howMuchBereavementAllowance.checkYourAnswersLabel"
     }
   }
 
-  "How much jobseekers allowance" must {
+  "howMuchCarersAllowance" must {
     s"have the correct label" in {
-      when(answers.howMuchJobseekersAllowance) thenReturn Some("9,999.99")
+      when(answers.howMuchCarersAllowance) thenReturn Some("1234")
+      helper.howMuchCarersAllowance.get.label.key mustBe s"howMuchCarersAllowance.checkYourAnswersLabel"
+    }
+  }
+
+  "howMuchJobseekersAllowance" must {
+    s"have the correct label" in {
+      when(answers.howMuchJobseekersAllowance) thenReturn Some("1234")
       helper.howMuchJobseekersAllowance.get.label.key mustBe s"howMuchJobseekersAllowance.checkYourAnswersLabel"
     }
   }
 
-  "How much incapacity benefit" must {
+  "howMuchIncapacityBenefit" must {
     s"have the correct label" in {
-      when(answers.howMuchIncapacityBenefit) thenReturn Some("9,999.99")
+      when(answers.howMuchIncapacityBenefit) thenReturn Some("1234")
       helper.howMuchIncapacityBenefit.get.label.key mustBe s"howMuchIncapacityBenefit.checkYourAnswersLabel"
     }
   }
 
-  "How much employment and support allowance" must {
+  "howMuchEmploymentAndSupportAllowance" must {
     s"have the correct label" in {
-      when(answers.howMuchEmploymentAndSupportAllowance) thenReturn Some("9,999.99")
+      when(answers.howMuchEmploymentAndSupportAllowance) thenReturn Some("1234")
       helper.howMuchEmploymentAndSupportAllowance.get.label.key mustBe s"howMuchEmploymentAndSupportAllowance.checkYourAnswersLabel"
     }
   }
 
-  "How much state pension" must {
+  "howMuchStatePension" must {
     s"have the correct label" in {
-      when(answers.howMuchStatePension) thenReturn Some("9,999.99")
+      when(answers.howMuchStatePension) thenReturn Some("1234")
       helper.howMuchStatePension.get.label.key mustBe s"howMuchStatePension.checkYourAnswersLabel"
     }
   }
 
-  "Is anyOtherBenefits (true)" must {
+  "otherBenefitsName" must {
+    s"have the correct label" in {
+      when(answers.otherBenefitsName) thenReturn Some(Seq("Other benefit"))
+      helper.otherBenefitsName(1).head.label.key mustBe s"otherBenefitsName.checkYourAnswersLabel"
+    }
+  }
+
+  "howMuchOtherBenefit" must {
+    s"have the correct label" in {
+      when(answers.howMuchOtherBenefit) thenReturn Some("1234")
+      helper.howMuchOtherBenefit.get.label.key mustBe s"howMuchOtherBenefit.checkYourAnswersLabel"
+    }
+  }
+
+  "anyOtherBenefits (yes)" must {
     s"have the correct label" in {
       when(answers.anyOtherBenefits) thenReturn Some(true)
       helper.anyOtherBenefits.get.label.key mustBe s"anyOtherBenefits.checkYourAnswersLabel"
     }
   }
 
-  "Is anyOtherBenefits (false)" must {
+  "anyOtherBenefits (no)" must {
     s"have the correct label" in {
       when(answers.anyOtherBenefits) thenReturn Some(false)
       helper.anyOtherBenefits.get.label.key mustBe s"anyOtherBenefits.checkYourAnswersLabel"
     }
   }
 
-  "How much car benefits" must {
+  //Company benefits details
+  //------------------------------------------------------------------------------
+
+  "Any company benefit (true)" must {
     s"have the correct label" in {
-      when(answers.howMuchCarBenefits) thenReturn Some("9,999.99")
+      when(answers.anyCompanyBenefits) thenReturn Some(true)
+      helper.anyCompanyBenefits.get.label.key mustBe s"anyCompanyBenefits.checkYourAnswersLabel"
+    }
+  }
+
+  "Any company benefit (false)" must {
+    s"have the correct label" in {
+      when(answers.anyCompanyBenefits) thenReturn Some(false)
+      helper.anyCompanyBenefits.get.label.key mustBe s"anyCompanyBenefits.checkYourAnswersLabel"
+    }
+  }
+
+  "selectCompanyBenefits" must {
+    s"have correct label" in {
+      when(answers.selectCompanyBenefits) thenReturn Some(
+        Seq(
+          CompanyBenefits.COMPANY_CAR_BENEFIT,
+          CompanyBenefits.FUEL_BENEFIT,
+          CompanyBenefits.MEDICAL_BENEFIT,
+          CompanyBenefits.OTHER_COMPANY_BENEFIT
+        ))
+      helper.selectCompanyBenefits.get.label.key mustBe s"selectCompanyBenefits.checkYourAnswersLabel"
+    }
+  }
+
+  "howMuchCarBenefits" must {
+    s"have the correct label" in {
+      when(answers.howMuchCarBenefits) thenReturn Some("1234")
       helper.howMuchCarBenefits.get.label.key mustBe s"howMuchCarBenefits.checkYourAnswersLabel"
     }
   }
 
-  "How much rental income" must {
+  "howMuchFuelBenefit" must {
     s"have the correct label" in {
-      when(answers.howMuchRentalIncome) thenReturn Some("9,999.99")
-      helper.howMuchRentalIncome.get.label.key mustBe s"howMuchRentalIncome.checkYourAnswersLabel"
+      when(answers.howMuchFuelBenefit) thenReturn Some("1234")
+      helper.howMuchFuelBenefit.get.label.key mustBe s"howMuchFuelBenefit.checkYourAnswersLabel"
     }
   }
 
-  "How much bank building society interest" must {
+  "howMuchMedicalBenefits" must {
     s"have the correct label" in {
-      when(answers.howMuchBankInterest) thenReturn Some("9,999.99")
-      helper.howMuchBankInterest.get.label.key mustBe s"howMuchBankInterest.checkYourAnswersLabel"
-    }
-  }
-
-  "How much medical benefits" must {
-    s"have the correct label" in {
-      when(answers.howMuchMedicalBenefits) thenReturn Some("9,999.99")
+      when(answers.howMuchMedicalBenefits) thenReturn Some("1234")
       helper.howMuchMedicalBenefits.get.label.key mustBe s"howMuchMedicalBenefits.checkYourAnswersLabel"
     }
   }
 
-  "Is anyOtherTaxableIncome (true)" must {
+  "otherCompanyBenefitsName" must {
     s"have the correct label" in {
-      when(answers.anyOtherTaxableIncome) thenReturn Some(true)
-      helper.anyOtherTaxableIncome.get.label.key mustBe s"anyOtherTaxableIncome.checkYourAnswersLabel"
+      when(answers.otherCompanyBenefitsName) thenReturn Some("Benefit name")
+      helper.otherCompanyBenefitsName.get.label.key mustBe s"otherCompanyBenefitsName.checkYourAnswersLabel"
     }
   }
 
-  "Is anyOtherTaxableIncome (false)" must {
+  "howMuchOtherCompanyBenefit" must {
     s"have the correct label" in {
-      when(answers.anyOtherTaxableIncome) thenReturn Some(false)
-      helper.anyOtherTaxableIncome.get.label.key mustBe s"anyOtherTaxableIncome.checkYourAnswersLabel"
+      when(answers.howMuchOtherCompanyBenefit) thenReturn Some("Benefit name")
+      helper.howMuchOtherCompanyBenefit.get.label.key mustBe s"howMuchOtherCompanyBenefit.checkYourAnswersLabel"
     }
   }
+
+  "anyOtherCompanyBenefits (yes)" must {
+    s"have the correct label" in {
+      when(answers.anyOtherCompanyBenefits) thenReturn Some(true)
+      helper.anyOtherCompanyBenefits.get.label.key mustBe s"anyOtherCompanyBenefits.checkYourAnswersLabel"
+    }
+  }
+
+  "anyOtherCompanyBenefits (no)" must {
+    s"have the correct label" in {
+      when(answers.anyOtherCompanyBenefits) thenReturn Some(false)
+      helper.anyOtherCompanyBenefits.get.label.key mustBe s"anyOtherCompanyBenefits.checkYourAnswersLabel"
+    }
+  }
+
+  //Taxable income details
+  //------------------------------------------------------------------------------
+
+  "Any taxable income (true)" must {
+    s"have the correct label" in {
+      when(answers.anyTaxableIncome) thenReturn Some(true)
+      helper.anyTaxableIncome.get.label.key mustBe s"anyTaxableIncome.checkYourAnswersLabel"
+    }
+  }
+
+  "Any taxable income (false)" must {
+    s"have the correct label" in {
+      when(answers.anyTaxableIncome) thenReturn Some(false)
+      helper.anyTaxableIncome.get.label.key mustBe s"anyTaxableIncome.checkYourAnswersLabel"
+    }
+  }
+
+  "selectTaxableIncome" must {
+    s"have correct label" in {
+      when(answers.selectTaxableIncome) thenReturn Some(
+        Seq(
+          TaxableIncome.RENTAL_INCOME,
+          TaxableIncome.BANK_OR_BUILDING_SOCIETY_INTEREST,
+          TaxableIncome.INVESTMENT_OR_DIVIDENDS,
+          TaxableIncome.FOREIGN_INCOME,
+          TaxableIncome.OTHER_TAXABLE_INCOME
+        ))
+      helper.selectTaxableIncome.get.label.key mustBe s"selectTaxableIncome.checkYourAnswersLabel"
+    }
+  }
+
+
+
+  "howMuchRentalIncome" must {
+    s"have correct label" in {
+      when(answers.howMuchRentalIncome) thenReturn Some("123")
+      helper.howMuchRentalIncome.get.label.key mustBe s"howMuchRentalIncome.checkYourAnswersLabel"
+    }
+  }
+
+  "anyTaxableRentalIncome" must {
+    val labelOption = "anyTaxableRentalIncomeOption"
+    val label = "anyTaxableRentalIncome"
+    val route = routes.AnyTaxableRentalIncomeController.onPageLoad(CheckMode).url
+
+    s"have correct label (yes)" in {
+      when(answers.anyTaxableRentalIncome) thenReturn Some(AnyTaxPaid.Yes("123"))
+      val answer = answers.anyTaxableRentalIncome
+      helper.anyTaxPaid(labelOption, answer, route).get.label.key mustBe s"$labelOption.checkYourAnswersLabel"
+      helper.taxPaid(label, answer, route).get.label.key mustBe s"$label.checkYourAnswersLabel"
+    }
+    s"have correct label (no)" in {
+      when(answers.anyTaxableRentalIncome) thenReturn Some(AnyTaxPaid.No)
+      val answer = answers.anyTaxableRentalIncome
+      helper.anyTaxPaid(labelOption, answer, route).get.label.key mustBe s"$labelOption.checkYourAnswersLabel"
+    }
+  }
+
+  "howMuchBankInterest" must {
+    s"have correct label" in {
+      when(answers.howMuchBankInterest) thenReturn Some("123")
+      helper.howMuchBankInterest.get.label.key mustBe s"howMuchBankInterest.checkYourAnswersLabel"
+    }
+  }
+
+  "anyTaxableBankInterest" must {
+    val labelOption = "anyTaxableBankInterestOption"
+    val label = "anyTaxableBankInterest"
+    val route = routes.AnyTaxableBankInterestController.onPageLoad(CheckMode).url
+
+    s"have correct label (yes)" in {
+      when(answers.anyTaxableBankInterest) thenReturn Some(AnyTaxPaid.Yes("123"))
+      val answer = answers.anyTaxableBankInterest
+      helper.anyTaxPaid(labelOption, answer, route).get.label.key mustBe s"$labelOption.checkYourAnswersLabel"
+      helper.taxPaid(label, answer, route).get.label.key mustBe s"$label.checkYourAnswersLabel"
+    }
+    s"have correct label (no)" in {
+      when(answers.anyTaxableBankInterest) thenReturn Some(AnyTaxPaid.No)
+      val answer = answers.anyTaxableBankInterest
+      helper.anyTaxPaid(labelOption, answer, route).get.label.key mustBe s"$labelOption.checkYourAnswersLabel"
+    }
+  }
+
+  "howMuchInvestmentOrDividend" must {
+    s"have correct label" in {
+      when(answers.howMuchInvestmentOrDividend) thenReturn Some("123")
+      helper.howMuchInvestmentOrDividend.get.label.key mustBe s"howMuchInvestmentOrDividend.checkYourAnswersLabel"
+    }
+  }
+
+  "anyTaxableInvestments" must {
+    val labelOption = "anyTaxableInvestmentsOption"
+    val label = "anyTaxableInvestments"
+    val route = routes.AnyTaxableInvestmentsController.onPageLoad(CheckMode).url
+
+    s"have correct label (yes)" in {
+      when(answers.anyTaxableInvestments) thenReturn Some(AnyTaxPaid.Yes("123"))
+      val answer = answers.anyTaxableInvestments
+      helper.anyTaxPaid(labelOption, answer, route).get.label.key mustBe s"$labelOption.checkYourAnswersLabel"
+      helper.taxPaid(label, answer, route).get.label.key mustBe s"$label.checkYourAnswersLabel"
+    }
+    s"have correct label (no)" in {
+      when(answers.anyTaxableBankInterest) thenReturn Some(AnyTaxPaid.No)
+      val answer = answers.anyTaxableBankInterest
+      helper.anyTaxPaid(labelOption, answer, route).get.label.key mustBe s"$labelOption.checkYourAnswersLabel"
+    }
+  }
+
+  "howMuchForeignIncome" must {
+    s"have correct label" in {
+      when(answers.howMuchForeignIncome) thenReturn Some("123")
+      helper.howMuchForeignIncome.get.label.key mustBe s"howMuchForeignIncome.checkYourAnswersLabel"
+    }
+  }
+
+  "anyTaxableForeignIncome" must {
+    val labelOption = "anyTaxableForeignIncomeOption"
+    val label = "anyTaxableForeignIncome"
+    val route = routes.AnyTaxableForeignIncomeController.onPageLoad(CheckMode).url
+
+    s"have correct label (yes)" in {
+      when(answers.anyTaxableForeignIncome) thenReturn Some(AnyTaxPaid.Yes("123"))
+      val answer = answers.anyTaxableForeignIncome
+      helper.anyTaxPaid(labelOption, answer, route).get.label.key mustBe s"$labelOption.checkYourAnswersLabel"
+      helper.taxPaid(label, answer, route).get.label.key mustBe s"$label.checkYourAnswersLabel"
+    }
+    s"have correct label (no)" in {
+      when(answers.anyTaxableForeignIncome) thenReturn Some(AnyTaxPaid.No)
+      val answer = answers.anyTaxableForeignIncome
+      helper.anyTaxPaid(labelOption, answer, route).get.label.key mustBe s"$labelOption.checkYourAnswersLabel"
+    }
+  }
+
+  "otherTaxableIncomeName" must {
+    s"have correct label" in {
+      when(answers.otherTaxableIncomeName) thenReturn Some("Other taxable income")
+      helper.otherTaxableIncomeName.get.label.key mustBe s"otherTaxableIncomeName.checkYourAnswersLabel"
+    }
+  }
+
+  "howMuchOtherTaxableIncome" must {
+    s"have correct label" in {
+      when(answers.howMuchOtherTaxableIncome) thenReturn Some("123")
+      helper.howMuchOtherTaxableIncome.get.label.key mustBe s"howMuchOtherTaxableIncome.checkYourAnswersLabel"
+    }
+  }
+
+  "anyTaxableOtherIncome" must {
+    val labelOption = "anyTaxableOtherIncomeOption"
+    val label = "anyTaxableOtherIncome"
+    val route = routes.AnyOtherTaxableIncomeController.onPageLoad(CheckMode).url
+
+    s"have correct label (yes)" in {
+      when(answers.anyTaxableOtherIncome) thenReturn Some(AnyTaxPaid.Yes("123"))
+      val answer = answers.anyTaxableOtherIncome
+      helper.anyTaxPaid(labelOption, answer, route).get.label.key mustBe s"$labelOption.checkYourAnswersLabel"
+      helper.taxPaid(label, answer, route).get.label.key mustBe s"$label.checkYourAnswersLabel"
+    }
+    s"have correct label (no)" in {
+      when(answers.anyTaxableOtherIncome) thenReturn Some(AnyTaxPaid.No)
+      val answer = answers.anyTaxableOtherIncome
+      helper.anyTaxPaid(labelOption, answer, route).get.label.key mustBe s"$labelOption.checkYourAnswersLabel"
+    }
+  }
+
+
+  //Payment details
+  //------------------------------------------------------------------------------
 
   "Is WhereToSendPayment yourself" must {
     s"have the correct label" in {
@@ -227,14 +468,28 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     }
   }
 
-  "Is WhereToSendPayment someone else" must {
+  "Is WhereToSendPayment nominee else" must {
     s"have the correct label" in {
       when(answers.whereToSendPayment) thenReturn Some(Nominee)
       helper.whereToSendPayment.get.label.key mustBe s"whereToSendPayment.checkYourAnswersLabel"
     }
   }
 
-  "Nominee Full Name" must {
+  "Payment address correct (yes)" must {
+    s"have the correct label" in {
+      when(answers.paymentAddressCorrect) thenReturn Some(true)
+      helper.paymentAddressCorrect.get.label.key mustBe s"paymentAddressCorrect.checkYourAnswersLabel"
+    }
+  }
+
+  "Payment address correct (no)" must {
+    s"have the correct label" in {
+      when(answers.paymentAddressCorrect) thenReturn Some(false)
+      helper.paymentAddressCorrect.get.label.key mustBe s"paymentAddressCorrect.checkYourAnswersLabel"
+    }
+  }
+
+  "Nominee name" must {
     s"have the correct label" in {
       when(answers.nomineeFullName) thenReturn Some("Test name")
       helper.nomineeFullName.get.label.key mustBe s"nomineeFullName.checkYourAnswersLabel"
@@ -244,14 +499,15 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "Is anyAgentRef (true)" must {
     s"have the correct label" in {
       when(answers.anyAgentRef) thenReturn Some(AnyAgentRef.Yes("AB12345"))
-      helper.anyAgentRef.get.label.key mustBe s"anyAgentRef.checkYourAnswersLabel"
+      helper.anyAgentRef.get.label.key mustBe s"anyAgentRefOption.checkYourAnswersLabel"
+      helper.agentReferenceNumber.get.label.key mustBe s"anyAgentRef.checkYourAnswersLabel"
     }
   }
 
   "Is anyAgentRef (false)" must {
     s"have the correct label" in {
       when(answers.anyAgentRef) thenReturn Some(AnyAgentRef.No)
-      helper.anyAgentRef.get.label.key mustBe s"anyAgentRef.checkYourAnswersLabel"
+      helper.anyAgentRef.get.label.key mustBe s"anyAgentRefOption.checkYourAnswersLabel"
     }
   }
 
@@ -269,6 +525,13 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     }
   }
 
+  "Payment UK Address" must {
+    s"have correct label" in {
+      when(answers.paymentUKAddress) thenReturn Some(UkAddress("line 1", "line 2", None, None, None, "AA11 1AA"))
+      helper.paymentUKAddress.get.label.key mustBe s"paymentUKAddress.checkYourAnswersLabel"
+    }
+  }
+
   "Payment International Address" must {
     s"have correct label" in {
       when(answers.paymentInternationalAddress) thenReturn Some(InternationalAddress("line 1", "line 2", None, None, None, "country"))
@@ -276,10 +539,21 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     }
   }
 
-  "Payment UK Address" must {
-    s"have correct label" in {
-      when(answers.paymentUKAddress) thenReturn Some(UkAddress("line 1", "line 2", None, None, None, "AA11 1AA"))
-      helper.paymentUKAddress.get.label.key mustBe s"paymentUKAddress.checkYourAnswersLabel"
+  //Contact details
+  //------------------------------------------------------------------------------
+
+  "Telephone number (yes)" must {
+    s"have the correct label" in {
+      when(answers.anyTelephoneNumber) thenReturn Some(TelephoneOption.Yes("0191123123"))
+      helper.anyTelephoneNumber.get.label.key mustBe s"telephoneNumberOption.checkYourAnswersLabel"
+      helper.telephoneNumber.get.label.key mustBe s"telephoneNumber.checkYourAnswersLabel"
+    }
+  }
+
+  "Telephone number (no)" must {
+    s"have the correct label" in {
+      when(answers.anyTelephoneNumber) thenReturn Some(TelephoneOption.No)
+      helper.anyTelephoneNumber.get.label.key mustBe s"telephoneNumberOption.checkYourAnswersLabel"
     }
   }
 

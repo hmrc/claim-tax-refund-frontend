@@ -20,7 +20,7 @@ import config.FrontendAppConfig
 import play.api.data.Form
 import controllers.routes
 import forms.OtherBenefitsNameForm
-import models.NormalMode
+import models.{Index, NormalMode}
 import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
 import play.api.i18n.Messages
@@ -30,7 +30,6 @@ import views.html.otherBenefitsName
 class OtherBenefitsNameViewSpec(implicit messages: Messages) extends StringViewBehaviours with MockitoSugar {
 
   val messageKeyPrefix = "otherBenefitsName"
-
   private val taxYear = CYMinus2
 
   val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
@@ -48,6 +47,6 @@ class OtherBenefitsNameViewSpec(implicit messages: Messages) extends StringViewB
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.OtherBenefitsNameController.onSubmit(NormalMode).url)
+    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.OtherBenefitsNameController.onSubmit(NormalMode, 1).url)
   }
 }

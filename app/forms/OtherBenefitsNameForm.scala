@@ -19,6 +19,7 @@ package forms
 import com.google.inject.Inject
 import config.FrontendAppConfig
 import forms.mappings.{Constraints, Mappings}
+import models.Index
 import play.api.data.Form
 
 class OtherBenefitsNameForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Mappings with Constraints {
