@@ -17,9 +17,8 @@
 package utils
 
 import javax.inject.Singleton
-
 import identifiers._
-import models.{Benefits, CompanyBenefits, TaxableIncome}
+import models.{Benefits, CompanyBenefits, OtherBenefit, TaxableIncome}
 import play.api.libs.json._
 import uk.gov.hmrc.http.cache.client.CacheMap
 
@@ -145,14 +144,14 @@ class CascadeUpsert {
     store(SelectCompanyBenefitsId.toString, selectedBenefits, mapToStore)
   }
 
-  private def storeTaxableIncome(selectedBenefits: JsValue, cacheMap: CacheMap): CacheMap = {
+  private def storeTaxableIncome(selectedIncome: JsValue, cacheMap: CacheMap): CacheMap = {
 
     val mapToStore = cacheMap.data.get(SelectTaxableIncomeId.toString).map {
       _.as[JsArray].value.foldLeft(cacheMap) {
-        (cm, benefit) =>
-          if (!selectedBenefits.as[JsArray].value.contains(benefit) && benefit != JsString(TaxableIncome.OTHER_TAXABLE_INCOME.toString)) {
-            cm copy (data = cacheMap.data - (TaxableIncome.getIdString(benefit.as[String])._1, TaxableIncome.getIdString(benefit.as[String])._2))
-          } else if (!selectedBenefits.as[JsArray].value.contains(JsString(TaxableIncome.OTHER_TAXABLE_INCOME.toString))) {
+        (cm, income) =>
+          if (!selectedIncome.as[JsArray].value.contains(income) && income != JsString(TaxableIncome.OTHER_TAXABLE_INCOME.toString)) {
+            cm copy (data = cacheMap.data - (TaxableIncome.getIdString(income.as[String])._1, TaxableIncome.getIdString(income.as[String])._2))
+          } else if (!selectedIncome.as[JsArray].value.contains(JsString(TaxableIncome.OTHER_TAXABLE_INCOME.toString))) {
             cm copy (data = cacheMap.data - (OtherTaxableIncomeNameId.toString, HowMuchOtherTaxableIncomeId.toString, AnyOtherTaxableIncomeId.toString))
           } else {
             cm
@@ -160,6 +159,6 @@ class CascadeUpsert {
       }
     }.getOrElse(cacheMap)
 
-    store(SelectTaxableIncomeId.toString, selectedBenefits, mapToStore)
+    store(SelectTaxableIncomeId.toString, selectedIncome, mapToStore)
   }
 }

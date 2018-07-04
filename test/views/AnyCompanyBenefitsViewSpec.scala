@@ -16,13 +16,13 @@
 
 package views
 
-import play.api.data.Form
 import controllers.routes
 import forms.BooleanForm
-import views.behaviours.YesNoViewBehaviours
-import models.{Benefits, NormalMode}
+import models.NormalMode
 import models.SelectTaxYear.CYMinus2
+import play.api.data.Form
 import play.api.i18n.Messages
+import views.behaviours.YesNoViewBehaviours
 import views.html.anyCompanyBenefits
 
 class AnyCompanyBenefitsViewSpec(implicit messages: Messages) extends YesNoViewBehaviours {

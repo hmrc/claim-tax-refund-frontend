@@ -25,7 +25,7 @@ import controllers.actions._
 import config.FrontendAppConfig
 import forms.OtherBenefitsNameForm
 import identifiers.OtherBenefitsNameId
-import models.Mode
+import models.{Index, Mode}
 import play.api.mvc.{Action, AnyContent}
 import utils.{Navigator, UserAnswers}
 import views.html.otherBenefitsName
@@ -44,7 +44,7 @@ class OtherBenefitsNameController @Inject()(
 
   private val form: Form[String] = formBuilder()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.otherBenefitsName match {
         case None => form
@@ -60,7 +60,7 @@ class OtherBenefitsNameController @Inject()(
       }
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>

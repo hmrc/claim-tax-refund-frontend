@@ -18,13 +18,12 @@ package forms
 
 import com.google.inject.Inject
 import config.FrontendAppConfig
-import forms.mappings.Constraints
+import forms.mappings.{Constraints, Mappings}
 import play.api.data.Form
-import play.api.data.Forms._
 
-class OtherBenefitsNameForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
+class OtherBenefitsNameForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Mappings with Constraints {
 
   private val errorBlankKey = "otherBenefitsName.blank"
 
-  def apply(): Form[String] = Form("value" -> text.verifying(nonEmpty(errorBlankKey)))
+  def apply(): Form[String] = Form("value" -> text(errorBlankKey))
 }
