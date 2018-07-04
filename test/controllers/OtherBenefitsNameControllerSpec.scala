@@ -41,7 +41,7 @@ class OtherBenefitsNameControllerSpec extends ControllerSpecBase {
     new OtherBenefitsNameController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, new OtherBenefitsNameForm(frontendAppConfig))
 
-  def viewAsString(form: Form[_] = form): String = otherBenefitsName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = form): String = otherBenefitsName(frontendAppConfig, form, NormalMode, 1, taxYear)(fakeRequest, messages).toString
 
   "OtherBenefitsName Controller" must {
 
