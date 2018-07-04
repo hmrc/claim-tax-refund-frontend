@@ -36,9 +36,9 @@ class OtherBenefitsNameViewSpec(implicit messages: Messages) extends StringViewB
 
   override val form: Form[String] = new OtherBenefitsNameForm(appConfig)()
 
-  def createView = () => otherBenefitsName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createView = () => otherBenefitsName(frontendAppConfig, form, NormalMode, 1, taxYear)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) => otherBenefitsName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[String]) => otherBenefitsName(frontendAppConfig, form, NormalMode, 1, taxYear)(fakeRequest, messages)
 
   "OtherBenefitsName view" must {
     behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, s"${taxYear.asString}?")

@@ -16,17 +16,17 @@
 
 package controllers
 
-import javax.inject.Inject
-import play.api.data.Form
-import play.api.i18n.{I18nSupport, MessagesApi}
-import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
-import config.FrontendAppConfig
 import forms.OtherBenefitsNameForm
 import identifiers.OtherBenefitsNameId
+import javax.inject.Inject
 import models.{Index, Mode}
+import play.api.data.Form
+import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
+import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import utils.{Navigator, UserAnswers}
 import views.html.otherBenefitsName
 
@@ -54,7 +54,7 @@ class OtherBenefitsNameController @Inject()(
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
           val taxYear = selectedTaxYear
-          Ok(otherBenefitsName(appConfig, preparedForm, mode, taxYear))
+          Ok(otherBenefitsName(appConfig, preparedForm, mode, index, taxYear))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
@@ -67,9 +67,9 @@ class OtherBenefitsNameController @Inject()(
           val taxYear = selectedTaxYear
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(otherBenefitsName(appConfig, formWithErrors, mode, taxYear))),
+              Future.successful(BadRequest(otherBenefitsName(appConfig, formWithErrors, mode, index, taxYear))),
             value =>
-              dataCacheConnector.save[String](request.externalId, OtherBenefitsNameId.toString, value).map(cacheMap =>
+              dataCacheConnector.save[Seq[String]](request.externalId, OtherBenefitsNameId.toString, Seq(value)).map(cacheMap =>
                 Redirect(navigator.nextPage(OtherBenefitsNameId, mode)(new UserAnswers(cacheMap))))
           )
       }.getOrElse {
