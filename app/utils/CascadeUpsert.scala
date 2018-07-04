@@ -16,9 +16,9 @@
 
 package utils
 
-import javax.inject.Singleton
 import identifiers._
-import models.{Benefits, CompanyBenefits, OtherBenefit, TaxableIncome}
+import javax.inject.Singleton
+import models.{Benefits, CompanyBenefits, TaxableIncome}
 import play.api.libs.json._
 import uk.gov.hmrc.http.cache.client.CacheMap
 

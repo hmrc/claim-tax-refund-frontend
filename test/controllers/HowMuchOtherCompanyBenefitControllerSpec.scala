@@ -35,7 +35,7 @@ class HowMuchOtherCompanyBenefitControllerSpec extends ControllerSpecBase {
   val form = new HowMuchOtherCompanyBenefitForm(frontendAppConfig)()
   private val taxYear = CYMinus2
   private val otherBenefitName = "test benefit"
-  private val mockUserAnswers = MockUserAnswers.yourDetailsUserAnswers
+  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new HowMuchOtherCompanyBenefitController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,

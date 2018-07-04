@@ -19,7 +19,7 @@ package utils
 import base.SpecBase
 import controllers.routes
 import identifiers._
-import models.{Benefits, NormalMode}
+import models.{Benefits, Index, NormalMode}
 import org.mockito.Mockito._
 import org.scalatest.mockito.MockitoSugar
 
@@ -132,7 +132,7 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
             )
           )
 
-          navigator.nextPage(SelectBenefitsId, NormalMode)(answers) mustBe routes.OtherBenefitsNameController.onPageLoad(NormalMode)
+          navigator.nextPage(SelectBenefitsId, NormalMode)(answers) mustBe routes.OtherBenefitsNameController.onPageLoad(NormalMode, 1)
         }
       }
 
@@ -170,7 +170,7 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
         "go to OtherBenefitsName if this option was selected on SelectBenefits" in {
           val answers = mock[UserAnswers]
           when(answers.selectBenefits) thenReturn Some(Seq(Benefits.OTHER_TAXABLE_BENEFIT))
-          navigator.nextPage(HowMuchBereavementAllowanceId, NormalMode)(answers) mustBe routes.OtherBenefitsNameController.onPageLoad(NormalMode)
+          navigator.nextPage(HowMuchBereavementAllowanceId, NormalMode)(answers) mustBe routes.OtherBenefitsNameController.onPageLoad(NormalMode, 1)
         }
 
       }
@@ -221,7 +221,7 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
       "go to OtherBenefitsName from AnyOtherBenefits when answer is yes" in {
         val answers = mock[UserAnswers]
         when(answers.anyOtherBenefits) thenReturn Some(true)
-        navigator.nextPage(AnyOtherBenefitsId, NormalMode)(answers) mustBe routes.OtherBenefitsNameController.onPageLoad(NormalMode)
+        navigator.nextPage(AnyOtherBenefitsId, NormalMode)(answers) mustBe routes.OtherBenefitsNameController.onPageLoad(NormalMode, 1)
       }
     }
   }
