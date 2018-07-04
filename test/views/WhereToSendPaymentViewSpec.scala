@@ -24,14 +24,14 @@ import views.html.whereToSendPayment
 
 class WhereToSendPaymentViewSpec extends ViewBehaviours {
 
-  val messageKeyPrefix = "whereToSendPayment"
+  private val messageKeyPrefix = "whereToSendPayment"
 
   def createView = () => whereToSendPayment(frontendAppConfig, WhereToSendPaymentForm(), NormalMode)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[_]) => whereToSendPayment(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
   "WhereToSendPayment view" must {
-    behave like normalPage(createView, messageKeyPrefix)
+    behave like normalPage(createView, messageKeyPrefix, None)
 
     behave like pageWithBackLink(createView)
 

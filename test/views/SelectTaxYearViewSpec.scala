@@ -26,7 +26,7 @@ import views.html.selectTaxYear
 
 class SelectTaxYearViewSpec extends ViewBehaviours {
 
-  val messageKeyPrefix = "selectTaxYear"
+  private val messageKeyPrefix = "selectTaxYear"
 
   def createView = () => selectTaxYear(frontendAppConfig, SelectTaxYearForm(), NormalMode)(fakeRequest, messages)
 
@@ -36,7 +36,7 @@ class SelectTaxYearViewSpec extends ViewBehaviours {
 
 
   "SelectTaxYear view" must {
-    behave like normalPage(createView, messageKeyPrefix)
+    behave like normalPage(createView, messageKeyPrefix, None)
 
     behave like pageWithBackLink(createView)
 

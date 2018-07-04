@@ -24,7 +24,7 @@
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, nomineeName: String)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("anyAgentRef.title", s"$nomineeName"),
+    title = messages("anyAgentRef.title", nomineeName),
     appConfig = appConfig,
     bodyClasses = None) {
 
@@ -34,11 +34,11 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading(messages("anyAgentRef.heading", s"$nomineeName"))
+        @components.heading(messages("anyAgentRef.heading", nomineeName))
 
         @components.input_yes_no(
             InputViewModel("anyAgentRef", form),
-            label = messages("anyAgentRef.heading"),
+            label = messages("anyAgentRef.heading", nomineeName),
             labelClass = Some("visually-hidden"),
             yesAssoc = Some("yesAgentRef")
         )

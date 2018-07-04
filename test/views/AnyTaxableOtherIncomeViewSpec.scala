@@ -16,19 +16,18 @@
 
 package views
 
-import play.api.data.{Form, FormError}
 import controllers.routes
 import forms.AnyTaxPaidForm
 import models.SelectTaxYear.CYMinus2
-import views.behaviours.QuestionViewBehaviours
 import models.{AnyTaxPaid, NormalMode}
-import play.api.i18n.Messages
+import play.api.data.{Form, FormError}
 import play.twirl.api.HtmlFormat
+import views.behaviours.QuestionViewBehaviours
 import views.html.anyTaxableOtherIncome
 
-class AnyTaxableOtherIncomeViewSpec(implicit messages: Messages) extends QuestionViewBehaviours[AnyTaxPaid] {
+class AnyTaxableOtherIncomeViewSpec extends QuestionViewBehaviours[AnyTaxPaid] {
 
-  val messageKeyPrefix = "anyTaxableOtherIncome"
+  private val messageKeyPrefix = "anyTaxableOtherIncome"
   private val testAmount = "9,999.00"
   private val notSelectedKey = "anyTaxableOtherIncome.notSelected"
   private val blankKey = "anyTaxableOtherIncome.blank"
@@ -39,25 +38,31 @@ class AnyTaxableOtherIncomeViewSpec(implicit messages: Messages) extends Questio
   val formProvider = new AnyTaxPaidForm()
   val form = formProvider(notSelectedKey, blankKey, invalidKey)
 
-
   def createView = () => anyTaxableOtherIncome(frontendAppConfig, form, NormalMode, taxYear, incomeName)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[_]) => anyTaxableOtherIncome(frontendAppConfig, form, NormalMode, taxYear, incomeName)(fakeRequest, messages)
 
   "AnyTaxableOtherIncome view" must {
 
-    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, taxYear.asString)
+    behave like normalPage(createView, messageKeyPrefix, None, incomeName, taxYear.asString(messages))
 
     behave like pageWithBackLink(createView)
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    yesNoPage(createViewUsingForm, messageKeyPrefix, routes.AnyTaxableOtherIncomeController.onSubmit(NormalMode).url)
+    yesNoPage(
+      createView = createViewUsingForm,
+      messageKeyPrefix = messageKeyPrefix,
+      expectedFormAction = routes.AnyTaxableOtherIncomeController.onSubmit(NormalMode).url,
+      expectedHintText = None,
+      args = incomeName, taxYear.asString(messages)
+    )
 
     def yesNoPage(createView: (Form[AnyTaxPaid]) => HtmlFormat.Appendable,
                   messageKeyPrefix: String,
                   expectedFormAction: String,
-                  expectedHintText: Option[String] = None) = {
+                  expectedHintText: Option[String],
+                  args: Any*) = {
 
       "behave like a page with a Yes/No question and revealing content" when {
         "rendered" must {
@@ -69,13 +74,14 @@ class AnyTaxableOtherIncomeViewSpec(implicit messages: Messages) extends Questio
 
           "contain a heading" in {
             val doc = asDocument(createView(form))
-            assertContainsText(doc, messages(s"$messageKeyPrefix.heading"))
+            assertContainsText(doc, messages(s"$messageKeyPrefix.heading", args: _*))
           }
 
           "contain an input for the value" in {
             val doc = asDocument(createView(form))
             assertRenderedById(doc, "anyTaxPaid-no")
             assertRenderedById(doc, "anyTaxPaid-yes")
+            assertRenderedById(doc, "taxPaidAmount")
           }
 
           "have no values checked when rendered with no form" in {

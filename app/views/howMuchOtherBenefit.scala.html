@@ -23,7 +23,7 @@
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: SelectTaxYear)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("howMuchOtherBenefit.title",s" ${taxYear.asString}"),
+    title = messages("howMuchOtherBenefit.title", taxYear.asString),
     appConfig = appConfig,
     bodyClasses = None) {
 
@@ -36,7 +36,7 @@
         @components.heading(messages("howMuchOtherBenefit.heading", taxYear.asString))
 
         @components.input_text(InputViewModel("value", form),
-            label = messages("howMuchOtherBenefit.heading"),
+            label = messages("howMuchOtherBenefit.heading", taxYear.asString),
             labelClass=Some("visually-hidden"),
             prefix = Some(messages("global.poundSign")))
 

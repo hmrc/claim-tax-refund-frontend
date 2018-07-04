@@ -16,40 +16,43 @@
 
 package views
 
-import config.FrontendAppConfig
-import play.api.data.Form
 import controllers.routes
 import forms.DetailsOfEmploymentOrPensionForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
-import play.api.i18n.Messages
+import play.api.data.Form
 import views.behaviours.StringViewBehaviours
 import views.html.detailsOfEmploymentOrPension
 
-class DetailsOfEmploymentOrPensionViewSpec(implicit messages: Messages) extends StringViewBehaviours with MockitoSugar {
+class DetailsOfEmploymentOrPensionViewSpec extends StringViewBehaviours with MockitoSugar {
 
-  val messageKeyPrefix = "detailsOfEmploymentOrPension"
-
+  private val messageKeyPrefix = "detailsOfEmploymentOrPension"
   private val taxYear = CYMinus2
-  def characterLimit = 500
+  private val characterLimit = 500
 
-  val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
-
-  override val form: Form[String] = new DetailsOfEmploymentOrPensionForm(appConfig)()
+  override val form: Form[String] = new DetailsOfEmploymentOrPensionForm(frontendAppConfig)()
 
   def createView = () => detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[String]) => detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages)
 
   "DetailsOfEmploymentOrPension view" must {
-    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, s"${taxYear.asString}?")
+    behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))
 
     behave like pageWithBackLink(createView)
 
-    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.DetailsOfEmploymentOrPensionController.onSubmit(NormalMode).url)
-
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
+
+    behave like stringPage(
+      createView = createViewUsingForm,
+      messageKeyPrefix = messageKeyPrefix,
+      expectedFormAction = routes.DetailsOfEmploymentOrPensionController.onSubmit(NormalMode).url,
+      expectedHintKeyLine1 = None,
+      expectedHintKeyLine2 = None,
+      expectedPrefix = None,
+      args = taxYear.asString(messages)
+    )
 
   }
 }
