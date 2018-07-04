@@ -16,22 +16,20 @@
 
 package views
 
-import play.api.data.Form
 import controllers.routes
 import forms.BooleanForm
-import views.behaviours.YesNoViewBehaviours
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
-import play.api.i18n.Messages
+import play.api.data.Form
+import views.behaviours.YesNoViewBehaviours
 import views.html.anyOtherCompanyBenefits
 
-class AnyOtherCompanyBenefitsViewSpec(implicit messages: Messages) extends YesNoViewBehaviours {
+class AnyOtherCompanyBenefitsViewSpec extends YesNoViewBehaviours {
 
-  val messageKeyPrefix = "anyOtherCompanyBenefits"
+  private val messageKeyPrefix = "anyOtherCompanyBenefits"
+  private val taxYear = CYMinus2
 
   override val form = new BooleanForm()()
-
-  private val taxYear = CYMinus2
 
   def createView = () => anyOtherCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
@@ -39,12 +37,18 @@ class AnyOtherCompanyBenefitsViewSpec(implicit messages: Messages) extends YesNo
 
   "AnyOtherCompanyBenefits view" must {
 
-    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, taxYear.asString)
+    behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))
 
     behave like pageWithBackLink(createView)
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.AnyOtherCompanyBenefitsController.onSubmit(NormalMode).url)
+    behave like yesNoPage(
+      createView = createViewUsingForm,
+      messageKeyPrefix = messageKeyPrefix,
+      expectedFormAction = routes.AnyOtherCompanyBenefitsController.onSubmit(NormalMode).url,
+      expectedHintText = None,
+      args = taxYear.asString(messages)
+    )
   }
 }

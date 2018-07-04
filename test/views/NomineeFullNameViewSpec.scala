@@ -16,7 +16,6 @@
 
 package views
 
-import config.FrontendAppConfig
 import controllers.routes
 import forms.NomineeFullNameForm
 import models.NormalMode
@@ -27,23 +26,29 @@ import views.html.nomineeFullName
 
 class NomineeFullNameViewSpec extends StringViewBehaviours with MockitoSugar {
 
-  val messageKeyPrefix = "nomineeFullName"
+  private val messageKeyPrefix = "nomineeFullName"
 
-  val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
-
-  override val form: Form[String] = new NomineeFullNameForm(appConfig)()
+  override val form: Form[String] = new NomineeFullNameForm(frontendAppConfig)()
 
   def createView = () => nomineeFullName(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[String]) => nomineeFullName(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
   "NomineeFullName view" must {
-    behave like normalPage(createView, messageKeyPrefix)
+    behave like normalPage(createView, messageKeyPrefix, None)
 
     behave like pageWithBackLink(createView)
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.NomineeFullNameController.onSubmit(NormalMode).url)
+    behave like stringPage(
+      createView = createViewUsingForm,
+      messageKeyPrefix = messageKeyPrefix,
+      expectedFormAction = routes.NomineeFullNameController.onSubmit(NormalMode).url,
+      expectedHintKeyLine1 = None,
+      expectedHintKeyLine2 = None,
+      expectedPrefix = None
+    )
+
   }
 }

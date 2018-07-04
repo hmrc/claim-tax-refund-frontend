@@ -26,8 +26,9 @@ import views.html.anyAgentRef
 
 class AnyAgentRefViewSpec extends QuestionViewBehaviours[AnyAgentRef]{
 
-  val messageKeyPrefix = "anyAgentRef"
-  val nomineeName = "Test Nominee"
+  private val messageKeyPrefix = "anyAgentRef"
+  private val nomineeName = "Test Nominee"
+  private val testAgentRef = "123456"
 
   val formProvider = new AnyAgentReferenceForm()
   val form = formProvider()
@@ -38,16 +39,25 @@ class AnyAgentRefViewSpec extends QuestionViewBehaviours[AnyAgentRef]{
 
   "AnyAgentRef view" must {
 
-    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, s"$nomineeName")
+    behave like normalPage(createView, messageKeyPrefix, None, nomineeName)
 
     behave like pageWithBackLink(createView)
 
-    yesNoPage(createViewUsingForm, messageKeyPrefix, routes.AnyAgentRefController.onSubmit(NormalMode).url)
+    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+
+    yesNoPage(
+      createView = createViewUsingForm,
+      messageKeyPrefix = messageKeyPrefix,
+      expectedFormAction = routes.AnyAgentRefController.onSubmit(NormalMode).url,
+      expectedHintText = None,
+      args = nomineeName
+    )
 
     def yesNoPage(createView: (Form[AnyAgentRef]) => HtmlFormat.Appendable,
                   messageKeyPrefix: String,
                   expectedFormAction: String,
-                  expectedHintText: Option[String] = None) = {
+                  expectedHintText: Option[String],
+                  args: Any*) = {
 
       "behave like a page with a Yes/No question" when {
         "rendered" must {
@@ -59,19 +69,26 @@ class AnyAgentRefViewSpec extends QuestionViewBehaviours[AnyAgentRef]{
 
           "contain a heading" in {
             val doc = asDocument(createView(form))
-            assertContainsText(doc, messages(s"$messageKeyPrefix.heading"))
+            assertContainsText(doc, messages(s"$messageKeyPrefix.heading", args: _*))
           }
 
           "contain an input for the value" in {
             val doc = asDocument(createView(form))
             assertRenderedById(doc, "anyAgentRef-yes")
             assertRenderedById(doc, "anyAgentRef-no")
+            assertRenderedById(doc, "yesAgentRef")
           }
 
           "have no values checked when rendered with no form" in {
             val doc = asDocument(createView(form))
             assert(!doc.getElementById("anyAgentRef-yes").hasAttr("checked"))
             assert(!doc.getElementById("anyAgentRef-no").hasAttr("checked"))
+          }
+
+
+          "include the form's value in the value input" in {
+            val doc = asDocument(createView(form.fill(AnyAgentRef.Yes(testAgentRef))))
+            doc.getElementById("agentRef").attr("value") mustBe testAgentRef
           }
 
           "not render an error summary" in {
@@ -107,7 +124,7 @@ class AnyAgentRefViewSpec extends QuestionViewBehaviours[AnyAgentRef]{
     def answeredYesNoPage(createView: (Form[AnyAgentRef]) => HtmlFormat.Appendable, answer: Boolean) = {
 
       "have only the correct value checked when yes selected" in {
-        val doc = asDocument(createView(form.fill(AnyAgentRef.Yes("AB1234"))))
+        val doc = asDocument(createView(form.fill(AnyAgentRef.Yes(testAgentRef))))
         assert(doc.getElementById("anyAgentRef-yes").hasAttr("checked"))
         assert(!doc.getElementById("anyAgentRef-no").hasAttr("checked"))
       }
@@ -120,7 +137,7 @@ class AnyAgentRefViewSpec extends QuestionViewBehaviours[AnyAgentRef]{
 
 
       "not render an error summary" in {
-        val doc = asDocument(createView(form.fill(AnyAgentRef.Yes("AB1234"))))
+        val doc = asDocument(createView(form.fill(AnyAgentRef.Yes(testAgentRef))))
         assertNotRenderedById(doc, "error-summary_header")
       }
     }

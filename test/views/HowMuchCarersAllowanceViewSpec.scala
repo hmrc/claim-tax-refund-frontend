@@ -16,25 +16,21 @@
 
 package views
 
-import config.FrontendAppConfig
-import play.api.data.Form
 import controllers.routes
 import forms.HowMuchCarersAllowanceForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
-import play.api.i18n.Messages
+import play.api.data.Form
 import views.behaviours.StringViewBehaviours
 import views.html.howMuchCarersAllowance
 
-class HowMuchCarersAllowanceViewSpec(implicit messages: Messages) extends StringViewBehaviours with MockitoSugar {
+class HowMuchCarersAllowanceViewSpec extends StringViewBehaviours with MockitoSugar {
 
-  val messageKeyPrefix = "howMuchCarersAllowance"
+  private val messageKeyPrefix = "howMuchCarersAllowance"
   private val taxYear = CYMinus2
 
-  val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
-
-  override val form: Form[String] = new HowMuchCarersAllowanceForm(appConfig)()
+  override val form: Form[String] = new HowMuchCarersAllowanceForm(frontendAppConfig)()
 
   def createView = () => howMuchCarersAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
@@ -42,12 +38,21 @@ class HowMuchCarersAllowanceViewSpec(implicit messages: Messages) extends String
 
   "HowMuchCarersAllowance view" must {
 
-    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, s"${taxYear.asString}?")
+    behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))
 
     behave like pageWithBackLink(createView)
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.HowMuchCarersAllowanceController.onSubmit(NormalMode).url)
+    behave like stringPage(
+      createView = createViewUsingForm,
+      messageKeyPrefix = messageKeyPrefix,
+      expectedFormAction = routes.HowMuchCarersAllowanceController.onSubmit(NormalMode).url,
+      expectedHintKeyLine1 = None,
+      expectedHintKeyLine2 = None,
+      expectedPrefix = Some(messages("global.poundSign")),
+      args = taxYear.asString(messages)
+    )
+
   }
 }

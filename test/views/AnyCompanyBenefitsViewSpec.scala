@@ -16,22 +16,20 @@
 
 package views
 
-import play.api.data.Form
 import controllers.routes
 import forms.BooleanForm
-import views.behaviours.YesNoViewBehaviours
-import models.{Benefits, NormalMode}
+import models.NormalMode
 import models.SelectTaxYear.CYMinus2
-import play.api.i18n.Messages
+import play.api.data.Form
+import views.behaviours.YesNoViewBehaviours
 import views.html.anyCompanyBenefits
 
-class AnyCompanyBenefitsViewSpec(implicit messages: Messages) extends YesNoViewBehaviours {
+class AnyCompanyBenefitsViewSpec extends YesNoViewBehaviours {
 
-  val messageKeyPrefix = "anyCompanyBenefits"
+  private val messageKeyPrefix = "anyCompanyBenefits"
+  private val taxYear = CYMinus2
 
   override val form = new BooleanForm()()
-
-  private val taxYear = CYMinus2
 
   def createView = () => anyCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
@@ -39,13 +37,19 @@ class AnyCompanyBenefitsViewSpec(implicit messages: Messages) extends YesNoViewB
 
   "AnyCompanyBenefits view" must {
 
-    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, s"${taxYear.asString}?")
+    behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))
 
     behave like pageWithBackLink(createView)
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.AnyBenefitsController.onSubmit(NormalMode).url, Some(s"$messageKeyPrefix.hint"))
+    behave like yesNoPage(
+      createView = createViewUsingForm,
+      messageKeyPrefix = messageKeyPrefix,
+      expectedFormAction = routes.AnyBenefitsController.onSubmit(NormalMode).url,
+      expectedHintText = Some(s"$messageKeyPrefix.hint"),
+      args = taxYear.asString(messages)
+    )
 
     behave like pageWithList(createView, messageKeyPrefix,
       Seq(

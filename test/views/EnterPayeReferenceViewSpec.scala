@@ -27,9 +27,8 @@ import views.html.enterPayeReference
 
 class EnterPayeReferenceViewSpec extends StringViewBehaviours with MockitoSugar {
 
-  val messageKeyPrefix = "enterPayeReference"
-
-  val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
+  private val messageKeyPrefix = "enterPayeReference"
+  private val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
   override val form: Form[String] = new EnterPayeReferenceForm(appConfig)()
 
@@ -38,12 +37,19 @@ class EnterPayeReferenceViewSpec extends StringViewBehaviours with MockitoSugar 
   def createViewUsingForm = (form: Form[String]) => enterPayeReference(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
   "EnterPayeReference view" must {
-    behave like normalPage(createView, messageKeyPrefix)
+    behave like normalPage(createView, messageKeyPrefix, None)
 
     behave like pageWithBackLink(createView)
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.EnterPayeReferenceController.onSubmit(NormalMode).url)
+    behave like stringPage(
+      createView = createViewUsingForm,
+      messageKeyPrefix = messageKeyPrefix,
+      expectedFormAction = routes.EnterPayeReferenceController.onSubmit(NormalMode).url,
+      expectedHintKeyLine1 = None,
+      expectedHintKeyLine2 = None,
+      expectedPrefix = None
+    )
   }
 }

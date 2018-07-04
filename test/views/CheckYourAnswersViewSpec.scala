@@ -34,7 +34,7 @@ class CheckYourAnswersViewSpec extends SpecBase with ViewBehaviours with Mockito
   def view = () => check_your_answers(frontendAppConfig, sections)(fakeRequest, messages: Messages)
 
   "Check your answers view" must {
-    behave like normalPage(view, messageKeyPrefix)
+    behave like normalPage(view, messageKeyPrefix, None)
   }
 
   "Page should display correct sections" in {
