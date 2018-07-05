@@ -73,9 +73,14 @@ class AnyAgentRefViewSpec extends QuestionViewBehaviours[AnyAgentRef]{
           }
 
           if(expectedHintTextKey.isDefined){
-            "contain a label for the value" in {
+            "render a hint" in {
               val doc = asDocument(createView(form))
               assertYesNoHint(doc, expectedHintTextKey)
+            }
+          } else {
+            "not render a hint" in {
+              val doc = asDocument(createView(form))
+              assertNotRenderedByCssSelector(doc, ".form-hint")
             }
           }
 
