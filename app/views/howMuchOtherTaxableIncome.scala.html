@@ -39,8 +39,7 @@
             InputViewModel("value", form),
             label = messages("howMuchOtherTaxableIncome.heading", taxYear.asString),
             labelClass=Some("visually-hidden"),
-            prefix = Some(messages("global.poundSign"))
-        )
+            prefix = Some(messages("global.poundSign")))
 
         @components.submit_button()
     }
