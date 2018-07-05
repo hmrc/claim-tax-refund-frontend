@@ -35,7 +35,7 @@ class HowMuchOtherBenefitViewSpec extends StringViewBehaviours with MockitoSugar
 
   def createView = () => howMuchOtherBenefit(frontendAppConfig, form, NormalMode, taxYear, otherBenefitName)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) => howMuchOtherBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[String]) => howMuchOtherBenefit(frontendAppConfig, form, NormalMode, taxYear, otherBenefitName)(fakeRequest, messages)
 
   "HowMuchOtherBenefit view" must {
     behave like normalPage(createView, messageKeyPrefix, None, otherBenefitName, taxYear.asString(messages))

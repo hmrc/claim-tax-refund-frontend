@@ -27,6 +27,7 @@ import config.FrontendAppConfig
 import forms.HowMuchOtherBenefitForm
 import identifiers.HowMuchOtherBenefitId
 import models.Mode
+import play.api.mvc.Result
 import utils.{Navigator, UserAnswers}
 import views.html.howMuchOtherBenefit
 
@@ -51,27 +52,33 @@ class HowMuchOtherBenefitController @Inject()(
         case Some(value) => form.fill(value)
       }
 
-      request.userAnswers.selectTaxYear.map{
-        selectedTaxYear =>
-          val taxYear = selectedTaxYear
-          Ok(howMuchOtherBenefit(appConfig, preparedForm, mode, taxYear))
-      }.getOrElse{
+      val details: Option[Result] = for(
+        selectedTaxYear <- request.userAnswers.selectTaxYear;
+        otherBenefitName <- request.userAnswers.otherBenefitsName
+      ) yield {
+        val taxYear = selectedTaxYear
+        Ok(howMuchOtherBenefit(appConfig, preparedForm, mode, taxYear, otherBenefitName))
+      }
+      details.getOrElse{
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      request.userAnswers.selectTaxYear.map {
+      request.userAnswers.selectTaxYear.flatMap {
         selectedTaxYear =>
           val taxYear = selectedTaxYear
-          form.bindFromRequest().fold(
-            (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(howMuchOtherBenefit(appConfig, formWithErrors, mode, taxYear))),
-            (value) =>
-              dataCacheConnector.save[String](request.externalId, HowMuchOtherBenefitId.toString, value).map(cacheMap =>
-                Redirect(navigator.nextPage(HowMuchOtherBenefitId, mode)(new UserAnswers(cacheMap))))
-          )
+          request.userAnswers.otherBenefitsName.map {
+            benefitName =>
+              form.bindFromRequest().fold(
+                (formWithErrors: Form[_]) =>
+                  Future.successful(BadRequest(howMuchOtherBenefit(appConfig, formWithErrors, mode, taxYear, benefitName))),
+                (value) =>
+                  dataCacheConnector.save[String](request.externalId, HowMuchOtherBenefitId.toString, value).map(cacheMap =>
+                    Redirect(navigator.nextPage(HowMuchOtherBenefitId, mode)(new UserAnswers(cacheMap))))
+              )
+          }
       }.getOrElse {
         Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
       }
