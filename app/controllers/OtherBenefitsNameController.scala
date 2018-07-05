@@ -27,20 +27,21 @@ import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
-import utils.{Navigator, UserAnswers}
+import utils.{Navigator, UserAnswers, SequenceUtil}
 import views.html.otherBenefitsName
 
 import scala.concurrent.Future
 
 class OtherBenefitsNameController @Inject()(
-                                        appConfig: FrontendAppConfig,
-                                        override val messagesApi: MessagesApi,
-                                        dataCacheConnector: DataCacheConnector,
-                                        navigator: Navigator,
-                                        authenticate: AuthAction,
-                                        getData: DataRetrievalAction,
-                                        requireData: DataRequiredAction,
-                                        formBuilder: OtherBenefitsNameForm) extends FrontendController with I18nSupport {
+                                             appConfig: FrontendAppConfig,
+                                             override val messagesApi: MessagesApi,
+                                             dataCacheConnector: DataCacheConnector,
+                                             navigator: Navigator,
+                                             authenticate: AuthAction,
+                                             getData: DataRetrievalAction,
+                                             requireData: DataRequiredAction,
+                                             sequenceUtil: SequenceUtil,
+                                             formBuilder: OtherBenefitsNameForm) extends FrontendController with I18nSupport {
 
   private val form: Form[String] = formBuilder()
 
@@ -71,9 +72,7 @@ class OtherBenefitsNameController @Inject()(
               Future.successful(BadRequest(otherBenefitsName(appConfig, formWithErrors, mode, index, taxYear))),
             value => {
               val benefitNames: Seq[String] = request.userAnswers.otherBenefitsName.getOrElse(Seq(value))
-              if (index.id >= benefitNames.length) benefitNames :+ value else benefitNames.updated(index, value)
-              benefitNames.length
-              dataCacheConnector.save[Seq[String]](request.externalId, OtherBenefitsNameId.toString, benefitNames).map(cacheMap =>
+              dataCacheConnector.save[Seq[String]](request.externalId, OtherBenefitsNameId.toString, sequenceUtil.update(benefitNames, index, value)).map(cacheMap =>
                 Redirect(navigator.nextPage(OtherBenefitsNameId, mode)(new UserAnswers(cacheMap))))
             }
           )
