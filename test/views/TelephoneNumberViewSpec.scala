@@ -69,6 +69,11 @@ class TelephoneNumberViewSpec extends QuestionViewBehaviours[TelephoneOption]{
             assertContainsText(doc, messages(s"$messageKeyPrefix.heading", args: _*))
           }
 
+          "contain hint text" in {
+            val doc = asDocument(createView(form))
+            assertContainsText(doc, messages(s"$messageKeyPrefix.hintPara1"))
+          }
+
           "contain an input for the value" in {
             val doc = asDocument(createView(form))
             assertRenderedById(doc, "anyTelephoneNumber-yes")
@@ -130,6 +135,11 @@ class TelephoneNumberViewSpec extends QuestionViewBehaviours[TelephoneOption]{
         val doc = asDocument(createView(form.fill(TelephoneOption.No)))
         assert(!doc.getElementById("anyTelephoneNumber-yes").hasAttr("checked"))
         assert(doc.getElementById("anyTelephoneNumber-no").hasAttr("checked"))
+      }
+
+      "display hint text when no is selected" in {
+        val doc = asDocument(createView(form.fill(TelephoneOption.No)))
+        assertContainsText(doc, messages(s"$messageKeyPrefix.hintPara1"))
       }
 
       "not render an error summary" in {
