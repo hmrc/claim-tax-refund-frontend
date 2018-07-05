@@ -47,8 +47,9 @@ class OtherBenefitsNameController @Inject()(
   def onPageLoad(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.otherBenefitsName match {
+        case Some(benefitNames) =>
+          if (index >= benefitNames.length) form else form.fill(benefitNames(index))
         case None => form
-        case Some(value) => form.fill(value(index))
       }
 
       request.userAnswers.selectTaxYear.map {
@@ -68,9 +69,13 @@ class OtherBenefitsNameController @Inject()(
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
               Future.successful(BadRequest(otherBenefitsName(appConfig, formWithErrors, mode, index, taxYear))),
-            value =>
-              dataCacheConnector.save[Seq[String]](request.externalId, OtherBenefitsNameId.toString, Seq(value)).map(cacheMap =>
+            value => {
+              val benefitNames: Seq[String] = request.userAnswers.otherBenefitsName.getOrElse(Seq(value))
+              if (index.id >= benefitNames.length) benefitNames :+ value else benefitNames.updated(index, value)
+              benefitNames.length
+              dataCacheConnector.save[Seq[String]](request.externalId, OtherBenefitsNameId.toString, benefitNames).map(cacheMap =>
                 Redirect(navigator.nextPage(OtherBenefitsNameId, mode)(new UserAnswers(cacheMap))))
+            }
           )
       }.getOrElse {
         Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))

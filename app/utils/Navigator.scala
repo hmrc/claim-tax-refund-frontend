@@ -99,7 +99,7 @@ class Navigator @Inject()() {
         case Benefits.INCAPACITY_BENEFIT => routes.HowMuchIncapacityBenefitController.onPageLoad(NormalMode)
         case Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE => routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(NormalMode)
         case Benefits.STATE_PENSION => routes.HowMuchStatePensionController.onPageLoad(NormalMode)
-        case Benefits.OTHER_TAXABLE_BENEFIT => routes.OtherBenefitsNameController.onPageLoad(NormalMode, Index(1))
+        case Benefits.OTHER_TAXABLE_BENEFIT => routes.OtherBenefitsNameController.onPageLoad(NormalMode, Index(0))
       }
     case None =>
       routes.SessionExpiredController.onPageLoad()
@@ -129,7 +129,7 @@ class Navigator @Inject()() {
           case Benefits.INCAPACITY_BENEFIT => routes.HowMuchIncapacityBenefitController.onPageLoad(NormalMode)
           case Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE => routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(NormalMode)
           case Benefits.STATE_PENSION => routes.HowMuchStatePensionController.onPageLoad(NormalMode)
-          case Benefits.OTHER_TAXABLE_BENEFIT => routes.OtherBenefitsNameController.onPageLoad(NormalMode, Index(1))
+          case Benefits.OTHER_TAXABLE_BENEFIT => routes.OtherBenefitsNameController.onPageLoad(NormalMode, Index(0))
         }
       } else {
         routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
@@ -193,7 +193,7 @@ class Navigator @Inject()() {
   }
 
   private def anyOtherBenefits(userAnswers: UserAnswers): Call = userAnswers.anyOtherBenefits match {
-    case Some(true) => routes.OtherBenefitsNameController.onPageLoad(NormalMode, Index(1))
+    case Some(true) => routes.OtherBenefitsNameController.onPageLoad(NormalMode, Index(userAnswers.otherBenefitsName.get.length))
     case Some(false) => routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
