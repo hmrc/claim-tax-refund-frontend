@@ -53,14 +53,14 @@ class AnyTaxableBankInterestViewSpec extends QuestionViewBehaviours[AnyTaxPaid] 
       createView = createViewUsingForm,
       messageKeyPrefix = messageKeyPrefix,
       expectedFormAction = routes.AnyTaxableBankInterestController.onSubmit(NormalMode).url,
-      expectedHintText = Some(messages("anyTaxableBankInterest.hint")),
+      expectedHintTextKey = Some("anyTaxableBankInterest.hint"),
       args = taxYear.asString(messages)
     )
 
     def yesNoPage(createView: (Form[AnyTaxPaid]) => HtmlFormat.Appendable,
                   messageKeyPrefix: String,
                   expectedFormAction: String,
-                  expectedHintText: Option[String],
+                  expectedHintTextKey: Option[String],
                   args: Any*) = {
 
       "behave like a page with a Yes/No question and revealing content" when {
@@ -74,6 +74,14 @@ class AnyTaxableBankInterestViewSpec extends QuestionViewBehaviours[AnyTaxPaid] 
           "contain a heading" in {
             val doc = asDocument(createView(form))
             assertContainsText(doc, messages(s"$messageKeyPrefix.heading", args: _*))
+          }
+
+          if(expectedHintTextKey.isDefined){
+            "contain a label for the value" in {
+              val doc = asDocument(createView(form))
+              val expectedHintTextLine1 = expectedHintTextKey map (k => messages(k))
+              assertYesNoHint(doc, expectedHintTextLine1)
+            }
           }
 
           "contain an input for the value" in {

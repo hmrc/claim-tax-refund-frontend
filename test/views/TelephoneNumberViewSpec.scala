@@ -47,13 +47,13 @@ class TelephoneNumberViewSpec extends QuestionViewBehaviours[TelephoneOption]{
       createView = createViewUsingForm,
       messageKeyPrefix = messageKeyPrefix,
       expectedFormAction = routes.TelephoneNumberController.onSubmit(NormalMode).url,
-      expectedHintText = None
+      expectedHintTextKey = None
     )
 
     def yesNoPage(createView: (Form[TelephoneOption]) => HtmlFormat.Appendable,
                   messageKeyPrefix: String,
                   expectedFormAction: String,
-                  expectedHintText: Option[String],
+                  expectedHintTextKey: Option[String],
                   args: Any*) = {
 
       "behave like a page with a Yes/No question and revealing content" when {
@@ -69,9 +69,12 @@ class TelephoneNumberViewSpec extends QuestionViewBehaviours[TelephoneOption]{
             assertContainsText(doc, messages(s"$messageKeyPrefix.heading", args: _*))
           }
 
-          "contain hint text" in {
-            val doc = asDocument(createView(form))
-            assertContainsText(doc, messages(s"$messageKeyPrefix.hintPara1"))
+          if(expectedHintTextKey.isDefined){
+            "contain a label for the value" in {
+              val doc = asDocument(createView(form))
+              val expectedHintTextLine1 = expectedHintTextKey map (k => messages(k))
+              assertYesNoHint(doc, expectedHintTextLine1)
+            }
           }
 
           "contain an input for the value" in {
