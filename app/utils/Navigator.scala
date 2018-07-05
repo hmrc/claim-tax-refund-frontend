@@ -77,8 +77,12 @@ class Navigator @Inject()() {
   private val editRouteMap: Map[Identifier, UserAnswers => Call] = Map(
     EmploymentDetailsId ->  employmentDetailsCheck,
     EnterPayeReferenceId -> (_ => routes.DetailsOfEmploymentOrPensionController.onPageLoad(CheckMode)),
-    DetailsOfEmploymentOrPensionId -> (_ => routes.CheckYourAnswersController.onPageLoad())
-
+    DetailsOfEmploymentOrPensionId -> (_ => routes.CheckYourAnswersController.onPageLoad()),
+    AnyAgentRefId -> (_ => routes.IsPaymentAddressInTheUKController.onPageLoad(CheckMode)),
+    NomineeFullNameId -> (_ => routes.AnyAgentRefController.onPageLoad(CheckMode)),
+    WhereToSendPaymentId -> whereToSendPaymentCheck,
+    IsPaymentAddressInTheUKId -> isPaymentAddressInUkRouteCheck,
+    PaymentAddressCorrectId -> paymentAddressCorrectCheck
   )
 
   private def employmentDetails(userAnswers: UserAnswers): Call = userAnswers.employmentDetails match {
@@ -229,6 +233,12 @@ class Navigator @Inject()() {
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
+  private def whereToSendPaymentCheck(userAnswers: UserAnswers): Call = userAnswers.whereToSendPayment match {
+    case Some(Nominee) => routes.NomineeFullNameController.onPageLoad(CheckMode)
+    case Some(Myself) => routes.PaymentAddressCorrectController.onPageLoad(CheckMode)
+    case None => routes.SessionExpiredController.onPageLoad()
+  }
+
   private def anyAgentRef(userAnswers: UserAnswers): Option[Call] = userAnswers.anyAgentRef map {
     case AnyAgentRef.Yes(agentRef) => routes.IsPaymentAddressInTheUKController.onPageLoad(NormalMode)
     case AnyAgentRef.No => routes.IsPaymentAddressInTheUKController.onPageLoad(NormalMode)
@@ -241,9 +251,23 @@ class Navigator @Inject()() {
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
+  private def isPaymentAddressInUkRouteCheck(userAnswers: UserAnswers): Call = userAnswers.isPaymentAddressInTheUK match {
+    case Some(true) => routes.PaymentUKAddressController.onPageLoad(CheckMode)
+    case Some(false) => routes.PaymentInternationalAddressController.onPageLoad(CheckMode)
+    case None => routes.SessionExpiredController.onPageLoad()
+  }
+
+
   private def paymentAddressCorrect(userAnswers: UserAnswers): Call = userAnswers.paymentAddressCorrect match {
     case Some(true) => routes.TelephoneNumberController.onPageLoad(NormalMode)
     case Some(false) => routes.IsPaymentAddressInTheUKController.onPageLoad(NormalMode)
+    case None => routes.SessionExpiredController.onPageLoad()
+  }
+
+
+  private def paymentAddressCorrectCheck(userAnswers: UserAnswers): Call = userAnswers.paymentAddressCorrect match {
+    case Some(true) => routes.TelephoneNumberController.onPageLoad(CheckMode)
+    case Some(false) => routes.IsPaymentAddressInTheUKController.onPageLoad(CheckMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
 

@@ -172,6 +172,48 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(DetailsOfEmploymentOrPensionId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
       }
 
+      //Payment details section
+      "go to NomineeFullName from WhereToSendPayment when Nominee is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.whereToSendPayment) thenReturn Some(Nominee)
+        navigator.nextPage(WhereToSendPaymentId, CheckMode)(answers) mustBe routes.NomineeFullNameController.onPageLoad(CheckMode)
+      }
+
+      "go to AnyAgentRef from NomineeFullName" in {
+        val answers = mock[UserAnswers]
+        navigator.nextPage(NomineeFullNameId, CheckMode)(answers) mustBe routes.AnyAgentRefController.onPageLoad(CheckMode)
+      }
+
+      "go to PaymentAddressCorrect from WhereToSendPayment when Myself is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.whereToSendPayment) thenReturn Some(Myself)
+        navigator.nextPage(WhereToSendPaymentId, CheckMode)(answers) mustBe routes.PaymentAddressCorrectController.onPageLoad(CheckMode)
+      }
+
+      "go to IsPaymentAddressInTheUK from PaymentAddressCorrect when No is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.paymentAddressCorrect) thenReturn Some(false)
+        navigator.nextPage(PaymentAddressCorrectId, CheckMode)(answers) mustBe routes.IsPaymentAddressInTheUKController.onPageLoad(CheckMode)
+      }
+
+      "go to IsPaymentAddressInTheUK from AnyAgentRef" in {
+        val answers = mock[UserAnswers]
+        navigator.nextPage(AnyAgentRefId, CheckMode)(answers) mustBe routes.IsPaymentAddressInTheUKController.onPageLoad(CheckMode)
+      }
+
+      "go to PaymentInternationalAddress from IsPaymentAddressInTheUK when no is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.isPaymentAddressInTheUK) thenReturn Some(false)
+        navigator.nextPage(IsPaymentAddressInTheUKId, CheckMode)(answers) mustBe routes.PaymentInternationalAddressController.onPageLoad(CheckMode)
+      }
+
+      "go to PaymentUKAddress from IsPaymentAddressInTheUK when Yes is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.isPaymentAddressInTheUK) thenReturn Some(true)
+        navigator.nextPage(IsPaymentAddressInTheUKId, CheckMode)(answers) mustBe routes.PaymentUKAddressController.onPageLoad(CheckMode)
+      }
+
+
     }
   }
 }
