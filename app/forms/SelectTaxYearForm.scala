@@ -22,6 +22,7 @@ import play.api.data.Form
 import play.api.data.Forms._
 import play.api.data.format.Formatter
 import play.api.i18n.Messages
+import uk.gov.hmrc.time.TaxYearResolver
 import utils.RadioOption
 
 object SelectTaxYearForm extends FormErrorHelper {
@@ -33,15 +34,25 @@ object SelectTaxYearForm extends FormErrorHelper {
 
   def options(implicit messages: Messages): Seq[RadioOption] = Seq(
     RadioOption(
-      CYMinus1.toString, CYMinus1.toString, CYMinus1.asString(messages)),
+      CYMinus1.toString, CYMinus1.toString, messages(s"selectTaxYear.${CYMinus1.toString}",
+        TaxYearResolver.startOfCurrentTaxYear.minusYears(1).toString(dateFormat),
+        TaxYearResolver.endOfCurrentTaxYear.minusYears(1).toString(dateFormat))),
     RadioOption(
-      CYMinus2.toString, CYMinus2.toString, CYMinus2.asString(messages)),
+      CYMinus2.toString, CYMinus2.toString, messages(s"selectTaxYear.${CYMinus2.toString}",
+        TaxYearResolver.startOfCurrentTaxYear.minusYears(2).toString(dateFormat),
+        TaxYearResolver.endOfCurrentTaxYear.minusYears(2).toString(dateFormat))),
     RadioOption(
-      CYMinus3.toString, CYMinus3.toString, CYMinus3.asString(messages)),
+      CYMinus3.toString, CYMinus3.toString, messages(s"selectTaxYear.${CYMinus3.toString}",
+        TaxYearResolver.startOfCurrentTaxYear.minusYears(3).toString(dateFormat),
+        TaxYearResolver.endOfCurrentTaxYear.minusYears(3).toString(dateFormat))),
     RadioOption(
-      CYMinus4.toString, CYMinus4.toString, CYMinus4.asString(messages)),
+      CYMinus4.toString, CYMinus4.toString, messages(s"selectTaxYear.${CYMinus4.toString}",
+        TaxYearResolver.startOfCurrentTaxYear.minusYears(4).toString(dateFormat),
+        TaxYearResolver.endOfCurrentTaxYear.minusYears(4).toString(dateFormat))),
     RadioOption(
-      CYMinus5.toString, CYMinus5.toString, CYMinus5.asString(messages))
+      CYMinus5.toString, CYMinus5.toString, messages(s"selectTaxYear.${CYMinus5.toString}",
+        TaxYearResolver.startOfCurrentTaxYear.minusYears(5).toString(dateFormat),
+        TaxYearResolver.endOfCurrentTaxYear.minusYears(5).toString(dateFormat)))
   )
 
   private def selectTaxYearFormatter = new Formatter[SelectTaxYear] {
