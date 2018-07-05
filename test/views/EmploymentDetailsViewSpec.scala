@@ -52,5 +52,22 @@ class EmploymentDetailsViewSpec extends YesNoViewBehaviours {
       args = taxYear.asString(messages)
     )
 
+    "contain a table" in {
+      val doc = asDocument(createViewUsingForm(form))
+      val table = doc.getElementsByTag("table")
+      table.size mustBe 1
+    }
+
+    "contains correct employer name inside of table" in {
+      val doc = asDocument(createViewUsingForm(form))
+      val employerName = doc.getElementsByTag("th").eachText.contains("AVIVA PENSIONS")
+      employerName mustBe true
+    }
+
+    "contains correct staff number inside of table" in {
+      val doc = asDocument(createViewUsingForm(form))
+      val staffNumber = doc.getElementsByTag("td").eachText.contains("AZ00070")
+      staffNumber mustBe true
+    }
   }
 }

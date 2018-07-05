@@ -34,25 +34,28 @@ class HowMuchOtherBenefitControllerSpec extends ControllerSpecBase {
   val testAnswer = "9,999.99"
   val form = new HowMuchOtherBenefitForm(frontendAppConfig)()
   private val taxYear = CYMinus2
+  private val otherBenefitName = "test benefit"
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new HowMuchOtherBenefitController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, new HowMuchOtherBenefitForm(frontendAppConfig))
 
-  def viewAsString(form: Form[_] = form) = howMuchOtherBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = form) = howMuchOtherBenefit(frontendAppConfig, form, NormalMode, taxYear, otherBenefitName)(fakeRequest, messages).toString
 
 
   "HowMuchOtherBenefit Controller" must {
 
     "return OK and the correct view for a GET" in {
-      val result = controller(fakeDataRetrievalAction()).onPageLoad(NormalMode)(fakeRequest)
+      when(mockUserAnswers.otherBenefitsName).thenReturn(Some(otherBenefitName))
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe OK
       contentAsString(result) mustBe viewAsString()
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
+      when(mockUserAnswers.otherBenefitsName).thenReturn(Some(otherBenefitName))
       when(mockUserAnswers.howMuchOtherBenefit).thenReturn(Some(testAnswer))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
@@ -60,6 +63,7 @@ class HowMuchOtherBenefitControllerSpec extends ControllerSpecBase {
     }
 
     "redirect to the next page when valid data is submitted" in {
+      when(mockUserAnswers.otherBenefitsName).thenReturn(Some(otherBenefitName))
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", testAnswer))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(postRequest)
 
@@ -68,6 +72,7 @@ class HowMuchOtherBenefitControllerSpec extends ControllerSpecBase {
     }
 
     "return a Bad Request and errors when invalid data is submitted" in {
+      when(mockUserAnswers.otherBenefitsName).thenReturn(Some(otherBenefitName))
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", ""))
       val boundForm = form.bind(Map("value" -> ""))
 
@@ -103,6 +108,24 @@ class HowMuchOtherBenefitControllerSpec extends ControllerSpecBase {
 
     "redirect to Session Expired if no taxYears have been selected on submit" in {
       when(mockUserAnswers.selectTaxYear).thenReturn(None)
+
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(fakeRequest)
+
+      status(result) mustBe SEE_OTHER
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+    }
+
+    "redirect to Session Expired if no other benefit name have been selected" in {
+      when(mockUserAnswers.otherBenefitsName).thenReturn(None)
+
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
+
+      status(result) mustBe SEE_OTHER
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+    }
+
+    "redirect to Session Expired if no other benefit name have been selected on submit" in {
+      when(mockUserAnswers.otherBenefitsName).thenReturn(None)
 
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(fakeRequest)
 

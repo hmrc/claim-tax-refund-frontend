@@ -20,10 +20,10 @@
 @import models.Mode
 @import viewmodels.InputViewModel
 
-@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: SelectTaxYear)(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: SelectTaxYear, benefitName: String)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("howMuchOtherBenefit.title", taxYear.asString),
+    title = messages("howMuchOtherBenefit.title", benefitName, taxYear.asString),
     appConfig = appConfig,
     bodyClasses = None) {
 
@@ -33,9 +33,10 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading(messages("howMuchOtherBenefit.heading", taxYear.asString))
+        @components.heading(messages("howMuchOtherBenefit.heading", benefitName, taxYear.asString))
 
-        @components.input_text(InputViewModel("value", form),
+        @components.input_text(
+            InputViewModel("value", form),
             label = messages("howMuchOtherBenefit.heading", taxYear.asString),
             labelClass=Some("visually-hidden"),
             prefix = Some(messages("global.poundSign")))
