@@ -77,10 +77,14 @@ class AnyTaxableBankInterestViewSpec extends QuestionViewBehaviours[AnyTaxPaid] 
           }
 
           if(expectedHintTextKey.isDefined){
-            "contain a label for the value" in {
+            "render a hint" in {
               val doc = asDocument(createView(form))
-              val expectedHintTextLine1 = expectedHintTextKey map (k => messages(k))
-              assertYesNoHint(doc, expectedHintTextLine1)
+              assertYesNoHint(doc, expectedHintTextKey)
+            }
+          } else {
+            "not render a hint" in {
+              val doc = asDocument(createView(form))
+              assertNotRenderedByCssSelector(doc, ".form-hint")
             }
           }
 
