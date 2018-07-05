@@ -48,7 +48,7 @@ class AnyBenefitsViewSpec extends YesNoViewBehaviours {
       createView = createViewUsingForm,
       messageKeyPrefix = messageKeyPrefix,
       expectedFormAction = routes.AnyBenefitsController.onSubmit(NormalMode).url,
-      None,
+      expectedHintTextKey = None,
       args = taxYear.asString(messages)
     )
 

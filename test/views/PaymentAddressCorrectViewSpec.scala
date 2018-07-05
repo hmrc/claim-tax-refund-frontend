@@ -56,7 +56,7 @@ class PaymentAddressCorrectViewSpec extends YesNoViewBehaviours {
       createView = createViewUsingForm,
       messageKeyPrefix = messageKeyPrefix,
       expectedFormAction = routes.PaymentAddressCorrectController.onSubmit(NormalMode).url,
-      expectedHintText = None
+      expectedHintTextKey = None
     )
 
     "render the section for the users address" in {
