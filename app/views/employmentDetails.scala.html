@@ -23,7 +23,7 @@
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, results: Seq[Employment], taxYear: SelectTaxYear)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("employmentDetails.title"),
+    title = messages("employmentDetails.title", taxYear.asString),
     appConfig = appConfig,
     bodyClasses = None) {
 
@@ -33,9 +33,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading(messages("employmentDetails.heading"))
-
-        <p>@Messages("employmentDetails.detailsWeHave") @taxYear @Messages("global.colon")</p>
+        @components.heading(messages("employmentDetails.heading", taxYear.asString))
 
         <table>
             <thead>

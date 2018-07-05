@@ -35,12 +35,17 @@ class IsPaymentAddressInTheUKViewSpec extends YesNoViewBehaviours {
 
   "IsPaymentAddressInTheUK view" must {
 
-    behave like normalPage(createView, messageKeyPrefix)
+    behave like normalPage(createView, messageKeyPrefix, None)
 
     behave like pageWithBackLink(createView)
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.IsPaymentAddressInTheUKController.onSubmit(NormalMode).url)
+    behave like yesNoPage(
+      createView = createViewUsingForm,
+      messageKeyPrefix = messageKeyPrefix,
+      expectedFormAction = routes.IsPaymentAddressInTheUKController.onSubmit(NormalMode).url,
+      expectedHintText = None
+    )
   }
 }

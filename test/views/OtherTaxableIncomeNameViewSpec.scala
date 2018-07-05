@@ -16,38 +16,42 @@
 
 package views
 
-import config.FrontendAppConfig
-import play.api.data.Form
 import controllers.routes
 import forms.OtherTaxableIncomeNameForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
-import play.api.i18n.Messages
+import play.api.data.Form
 import views.behaviours.StringViewBehaviours
 import views.html.otherTaxableIncomeName
 
-class OtherTaxableIncomeNameViewSpec(implicit messages: Messages) extends StringViewBehaviours with MockitoSugar {
+class OtherTaxableIncomeNameViewSpec extends StringViewBehaviours with MockitoSugar {
 
-  val messageKeyPrefix = "otherTaxableIncomeName"
-
+  private val messageKeyPrefix = "otherTaxableIncomeName"
   private val taxYear = CYMinus2
 
-  val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
-
-  override val form: Form[String] = new OtherTaxableIncomeNameForm(appConfig)()
+  override val form: Form[String] = new OtherTaxableIncomeNameForm(frontendAppConfig)()
 
   def createView = () => otherTaxableIncomeName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[String]) => otherTaxableIncomeName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "OtherTaxableIncomeName view" must {
-    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, s"${taxYear.asString}?")
+    behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))
 
     behave like pageWithBackLink(createView)
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.OtherTaxableIncomeNameController.onSubmit(NormalMode).url)
+    behave like stringPage(
+      createView = createViewUsingForm,
+      messageKeyPrefix = messageKeyPrefix,
+      expectedFormAction = routes.OtherTaxableIncomeNameController.onSubmit(NormalMode).url,
+      expectedHintKeyLine1 = None,
+      expectedHintKeyLine2 = None,
+      expectedPrefix = None,
+      args = taxYear.asString(messages)
+    )
+
   }
 }

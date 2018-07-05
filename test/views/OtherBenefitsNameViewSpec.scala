@@ -16,37 +16,42 @@
 
 package views
 
-import config.FrontendAppConfig
-import play.api.data.Form
 import controllers.routes
 import forms.OtherBenefitsNameForm
-import models.{Index, NormalMode}
+import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
-import play.api.i18n.Messages
+import play.api.data.Form
 import views.behaviours.StringViewBehaviours
 import views.html.otherBenefitsName
 
-class OtherBenefitsNameViewSpec(implicit messages: Messages) extends StringViewBehaviours with MockitoSugar {
+class OtherBenefitsNameViewSpec extends StringViewBehaviours with MockitoSugar {
 
-  val messageKeyPrefix = "otherBenefitsName"
+  private val messageKeyPrefix = "otherBenefitsName"
   private val taxYear = CYMinus2
 
-  val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
+  override val form: Form[String] = new OtherBenefitsNameForm(frontendAppConfig)()
 
-  override val form: Form[String] = new OtherBenefitsNameForm(appConfig)()
+  def createView = () => otherBenefitsName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
-  def createView = () => otherBenefitsName(frontendAppConfig, form, NormalMode, 1, taxYear)(fakeRequest, messages)
-
-  def createViewUsingForm = (form: Form[String]) => otherBenefitsName(frontendAppConfig, form, NormalMode, 1, taxYear)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[String]) => otherBenefitsName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "OtherBenefitsName view" must {
-    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, s"${taxYear.asString}?")
+    behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))
 
     behave like pageWithBackLink(createView)
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.OtherBenefitsNameController.onSubmit(NormalMode, 1).url)
+    behave like stringPage(
+      createView = createViewUsingForm,
+      messageKeyPrefix = messageKeyPrefix,
+      expectedFormAction = routes.OtherBenefitsNameController.onSubmit(NormalMode).url,
+      expectedHintKeyLine1 = None,
+      expectedHintKeyLine2 = None,
+      expectedPrefix = None,
+      args = taxYear.asString(messages)
+    )
+
   }
 }
