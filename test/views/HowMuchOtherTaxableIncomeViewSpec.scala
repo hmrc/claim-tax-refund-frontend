@@ -16,39 +16,43 @@
 
 package views
 
-import config.FrontendAppConfig
-import play.api.data.Form
 import controllers.routes
 import forms.HowMuchOtherTaxableIncomeForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
-import play.api.i18n.Messages
+import play.api.data.Form
 import views.behaviours.StringViewBehaviours
 import views.html.howMuchOtherTaxableIncome
 
-class HowMuchOtherTaxableIncomeViewSpec(implicit messages: Messages) extends StringViewBehaviours with MockitoSugar {
+class HowMuchOtherTaxableIncomeViewSpec extends StringViewBehaviours with MockitoSugar {
 
-  val messageKeyPrefix = "howMuchOtherTaxableIncome"
+  private val messageKeyPrefix = "howMuchOtherTaxableIncome"
   private val taxYear = CYMinus2
   private val testIncome = "Test income"
 
-  val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
-
-  override val form: Form[String] = new HowMuchOtherTaxableIncomeForm(appConfig)()
+  override val form: Form[String] = new HowMuchOtherTaxableIncomeForm(frontendAppConfig)()
 
   def createView = () => howMuchOtherTaxableIncome(frontendAppConfig, form, NormalMode, taxYear, testIncome)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[String]) => howMuchOtherTaxableIncome(frontendAppConfig, form, NormalMode, taxYear, testIncome)(fakeRequest, messages)
 
   "howMuchOtherTaxableIncome view" must {
-    behave like normalPageWithDynamicHeader(createView, messageKeyPrefix, (testIncome, taxYear.asString))
+    behave like normalPage(createView, messageKeyPrefix, None, testIncome, taxYear.asString(messages))
 
     behave like pageWithBackLink(createView)
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.HowMuchOtherTaxableIncomeController.onSubmit(NormalMode).url)
+    behave like stringPage(
+      createView = createViewUsingForm,
+      messageKeyPrefix = messageKeyPrefix,
+      expectedFormAction = routes.HowMuchOtherTaxableIncomeController.onSubmit(NormalMode).url,
+      expectedHintKeyLine1 = None,
+      expectedHintKeyLine2 = None,
+      expectedPrefix = Some(messages("global.poundSign")),
+      args = taxYear.asString(messages)
+      )
 
   }
 }

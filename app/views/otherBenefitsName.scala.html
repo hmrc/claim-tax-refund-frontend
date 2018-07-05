@@ -23,7 +23,7 @@
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, index: Index, taxYear: SelectTaxYear)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("otherBenefitsName.title",s" ${taxYear.asString}"),
+    title = messages("otherBenefitsName.title",taxYear.asString),
     appConfig = appConfig,
     bodyClasses = None) {
 
@@ -35,7 +35,11 @@
 
         @components.heading(messages("otherBenefitsName.heading", taxYear.asString))
 
-        @components.input_text(InputViewModel("value", form), label = messages("otherBenefitsName.heading"), labelClass=Some("visually-hidden"))
+        @components.input_text(
+            InputViewModel("value", form),
+            label = messages("otherBenefitsName.heading", taxYear.asString),
+            labelClass=Some("visually-hidden")
+        )
 
         @components.submit_button()
     }

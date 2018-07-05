@@ -16,38 +16,42 @@
 
 package views
 
-import config.FrontendAppConfig
 import controllers.routes
 import forms.HowMuchIncapacityBenefitForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
-import play.api.i18n.Messages
 import views.behaviours.StringViewBehaviours
 import views.html.howMuchIncapacityBenefit
 
-class HowMuchIncapacityBenefitViewSpec(implicit messages: Messages) extends StringViewBehaviours with MockitoSugar {
+class HowMuchIncapacityBenefitViewSpec extends StringViewBehaviours with MockitoSugar {
 
   private val messageKeyPrefix = "howMuchIncapacityBenefit"
   private val taxYear = CYMinus2
 
-  val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
-
-  override val form: Form[String] = new HowMuchIncapacityBenefitForm(appConfig)()
+  override val form: Form[String] = new HowMuchIncapacityBenefitForm(frontendAppConfig)()
 
   def createView = () => howMuchIncapacityBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[String]) => howMuchIncapacityBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "HowMuchIncapacityBenefit view" must {
-    behave like normalPage(createView, messageKeyPrefix, taxYear.asString)
+    behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))
 
     behave like pageWithBackLink(createView)
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    behave like stringPage(createViewUsingForm, messageKeyPrefix,
-      routes.HowMuchIncapacityBenefitController.onSubmit(NormalMode).url, None, None, Some(messages("global.poundSign")))
+    behave like stringPage(
+      createView = createViewUsingForm,
+      messageKeyPrefix = messageKeyPrefix,
+      expectedFormAction = routes.HowMuchIncapacityBenefitController.onSubmit(NormalMode).url,
+      expectedHintKeyLine1 = None,
+      expectedHintKeyLine2 = None,
+      expectedPrefix = Some(messages("global.poundSign")),
+      args = taxYear.asString(messages)
+    )
+
   }
 }

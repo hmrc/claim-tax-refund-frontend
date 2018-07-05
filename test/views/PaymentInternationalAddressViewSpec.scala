@@ -16,7 +16,6 @@
 
 package views
 
-import config.FrontendAppConfig
 import controllers.routes
 import forms.PaymentInternationalAddressForm
 import models.{InternationalAddress, NormalMode}
@@ -27,11 +26,9 @@ import views.html.paymentInternationalAddress
 
 class PaymentInternationalAddressViewSpec extends QuestionViewBehaviours[InternationalAddress] with MockitoSugar {
 
-  val messageKeyPrefix = "paymentInternationalAddress"
+  private val messageKeyPrefix = "paymentInternationalAddress"
 
-  val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
-
-  override val form: Form[InternationalAddress] = new PaymentInternationalAddressForm(appConfig)()
+  override val form: Form[InternationalAddress] = new PaymentInternationalAddressForm(frontendAppConfig)()
 
   def createView = () => paymentInternationalAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
@@ -39,7 +36,7 @@ class PaymentInternationalAddressViewSpec extends QuestionViewBehaviours[Interna
 
   "PaymentInternationalAddress view" must {
 
-    behave like normalPage(createView, messageKeyPrefix)
+    behave like normalPage(createView, messageKeyPrefix, None)
 
     behave like pageWithBackLink(createView)
 

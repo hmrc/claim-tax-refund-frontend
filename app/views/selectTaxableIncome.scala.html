@@ -23,7 +23,7 @@
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: SelectTaxYear)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("selectTaxableIncome.title",s" ${taxYear.asString}"),
+    title = messages("selectTaxableIncome.title",taxYear.asString),
     appConfig = appConfig,
     bodyClasses = None) {
 
@@ -37,7 +37,7 @@
 
         @components.input_check_box(
             form("value"),
-            legend = messages("selectTaxableIncome.heading"),
+            legend = messages("selectTaxableIncome.heading", taxYear.asString),
             legendClass = Some("visually-hidden"),
             inputs = SelectTaxableIncomeForm.options
         )
