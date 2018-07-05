@@ -47,7 +47,7 @@ class AnyTaxableIncomeViewSpec extends YesNoViewBehaviours {
       createView = createViewUsingForm,
       messageKeyPrefix = messageKeyPrefix,
       expectedFormAction = routes.AnyTaxableIncomeController.onSubmit(NormalMode).url,
-      expectedHintText = None,
+      expectedHintTextKey = None,
       args = taxYear.asString(messages)
     )
 
