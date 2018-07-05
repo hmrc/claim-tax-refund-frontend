@@ -26,7 +26,7 @@ import controllers.actions._
 import config.FrontendAppConfig
 import forms.HowMuchOtherBenefitForm
 import identifiers.HowMuchOtherBenefitId
-import models.Mode
+import models.{Mode, SelectTaxYear}
 import play.api.mvc.Result
 import utils.{Navigator, UserAnswers}
 import views.html.howMuchOtherBenefit
@@ -66,20 +66,21 @@ class HowMuchOtherBenefitController @Inject()(
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      request.userAnswers.selectTaxYear.flatMap {
-        selectedTaxYear =>
-          val taxYear = selectedTaxYear
-          request.userAnswers.otherBenefitsName.map {
-            benefitName =>
-              form.bindFromRequest().fold(
-                (formWithErrors: Form[_]) =>
-                  Future.successful(BadRequest(howMuchOtherBenefit(appConfig, formWithErrors, mode, taxYear, benefitName))),
-                (value) =>
-                  dataCacheConnector.save[String](request.externalId, HowMuchOtherBenefitId.toString, value).map(cacheMap =>
-                    Redirect(navigator.nextPage(HowMuchOtherBenefitId, mode)(new UserAnswers(cacheMap))))
-              )
-          }
-      }.getOrElse {
+
+      val details: Option[Future[Result]] = for (
+        taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear;
+        benefitName: String <- request.userAnswers.otherBenefitsName
+      ) yield {
+        form.bindFromRequest().fold(
+          (formWithErrors: Form[_]) =>
+            Future.successful(BadRequest(howMuchOtherBenefit(appConfig, formWithErrors, mode, taxYear, benefitName))),
+          value =>
+            dataCacheConnector.save[String](request.externalId, HowMuchOtherBenefitId.toString, value).map(cacheMap =>
+              Redirect(navigator.nextPage(HowMuchOtherBenefitId, mode)(new UserAnswers(cacheMap))))
+        )
+      }
+
+      details.getOrElse {
         Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
       }
   }
