@@ -188,7 +188,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "otherBenefitsName" must {
     s"have the correct label" in {
       when(answers.otherBenefitsName) thenReturn Some(Seq("Other benefit"))
-      helper.otherBenefitsName(1).head.label.key mustBe s"otherBenefitsName.checkYourAnswersLabel"
+      helper.otherBenefitsName.head.label.key mustBe s"otherBenefitsName.checkYourAnswersLabel"
     }
   }
 
