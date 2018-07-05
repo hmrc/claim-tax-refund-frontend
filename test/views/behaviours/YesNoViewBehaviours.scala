@@ -28,7 +28,7 @@ trait YesNoViewBehaviours extends QuestionViewBehaviours[Boolean] {
   def yesNoPage(createView: (Form[Boolean]) => HtmlFormat.Appendable,
                 messageKeyPrefix: String,
                 expectedFormAction: String,
-                expectedHintText: Option[String],
+                expectedHintTextKey: Option[String],
                 args: Any*) = {
 
     "behave like a page with a Yes/No question" when {
@@ -42,6 +42,18 @@ trait YesNoViewBehaviours extends QuestionViewBehaviours[Boolean] {
         "contain a heading" in {
           val doc = asDocument(createView(form))
           assertContainsText(doc, messages(s"$messageKeyPrefix.heading", args: _*))
+        }
+
+        if(expectedHintTextKey.isDefined){
+          "render a hint" in {
+            val doc = asDocument(createView(form))
+            assertYesNoHint(doc, expectedHintTextKey)
+          }
+        } else {
+          "not render a hint" in {
+            val doc = asDocument(createView(form))
+            assertNotRenderedByCssSelector(doc, ".form-hint")
+          }
         }
 
         "contain an input for the value" in {
