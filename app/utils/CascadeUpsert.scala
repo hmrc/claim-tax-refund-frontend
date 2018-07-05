@@ -110,7 +110,7 @@ class CascadeUpsert {
 
   private def storeBenefit(selectedBenefits: JsValue, cacheMap: CacheMap): CacheMap = {
 
-    val mapToStore = cacheMap.data.get(SelectBenefitsId.toString).map {
+    val mapToStore: CacheMap = cacheMap.data.get(SelectBenefitsId.toString).map {
       _.as[JsArray].value.foldLeft(cacheMap) {
         (cm, benefit) =>
           if (!selectedBenefits.as[JsArray].value.contains(benefit) && benefit != JsString(Benefits.OTHER_TAXABLE_BENEFIT.toString)) {
@@ -128,7 +128,7 @@ class CascadeUpsert {
 
   private def storeCompanyBenefit(selectedBenefits: JsValue, cacheMap: CacheMap): CacheMap = {
 
-    val mapToStore = cacheMap.data.get(SelectCompanyBenefitsId.toString).map {
+    val mapToStore: CacheMap = cacheMap.data.get(SelectCompanyBenefitsId.toString).map {
       _.as[JsArray].value.foldLeft(cacheMap) {
         (cm, benefit) =>
           if (!selectedBenefits.as[JsArray].value.contains(benefit) && benefit != JsString(CompanyBenefits.OTHER_COMPANY_BENEFIT.toString)) {
@@ -146,7 +146,7 @@ class CascadeUpsert {
 
   private def storeTaxableIncome(selectedIncome: JsValue, cacheMap: CacheMap): CacheMap = {
 
-    val mapToStore = cacheMap.data.get(SelectTaxableIncomeId.toString).map {
+    val mapToStore: CacheMap = cacheMap.data.get(SelectTaxableIncomeId.toString).map {
       _.as[JsArray].value.foldLeft(cacheMap) {
         (cm, income) =>
           if (!selectedIncome.as[JsArray].value.contains(income) && income != JsString(TaxableIncome.OTHER_TAXABLE_INCOME.toString)) {
