@@ -31,6 +31,12 @@ class TaxableIncomeNavigatorSpec extends SpecBase with MockitoSugar {
 
   "TaxableIncomeNavigator" when {
     "in normal mode" when {
+      "go to SelectTaxableIncome from AnyTaxableIncome when answer is yes" in {
+        val answers = mock[UserAnswers]
+        when(answers.anyTaxableIncome) thenReturn Some(true)
+        navigator.nextPage(AnyTaxableIncomeId, NormalMode)(answers) mustBe routes.SelectTaxableIncomeController.onPageLoad(NormalMode)
+      }
+
       "Navigating from SelectTaxableIncome" must {
         "go to HowMuchRentalIncome when rental-income checkbox is the first answer selected" in {
           val answers = mock[UserAnswers]
