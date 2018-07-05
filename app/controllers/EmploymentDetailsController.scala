@@ -17,7 +17,6 @@
 package controllers
 
 import javax.inject.Inject
-
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
@@ -26,7 +25,7 @@ import controllers.actions._
 import config.FrontendAppConfig
 import forms.BooleanForm
 import identifiers.EmploymentDetailsId
-import models.{Mode, NormalMode}
+import models.{CheckMode, Mode, NormalMode}
 import utils.{Navigator, UserAnswers}
 import views.html.employmentDetails
 
@@ -87,9 +86,15 @@ class EmploymentDetailsController @Inject()(appConfig: FrontendAppConfig,
               form.bindFromRequest().fold(
                 (formWithErrors: Form[_]) =>
                   Future.successful(BadRequest(employmentDetails(appConfig, formWithErrors, mode, employments, taxYear))),
-                (value) =>
-                  dataCacheConnector.save[Boolean](request.externalId, EmploymentDetailsId.toString, value).map(cacheMap =>
-                    Redirect(navigator.nextPage(EmploymentDetailsId, mode)(new UserAnswers(cacheMap))))
+                (value) => {
+                  if ((request.userAnswers.employmentDetails == Some(value)) && mode == CheckMode) {
+                    Future.successful(Redirect(routes.CheckYourAnswersController.onPageLoad()))
+                  } else {
+                    dataCacheConnector.save[Boolean](request.externalId, EmploymentDetailsId.toString, value).map(cacheMap =>
+                      Redirect(navigator.nextPage(EmploymentDetailsId, mode)(new UserAnswers(cacheMap))))
+                  }
+
+                }
               )
           }
       }.getOrElse {
