@@ -21,7 +21,6 @@ import forms.BooleanForm
 import models.SelectTaxYear.CYMinus2
 import models.{Employment, NormalMode}
 import play.api.data.Form
-import play.twirl.api.HtmlFormat
 import views.behaviours.YesNoViewBehaviours
 import views.html.employmentDetails
 
