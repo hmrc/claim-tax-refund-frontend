@@ -100,8 +100,8 @@ trait ViewSpecBase extends SpecBase {
 
   def assertYesNoHint(doc: Document, expectedText: Option[String]) = {
     val hint = doc.getElementsByClass("form-hint")
-    assert(hint != null , "\n\nHint was rendered on the page.\n")
-    assert(hint.text.contains(expectedText.get))
+    assert(hint != null , "\n\nhint was rendered on the page.\n")
+    assert(hint.text.contains(messages(expectedText.get)))
   }
 
 }
