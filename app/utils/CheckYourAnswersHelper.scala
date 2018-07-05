@@ -134,10 +134,10 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
         s"$x", false, routes.HowMuchStatePensionController.onPageLoad(CheckMode).url)
   }
 
-  def otherBenefitsName(index: Int): Seq[AnswerRow] = userAnswers.otherBenefitsName match {
+  def otherBenefitsName: Seq[AnswerRow] = userAnswers.otherBenefitsName match {
     case Some(benefitsNames) =>
-      benefitsNames.map { benefitName =>
-        AnswerRow("otherBenefitsName.checkYourAnswersLabel", s"$benefitName", false, routes.OtherBenefitsNameController.onPageLoad(CheckMode, Index(index)).url)
+      benefitsNames.zipWithIndex.map { case (benefit, index) =>
+        AnswerRow("otherBenefitsName.checkYourAnswersLabel", benefit, false, routes.OtherBenefitsNameController.onPageLoad(CheckMode, Index(index)).url)
       }
     case _ =>
       Seq.empty
