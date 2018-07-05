@@ -22,6 +22,7 @@ import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
+import play.twirl.api.HtmlFormat
 import views.behaviours.StringViewBehaviours
 import views.html.otherBenefitsName
 
@@ -32,9 +33,9 @@ class OtherBenefitsNameViewSpec extends StringViewBehaviours with MockitoSugar {
 
   override val form: Form[String] = new OtherBenefitsNameForm(frontendAppConfig)()
 
-  def createView = () => otherBenefitsName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createView: () => HtmlFormat.Appendable = () => otherBenefitsName(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) => otherBenefitsName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createViewUsingForm: Form[String] => HtmlFormat.Appendable = (form: Form[String]) => otherBenefitsName(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages)
 
   "OtherBenefitsName view" must {
     behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))
@@ -46,7 +47,7 @@ class OtherBenefitsNameViewSpec extends StringViewBehaviours with MockitoSugar {
     behave like stringPage(
       createView = createViewUsingForm,
       messageKeyPrefix = messageKeyPrefix,
-      expectedFormAction = routes.OtherBenefitsNameController.onSubmit(NormalMode).url,
+      expectedFormAction = routes.OtherBenefitsNameController.onSubmit(NormalMode, 0).url,
       expectedHintKeyLine1 = None,
       expectedHintKeyLine2 = None,
       expectedPrefix = None,
