@@ -53,7 +53,7 @@ class AnyTaxableBankInterestViewSpec extends QuestionViewBehaviours[AnyTaxPaid] 
       createView = createViewUsingForm,
       messageKeyPrefix = messageKeyPrefix,
       expectedFormAction = routes.AnyTaxableBankInterestController.onSubmit(NormalMode).url,
-      expectedHintText = None,
+      expectedHintText = Some(messages("anyTaxableBankInterest.hint")),
       args = taxYear.asString(messages)
     )
 
