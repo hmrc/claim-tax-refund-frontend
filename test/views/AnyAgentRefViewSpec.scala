@@ -49,14 +49,14 @@ class AnyAgentRefViewSpec extends QuestionViewBehaviours[AnyAgentRef]{
       createView = createViewUsingForm,
       messageKeyPrefix = messageKeyPrefix,
       expectedFormAction = routes.AnyAgentRefController.onSubmit(NormalMode).url,
-      expectedHintText = None,
+      expectedHintTextKey = None,
       args = nomineeName
     )
 
     def yesNoPage(createView: (Form[AnyAgentRef]) => HtmlFormat.Appendable,
                   messageKeyPrefix: String,
                   expectedFormAction: String,
-                  expectedHintText: Option[String],
+                  expectedHintTextKey: Option[String],
                   args: Any*) = {
 
       "behave like a page with a Yes/No question" when {
@@ -70,6 +70,13 @@ class AnyAgentRefViewSpec extends QuestionViewBehaviours[AnyAgentRef]{
           "contain a heading" in {
             val doc = asDocument(createView(form))
             assertContainsText(doc, messages(s"$messageKeyPrefix.heading", args: _*))
+          }
+
+          if(expectedHintTextKey.isDefined){
+            "contain a label for the value" in {
+              val doc = asDocument(createView(form))
+              assertYesNoHint(doc, expectedHintTextKey)
+            }
           }
 
           "contain an input for the value" in {
