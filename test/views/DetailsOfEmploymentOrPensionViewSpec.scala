@@ -33,9 +33,11 @@ class DetailsOfEmploymentOrPensionViewSpec extends StringViewBehaviours with Moc
 
   override val form: Form[String] = new DetailsOfEmploymentOrPensionForm(frontendAppConfig)()
 
-  def createView = () => detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages)
+  def createView = () =>
+    detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) => detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[String]) =>
+    detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages)
 
   "DetailsOfEmploymentOrPension view" must {
     behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))
@@ -54,5 +56,10 @@ class DetailsOfEmploymentOrPensionViewSpec extends StringViewBehaviours with Moc
       args = taxYear.asString(messages)
     )
 
+    "Display the correct message when the character counter can't be shown on the page" in {
+      val doc = asDocument(createView())
+      assertContainsText (doc, messages("site.textarea.char_limit", characterLimit))
+    }
   }
+
 }
