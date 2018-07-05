@@ -29,6 +29,12 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
 
   "BenefitsNavigator" when {
     "in normal mode" when {
+      "go to SelectBenefits page from AnyBenefits when answer is yes" in {
+        val answers = mock[UserAnswers]
+        when(answers.anyBenefits) thenReturn Some(true)
+        navigator.nextPage(AnyBenefitsId, NormalMode)(answers) mustBe routes.SelectBenefitsController.onPageLoad(NormalMode)
+      }
+
       "Navigating from SelectBenefits" must {
         "go to HowMuchBereavementAllowance when bereavement-allowance checkbox is the first answer selected" in {
           val answers = mock[UserAnswers]

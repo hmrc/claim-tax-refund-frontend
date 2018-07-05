@@ -17,7 +17,6 @@
 package utils
 
 import javax.inject.Singleton
-
 import identifiers._
 import models.{Benefits, CompanyBenefits, TaxableIncome}
 import play.api.libs.json._
@@ -33,7 +32,8 @@ class CascadeUpsert {
       SelectTaxableIncomeId.toString -> storeTaxableIncome,
       AnyCompanyBenefitsId.toString -> anyCompanyBenefits,
       AnyTaxableIncomeId.toString -> anyTaxableIncome,
-      AnyBenefitsId.toString -> anyBenefits
+      AnyBenefitsId.toString -> anyBenefits,
+      EmploymentDetailsId.toString -> claimDetails
     )
 
   def apply[A](key: String, value: A, originalCacheMap: CacheMap)(implicit fmt: Format[A]): CacheMap =
@@ -161,5 +161,17 @@ class CascadeUpsert {
     }.getOrElse(cacheMap)
 
     store(SelectTaxableIncomeId.toString, selectedBenefits, mapToStore)
+  }
+
+  private def claimDetails(value: JsValue, cacheMap: CacheMap): CacheMap = {
+    val keysToRemove = Seq[String](
+      EnterPayeReferenceId.toString,
+      DetailsOfEmploymentOrPensionId.toString
+    )
+    val mapToStore = value match {
+      case JsBoolean(true) => cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemove.contains(s)))
+      case _ => cacheMap
+    }
+    store(EmploymentDetailsId.toString, value, mapToStore)
   }
 }
