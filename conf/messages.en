@@ -170,11 +170,11 @@ nomineeFullName.title = What is the full name of the person you want us to send 
 nomineeFullName.heading = What is the full name of the person you want us to send any payment to?
 nomineeFullName.checkYourAnswersLabel = Full name of the person you want us to send any payment to
 nomineeFullName.blank = Enter the full name of the person you want us to send any payment to
-nomineeFullName.tooLong = Full name of the person you want us to send any payment to can only be up to 30 characters
+nomineeFullName.tooLong = Full name of the person you want us to send any payment to can only be up to 70 characters
 
 anyAgentRef.title = Does {0} have an agent reference?
 anyAgentRef.heading = Does {0} have an agent reference?
-anyAgentRefOption.checkYourAnswersLabel = Any agent reference
+anyAgentRefOption.checkYourAnswersLabel = Does the person you want us to send any payment to have an agent reference?
 anyAgentRef.checkYourAnswersLabel = Agent reference
 anyAgentRef.blank = Select yes if the person you want us to send any payment to has an agent reference
 anyAgentRef.agentRefField = Agent reference
@@ -194,12 +194,12 @@ paymentUKAddress.title = What is the address you us to send any payment to?
 paymentUKAddress.heading = What is the address you us to send any payment to?
 paymentUKAddress.checkYourAnswersLabel = Address of the person you want us to send any payment to
 
-whereToSendPayment.title = Who would you like us to make the payment to?
-whereToSendPayment.heading = Who would you like us to make the payment to?
-whereToSendPayment.myself = Myself
-whereToSendPayment.nominee = Nominee
-whereToSendPayment.checkYourAnswersLabel = Who would you like us to make the payment to?
-whereToSendPayment.blank = Select who you would like us to make the payment to
+whereToSendPayment.title = Who would you like us to make any payment to?
+whereToSendPayment.heading = Who would you like us to make any payment to?
+whereToSendPayment.myself = You
+whereToSendPayment.nominee = Someone else
+whereToSendPayment.checkYourAnswersLabel = Who would you like us to make any payment to?
+whereToSendPayment.blank = Select who you would like us to make any payment to
 
 telephoneNumber.title = Can we contact you by phone if we need more information?
 telephoneNumber.heading = Can we contact you by phone if we need more information?
@@ -208,9 +208,9 @@ telephoneNumber.checkYourAnswersLabel = Phone number
 telephoneNumber.invalid = Enter a valid phone number
 telephoneNumber.notSelected = Select yes if we can call you if we need more information
 telephoneNumber.blank = Enter the phone number we can contact you on
-telephoneNumber.telephoneNumberField = Phone Number
+telephoneNumber.telephoneNumberField = Phone number
 telephoneNumber.hintPara1 = We will only call you if we need more information about your claim. It is the quickest way to resolve any problems.
-telephoneNumber.hintPara2 = We will contact you by letter. For security reasons we will not ask for more information by email.
+telephoneNumber.hintPara2 = We will contact you by letter.
 
 employmentDetails.title = Your employments or pensions between {0}
 employmentDetails.heading = Your employments or pensions between {0}
@@ -393,7 +393,7 @@ anyTaxableOtherIncome.notSelected = Select yes if you paid income tax on this in
 anyTaxableOtherIncome.blank = Enter the amount of income tax you paid on this income
 anyTaxableOtherIncome.anyTaxPaidAmountField = How much income tax did you pay on {0}?
 
-paymentAddressCorrect.title = Do you want to send payment to this address?
-paymentAddressCorrect.heading = Do you want to send payment to this address?
-paymentAddressCorrect.checkYourAnswersLabel = Do you want to send payment to this address?
-paymentAddressCorrect.blank = Select yes if you want to send payment to this address
+paymentAddressCorrect.title = Do you want to send any payment to this address?
+paymentAddressCorrect.heading = Do you want to send any payment to this address?
+paymentAddressCorrect.checkYourAnswersLabel = Do you want to send any payment to this address?
+paymentAddressCorrect.blank = Select yes if you want to send any payment to this address
