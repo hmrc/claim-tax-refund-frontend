@@ -18,7 +18,7 @@ package utils
 
 import base.SpecBase
 import identifiers._
-import models.{AnyTaxPaid, Benefits, CompanyBenefits, TaxableIncome}
+import models._
 import org.scalacheck.{Gen, Shrink}
 import play.api.libs.json._
 import uk.gov.hmrc.http.cache.client.CacheMap
@@ -68,10 +68,12 @@ class CascadeUpsertSpec extends SpecBase with PropertyChecks {
     }
   }
 
+  //Claim details section
+
   "Claim details section" must {
     "Answering 'Yes' on EmploymentDetailsController" must {
       "remove data from next 2 screens" in {
-        val originalCacheMap = new CacheMap("test", Map(
+        val originalCacheMap = new CacheMap(id = "test", Map(
           EmploymentDetailsId.toString -> Json.toJson(false),
           EnterPayeReferenceId.toString -> Json.toJson("123/AB1234"),
           DetailsOfEmploymentOrPensionId.toString -> Json.toJson("some details")
@@ -84,5 +86,49 @@ class CascadeUpsertSpec extends SpecBase with PropertyChecks {
         result.data.contains(DetailsOfEmploymentOrPensionId.toString) mustBe false
       }
     }
+  }
+
+  //Payment details section
+
+  "Payment details section" must {
+    "when answering where to send payment" must {
+      "remove nominee name and agent reference answers when selecting 'Self'" in {
+        val originalCacheMap = new CacheMap(id = "test", Map(
+          WhereToSendPaymentId.toString -> Json.toJson(WhereToSendPayment.Nominee),
+          NomineeFullNameId.toString -> Json.toJson("Test Name"),
+          AgentRefId.toString -> Json.toJson(AnyAgentRef.Yes("12345"))
+        ))
+        val cascadeUpsert = new CascadeUpsert
+        val result = cascadeUpsert (WhereToSendPaymentId.toString, Json.toJson(WhereToSendPayment.Myself), originalCacheMap)
+        result.data.size mustBe 1
+        result.data.contains(WhereToSendPaymentId.toString) mustBe true
+        result.data.contains(NomineeFullNameId.toString) mustBe false
+        result.data.contains(AgentRefId.toString) mustBe false
+      }
+
+      "remove is payment address correct when selecting 'Nominee'" in {
+        1 mustBe 2
+      }
+    }
+
+    "remove remaining journey when 'yes' is selected"in {
+        1 mustBe 2
+
+    }
+
+    "for address in the UK" must {
+      "remove UK address details when 'No' is selected" in {
+        1 mustBe 2
+      }
+
+      "remove international address details when 'Yes' is selected" in {
+        1 mustBe 2
+      }
+    }
+
+
+
+
+
   }
 }
