@@ -37,7 +37,7 @@ class NomineeFullNameControllerSpec extends ControllerSpecBase {
       dataRetrievalAction, new DataRequiredActionImpl, new NomineeFullNameForm(frontendAppConfig))
 
   val testAnswer = "answer"
-  val testTooLongAnswer = "AnswerAnswerAnswerAnswerAnswerAnswer"
+  val testTooLongAnswer = "AnswerAnswerAnswerAnswerAnswerAnswerAnswerAnswerAnswerAnswerAnswerAnswer"
   val form = new NomineeFullNameForm(frontendAppConfig)()
 
   def viewAsString(form: Form[_] = form) = nomineeFullName(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
