@@ -30,6 +30,8 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
 
   private val answers = MockUserAnswers.nothingAnswered
   private val helper = new CheckYourAnswersHelper(answers)(messages: Messages)
+  private val yes = "site.yes"
+  private val no = "site.no"
 
   "Change link" must {
     "be shown when set to true" in {
@@ -47,65 +49,76 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   //------------------------------------------------------------------------------
 
   "Select current year minus 1" must {
-    s"have correct label" in {
+    s"have correct label and answer" in {
       when(answers.selectTaxYear) thenReturn Some(CYMinus1)
       helper.selectTaxYear.get.label.key mustBe s"selectTaxYear.checkYourAnswersLabel"
+      helper.selectTaxYear.get.answer.key mustBe CYMinus1.asString(messages)
     }
   }
 
   "Select current year minus 2" must {
-    s"have correct label" in {
+    s"have correct label and answer" in {
       when(answers.selectTaxYear) thenReturn Some(CYMinus2)
       helper.selectTaxYear.get.label.key mustBe s"selectTaxYear.checkYourAnswersLabel"
+      helper.selectTaxYear.get.answer.key mustBe CYMinus2.asString(messages)
     }
   }
 
   "Select current year minus 3" must {
-    s"have correct label" in {
+    s"have correct label and answer" in {
       when(answers.selectTaxYear) thenReturn Some(CYMinus3)
       helper.selectTaxYear.get.label.key mustBe s"selectTaxYear.checkYourAnswersLabel"
+      helper.selectTaxYear.get.answer.key mustBe CYMinus3.asString(messages)
     }
   }
 
   "Select current year minus 4" must {
-    s"have correct label" in {
+    s"have correct label and answer" in {
       when(answers.selectTaxYear) thenReturn Some(CYMinus4)
       helper.selectTaxYear.get.label.key mustBe s"selectTaxYear.checkYourAnswersLabel"
+      helper.selectTaxYear.get.answer.key mustBe CYMinus4.asString(messages)
     }
   }
 
   "Select current year minus 5" must {
-    s"have correct label" in {
+    s"have correct label and answer" in {
       when(answers.selectTaxYear) thenReturn Some(CYMinus5)
       helper.selectTaxYear.get.label.key mustBe s"selectTaxYear.checkYourAnswersLabel"
+      helper.selectTaxYear.get.answer.key mustBe CYMinus5.asString(messages)
     }
   }
 
   "Employment details (yes)" must {
-    s"have correct label" in {
+    s"have correct label and answer" in {
       when(answers.employmentDetails) thenReturn Some(true)
       helper.employmentDetails.get.label.key mustBe s"employmentDetails.checkYourAnswersLabel"
+      helper.employmentDetails.get.answer.key mustBe yes
     }
   }
 
   "Employment details (no)" must {
-    s"have correct label" in {
+    s"have correct label and answer" in {
       when(answers.employmentDetails) thenReturn Some(false)
       helper.employmentDetails.get.label.key mustBe s"employmentDetails.checkYourAnswersLabel"
+      helper.employmentDetails.get.answer.key mustBe no
     }
   }
 
   "Enter PAYE Ref" must {
-    s"have correct label" in {
-      when(answers.enterPayeReference) thenReturn Some("AB12345")
+    s"have correct label and answer" in {
+      val testRef = "AB12345"
+      when(answers.enterPayeReference) thenReturn Some(testRef)
       helper.enterPayeReference.get.label.key mustBe s"enterPayeReference.checkYourAnswersLabel"
+      helper.enterPayeReference.get.answer.key mustBe testRef
     }
   }
 
   "Details of employment or pension" must {
-    s"have correct label" in {
-      when(answers.detailsOfEmploymentOrPension) thenReturn Some("Details of employment or pension")
+    s"have correct label and answer" in {
+      val details = "Details of employment or pension"
+      when(answers.detailsOfEmploymentOrPension) thenReturn Some(details)
       helper.detailsOfEmploymentOrPension.get.label.key mustBe s"detailsOfEmploymentOrPension.checkYourAnswersLabel"
+      helper.detailsOfEmploymentOrPension.get.answer.key mustBe details
     }
   }
 
