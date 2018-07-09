@@ -568,6 +568,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have the correct label and answer" in {
       when(answers.whereToSendPayment) thenReturn Some(Myself)
       helper.whereToSendPayment.get.label.key mustBe s"whereToSendPayment.checkYourAnswersLabel"
+      helper.whereToSendPayment.get.answer.key mustBe "whereToSendPayment.myself"
     }
   }
 
@@ -575,6 +576,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have the correct label and answer" in {
       when(answers.whereToSendPayment) thenReturn Some(Nominee)
       helper.whereToSendPayment.get.label.key mustBe s"whereToSendPayment.checkYourAnswersLabel"
+      helper.whereToSendPayment.get.answer.key mustBe s"whereToSendPayment.nominee"
     }
   }
 
@@ -582,6 +584,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have the correct label and answer" in {
       when(answers.paymentAddressCorrect) thenReturn Some(true)
       helper.paymentAddressCorrect.get.label.key mustBe s"paymentAddressCorrect.checkYourAnswersLabel"
+      helper.paymentAddressCorrect.get.answer.key mustBe yes
     }
   }
 
@@ -589,21 +592,29 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have the correct label and answer" in {
       when(answers.paymentAddressCorrect) thenReturn Some(false)
       helper.paymentAddressCorrect.get.label.key mustBe s"paymentAddressCorrect.checkYourAnswersLabel"
+      helper.paymentAddressCorrect.get.answer.key mustBe no
     }
   }
 
   "Nominee name" must {
     s"have the correct label and answer" in {
-      when(answers.nomineeFullName) thenReturn Some("Test name")
+      val nomineeName = "Test name"
+      when(answers.nomineeFullName) thenReturn Some(nomineeName)
       helper.nomineeFullName.get.label.key mustBe s"nomineeFullName.checkYourAnswersLabel"
+      helper.nomineeFullName.get.answer.key mustBe nomineeName
     }
   }
 
   "Is anyAgentRef (true)" must {
     s"have the correct label and answer" in {
-      when(answers.anyAgentRef) thenReturn Some(AnyAgentRef.Yes("AB12345"))
+      val agentRef = "AB12345"
+      when(answers.anyAgentRef) thenReturn Some(AnyAgentRef.Yes(agentRef))
+
       helper.anyAgentRef.get.label.key mustBe s"anyAgentRefOption.checkYourAnswersLabel"
       helper.agentReferenceNumber.get.label.key mustBe s"anyAgentRef.checkYourAnswersLabel"
+
+      helper.anyAgentRef.get.answer.key mustBe yes
+      helper.agentReferenceNumber.get.answer.key mustBe agentRef
     }
   }
 
@@ -611,6 +622,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have the correct label and answer" in {
       when(answers.anyAgentRef) thenReturn Some(AnyAgentRef.No)
       helper.anyAgentRef.get.label.key mustBe s"anyAgentRefOption.checkYourAnswersLabel"
+      helper.anyAgentRef.get.answer.key mustBe no
     }
   }
 
@@ -618,6 +630,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have the correct label and answer" in {
       when(answers.isPaymentAddressInTheUK) thenReturn Some(true)
       helper.isPaymentAddressInTheUK.get.label.key mustBe s"isPaymentAddressInTheUK.checkYourAnswersLabel"
+      helper.isPaymentAddressInTheUK.get.answer.key mustBe yes
     }
   }
 
@@ -625,20 +638,25 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have the correct label and answer" in {
       when(answers.isPaymentAddressInTheUK) thenReturn Some(false)
       helper.isPaymentAddressInTheUK.get.label.key mustBe s"isPaymentAddressInTheUK.checkYourAnswersLabel"
+      helper.isPaymentAddressInTheUK.get.answer.key mustBe no
     }
   }
 
   "Payment UK Address" must {
     s"have correct label and answer" in {
-      when(answers.paymentUKAddress) thenReturn Some(UkAddress("line 1", "line 2", None, None, None, "AA11 1AA"))
+      val address = UkAddress("line 1", "line 2", None, None, None, "AA11 1AA")
+      when(answers.paymentUKAddress) thenReturn Some(address)
       helper.paymentUKAddress.get.label.key mustBe s"paymentUKAddress.checkYourAnswersLabel"
+      helper.paymentUKAddress.get.answer.key mustBe UkAddress.asString(address)
     }
   }
 
   "Payment International Address" must {
     s"have correct label and answer" in {
-      when(answers.paymentInternationalAddress) thenReturn Some(InternationalAddress("line 1", "line 2", None, None, None, "country"))
+      val intAddress = InternationalAddress("line 1", "line 2", None, None, None, "country")
+      when(answers.paymentInternationalAddress) thenReturn Some(intAddress)
       helper.paymentInternationalAddress.get.label.key mustBe s"paymentInternationalAddress.checkYourAnswersLabel"
+      helper.paymentInternationalAddress.get.answer.key mustBe InternationalAddress.asString(intAddress)
     }
   }
 
@@ -647,9 +665,13 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
 
   "Telephone number (yes)" must {
     s"have the correct label and answer" in {
-      when(answers.anyTelephoneNumber) thenReturn Some(TelephoneOption.Yes("0191123123"))
+      val telNo = "0191123123"
+      when(answers.anyTelephoneNumber) thenReturn Some(TelephoneOption.Yes(telNo))
       helper.anyTelephoneNumber.get.label.key mustBe s"telephoneNumberOption.checkYourAnswersLabel"
       helper.telephoneNumber.get.label.key mustBe s"telephoneNumber.checkYourAnswersLabel"
+
+      helper.anyTelephoneNumber.get.answer.key mustBe yes
+      helper.telephoneNumber.get.answer.key mustBe telNo
     }
   }
 
@@ -657,6 +679,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have the correct label and answer" in {
       when(answers.anyTelephoneNumber) thenReturn Some(TelephoneOption.No)
       helper.anyTelephoneNumber.get.label.key mustBe s"telephoneNumberOption.checkYourAnswersLabel"
+      helper.anyTelephoneNumber.get.answer.key mustBe no
     }
   }
 
