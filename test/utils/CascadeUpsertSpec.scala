@@ -18,15 +18,11 @@ package utils
 
 import base.SpecBase
 import identifiers._
-import models._
-import org.scalacheck.{Gen, Shrink}
 import play.api.libs.json._
 import uk.gov.hmrc.http.cache.client.CacheMap
 import org.scalatest.prop.PropertyChecks
 
 class CascadeUpsertSpec extends SpecBase with PropertyChecks {
-
-  implicit def dontShrink[A]: Shrink[A] = Shrink.shrinkAny
 
   "using the apply method for a key that has no special function" when {
     "the key doesn't already exists" must {
@@ -80,55 +76,10 @@ class CascadeUpsertSpec extends SpecBase with PropertyChecks {
         ))
         val cascadeUpsert = new CascadeUpsert
         val result = cascadeUpsert(EmploymentDetailsId.toString, JsBoolean(true), originalCacheMap)
-        result.data.size mustBe 1
-        result.data.contains(EmploymentDetailsId.toString) mustBe true
-        result.data.contains(EnterPayeReferenceId.toString) mustBe false
-        result.data.contains(DetailsOfEmploymentOrPensionId.toString) mustBe false
+        result.data mustBe Map (
+          EmploymentDetailsId.toString -> Json.toJson(true)
+        )
       }
     }
-  }
-
-  //Payment details section
-
-  "Payment details section" must {
-    "when answering where to send payment" must {
-      "remove nominee name and agent reference answers when selecting 'Self'" in {
-        val originalCacheMap = new CacheMap(id = "test", Map(
-          WhereToSendPaymentId.toString -> Json.toJson(WhereToSendPayment.Nominee),
-          NomineeFullNameId.toString -> Json.toJson("Test Name"),
-          AgentRefId.toString -> Json.toJson(AnyAgentRef.Yes("12345"))
-        ))
-        val cascadeUpsert = new CascadeUpsert
-        val result = cascadeUpsert (WhereToSendPaymentId.toString, Json.toJson(WhereToSendPayment.Myself), originalCacheMap)
-        result.data.size mustBe 1
-        result.data.contains(WhereToSendPaymentId.toString) mustBe true
-        result.data.contains(NomineeFullNameId.toString) mustBe false
-        result.data.contains(AgentRefId.toString) mustBe false
-      }
-
-      "remove is payment address correct when selecting 'Nominee'" in {
-        1 mustBe 2
-      }
-    }
-
-    "remove remaining journey when 'yes' is selected"in {
-        1 mustBe 2
-
-    }
-
-    "for address in the UK" must {
-      "remove UK address details when 'No' is selected" in {
-        1 mustBe 2
-      }
-
-      "remove international address details when 'Yes' is selected" in {
-        1 mustBe 2
-      }
-    }
-
-
-
-
-
   }
 }
