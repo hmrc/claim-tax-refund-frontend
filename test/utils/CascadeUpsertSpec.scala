@@ -18,15 +18,11 @@ package utils
 
 import base.SpecBase
 import identifiers._
-import models.{AnyTaxPaid, Benefits, CompanyBenefits, TaxableIncome}
-import org.scalacheck.{Gen, Shrink}
 import play.api.libs.json._
 import uk.gov.hmrc.http.cache.client.CacheMap
 import org.scalatest.prop.PropertyChecks
 
 class CascadeUpsertSpec extends SpecBase with PropertyChecks {
-
-  implicit def dontShrink[A]: Shrink[A] = Shrink.shrinkAny
 
   "using the apply method for a key that has no special function" when {
     "the key doesn't already exists" must {
@@ -68,20 +64,21 @@ class CascadeUpsertSpec extends SpecBase with PropertyChecks {
     }
   }
 
+  //Claim details section
+
   "Claim details section" must {
     "Answering 'Yes' on EmploymentDetailsController" must {
       "remove data from next 2 screens" in {
-        val originalCacheMap = new CacheMap("test", Map(
+        val originalCacheMap = new CacheMap(id = "test", Map(
           EmploymentDetailsId.toString -> Json.toJson(false),
           EnterPayeReferenceId.toString -> Json.toJson("123/AB1234"),
           DetailsOfEmploymentOrPensionId.toString -> Json.toJson("some details")
         ))
         val cascadeUpsert = new CascadeUpsert
         val result = cascadeUpsert(EmploymentDetailsId.toString, JsBoolean(true), originalCacheMap)
-        result.data.size mustBe 1
-        result.data.contains(EmploymentDetailsId.toString) mustBe true
-        result.data.contains(EnterPayeReferenceId.toString) mustBe false
-        result.data.contains(DetailsOfEmploymentOrPensionId.toString) mustBe false
+        result.data mustBe Map (
+          EmploymentDetailsId.toString -> Json.toJson(true)
+        )
       }
     }
   }

@@ -16,8 +16,6 @@
 
 package models
 
-import utils.{Enumerable, WithName}
-
 sealed trait WhereToSendPayment
 
 object WhereToSendPayment extends Enumerable[WhereToSendPayment] {
