@@ -16,9 +16,6 @@
 
 package models
 
-import play.api.libs.json._
-import utils.{EnumUtils, Enumerable, WithName}
-
 sealed trait WhereToSendPayment
 
 object WhereToSendPayment extends Enumerable[WhereToSendPayment] {
@@ -30,6 +27,4 @@ object WhereToSendPayment extends Enumerable[WhereToSendPayment] {
   lazy val values: Set[WhereToSendPayment] = Set(
     Myself, Nominee
   )
-
-
 }
