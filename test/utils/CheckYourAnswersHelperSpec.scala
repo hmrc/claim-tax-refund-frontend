@@ -155,7 +155,9 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
       )
       when(answers.selectBenefits) thenReturn Some(benefits)
       helper.selectBenefits.get.label.key mustBe s"selectBenefits.checkYourAnswersLabel"
-      helper.selectBenefits.get.answer.key mustBe benefits.map(x => messages("selectBenefits." + x)).mkString("<br>")
+      helper.selectBenefits.get.answer.key mustBe benefits.map(
+        benefit => messages("selectBenefits." + benefit)
+      ).mkString("<br>")
     }
   }
 
@@ -247,6 +249,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have the correct label and answer" in {
       when(answers.anyCompanyBenefits) thenReturn Some(true)
       helper.anyCompanyBenefits.get.label.key mustBe s"anyCompanyBenefits.checkYourAnswersLabel"
+      helper.anyCompanyBenefits.get.answer.key mustBe yes
     }
   }
 
@@ -254,19 +257,23 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have the correct label and answer" in {
       when(answers.anyCompanyBenefits) thenReturn Some(false)
       helper.anyCompanyBenefits.get.label.key mustBe s"anyCompanyBenefits.checkYourAnswersLabel"
+      helper.anyCompanyBenefits.get.answer.key mustBe no
     }
   }
 
   "selectCompanyBenefits" must {
     s"have correct label and answer" in {
-      when(answers.selectCompanyBenefits) thenReturn Some(
-        Seq(
-          CompanyBenefits.COMPANY_CAR_BENEFIT,
-          CompanyBenefits.FUEL_BENEFIT,
-          CompanyBenefits.MEDICAL_BENEFIT,
-          CompanyBenefits.OTHER_COMPANY_BENEFIT
-        ))
+      val companyBenefits = Seq(
+        CompanyBenefits.COMPANY_CAR_BENEFIT,
+        CompanyBenefits.FUEL_BENEFIT,
+        CompanyBenefits.MEDICAL_BENEFIT,
+        CompanyBenefits.OTHER_COMPANY_BENEFIT
+      )
+      when(answers.selectCompanyBenefits) thenReturn Some(companyBenefits)
       helper.selectCompanyBenefits.get.label.key mustBe s"selectCompanyBenefits.checkYourAnswersLabel"
+      helper.selectCompanyBenefits.get.answer.key mustBe companyBenefits.map(
+        companyBenefit => messages("selectCompanyBenefits." + companyBenefit)
+      ).mkString("<br>")
     }
   }
 
@@ -274,6 +281,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have the correct label and answer" in {
       when(answers.howMuchCarBenefits) thenReturn Some(amount)
       helper.howMuchCarBenefits.get.label.key mustBe s"howMuchCarBenefits.checkYourAnswersLabel"
+      helper.howMuchCarBenefits.get.answer.key mustBe amount
     }
   }
 
@@ -281,6 +289,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have the correct label and answer" in {
       when(answers.howMuchFuelBenefit) thenReturn Some(amount)
       helper.howMuchFuelBenefit.get.label.key mustBe s"howMuchFuelBenefit.checkYourAnswersLabel"
+      helper.howMuchFuelBenefit.get.answer.key mustBe amount
     }
   }
 
@@ -288,20 +297,24 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have the correct label and answer" in {
       when(answers.howMuchMedicalBenefits) thenReturn Some(amount)
       helper.howMuchMedicalBenefits.get.label.key mustBe s"howMuchMedicalBenefits.checkYourAnswersLabel"
+      helper.howMuchMedicalBenefits.get.answer.key mustBe amount
     }
   }
 
   "otherCompanyBenefitsName" must {
     s"have the correct label and answer" in {
-      when(answers.otherCompanyBenefitsName) thenReturn Some("Benefit name")
+      val companyBenefitName = "other benefit"
+      when(answers.otherCompanyBenefitsName) thenReturn Some(companyBenefitName)
       helper.otherCompanyBenefitsName.get.label.key mustBe s"otherCompanyBenefitsName.checkYourAnswersLabel"
+      helper.otherCompanyBenefitsName.get.answer.key mustBe companyBenefitName
     }
   }
 
   "howMuchOtherCompanyBenefit" must {
     s"have the correct label and answer" in {
-      when(answers.howMuchOtherCompanyBenefit) thenReturn Some("Benefit name")
+      when(answers.howMuchOtherCompanyBenefit) thenReturn Some(amount)
       helper.howMuchOtherCompanyBenefit.get.label.key mustBe s"howMuchOtherCompanyBenefit.checkYourAnswersLabel"
+      helper.howMuchOtherCompanyBenefit.get.answer.key mustBe amount
     }
   }
 
@@ -309,6 +322,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have the correct label and answer" in {
       when(answers.anyOtherCompanyBenefits) thenReturn Some(true)
       helper.anyOtherCompanyBenefits.get.label.key mustBe s"anyOtherCompanyBenefits.checkYourAnswersLabel"
+      helper.anyOtherCompanyBenefits.get.answer.key mustBe yes
     }
   }
 
@@ -316,6 +330,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have the correct label and answer" in {
       when(answers.anyOtherCompanyBenefits) thenReturn Some(false)
       helper.anyOtherCompanyBenefits.get.label.key mustBe s"anyOtherCompanyBenefits.checkYourAnswersLabel"
+      helper.anyOtherCompanyBenefits.get.answer.key mustBe no
     }
   }
 
