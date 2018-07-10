@@ -23,7 +23,7 @@
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, index: Index, taxYear: SelectTaxYear)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("otherBenefitsName.title",taxYear.asString),
+    title = messages("otherBenefitsName.title", taxYear.asString),
     appConfig = appConfig,
     bodyClasses = None) {
 

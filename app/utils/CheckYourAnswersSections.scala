@@ -43,7 +43,7 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
     cyaHelper.howMuchIncapacityBenefit,
     cyaHelper.howMuchStatePension,
 //    cyaHelper.otherBenefitsName(1),
-    cyaHelper.howMuchOtherBenefit,
+//    cyaHelper.howMuchOtherBenefit,
     cyaHelper.anyOtherBenefits
   ).flatten)
 

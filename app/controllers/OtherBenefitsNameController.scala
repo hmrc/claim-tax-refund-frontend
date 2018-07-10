@@ -72,7 +72,11 @@ class OtherBenefitsNameController @Inject()(
               Future.successful(BadRequest(otherBenefitsName(appConfig, formWithErrors, mode, index, taxYear))),
             value => {
               val benefitNames: Seq[String] = request.userAnswers.otherBenefitsName.getOrElse(Seq(value))
-              dataCacheConnector.save[Seq[String]](request.externalId, OtherBenefitsNameId.toString, sequenceUtil.update(benefitNames, index, value)).map(cacheMap =>
+              dataCacheConnector.save[Seq[String]](
+                request.externalId,
+                OtherBenefitsNameId.toString,
+                sequenceUtil.updateSeq(benefitNames, index, value)
+              ).map(cacheMap =>
                 Redirect(navigator.nextPage(OtherBenefitsNameId, mode)(new UserAnswers(cacheMap))))
             }
           )
