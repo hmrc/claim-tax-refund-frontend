@@ -22,12 +22,12 @@ import controllers.actions._
 import forms.HowMuchOtherBenefitForm
 import identifiers.HowMuchOtherBenefitId
 import javax.inject.Inject
-import models.Mode
+import models.{Index, Mode}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
-import utils.{Navigator, UserAnswers}
+import utils.{Navigator, SequenceUtil, UserAnswers}
 import views.html.howMuchOtherBenefit
 
 import scala.concurrent.Future
@@ -40,37 +40,54 @@ class HowMuchOtherBenefitController @Inject()(
                                         authenticate: AuthAction,
                                         getData: DataRetrievalAction,
                                         requireData: DataRequiredAction,
+                                        sequenceUtil: SequenceUtil,
                                         formBuilder: HowMuchOtherBenefitForm) extends FrontendController with I18nSupport {
 
   private val form: Form[String] = formBuilder()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.howMuchOtherBenefit match {
+        case Some(value) =>
+          if (index >= value.size) form else form.fill(value.toSeq(index)._2)
         case None => form
-        case Some(value) => form.fill(value)
       }
 
       request.userAnswers.selectTaxYear.map{
         selectedTaxYear =>
           val taxYear = selectedTaxYear
-          Ok(howMuchOtherBenefit(appConfig, preparedForm, mode, taxYear))
+          Ok(howMuchOtherBenefit(appConfig, preparedForm, mode, index, taxYear))
       }.getOrElse{
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
           val taxYear = selectedTaxYear
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(howMuchOtherBenefit(appConfig, formWithErrors, mode, taxYear))),
-            value =>
-              dataCacheConnector.save[String](request.externalId, HowMuchOtherBenefitId.toString, value).map(cacheMap =>
+              Future.successful(BadRequest(howMuchOtherBenefit(appConfig, formWithErrors, mode, index, taxYear))),
+            value => {
+              val name: String = request.userAnswers.otherBenefitsName match {
+                case Some(benefits) => benefits(index)
+                case None => ???
+              }
+              
+              val otherBenefits: Map[String, String] = Map(request.userAnswers.otherBenefitsName match {
+                case Some(benefits) => benefits(index) -> value
+                case None => ???
+              })
+
+              dataCacheConnector.save[Map[String, String]](
+                request.externalId,
+                HowMuchOtherBenefitId.toString,
+                sequenceUtil.updateMap(otherBenefits, name, value)
+              ).map(cacheMap =>
                 Redirect(navigator.nextPage(HowMuchOtherBenefitId, mode)(new UserAnswers(cacheMap))))
+            }
           )
       }.getOrElse {
         Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))

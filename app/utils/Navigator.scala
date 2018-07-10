@@ -40,6 +40,8 @@ class Navigator @Inject()() {
     HowMuchEmploymentAndSupportAllowanceId -> benefitRouter(HowMuchEmploymentAndSupportAllowanceId.cyaId),
     HowMuchStatePensionId -> benefitRouter(HowMuchStatePensionId.cyaId),
     AnyOtherBenefitsId -> anyOtherBenefits,
+    OtherBenefitsNameId -> otherBenefitsName,
+    HowMuchOtherBenefitId -> (_ => routes.AnyOtherBenefitsController.onPageLoad(NormalMode)),
     AnyCompanyBenefitsId -> anyCompanyBenefits,
     HowMuchCarBenefitsId -> companyBenefitRouter(HowMuchCarBenefitsId.cyaId),
     HowMuchFuelBenefitId -> companyBenefitRouter(HowMuchFuelBenefitId.cyaId),
@@ -59,8 +61,6 @@ class Navigator @Inject()() {
     HowMuchOtherTaxableIncomeId -> (_ => routes.AnyTaxableOtherIncomeController.onPageLoad(NormalMode)),
     AnyTaxableOtherIncomeId -> (_ => routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)),
     AnyOtherTaxableIncomeId -> anyOtherTaxableIncome,
-    OtherBenefitsNameId -> (_ => routes.HowMuchOtherBenefitController.onPageLoad(NormalMode)),
-    HowMuchOtherBenefitId -> (_ => routes.AnyOtherBenefitsController.onPageLoad(NormalMode)),
     OtherCompanyBenefitsNameId -> (_ => routes.HowMuchOtherCompanyBenefitController.onPageLoad(NormalMode)),
     HowMuchOtherCompanyBenefitId -> (_ => routes.AnyOtherCompanyBenefitsController.onPageLoad(NormalMode)),
     AnyOtherCompanyBenefitsId -> anyOtherCompanyBenefits,
@@ -196,6 +196,11 @@ class Navigator @Inject()() {
     case Some(true) => routes.OtherBenefitsNameController.onPageLoad(NormalMode, Index(userAnswers.otherBenefitsName.get.length))
     case Some(false) => routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
+  }
+
+  private def otherBenefitsName(userAnswers: UserAnswers): Call = userAnswers.howMuchOtherBenefit match {
+    case Some(otherBenefits) => routes.HowMuchOtherBenefitController.onPageLoad(NormalMode, Index(otherBenefits.size))
+    case None => routes.HowMuchOtherBenefitController.onPageLoad(NormalMode, Index(0))
   }
 
   private def anyOtherCompanyBenefits(userAnswers: UserAnswers): Call = userAnswers.anyOtherCompanyBenefits match {

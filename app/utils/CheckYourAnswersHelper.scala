@@ -143,9 +143,9 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
       Seq.empty
   }
 
-  def howMuchOtherBenefit: Option[AnswerRow] = userAnswers.howMuchOtherBenefit map {
-    x => AnswerRow("howMuchOtherBenefit.checkYourAnswersLabel", s"$x", false, routes.HowMuchOtherBenefitController.onPageLoad(CheckMode).url)
-  }
+//  def howMuchOtherBenefit: Option[AnswerRow] = userAnswers.howMuchOtherBenefit map {
+//    x => AnswerRow("howMuchOtherBenefit.checkYourAnswersLabel", s"$x", false, routes.HowMuchOtherBenefitController.onPageLoad(CheckMode).url)
+//  }
 
   def anyOtherBenefits: Option[AnswerRow] = userAnswers.anyOtherBenefits map {
     x =>

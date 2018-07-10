@@ -19,7 +19,7 @@ package utils
 import models.Index
 
 class SequenceUtil {
-  def update(seq: Seq[String], index: Index, value: String): Seq[String] = {
+  def updateSeq(seq: Seq[String], index: Index, value: String): Seq[String] = {
     if (index.id >= seq.length) {
       val updatedSeq: Seq[String] = seq :+ value
       updatedSeq
@@ -27,5 +27,10 @@ class SequenceUtil {
       val updatedSeq: Seq[String] = seq.updated(index.id, value)
       updatedSeq
     }
+  }
+
+  def updateMap(map: Map[String, String], name: String, value: String): Map[String, String] = {
+    val updatedMap: Map[String, String] = map + (name -> value)
+    updatedMap
   }
 }
