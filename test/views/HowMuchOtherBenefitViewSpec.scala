@@ -29,15 +29,16 @@ class HowMuchOtherBenefitViewSpec extends StringViewBehaviours with MockitoSugar
 
   private val messageKeyPrefix = "howMuchOtherBenefit"
   private val taxYear = CYMinus2
+  private val otherBenefitName = "test benefit"
 
   override val form: Form[String] = new HowMuchOtherBenefitForm(frontendAppConfig)()
 
-  def createView = () => howMuchOtherBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createView = () => howMuchOtherBenefit(frontendAppConfig, form, NormalMode, taxYear, otherBenefitName, 0)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) => howMuchOtherBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[String]) => howMuchOtherBenefit(frontendAppConfig, form, NormalMode, taxYear, otherBenefitName, 0)(fakeRequest, messages)
 
   "HowMuchOtherBenefit view" must {
-    behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))
+    behave like normalPage(createView, messageKeyPrefix, None, otherBenefitName, taxYear.asString(messages))
 
     behave like pageWithBackLink(createView)
 
@@ -46,7 +47,7 @@ class HowMuchOtherBenefitViewSpec extends StringViewBehaviours with MockitoSugar
     behave like stringPage(
       createView = createViewUsingForm,
       messageKeyPrefix = messageKeyPrefix,
-      expectedFormAction = routes.HowMuchOtherBenefitController.onSubmit(NormalMode).url,
+      expectedFormAction = routes.HowMuchOtherBenefitController.onSubmit(NormalMode, 0).url,
       expectedHintKeyLine1 = None,
       expectedHintKeyLine2 = None,
       expectedPrefix = Some(messages("global.poundSign")),

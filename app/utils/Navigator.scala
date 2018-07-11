@@ -26,6 +26,14 @@ import play.api.mvc.Call
 @Singleton
 class Navigator @Inject()() {
 
+  private val routeMapWithIndex: PartialFunction[Identifier, UserAnswers => Call] = {
+    case OtherBenefitsNameId(index) => otherBenefitsName(index)
+  }
+
+  private val editRouteMapWithIndex: PartialFunction[Identifier, UserAnswers => Call] = {
+    case _ => ???
+  }
+
   private val routeMap: Map[Identifier, UserAnswers => Call] = Map(
     SelectTaxYearId -> (_ => routes.EmploymentDetailsController.onPageLoad(NormalMode)),
     EmploymentDetailsId -> employmentDetails,
@@ -40,7 +48,6 @@ class Navigator @Inject()() {
     HowMuchEmploymentAndSupportAllowanceId -> benefitRouter(HowMuchEmploymentAndSupportAllowanceId.cyaId),
     HowMuchStatePensionId -> benefitRouter(HowMuchStatePensionId.cyaId),
     AnyOtherBenefitsId -> anyOtherBenefits,
-    OtherBenefitsNameId -> otherBenefitsName,
     HowMuchOtherBenefitId -> (_ => routes.AnyOtherBenefitsController.onPageLoad(NormalMode)),
     AnyCompanyBenefitsId -> anyCompanyBenefits,
     HowMuchCarBenefitsId -> companyBenefitRouter(HowMuchCarBenefitsId.cyaId),
@@ -75,7 +82,14 @@ class Navigator @Inject()() {
   )
 
   private val editRouteMap: Map[Identifier, UserAnswers => Call] = Map(
-
+    EmploymentDetailsId ->  employmentDetailsCheck,
+    EnterPayeReferenceId -> (_ => routes.DetailsOfEmploymentOrPensionController.onPageLoad(CheckMode)),
+    DetailsOfEmploymentOrPensionId -> (_ => routes.CheckYourAnswersController.onPageLoad()),
+    AnyAgentRefId -> (_ => routes.IsPaymentAddressInTheUKController.onPageLoad(CheckMode)),
+    NomineeFullNameId -> (_ => routes.AnyAgentRefController.onPageLoad(CheckMode)),
+    WhereToSendPaymentId -> whereToSendPaymentCheck,
+    IsPaymentAddressInTheUKId -> isPaymentAddressInUkRouteCheck,
+    PaymentAddressCorrectId -> paymentAddressCorrectCheck
   )
 
   private def employmentDetails(userAnswers: UserAnswers): Call = userAnswers.employmentDetails match {
@@ -84,6 +98,11 @@ class Navigator @Inject()() {
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
+  private def employmentDetailsCheck(userAnswers: UserAnswers): Call = userAnswers.employmentDetails match {
+    case Some(true) => routes.CheckYourAnswersController.onPageLoad()
+    case Some(false) => routes.EnterPayeReferenceController.onPageLoad(CheckMode)
+    case None => routes.SessionExpiredController.onPageLoad()
+  }
   private def anyBenefits(userAnswers: UserAnswers): Call = userAnswers.anyBenefits match {
     case Some(true) => routes.SelectBenefitsController.onPageLoad(NormalMode)
     case Some(false) => routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
@@ -198,8 +217,8 @@ class Navigator @Inject()() {
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
-  private def otherBenefitsName(userAnswers: UserAnswers): Call = userAnswers.howMuchOtherBenefit match {
-    case Some(otherBenefits) => routes.HowMuchOtherBenefitController.onPageLoad(NormalMode, Index(otherBenefits.size))
+  def otherBenefitsName(index: Index)(userAnswers: UserAnswers): Call = userAnswers.otherBenefitsName match {
+    case Some(otherBenefits) => routes.HowMuchOtherBenefitController.onPageLoad(NormalMode, index)
     case None => routes.HowMuchOtherBenefitController.onPageLoad(NormalMode, Index(0))
   }
 
@@ -227,6 +246,12 @@ class Navigator @Inject()() {
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
+  private def whereToSendPaymentCheck(userAnswers: UserAnswers): Call = userAnswers.whereToSendPayment match {
+    case Some(Nominee) => routes.NomineeFullNameController.onPageLoad(CheckMode)
+    case Some(Myself) => routes.PaymentAddressCorrectController.onPageLoad(CheckMode)
+    case None => routes.SessionExpiredController.onPageLoad()
+  }
+
   private def anyAgentRef(userAnswers: UserAnswers): Option[Call] = userAnswers.anyAgentRef map {
     case AnyAgentRef.Yes(agentRef) => routes.IsPaymentAddressInTheUKController.onPageLoad(NormalMode)
     case AnyAgentRef.No => routes.IsPaymentAddressInTheUKController.onPageLoad(NormalMode)
@@ -239,9 +264,23 @@ class Navigator @Inject()() {
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
+  private def isPaymentAddressInUkRouteCheck(userAnswers: UserAnswers): Call = userAnswers.isPaymentAddressInTheUK match {
+    case Some(true) => routes.PaymentUKAddressController.onPageLoad(CheckMode)
+    case Some(false) => routes.PaymentInternationalAddressController.onPageLoad(CheckMode)
+    case None => routes.SessionExpiredController.onPageLoad()
+  }
+
+
   private def paymentAddressCorrect(userAnswers: UserAnswers): Call = userAnswers.paymentAddressCorrect match {
     case Some(true) => routes.TelephoneNumberController.onPageLoad(NormalMode)
     case Some(false) => routes.IsPaymentAddressInTheUKController.onPageLoad(NormalMode)
+    case None => routes.SessionExpiredController.onPageLoad()
+  }
+
+
+  private def paymentAddressCorrectCheck(userAnswers: UserAnswers): Call = userAnswers.paymentAddressCorrect match {
+    case Some(true) => routes.TelephoneNumberController.onPageLoad(CheckMode)
+    case Some(false) => routes.IsPaymentAddressInTheUKController.onPageLoad(CheckMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
@@ -250,5 +289,12 @@ class Navigator @Inject()() {
       routeMap.getOrElse(id, _ => routes.IndexController.onPageLoad())
     case CheckMode =>
       editRouteMap.getOrElse(id, _ => routes.CheckYourAnswersController.onPageLoad())
+  }
+
+  def nextPageWithIndex(id: Identifier, mode: Mode): UserAnswers => Call = mode match {
+    case NormalMode =>
+      routeMapWithIndex.lift(id).getOrElse(_ => routes.IndexController.onPageLoad())
+    case CheckMode =>
+      editRouteMapWithIndex.lift(id).getOrElse(_ => routes.CheckYourAnswersController.onPageLoad())
   }
 }

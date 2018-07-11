@@ -45,7 +45,7 @@ class IsPaymentAddressInTheUKViewSpec extends YesNoViewBehaviours {
       createView = createViewUsingForm,
       messageKeyPrefix = messageKeyPrefix,
       expectedFormAction = routes.IsPaymentAddressInTheUKController.onSubmit(NormalMode).url,
-      expectedHintText = None
+      expectedHintTextKey = None
     )
   }
 }

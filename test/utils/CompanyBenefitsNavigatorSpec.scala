@@ -29,6 +29,12 @@ class CompanyBenefitsNavigatorSpec extends SpecBase with MockitoSugar {
 
   "CompanyBenefitsNavigator" when {
     "in normal mode" when {
+      "go to SelectAnyCompanyBenefits from AnyCompanyBenefits when Yes is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.anyCompanyBenefits) thenReturn Some(true)
+        navigator.nextPage(AnyCompanyBenefitsId, NormalMode)(answers) mustBe routes.SelectCompanyBenefitsController.onPageLoad(NormalMode)
+      }
+
       "Navigating from SelectCompanyBenefits" must {
         "go to COMPANY_CAR_BENEFIT when company-car-benefit checkbox is the first answer selected" in {
           val answers = mock[UserAnswers]

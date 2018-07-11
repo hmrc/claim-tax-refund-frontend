@@ -29,6 +29,12 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
 
   "BenefitsNavigator" when {
     "in normal mode" when {
+      "go to SelectBenefits page from AnyBenefits when answer is yes" in {
+        val answers = mock[UserAnswers]
+        when(answers.anyBenefits) thenReturn Some(true)
+        navigator.nextPage(AnyBenefitsId, NormalMode)(answers) mustBe routes.SelectBenefitsController.onPageLoad(NormalMode)
+      }
+
       "Navigating from SelectBenefits" must {
         "go to HowMuchBereavementAllowance when bereavement-allowance checkbox is the first answer selected" in {
           val answers = mock[UserAnswers]
@@ -132,7 +138,7 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
             )
           )
 
-          navigator.nextPage(SelectBenefitsId, NormalMode)(answers) mustBe routes.OtherBenefitsNameController.onPageLoad(NormalMode, 1)
+          navigator.nextPage(SelectBenefitsId, NormalMode)(answers) mustBe routes.OtherBenefitsNameController.onPageLoad(NormalMode, 0)
         }
       }
 
@@ -170,7 +176,7 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
         "go to OtherBenefitsName if this option was selected on SelectBenefits" in {
           val answers = mock[UserAnswers]
           when(answers.selectBenefits) thenReturn Some(Seq(Benefits.OTHER_TAXABLE_BENEFIT))
-          navigator.nextPage(HowMuchBereavementAllowanceId, NormalMode)(answers) mustBe routes.OtherBenefitsNameController.onPageLoad(NormalMode, 1)
+          navigator.nextPage(HowMuchBereavementAllowanceId, NormalMode)(answers) mustBe routes.OtherBenefitsNameController.onPageLoad(NormalMode, 0)
         }
 
       }
@@ -204,7 +210,8 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
 
       "go to HowMuchOtherBenefit from OtherBenefitsName" in {
         val answers = mock[UserAnswers]
-        navigator.nextPage(OtherBenefitsNameId, NormalMode)(answers) mustBe routes.HowMuchOtherBenefitController.onPageLoad(NormalMode)
+        when(answers.otherBenefitsName) thenReturn Some(Seq("test"))
+        navigator.nextPageWithIndex(OtherBenefitsNameId(0), NormalMode)(answers) mustBe routes.HowMuchOtherBenefitController.onPageLoad(NormalMode, 0)
       }
 
       "go to AnyOtherBenefits from HowMuchOtherBenefit" in {
@@ -221,6 +228,7 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
       "go to OtherBenefitsName from AnyOtherBenefits when answer is yes" in {
         val answers = mock[UserAnswers]
         when(answers.anyOtherBenefits) thenReturn Some(true)
+        when(answers.otherBenefitsName) thenReturn Some(Seq("test"))
         navigator.nextPage(AnyOtherBenefitsId, NormalMode)(answers) mustBe routes.OtherBenefitsNameController.onPageLoad(NormalMode, 1)
       }
     }

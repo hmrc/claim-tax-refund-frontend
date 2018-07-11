@@ -36,7 +36,7 @@
 
         @components.heading(messages("anyTaxableIncome.heading", taxYear.asString))
 
-        <p>@messages(messages("anyTaxableIncome.listHeading"))</p>
+        <p id="listHeading">@messages("anyTaxableIncome.listHeading")</p>
 
         @components.list("selectTaxableIncome", TaxableIncome.sortedTaxableIncome.map(_.toString))
 
