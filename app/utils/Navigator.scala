@@ -93,9 +93,11 @@ class Navigator @Inject()() {
 
   private def employmentDetailsCheck(userAnswers: UserAnswers): Call = userAnswers.employmentDetails match {
     case Some(true) => routes.CheckYourAnswersController.onPageLoad()
+    case Some(false) if userAnswers.enterPayeReference.nonEmpty => routes.CheckYourAnswersController.onPageLoad()
     case Some(false) => routes.EnterPayeReferenceController.onPageLoad(CheckMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
+
   private def anyBenefits(userAnswers: UserAnswers): Call = userAnswers.anyBenefits match {
     case Some(true) => routes.SelectBenefitsController.onPageLoad(NormalMode)
     case Some(false) => routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
@@ -112,9 +114,9 @@ class Navigator @Inject()() {
         case Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE => routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(NormalMode)
         case Benefits.STATE_PENSION => routes.HowMuchStatePensionController.onPageLoad(NormalMode)
         case Benefits.OTHER_TAXABLE_BENEFIT => routes.OtherBenefitsNameController.onPageLoad(NormalMode)
+        case _ => routes.SessionExpiredController.onPageLoad()
       }
-    case None =>
-      routes.SessionExpiredController.onPageLoad()
+    case None => routes.SessionExpiredController.onPageLoad()
   }
 
   private def selectTaxableIncome(userAnswers: UserAnswers): Call = userAnswers.selectTaxableIncome match {
@@ -125,9 +127,9 @@ class Navigator @Inject()() {
         case TaxableIncome.INVESTMENT_OR_DIVIDENDS => routes.HowMuchInvestmentOrDividendController.onPageLoad(NormalMode)
         case TaxableIncome.FOREIGN_INCOME => routes.HowMuchForeignIncomeController.onPageLoad(NormalMode)
         case TaxableIncome.OTHER_TAXABLE_INCOME => routes.OtherTaxableIncomeNameController.onPageLoad(NormalMode)
+        case _ => routes.SessionExpiredController.onPageLoad()
       }
-    case None =>
-      routes.SessionExpiredController.onPageLoad()
+    case None => routes.SessionExpiredController.onPageLoad()
   }
 
   private def benefitRouter(currentPageId: String)(userAnswers: UserAnswers): Call = userAnswers.selectBenefits match {
@@ -142,12 +144,12 @@ class Navigator @Inject()() {
           case Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE => routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(NormalMode)
           case Benefits.STATE_PENSION => routes.HowMuchStatePensionController.onPageLoad(NormalMode)
           case Benefits.OTHER_TAXABLE_BENEFIT => routes.OtherBenefitsNameController.onPageLoad(NormalMode)
+          case _ => routes.SessionExpiredController.onPageLoad()
         }
       } else {
         routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
       }
-    case None =>
-      routes.SessionExpiredController.onPageLoad()
+    case None => routes.SessionExpiredController.onPageLoad()
   }
 
   private def anyCompanyBenefits(userAnswers: UserAnswers): Call = userAnswers.anyCompanyBenefits match {
@@ -166,12 +168,12 @@ class Navigator @Inject()() {
           case TaxableIncome.INVESTMENT_OR_DIVIDENDS => routes.HowMuchInvestmentOrDividendController.onPageLoad(NormalMode)
           case TaxableIncome.FOREIGN_INCOME => routes.HowMuchForeignIncomeController.onPageLoad(NormalMode)
           case TaxableIncome.OTHER_TAXABLE_INCOME => routes.OtherTaxableIncomeNameController.onPageLoad(NormalMode)
+          case _ => routes.SessionExpiredController.onPageLoad()
         }
       } else {
         routes.WhereToSendPaymentController.onPageLoad(NormalMode)
       }
-    case None =>
-      routes.SessionExpiredController.onPageLoad()
+    case None => routes.SessionExpiredController.onPageLoad()
   }
 
   private def selectCompanyBenefits(userAnswers: UserAnswers): Call = userAnswers.selectCompanyBenefits match {
@@ -181,9 +183,9 @@ class Navigator @Inject()() {
         case CompanyBenefits.FUEL_BENEFIT => routes.HowMuchFuelBenefitController.onPageLoad(NormalMode)
         case CompanyBenefits.MEDICAL_BENEFIT => routes.HowMuchMedicalBenefitsController.onPageLoad(NormalMode)
         case CompanyBenefits.OTHER_COMPANY_BENEFIT => routes.OtherCompanyBenefitsNameController.onPageLoad(NormalMode)
+        case _ => routes.SessionExpiredController.onPageLoad()
       }
-    case None =>
-      routes.SessionExpiredController.onPageLoad()
+    case None => routes.SessionExpiredController.onPageLoad()
   }
 
   private def companyBenefitRouter(currentPageId: String)(userAnswers: UserAnswers): Call = userAnswers.selectCompanyBenefits match {
@@ -195,12 +197,12 @@ class Navigator @Inject()() {
           case CompanyBenefits.FUEL_BENEFIT => routes.HowMuchFuelBenefitController.onPageLoad(NormalMode)
           case CompanyBenefits.MEDICAL_BENEFIT => routes.HowMuchMedicalBenefitsController.onPageLoad(NormalMode)
           case CompanyBenefits.OTHER_COMPANY_BENEFIT => routes.OtherCompanyBenefitsNameController.onPageLoad(NormalMode)
+          case _ => routes.SessionExpiredController.onPageLoad()
         }
       } else {
         routes.AnyTaxableIncomeController.onPageLoad(NormalMode)
       }
-    case None =>
-      routes.SessionExpiredController.onPageLoad()
+    case None => routes.SessionExpiredController.onPageLoad()
   }
 
   private def anyOtherBenefits(userAnswers: UserAnswers): Call = userAnswers.anyOtherBenefits match {

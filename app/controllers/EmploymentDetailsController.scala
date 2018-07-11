@@ -86,15 +86,9 @@ class EmploymentDetailsController @Inject()(appConfig: FrontendAppConfig,
               form.bindFromRequest().fold(
                 (formWithErrors: Form[_]) =>
                   Future.successful(BadRequest(employmentDetails(appConfig, formWithErrors, mode, employments, taxYear))),
-                (value) => {
-                  if ((request.userAnswers.employmentDetails == Some(value)) && mode == CheckMode) {
-                    Future.successful(Redirect(routes.CheckYourAnswersController.onPageLoad()))
-                  } else {
-                    dataCacheConnector.save[Boolean](request.externalId, EmploymentDetailsId.toString, value).map(cacheMap =>
-                      Redirect(navigator.nextPage(EmploymentDetailsId, mode)(new UserAnswers(cacheMap))))
-                  }
-
-                }
+                (value) =>
+                  dataCacheConnector.save[Boolean](request.externalId, EmploymentDetailsId.toString, value).map(cacheMap =>
+                    Redirect(navigator.nextPage(EmploymentDetailsId, mode)(new UserAnswers(cacheMap))))
               )
           }
       }.getOrElse {
