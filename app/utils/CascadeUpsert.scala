@@ -27,8 +27,8 @@ class CascadeUpsert {
 
   val funcMap: Map[String, (JsValue, CacheMap) => CacheMap] =
     Map(
-      SelectCompanyBenefitsId.toString -> storeCompanyBenefit,
       SelectBenefitsId.toString -> storeBenefit,
+      SelectCompanyBenefitsId.toString -> storeCompanyBenefit,
       SelectTaxableIncomeId.toString -> storeTaxableIncome,
       AnyCompanyBenefitsId.toString -> anyCompanyBenefits,
       AnyTaxableIncomeId.toString -> anyTaxableIncome,
@@ -118,9 +118,9 @@ class CascadeUpsert {
       _.as[JsArray].value.foldLeft(cacheMap) {
         (cm, benefit) =>
           if (!selectedBenefits.as[JsArray].value.contains(benefit) && benefit != JsString(Benefits.OTHER_TAXABLE_BENEFIT.toString)) {
-            cm copy (data = cacheMap.data - Benefits.getIdString(benefit.as[String]))
+            cm copy (data = cm.data - Benefits.getIdString(benefit.as[String]))
           } else if (!selectedBenefits.as[JsArray].value.contains(JsString(Benefits.OTHER_TAXABLE_BENEFIT.toString))) {
-            cm copy (data = cacheMap.data - (OtherBenefitsNameId.toString, HowMuchOtherBenefitId.toString, AnyOtherBenefitsId.toString))
+            cm copy (data = cm.data - (OtherBenefitsNameId.toString, HowMuchOtherBenefitId.toString, AnyOtherBenefitsId.toString))
           } else {
             cm
           }
@@ -130,15 +130,16 @@ class CascadeUpsert {
     store(SelectBenefitsId.toString, selectedBenefits, mapToStore)
   }
 
+
   private def storeCompanyBenefit(selectedBenefits: JsValue, cacheMap: CacheMap): CacheMap = {
 
     val mapToStore = cacheMap.data.get(SelectCompanyBenefitsId.toString).map {
       _.as[JsArray].value.foldLeft(cacheMap) {
         (cm, benefit) =>
           if (!selectedBenefits.as[JsArray].value.contains(benefit) && benefit != JsString(CompanyBenefits.OTHER_COMPANY_BENEFIT.toString)) {
-            cm copy (data = cacheMap.data - CompanyBenefits.getIdString(benefit.as[String]))
+            cm copy (data = cm.data - CompanyBenefits.getIdString(benefit.as[String]))
           } else if (!selectedBenefits.as[JsArray].value.contains(JsString(CompanyBenefits.OTHER_COMPANY_BENEFIT.toString))) {
-            cm copy (data = cacheMap.data - (OtherCompanyBenefitsNameId.toString, HowMuchOtherCompanyBenefitId.toString, AnyOtherCompanyBenefitsId.toString))
+            cm copy (data = cm.data - (OtherCompanyBenefitsNameId.toString, HowMuchOtherCompanyBenefitId.toString, AnyOtherCompanyBenefitsId.toString))
           } else {
             cm
           }
@@ -154,9 +155,9 @@ class CascadeUpsert {
       _.as[JsArray].value.foldLeft(cacheMap) {
         (cm, benefit) =>
           if (!selectedBenefits.as[JsArray].value.contains(benefit) && benefit != JsString(TaxableIncome.OTHER_TAXABLE_INCOME.toString)) {
-            cm copy (data = cacheMap.data - (TaxableIncome.getIdString(benefit.as[String])._1, TaxableIncome.getIdString(benefit.as[String])._2))
+            cm copy (data = cm.data - (TaxableIncome.getIdString(benefit.as[String])._1, TaxableIncome.getIdString(benefit.as[String])._2))
           } else if (!selectedBenefits.as[JsArray].value.contains(JsString(TaxableIncome.OTHER_TAXABLE_INCOME.toString))) {
-            cm copy (data = cacheMap.data - (OtherTaxableIncomeNameId.toString, HowMuchOtherTaxableIncomeId.toString, AnyOtherTaxableIncomeId.toString))
+            cm copy (data = cm.data - (OtherTaxableIncomeNameId.toString, HowMuchOtherTaxableIncomeId.toString, AnyTaxableOtherIncomeId.toString, AnyOtherTaxableIncomeId.toString))
           } else {
             cm
           }
