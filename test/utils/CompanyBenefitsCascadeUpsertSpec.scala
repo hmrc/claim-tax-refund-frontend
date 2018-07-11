@@ -28,11 +28,23 @@ class CompanyBenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
 
   implicit def dontShrink[A]: Shrink[A] = Shrink.shrinkAny
 
+  private val allCompanyBenefits = new CacheMap(id = "test", Map(
+    AnyCompanyBenefitsId.toString -> Json.toJson(true),
+    SelectCompanyBenefitsId.toString -> Json.toJson(CompanyBenefits.sortedCompanyBenefits),
+    HowMuchCarBenefitsId.toString -> JsString("1234"),
+    HowMuchFuelBenefitId.toString -> JsString("1234"),
+    HowMuchMedicalBenefitsId.toString -> JsString("1234"),
+    OtherCompanyBenefitsNameId.toString -> JsString("qwerty"),
+    HowMuchOtherCompanyBenefitId.toString ->  JsString("1234"),
+    AnyOtherCompanyBenefitsId.toString -> JsBoolean(false)
+  ))
+  private val cascadeUpsert = new CascadeUpsert
+
   private val arbitraryCompanyBenefits: Gen[Seq[CompanyBenefits.Value]] =
     Gen.containerOf[Seq, CompanyBenefits.Value](Gen.oneOf(
+      CompanyBenefits.COMPANY_CAR_BENEFIT,
       CompanyBenefits.FUEL_BENEFIT,
       CompanyBenefits.MEDICAL_BENEFIT,
-      CompanyBenefits.COMPANY_CAR_BENEFIT,
       CompanyBenefits.OTHER_COMPANY_BENEFIT
     ))
 
@@ -40,102 +52,136 @@ class CompanyBenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
     "remove all associated data" in {
       forAll(arbitraryCompanyBenefits) {
         companyBenefits =>
-          val originalCacheMap = new CacheMap("id", Map(
+          val originalCacheMap = new CacheMap(id = "test", Map(
+            AnyCompanyBenefitsId.toString -> Json.toJson(true),
             SelectCompanyBenefitsId.toString -> Json.toJson(companyBenefits),
             HowMuchCarBenefitsId.toString -> JsString("1234"),
             HowMuchFuelBenefitId.toString -> JsString("1234"),
             HowMuchMedicalBenefitsId.toString -> JsString("1234"),
             OtherCompanyBenefitsNameId.toString -> JsString("qwerty"),
-            HowMuchOtherCompanyBenefitId.toString ->  JsString("1234"),
+            HowMuchOtherCompanyBenefitId.toString -> JsString("1234"),
             AnyOtherCompanyBenefitsId.toString -> JsBoolean(false)
           ))
-          val cascadeUpsert = new CascadeUpsert
           val result = cascadeUpsert(AnyCompanyBenefitsId.toString, JsBoolean(false), originalCacheMap)
-          result.data.size mustBe 1
-          result.data.contains(SelectCompanyBenefitsId.toString) mustBe false
-          result.data.contains(HowMuchCarBenefitsId.toString) mustBe false
-          result.data.contains(HowMuchFuelBenefitId.toString) mustBe false
-          result.data.contains(HowMuchMedicalBenefitsId.toString) mustBe false
-          result.data.contains(OtherCompanyBenefitsNameId.toString) mustBe false
-          result.data.contains(HowMuchOtherCompanyBenefitId.toString) mustBe false
-          result.data.contains(AnyOtherCompanyBenefitsId.toString) mustBe false
-      }
-    }
-  }
-
-  "unselecting fuel benefit" must {
-    "remove amount of fuel benefit" in {
-      forAll(Gen.numStr, arbitraryCompanyBenefits) {
-        (fuelBenefitAmount, companyBenefits) =>
-          val originalCacheMap = new CacheMap("id", Map(
-            SelectCompanyBenefitsId.toString -> Json.toJson(companyBenefits :+ CompanyBenefits.FUEL_BENEFIT),
-            HowMuchFuelBenefitId.toString -> JsString(fuelBenefitAmount)
-          ))
-          val cascadeUpsert = new CascadeUpsert
-          val result = cascadeUpsert(SelectCompanyBenefitsId.toString, companyBenefits.filterNot(_ == CompanyBenefits.FUEL_BENEFIT), originalCacheMap)
-          result.data mustEqual Map(SelectCompanyBenefitsId.toString -> Json.toJson(companyBenefits.filterNot(_ == CompanyBenefits.FUEL_BENEFIT)))
-      }
-    }
-  }
-
-  "unselecting company car benefit" must {
-    "remove amount of company car benefit" in {
-      forAll(Gen.numStr, arbitraryCompanyBenefits) {
-        (carBenefitAmount, companyBenefits) =>
-          val originalCacheMap = new CacheMap("id", Map(
-            SelectCompanyBenefitsId.toString -> Json.toJson(companyBenefits :+ CompanyBenefits.COMPANY_CAR_BENEFIT),
-            HowMuchCarBenefitsId.toString -> JsString(carBenefitAmount)
-          ))
-          val cascadeUpsert = new CascadeUpsert
-          val result = cascadeUpsert(SelectCompanyBenefitsId.toString, companyBenefits.filterNot(_ == CompanyBenefits.COMPANY_CAR_BENEFIT), originalCacheMap)
-          result.data mustEqual Map(SelectCompanyBenefitsId.toString -> Json.toJson(companyBenefits.filterNot(_ == CompanyBenefits.COMPANY_CAR_BENEFIT)))
-      }
-    }
-  }
-
-  "unselecting medical benefit" must {
-    "remove amount of medical benefit" in {
-      forAll(Gen.numStr, arbitraryCompanyBenefits) {
-        (medicalBenefitAmount, companyBenefits) =>
-          val originalCacheMap = new CacheMap("id", Map(
-            SelectCompanyBenefitsId.toString -> Json.toJson(companyBenefits :+ CompanyBenefits.MEDICAL_BENEFIT),
-            HowMuchMedicalBenefitsId.toString -> JsString(medicalBenefitAmount)
-          ))
-          val cascadeUpsert = new CascadeUpsert
-          val result = cascadeUpsert(SelectCompanyBenefitsId.toString, companyBenefits.filterNot(_ == CompanyBenefits.MEDICAL_BENEFIT), originalCacheMap)
-          result.data mustEqual Map(SelectCompanyBenefitsId.toString -> Json.toJson(companyBenefits.filterNot(_ == CompanyBenefits.MEDICAL_BENEFIT)))
-      }
-    }
-  }
-
-  "unselecting other company benefit" must {
-    "remove amount and name of other company benefit" in {
-      forAll(Gen.numStr, arbitraryCompanyBenefits) {
-        (amount, companyBenefits) =>
-          val originalCacheMap = new CacheMap("id", Map(
-            SelectCompanyBenefitsId.toString -> Json.toJson(companyBenefits :+ CompanyBenefits.OTHER_COMPANY_BENEFIT),
-            OtherCompanyBenefitsNameId.toString -> JsString("qwerty"),
-            HowMuchOtherCompanyBenefitId.toString -> JsString(amount),
-            AnyOtherCompanyBenefitsId.toString -> JsBoolean(false)
-          ))
-          val cascadeUpsert = new CascadeUpsert
-          val result = cascadeUpsert(SelectCompanyBenefitsId.toString, companyBenefits.filterNot(_ == CompanyBenefits.OTHER_COMPANY_BENEFIT), originalCacheMap)
-          result.data mustEqual Map(
-            SelectCompanyBenefitsId.toString -> Json.toJson(companyBenefits.filterNot(_ == CompanyBenefits.OTHER_COMPANY_BENEFIT))
+          result.data mustBe Map(
+            AnyCompanyBenefitsId.toString.toString -> Json.toJson(false)
           )
       }
     }
   }
 
-  "select company benefit when no data currently stored" must {
-    "store the data" in {
-      forAll(arbitraryCompanyBenefits) {
-        companyBenefits =>
-          val originalCacheMap = new CacheMap("id", Map())
-          val cascadeUpsert = new CascadeUpsert
-          val result = cascadeUpsert(SelectCompanyBenefitsId.toString, companyBenefits, originalCacheMap)
-          result.data mustEqual Map(SelectCompanyBenefitsId.toString -> Json.toJson(companyBenefits))
-      }
+  "SelectCompanyBenefits" must {
+    "un-selecting COMPANY_CAR to remove associated data" in {
+      val result = cascadeUpsert(SelectCompanyBenefitsId.toString, Seq(
+        CompanyBenefits.FUEL_BENEFIT,
+        CompanyBenefits.MEDICAL_BENEFIT,
+        CompanyBenefits.OTHER_COMPANY_BENEFIT)
+        , allCompanyBenefits)
+      result.data mustBe Map(
+        AnyCompanyBenefitsId.toString -> Json.toJson(true),
+        SelectCompanyBenefitsId.toString -> Json.toJson(Seq(
+          CompanyBenefits.FUEL_BENEFIT,
+          CompanyBenefits.MEDICAL_BENEFIT,
+          CompanyBenefits.OTHER_COMPANY_BENEFIT
+        )),
+        HowMuchFuelBenefitId.toString -> JsString("1234"),
+        HowMuchMedicalBenefitsId.toString -> JsString("1234"),
+        OtherCompanyBenefitsNameId.toString -> JsString("qwerty"),
+        HowMuchOtherCompanyBenefitId.toString -> JsString("1234"),
+        AnyOtherCompanyBenefitsId.toString -> JsBoolean(false)
+      )
+    }
+
+    "un-selecting FUEL to remove associated data" in {
+      val result = cascadeUpsert(SelectCompanyBenefitsId.toString, Seq(
+        CompanyBenefits.COMPANY_CAR_BENEFIT,
+        CompanyBenefits.MEDICAL_BENEFIT,
+        CompanyBenefits.OTHER_COMPANY_BENEFIT)
+        , allCompanyBenefits)
+      result.data mustBe Map(
+        AnyCompanyBenefitsId.toString -> Json.toJson(true),
+        SelectCompanyBenefitsId.toString -> Json.toJson(Seq(
+          CompanyBenefits.COMPANY_CAR_BENEFIT,
+          CompanyBenefits.MEDICAL_BENEFIT,
+          CompanyBenefits.OTHER_COMPANY_BENEFIT
+        )),
+        HowMuchCarBenefitsId.toString -> JsString("1234"),
+        HowMuchMedicalBenefitsId.toString -> JsString("1234"),
+        OtherCompanyBenefitsNameId.toString -> JsString("qwerty"),
+        HowMuchOtherCompanyBenefitId.toString -> JsString("1234"),
+        AnyOtherCompanyBenefitsId.toString -> JsBoolean(false)
+      )
+    }
+
+    "un-selecting MEDICAL to remove associated data" in {
+      val result = cascadeUpsert(SelectCompanyBenefitsId.toString, Seq(
+        CompanyBenefits.COMPANY_CAR_BENEFIT,
+        CompanyBenefits.FUEL_BENEFIT,
+        CompanyBenefits.OTHER_COMPANY_BENEFIT)
+        , allCompanyBenefits)
+      result.data mustBe Map(
+        AnyCompanyBenefitsId.toString -> Json.toJson(true),
+        SelectCompanyBenefitsId.toString -> Json.toJson(Seq(
+          CompanyBenefits.COMPANY_CAR_BENEFIT,
+          CompanyBenefits.FUEL_BENEFIT,
+          CompanyBenefits.OTHER_COMPANY_BENEFIT
+        )),
+        HowMuchCarBenefitsId.toString -> JsString("1234"),
+        HowMuchFuelBenefitId.toString -> JsString("1234"),
+        OtherCompanyBenefitsNameId.toString -> JsString("qwerty"),
+        HowMuchOtherCompanyBenefitId.toString -> JsString("1234"),
+        AnyOtherCompanyBenefitsId.toString -> JsBoolean(false)
+      )
+    }
+
+    "un-selecting OTHER_COMPANY to remove associated data" in {
+      val result = cascadeUpsert(SelectCompanyBenefitsId.toString, Seq(
+        CompanyBenefits.COMPANY_CAR_BENEFIT,
+        CompanyBenefits.FUEL_BENEFIT,
+        CompanyBenefits.MEDICAL_BENEFIT
+      ), allCompanyBenefits)
+      result.data mustBe Map(
+        AnyCompanyBenefitsId.toString -> Json.toJson(true),
+        SelectCompanyBenefitsId.toString -> Json.toJson(Seq(
+          CompanyBenefits.COMPANY_CAR_BENEFIT,
+          CompanyBenefits.FUEL_BENEFIT,
+          CompanyBenefits.MEDICAL_BENEFIT
+        )),
+        HowMuchCarBenefitsId.toString -> JsString("1234"),
+        HowMuchFuelBenefitId.toString -> JsString("1234"),
+        HowMuchMedicalBenefitsId.toString -> JsString("1234")
+      )
+    }
+
+    "un-selecting COMPANY_CAR and MEDICAL to remove associated data" in {
+      val result = cascadeUpsert(SelectCompanyBenefitsId.toString, Seq(
+        CompanyBenefits.FUEL_BENEFIT,
+        CompanyBenefits.OTHER_COMPANY_BENEFIT)
+        , allCompanyBenefits)
+      result.data mustBe Map(
+        AnyCompanyBenefitsId.toString -> Json.toJson(true),
+        SelectCompanyBenefitsId.toString -> Json.toJson(Seq(
+          CompanyBenefits.FUEL_BENEFIT,
+          CompanyBenefits.OTHER_COMPANY_BENEFIT
+        )),
+        HowMuchFuelBenefitId.toString -> JsString("1234"),
+        OtherCompanyBenefitsNameId.toString -> JsString("qwerty"),
+        HowMuchOtherCompanyBenefitId.toString -> JsString("1234"),
+        AnyOtherCompanyBenefitsId.toString -> JsBoolean(false)
+      )
+    }
+
+    "un-selecting COMPANY_CAR, MEDICAL and OTHER to remove associated data" in {
+      val result = cascadeUpsert(SelectCompanyBenefitsId.toString, Seq(
+        CompanyBenefits.FUEL_BENEFIT)
+        , allCompanyBenefits)
+      result.data mustBe Map(
+        AnyCompanyBenefitsId.toString -> Json.toJson(true),
+        SelectCompanyBenefitsId.toString -> Json.toJson(Seq(
+          CompanyBenefits.FUEL_BENEFIT
+        )),
+        HowMuchFuelBenefitId.toString -> JsString("1234")
+      )
     }
   }
 }
