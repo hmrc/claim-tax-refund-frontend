@@ -27,6 +27,7 @@ import views.html.anyCompanyBenefits
 class AnyCompanyBenefitsViewSpec extends YesNoViewBehaviours {
 
   private val messageKeyPrefix = "anyCompanyBenefits"
+  private val listMessageKeyPrefix = "selectCompanyBenefits"
   private val taxYear = CYMinus2
 
   override val form = new BooleanForm()()
@@ -47,7 +48,7 @@ class AnyCompanyBenefitsViewSpec extends YesNoViewBehaviours {
       createView = createViewUsingForm,
       messageKeyPrefix = messageKeyPrefix,
       expectedFormAction = routes.AnyBenefitsController.onSubmit(NormalMode).url,
-      expectedHintText = Some(s"$messageKeyPrefix.hint"),
+      expectedHintTextKey = None,
       args = taxYear.asString(messages)
     )
 
@@ -57,7 +58,12 @@ class AnyCompanyBenefitsViewSpec extends YesNoViewBehaviours {
         "fuel-benefit",
         "medical-benefit",
         "other-company-benefit"
-      )
-    )
+      ), listMessageKeyPrefix)
+  }
+
+  "contain a listHeader" in {
+    val doc = asDocument(createViewUsingForm(form))
+    val employerName = doc.getElementById("listHeading").text
+    employerName mustBe messages("anyCompanyBenefits.listHeading")
   }
 }

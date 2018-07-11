@@ -55,8 +55,7 @@ class OtherBenefitsNameController @Inject()(
 
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
-          val taxYear = selectedTaxYear
-          Ok(otherBenefitsName(appConfig, preparedForm, mode, index, taxYear))
+          Ok(otherBenefitsName(appConfig, preparedForm, mode, index, selectedTaxYear))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
@@ -77,7 +76,7 @@ class OtherBenefitsNameController @Inject()(
                 OtherBenefitsNameId.toString,
                 sequenceUtil.updateSeq(benefitNames, index, value)
               ).map(cacheMap =>
-                Redirect(navigator.nextPage(OtherBenefitsNameId, mode)(new UserAnswers(cacheMap))))
+                Redirect(navigator.nextPageWithIndex(OtherBenefitsNameId(index), mode)(new UserAnswers(cacheMap))))
             }
           )
       }.getOrElse {

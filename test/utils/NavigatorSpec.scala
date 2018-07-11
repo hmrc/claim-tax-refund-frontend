@@ -36,39 +36,11 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(UnknownIdentifier, NormalMode)(mock[UserAnswers]) mustBe routes.IndexController.onPageLoad()
       }
 
+      //Claim details section
+
       "go to EmploymentDetails from SelectATaxYear" in {
         val answers = mock[UserAnswers]
         navigator.nextPage(SelectTaxYearId, NormalMode)(answers) mustBe routes.EmploymentDetailsController.onPageLoad(NormalMode)
-      }
-
-      "go to SelectBenefits page from AnyBenefits when answer is yes" in {
-        val answers = mock[UserAnswers]
-        when(answers.anyBenefits) thenReturn Some(true)
-        navigator.nextPage(AnyBenefitsId, NormalMode)(answers) mustBe routes.SelectBenefitsController.onPageLoad(NormalMode)
-      }
-
-      "go to AnyCompanyBenefits from AnyBenefits when No is selected" in {
-        val answers = mock[UserAnswers]
-        when(answers.anyBenefits) thenReturn Some(false)
-        navigator.nextPage(AnyBenefitsId, NormalMode)(answers) mustBe routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
-      }
-
-      "go to SelectAnyCompanyBenefits from AnyCompanyBenefits when Yes is selected" in {
-        val answers = mock[UserAnswers]
-        when(answers.anyCompanyBenefits) thenReturn Some(true)
-        navigator.nextPage(AnyCompanyBenefitsId, NormalMode)(answers) mustBe routes.SelectCompanyBenefitsController.onPageLoad(NormalMode)
-      }
-
-      "go to SelectTaxableIncome from AnyTaxableIncome when answer is yes" in {
-        val answers = mock[UserAnswers]
-        when(answers.anyTaxableIncome) thenReturn Some(true)
-        navigator.nextPage(AnyTaxableIncomeId, NormalMode)(answers) mustBe routes.SelectTaxableIncomeController.onPageLoad(NormalMode)
-      }
-
-      "go to AnyBenefits from AnyOtherTaxableBenefit when Yes is selected" in {
-        val answers = mock[UserAnswers]
-        when(answers.employmentDetails) thenReturn Some(true)
-        navigator.nextPage(EmploymentDetailsId, NormalMode)(answers) mustBe routes.AnyBenefitsController.onPageLoad(NormalMode)
       }
 
       "go to enter paye reference from employmentDetails when no is selected" in {
@@ -82,15 +54,42 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(EnterPayeReferenceId, NormalMode)(answers) mustBe routes.DetailsOfEmploymentOrPensionController.onPageLoad(NormalMode)
       }
 
+      "go to AnyBenefits from Employment details when yes is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.employmentDetails) thenReturn Some(true)
+        navigator.nextPage(EmploymentDetailsId, NormalMode)(answers) mustBe routes.AnyBenefitsController.onPageLoad(NormalMode)
+      }
+
+      //3 benefit selectors
+
+      "go to AnyCompanyBenefits from AnyBenefits when No is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.anyBenefits) thenReturn Some(false)
+        navigator.nextPage(AnyBenefitsId, NormalMode)(answers) mustBe routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
+      }
+
+      "go to AnyBenefits from AnyOtherTaxableBenefit when Yes is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.employmentDetails) thenReturn Some(true)
+        navigator.nextPage(EmploymentDetailsId, NormalMode)(answers) mustBe routes.AnyBenefitsController.onPageLoad(NormalMode)
+      }
+
       "go to AnyBenefits from DetailsOfEmploymentOrPension" in {
         val answers = mock[UserAnswers]
         navigator.nextPage(DetailsOfEmploymentOrPensionId, NormalMode)(answers) mustBe routes.AnyBenefitsController.onPageLoad(NormalMode)
       }
 
+      //Payment details section
+
       "go to NomineeFullName from WhereToSendPayment when Nominee is selected" in {
         val answers = mock[UserAnswers]
         when(answers.whereToSendPayment) thenReturn Some(Nominee)
         navigator.nextPage(WhereToSendPaymentId, NormalMode)(answers) mustBe routes.NomineeFullNameController.onPageLoad(NormalMode)
+      }
+
+      "go to AnyAgentRef from NomineeFullName" in {
+        val answers = mock[UserAnswers]
+        navigator.nextPage(NomineeFullNameId, NormalMode)(answers) mustBe routes.AnyAgentRefController.onPageLoad(NormalMode)
       }
 
       "go to PaymentAddressCorrect from WhereToSendPayment when Myself is selected" in {
@@ -103,17 +102,6 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         val answers = mock[UserAnswers]
         when(answers.paymentAddressCorrect) thenReturn Some(false)
         navigator.nextPage(PaymentAddressCorrectId, NormalMode)(answers) mustBe routes.IsPaymentAddressInTheUKController.onPageLoad(NormalMode)
-      }
-
-      "go to TelephoneNumber from PaymentAddressCorrect when Yes is selected" in {
-        val answers = mock[UserAnswers]
-        when(answers.paymentAddressCorrect) thenReturn Some(true)
-        navigator.nextPage(PaymentAddressCorrectId, NormalMode)(answers) mustBe routes.TelephoneNumberController.onPageLoad(NormalMode)
-      }
-
-      "go to AnyAgentRef from NomineeFullName" in {
-        val answers = mock[UserAnswers]
-        navigator.nextPage(NomineeFullNameId, NormalMode)(answers) mustBe routes.AnyAgentRefController.onPageLoad(NormalMode)
       }
 
       "go to IsPaymentAddressInTheUK from AnyAgentRef" in {
@@ -133,6 +121,14 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(IsPaymentAddressInTheUKId, NormalMode)(answers) mustBe routes.PaymentUKAddressController.onPageLoad(NormalMode)
       }
 
+      //Telephone section 3 routes
+
+      "go to TelephoneNumber from PaymentAddressCorrect when Yes is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.paymentAddressCorrect) thenReturn Some(true)
+        navigator.nextPage(PaymentAddressCorrectId, NormalMode)(answers) mustBe routes.TelephoneNumberController.onPageLoad(NormalMode)
+      }
+
       "go to TelephoneNumber from PaymentInternationalAddress" in {
         val answers = mock[UserAnswers]
         navigator.nextPage(PaymentInternationalAddressId, NormalMode)(answers) mustBe routes.TelephoneNumberController.onPageLoad(NormalMode)
@@ -144,11 +140,80 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
       }
     }
 
+    //check mode
+
     "in Check mode" must {
       "go to CheckYourAnswers from an identifier that doesn't exist in the edit route map" in {
         case object UnknownIdentifier extends Identifier
         navigator.nextPage(UnknownIdentifier, CheckMode)(mock[UserAnswers]) mustBe routes.CheckYourAnswersController.onPageLoad()
       }
+
+      //Claim details section
+
+      "go to CYA when Employment details is (yes)" in {
+        val answers = mock[UserAnswers]
+        when(answers.employmentDetails) thenReturn Some(true)
+        navigator.nextPage(EmploymentDetailsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+      }
+
+      "go to Enter PAYE reference when Employment details is (no)" in {
+        val answers = mock[UserAnswers]
+        when(answers.employmentDetails) thenReturn Some(false)
+        navigator.nextPage(EmploymentDetailsId, CheckMode)(answers) mustBe routes.EnterPayeReferenceController.onPageLoad(CheckMode)
+      }
+
+      "go to DetailsOfEmploymentOrPensionController from Enter PAYE reference" in {
+        val answers = mock[UserAnswers]
+        navigator.nextPage(EnterPayeReferenceId, CheckMode)(answers) mustBe routes.DetailsOfEmploymentOrPensionController.onPageLoad(CheckMode)
+      }
+
+      "go to CYA from DetailsOfEmploymentOrPensionController" in {
+        val answers = mock[UserAnswers]
+        navigator.nextPage(DetailsOfEmploymentOrPensionId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+      }
+
+      //Payment details section
+      "go to NomineeFullName from WhereToSendPayment when Nominee is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.whereToSendPayment) thenReturn Some(Nominee)
+        navigator.nextPage(WhereToSendPaymentId, CheckMode)(answers) mustBe routes.NomineeFullNameController.onPageLoad(CheckMode)
+      }
+
+      "go to AnyAgentRef from NomineeFullName" in {
+        val answers = mock[UserAnswers]
+        navigator.nextPage(NomineeFullNameId, CheckMode)(answers) mustBe routes.AnyAgentRefController.onPageLoad(CheckMode)
+      }
+
+      "go to PaymentAddressCorrect from WhereToSendPayment when Myself is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.whereToSendPayment) thenReturn Some(Myself)
+        navigator.nextPage(WhereToSendPaymentId, CheckMode)(answers) mustBe routes.PaymentAddressCorrectController.onPageLoad(CheckMode)
+      }
+
+      "go to IsPaymentAddressInTheUK from PaymentAddressCorrect when No is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.paymentAddressCorrect) thenReturn Some(false)
+        navigator.nextPage(PaymentAddressCorrectId, CheckMode)(answers) mustBe routes.IsPaymentAddressInTheUKController.onPageLoad(CheckMode)
+      }
+
+      "go to IsPaymentAddressInTheUK from AnyAgentRef" in {
+        val answers = mock[UserAnswers]
+        navigator.nextPage(AnyAgentRefId, CheckMode)(answers) mustBe routes.IsPaymentAddressInTheUKController.onPageLoad(CheckMode)
+      }
+
+      "go to PaymentInternationalAddress from IsPaymentAddressInTheUK when no is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.isPaymentAddressInTheUK) thenReturn Some(false)
+        navigator.nextPage(IsPaymentAddressInTheUKId, CheckMode)(answers) mustBe routes.PaymentInternationalAddressController.onPageLoad(CheckMode)
+      }
+
+      "go to PaymentUKAddress from IsPaymentAddressInTheUK when Yes is selected" in {
+        val answers = mock[UserAnswers]
+        when(answers.isPaymentAddressInTheUK) thenReturn Some(true)
+        navigator.nextPage(IsPaymentAddressInTheUKId, CheckMode)(answers) mustBe routes.PaymentUKAddressController.onPageLoad(CheckMode)
+      }
+
+
     }
   }
 }

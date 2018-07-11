@@ -16,8 +16,8 @@
 
 package utils
 
-import identifiers._
 import javax.inject.Singleton
+import identifiers._
 import models.{Benefits, CompanyBenefits, TaxableIncome}
 import play.api.libs.json._
 import uk.gov.hmrc.http.cache.client.CacheMap
@@ -27,12 +27,16 @@ class CascadeUpsert {
 
   val funcMap: Map[String, (JsValue, CacheMap) => CacheMap] =
     Map(
-      SelectCompanyBenefitsId.toString -> storeCompanyBenefit,
       SelectBenefitsId.toString -> storeBenefit,
+      SelectCompanyBenefitsId.toString -> storeCompanyBenefit,
       SelectTaxableIncomeId.toString -> storeTaxableIncome,
       AnyCompanyBenefitsId.toString -> anyCompanyBenefits,
       AnyTaxableIncomeId.toString -> anyTaxableIncome,
-      AnyBenefitsId.toString -> anyBenefits
+      AnyBenefitsId.toString -> anyBenefits,
+      EmploymentDetailsId.toString -> claimDetails,
+      WhereToSendPaymentId.toString -> whereToSendPayment,
+      PaymentAddressCorrectId.toString -> paymentAddressCorrect,
+      IsPaymentAddressInTheUKId.toString -> isPaymentAddressInTheUK
     )
 
   def apply[A](key: String, value: A, originalCacheMap: CacheMap)(implicit fmt: Format[A]): CacheMap =
@@ -110,7 +114,7 @@ class CascadeUpsert {
 
   private def storeBenefit(selectedBenefits: JsValue, cacheMap: CacheMap): CacheMap = {
 
-    val mapToStore: CacheMap = cacheMap.data.get(SelectBenefitsId.toString).map {
+    val mapToStore = cacheMap.data.get(SelectBenefitsId.toString).map {
       _.as[JsArray].value.foldLeft(cacheMap) {
         (cm, benefit) =>
           if (!selectedBenefits.as[JsArray].value.contains(benefit) && benefit != JsString(Benefits.OTHER_TAXABLE_BENEFIT.toString)) {
@@ -126,9 +130,10 @@ class CascadeUpsert {
     store(SelectBenefitsId.toString, selectedBenefits, mapToStore)
   }
 
+
   private def storeCompanyBenefit(selectedBenefits: JsValue, cacheMap: CacheMap): CacheMap = {
 
-    val mapToStore: CacheMap = cacheMap.data.get(SelectCompanyBenefitsId.toString).map {
+    val mapToStore = cacheMap.data.get(SelectCompanyBenefitsId.toString).map {
       _.as[JsArray].value.foldLeft(cacheMap) {
         (cm, benefit) =>
           if (!selectedBenefits.as[JsArray].value.contains(benefit) && benefit != JsString(CompanyBenefits.OTHER_COMPANY_BENEFIT.toString)) {
@@ -144,21 +149,81 @@ class CascadeUpsert {
     store(SelectCompanyBenefitsId.toString, selectedBenefits, mapToStore)
   }
 
-  private def storeTaxableIncome(selectedIncome: JsValue, cacheMap: CacheMap): CacheMap = {
+  private def storeTaxableIncome(selectedBenefits: JsValue, cacheMap: CacheMap): CacheMap = {
 
-    val mapToStore: CacheMap = cacheMap.data.get(SelectTaxableIncomeId.toString).map {
+    val mapToStore = cacheMap.data.get(SelectTaxableIncomeId.toString).map {
       _.as[JsArray].value.foldLeft(cacheMap) {
-        (cm, income) =>
-          if (!selectedIncome.as[JsArray].value.contains(income) && income != JsString(TaxableIncome.OTHER_TAXABLE_INCOME.toString)) {
-            cm copy (data = cm.data - (TaxableIncome.getIdString(income.as[String])._1, TaxableIncome.getIdString(income.as[String])._2))
-          } else if (!selectedIncome.as[JsArray].value.contains(JsString(TaxableIncome.OTHER_TAXABLE_INCOME.toString))) {
-            cm copy (data = cm.data - (OtherTaxableIncomeNameId.toString, HowMuchOtherTaxableIncomeId.toString, AnyOtherTaxableIncomeId.toString))
+        (cm, benefit) =>
+          if (!selectedBenefits.as[JsArray].value.contains(benefit) && benefit != JsString(TaxableIncome.OTHER_TAXABLE_INCOME.toString)) {
+            cm copy (data = cm.data - (TaxableIncome.getIdString(benefit.as[String])._1, TaxableIncome.getIdString(benefit.as[String])._2))
+          } else if (!selectedBenefits.as[JsArray].value.contains(JsString(TaxableIncome.OTHER_TAXABLE_INCOME.toString))) {
+            cm copy (data = cm.data - (OtherTaxableIncomeNameId.toString, HowMuchOtherTaxableIncomeId.toString, AnyTaxableOtherIncomeId.toString, AnyOtherTaxableIncomeId.toString))
           } else {
             cm
           }
       }
     }.getOrElse(cacheMap)
 
-    store(SelectTaxableIncomeId.toString, selectedIncome, mapToStore)
+    store(SelectTaxableIncomeId.toString, selectedBenefits, mapToStore)
   }
+
+  private def claimDetails(value: JsValue, cacheMap: CacheMap): CacheMap = {
+    val keysToRemove = Seq[String](
+      EnterPayeReferenceId.toString,
+      DetailsOfEmploymentOrPensionId.toString
+    )
+    val mapToStore = value match {
+      case JsBoolean(true) => cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemove.contains(s)))
+      case _ => cacheMap
+    }
+    store(EmploymentDetailsId.toString, value, mapToStore)
+  }
+
+  //Payment details
+
+  private def whereToSendPayment(value: JsValue, cacheMap: CacheMap): CacheMap = {
+    val keysToRemoveMyself = Seq[String](
+      NomineeFullNameId.toString,
+      AgentRefId.toString,
+      IsPaymentAddressInTheUKId.toString,
+      PaymentUKAddressId.toString,
+      PaymentInternationalAddressId.toString
+    )
+    val keysToRemoveNominee = Seq[String](
+      PaymentAddressCorrectId.toString,
+      IsPaymentAddressInTheUKId.toString,
+      PaymentUKAddressId.toString,
+      PaymentInternationalAddressId.toString
+    )
+    val mapToStore = value match {
+        case JsString("myself") => cacheMap copy (data = cacheMap.data.filterKeys (s => !keysToRemoveMyself.contains(s)))
+        case JsString("nominee") => cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemoveNominee.contains(s)))
+        case _ => cacheMap
+    }
+    store(WhereToSendPaymentId.toString, value, mapToStore)
+  }
+
+
+  private def paymentAddressCorrect(value: JsValue, cacheMap: CacheMap): CacheMap = {
+    val keysToRemoveYes = Seq[String](
+      IsPaymentAddressInTheUKId.toString,
+      PaymentUKAddressId.toString,
+      PaymentInternationalAddressId.toString
+    )
+    val mapToStore = value match {
+      case JsBoolean (true) => cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemoveYes.contains(s)))
+      case _ => cacheMap
+    }
+    store(PaymentAddressCorrectId.toString, value, mapToStore)
+  }
+
+  private def isPaymentAddressInTheUK(value: JsValue, cacheMap: CacheMap): CacheMap = {
+    val mapToStore = value match {
+      case JsBoolean(true) => cacheMap copy (data = cacheMap.data.filterKeys(s => !PaymentInternationalAddressId.toString.contains(s)))
+      case JsBoolean(false) => cacheMap copy (data = cacheMap.data.filterKeys(s => !PaymentUKAddressId.toString.contains(s)))
+      case _ => cacheMap
+    }
+    store(IsPaymentAddressInTheUKId.toString, value, mapToStore)
+  }
+
 }

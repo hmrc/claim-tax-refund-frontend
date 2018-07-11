@@ -140,7 +140,7 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.howMuchIncapacityBenefit) thenReturn Some("1234")
     when(answers.howMuchStatePension) thenReturn Some("1234")
     when(answers.otherBenefitsName) thenReturn Some(Seq("Other"))
-    when(answers.howMuchOtherBenefit) thenReturn Some("1234")
+    when(answers.howMuchOtherBenefit) thenReturn Some(Seq("1234"))
     when(answers.anyOtherBenefits) thenReturn Some(false)
 
     answers

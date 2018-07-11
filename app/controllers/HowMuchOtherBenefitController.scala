@@ -22,10 +22,10 @@ import controllers.actions._
 import forms.HowMuchOtherBenefitForm
 import identifiers.HowMuchOtherBenefitId
 import javax.inject.Inject
-import models.{Index, Mode}
+import models.{Index, Mode, SelectTaxYear}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.{Action, AnyContent}
+import play.api.mvc.{Action, AnyContent, Result}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import utils.{Navigator, SequenceUtil, UserAnswers}
 import views.html.howMuchOtherBenefit
@@ -53,34 +53,39 @@ class HowMuchOtherBenefitController @Inject()(
         case None => form
       }
 
-      request.userAnswers.selectTaxYear.map{
-        selectedTaxYear =>
-          val taxYear = selectedTaxYear
-          Ok(howMuchOtherBenefit(appConfig, preparedForm, mode, index, taxYear))
-      }.getOrElse{
+      val details: Option[Result] = for {
+        selectedTaxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
+        otherBenefitName: Seq[String] <- request.userAnswers.otherBenefitsName
+      } yield
+        Ok(howMuchOtherBenefit(appConfig, preparedForm, mode, selectedTaxYear, otherBenefitName(index), index))
+
+      details.getOrElse{
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
   }
 
   def onSubmit(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      request.userAnswers.selectTaxYear.map {
-        selectedTaxYear =>
-          val taxYear = selectedTaxYear
-          form.bindFromRequest().fold(
-            (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(howMuchOtherBenefit(appConfig, formWithErrors, mode, index, taxYear))),
-            value => {
-              val benefitAmounts: Seq[String] = request.userAnswers.howMuchOtherBenefit.getOrElse(Seq(value))
-              dataCacheConnector.save[Seq[String]](
-                request.externalId,
-                HowMuchOtherBenefitId.toString,
-                sequenceUtil.updateSeq(benefitAmounts, index, value)
-              ).map(cacheMap =>
-                Redirect(navigator.nextPage(HowMuchOtherBenefitId, mode)(new UserAnswers(cacheMap))))
-            }
-          )
-      }.getOrElse {
+      val details: Option[Future[Result]] = for {
+        selectedTaxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
+        otherBenefitName: Seq[String] <- request.userAnswers.otherBenefitsName
+      } yield {
+        form.bindFromRequest().fold(
+          (formWithErrors: Form[_]) =>
+            Future.successful(BadRequest(howMuchOtherBenefit(appConfig, formWithErrors, mode, selectedTaxYear, otherBenefitName(index), index))),
+          value => {
+            val benefitAmounts: Seq[String] = request.userAnswers.howMuchOtherBenefit.getOrElse(Seq(value))
+            dataCacheConnector.save[Seq[String]](
+              request.externalId,
+              HowMuchOtherBenefitId.toString,
+              sequenceUtil.updateSeq(benefitAmounts, index, value)
+            ).map(cacheMap =>
+              Redirect(navigator.nextPage(HowMuchOtherBenefitId, mode)(new UserAnswers(cacheMap))))
+          }
+        )
+      }
+
+      details.getOrElse {
         Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
       }
   }

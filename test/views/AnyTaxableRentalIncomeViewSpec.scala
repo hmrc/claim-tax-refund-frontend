@@ -53,14 +53,14 @@ class AnyTaxableRentalIncomeViewSpec extends QuestionViewBehaviours[AnyTaxPaid] 
       createView = createViewUsingForm,
       messageKeyPrefix = messageKeyPrefix,
       expectedFormAction = routes.AnyTaxableRentalIncomeController.onSubmit(NormalMode).url,
-      expectedHintText = None,
+      expectedHintTextKey = None,
       args = taxYear.asString(messages)
     )
 
     def yesNoPage(createView: (Form[AnyTaxPaid]) => HtmlFormat.Appendable,
                   messageKeyPrefix: String,
                   expectedFormAction: String,
-                  expectedHintText: Option[String],
+                  expectedHintTextKey: Option[String],
                   args: Any*) = {
 
       "behave like a page with a Yes/No question and revealing content" when {
@@ -74,6 +74,18 @@ class AnyTaxableRentalIncomeViewSpec extends QuestionViewBehaviours[AnyTaxPaid] 
           "contain a heading" in {
             val doc = asDocument(createView(form))
             assertContainsText(doc, messages(s"$messageKeyPrefix.heading", args: _*))
+          }
+
+          if(expectedHintTextKey.isDefined){
+            "render a hint" in {
+              val doc = asDocument(createView(form))
+              assertYesNoHint(doc, expectedHintTextKey)
+            }
+          } else {
+            "not render a hint" in {
+              val doc = asDocument(createView(form))
+              assertNotRenderedByCssSelector(doc, ".form-hint")
+            }
           }
 
           "contain an input for the value" in {

@@ -23,6 +23,7 @@ import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.Injector
 import play.api.test.FakeRequest
 import uk.gov.hmrc.auth.core.retrieve.ItmpAddress
+import utils.SequenceUtil
 
 trait SpecBase extends PlaySpec with GuiceOneAppPerSuite {
 
@@ -35,6 +36,8 @@ trait SpecBase extends PlaySpec with GuiceOneAppPerSuite {
   def fakeRequest = FakeRequest("", "")
 
   def messages: Messages = messagesApi.preferred(fakeRequest)
+
+  def sequenceUtil: SequenceUtil = injector.instanceOf[SequenceUtil]
 
   val itmpAddress = ItmpAddress(
     Some("Line1"),

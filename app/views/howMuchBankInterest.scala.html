@@ -38,8 +38,8 @@
         @components.input_text(InputViewModel("value", form),
             label = messages("howMuchBankInterest.heading", taxYear.asString),
             labelClass=Some("visually-hidden"),
-            prefix = Some(messages("global.poundSign")),
-            hintLine1 = Some(messages("howMuchBankInterest.hint")))
+            prefix = Some(messages("global.poundSign"))
+        )
 
         @components.submit_button()
     }

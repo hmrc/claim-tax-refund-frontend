@@ -27,6 +27,7 @@ import views.html.anyTaxableIncome
 class AnyTaxableIncomeViewSpec extends YesNoViewBehaviours {
 
   private val messageKeyPrefix = "anyTaxableIncome"
+  private val listMessageKeyPrefix = "selectTaxableIncome"
   private val taxYear = CYMinus2
 
   override val form = new BooleanForm()()
@@ -47,7 +48,7 @@ class AnyTaxableIncomeViewSpec extends YesNoViewBehaviours {
       createView = createViewUsingForm,
       messageKeyPrefix = messageKeyPrefix,
       expectedFormAction = routes.AnyTaxableIncomeController.onSubmit(NormalMode).url,
-      expectedHintText = None,
+      expectedHintTextKey = None,
       args = taxYear.asString(messages)
     )
 
@@ -58,7 +59,12 @@ class AnyTaxableIncomeViewSpec extends YesNoViewBehaviours {
         "investment-or-dividends",
         "foreign-income",
         "other-taxable-income"
-      )
-    )
+      ), listMessageKeyPrefix)
+
+    "contain a listHeader" in {
+      val doc = asDocument(createViewUsingForm(form))
+      val employerName = doc.getElementById("listHeading").text
+      employerName mustBe messages("anyTaxableIncome.listHeading")
+    }
   }
 }

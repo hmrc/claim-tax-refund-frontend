@@ -91,7 +91,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
 
   def selectBenefits: Option[AnswerRow] = userAnswers.selectBenefits map {
     val keyPrefix = "selectBenefits."
-    x => AnswerRow(keyPrefix + "checkYourAnswersLabel", x.toSeq.map {
+    x => AnswerRow(keyPrefix + "checkYourAnswersLabel", x.map {
       case Benefits.BEREAVEMENT_ALLOWANCE => Messages(keyPrefix + "bereavement-allowance")
       case Benefits.CARERS_ALLOWANCE => Messages(keyPrefix + "carers-allowance")
       case Benefits.JOBSEEKERS_ALLOWANCE => Messages(keyPrefix + "jobseekers-allowance")
@@ -99,7 +99,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
       case Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE => Messages(keyPrefix + "employment-and-support-allowance")
       case Benefits.STATE_PENSION => Messages(keyPrefix + "state-pension")
       case Benefits.OTHER_TAXABLE_BENEFIT => Messages(keyPrefix + "other-taxable-benefit")
-    }.mkString(", <br>"), false, routes.SelectBenefitsController.onPageLoad(CheckMode).url)
+    }.mkString("<br>"), false, routes.SelectBenefitsController.onPageLoad(CheckMode).url)
   }
 
   def howMuchBereavementAllowance: Option[AnswerRow] = userAnswers.howMuchBereavementAllowance map {
@@ -166,12 +166,12 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
 
   def selectCompanyBenefits: Option[AnswerRow] = userAnswers.selectCompanyBenefits map {
     val keyPrefix = "selectCompanyBenefits."
-    x => AnswerRow(keyPrefix + "checkYourAnswersLabel", x.toSeq.map {
+    x => AnswerRow(keyPrefix + "checkYourAnswersLabel", x.map {
       case CompanyBenefits.COMPANY_CAR_BENEFIT => Messages(keyPrefix + "company-car-benefit")
       case CompanyBenefits.FUEL_BENEFIT => Messages(keyPrefix + "fuel-benefit")
       case CompanyBenefits.MEDICAL_BENEFIT => Messages(keyPrefix + "medical-benefit")
       case CompanyBenefits.OTHER_COMPANY_BENEFIT => Messages(keyPrefix + "other-company-benefit")
-    }.mkString(", <br>"), false, routes.SelectCompanyBenefitsController.onPageLoad(CheckMode).url)
+    }.mkString("<br>"), false, routes.SelectCompanyBenefitsController.onPageLoad(CheckMode).url)
   }
 
   def howMuchCarBenefits: Option[AnswerRow] = userAnswers.howMuchCarBenefits map {
@@ -236,7 +236,14 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
   }
 
   def selectTaxableIncome: Option[AnswerRow] = userAnswers.selectTaxableIncome map {
-    x => AnswerRow("selectTaxableIncome.checkYourAnswersLabel", s"$x", false, routes.SelectTaxableIncomeController.onPageLoad(CheckMode).url)
+    val keyPrefix = "selectTaxableIncome."
+    x => AnswerRow(keyPrefix + "checkYourAnswersLabel", x.map {
+      case TaxableIncome.RENTAL_INCOME => Messages(keyPrefix + "rental-income")
+      case TaxableIncome.BANK_OR_BUILDING_SOCIETY_INTEREST => Messages(keyPrefix + "bank-or-building-society-interest")
+      case TaxableIncome.INVESTMENT_OR_DIVIDENDS => Messages(keyPrefix + "investment-or-dividends")
+      case TaxableIncome.FOREIGN_INCOME => Messages(keyPrefix + "foreign-income")
+      case TaxableIncome.OTHER_TAXABLE_INCOME => Messages(keyPrefix + "other-taxable-income")
+    }.mkString("<br>"), false, routes.SelectTaxableIncomeController.onPageLoad(CheckMode).url)
   }
 
   def howMuchRentalIncome: Option[AnswerRow] = userAnswers.howMuchRentalIncome map {
