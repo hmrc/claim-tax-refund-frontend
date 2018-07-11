@@ -33,15 +33,15 @@ import views.html.howMuchOtherBenefit
 import scala.concurrent.Future
 
 class HowMuchOtherBenefitController @Inject()(
-                                        appConfig: FrontendAppConfig,
-                                        override val messagesApi: MessagesApi,
-                                        dataCacheConnector: DataCacheConnector,
-                                        navigator: Navigator,
-                                        authenticate: AuthAction,
-                                        getData: DataRetrievalAction,
-                                        requireData: DataRequiredAction,
-                                        sequenceUtil: SequenceUtil,
-                                        formBuilder: HowMuchOtherBenefitForm) extends FrontendController with I18nSupport {
+                                                appConfig: FrontendAppConfig,
+                                                override val messagesApi: MessagesApi,
+                                                dataCacheConnector: DataCacheConnector,
+                                                navigator: Navigator,
+                                                authenticate: AuthAction,
+                                                getData: DataRetrievalAction,
+                                                requireData: DataRequiredAction,
+                                                sequenceUtil: SequenceUtil,
+                                                formBuilder: HowMuchOtherBenefitForm) extends FrontendController with I18nSupport {
 
   private val form: Form[String] = formBuilder()
 
@@ -49,7 +49,7 @@ class HowMuchOtherBenefitController @Inject()(
     implicit request =>
       val preparedForm = request.userAnswers.howMuchOtherBenefit match {
         case Some(value) =>
-          if (index >= value.size) form else form.fill(value.toSeq(index)._2)
+          if (index >= value.length) form else form.fill(value(index))
         case None => form
       }
 
@@ -71,20 +71,11 @@ class HowMuchOtherBenefitController @Inject()(
             (formWithErrors: Form[_]) =>
               Future.successful(BadRequest(howMuchOtherBenefit(appConfig, formWithErrors, mode, index, taxYear))),
             value => {
-              val name: String = request.userAnswers.otherBenefitsName match {
-                case Some(benefits) => benefits(index)
-                case None => ???
-              }
-              
-              val otherBenefits: Map[String, String] = Map(request.userAnswers.otherBenefitsName match {
-                case Some(benefits) => benefits(index) -> value
-                case None => ???
-              })
-
-              dataCacheConnector.save[Map[String, String]](
+              val benefitAmounts: Seq[String] = request.userAnswers.howMuchOtherBenefit.getOrElse(Seq(value))
+              dataCacheConnector.save[Seq[String]](
                 request.externalId,
                 HowMuchOtherBenefitId.toString,
-                sequenceUtil.updateMap(otherBenefits, name, value)
+                sequenceUtil.updateSeq(benefitAmounts, index, value)
               ).map(cacheMap =>
                 Redirect(navigator.nextPage(HowMuchOtherBenefitId, mode)(new UserAnswers(cacheMap))))
             }

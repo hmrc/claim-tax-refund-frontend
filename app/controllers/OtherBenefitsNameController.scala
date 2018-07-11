@@ -48,8 +48,8 @@ class OtherBenefitsNameController @Inject()(
   def onPageLoad(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.otherBenefitsName match {
-        case Some(benefitNames) =>
-          if (index >= benefitNames.length) form else form.fill(benefitNames(index))
+        case Some(value) =>
+          if (index >= value.length) form else form.fill(value(index))
         case None => form
       }
 
