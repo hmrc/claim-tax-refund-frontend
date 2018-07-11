@@ -28,6 +28,21 @@ class BenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
 
   implicit def dontShrink[A]: Shrink[A] = Shrink.shrinkAny
 
+  private val cascadeUpsert = new CascadeUpsert
+  private val allBenefits = new CacheMap(id = "test", Map(
+    AnyBenefitsId.toString -> Json.toJson(true),
+    SelectBenefitsId.toString -> Json.toJson(Benefits.sortedBenefits),
+    HowMuchBereavementAllowanceId.toString -> JsString("1234"),
+    HowMuchCarersAllowanceId.toString -> JsString("1234"),
+    HowMuchJobseekersAllowanceId.toString -> JsString("1234"),
+    HowMuchIncapacityBenefitId.toString -> JsString("1234"),
+    HowMuchEmploymentAndSupportAllowanceId.toString -> JsString("1234"),
+    HowMuchStatePensionId.toString -> JsString("1234"),
+    OtherBenefitsNameId.toString -> JsString("qwerty"),
+    HowMuchOtherBenefitId.toString -> JsString("1234"),
+    AnyOtherBenefitsId.toString -> JsBoolean(false)
+  ))
+
   private val arbitraryBenefits: Gen[Seq[Benefits.Value]] =
     Gen.containerOf[Seq, Benefits.Value](Gen.oneOf(
       Benefits.BEREAVEMENT_ALLOWANCE,
@@ -44,6 +59,7 @@ class BenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
       forAll(arbitraryBenefits) {
         benefits =>
           val originalCacheMap = new CacheMap("id", Map(
+            AnyBenefitsId.toString -> Json.toJson(true),
             SelectBenefitsId.toString -> Json.toJson(benefits),
             HowMuchBereavementAllowanceId.toString -> JsString("1234"),
             HowMuchCarersAllowanceId.toString -> JsString("1234"),
@@ -55,134 +71,271 @@ class BenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
             HowMuchOtherBenefitId.toString -> JsString("1234"),
             AnyOtherBenefitsId.toString -> JsString("1234")
           ))
-          val cascadeUpsert = new CascadeUpsert
           val result = cascadeUpsert(AnyBenefitsId.toString, JsBoolean(false), originalCacheMap)
-          result.data.size mustBe 1
-          result.data.contains(SelectBenefitsId.toString) mustBe false
-          result.data.contains(HowMuchBereavementAllowanceId.toString) mustBe false
-          result.data.contains(HowMuchCarersAllowanceId.toString) mustBe false
-          result.data.contains(HowMuchJobseekersAllowanceId.toString) mustBe false
-          result.data.contains(HowMuchIncapacityBenefitId.toString) mustBe false
-          result.data.contains(HowMuchEmploymentAndSupportAllowanceId.toString) mustBe false
-          result.data.contains(HowMuchStatePensionId.toString) mustBe false
-          result.data.contains(OtherBenefitsNameId.toString) mustBe false
-          result.data.contains(HowMuchOtherBenefitId.toString) mustBe false
-          result.data.contains(AnyOtherBenefitsId.toString) mustBe false
+          result.data mustBe Map(
+            AnyBenefitsId.toString -> Json.toJson(false)
+          )
       }
     }
   }
 
-  "unselecting BEREAVEMENT_ALLOWANCE" must {
-    "remove the figure from userAnswers" in {
-      forAll(Gen.numStr, arbitraryBenefits) {
-        (amount, benefits) =>
-
-          val originalCacheMap = new CacheMap("", Map(
-            SelectBenefitsId.toString -> Json.toJson(benefits :+ Benefits.BEREAVEMENT_ALLOWANCE),
-            HowMuchBereavementAllowanceId.toString -> JsString(amount)
-          ))
-          val cascadeUpsert = new CascadeUpsert
-          val result = cascadeUpsert(SelectBenefitsId.toString, benefits.filterNot(_ == Benefits.BEREAVEMENT_ALLOWANCE), originalCacheMap)
-          result.data mustEqual Map(SelectBenefitsId.toString -> Json.toJson(benefits.filterNot(_ == Benefits.BEREAVEMENT_ALLOWANCE)))
-      }
+  "SelectBenefits" must {
+    "removing bereavment and its associated howMuch" in {
+      val result = cascadeUpsert(SelectBenefitsId.toString, Seq(
+        Benefits.CARERS_ALLOWANCE,
+        Benefits.JOBSEEKERS_ALLOWANCE,
+        Benefits.INCAPACITY_BENEFIT,
+        Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE,
+        Benefits.STATE_PENSION,
+        Benefits.OTHER_TAXABLE_BENEFIT
+      ), allBenefits)
+      result.data mustBe Map(
+        AnyBenefitsId.toString -> Json.toJson(true),
+        SelectBenefitsId.toString -> Json.toJson(Seq(
+          Benefits.CARERS_ALLOWANCE,
+          Benefits.JOBSEEKERS_ALLOWANCE,
+          Benefits.INCAPACITY_BENEFIT,
+          Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE,
+          Benefits.STATE_PENSION,
+          Benefits.OTHER_TAXABLE_BENEFIT
+        )),
+        HowMuchCarersAllowanceId.toString -> JsString("1234"),
+        HowMuchJobseekersAllowanceId.toString -> JsString("1234"),
+        HowMuchIncapacityBenefitId.toString -> JsString("1234"),
+        HowMuchEmploymentAndSupportAllowanceId.toString -> JsString("1234"),
+        HowMuchStatePensionId.toString -> JsString("1234"),
+        OtherBenefitsNameId.toString -> JsString("qwerty"),
+        HowMuchOtherBenefitId.toString -> JsString("1234"),
+        AnyOtherBenefitsId.toString -> JsBoolean(false)
+      )
     }
-  }
 
-  "unselecting CARERS_ALLOWANCE" must {
-    "remove the figure from userAnswers" in {
-      forAll(Gen.numStr, arbitraryBenefits) {
-        (amount, benefits) =>
 
-          val originalCacheMap = new CacheMap("", Map(
-            SelectBenefitsId.toString -> Json.toJson(benefits :+ Benefits.CARERS_ALLOWANCE),
-            HowMuchCarersAllowanceId.toString -> JsString(amount)
-          ))
-          val cascadeUpsert = new CascadeUpsert
-          val result = cascadeUpsert(SelectBenefitsId.toString, benefits.filterNot(_ == Benefits.CARERS_ALLOWANCE), originalCacheMap)
-          result.data mustEqual Map(SelectBenefitsId.toString -> Json.toJson(benefits.filterNot(_ == Benefits.CARERS_ALLOWANCE)))
-      }
+    "removing careers and its associated howMuch" in {
+      val result = cascadeUpsert(SelectBenefitsId.toString, Seq(
+        Benefits.BEREAVEMENT_ALLOWANCE,
+        Benefits.JOBSEEKERS_ALLOWANCE,
+        Benefits.INCAPACITY_BENEFIT,
+        Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE,
+        Benefits.STATE_PENSION,
+        Benefits.OTHER_TAXABLE_BENEFIT
+      ), allBenefits)
+      result.data mustBe Map(
+        AnyBenefitsId.toString -> Json.toJson(true),
+        SelectBenefitsId.toString -> Json.toJson(Seq(
+          Benefits.BEREAVEMENT_ALLOWANCE,
+          Benefits.JOBSEEKERS_ALLOWANCE,
+          Benefits.INCAPACITY_BENEFIT,
+          Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE,
+          Benefits.STATE_PENSION,
+          Benefits.OTHER_TAXABLE_BENEFIT
+        )),
+        HowMuchBereavementAllowanceId.toString -> JsString("1234"),
+        HowMuchJobseekersAllowanceId.toString -> JsString("1234"),
+        HowMuchIncapacityBenefitId.toString -> JsString("1234"),
+        HowMuchEmploymentAndSupportAllowanceId.toString -> JsString("1234"),
+        HowMuchStatePensionId.toString -> JsString("1234"),
+        OtherBenefitsNameId.toString -> JsString("qwerty"),
+        HowMuchOtherBenefitId.toString -> JsString("1234"),
+        AnyOtherBenefitsId.toString -> JsBoolean(false)
+      )
     }
-  }
 
-  "unselecting JOBSEEKERS_ALLOWANCE" must {
-    "remove the figure from userAnswers" in {
-      forAll(Gen.numStr, arbitraryBenefits) {
-        (amount, benefits) =>
-
-          val originalCacheMap = new CacheMap("", Map(
-            SelectBenefitsId.toString -> Json.toJson(benefits :+ Benefits.JOBSEEKERS_ALLOWANCE),
-            HowMuchJobseekersAllowanceId.toString -> JsString(amount)
-          ))
-          val cascadeUpsert = new CascadeUpsert
-          val result = cascadeUpsert(SelectBenefitsId.toString, benefits.filterNot(_ == Benefits.JOBSEEKERS_ALLOWANCE), originalCacheMap)
-          result.data mustEqual Map(SelectBenefitsId.toString -> Json.toJson(benefits.filterNot(_ == Benefits.JOBSEEKERS_ALLOWANCE)))
-      }
+    "removing jobseekers and its associated howMuch" in {
+      val result = cascadeUpsert(SelectBenefitsId.toString, Seq(
+        Benefits.BEREAVEMENT_ALLOWANCE,
+        Benefits.CARERS_ALLOWANCE,
+        Benefits.INCAPACITY_BENEFIT,
+        Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE,
+        Benefits.STATE_PENSION,
+        Benefits.OTHER_TAXABLE_BENEFIT
+      ), allBenefits)
+      result.data mustBe Map(
+        AnyBenefitsId.toString -> Json.toJson(true),
+        SelectBenefitsId.toString -> Json.toJson(Seq(
+          Benefits.BEREAVEMENT_ALLOWANCE,
+          Benefits.CARERS_ALLOWANCE,
+          Benefits.INCAPACITY_BENEFIT,
+          Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE,
+          Benefits.STATE_PENSION,
+          Benefits.OTHER_TAXABLE_BENEFIT
+        )),
+        HowMuchBereavementAllowanceId.toString -> JsString("1234"),
+        HowMuchCarersAllowanceId.toString -> JsString("1234"),
+        HowMuchIncapacityBenefitId.toString -> JsString("1234"),
+        HowMuchEmploymentAndSupportAllowanceId.toString -> JsString("1234"),
+        HowMuchStatePensionId.toString -> JsString("1234"),
+        OtherBenefitsNameId.toString -> JsString("qwerty"),
+        HowMuchOtherBenefitId.toString -> JsString("1234"),
+        AnyOtherBenefitsId.toString -> JsBoolean(false)
+      )
     }
-  }
 
-  "unselecting INCAPACITY_BENEFIT" must {
-    "remove the figure from userAnswers" in {
-      forAll(Gen.numStr, arbitraryBenefits) {
-        (amount, benefits) =>
-
-          val originalCacheMap = new CacheMap("", Map(
-            SelectBenefitsId.toString -> Json.toJson(benefits :+ Benefits.INCAPACITY_BENEFIT),
-            HowMuchIncapacityBenefitId.toString -> JsString(amount)
-          ))
-          val cascadeUpsert = new CascadeUpsert
-          val result = cascadeUpsert(SelectBenefitsId.toString, benefits.filterNot(_ == Benefits.INCAPACITY_BENEFIT), originalCacheMap)
-          result.data mustEqual Map(SelectBenefitsId.toString -> Json.toJson(benefits.filterNot(_ == Benefits.INCAPACITY_BENEFIT)))
-      }
+    "removing incapacity and its associated howMuch" in {
+      val result = cascadeUpsert(SelectBenefitsId.toString, Seq(
+        Benefits.BEREAVEMENT_ALLOWANCE,
+        Benefits.CARERS_ALLOWANCE,
+        Benefits.JOBSEEKERS_ALLOWANCE,
+        Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE,
+        Benefits.STATE_PENSION,
+        Benefits.OTHER_TAXABLE_BENEFIT
+      ), allBenefits)
+      result.data mustBe Map(
+        AnyBenefitsId.toString -> Json.toJson(true),
+        SelectBenefitsId.toString -> Json.toJson(Seq(
+          Benefits.BEREAVEMENT_ALLOWANCE,
+          Benefits.CARERS_ALLOWANCE,
+          Benefits.JOBSEEKERS_ALLOWANCE,
+          Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE,
+          Benefits.STATE_PENSION,
+          Benefits.OTHER_TAXABLE_BENEFIT
+        )),
+        HowMuchBereavementAllowanceId.toString -> JsString("1234"),
+        HowMuchCarersAllowanceId.toString -> JsString("1234"),
+        HowMuchJobseekersAllowanceId.toString -> JsString("1234"),
+        HowMuchEmploymentAndSupportAllowanceId.toString -> JsString("1234"),
+        HowMuchStatePensionId.toString -> JsString("1234"),
+        OtherBenefitsNameId.toString -> JsString("qwerty"),
+        HowMuchOtherBenefitId.toString -> JsString("1234"),
+        AnyOtherBenefitsId.toString -> JsBoolean(false)
+      )
     }
-  }
 
-  "unselecting EMPLOYMENT_AND_SUPPORT_ALLOWANCE" must {
-    "remove the figure from userAnswers" in {
-      forAll(Gen.numStr, arbitraryBenefits) {
-        (amount, benefits) =>
-
-          val originalCacheMap = new CacheMap("", Map(
-            SelectBenefitsId.toString -> Json.toJson(benefits :+ Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE),
-            HowMuchEmploymentAndSupportAllowanceId.toString -> JsString(amount)
-          ))
-          val cascadeUpsert = new CascadeUpsert
-          val result = cascadeUpsert(SelectBenefitsId.toString, benefits.filterNot(_ == Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE), originalCacheMap)
-          result.data mustEqual Map(SelectBenefitsId.toString -> Json.toJson(benefits.filterNot(_ == Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE)))
-      }
+    "removing employment and its associated howMuch" in {
+      val result = cascadeUpsert(SelectBenefitsId.toString, Seq(
+        Benefits.BEREAVEMENT_ALLOWANCE,
+        Benefits.CARERS_ALLOWANCE,
+        Benefits.JOBSEEKERS_ALLOWANCE,
+        Benefits.INCAPACITY_BENEFIT,
+        Benefits.STATE_PENSION,
+        Benefits.OTHER_TAXABLE_BENEFIT
+      ), allBenefits)
+      result.data mustBe Map(
+        AnyBenefitsId.toString -> Json.toJson(true),
+        SelectBenefitsId.toString -> Json.toJson(Seq(
+          Benefits.BEREAVEMENT_ALLOWANCE,
+          Benefits.CARERS_ALLOWANCE,
+          Benefits.JOBSEEKERS_ALLOWANCE,
+          Benefits.INCAPACITY_BENEFIT,
+          Benefits.STATE_PENSION,
+          Benefits.OTHER_TAXABLE_BENEFIT
+        )),
+        HowMuchBereavementAllowanceId.toString -> JsString("1234"),
+        HowMuchCarersAllowanceId.toString -> JsString("1234"),
+        HowMuchJobseekersAllowanceId.toString -> JsString("1234"),
+        HowMuchIncapacityBenefitId.toString -> JsString("1234"),
+        HowMuchStatePensionId.toString -> JsString("1234"),
+        OtherBenefitsNameId.toString -> JsString("qwerty"),
+        HowMuchOtherBenefitId.toString -> JsString("1234"),
+        AnyOtherBenefitsId.toString -> JsBoolean(false)
+      )
     }
-  }
 
-  "unselecting STATE_PENSION" must {
-    "remove the figure from userAnswers" in {
-      forAll(Gen.numStr, arbitraryBenefits) {
-        (amount, benefits) =>
-
-          val originalCacheMap = new CacheMap("", Map(
-            SelectBenefitsId.toString -> Json.toJson(benefits :+ Benefits.STATE_PENSION),
-            HowMuchStatePensionId.toString -> JsString(amount)
-          ))
-          val cascadeUpsert = new CascadeUpsert
-          val result = cascadeUpsert(SelectBenefitsId.toString, benefits.filterNot(_ == Benefits.STATE_PENSION), originalCacheMap)
-          result.data mustEqual Map(SelectBenefitsId.toString -> Json.toJson(benefits.filterNot(_ == Benefits.STATE_PENSION)))
-      }
+    "removing state pension its associated howMuch" in {
+      val result = cascadeUpsert(SelectBenefitsId.toString, Seq(
+        Benefits.BEREAVEMENT_ALLOWANCE,
+        Benefits.CARERS_ALLOWANCE,
+        Benefits.JOBSEEKERS_ALLOWANCE,
+        Benefits.INCAPACITY_BENEFIT,
+        Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE,
+        Benefits.OTHER_TAXABLE_BENEFIT
+      ), allBenefits)
+      result.data mustBe Map(
+        AnyBenefitsId.toString -> Json.toJson(true),
+        SelectBenefitsId.toString -> Json.toJson(Seq(
+          Benefits.BEREAVEMENT_ALLOWANCE,
+          Benefits.CARERS_ALLOWANCE,
+          Benefits.JOBSEEKERS_ALLOWANCE,
+          Benefits.INCAPACITY_BENEFIT,
+          Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE,
+          Benefits.OTHER_TAXABLE_BENEFIT
+        )),
+        HowMuchBereavementAllowanceId.toString -> JsString("1234"),
+        HowMuchCarersAllowanceId.toString -> JsString("1234"),
+        HowMuchJobseekersAllowanceId.toString -> JsString("1234"),
+        HowMuchIncapacityBenefitId.toString -> JsString("1234"),
+        HowMuchEmploymentAndSupportAllowanceId.toString -> JsString("1234"),
+        OtherBenefitsNameId.toString -> JsString("qwerty"),
+        HowMuchOtherBenefitId.toString -> JsString("1234"),
+        AnyOtherBenefitsId.toString -> JsBoolean(false)
+      )
     }
-  }
 
-  "unselecting OTHER_TAXABLE_BENEFIT" must {
-    "remove the figure and name from userAnswers" in {
-      forAll(Gen.numStr, arbitraryBenefits) {
-        (amount, benefits) =>
+    "removing otherTaxable and its associated howMuch" in {
+      val result = cascadeUpsert(SelectBenefitsId.toString, Seq(
+        Benefits.BEREAVEMENT_ALLOWANCE,
+        Benefits.CARERS_ALLOWANCE,
+        Benefits.JOBSEEKERS_ALLOWANCE,
+        Benefits.INCAPACITY_BENEFIT,
+        Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE,
+        Benefits.STATE_PENSION
+      ), allBenefits)
+      result.data mustBe Map(
+        AnyBenefitsId.toString -> Json.toJson(true),
+        SelectBenefitsId.toString -> Json.toJson(Seq(
+          Benefits.BEREAVEMENT_ALLOWANCE,
+          Benefits.CARERS_ALLOWANCE,
+          Benefits.JOBSEEKERS_ALLOWANCE,
+          Benefits.INCAPACITY_BENEFIT,
+          Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE,
+          Benefits.STATE_PENSION
+        )),
+        HowMuchBereavementAllowanceId.toString -> JsString("1234"),
+        HowMuchCarersAllowanceId.toString -> JsString("1234"),
+        HowMuchJobseekersAllowanceId.toString -> JsString("1234"),
+        HowMuchIncapacityBenefitId.toString -> JsString("1234"),
+        HowMuchEmploymentAndSupportAllowanceId.toString -> JsString("1234"),
+        HowMuchStatePensionId.toString -> JsString("1234")
+      )
+    }
 
-          val originalCacheMap = new CacheMap("", Map(
-            SelectBenefitsId.toString -> Json.toJson(benefits :+ Benefits.OTHER_TAXABLE_BENEFIT),
-            OtherBenefitsNameId.toString -> JsString("qwerty"),
-            HowMuchOtherBenefitId.toString -> JsString(amount),
-            AnyOtherBenefitsId.toString -> JsBoolean(false)
-          ))
-          val cascadeUpsert = new CascadeUpsert
-          val result = cascadeUpsert(SelectBenefitsId.toString, benefits.filterNot(_ == Benefits.OTHER_TAXABLE_BENEFIT), originalCacheMap)
-          result.data mustEqual Map(SelectBenefitsId.toString -> Json.toJson(benefits.filterNot(_ == Benefits.OTHER_TAXABLE_BENEFIT)))
-      }
+    "removing careers and jobseekers remove associated howMuch" in {
+      val result = cascadeUpsert(SelectBenefitsId.toString, Seq(
+        Benefits.BEREAVEMENT_ALLOWANCE,
+        Benefits.INCAPACITY_BENEFIT,
+        Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE,
+        Benefits.STATE_PENSION,
+        Benefits.OTHER_TAXABLE_BENEFIT
+      ), allBenefits)
+      result.data mustBe Map(
+        AnyBenefitsId.toString -> Json.toJson(true),
+        SelectBenefitsId.toString -> Json.toJson(Seq(
+          Benefits.BEREAVEMENT_ALLOWANCE,
+          Benefits.INCAPACITY_BENEFIT,
+          Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE,
+          Benefits.STATE_PENSION,
+          Benefits.OTHER_TAXABLE_BENEFIT
+        )),
+        HowMuchBereavementAllowanceId.toString -> JsString("1234"),
+        HowMuchIncapacityBenefitId.toString -> JsString("1234"),
+        HowMuchEmploymentAndSupportAllowanceId.toString -> JsString("1234"),
+        HowMuchStatePensionId.toString -> JsString("1234"),
+        OtherBenefitsNameId.toString -> JsString("qwerty"),
+        HowMuchOtherBenefitId.toString -> JsString("1234"),
+        AnyOtherBenefitsId.toString -> JsBoolean(false)
+      )
+    }
+
+    "removing careers, jobseekers and other remove associated howMuch" in {
+      val result = cascadeUpsert(SelectBenefitsId.toString, Seq(
+        Benefits.BEREAVEMENT_ALLOWANCE,
+        Benefits.INCAPACITY_BENEFIT,
+        Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE,
+        Benefits.STATE_PENSION
+      ), allBenefits)
+      result.data mustBe Map(
+        AnyBenefitsId.toString -> Json.toJson(true),
+        SelectBenefitsId.toString -> Json.toJson(Seq(
+          Benefits.BEREAVEMENT_ALLOWANCE,
+          Benefits.INCAPACITY_BENEFIT,
+          Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE,
+          Benefits.STATE_PENSION
+        )),
+        HowMuchBereavementAllowanceId.toString -> JsString("1234"),
+        HowMuchIncapacityBenefitId.toString -> JsString("1234"),
+        HowMuchEmploymentAndSupportAllowanceId.toString -> JsString("1234"),
+        HowMuchStatePensionId.toString -> JsString("1234")
+      )
     }
   }
 }
