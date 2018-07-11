@@ -28,9 +28,4 @@ class SequenceUtil {
       updatedSeq
     }
   }
-
-  def updateMap(map: Map[String, String], name: String, value: String): Map[String, String] = {
-    val updatedMap: Map[String, String] = map + (name -> value)
-    updatedMap
-  }
 }
