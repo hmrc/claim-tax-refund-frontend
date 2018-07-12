@@ -19,7 +19,7 @@ package utils
 import base.SpecBase
 import controllers.routes
 import identifiers._
-import models.{Benefits, NormalMode}
+import models.{Benefits, CheckMode, NormalMode}
 import org.mockito.Mockito._
 import org.scalatest.mockito.MockitoSugar
 
@@ -37,7 +37,7 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
 
       "Navigating from SelectBenefits" must {
         "go to HowMuchBereavementAllowance when bereavement-allowance checkbox is the first answer selected" in {
-          val answers = mock[UserAnswers]
+          val answers = MockUserAnswers.nothingAnswered
 
           when(answers.selectBenefits) thenReturn Some(
             Seq(
@@ -55,7 +55,7 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
         }
 
         "go to HowMuchCarersAllowance when carers-allowance checkbox is the first answer selected" in {
-          val answers = mock[UserAnswers]
+          val answers = MockUserAnswers.nothingAnswered
 
           when(answers.selectBenefits) thenReturn Some(
             Seq(
@@ -72,7 +72,7 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
         }
 
         "go to HowMuchJobseekersAllowance when jobseekers-allowance checkbox is the first answer selected" in {
-          val answers = mock[UserAnswers]
+          val answers = MockUserAnswers.nothingAnswered
 
           when(answers.selectBenefits) thenReturn Some(
             Seq(
@@ -88,7 +88,7 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
         }
 
         "go to HowMuchIncapacityBenefit when incapacity-benefit checkbox is the first answer selected" in {
-          val answers = mock[UserAnswers]
+          val answers = MockUserAnswers.nothingAnswered
 
           when(answers.selectBenefits) thenReturn Some(
             Seq(
@@ -103,7 +103,7 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
         }
 
         "go to HowMuchEmploymentAndSupport when employment-and-support-allowance checkbox is the first answer selected" in {
-          val answers = mock[UserAnswers]
+          val answers = MockUserAnswers.nothingAnswered
 
           when(answers.selectBenefits) thenReturn Some(
             Seq(
@@ -117,7 +117,7 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
         }
 
         "go to HowMuchStatePension when state-pension checkbox is the first answer selected" in {
-          val answers = mock[UserAnswers]
+          val answers = MockUserAnswers.nothingAnswered
 
           when(answers.selectBenefits) thenReturn Some(
             Seq(
@@ -130,7 +130,7 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
         }
 
         "go to OtherBenefitsName when other-taxable-benefit checkbox is the first answer selected" in {
-          val answers = mock[UserAnswers]
+          val answers = MockUserAnswers.nothingAnswered
 
           when(answers.selectBenefits) thenReturn Some(
             Seq(
@@ -144,37 +144,37 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
 
       "Navigating from HowMuchBereavementAllowance" must {
         "go to HowMuchCarersAllowance if this option was selected on SelectBenefits" in {
-          val answers = mock[UserAnswers]
+          val answers = MockUserAnswers.nothingAnswered
           when(answers.selectBenefits) thenReturn Some(Seq(Benefits.CARERS_ALLOWANCE))
           navigator.nextPage(HowMuchBereavementAllowanceId, NormalMode)(answers) mustBe routes.HowMuchCarersAllowanceController.onPageLoad(NormalMode)
         }
 
         "go to HowMuchJobseekersAllowance if this option was selected on SelectBenefits" in {
-          val answers = mock[UserAnswers]
+          val answers = MockUserAnswers.nothingAnswered
           when(answers.selectBenefits) thenReturn Some(Seq(Benefits.JOBSEEKERS_ALLOWANCE))
           navigator.nextPage(HowMuchBereavementAllowanceId, NormalMode)(answers) mustBe routes.HowMuchJobseekersAllowanceController.onPageLoad(NormalMode)
         }
 
         "go to HowMuchIncapacityBenefit if this option was selected on SelectBenefits" in {
-          val answers = mock[UserAnswers]
+          val answers = MockUserAnswers.nothingAnswered
           when(answers.selectBenefits) thenReturn Some(Seq(Benefits.INCAPACITY_BENEFIT))
           navigator.nextPage(HowMuchBereavementAllowanceId, NormalMode)(answers) mustBe routes.HowMuchIncapacityBenefitController.onPageLoad(NormalMode)
         }
 
         "go to HowMuchEmploymentAndSupportAllowance if this option was selected on SelectBenefits" in {
-          val answers = mock[UserAnswers]
+          val answers = MockUserAnswers.nothingAnswered
           when(answers.selectBenefits) thenReturn Some(Seq(Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE))
           navigator.nextPage(HowMuchBereavementAllowanceId, NormalMode)(answers) mustBe routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(NormalMode)
         }
 
         "go to HowMuchStatePension if this option was selected on SelectBenefits" in {
-          val answers = mock[UserAnswers]
+          val answers = MockUserAnswers.nothingAnswered
           when(answers.selectBenefits) thenReturn Some(Seq(Benefits.STATE_PENSION))
           navigator.nextPage(HowMuchBereavementAllowanceId, NormalMode)(answers) mustBe routes.HowMuchStatePensionController.onPageLoad(NormalMode)
         }
 
         "go to OtherBenefitsName if this option was selected on SelectBenefits" in {
-          val answers = mock[UserAnswers]
+          val answers = MockUserAnswers.nothingAnswered
           when(answers.selectBenefits) thenReturn Some(Seq(Benefits.OTHER_TAXABLE_BENEFIT))
           navigator.nextPage(HowMuchBereavementAllowanceId, NormalMode)(answers) mustBe routes.OtherBenefitsNameController.onPageLoad(NormalMode)
         }
@@ -228,6 +228,73 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
         val answers = mock[UserAnswers]
         when(answers.anyOtherBenefits) thenReturn Some(true)
         navigator.nextPage(AnyOtherBenefitsId, NormalMode)(answers) mustBe routes.OtherBenefitsNameController.onPageLoad(NormalMode)
+      }
+    }
+
+    "when in checkMode" must {
+      "when moving from 'AnyBenefitsController'" must {
+        "take you to 'SelectBenefits' then selecting 'Yes'" in {
+          val answers = MockUserAnswers.nothingAnswered
+          when (answers.anyBenefits) thenReturn Some(true)
+          navigator.nextPage(AnyBenefitsId, CheckMode)(answers) mustBe routes.SelectBenefitsController.onPageLoad(CheckMode)
+        }
+
+        "take you to 'CheckYourAnswers' then selecting 'No'" in {
+          val answers = MockUserAnswers.nothingAnswered
+          when (answers.anyBenefits) thenReturn Some(false)
+          navigator.nextPage(AnyBenefitsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+        }
+
+        "take you to 'CheckYourAnswers' when not changeing your answer" in {
+          val answers = MockUserAnswers.nothingAnswered
+          when (answers.anyBenefits) thenReturn Some (true)
+          when (answers.selectBenefits) thenReturn Some(Seq(
+            Benefits.CARERS_ALLOWANCE
+          ))
+          navigator.nextPage(AnyBenefitsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+        }
+      }
+
+      "when moving from 'SelectBenefits'" must {
+        "go to 'HowMuchBereavement' when 'BEREAVEMENT_ALLOWANCE' selected and HowMuch is empty" in {
+          val answers = MockUserAnswers.nothingAnswered
+          when (answers.selectBenefits) thenReturn Some(Seq(
+            Benefits.BEREAVEMENT_ALLOWANCE
+          ))
+          navigator.nextPage(SelectBenefitsId, CheckMode)(answers) mustBe routes.HowMuchBereavementAllowanceController.onPageLoad(CheckMode)
+          when (answers.howMuchBereavementAllowance) thenReturn Some("112.44")
+          navigator.nextPage(SelectBenefitsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+        }
+
+        "go to 'CheckYourAnswers' when 'BEREAVEMENT_ALLOWANCE' selected and HowMuch is not empty" in {
+          val answers = MockUserAnswers.nothingAnswered
+          when (answers.selectBenefits) thenReturn Some(Seq(
+            Benefits.BEREAVEMENT_ALLOWANCE
+          ))
+          when (answers.howMuchBereavementAllowance) thenReturn Some("112.44")
+          navigator.nextPage(SelectBenefitsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+        }
+
+        "go to 'HowMuchCareers when 'BEREAVEMENT_ALLOWANCE' and 'CARERS_ALLOWANCE' but CAREERS is empty" in {
+          val answers = MockUserAnswers.nothingAnswered
+          when (answers.selectBenefits) thenReturn Some(Seq(
+            Benefits.BEREAVEMENT_ALLOWANCE,
+            Benefits.CARERS_ALLOWANCE
+          ))
+          when (answers.howMuchBereavementAllowance) thenReturn Some("112.44")
+          navigator.nextPage(SelectBenefitsId, CheckMode)(answers) mustBe routes.HowMuchCarersAllowanceController.onPageLoad(CheckMode)
+        }
+
+        "go to 'HowMuchIncapacity' when all selected but HowMuchIncapcity is Empty " in {
+          val answers = MockUserAnswers.nothingAnswered
+          when(answers.selectBenefits) thenReturn Some (Benefits.sortedBenefits)
+          when(answers.howMuchBereavementAllowance) thenReturn Some ("112.44")
+          when(answers.howMuchCarersAllowance) thenReturn Some ("112.44")
+          when(answers.howMuchJobseekersAllowance) thenReturn Some ("112.44")
+          when(answers.howMuchEmploymentAndSupportAllowance) thenReturn Some ("112.44")
+          when(answers.howMuchStatePension) thenReturn Some ("112.44")
+          navigator.nextPage(SelectBenefitsId, CheckMode)(answers) mustBe routes.HowMuchIncapacityBenefitController.onPageLoad(CheckMode)
+        }
       }
     }
   }

@@ -32,13 +32,13 @@ class Navigator @Inject()() {
     EnterPayeReferenceId -> (_ => routes.DetailsOfEmploymentOrPensionController.onPageLoad(NormalMode)),
     DetailsOfEmploymentOrPensionId -> (_ => routes.AnyBenefitsController.onPageLoad(NormalMode)),
     AnyBenefitsId -> anyBenefits,
-    SelectBenefitsId -> selectBenefits,
-    HowMuchBereavementAllowanceId -> benefitRouter(HowMuchBereavementAllowanceId.cyaId),
-    HowMuchCarersAllowanceId -> benefitRouter(HowMuchCarersAllowanceId.cyaId),
-    HowMuchJobseekersAllowanceId -> benefitRouter(HowMuchJobseekersAllowanceId.cyaId),
-    HowMuchIncapacityBenefitId -> benefitRouter(HowMuchIncapacityBenefitId.cyaId),
-    HowMuchEmploymentAndSupportAllowanceId -> benefitRouter(HowMuchEmploymentAndSupportAllowanceId.cyaId),
-    HowMuchStatePensionId -> benefitRouter(HowMuchStatePensionId.cyaId),
+    SelectBenefitsId -> selectBenefits(NormalMode),
+    HowMuchBereavementAllowanceId -> benefitRouter(HowMuchBereavementAllowanceId.cyaId, NormalMode),
+    HowMuchCarersAllowanceId -> benefitRouter(HowMuchCarersAllowanceId.cyaId, NormalMode),
+    HowMuchJobseekersAllowanceId -> benefitRouter(HowMuchJobseekersAllowanceId.cyaId, NormalMode),
+    HowMuchIncapacityBenefitId -> benefitRouter(HowMuchIncapacityBenefitId.cyaId, NormalMode),
+    HowMuchEmploymentAndSupportAllowanceId -> benefitRouter(HowMuchEmploymentAndSupportAllowanceId.cyaId, NormalMode),
+    HowMuchStatePensionId -> benefitRouter(HowMuchStatePensionId.cyaId, NormalMode),
     AnyOtherBenefitsId -> anyOtherBenefits,
     AnyCompanyBenefitsId -> anyCompanyBenefits,
     SelectCompanyBenefitsId -> selectedCompanyBenefitsCheck(NormalMode),
@@ -51,9 +51,9 @@ class Navigator @Inject()() {
     AnyTaxableRentalIncomeId -> taxableIncomeRouter(HowMuchRentalIncomeId.cyaId),
     HowMuchBankInterestId -> (_ => routes.AnyTaxableBankInterestController.onPageLoad(NormalMode)),
     AnyTaxableBankInterestId -> taxableIncomeRouter(HowMuchBankInterestId.cyaId),
-    HowMuchInvestmentOrDividendId ->  (_ => routes.AnyTaxableInvestmentsController.onPageLoad(NormalMode)),
+    HowMuchInvestmentOrDividendId -> (_ => routes.AnyTaxableInvestmentsController.onPageLoad(NormalMode)),
     AnyTaxableInvestmentsId -> taxableIncomeRouter(HowMuchInvestmentOrDividendId.cyaId),
-    HowMuchForeignIncomeId ->  (_ => routes.AnyTaxableForeignIncomeController.onPageLoad(NormalMode)),
+    HowMuchForeignIncomeId -> (_ => routes.AnyTaxableForeignIncomeController.onPageLoad(NormalMode)),
     AnyTaxableForeignIncomeId -> taxableIncomeRouter(HowMuchForeignIncomeId.cyaId),
     OtherTaxableIncomeNameId -> (_ => routes.HowMuchOtherTaxableIncomeController.onPageLoad(NormalMode)),
     HowMuchOtherTaxableIncomeId -> (_ => routes.AnyTaxableOtherIncomeController.onPageLoad(NormalMode)),
@@ -75,7 +75,7 @@ class Navigator @Inject()() {
   )
 
   private val editRouteMap: Map[Identifier, UserAnswers => Call] = Map(
-    EmploymentDetailsId ->  employmentDetailsCheck,
+    EmploymentDetailsId -> employmentDetailsCheck,
     EnterPayeReferenceId -> (_ => routes.DetailsOfEmploymentOrPensionController.onPageLoad(CheckMode)),
     DetailsOfEmploymentOrPensionId -> (_ => routes.CheckYourAnswersController.onPageLoad()),
     AnyAgentRefId -> (_ => routes.IsPaymentAddressInTheUKController.onPageLoad(CheckMode)),
@@ -83,6 +83,14 @@ class Navigator @Inject()() {
     WhereToSendPaymentId -> whereToSendPaymentCheck,
     IsPaymentAddressInTheUKId -> isPaymentAddressInUkRouteCheck,
     PaymentAddressCorrectId -> paymentAddressCorrectCheck,
+    AnyBenefitsId -> anyBenefitsCheck,
+    SelectBenefitsId -> selectBenefits(CheckMode),
+    HowMuchBereavementAllowanceId -> benefitRouter(HowMuchBereavementAllowanceId.cyaId, CheckMode),
+    HowMuchCarersAllowanceId -> benefitRouter(HowMuchCarersAllowanceId.cyaId, CheckMode),
+    HowMuchJobseekersAllowanceId -> benefitRouter(HowMuchJobseekersAllowanceId.cyaId, CheckMode),
+    HowMuchIncapacityBenefitId -> benefitRouter(HowMuchIncapacityBenefitId.cyaId, CheckMode),
+    HowMuchEmploymentAndSupportAllowanceId -> benefitRouter(HowMuchEmploymentAndSupportAllowanceId.cyaId, CheckMode),
+    HowMuchStatePensionId -> benefitRouter(HowMuchStatePensionId.cyaId, CheckMode),
     SelectCompanyBenefitsId -> selectedCompanyBenefitsCheck(CheckMode),
     HowMuchCarBenefitsId -> selectedCompanyBenefitsCheck(CheckMode),
     HowMuchFuelBenefitId -> selectedCompanyBenefitsCheck(CheckMode),
@@ -111,18 +119,64 @@ class Navigator @Inject()() {
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
-  private def selectBenefits(userAnswers: UserAnswers): Call = userAnswers.selectBenefits match {
+  private def anyBenefitsCheck(userAnswers: UserAnswers): Call = userAnswers.anyBenefits match {
+    case Some(true) if userAnswers.selectBenefits.isEmpty => routes.SelectBenefitsController.onPageLoad(CheckMode)
+    case Some(true) => routes.CheckYourAnswersController.onPageLoad()
+    case Some(false) => routes.CheckYourAnswersController.onPageLoad()
+    case None => routes.SessionExpiredController.onPageLoad()
+  }
+
+  private def selectBenefits(mode: Mode)(userAnswers: UserAnswers): Call = userAnswers.selectBenefits match {
     case Some(benefits) =>
-      benefits.head match {
-        case Benefits.BEREAVEMENT_ALLOWANCE => routes.HowMuchBereavementAllowanceController.onPageLoad(NormalMode)
-        case Benefits.CARERS_ALLOWANCE => routes.HowMuchCarersAllowanceController.onPageLoad(NormalMode)
-        case Benefits.JOBSEEKERS_ALLOWANCE => routes.HowMuchJobseekersAllowanceController.onPageLoad(NormalMode)
-        case Benefits.INCAPACITY_BENEFIT => routes.HowMuchIncapacityBenefitController.onPageLoad(NormalMode)
-        case Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE => routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(NormalMode)
-        case Benefits.STATE_PENSION => routes.HowMuchStatePensionController.onPageLoad(NormalMode)
-        case Benefits.OTHER_TAXABLE_BENEFIT => routes.OtherBenefitsNameController.onPageLoad(NormalMode)
-        case _ => routes.SessionExpiredController.onPageLoad()
+      if (benefits.contains(Benefits.BEREAVEMENT_ALLOWANCE) && (userAnswers.howMuchBereavementAllowance.isEmpty || mode == NormalMode)) {
+        routes.HowMuchBereavementAllowanceController.onPageLoad(mode)
+      } else if (benefits.contains(Benefits.CARERS_ALLOWANCE) && (userAnswers.howMuchCarersAllowance.isEmpty || mode == NormalMode)) {
+        routes.HowMuchCarersAllowanceController.onPageLoad(mode)
+      } else if (benefits.contains(Benefits.JOBSEEKERS_ALLOWANCE) && (userAnswers.howMuchJobseekersAllowance.isEmpty || mode == NormalMode)) {
+        routes.HowMuchJobseekersAllowanceController.onPageLoad(mode)
+      } else if (benefits.contains(Benefits.INCAPACITY_BENEFIT) && (userAnswers.howMuchIncapacityBenefit.isEmpty || mode == NormalMode)) {
+        routes.HowMuchIncapacityBenefitController.onPageLoad(mode)
+      } else if (benefits.contains(Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE) && (userAnswers.howMuchEmploymentAndSupportAllowance.isEmpty || mode == NormalMode)) {
+        routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(mode)
+      } else if (benefits.contains(Benefits.STATE_PENSION) && (userAnswers.howMuchStatePension.isEmpty || mode == NormalMode)) {
+        routes.HowMuchStatePensionController.onPageLoad(mode)
+      } else if (benefits.contains(Benefits.OTHER_TAXABLE_BENEFIT) && ((mode == CheckMode && userAnswers.howMuchOtherTaxableIncome.isEmpty) || mode == NormalMode)) {
+        routes.OtherBenefitsNameController.onPageLoad(mode)
+      } else {
+        routes.CheckYourAnswersController.onPageLoad()
       }
+    case None => routes.SessionExpiredController.onPageLoad()
+  }
+
+  private def benefitRouter(currentPageId: String, mode: Mode)(userAnswers: UserAnswers): Call = userAnswers.selectBenefits match {
+
+    case Some(benefits) =>
+      val nextPageIndex: Int = (benefits.map(_.toString) indexOf currentPageId) + 1
+
+      if (nextPageIndex < benefits.length) {
+
+        benefits(nextPageIndex) match {
+          case Benefits.CARERS_ALLOWANCE if userAnswers.howMuchCarersAllowance.isEmpty || mode == NormalMode => routes.HowMuchCarersAllowanceController.onPageLoad(mode)
+          case Benefits.JOBSEEKERS_ALLOWANCE if userAnswers.howMuchJobseekersAllowance.isEmpty || mode == NormalMode => routes.HowMuchJobseekersAllowanceController.onPageLoad(mode)
+          case Benefits.INCAPACITY_BENEFIT if userAnswers.howMuchIncapacityBenefit.isEmpty || mode == NormalMode => routes.HowMuchIncapacityBenefitController.onPageLoad(mode)
+          case Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE if userAnswers.howMuchEmploymentAndSupportAllowance.isEmpty || mode == NormalMode => routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(mode)
+          case Benefits.STATE_PENSION if userAnswers.howMuchStatePension.isEmpty || mode == NormalMode => routes.HowMuchStatePensionController.onPageLoad(mode)
+          case Benefits.OTHER_TAXABLE_BENEFIT if userAnswers.howMuchOtherTaxableIncome.isEmpty || mode == NormalMode => routes.OtherBenefitsNameController.onPageLoad(mode)
+          case _ if mode == NormalMode => routes.SessionExpiredController.onPageLoad()
+          case _ => routes.CheckYourAnswersController.onPageLoad()
+        }
+      } else  if (mode == NormalMode) {
+        routes.AnyCompanyBenefitsController.onPageLoad(mode)
+      } else {
+        routes.CheckYourAnswersController.onPageLoad()
+      }
+    case None if mode == NormalMode => routes.SessionExpiredController.onPageLoad()
+    case None => routes.CheckYourAnswersController.onPageLoad()
+  }
+
+  private def anyCompanyBenefits(userAnswers: UserAnswers): Call = userAnswers.anyCompanyBenefits match {
+    case Some(true) => routes.SelectCompanyBenefitsController.onPageLoad(NormalMode)
+    case Some(false) => routes.AnyTaxableIncomeController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
@@ -159,11 +213,6 @@ class Navigator @Inject()() {
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
-  private def anyCompanyBenefits(userAnswers: UserAnswers): Call = userAnswers.anyCompanyBenefits match {
-    case Some(true) => routes.SelectCompanyBenefitsController.onPageLoad(NormalMode)
-    case Some(false) => routes.AnyTaxableIncomeController.onPageLoad(NormalMode)
-    case None => routes.SessionExpiredController.onPageLoad()
-  }
   private def taxableIncomeRouter(currentPageId: String)(userAnswers: UserAnswers): Call = userAnswers.selectTaxableIncome match {
     case Some(taxableIncome) =>
       val nextPageIndex: Int = (taxableIncome.map(_.toString) indexOf currentPageId) + 1
@@ -286,3 +335,4 @@ class Navigator @Inject()() {
       editRouteMap.getOrElse(id, _ => routes.CheckYourAnswersController.onPageLoad())
   }
 }
+
