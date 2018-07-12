@@ -18,10 +18,11 @@ package views
 
 import controllers.routes
 import forms.HowMuchOtherBenefitForm
-import models.NormalMode
+import models.{NormalMode, SelectTaxYear}
 import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
+import play.twirl.api.Html
 import views.behaviours.StringViewBehaviours
 import views.html.howMuchOtherBenefit
 
@@ -33,9 +34,9 @@ class HowMuchOtherBenefitViewSpec extends StringViewBehaviours with MockitoSugar
 
   override val form: Form[String] = new HowMuchOtherBenefitForm(frontendAppConfig)()
 
-  def createView = () => howMuchOtherBenefit(frontendAppConfig, form, NormalMode, taxYear, otherBenefitName, 0)(fakeRequest, messages)
+  def createView: () => Html = () => howMuchOtherBenefit(frontendAppConfig, form, NormalMode, taxYear, otherBenefitName, 1)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) => howMuchOtherBenefit(frontendAppConfig, form, NormalMode, taxYear, otherBenefitName, 0)(fakeRequest, messages)
+  def createViewUsingForm: Form[String] => Html = (form: Form[String]) => howMuchOtherBenefit(frontendAppConfig, form, NormalMode, taxYear, otherBenefitName, 1)(fakeRequest, messages)
 
   "HowMuchOtherBenefit view" must {
     behave like normalPage(createView, messageKeyPrefix, None, otherBenefitName, taxYear.asString(messages))
@@ -47,11 +48,11 @@ class HowMuchOtherBenefitViewSpec extends StringViewBehaviours with MockitoSugar
     behave like stringPage(
       createView = createViewUsingForm,
       messageKeyPrefix = messageKeyPrefix,
-      expectedFormAction = routes.HowMuchOtherBenefitController.onSubmit(NormalMode, 0).url,
+      expectedFormAction = routes.HowMuchOtherBenefitController.onSubmit(NormalMode, 1).url,
       expectedHintKeyLine1 = None,
       expectedHintKeyLine2 = None,
       expectedPrefix = Some(messages("global.poundSign")),
-      args = taxYear.asString(messages)
+      args = otherBenefitName, taxYear.asString(messages)
     )
 
   }
