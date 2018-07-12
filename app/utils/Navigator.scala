@@ -183,7 +183,7 @@ class Navigator @Inject()() {
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
-  private def selectedCompanyBenefitsCheck(mode : Mode)(userAnswers: UserAnswers): Call = userAnswers.selectCompanyBenefits match {
+  private def selectedCompanyBenefitsCheck(mode: Mode)(userAnswers: UserAnswers): Call = userAnswers.selectCompanyBenefits match {
     case Some(benefits) =>
       if (benefits.contains(CompanyBenefits.COMPANY_CAR_BENEFIT) && userAnswers.howMuchCarBenefits.isEmpty) {
         routes.HowMuchCarBenefitsController.onPageLoad(mode)
@@ -193,10 +193,8 @@ class Navigator @Inject()() {
         routes.HowMuchMedicalBenefitsController.onPageLoad(mode)
       } else if (benefits.contains(CompanyBenefits.OTHER_COMPANY_BENEFIT) && userAnswers.otherCompanyBenefitsName.isEmpty) {
         routes.OtherCompanyBenefitsNameController.onPageLoad(mode)
-      } else if (mode == NormalMode){
-        routes.AnyTaxableIncomeController.onPageLoad(mode)
       } else {
-        routes.CheckYourAnswersController.onPageLoad()
+        if (mode == NormalMode) routes.AnyTaxableIncomeController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
       }
     case None =>
       routes.SessionExpiredController.onPageLoad()

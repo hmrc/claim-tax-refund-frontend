@@ -16,9 +16,6 @@
 
 package identifiers
 
-import models.CompanyBenefits
-
 case object HowMuchCarBenefitsId extends Identifier {
   override def toString: String = "howMuchCarBenefits"
-  def cyaId: String = CompanyBenefits.COMPANY_CAR_BENEFIT.toString
 }
