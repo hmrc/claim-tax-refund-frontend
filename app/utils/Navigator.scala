@@ -41,10 +41,10 @@ class Navigator @Inject()() {
     HowMuchStatePensionId -> benefitRouter(HowMuchStatePensionId.cyaId),
     AnyOtherBenefitsId -> anyOtherBenefits,
     AnyCompanyBenefitsId -> anyCompanyBenefits,
-    HowMuchCarBenefitsId -> companyBenefitRouter(HowMuchCarBenefitsId.cyaId),
-    HowMuchFuelBenefitId -> companyBenefitRouter(HowMuchFuelBenefitId.cyaId),
-    HowMuchMedicalBenefitsId -> companyBenefitRouter(HowMuchMedicalBenefitsId.cyaId),
-    SelectCompanyBenefitsId -> selectCompanyBenefits,
+    SelectCompanyBenefitsId -> selectedCompanyBenefitsCheck(NormalMode),
+    HowMuchCarBenefitsId -> selectedCompanyBenefitsCheck(NormalMode),
+    HowMuchFuelBenefitId -> selectedCompanyBenefitsCheck(NormalMode),
+    HowMuchMedicalBenefitsId -> selectedCompanyBenefitsCheck(NormalMode),
     AnyTaxableIncomeId -> otherTaxableIncome,
     SelectTaxableIncomeId -> selectTaxableIncome,
     HowMuchRentalIncomeId -> (_ => routes.AnyTaxableRentalIncomeController.onPageLoad(NormalMode)),
@@ -83,10 +83,10 @@ class Navigator @Inject()() {
     WhereToSendPaymentId -> whereToSendPaymentCheck,
     IsPaymentAddressInTheUKId -> isPaymentAddressInUkRouteCheck,
     PaymentAddressCorrectId -> paymentAddressCorrectCheck,
-    SelectCompanyBenefitsId -> selectedCompanyBenefitsCheck,
-    HowMuchCarBenefitsId -> selectedCompanyBenefitsCheck,
-    HowMuchFuelBenefitId -> selectedCompanyBenefitsCheck,
-    HowMuchMedicalBenefitsId -> selectedCompanyBenefitsCheck,
+    SelectCompanyBenefitsId -> selectedCompanyBenefitsCheck(CheckMode),
+    HowMuchCarBenefitsId -> selectedCompanyBenefitsCheck(CheckMode),
+    HowMuchFuelBenefitId -> selectedCompanyBenefitsCheck(CheckMode),
+    HowMuchMedicalBenefitsId -> selectedCompanyBenefitsCheck(CheckMode),
     OtherCompanyBenefitsNameId -> howMuchOtherCompanyBenefitsCheck,
     HowMuchOtherCompanyBenefitId -> (_ => routes.CheckYourAnswersController.onPageLoad()),
     AnyOtherCompanyBenefitsId -> anyOtherCompanyBenefitsCheck
@@ -183,47 +183,18 @@ class Navigator @Inject()() {
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
-  private def selectCompanyBenefits(userAnswers: UserAnswers): Call = userAnswers.selectCompanyBenefits match {
-    case Some(benefits) =>
-      benefits.head match {
-        case CompanyBenefits.COMPANY_CAR_BENEFIT => routes.HowMuchCarBenefitsController.onPageLoad(NormalMode)
-        case CompanyBenefits.FUEL_BENEFIT => routes.HowMuchFuelBenefitController.onPageLoad(NormalMode)
-        case CompanyBenefits.MEDICAL_BENEFIT => routes.HowMuchMedicalBenefitsController.onPageLoad(NormalMode)
-        case CompanyBenefits.OTHER_COMPANY_BENEFIT => routes.OtherCompanyBenefitsNameController.onPageLoad(NormalMode)
-        case _ => routes.SessionExpiredController.onPageLoad()
-      }
-    case None => routes.SessionExpiredController.onPageLoad()
-  }
-
-  private def companyBenefitRouter(currentPageId: String)(userAnswers: UserAnswers): Call = userAnswers.selectCompanyBenefits match {
-    case Some(benefits) =>
-      val nextPageIndex: Int = (benefits.map(_.toString) indexOf currentPageId) + 1
-
-      if (nextPageIndex < benefits.length) {
-        benefits(nextPageIndex) match {
-          case CompanyBenefits.FUEL_BENEFIT => routes.HowMuchFuelBenefitController.onPageLoad(NormalMode)
-          case CompanyBenefits.MEDICAL_BENEFIT => routes.HowMuchMedicalBenefitsController.onPageLoad(NormalMode)
-          case CompanyBenefits.OTHER_COMPANY_BENEFIT => routes.OtherCompanyBenefitsNameController.onPageLoad(NormalMode)
-          case _ => routes.SessionExpiredController.onPageLoad()
-        }
-      } else {
-        routes.AnyTaxableIncomeController.onPageLoad(NormalMode)
-      }
-    case None => routes.SessionExpiredController.onPageLoad()
-  }
-
-  private def selectedCompanyBenefitsCheck(userAnswers: UserAnswers): Call = userAnswers.selectCompanyBenefits match {
+  private def selectedCompanyBenefitsCheck(mode: Mode)(userAnswers: UserAnswers): Call = userAnswers.selectCompanyBenefits match {
     case Some(benefits) =>
       if (benefits.contains(CompanyBenefits.COMPANY_CAR_BENEFIT) && userAnswers.howMuchCarBenefits.isEmpty) {
-        routes.HowMuchCarBenefitsController.onPageLoad(CheckMode)
+        routes.HowMuchCarBenefitsController.onPageLoad(mode)
       } else if (benefits.contains(CompanyBenefits.FUEL_BENEFIT) && userAnswers.howMuchFuelBenefit.isEmpty) {
-        routes.HowMuchFuelBenefitController.onPageLoad(CheckMode)
+        routes.HowMuchFuelBenefitController.onPageLoad(mode)
       } else if (benefits.contains(CompanyBenefits.MEDICAL_BENEFIT) && userAnswers.howMuchMedicalBenefits.isEmpty) {
-        routes.HowMuchMedicalBenefitsController.onPageLoad(CheckMode)
+        routes.HowMuchMedicalBenefitsController.onPageLoad(mode)
       } else if (benefits.contains(CompanyBenefits.OTHER_COMPANY_BENEFIT) && userAnswers.otherCompanyBenefitsName.isEmpty) {
-        routes.OtherCompanyBenefitsNameController.onPageLoad(CheckMode)
+        routes.OtherCompanyBenefitsNameController.onPageLoad(mode)
       } else {
-        routes.CheckYourAnswersController.onPageLoad()
+        if (mode == NormalMode) routes.AnyTaxableIncomeController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
       }
     case None =>
       routes.SessionExpiredController.onPageLoad()
