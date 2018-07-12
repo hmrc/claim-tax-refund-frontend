@@ -103,7 +103,7 @@ class UserAnswers(val cacheMap: CacheMap) {
 
   def anyTaxableBankInterest: Option[AnyTaxPaid] = cacheMap.getEntry[AnyTaxPaid](AnyTaxableBankInterestId.toString)
 
-  def howMuchInvestmentOrDividend: Option[String] = cacheMap.getEntry[String](HowMuchInvestmentOrDividendId.toString)
+  def howMuchInvestmentOrDividend: Option[String] = cacheMap.getEntry[String](HowMuchInvestmentsId.toString)
 
   def anyTaxableInvestments: Option[AnyTaxPaid] = cacheMap.getEntry[AnyTaxPaid](AnyTaxableInvestmentsId.toString)
 

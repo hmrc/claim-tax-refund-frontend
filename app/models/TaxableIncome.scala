@@ -37,7 +37,7 @@ object TaxableIncome extends Enumeration {
     taxableIncomeValue match {
       case "rental-income" => (HowMuchRentalIncomeId.toString, AnyTaxableRentalIncomeId.toString)
       case "bank-or-building-society-interest" => (HowMuchBankInterestId.toString, AnyTaxableBankInterestId.toString)
-      case "investment-or-dividends" => (HowMuchInvestmentOrDividendId.toString, AnyTaxableInvestmentsId.toString)
+      case "investment-or-dividends" => (HowMuchInvestmentsId.toString, AnyTaxableInvestmentsId.toString)
       case "foreign-income" => (HowMuchForeignIncomeId.toString, AnyTaxableForeignIncomeId.toString)
       case "other-taxable-income" => (OtherTaxableIncomeNameId.toString, AnyTaxableOtherIncomeId.toString)
     }
