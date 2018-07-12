@@ -22,7 +22,7 @@ import connectors.FakeDataCacheConnector
 import controllers.actions._
 import play.api.test.Helpers._
 import forms.HowMuchOtherBenefitForm
-import models.NormalMode
+import models.{Index, NormalMode}
 import models.SelectTaxYear.CYMinus2
 import org.mockito.Mockito.when
 import play.api.mvc.Call
@@ -42,25 +42,28 @@ class HowMuchOtherBenefitControllerSpec extends ControllerSpecBase {
     new HowMuchOtherBenefitController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, sequenceUtil, new HowMuchOtherBenefitForm(frontendAppConfig))
 
-  def viewAsString(form: Form[_] = form): String = howMuchOtherBenefit(frontendAppConfig, form, NormalMode, taxYear, otherBenefitName.head, 0)(fakeRequest, messages).toString
-
+  def viewAsString(form: Form[_] = form, index: Index): String = howMuchOtherBenefit(frontendAppConfig, form, NormalMode, taxYear, otherBenefitName(index), index)(fakeRequest, messages).toString
 
   "HowMuchOtherBenefit Controller" must {
 
     "return OK and the correct view for a GET" in {
       when(mockUserAnswers.otherBenefitsName).thenReturn(Some(otherBenefitName))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, 0)(fakeRequest)
+      val result1 = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, 1)(fakeRequest)
 
       status(result) mustBe OK
-      contentAsString(result) mustBe viewAsString()
+      contentAsString(result) mustBe viewAsString(form, 0)
+      contentAsString(result1) mustBe viewAsString(form, 1)
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
       when(mockUserAnswers.otherBenefitsName).thenReturn(Some(otherBenefitName))
       when(mockUserAnswers.howMuchOtherBenefit).thenReturn(Some(testAnswer))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, 0)(fakeRequest)
+      val result1 = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, 1)(fakeRequest)
 
-      contentAsString(result) mustBe viewAsString(form.fill(testAnswer.head))
+      contentAsString(result) mustBe viewAsString(form.fill(testAnswer.head), 0)
+      contentAsString(result1) mustBe viewAsString(form.fill(testAnswer(1)), 1)
     }
 
     "redirect to the next page when valid data is submitted" in {
@@ -78,9 +81,11 @@ class HowMuchOtherBenefitControllerSpec extends ControllerSpecBase {
       val boundForm = form.bind(Map("value" -> ""))
 
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode, 0)(postRequest)
+      val result1 = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode, 1)(postRequest)
 
       status(result) mustBe BAD_REQUEST
-      contentAsString(result) mustBe viewAsString(boundForm)
+      contentAsString(result) mustBe viewAsString(boundForm, 0)
+      contentAsString(result1) mustBe viewAsString(boundForm, 1)
     }
 
     "redirect to Session Expired for a GET if no existing data is found" in {
