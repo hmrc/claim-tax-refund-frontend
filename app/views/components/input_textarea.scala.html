@@ -46,7 +46,7 @@ labelClass: Option[String] = None
                 @if(charLimit.isDefined){maxLength="@{charLimit}"}
                 data-char-field
                 rows="5"
-        ></textarea>
+        >@{viewModel.value}</textarea>
         @if(charLimit.isDefined){
         <noscript>
             <p class="char-counter-text flush">@messages("site.textarea.char_limit", charLimit.get)</p>
