@@ -39,23 +39,24 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
       //Claim details section
 
       "go to EmploymentDetails from SelectATaxYear" in {
-        val answers = mock[UserAnswers]
+        val answers = MockUserAnswers.nothingAnswered
+
         navigator.nextPage(SelectTaxYearId, NormalMode)(answers) mustBe routes.EmploymentDetailsController.onPageLoad(NormalMode)
       }
 
       "go to enter paye reference from employmentDetails when no is selected" in {
-        val answers = mock[UserAnswers]
+        val answers = MockUserAnswers.nothingAnswered
         when(answers.employmentDetails) thenReturn Some(false)
         navigator.nextPage(EmploymentDetailsId, NormalMode)(answers) mustBe routes.EnterPayeReferenceController.onPageLoad(NormalMode)
       }
 
       "go to DetailsOfEmploymentOrPension from EnterPayeReference" in {
-        val answers = mock[UserAnswers]
+        val answers = MockUserAnswers.nothingAnswered
         navigator.nextPage(EnterPayeReferenceId, NormalMode)(answers) mustBe routes.DetailsOfEmploymentOrPensionController.onPageLoad(NormalMode)
       }
 
       "go to AnyBenefits from Employment details when yes is selected" in {
-        val answers = mock[UserAnswers]
+        val answers = MockUserAnswers.nothingAnswered
         when(answers.employmentDetails) thenReturn Some(true)
         navigator.nextPage(EmploymentDetailsId, NormalMode)(answers) mustBe routes.AnyBenefitsController.onPageLoad(NormalMode)
       }
@@ -63,7 +64,7 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
       //3 benefit selectors
 
       "go to AnyCompanyBenefits from AnyBenefits when No is selected" in {
-        val answers = mock[UserAnswers]
+        val answers = MockUserAnswers.nothingAnswered
         when(answers.anyBenefits) thenReturn Some(false)
         navigator.nextPage(AnyBenefitsId, NormalMode)(answers) mustBe routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
       }
@@ -156,8 +157,15 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(EmploymentDetailsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
       }
 
-      "go to Enter PAYE reference when Employment details is (no)" in {
-        val answers = mock[UserAnswers]
+      "when the answer hasn't changed return the user to checkYourAnswer" in {
+        val answers = MockUserAnswers.nothingAnswered
+        when(answers.enterPayeReference) thenReturn Some("123/AB1234")
+        when(answers.employmentDetails) thenReturn Some(false)
+        navigator.nextPage(EmploymentDetailsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+      }
+
+      "go to Enter PAYE reference when Employment details is (no) and no previous answers" in {
+        val answers = MockUserAnswers.nothingAnswered
         when(answers.employmentDetails) thenReturn Some(false)
         navigator.nextPage(EmploymentDetailsId, CheckMode)(answers) mustBe routes.EnterPayeReferenceController.onPageLoad(CheckMode)
       }
