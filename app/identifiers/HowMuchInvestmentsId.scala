@@ -16,9 +16,6 @@
 
 package identifiers
 
-import models.TaxableIncome
-
-case object HowMuchInvestmentOrDividendId extends Identifier {
+case object HowMuchInvestmentsId extends Identifier {
   override def toString: String = "howMuchInvestmentOrDividend"
-  def cyaId: String = TaxableIncome.INVESTMENT_OR_DIVIDENDS.toString
 }

@@ -101,7 +101,7 @@ class CascadeUpsert {
         AnyTaxableRentalIncomeId.toString,
         HowMuchBankInterestId.toString,
         AnyTaxableBankInterestId.toString,
-        HowMuchInvestmentOrDividendId.toString,
+        HowMuchInvestmentsId.toString,
         AnyTaxableInvestmentsId.toString,
         HowMuchForeignIncomeId.toString,
         AnyTaxableForeignIncomeId.toString,
