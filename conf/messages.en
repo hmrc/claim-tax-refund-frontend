@@ -293,6 +293,7 @@ otherBenefitsName.title = What is the name of the other taxable benefit you got 
 otherBenefitsName.heading = What is the name of the other taxable benefit you got between {0}?
 otherBenefitsName.checkYourAnswersLabel = Other taxable benefit name
 otherBenefitsName.blank = Enter the name of the other taxable benefit you got
+otherBenefitsName.duplicate = You have already entered this other taxable benefit name
 
 howMuchOtherBenefit.title = How much {0} did you get between {1}?
 howMuchOtherBenefit.heading = How much {0} did you get between {1}?

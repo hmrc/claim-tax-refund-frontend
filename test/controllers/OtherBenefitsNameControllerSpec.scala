@@ -33,7 +33,7 @@ class OtherBenefitsNameControllerSpec extends ControllerSpecBase {
   def onwardRoute: Call = routes.HowMuchOtherBenefitController.onPageLoad(NormalMode, 0)
 
   val testAnswer = "answer"
-  val form = new OtherBenefitsNameForm(frontendAppConfig)()
+  val form = new OtherBenefitsNameForm(frontendAppConfig)(Seq.empty)
   private val taxYear = CYMinus2
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
 

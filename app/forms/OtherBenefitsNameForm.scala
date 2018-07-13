@@ -24,6 +24,9 @@ import play.api.data.Form
 class OtherBenefitsNameForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Mappings with Constraints {
 
   private val errorBlankKey = "otherBenefitsName.blank"
+  private val duplicateBenefitKey = "otherBenefitsName.duplicate"
 
-  def apply(): Form[String] = Form("value" -> text(errorBlankKey))
+  def apply(otherBenefitsName: Seq[String]): Form[String] = Form(
+    "value" -> text(errorBlankKey).verifying(duplicateBenefitKey, a => !otherBenefitsName.contains(a))
+  )
 }

@@ -34,12 +34,16 @@ class OtherBenefitsNameFormSpec extends FormBehaviours with MockitoSugar {
 
   val validData: Map[String, String] = Map("value" -> "test answer")
 
-  override val form: Form[_] = new OtherBenefitsNameForm(appConfig)()
+  override val form: Form[_] = new OtherBenefitsNameForm(appConfig)(Seq.empty)
 
   "OtherBenefitsName Form" must {
 
     behave like formWithMandatoryTextFields(
       MandatoryField("value", errorKeyBlank)
+    )
+
+    behave like formThatDoesNotAllowDuplicateValues(
+      "2qwerty", Seq("1qwerty", "2qwerty", "3qwerty")
     )
   }
 }

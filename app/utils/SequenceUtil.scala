@@ -18,13 +18,13 @@ package utils
 
 import models.Index
 
-class SequenceUtil {
-  def updateSeq(seq: Seq[String], index: Index, value: String): Seq[String] = {
+class SequenceUtil[A] {
+  def updateSeq(seq: Seq[A], index: Index, value: A): Seq[A] = {
     if (index.id >= seq.length) {
-      val updatedSeq: Seq[String] = seq :+ value
+      val updatedSeq: Seq[A] = seq :+ value
       updatedSeq
     } else {
-      val updatedSeq: Seq[String] = seq.updated(index.id, value)
+      val updatedSeq: Seq[A] = seq.updated(index.id, value)
       updatedSeq
     }
   }

@@ -27,7 +27,7 @@ import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
-import utils.{Navigator, UserAnswers, SequenceUtil}
+import utils.{Navigator, SequenceUtil, UserAnswers}
 import views.html.otherBenefitsName
 
 import scala.concurrent.Future
@@ -40,13 +40,13 @@ class OtherBenefitsNameController @Inject()(
                                              authenticate: AuthAction,
                                              getData: DataRetrievalAction,
                                              requireData: DataRequiredAction,
-                                             sequenceUtil: SequenceUtil,
+                                             sequenceUtil: SequenceUtil[String],
                                              formBuilder: OtherBenefitsNameForm) extends FrontendController with I18nSupport {
-
-  private val form: Form[String] = formBuilder()
 
   def onPageLoad(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
+      val form = formBuilder(request.userAnswers.otherBenefitsName.getOrElse(Seq.empty))
+
       val preparedForm = request.userAnswers.otherBenefitsName match {
         case Some(value) =>
           if (index >= value.length) form else form.fill(value(index))
@@ -63,6 +63,8 @@ class OtherBenefitsNameController @Inject()(
 
   def onSubmit(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
+      val form = formBuilder(request.userAnswers.otherBenefitsName.getOrElse(Seq.empty))
+
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
           val taxYear = selectedTaxYear

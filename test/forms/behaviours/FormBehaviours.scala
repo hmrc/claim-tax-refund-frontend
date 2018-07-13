@@ -246,4 +246,10 @@ trait FormBehaviours extends FormSpec with GuiceOneAppPerSuite {
     }
 
   }
+
+  def formThatDoesNotAllowDuplicateValues(value: String, values: Seq[String]) = {
+    s"fail to bind when value is a duplicate" in {
+      values.contains(value) shouldBe true
+    }
+  }
 }
