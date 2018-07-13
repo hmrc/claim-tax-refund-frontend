@@ -25,7 +25,7 @@ import connectors.DataCacheConnector
 import controllers.actions._
 import config.FrontendAppConfig
 import forms.HowMuchInvestmentOrDividendForm
-import identifiers.HowMuchInvestmentOrDividendId
+import identifiers.HowMuchInvestmentsId
 import models.Mode
 import utils.{Navigator, UserAnswers}
 import views.html.howMuchInvestmentOrDividend
@@ -69,8 +69,8 @@ class HowMuchInvestmentOrDividendController @Inject()(
             (formWithErrors: Form[_]) =>
               Future.successful(BadRequest(howMuchInvestmentOrDividend(appConfig, formWithErrors, mode, taxYear))),
             (value) =>
-              dataCacheConnector.save[String](request.externalId, HowMuchInvestmentOrDividendId.toString, value).map(cacheMap =>
-                Redirect(navigator.nextPage(HowMuchInvestmentOrDividendId, mode)(new UserAnswers(cacheMap))))
+              dataCacheConnector.save[String](request.externalId, HowMuchInvestmentsId.toString, value).map(cacheMap =>
+                Redirect(navigator.nextPage(HowMuchInvestmentsId, mode)(new UserAnswers(cacheMap))))
           )
       }.getOrElse {
         Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
