@@ -194,7 +194,7 @@ class Navigator @Inject()() {
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
-  def otherBenefitsName(index: Index, mode: Mode)(userAnswers: UserAnswers): Call = userAnswers.otherBenefitsName match {
+  def otherBenefitsName(index: Index, mode: Mode)(userAnswers: UserAnswers): Call = userAnswers.howMuchOtherBenefit match {
     case None =>
       routes.HowMuchOtherBenefitController.onPageLoad(mode, index)
     case _ =>
