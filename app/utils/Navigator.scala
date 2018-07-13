@@ -195,8 +195,10 @@ class Navigator @Inject()() {
   }
 
   def otherBenefitsName(index: Index, mode: Mode)(userAnswers: UserAnswers): Call = userAnswers.otherBenefitsName match {
-    case None => routes.HowMuchOtherBenefitController.onPageLoad(mode, Index(0))
-    case _ => routes.HowMuchOtherBenefitController.onPageLoad(mode, index)
+    case None =>
+      routes.HowMuchOtherBenefitController.onPageLoad(mode, index)
+    case _ =>
+      if (mode == NormalMode) routes.HowMuchOtherBenefitController.onPageLoad(mode, index) else routes.CheckYourAnswersController.onPageLoad()
   }
 
 
