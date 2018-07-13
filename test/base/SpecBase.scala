@@ -37,7 +37,7 @@ trait SpecBase extends PlaySpec with GuiceOneAppPerSuite {
 
   def messages: Messages = messagesApi.preferred(fakeRequest)
 
-  def sequenceUtil: SequenceUtil = injector.instanceOf[SequenceUtil]
+  def sequenceUtil: SequenceUtil[String] = injector.instanceOf[SequenceUtil[String]]
 
   val itmpAddress = ItmpAddress(
     Some("Line1"),

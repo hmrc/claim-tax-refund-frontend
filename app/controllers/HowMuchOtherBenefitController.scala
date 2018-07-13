@@ -40,7 +40,7 @@ class HowMuchOtherBenefitController @Inject()(
                                                 authenticate: AuthAction,
                                                 getData: DataRetrievalAction,
                                                 requireData: DataRequiredAction,
-                                                sequenceUtil: SequenceUtil,
+                                                sequenceUtil: SequenceUtil[String],
                                                 formBuilder: HowMuchOtherBenefitForm) extends FrontendController with I18nSupport {
 
   private val form: Form[String] = formBuilder()

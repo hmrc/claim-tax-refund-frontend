@@ -31,7 +31,7 @@ class OtherBenefitsNameViewSpec extends StringViewBehaviours with MockitoSugar {
   private val messageKeyPrefix = "otherBenefitsName"
   private val taxYear = CYMinus2
 
-  override val form: Form[String] = new OtherBenefitsNameForm(frontendAppConfig)()
+  override val form: Form[String] = new OtherBenefitsNameForm(frontendAppConfig)(Seq.empty)
 
   def createView: () => HtmlFormat.Appendable = () => otherBenefitsName(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages)
 
