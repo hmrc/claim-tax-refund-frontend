@@ -28,7 +28,7 @@ import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.HeaderCarrierConverter
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import utils.{CheckYourAnswersHelper, CheckYourAnswersSections}
-import views.html.{check_your_answers, pdf_check_your_answers}
+import views.html.pdf_check_your_answers
 
 class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
                                            override val messagesApi: MessagesApi,
@@ -42,7 +42,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
     implicit request =>
       val cyaHelper = new CheckYourAnswersHelper(request.userAnswers)
       val cyaSections = new CheckYourAnswersSections(cyaHelper, request.userAnswers)
-      Ok(check_your_answers(appConfig, cyaSections.sections))
+      Ok(pdf_check_your_answers(appConfig, cyaSections.sections, request.nino, request.name))
   }
 
   def onSubmit() = (authenticate andThen getData andThen requireData).async {
@@ -52,7 +52,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
 
       val cyaHelper = new CheckYourAnswersHelper(request.userAnswers)
       val cyaSections = new CheckYourAnswersSections(cyaHelper, request.userAnswers)
-      val pdfHtml = pdf_check_your_answers(appConfig, cyaSections.sections)
+      val pdfHtml = pdf_check_your_answers(appConfig, cyaSections.sections, request.nino, request.name)
       dataCacheConnector.save[String](request.externalId, "pdfHtml", pdfHtml.toString())
 
       implicit val metadata = new Metadata()
