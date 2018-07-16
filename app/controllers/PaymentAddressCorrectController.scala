@@ -55,23 +55,24 @@ class PaymentAddressCorrectController @Inject()(appConfig: FrontendAppConfig,
       request.address match {
         case Some(address) if address.line1.exists(_.trim.nonEmpty) &&
           (address.postCode.exists(_.trim.nonEmpty) || address.countryName.exists(_.trim.nonEmpty)) =>
-              Ok(paymentAddressCorrect(appConfig, preparedForm, mode, address))
+            Ok(paymentAddressCorrect(appConfig, preparedForm, mode, address))
         case _ => Redirect(routes.IsPaymentAddressInTheUKController.onPageLoad(mode))
       }
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      if (request.address.get.line1.exists(_.trim.nonEmpty)) {
-        form.bindFromRequest().fold(
-          (formWithErrors: Form[_]) =>
-            Future.successful(BadRequest(paymentAddressCorrect(appConfig, formWithErrors, mode, request.address.get))),
-          value =>
-            dataCacheConnector.save[Boolean](request.externalId, PaymentAddressCorrectId.toString, value).map(cacheMap =>
-              Redirect(navigator.nextPage(PaymentAddressCorrectId, mode)(new UserAnswers(cacheMap))))
-        )
-      } else {
-        Future.successful(Redirect(routes.IsPaymentAddressInTheUKController.onPageLoad(NormalMode)))
+      request.address match {
+        case Some(address) if address.line1.exists(_.trim.nonEmpty) &&
+          (address.postCode.exists(_.trim.nonEmpty) || address.countryName.exists(_.trim.nonEmpty)) =>
+            form.bindFromRequest().fold(
+              (formWithErrors: Form[_]) =>
+                Future.successful(BadRequest(paymentAddressCorrect(appConfig, formWithErrors, mode, request.address.get))),
+              value =>
+                dataCacheConnector.save[Boolean](request.externalId, PaymentAddressCorrectId.toString, value).map(cacheMap =>
+                  Redirect(navigator.nextPage(PaymentAddressCorrectId, mode)(new UserAnswers(cacheMap))))
+            )
+        case _ => Future.successful(Redirect(routes.IsPaymentAddressInTheUKController.onPageLoad(NormalMode)))
       }
   }
 }
