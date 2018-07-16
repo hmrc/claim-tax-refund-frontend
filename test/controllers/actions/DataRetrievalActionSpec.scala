@@ -43,7 +43,7 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar with ScalaFutur
 
         val futureResult = action.callTransform(
           new AuthenticatedRequest(
-            fakeRequest, "id", ItmpName(Some("firstName"), Some("middleName"), Some("familyName")), "AB123456A", itmpAddress
+            fakeRequest, "id", "AB123456A", Some(ItmpName(Some("firstName"), None, None)), Some(itmpAddress)
           )
         )
 
@@ -61,7 +61,7 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar with ScalaFutur
 
         val futureResult = action.callTransform(
           new AuthenticatedRequest(
-            fakeRequest, "id", ItmpName(Some("firstName"), Some("middleName"), Some("familyName")), "AB123456A", itmpAddress
+            fakeRequest, "id", "AB123456A", Some(ItmpName(Some("firstName"), None, None)), Some(itmpAddress)
           )
         )
 

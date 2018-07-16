@@ -20,8 +20,8 @@ import play.api.mvc.{Request, WrappedRequest}
 import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
 import utils.UserAnswers
 
-case class OptionalDataRequest[A](request: Request[A], externalId: String, name: ItmpName, nino: String,
-                                  address: ItmpAddress, userAnswers: Option[UserAnswers]) extends WrappedRequest[A](request)
+case class OptionalDataRequest[A](request: Request[A], externalId: String, nino: String, name: Option[ItmpName],
+                                  address: Option[ItmpAddress], userAnswers: Option[UserAnswers]) extends WrappedRequest[A](request)
 
-case class DataRequest[A](request: Request[A], externalId: String, name: ItmpName, nino: String,
-                          address: ItmpAddress, userAnswers: UserAnswers) extends WrappedRequest[A](request)
+case class DataRequest[A](request: Request[A], externalId: String, nino: String, name: Option[ItmpName],
+                          address: Option[ItmpAddress], userAnswers: UserAnswers) extends WrappedRequest[A](request)

@@ -34,13 +34,13 @@ import views.html.paymentAddressCorrect
 import scala.concurrent.Future
 
 class PaymentAddressCorrectController @Inject()(appConfig: FrontendAppConfig,
-                                         override val messagesApi: MessagesApi,
-                                         dataCacheConnector: DataCacheConnector,
-                                         navigator: Navigator,
-                                         authenticate: AuthAction,
-                                         getData: DataRetrievalAction,
-                                         requireData: DataRequiredAction,
-                                         formProvider: BooleanForm) extends FrontendController with I18nSupport {
+                                                override val messagesApi: MessagesApi,
+                                                dataCacheConnector: DataCacheConnector,
+                                                navigator: Navigator,
+                                                authenticate: AuthAction,
+                                                getData: DataRetrievalAction,
+                                                requireData: DataRequiredAction,
+                                                formProvider: BooleanForm) extends FrontendController with I18nSupport {
 
   private val errorKey = "paymentAddressCorrect.blank"
   val form: Form[Boolean] = formProvider(errorKey)
@@ -52,19 +52,20 @@ class PaymentAddressCorrectController @Inject()(appConfig: FrontendAppConfig,
         case Some(value) => form.fill(value)
       }
 
-      if(request.address.line1.exists(_.trim.nonEmpty)){
-        Ok(paymentAddressCorrect(appConfig, preparedForm, mode, request.address))
-      } else {
-        Redirect(routes.IsPaymentAddressInTheUKController.onPageLoad(NormalMode))
+      request.address match {
+        case Some(address) if address.line1.exists(_.trim.nonEmpty) &&
+          (address.postCode.exists(_.trim.nonEmpty) || address.countryName.exists(_.trim.nonEmpty)) =>
+              Ok(paymentAddressCorrect(appConfig, preparedForm, mode, address))
+        case _ => Redirect(routes.IsPaymentAddressInTheUKController.onPageLoad(mode))
       }
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      if(request.address.line1.exists(_.trim.nonEmpty)){
+      if (request.address.get.line1.exists(_.trim.nonEmpty)) {
         form.bindFromRequest().fold(
           (formWithErrors: Form[_]) =>
-            Future.successful(BadRequest(paymentAddressCorrect(appConfig, formWithErrors, mode, request.address))),
+            Future.successful(BadRequest(paymentAddressCorrect(appConfig, formWithErrors, mode, request.address.get))),
           value =>
             dataCacheConnector.save[Boolean](request.externalId, PaymentAddressCorrectId.toString, value).map(cacheMap =>
               Redirect(navigator.nextPage(PaymentAddressCorrectId, mode)(new UserAnswers(cacheMap))))
