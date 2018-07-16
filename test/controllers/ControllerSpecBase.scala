@@ -44,8 +44,8 @@ trait ControllerSpecBase extends SpecBase {
 
   def fakeDataRetrievalAction(mockUserAnswers: UserAnswers = MockUserAnswers.claimDetailsUserAnswers) = new DataRetrievalAction {
     override protected def transform[A](request: AuthenticatedRequest[A]): Future[OptionalDataRequest[A]] = {
-      Future.successful(OptionalDataRequest(request, "123123", ItmpName(Some("sdadsad"), Some("sdfasfad"), Some("adfsdfa")), "AB123456A",
-        itmpAddress,
+      Future.successful(OptionalDataRequest(request, "123123", "AB123456A", Some(ItmpName(Some("sdadsad"), None, None)),
+        Some(itmpAddress),
         Some(mockUserAnswers)))
     }
   }

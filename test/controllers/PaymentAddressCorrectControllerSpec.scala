@@ -45,9 +45,15 @@ class PaymentAddressCorrectControllerSpec extends ControllerSpecBase {
 
   def fakeDataRetrievalActionNoAddress(mockUserAnswers: UserAnswers = MockUserAnswers.claimDetailsUserAnswers) = new DataRetrievalAction {
     override protected def transform[A](request: AuthenticatedRequest[A]): Future[OptionalDataRequest[A]] = {
-      Future.successful(OptionalDataRequest(request, "123123", ItmpName(Some("sdadsad"), Some("sdfasfad"), Some("adfsdfa")), "AB123456A",
-        ItmpAddress(None, None, None, None, None, None, None, None),
-        Some(mockUserAnswers)))
+      Future.successful(
+        OptionalDataRequest(
+          request,
+          "123123",
+          "AB123456A",
+          Some(ItmpName(Some("sdadsad"), None, None)),
+          Some(ItmpAddress(None, None, None, None, None, None, None, None)),
+          Some(mockUserAnswers))
+      )
     }
   }
 
