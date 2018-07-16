@@ -17,23 +17,45 @@
 @import config.FrontendAppConfig
 @import viewmodels.{Section, AnswerSection, RepeaterAnswerSection}
 
-@(appConfig: FrontendAppConfig, answerSections: Seq[Section])(implicit request: Request[_], messages: Messages)
+@import uk.gov.hmrc.auth.core.retrieve.ItmpName
+@(appConfig: FrontendAppConfig, answerSections: Seq[Section], nino: String, name: Option[ItmpName])(implicit request: Request[_], messages: Messages)
 
-@pdf_main_template(
-    title = messages("checkYourAnswers.title"),
-    appConfig = appConfig,
-    bodyClasses = None) {
+    @pdf_main_template(
+        title = messages("checkYourAnswers.pdfHeader"),
+        appConfig = appConfig,
+        bodyClasses = None) {
 
-    <h1 class="heading-xlarge">@messages("checkYourAnswers.heading")</h1>
+        <h1 class="heading-xlarge">@messages("checkYourAnswers.pdfHeader")</h1>
 
-    <p>@messages("checkYourAnswers.guidance")</p>
+        <h2 id="cya-userInfo-heading">@messages("checkYourAnswers.userSection")</h2>
 
-    @for((section, i) <- answerSections.zipWithIndex){
-        @{
-            section match {
-                case a: AnswerSection => components.answer_section(a, i.toString)
-                case r: RepeaterAnswerSection => components.repeater_answer_section(r, i.toString)
+        <ul role="list" class="tabular-data tabular-data--list">
+            <li class="tabular-data__entry tabular-data__entry--grouped divider--bottom">
+                <div id="cya-nino-question" class="tabular-data__data tabular-data__data--6-12">
+                @messages("userDetails.checkYourAnswersLabel.nino")
+                </div>
+                <div id="cya-nino-answer" class="tabular-data__data tabular-data__data--3-12">
+                @nino
+                </div>
+            </li>
+            @if(name.isDefined) {
+                <li class="tabular-data__entry tabular-data__entry--grouped divider--bottom">
+                    <div id="cya-name-question" class="tabular-data__data tabular-data__data--6-12">
+                    @messages("userDetails.checkYourAnswersLabel.name")
+                    </div>
+                    <div id="cya-name-answer" class="tabular-data__data tabular-data__data--3-12">
+                        @name.get.givenName @name.get.middleName @name.get.familyName
+                    </div>
+                </li>
+            }
+        </ul>
+
+        @for((section, i) <- answerSections.zipWithIndex) {
+            @{
+                section match {
+                    case a: AnswerSection => components.answer_section(a, i.toString, changeLink = false)
+                    case r: RepeaterAnswerSection => components.repeater_answer_section(r, i.toString, changeLink = false)
+                }
             }
         }
     }
-}
