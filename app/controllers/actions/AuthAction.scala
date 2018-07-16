@@ -24,7 +24,7 @@ import models.requests.AuthenticatedRequest
 import play.api.mvc.Results._
 import play.api.mvc.{ActionBuilder, ActionFunction, Request, Result}
 import uk.gov.hmrc.auth.core._
-import uk.gov.hmrc.auth.core.retrieve.{Retrievals, _}
+import uk.gov.hmrc.auth.core.retrieve.Retrievals
 import uk.gov.hmrc.http.{HeaderCarrier, UnauthorizedException}
 import uk.gov.hmrc.play.HeaderCarrierConverter
 
@@ -37,11 +37,15 @@ class AuthActionImpl @Inject()(override val authConnector: AuthConnector, config
     implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromHeadersAndSession(request.headers, Some(request.session))
 
     authorised(ConfidenceLevel.L200 and AffinityGroup.Individual)
-      .retrieve(Retrievals.externalId and Retrievals.itmpName and Retrievals.nino and Retrievals.itmpAddress) {
-        case Some(externalId) ~ name ~ Some(nino) ~ address =>
-          block(AuthenticatedRequest(request, externalId, name, nino, address))
-        case _ =>
-          throw new UnauthorizedException("Unable to retrieve external Id")
+      .retrieve(Retrievals.externalId and Retrievals.nino and Retrievals.itmpName and Retrievals.itmpAddress) {
+        x =>
+          val externalId = x.a.a.a.getOrElse(throw new UnauthorizedException("unable to retrieve external Id"))
+          val nino = x.a.a.b.getOrElse(throw new UnauthorizedException("unable to retrieve NINO"))
+          val name = x.a.b
+          val address = x.b
+
+          block(AuthenticatedRequest(request, externalId, nino, Some(name), Some(address)))
+
       } recover {
       case ex: NoActiveSession =>
         Redirect(config.loginUrl, Map("continue" -> Seq(config.loginContinueUrl)))
