@@ -27,25 +27,6 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
   //Claim details
   //------------------------------------------------------------------
 
-  def userName: Option[AnswerRow] = userAnswers.userDetails map {
-    x =>
-      AnswerRow("userDetails.checkYourAnswersLabel.name",
-        s"${x.name}", false, routes.SelectTaxYearController.onPageLoad(CheckMode).url, false)
-  }
-
-  def userNino: Option[AnswerRow] = userAnswers.userDetails map {
-    x =>
-      AnswerRow("userDetails.checkYourAnswersLabel.nino",
-        s"${x.nino}", false, routes.SelectTaxYearController.onPageLoad(CheckMode).url, false)
-  }
-
-  def userAddress: Option[AnswerRow] = userAnswers.userDetails map {
-    x =>
-      AnswerRow("userDetails.checkYourAnswersLabel.address",
-        UkAddress.asString(x.address),
-        false, routes.SelectTaxYearController.onPageLoad(CheckMode).url, false)
-  }
-
   def selectTaxYear: Option[AnswerRow] = userAnswers.selectTaxYear map {
     x =>
       AnswerRow("selectTaxYear.checkYourAnswersLabel",
@@ -72,7 +53,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
 
   def enterPayeReference: Option[AnswerRow] = userAnswers.enterPayeReference map {
     x => AnswerRow("enterPayeReference.checkYourAnswersLabel",
-      s"$x", false, routes.EnterPayeReferenceController.onPageLoad(CheckMode).url, true)
+      s"$x", false, routes.EnterPayeReferenceController.onPageLoad(CheckMode).url)
   }
 
   def detailsOfEmploymentOrPension: Option[AnswerRow] = userAnswers.detailsOfEmploymentOrPension map {
