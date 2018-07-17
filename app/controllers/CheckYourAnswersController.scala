@@ -52,7 +52,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
 
       val cyaHelper = new CheckYourAnswersHelper(request.userAnswers)
       val cyaSections = new CheckYourAnswersSections(cyaHelper, request.userAnswers)
-      val pdfHtml = pdf_check_your_answers(appConfig, cyaSections.sections)
+      val pdfHtml = pdf_check_your_answers(appConfig, cyaSections.sections, request.nino, request.name)
       dataCacheConnector.save[String](request.externalId, "pdfHtml", pdfHtml.toString())
 
       implicit val metadata = new Metadata()
