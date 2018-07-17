@@ -115,18 +115,20 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
         s"$x", false, routes.HowMuchStatePensionController.onPageLoad(CheckMode).url)
   }
 
-  def otherBenefitsName: Seq[AnswerRow] = userAnswers.otherBenefitsName match {
-    case Some(benefitsNames) =>
-      benefitsNames.zipWithIndex.map { case (benefit, index) =>
-        AnswerRow("otherBenefitsName.checkYourAnswersLabel", benefit, false, routes.OtherBenefitsNameController.onPageLoad(CheckMode, Index(index)).url)
+  def otherBenefits: Seq[Option[AnswerRow]] = {
+    for {
+      names   <- userAnswers.otherBenefitsName
+      amounts <- userAnswers.howMuchOtherBenefit
+    } yield {
+      (names zip amounts).zipWithIndex.flatMap {
+        case ((name, amount), index) =>
+          Seq(
+            Some(AnswerRow("Name", name, answerIsMessageKey = false, routes.OtherBenefitsNameController.onPageLoad(CheckMode, Index(index)).url)),
+            Some(AnswerRow("Amount", amount, answerIsMessageKey = false, routes.HowMuchOtherBenefitController.onPageLoad(CheckMode, Index(index)).url))
+          )
       }
-    case _ =>
-      Seq.empty
-  }
-
-//  def howMuchOtherBenefit: Option[AnswerRow] = userAnswers.howMuchOtherBenefit map {
-//    x => AnswerRow("howMuchOtherBenefit.checkYourAnswersLabel", s"$x", false, routes.HowMuchOtherBenefitController.onPageLoad(CheckMode).url)
-//  }
+    }
+  }.getOrElse(Seq.empty)
 
   def anyOtherBenefits: Option[AnswerRow] = userAnswers.anyOtherBenefits map {
     x =>
