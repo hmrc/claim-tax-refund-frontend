@@ -23,7 +23,15 @@ import viewmodels.AnswerSection
 class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: UserAnswers) {
 
   def sections: Seq[AnswerSection] = {
-    Seq(claimSection, benefitSection, companyBenefitSection, taxableIncomeSection, paymentSection, contactSection)
+    Seq(
+      claimSection,
+      benefitSection,
+      otherBenefitsSection,
+      companyBenefitSection,
+      taxableIncomeSection,
+      paymentSection,
+      contactSection
+    )
   }
 
   def claimSection = AnswerSection(Some("checkYourAnswers.claimSection"), Seq(
@@ -41,11 +49,16 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
     cyaHelper.howMuchJobseekersAllowance,
     cyaHelper.howMuchEmploymentAndSupportAllowance,
     cyaHelper.howMuchIncapacityBenefit,
-    cyaHelper.howMuchStatePension,
-//    cyaHelper.otherBenefitsName(1),
-//    cyaHelper.howMuchOtherBenefit,
-    cyaHelper.anyOtherBenefits
+    cyaHelper.howMuchStatePension
   ).flatten)
+
+  def otherBenefitsSection: AnswerSection = {
+    if (userAnswers.otherBenefitsName.isDefined && userAnswers.howMuchOtherBenefit.isDefined) {
+      AnswerSection(Some("Other taxable benefit details"), cyaHelper.otherBenefits.flatten)
+    } else {
+      AnswerSection(None, Seq.empty)
+    }
+  }
 
   def companyBenefitSection = AnswerSection(Some("checkYourAnswers.companyBenefitsSection"), Seq(
     cyaHelper.anyCompanyBenefits,
