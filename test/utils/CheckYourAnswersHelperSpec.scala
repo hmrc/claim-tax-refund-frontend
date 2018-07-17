@@ -34,19 +34,6 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   private val no = "site.no"
   private val amount = "1234"
 
-
-  "Change link" must {
-    "be shown when set to true" in {
-      when(answers.anyTelephoneNumber) thenReturn Some(TelephoneOption.Yes("0191123123"))
-      helper.telephoneNumber.get.changeLink mustBe true
-    }
-
-    "be hidden when set to false" in {
-      when(answers.userDetails) thenReturn Some(UserDetails("test", "test", UkAddress("test", "test", None, None, None, "test")))
-      helper.userName.get.changeLink mustBe false
-    }
-  }
-
   //Claim details
   //------------------------------------------------------------------------------
 
