@@ -22,7 +22,7 @@ import controllers.actions._
 import forms.HowMuchOtherBenefitForm
 import identifiers.HowMuchOtherBenefitId
 import javax.inject.Inject
-import models.{Index, Mode, SelectTaxYear}
+import models.{Index, Mode, OtherBenefit, SelectTaxYear}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, Result}
@@ -55,9 +55,9 @@ class HowMuchOtherBenefitController @Inject()(
 
       val details: Option[Result] = for {
         selectedTaxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
-        otherBenefitName: Seq[String] <- request.userAnswers.otherBenefitsName
+        otherBenefitName: Seq[OtherBenefit] <- request.userAnswers.otherBenefitsName
       } yield
-        Ok(howMuchOtherBenefit(appConfig, preparedForm, mode, selectedTaxYear, otherBenefitName(index), index))
+        Ok(howMuchOtherBenefit(appConfig, preparedForm, mode, selectedTaxYear, otherBenefitName(index).name, index))
 
       details.getOrElse{
         Redirect(routes.SessionExpiredController.onPageLoad())
@@ -68,11 +68,11 @@ class HowMuchOtherBenefitController @Inject()(
     implicit request =>
       val details: Option[Future[Result]] = for {
         selectedTaxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
-        otherBenefitName: Seq[String] <- request.userAnswers.otherBenefitsName
+        otherBenefitName: Seq[OtherBenefit] <- request.userAnswers.otherBenefitsName
       } yield {
         form.bindFromRequest().fold(
           (formWithErrors: Form[_]) =>
-            Future.successful(BadRequest(howMuchOtherBenefit(appConfig, formWithErrors, mode, selectedTaxYear, otherBenefitName(index), index))),
+            Future.successful(BadRequest(howMuchOtherBenefit(appConfig, formWithErrors, mode, selectedTaxYear, otherBenefitName(index).name, index))),
           value => {
             val benefitAmounts: Seq[String] = request.userAnswers.howMuchOtherBenefit.getOrElse(Seq(value))
             dataCacheConnector.save[Seq[String]](

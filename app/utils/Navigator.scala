@@ -28,11 +28,11 @@ import play.api.mvc.Call
 class Navigator @Inject()() {
 
   private val routeMapWithIndex: PartialFunction[Identifier, UserAnswers => Call] = {
-    case OtherBenefitsNameId(index) => otherBenefitsName(index, NormalMode)
+    case OtherBenefitsNameId(index) => otherBenefitsName(NormalMode)
   }
 
   private val editRouteMapWithIndex: PartialFunction[Identifier, UserAnswers => Call] = {
-    case OtherBenefitsNameId(index) => otherBenefitsName(index, CheckMode)
+    case OtherBenefitsNameId(index) => otherBenefitsName(CheckMode)
   }
 
   private val routeMap: Map[Identifier, UserAnswers => Call] = Map(
@@ -50,6 +50,7 @@ class Navigator @Inject()() {
     HowMuchIncapacityBenefitId -> selectBenefits(NormalMode),
     HowMuchEmploymentAndSupportAllowanceId -> selectBenefits(NormalMode),
     HowMuchStatePensionId -> selectBenefits(NormalMode),
+    //OtherBenefitsNameId(index) -> otherBenefitsName(),
     AnyOtherBenefitsId -> anyOtherBenefits,
     HowMuchOtherBenefitId -> (_ => routes.AnyOtherBenefitsController.onPageLoad(NormalMode)),
     //Company benefits
@@ -194,12 +195,8 @@ class Navigator @Inject()() {
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
-  def otherBenefitsName(index: Index, mode: Mode)(userAnswers: UserAnswers): Call = userAnswers.howMuchOtherBenefit match {
-    case None =>
-      routes.HowMuchOtherBenefitController.onPageLoad(mode, index)
-    case _ =>
-      if (mode == NormalMode) routes.HowMuchOtherBenefitController.onPageLoad(mode, index) else routes.CheckYourAnswersController.onPageLoad()
-  }
+  def otherBenefitsName(mode: Mode)(userAnswers: UserAnswers): Call =
+    if (mode == NormalMode) routes.AnyOtherBenefitsController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
 
 
   //Company benefits--------------------------
