@@ -27,6 +27,6 @@ class OtherBenefitsNameForm @Inject() (appConfig: FrontendAppConfig) extends For
   private val duplicateBenefitKey = "otherBenefitsName.duplicate"
 
   def apply(otherBenefitsName: Seq[String]): Form[String] = Form(
-    "value" -> text(errorBlankKey).verifying(duplicateBenefitKey, a => !otherBenefitsName.contains(a))
+    "value" -> text(errorBlankKey).verifying(duplicateBenefitKey,  a => !otherBenefitsName.contains(a))
   )
 }

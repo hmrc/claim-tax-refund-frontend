@@ -37,11 +37,11 @@ class HowMuchIncapacityBenefitViewSpec extends StringViewBehaviours with Mockito
   def createViewUsingForm = (form: Form[String]) => howMuchIncapacityBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "HowMuchIncapacityBenefit view" must {
-    behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))
+    behave like normalPage(createView, messageKeyPrefix, None)
 
     behave like pageWithBackLink(createView)
 
-    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+    behave like pageWithSecondaryHeader(createView, messages("site.service_name.with_tax_year", taxYear.asString(messages)))
 
     behave like stringPage(
       createView = createViewUsingForm,
@@ -49,8 +49,7 @@ class HowMuchIncapacityBenefitViewSpec extends StringViewBehaviours with Mockito
       expectedFormAction = routes.HowMuchIncapacityBenefitController.onSubmit(NormalMode).url,
       expectedHintKeyLine1 = None,
       expectedHintKeyLine2 = None,
-      expectedPrefix = Some(messages("global.poundSign")),
-      args = taxYear.asString(messages)
+      expectedPrefix = Some(messages("global.poundSign"))
     )
 
   }

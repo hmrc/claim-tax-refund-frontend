@@ -39,11 +39,11 @@ class HowMuchOtherBenefitViewSpec extends StringViewBehaviours with MockitoSugar
   def createViewUsingForm: Form[String] => Html = (form: Form[String]) => howMuchOtherBenefit(frontendAppConfig, form, NormalMode, taxYear, otherBenefitName, 1)(fakeRequest, messages)
 
   "HowMuchOtherBenefit view" must {
-    behave like normalPage(createView, messageKeyPrefix, None, otherBenefitName, taxYear.asString(messages))
+    behave like normalPage(createView, messageKeyPrefix, None, otherBenefitName)
 
     behave like pageWithBackLink(createView)
 
-    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+    behave like pageWithSecondaryHeader(createView, messages("site.service_name.with_tax_year", taxYear.asString(messages)))
 
     behave like stringPage(
       createView = createViewUsingForm,
@@ -52,7 +52,7 @@ class HowMuchOtherBenefitViewSpec extends StringViewBehaviours with MockitoSugar
       expectedHintKeyLine1 = None,
       expectedHintKeyLine2 = None,
       expectedPrefix = Some(messages("global.poundSign")),
-      args = otherBenefitName, taxYear.asString(messages)
+      args = otherBenefitName
     )
 
   }

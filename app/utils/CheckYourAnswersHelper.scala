@@ -123,8 +123,8 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
       (names zip amounts).zipWithIndex.flatMap {
         case ((name, amount), index) =>
           Seq(
-            Some(AnswerRow("Name", name, answerIsMessageKey = false, routes.OtherBenefitsNameController.onPageLoad(CheckMode, Index(index)).url)),
-            Some(AnswerRow("Amount", amount, answerIsMessageKey = false, routes.HowMuchOtherBenefitController.onPageLoad(CheckMode, Index(index)).url))
+//            Some(AnswerRow("Name", name, answerIsMessageKey = false, routes.OtherBenefitsNameController.onPageLoad(CheckMode, Index(index)).url)),
+            Some(AnswerRow(name, amount, answerIsMessageKey = false, routes.HowMuchOtherBenefitController.onPageLoad(CheckMode, Index(index)).url))
           )
       }
     }

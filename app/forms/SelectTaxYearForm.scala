@@ -27,7 +27,7 @@ import utils.RadioOption
 
 object SelectTaxYearForm extends FormErrorHelper {
 
-  val dateFormat = "dd MMMM YYYY"
+  val dateFormat = "d MMMM YYYY"
 
   def apply(): Form[SelectTaxYear] =
     Form(single("value" -> of(selectTaxYearFormatter)))
