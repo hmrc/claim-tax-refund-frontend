@@ -24,7 +24,7 @@
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: SelectTaxYear)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("anyBenefits.title", taxYear.asString),
+    title = messages("anyBenefits.title"),
     appConfig = appConfig,
     bodyClasses = None) {
 
@@ -34,7 +34,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading(messages(s"anyBenefits.heading", taxYear.asString))
+        @components.heading(messages("anyBenefits.heading"), taxYear = Some(taxYear.asString))
 
         <p id="listHeading">@messages("anyBenefits.listHeading")</p>
 

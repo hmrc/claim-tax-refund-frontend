@@ -23,7 +23,7 @@
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: SelectTaxYear, otherBenefitName: String, index: Index)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("howMuchOtherBenefit.title", otherBenefitName, taxYear.asString),
+    title = messages("howMuchOtherBenefit.title", otherBenefitName),
     appConfig = appConfig,
     bodyClasses = None) {
 
@@ -33,7 +33,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading(messages("howMuchOtherBenefit.heading", otherBenefitName, taxYear.asString))
+        @components.heading(messages("howMuchOtherBenefit.heading", otherBenefitName), taxYear = Some(taxYear.asString))
 
         @components.input_text(
             InputViewModel("value", form),
