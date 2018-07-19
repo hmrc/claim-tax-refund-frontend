@@ -19,14 +19,22 @@ package forms
 import com.google.inject.Inject
 import config.FrontendAppConfig
 import forms.mappings.{Constraints, Mappings}
+import models.{Index, OtherBenefit}
 import play.api.data.Form
-
+import play.api.data.Forms.mapping
 class OtherBenefitsNameForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Mappings with Constraints {
 
-  private val errorBlankKey = "otherBenefitsName.blank"
+  private val nameBlankKey = "otherBenefitsName.blank"
+  private val amountBlankKey = "howMuchOtherBenefit.blank"
   private val duplicateBenefitKey = "otherBenefitsName.duplicate"
 
-  def apply(otherBenefitsName: Seq[String]): Form[String] = Form(
-    "value" -> text(errorBlankKey).verifying(duplicateBenefitKey,  a => !otherBenefitsName.contains(a))
-  )
+  def apply(otherBenefitsName: Seq[OtherBenefit], index: Index): Form[OtherBenefit] = {
+    Form(
+      mapping(
+        "name" -> text(nameBlankKey).verifying(duplicateBenefitKey,  a => otherBenefitsName.forall(p => !p.name.contains(a))),
+        "amount" -> text(amountBlankKey)
+      )(OtherBenefit.apply)(OtherBenefit.unapply)
+    )
+  }
 }
+

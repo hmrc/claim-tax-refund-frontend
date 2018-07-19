@@ -36,9 +36,13 @@
         @components.heading(messages("otherBenefitsName.heading"), taxYear = Some(taxYear.asString))
 
         @components.input_text(
-            InputViewModel("value", form),
-            label = messages("otherBenefitsName.heading", taxYear.asString),
-            labelClass=Some("visually-hidden")
+            InputViewModel("name", form),
+            label = "Name"
+        )
+
+        @components.input_text(
+            InputViewModel("amount", form),
+            label = "Amount"
         )
 
         @components.submit_button()

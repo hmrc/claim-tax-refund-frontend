@@ -22,7 +22,7 @@ import controllers.actions._
 import forms.OtherBenefitsNameForm
 import identifiers.OtherBenefitsNameId
 import javax.inject.Inject
-import models.{Index, Mode}
+import models.{Index, Mode, OtherBenefit}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
@@ -40,12 +40,12 @@ class OtherBenefitsNameController @Inject()(
                                              authenticate: AuthAction,
                                              getData: DataRetrievalAction,
                                              requireData: DataRequiredAction,
-                                             sequenceUtil: SequenceUtil[String],
+                                             sequenceUtil: SequenceUtil[OtherBenefit],
                                              formBuilder: OtherBenefitsNameForm) extends FrontendController with I18nSupport {
 
   def onPageLoad(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val form = formBuilder(request.userAnswers.otherBenefitsName.getOrElse(Seq.empty))
+      val form = formBuilder(request.userAnswers.otherBenefitsName.getOrElse(Seq.empty), index)
 
       val preparedForm = request.userAnswers.otherBenefitsName match {
         case Some(value) =>
@@ -63,7 +63,7 @@ class OtherBenefitsNameController @Inject()(
 
   def onSubmit(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      val form = formBuilder(request.userAnswers.otherBenefitsName.getOrElse(Seq.empty))
+      val form = formBuilder(request.userAnswers.otherBenefitsName.getOrElse(Seq.empty), index)
 
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
@@ -72,8 +72,8 @@ class OtherBenefitsNameController @Inject()(
             (formWithErrors: Form[_]) =>
               Future.successful(BadRequest(otherBenefitsName(appConfig, formWithErrors, mode, index, taxYear))),
             value => {
-              val benefitNames: Seq[String] = request.userAnswers.otherBenefitsName.getOrElse(Seq(value))
-              dataCacheConnector.save[Seq[String]](
+              val benefitNames: Seq[OtherBenefit] = request.userAnswers.otherBenefitsName.getOrElse(Seq(value))
+              dataCacheConnector.save[Seq[OtherBenefit]](
                 request.externalId,
                 OtherBenefitsNameId.toString,
                 sequenceUtil.updateSeq(benefitNames, index, value)

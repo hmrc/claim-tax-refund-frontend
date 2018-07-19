@@ -63,7 +63,7 @@ class UserAnswers(val cacheMap: CacheMap) {
 
   def howMuchStatePension: Option[String] = cacheMap.getEntry[String](HowMuchStatePensionId.toString)
 
-  def otherBenefitsName: Option[Seq[String]] = cacheMap.getEntry[Seq[String]](OtherBenefitsNameId.toString)
+  def otherBenefitsName: Option[Seq[OtherBenefit]] = cacheMap.getEntry[Seq[OtherBenefit]](OtherBenefitsNameId.toString)
 
   def howMuchOtherBenefit: Option[Seq[String]] = cacheMap.getEntry[Seq[String]](HowMuchOtherBenefitId.toString)
 
