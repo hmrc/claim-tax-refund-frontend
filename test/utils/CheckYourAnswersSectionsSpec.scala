@@ -82,7 +82,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       rows(5).label.key mustBe "howMuchEmploymentAndSupportAllowance.checkYourAnswersLabel"
       rows(6).label.key mustBe "howMuchIncapacityBenefit.checkYourAnswersLabel"
       rows(7).label.key mustBe "howMuchStatePension.checkYourAnswersLabel"
-//      rows(8).label.key mustBe "otherBenefitsName.checkYourAnswersLabel"
+//      rows(8).label.key mustBe "otherBenefit.checkYourAnswersLabel"
 //      rows(9).label.key mustBe "howMuchOtherBenefit.checkYourAnswersLabel"
 //      rows(10).label.key mustBe "anyOtherBenefits.checkYourAnswersLabel"
     }

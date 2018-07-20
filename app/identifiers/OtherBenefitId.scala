@@ -21,5 +21,5 @@ import models.Index
 case class OtherBenefitId(index: Index) extends Identifier
 
 object OtherBenefitId {
-  override def toString: String = "otherBenefitsName"
+  override def toString: String = "otherBenefit"
 }
