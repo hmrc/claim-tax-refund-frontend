@@ -44,7 +44,7 @@ object Benefits extends Enumeration {
       case "incapacity-benefit" => HowMuchIncapacityBenefitId.toString
       case "employment-and-support-allowance" => HowMuchEmploymentAndSupportAllowanceId.toString
       case "state-pension" => HowMuchStatePensionId.toString
-      case "other-taxable-benefit" => OtherBenefitsNameId.toString
+      case "other-taxable-benefit" => OtherBenefitId.toString
     }
   }
 

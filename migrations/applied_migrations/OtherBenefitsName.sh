@@ -21,7 +21,7 @@ echo "otherBenefitsName.blank = otherBenefitsName" >> ../conf/messages.en
 echo "Adding helper line into UserAnswers"
 awk '/class/ {\
      print;\
-     print "  def otherBenefitsName: Option[String] = cacheMap.getEntry[String](OtherBenefitsNameId.toString)";\
+     print "  def otherBenefitsName: Option[String] = cacheMap.getEntry[String](OtherBenefitId.toString)";\
      print "";\
      next }1' ../app/utils/UserAnswers.scala > tmp && mv tmp ../app/utils/UserAnswers.scala
 

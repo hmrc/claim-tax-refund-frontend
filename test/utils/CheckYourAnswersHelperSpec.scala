@@ -197,15 +197,24 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     }
   }
 
-//  "otherBenefitsName" must {
-//    s"have the correct label and answer" in {
-//      val benefitName = Seq("other benefit")
-//      when(answers.otherBenefitsName) thenReturn Some(benefitName)
-//      helper.otherBenefitsName.get.label.key mustBe s"otherBenefitsName.checkYourAnswersLabel"
-//      helper.otherBenefitsName.get.answer.key mustBe benefitName
-//    }
-//  }
-  
+  "otherBenefit" must {
+    s"have the correct answer" in {
+      val otherBenefit = Seq(OtherBenefit("qwerty", "1234"))
+      when(answers.otherBenefit) thenReturn Some(otherBenefit)
+
+      helper.otherBenefits.head.get.label.key mustBe "qwerty"
+      helper.otherBenefits.head.get.answer.key mustBe amount
+    }
+   }
+
+  "otherBenefit" must {
+    s"return a empty Seq when empty" in {
+      when(answers.otherBenefit) thenReturn None
+
+      helper.otherBenefits mustBe Seq()
+    }
+  }
+
   "anyOtherBenefits (yes)" must {
     s"have the correct label and answer" in {
       when(answers.anyOtherBenefits) thenReturn Some(true)

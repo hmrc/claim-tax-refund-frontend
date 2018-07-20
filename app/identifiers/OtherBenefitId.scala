@@ -18,8 +18,8 @@ package identifiers
 
 import models.Index
 
-case class OtherBenefitsNameId(index: Index) extends Identifier
+case class OtherBenefitId(index: Index) extends Identifier
 
-object OtherBenefitsNameId {
+object OtherBenefitId {
   override def toString: String = "otherBenefitsName"
 }

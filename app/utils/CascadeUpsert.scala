@@ -70,7 +70,7 @@ class CascadeUpsert {
         HowMuchIncapacityBenefitId.toString,
         HowMuchEmploymentAndSupportAllowanceId.toString,
         HowMuchStatePensionId.toString,
-        OtherBenefitsNameId.toString,
+        OtherBenefitId.toString,
         AnyOtherBenefitsId.toString
       )))
     }
@@ -119,7 +119,7 @@ class CascadeUpsert {
           if (!selectedBenefits.as[JsArray].value.contains(benefit) && benefit != JsString(Benefits.OTHER_TAXABLE_BENEFIT.toString)) {
             cm copy (data = cm.data - Benefits.getIdString(benefit.as[String]))
           } else if (!selectedBenefits.as[JsArray].value.contains(JsString(Benefits.OTHER_TAXABLE_BENEFIT.toString))) {
-            cm copy (data = cm.data - (OtherBenefitsNameId.toString, AnyOtherBenefitsId.toString))
+            cm copy (data = cm.data - (OtherBenefitId.toString, AnyOtherBenefitsId.toString))
           } else {
             cm
           }

@@ -74,7 +74,7 @@ class HowMuchOtherCompanyBenefitController @Inject()(
               form.bindFromRequest().fold(
                 (formWithErrors: Form[_]) =>
                   Future.successful(BadRequest(howMuchOtherCompanyBenefit(appConfig, formWithErrors, mode, taxYear, benefitName))),
-                (value) =>
+                value =>
                   dataCacheConnector.save[String](request.externalId, HowMuchOtherCompanyBenefitId.toString, value).map(cacheMap =>
                     Redirect(navigator.nextPage(HowMuchOtherCompanyBenefitId, mode)(new UserAnswers(cacheMap))))
               )

@@ -19,8 +19,8 @@ package controllers
 import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
-import forms.OtherBenefitsNameForm
-import identifiers.OtherBenefitsNameId
+import forms.OtherBenefitForm
+import identifiers.OtherBenefitId
 import javax.inject.Inject
 import models.{Index, Mode, OtherBenefit}
 import play.api.data.Form
@@ -32,7 +32,7 @@ import views.html.otherBenefitsName
 
 import scala.concurrent.Future
 
-class OtherBenefitsNameController @Inject()(
+class OtherBenefitController @Inject()(
                                              appConfig: FrontendAppConfig,
                                              override val messagesApi: MessagesApi,
                                              dataCacheConnector: DataCacheConnector,
@@ -41,13 +41,13 @@ class OtherBenefitsNameController @Inject()(
                                              getData: DataRetrievalAction,
                                              requireData: DataRequiredAction,
                                              sequenceUtil: SequenceUtil[OtherBenefit],
-                                             formBuilder: OtherBenefitsNameForm) extends FrontendController with I18nSupport {
+                                             formBuilder: OtherBenefitForm) extends FrontendController with I18nSupport {
 
   def onPageLoad(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val form = formBuilder(request.userAnswers.otherBenefitsName.getOrElse(Seq.empty), index)
+      val form = formBuilder(request.userAnswers.otherBenefit.getOrElse(Seq.empty), index)
 
-      val preparedForm = request.userAnswers.otherBenefitsName match {
+      val preparedForm = request.userAnswers.otherBenefit match {
         case Some(value) =>
           if (index >= value.length) form else form.fill(value(index))
         case None => form
@@ -63,7 +63,7 @@ class OtherBenefitsNameController @Inject()(
 
   def onSubmit(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      val form = formBuilder(request.userAnswers.otherBenefitsName.getOrElse(Seq.empty), index)
+      val form = formBuilder(request.userAnswers.otherBenefit.getOrElse(Seq.empty), index)
 
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
@@ -72,13 +72,13 @@ class OtherBenefitsNameController @Inject()(
             (formWithErrors: Form[_]) =>
               Future.successful(BadRequest(otherBenefitsName(appConfig, formWithErrors, mode, index, taxYear))),
             value => {
-              val benefitNames: Seq[OtherBenefit] = request.userAnswers.otherBenefitsName.getOrElse(Seq(value))
+              val benefitNames: Seq[OtherBenefit] = request.userAnswers.otherBenefit.getOrElse(Seq(value))
               dataCacheConnector.save[Seq[OtherBenefit]](
                 request.externalId,
-                OtherBenefitsNameId.toString,
+                OtherBenefitId.toString,
                 sequenceUtil.updateSeq(benefitNames, index, value)
               ).map(cacheMap =>
-                Redirect(navigator.nextPageWithIndex(OtherBenefitsNameId(index), mode)(new UserAnswers(cacheMap))))
+                Redirect(navigator.nextPageWithIndex(OtherBenefitId(index), mode)(new UserAnswers(cacheMap))))
             }
           )
       }.getOrElse {
