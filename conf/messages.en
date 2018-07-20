@@ -298,12 +298,6 @@ otherBenefitsName.checkYourAnswersLabel = Other taxable benefit name
 otherBenefitsName.blank = Enter the name of the other taxable benefit you got
 otherBenefitsName.duplicate = You have already entered this other taxable benefit name
 
-howMuchOtherBenefit.title = How much {0} did you get?
-howMuchOtherBenefit.heading = How much {0} did you get?
-howMuchOtherBenefit.checkYourAnswersLabel = Other benefit
-howMuchOtherBenefit.blank = Enter the amount you got for this benefit
-howMuchOtherBenefit.invalid = Enter a valid amount you got for this benefit
-
 howMuchForeignIncome.title = How much foreign income did you get between {0}?
 howMuchForeignIncome.heading = How much foreign income did you get between {0}?
 howMuchForeignIncome.checkYourAnswersLabel = Foreign income

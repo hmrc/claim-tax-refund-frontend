@@ -53,7 +53,7 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
   ).flatten)
 
   def otherBenefitsSection: AnswerSection = {
-    if (userAnswers.otherBenefitsName.isDefined && userAnswers.howMuchOtherBenefit.isDefined) {
+    if (userAnswers.otherBenefitsName.isDefined) {
       AnswerSection(
         headingKey = Some("Other taxable benefit details"),
         rows = cyaHelper.otherBenefits.flatten,
