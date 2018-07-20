@@ -22,10 +22,10 @@ import models.MandatoryField
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
 
-class OtherBenefitsNameFormSpec extends FormBehaviours with MockitoSugar {
+class OtherBenefitFormSpec extends FormBehaviours with MockitoSugar {
 
-  val nameKeyBlank = "otherBenefitsName.name.blank"
-  val amountKeyBlank = "otherBenefitsName.amount.blank"
+  val nameKeyBlank = "otherBenefit.name.blank"
+  val amountKeyBlank = "otherBenefit.amount.blank"
 
 
   def appConfig: FrontendAppConfig = {
@@ -38,7 +38,8 @@ class OtherBenefitsNameFormSpec extends FormBehaviours with MockitoSugar {
     "amount" -> "123"
   )
 
-  override val form: Form[_] = new OtherBenefitsNameForm(appConfig)(Seq.empty, 0)
+  val newForm = new OtherBenefitForm(appConfig)
+  override val form: Form[_] = new OtherBenefitForm(appConfig)(Seq.empty, 0)
 
   "OtherBenefitsName Form" must {
 
@@ -47,8 +48,15 @@ class OtherBenefitsNameFormSpec extends FormBehaviours with MockitoSugar {
       MandatoryField("amount", amountKeyBlank)
     )
 
+    /*
     behave like formThatDoesNotAllowDuplicateValues(
       "2qwerty", Seq("1qwerty", "2qwerty", "3qwerty")
     )
+
+    "fail to bind" when {
+      "amount is invalid" in {
+
+      }
+    }*/
   }
 }

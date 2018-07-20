@@ -17,7 +17,7 @@
 package views
 
 import controllers.routes
-import forms.OtherBenefitsNameForm
+import forms.OtherBenefitForm
 import models.{NormalMode, OtherBenefit}
 import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
@@ -26,12 +26,12 @@ import play.twirl.api.HtmlFormat
 import views.behaviours.{QuestionViewBehaviours, StringViewBehaviours}
 import views.html.otherBenefitsName
 
-class OtherBenefitsNameViewSpec extends QuestionViewBehaviours[OtherBenefit] with MockitoSugar {
+class OtherBenefitViewSpec extends QuestionViewBehaviours[OtherBenefit] with MockitoSugar {
 
   private val messageKeyPrefix = "otherBenefitsName"
   private val taxYear = CYMinus2
 
-  override val form: Form[OtherBenefit] = new OtherBenefitsNameForm(frontendAppConfig)(Seq.empty, 0)
+  override val form: Form[OtherBenefit] = new OtherBenefitForm(frontendAppConfig)(Seq.empty, 0)
 
   def createView: () => HtmlFormat.Appendable = () => otherBenefitsName(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages)
 

@@ -117,12 +117,12 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
 
   def otherBenefits: Seq[Option[AnswerRow]] = {
     for {
-      otherBenefits <- userAnswers.otherBenefitsName
+      otherBenefits <- userAnswers.otherBenefit
     } yield {
       otherBenefits.zipWithIndex.flatMap {
         case (benefits, index) =>
           Seq(
-            Some(AnswerRow(benefits.name, benefits.amount, answerIsMessageKey = false, routes.OtherBenefitsNameController.onPageLoad(CheckMode, Index(index)).url))
+            Some(AnswerRow(benefits.name, benefits.amount, answerIsMessageKey = false, routes.OtherBenefitController.onPageLoad(CheckMode, Index(index)).url))
           )
       }
     }

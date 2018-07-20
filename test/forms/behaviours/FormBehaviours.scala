@@ -18,7 +18,7 @@ package forms.behaviours
 
 import config.FrontendAppConfig
 import forms.FormSpec
-import models.{MandatoryField, MaxLengthField, RegexField}
+import models.{MandatoryField, MaxLengthField, OtherBenefit, RegexField}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import play.api.i18n.{Messages, MessagesApi}
@@ -83,12 +83,6 @@ trait FormBehaviours extends FormSpec with GuiceOneAppPerSuite {
   def formWithMandatoryTextFields(fields: MandatoryField*) = {
     for (field <- fields) {
       s"fail to bind when ${field.fieldName} is omitted" in {
-        val data = validData + (field.fieldName -> "")
-        val expectedError = error(field.fieldName, field.errorMessageKey)
-        checkForError(form, data, expectedError)
-      }
-
-      s"fail to bind when ${field.fieldName} is blank" in {
         val data = validData + (field.fieldName -> "")
         val expectedError = error(field.fieldName, field.errorMessageKey)
         checkForError(form, data, expectedError)
@@ -245,11 +239,5 @@ trait FormBehaviours extends FormSpec with GuiceOneAppPerSuite {
       checkForError(form, data, expectedError)
     }
 
-  }
-
-  def formThatDoesNotAllowDuplicateValues(value: String, values: Seq[String]) = {
-    s"fail to bind when value is a duplicate" in {
-      values.contains(value) shouldBe true
-    }
   }
 }

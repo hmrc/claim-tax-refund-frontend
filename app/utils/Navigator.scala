@@ -28,11 +28,11 @@ import play.api.mvc.Call
 class Navigator @Inject()() {
 
   private val routeMapWithIndex: PartialFunction[Identifier, UserAnswers => Call] = {
-    case OtherBenefitsNameId(index) => otherBenefitsName(NormalMode)
+    case OtherBenefitId(index) => otherBenefitsName(NormalMode)
   }
 
   private val editRouteMapWithIndex: PartialFunction[Identifier, UserAnswers => Call] = {
-    case OtherBenefitsNameId(index) => otherBenefitsName(CheckMode)
+    case OtherBenefitId(index) => otherBenefitsName(CheckMode)
   }
 
   private val routeMap: Map[Identifier, UserAnswers => Call] = Map(
@@ -50,7 +50,7 @@ class Navigator @Inject()() {
     HowMuchIncapacityBenefitId -> selectBenefits(NormalMode),
     HowMuchEmploymentAndSupportAllowanceId -> selectBenefits(NormalMode),
     HowMuchStatePensionId -> selectBenefits(NormalMode),
-    //OtherBenefitsNameId(index) -> otherBenefitsName(),
+    //OtherBenefitId(index) -> otherBenefitsName(),
     AnyOtherBenefitsId -> anyOtherBenefits,
     //Company benefits
     AnyCompanyBenefitsId -> anyCompanyBenefits(NormalMode),
@@ -181,7 +181,7 @@ class Navigator @Inject()() {
       } else if (benefits.contains(Benefits.STATE_PENSION) && userAnswers.howMuchStatePension.isEmpty) {
         routes.HowMuchStatePensionController.onPageLoad(mode)
       } else if (benefits.contains(Benefits.OTHER_TAXABLE_BENEFIT)) {
-        routes.OtherBenefitsNameController.onPageLoad(mode, Index(0))
+        routes.OtherBenefitController.onPageLoad(mode, Index(0))
       } else {
         if (mode == NormalMode) routes.AnyCompanyBenefitsController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
       }
@@ -189,7 +189,7 @@ class Navigator @Inject()() {
   }
 
   private def anyOtherBenefits(userAnswers: UserAnswers): Call = userAnswers.anyOtherBenefits match {
-    case Some(true) => routes.OtherBenefitsNameController.onPageLoad(NormalMode, Index(userAnswers.otherBenefitsName.get.length))
+    case Some(true) => routes.OtherBenefitController.onPageLoad(NormalMode, Index(userAnswers.otherBenefit.get.length))
     case Some(false) => routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
