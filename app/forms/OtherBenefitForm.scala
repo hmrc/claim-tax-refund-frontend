@@ -33,7 +33,7 @@ class OtherBenefitForm @Inject()(appConfig: FrontendAppConfig) extends FormError
   def apply(otherBenefit: Seq[OtherBenefit], index: Index): Form[OtherBenefit] = {
     Form(
       mapping(
-        "name" -> text(nameBlankKey),//.verifying(duplicateBenefitKey,  a => otherBenefitsName.forall(p => !p.name.contains(a))),
+        "name" -> text(nameBlankKey),//.verifying(duplicateBenefitKey,  a => otherBenefit.forall(p => !p.name.contains(a))),
         "amount" -> text(amountBlankKey)//.verifying(regexValidation(currencyRegex, amountInvalidKey))
       )(OtherBenefit.apply)(OtherBenefit.unapply)
     )

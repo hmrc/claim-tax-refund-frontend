@@ -23,22 +23,22 @@ import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
-import views.behaviours.{QuestionViewBehaviours, StringViewBehaviours}
-import views.html.otherBenefitsName
+import views.behaviours.QuestionViewBehaviours
+import views.html.otherBenefit
 
 class OtherBenefitViewSpec extends QuestionViewBehaviours[OtherBenefit] with MockitoSugar {
 
-  private val messageKeyPrefix = "otherBenefitsName"
+  private val messageKeyPrefix = "otherBenefit"
   private val taxYear = CYMinus2
 
   override val form: Form[OtherBenefit] = new OtherBenefitForm(frontendAppConfig)(Seq.empty, 0)
 
-  def createView: () => HtmlFormat.Appendable = () => otherBenefitsName(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages)
+  def createView: () => HtmlFormat.Appendable = () => otherBenefit(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages)
 
   def createViewUsingForm: Form[String] => HtmlFormat.Appendable = (form: Form[String]) =>
-    otherBenefitsName(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages)
+    otherBenefit(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages)
 
-  "OtherBenefitsName view" must {
+  "OtherBenefit view" must {
     behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))
 
     behave like pageWithBackLink(createView)

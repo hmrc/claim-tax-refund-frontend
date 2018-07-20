@@ -26,7 +26,7 @@ import models.{Index, NormalMode, OtherBenefit}
 import models.SelectTaxYear.CYMinus2
 import org.mockito.Mockito.when
 import play.api.mvc.Call
-import views.html.otherBenefitsName
+import views.html.otherBenefit
 
 class OtherBenefitControllerSpec extends ControllerSpecBase {
 
@@ -41,9 +41,9 @@ class OtherBenefitControllerSpec extends ControllerSpecBase {
     new OtherBenefitController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, sequenceUtil, new OtherBenefitForm(frontendAppConfig))
 
-  def viewAsString(form: Form[_] = form): String = otherBenefitsName(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = form): String = otherBenefit(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages).toString
 
-  "OtherBenefitsName Controller" must {
+  "OtherBenefit Controller" must {
 
     "return OK and the correct view for a GET" in {
       val result = controller(fakeDataRetrievalAction()).onPageLoad(NormalMode, 0)(fakeRequest)

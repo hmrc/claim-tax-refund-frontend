@@ -28,7 +28,7 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import utils.{Navigator, SequenceUtil, UserAnswers}
-import views.html.otherBenefitsName
+import views.html.otherBenefit
 
 import scala.concurrent.Future
 
@@ -55,7 +55,7 @@ class OtherBenefitController @Inject()(
 
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
-          Ok(otherBenefitsName(appConfig, preparedForm, mode, index, selectedTaxYear))
+          Ok(otherBenefit(appConfig, preparedForm, mode, index, selectedTaxYear))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
@@ -70,7 +70,7 @@ class OtherBenefitController @Inject()(
           val taxYear = selectedTaxYear
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(otherBenefitsName(appConfig, formWithErrors, mode, index, taxYear))),
+              Future.successful(BadRequest(otherBenefit(appConfig, formWithErrors, mode, index, taxYear))),
             value => {
               val benefitNames: Seq[OtherBenefit] = request.userAnswers.otherBenefit.getOrElse(Seq(value))
               dataCacheConnector.save[Seq[OtherBenefit]](
