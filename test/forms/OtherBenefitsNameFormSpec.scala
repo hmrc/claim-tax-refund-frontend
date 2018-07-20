@@ -34,7 +34,7 @@ class OtherBenefitsNameFormSpec extends FormBehaviours with MockitoSugar {
 
   val validData: Map[String, String] = Map("value" -> "test answer")
 
-  override val form: Form[_] = new OtherBenefitsNameForm(appConfig)(Seq.empty)
+  override val form: Form[_] = new OtherBenefitsNameForm(appConfig)(Seq.empty, 0)
 
   "OtherBenefitsName Form" must {
 

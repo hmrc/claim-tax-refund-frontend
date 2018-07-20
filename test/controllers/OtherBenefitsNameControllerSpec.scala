@@ -22,7 +22,7 @@ import connectors.FakeDataCacheConnector
 import controllers.actions._
 import play.api.test.Helpers._
 import forms.OtherBenefitsNameForm
-import models.{Index, NormalMode}
+import models.{Index, NormalMode, OtherBenefit}
 import models.SelectTaxYear.CYMinus2
 import org.mockito.Mockito.when
 import play.api.mvc.Call
@@ -30,10 +30,10 @@ import views.html.otherBenefitsName
 
 class OtherBenefitsNameControllerSpec extends ControllerSpecBase {
 
-  def onwardRoute: Call = routes.HowMuchOtherBenefitController.onPageLoad(NormalMode, 0)
+  def onwardRoute: Call = routes.AnyOtherBenefitsController.onPageLoad(NormalMode)
 
-  val testAnswer = "answer"
-  val form = new OtherBenefitsNameForm(frontendAppConfig)(Seq.empty)
+  val testAnswer = OtherBenefit("qwerty", "")
+  val form = new OtherBenefitsNameForm(frontendAppConfig)(Seq.empty, 0)
   private val taxYear = CYMinus2
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
 
@@ -60,7 +60,7 @@ class OtherBenefitsNameControllerSpec extends ControllerSpecBase {
     }
 
     "redirect to the next page when valid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", testAnswer))
+      val postRequest = fakeRequest.withFormUrlEncodedBody((" ", ""), (" ", " "))
       val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode, 0)(postRequest)
 
       status(result) mustBe SEE_OTHER
@@ -85,7 +85,7 @@ class OtherBenefitsNameControllerSpec extends ControllerSpecBase {
     }
 
     "redirect to Session Expired for a POST if no existing data is found" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", testAnswer))
+    val postRequest = fakeRequest.withFormUrlEncodedBody((" ", ""), (" ", " "))
       val result = controller(dontGetAnyData).onSubmit(NormalMode, 0)(postRequest)
 
       status(result) mustBe SEE_OTHER

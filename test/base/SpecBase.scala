@@ -17,6 +17,7 @@
 package base
 
 import config.FrontendAppConfig
+import models.OtherBenefit
 import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice._
 import play.api.i18n.{Messages, MessagesApi}
@@ -37,7 +38,7 @@ trait SpecBase extends PlaySpec with GuiceOneAppPerSuite {
 
   def messages: Messages = messagesApi.preferred(fakeRequest)
 
-  def sequenceUtil: SequenceUtil[String] = injector.instanceOf[SequenceUtil[String]]
+  def sequenceUtil: SequenceUtil[OtherBenefit] = injector.instanceOf[SequenceUtil[OtherBenefit]]
 
   val itmpAddress = ItmpAddress(
     Some("Line1"),
