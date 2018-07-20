@@ -52,7 +52,6 @@ class Navigator @Inject()() {
     HowMuchStatePensionId -> selectBenefits(NormalMode),
     //OtherBenefitsNameId(index) -> otherBenefitsName(),
     AnyOtherBenefitsId -> anyOtherBenefits,
-    HowMuchOtherBenefitId -> (_ => routes.AnyOtherBenefitsController.onPageLoad(NormalMode)),
     //Company benefits
     AnyCompanyBenefitsId -> anyCompanyBenefits(NormalMode),
     SelectCompanyBenefitsId -> selectedCompanyBenefitsCheck(NormalMode),
@@ -181,7 +180,7 @@ class Navigator @Inject()() {
         routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(mode)
       } else if (benefits.contains(Benefits.STATE_PENSION) && userAnswers.howMuchStatePension.isEmpty) {
         routes.HowMuchStatePensionController.onPageLoad(mode)
-      } else if (benefits.contains(Benefits.OTHER_TAXABLE_BENEFIT) && userAnswers.howMuchOtherBenefit.isEmpty) {
+      } else if (benefits.contains(Benefits.OTHER_TAXABLE_BENEFIT)) {
         routes.OtherBenefitsNameController.onPageLoad(mode, Index(0))
       } else {
         if (mode == NormalMode) routes.AnyCompanyBenefitsController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
