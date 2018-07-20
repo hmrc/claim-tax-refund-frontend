@@ -306,11 +306,11 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
           navigator.nextPageWithIndex(OtherBenefitsNameId(0), CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
         }
 
-        "go to AnyOtherBenefit when no amount stored" in {
+        "go to CheckYourAnswersController when no amount stored" in {
           val answers = MockUserAnswers.benefitsUserAnswers
           when(answers.anyOtherBenefits) thenReturn None
 
-          navigator.nextPageWithIndex(OtherBenefitsNameId(0), CheckMode)(answers) mustBe routes.AnyOtherBenefitsController.onPageLoad(CheckMode)
+          navigator.nextPageWithIndex(OtherBenefitsNameId(0), CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
         }
       }
 

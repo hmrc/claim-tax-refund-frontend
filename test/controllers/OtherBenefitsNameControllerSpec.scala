@@ -60,7 +60,7 @@ class OtherBenefitsNameControllerSpec extends ControllerSpecBase {
     }
 
     "redirect to the next page when valid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody((" ", ""), (" ", " "))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("name", "qwerty"), ("amount", "123"))
       val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode, 0)(postRequest)
 
       status(result) mustBe SEE_OTHER

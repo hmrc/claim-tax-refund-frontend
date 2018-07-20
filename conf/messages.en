@@ -295,7 +295,8 @@ howMuchCarersAllowance.invalid = Enter a valid amount of Carer''s Allowance
 otherBenefitsName.title = What is the name of the other taxable benefit you got?
 otherBenefitsName.heading = What is the name of the other taxable benefit you got?
 otherBenefitsName.checkYourAnswersLabel = Other taxable benefit name
-otherBenefitsName.blank = Enter the name of the other taxable benefit you got
+otherBenefitsName.name.blank = Enter the name of the other taxable benefit you got
+otherBenefitsName.amount.blank = Enter the amount of other taxable benefit you got
 otherBenefitsName.duplicate = You have already entered this other taxable benefit name
 
 howMuchForeignIncome.title = How much foreign income did you get between {0}?
