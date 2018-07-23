@@ -50,7 +50,9 @@ class IsPaymentAddressInTheUKController @Inject()(appConfig: FrontendAppConfig,
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.isPaymentAddressInTheUK match {
-        case None => form
+        case None => {
+          form
+        }
         case Some(value) => form.fill(value)
       }
       Ok(isPaymentAddressInTheUK(appConfig, preparedForm, mode))
