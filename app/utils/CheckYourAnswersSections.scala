@@ -58,7 +58,7 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
         headingKey = Some("Other taxable benefit details"),
         rows = cyaHelper.otherBenefits.flatten,
         addLinkText = Some("Add another taxable benefit"),
-        addLinkUrl = Some(routes.OtherBenefitController.onPageLoad(NormalMode, Index(userAnswers.otherBenefit.get.size)).url)
+        addLinkUrl = Some(routes.OtherBenefitController.onPageLoad(CheckMode, Index(userAnswers.otherBenefit.get.size)).url)
       )
     } else {
       AnswerSection(None, Seq.empty)
