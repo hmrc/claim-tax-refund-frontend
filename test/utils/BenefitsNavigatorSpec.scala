@@ -254,7 +254,7 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
             Benefits.CARERS_ALLOWANCE
           ))
           when(answers.howMuchCarersAllowance) thenReturn Some ("112.44")
-          navigator.nextPage(AnyBenefitsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+          navigator.nextPage(HowMuchCarersAllowanceId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
         }
       }
 

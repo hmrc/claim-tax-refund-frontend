@@ -50,7 +50,6 @@ class Navigator @Inject()() {
     HowMuchIncapacityBenefitId -> selectBenefits(NormalMode),
     HowMuchEmploymentAndSupportAllowanceId -> selectBenefits(NormalMode),
     HowMuchStatePensionId -> selectBenefits(NormalMode),
-    //OtherBenefitId(index) -> otherBenefit(),
     AnyOtherBenefitsId -> anyOtherBenefits,
     //Company benefits
     AnyCompanyBenefitsId -> anyCompanyBenefits(NormalMode),
@@ -155,7 +154,7 @@ class Navigator @Inject()() {
   //Benefits----------------------------------
 
   private def anyBenefits(mode: Mode)(userAnswers: UserAnswers): Call = userAnswers.anyBenefits match {
-    case Some(true) =>
+    case Some(true)  =>
       routes.SelectBenefitsController.onPageLoad(mode)
     case Some(false) =>
       if(mode == NormalMode) routes.AnyCompanyBenefitsController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
