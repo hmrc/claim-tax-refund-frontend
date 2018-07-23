@@ -32,17 +32,12 @@ class OtherBenefitForm @Inject()(appConfig: FrontendAppConfig) extends FormError
   private val duplicateBenefitKey = "otherBenefit.duplicate"
 
   def apply(otherBenefit: Seq[OtherBenefit], index: Index): Form[OtherBenefit] = {
-
-
     Form(
       mapping(
         "name" -> text(nameBlankKey).verifying(duplicateBenefitKey, a => filter(otherBenefit, index, a).forall(p => p.name != a)),
-
         "amount" -> text(amountBlankKey).verifying(amountInvalidKey, a => a.matches(currencyRegex))
-        //text.verifying(firstError(nonEmpty(errorKeyBlank), regexValidation(currencyRegex, errorKeyInvalid)))
       )(OtherBenefit.apply)(OtherBenefit.unapply)
     )
-
   }
 
   def filter(seq: Seq[OtherBenefit], index: Index, name: String): Seq[OtherBenefit] = {
