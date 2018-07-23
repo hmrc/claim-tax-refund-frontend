@@ -20,7 +20,6 @@ import com.google.inject.Inject
 import config.FrontendAppConfig
 import forms.mappings.{Constraints, Mappings}
 import models.{Index, OtherBenefit}
-import play.api.Logger
 import play.api.data.Form
 import play.api.data.Forms._
 
@@ -37,12 +36,10 @@ class OtherBenefitForm @Inject()(appConfig: FrontendAppConfig) extends FormError
 
     Form(
       mapping(
-        "name" -> text(nameBlankKey).verifying(duplicateBenefitKey,
+        "name" -> text(nameBlankKey).verifying(duplicateBenefitKey, a => filter(otherBenefit, index, a).forall(p => p.name != a)),
 
-          a => filter(otherBenefit, index, a).forall(p => p.name != a)
-        ),
-
-        "amount" -> text(amountBlankKey).verifying(regexValidation(currencyRegex, amountInvalidKey))
+        "amount" -> text(amountBlankKey).verifying(amountInvalidKey, a => a.matches(currencyRegex))
+        //text.verifying(firstError(nonEmpty(errorKeyBlank), regexValidation(currencyRegex, errorKeyInvalid)))
       )(OtherBenefit.apply)(OtherBenefit.unapply)
     )
 

@@ -18,18 +18,23 @@ package forms
 
 import config.FrontendAppConfig
 import forms.behaviours.FormBehaviours
-import models.MandatoryField
+import models.{Index, OtherBenefit}
+import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
 
 class OtherBenefitFormSpec extends FormBehaviours with MockitoSugar {
 
+  val form: Form[OtherBenefit] = new OtherBenefitForm(appConfig)(Seq(OtherBenefit("blah", "123")), Index(0))
+
+  private val currencyRegex = """(?=.)^\$?(([1-9][0-9]{0,2}(,[0-9]{3})*)|[0-9]+)?(\.[0-9]{1,2})?$"""
   val nameKeyBlank = "otherBenefit.name.blank"
   val amountKeyBlank = "otherBenefit.amount.blank"
-
+  val amountKeyInvalid = "otherBenefit.amount.invalid"
 
   def appConfig: FrontendAppConfig = {
     val instance = mock[FrontendAppConfig]
+    when(instance.currencyRegex) thenReturn currencyRegex
     instance
   }
 
@@ -38,25 +43,14 @@ class OtherBenefitFormSpec extends FormBehaviours with MockitoSugar {
     "amount" -> "123"
   )
 
-  val newForm = new OtherBenefitForm(appConfig)
-  override val form: Form[_] = new OtherBenefitForm(appConfig)(Seq.empty, 0)
-
   "OtherBenefitsName Form" must {
 
-    behave like formWithMandatoryTextFields(
-      MandatoryField("name", nameKeyBlank),
-      MandatoryField("amount", amountKeyBlank)
-    )
+    "bind successfully with valid name and amount" in {
+      val result = form.bind(validData)
 
-    /*
-    behave like formThatDoesNotAllowDuplicateValues(
-      "2qwerty", Seq("1qwerty", "2qwerty", "3qwerty")
-    )
+      result.errors.size shouldBe 0
+      /*result.get shouldBe OtherBenefit.apply("qwerty", "123")*/
+    }
 
-    "fail to bind" when {
-      "amount is invalid" in {
-
-      }
-    }*/
   }
 }
