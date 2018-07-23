@@ -156,10 +156,7 @@ class Navigator @Inject()() {
 
   private def anyBenefits(mode: Mode)(userAnswers: UserAnswers): Call = userAnswers.anyBenefits match {
     case Some(true) =>
-      userAnswers.selectBenefits match {
-        case None => routes.SelectBenefitsController.onPageLoad(mode)
-        case _ => selectBenefits(mode)(userAnswers)
-      }
+      routes.SelectBenefitsController.onPageLoad(mode)
     case Some(false) =>
       if(mode == NormalMode) routes.AnyCompanyBenefitsController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
     case None =>
