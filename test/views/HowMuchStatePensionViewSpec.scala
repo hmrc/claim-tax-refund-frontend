@@ -37,11 +37,11 @@ class HowMuchStatePensionViewSpec extends StringViewBehaviours with MockitoSugar
   def createViewUsingForm = (form: Form[String]) => howMuchStatePension(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "HowMuchStatePension view" must {
-    behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))
+    behave like normalPage(createView, messageKeyPrefix, None)
 
     behave like pageWithBackLink(createView)
 
-    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+    behave like pageWithSecondaryHeader(createView, messages("site.service_name.with_tax_year", taxYear.asString(messages)))
 
     behave like stringPage(
       createView = createViewUsingForm,
@@ -49,8 +49,7 @@ class HowMuchStatePensionViewSpec extends StringViewBehaviours with MockitoSugar
       expectedFormAction = routes.HowMuchStatePensionController.onSubmit(NormalMode).url,
       expectedHintKeyLine1 = None,
       expectedHintKeyLine2 = None,
-      expectedPrefix = Some(messages("global.poundSign")),
-      args = taxYear.asString(messages)
+      expectedPrefix = Some(messages("global.poundSign"))
     )
 
   }

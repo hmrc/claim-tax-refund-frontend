@@ -23,7 +23,7 @@ trait StringViewBehaviours extends QuestionViewBehaviours[String] {
 
   val answer = "answer"
 
-  def stringPage(createView: (Form[String]) => HtmlFormat.Appendable,
+  def stringPage(createView: Form[String] => HtmlFormat.Appendable,
                  messageKeyPrefix: String,
                  expectedFormAction: String,
                  expectedHintKeyLine1: Option[String],

@@ -153,7 +153,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have the correct label and answer" in {
       when(answers.howMuchBereavementAllowance) thenReturn Some(amount)
       helper.howMuchBereavementAllowance.get.label.key mustBe s"howMuchBereavementAllowance.checkYourAnswersLabel"
-      helper.howMuchBereavementAllowance.get.answer.key mustBe amount
+      helper.howMuchBereavementAllowance.get.answer.key mustBe s"£$amount"
     }
   }
 
@@ -161,7 +161,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have the correct label and answer" in {
       when(answers.howMuchCarersAllowance) thenReturn Some(amount)
       helper.howMuchCarersAllowance.get.label.key mustBe s"howMuchCarersAllowance.checkYourAnswersLabel"
-      helper.howMuchCarersAllowance.get.answer.key mustBe amount
+      helper.howMuchCarersAllowance.get.answer.key mustBe s"£$amount"
     }
   }
 
@@ -169,7 +169,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have the correct label and answer" in {
       when(answers.howMuchJobseekersAllowance) thenReturn Some(amount)
       helper.howMuchJobseekersAllowance.get.label.key mustBe s"howMuchJobseekersAllowance.checkYourAnswersLabel"
-      helper.howMuchJobseekersAllowance.get.answer.key mustBe amount
+      helper.howMuchJobseekersAllowance.get.answer.key mustBe s"£$amount"
     }
   }
 
@@ -177,7 +177,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have the correct label and answer" in {
       when(answers.howMuchIncapacityBenefit) thenReturn Some(amount)
       helper.howMuchIncapacityBenefit.get.label.key mustBe s"howMuchIncapacityBenefit.checkYourAnswersLabel"
-      helper.howMuchIncapacityBenefit.get.answer.key mustBe amount
+      helper.howMuchIncapacityBenefit.get.answer.key mustBe s"£$amount"
     }
   }
 
@@ -185,7 +185,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have the correct label and answer" in {
       when(answers.howMuchEmploymentAndSupportAllowance) thenReturn Some(amount)
       helper.howMuchEmploymentAndSupportAllowance.get.label.key mustBe s"howMuchEmploymentAndSupportAllowance.checkYourAnswersLabel"
-      helper.howMuchEmploymentAndSupportAllowance.get.answer.key mustBe amount
+      helper.howMuchEmploymentAndSupportAllowance.get.answer.key mustBe s"£$amount"
     }
   }
 
@@ -193,40 +193,25 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have the correct label and answer" in {
       when(answers.howMuchStatePension) thenReturn Some(amount)
       helper.howMuchStatePension.get.label.key mustBe s"howMuchStatePension.checkYourAnswersLabel"
-      helper.howMuchStatePension.get.answer.key mustBe amount
+      helper.howMuchStatePension.get.answer.key mustBe s"£$amount"
     }
   }
 
-  "otherBenefitsName" must {
-    s"have the correct label and answer" in {
-      val benefitName = "other benefit"
-      when(answers.otherBenefitsName) thenReturn Some(benefitName)
-      helper.otherBenefitsName.get.label.key mustBe s"otherBenefitsName.checkYourAnswersLabel"
-      helper.otherBenefitsName.get.answer.key mustBe benefitName
-    }
-  }
+  "otherBenefit" must {
+    s"have the correct answer" in {
+      val otherBenefit = Seq(OtherBenefit("qwerty", "1234"))
+      when(answers.otherBenefit) thenReturn Some(otherBenefit)
 
-  "howMuchOtherBenefit" must {
-    s"have the correct label and answer" in {
-      when(answers.howMuchOtherBenefit) thenReturn Some(amount)
-      helper.howMuchOtherBenefit.get.label.key mustBe s"howMuchOtherBenefit.checkYourAnswersLabel"
-      helper.howMuchOtherBenefit.get.answer.key mustBe amount
+      helper.otherBenefits.head.get.label.key mustBe "qwerty"
+      helper.otherBenefits.head.get.answer.key mustBe s"£$amount"
     }
-  }
+   }
 
-  "anyOtherBenefits (yes)" must {
-    s"have the correct label and answer" in {
-      when(answers.anyOtherBenefits) thenReturn Some(true)
-      helper.anyOtherBenefits.get.label.key mustBe s"anyOtherBenefits.checkYourAnswersLabel"
-      helper.anyOtherBenefits.get.answer.key mustBe yes
-    }
-  }
+  "otherBenefit" must {
+    s"return a empty Seq when empty" in {
+      when(answers.otherBenefit) thenReturn None
 
-  "anyOtherBenefits (no)" must {
-    s"have the correct label and answer" in {
-      when(answers.anyOtherBenefits) thenReturn Some(false)
-      helper.anyOtherBenefits.get.label.key mustBe s"anyOtherBenefits.checkYourAnswersLabel"
-      helper.anyOtherBenefits.get.answer.key mustBe no
+      helper.otherBenefits mustBe Seq()
     }
   }
 

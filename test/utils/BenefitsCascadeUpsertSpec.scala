@@ -38,8 +38,7 @@ class BenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
     HowMuchIncapacityBenefitId.toString -> JsString("1234"),
     HowMuchEmploymentAndSupportAllowanceId.toString -> JsString("1234"),
     HowMuchStatePensionId.toString -> JsString("1234"),
-    OtherBenefitsNameId.toString -> JsString("qwerty"),
-    HowMuchOtherBenefitId.toString -> JsString("1234"),
+    OtherBenefitId.toString -> JsString("qwerty"),
     AnyOtherBenefitsId.toString -> JsBoolean(false)
   ))
 
@@ -67,8 +66,7 @@ class BenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
             HowMuchIncapacityBenefitId.toString -> JsString("1234"),
             HowMuchEmploymentAndSupportAllowanceId.toString -> JsString("1234"),
             HowMuchStatePensionId.toString -> JsString("1234"),
-            OtherBenefitsNameId.toString -> JsString("qwerty"),
-            HowMuchOtherBenefitId.toString -> JsString("1234"),
+            OtherBenefitId.toString -> JsString("qwerty"),
             AnyOtherBenefitsId.toString -> JsString("1234")
           ))
           val result = cascadeUpsert(AnyBenefitsId.toString, JsBoolean(false), originalCacheMap)
@@ -104,8 +102,7 @@ class BenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
         HowMuchIncapacityBenefitId.toString -> JsString("1234"),
         HowMuchEmploymentAndSupportAllowanceId.toString -> JsString("1234"),
         HowMuchStatePensionId.toString -> JsString("1234"),
-        OtherBenefitsNameId.toString -> JsString("qwerty"),
-        HowMuchOtherBenefitId.toString -> JsString("1234"),
+        OtherBenefitId.toString -> JsString("qwerty"),
         AnyOtherBenefitsId.toString -> JsBoolean(false)
       )
     }
@@ -135,8 +132,7 @@ class BenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
         HowMuchIncapacityBenefitId.toString -> JsString("1234"),
         HowMuchEmploymentAndSupportAllowanceId.toString -> JsString("1234"),
         HowMuchStatePensionId.toString -> JsString("1234"),
-        OtherBenefitsNameId.toString -> JsString("qwerty"),
-        HowMuchOtherBenefitId.toString -> JsString("1234"),
+        OtherBenefitId.toString -> JsString("qwerty"),
         AnyOtherBenefitsId.toString -> JsBoolean(false)
       )
     }
@@ -165,8 +161,7 @@ class BenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
         HowMuchIncapacityBenefitId.toString -> JsString("1234"),
         HowMuchEmploymentAndSupportAllowanceId.toString -> JsString("1234"),
         HowMuchStatePensionId.toString -> JsString("1234"),
-        OtherBenefitsNameId.toString -> JsString("qwerty"),
-        HowMuchOtherBenefitId.toString -> JsString("1234"),
+        OtherBenefitId.toString -> JsString("qwerty"),
         AnyOtherBenefitsId.toString -> JsBoolean(false)
       )
     }
@@ -195,8 +190,7 @@ class BenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
         HowMuchJobseekersAllowanceId.toString -> JsString("1234"),
         HowMuchEmploymentAndSupportAllowanceId.toString -> JsString("1234"),
         HowMuchStatePensionId.toString -> JsString("1234"),
-        OtherBenefitsNameId.toString -> JsString("qwerty"),
-        HowMuchOtherBenefitId.toString -> JsString("1234"),
+        OtherBenefitId.toString -> JsString("qwerty"),
         AnyOtherBenefitsId.toString -> JsBoolean(false)
       )
     }
@@ -225,8 +219,7 @@ class BenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
         HowMuchJobseekersAllowanceId.toString -> JsString("1234"),
         HowMuchIncapacityBenefitId.toString -> JsString("1234"),
         HowMuchStatePensionId.toString -> JsString("1234"),
-        OtherBenefitsNameId.toString -> JsString("qwerty"),
-        HowMuchOtherBenefitId.toString -> JsString("1234"),
+        OtherBenefitId.toString -> JsString("qwerty"),
         AnyOtherBenefitsId.toString -> JsBoolean(false)
       )
     }
@@ -255,8 +248,7 @@ class BenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
         HowMuchJobseekersAllowanceId.toString -> JsString("1234"),
         HowMuchIncapacityBenefitId.toString -> JsString("1234"),
         HowMuchEmploymentAndSupportAllowanceId.toString -> JsString("1234"),
-        OtherBenefitsNameId.toString -> JsString("qwerty"),
-        HowMuchOtherBenefitId.toString -> JsString("1234"),
+        OtherBenefitId.toString -> JsString("qwerty"),
         AnyOtherBenefitsId.toString -> JsBoolean(false)
       )
     }
@@ -310,8 +302,7 @@ class BenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
         HowMuchIncapacityBenefitId.toString -> JsString("1234"),
         HowMuchEmploymentAndSupportAllowanceId.toString -> JsString("1234"),
         HowMuchStatePensionId.toString -> JsString("1234"),
-        OtherBenefitsNameId.toString -> JsString("qwerty"),
-        HowMuchOtherBenefitId.toString -> JsString("1234"),
+        OtherBenefitId.toString -> JsString("qwerty"),
         AnyOtherBenefitsId.toString -> JsBoolean(false)
       )
     }

@@ -32,16 +32,16 @@
         <ul role="list" class="tabular-data tabular-data--list">
             <li class="tabular-data__entry tabular-data__entry--grouped divider--bottom">
                 <div id="cya-nino-question" class="tabular-data__data tabular-data__data--6-12">
-                @messages("userDetails.checkYourAnswersLabel.nino")
+                    @messages("userDetails.checkYourAnswersLabel.nino")
                 </div>
                 <div id="cya-nino-answer" class="tabular-data__data tabular-data__data--3-12">
-                @nino
+                    @nino
                 </div>
             </li>
             @if(name.isDefined) {
                 <li class="tabular-data__entry tabular-data__entry--grouped divider--bottom">
                     <div id="cya-name-question" class="tabular-data__data tabular-data__data--6-12">
-                    @messages("userDetails.checkYourAnswersLabel.name")
+                        @messages("userDetails.checkYourAnswersLabel.name")
                     </div>
                     <div id="cya-name-answer" class="tabular-data__data tabular-data__data--3-12">
                         @name.get.givenName @name.get.middleName @name.get.familyName

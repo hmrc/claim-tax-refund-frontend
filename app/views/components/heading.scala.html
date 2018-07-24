@@ -17,18 +17,16 @@
 @(
     heading: String,
     headingSize: String = "heading-xlarge",
-    secondaryHeaderKey: Option[String] = Some("index.title"),
-    subSecHeader: Option[String] = None
+    taxYear: Option[String] = None
 )(implicit messages: Messages)
+
+@secondaryHeaderText = @{
+    if (taxYear.isDefined) messages("site.service_name.with_tax_year", taxYear.get) else messages("site.service_name")
+}
 
 <header class="page-header">
     <h1 class="@headingSize">@heading</h1>
-    @secondaryHeaderKey.map { secHeader =>
         <p class="heading-secondary">
-            <span class="visuallyhidden">This section is: </span>@messages(secHeader)
-            @subSecHeader.map { subSecHeader =>
-                @subSecHeader
-            }
+            <span class="visuallyhidden">This section is: </span>@secondaryHeaderText
         </p>
-    }
 </header>

@@ -14,8 +14,18 @@
  * limitations under the License.
  */
 
-package identifiers
+package utils
 
-case object HowMuchOtherBenefitId extends Identifier {
-  override def toString: String = "howMuchOtherBenefit"
+import models.Index
+
+class SequenceUtil[A] {
+  def updateSeq(seq: Seq[A], index: Index, value: A): Seq[A] = {
+    if (index.id >= seq.length) {
+      val updatedSeq: Seq[A] = seq :+ value
+      updatedSeq
+    } else {
+      val updatedSeq: Seq[A] = seq.updated(index.id, value)
+      updatedSeq
+    }
+  }
 }

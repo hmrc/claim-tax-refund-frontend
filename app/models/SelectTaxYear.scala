@@ -27,7 +27,7 @@ sealed trait SelectTaxYear {
 
 object SelectTaxYear extends Enumerable[SelectTaxYear] {
 
-  val dateFormat = "dd MMMM YYYY"
+  val dateFormat = "d MMMM YYYY"
 
   case object CYMinus1 extends WithName("current-year-minus-1") with SelectTaxYear {
     override def year: Int = TaxYearResolver.startOfCurrentTaxYear.minusYears(1).getYear

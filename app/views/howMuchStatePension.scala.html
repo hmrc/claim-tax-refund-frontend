@@ -23,7 +23,7 @@
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: SelectTaxYear)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("howMuchStatePension.title", taxYear.asString),
+    title = messages("howMuchStatePension.title"),
     appConfig = appConfig,
     bodyClasses = None) {
 
@@ -33,7 +33,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading(messages("howMuchStatePension.heading", taxYear.asString))
+        @components.heading(messages("howMuchStatePension.heading"), taxYear = Some(taxYear.asString))
 
         @components.input_text(InputViewModel("value", form),
             label = messages("howMuchStatePension.heading", taxYear.asString),

@@ -26,6 +26,14 @@ import play.api.mvc.Call
 
 @Singleton
 class Navigator @Inject()() {
+//  To be used with looping taxable income
+//  private val routeMapWithIndex: PartialFunction[Identifier, UserAnswers => Call] = {
+//    ???
+//  }
+//
+//  private val editRouteMapWithIndex: PartialFunction[Identifier, UserAnswers => Call] = {
+//    ???
+//  }
 
   private val routeMap: Map[Identifier, UserAnswers => Call] = Map(
     //Claim details
@@ -43,8 +51,7 @@ class Navigator @Inject()() {
     HowMuchEmploymentAndSupportAllowanceId -> selectBenefits(NormalMode),
     HowMuchStatePensionId -> selectBenefits(NormalMode),
     AnyOtherBenefitsId -> anyOtherBenefits,
-    OtherBenefitsNameId -> (_ => routes.HowMuchOtherBenefitController.onPageLoad(NormalMode)),
-    HowMuchOtherBenefitId -> (_ => routes.AnyOtherBenefitsController.onPageLoad(NormalMode)),
+    OtherBenefitId -> otherBenefitsName(NormalMode),
     //Company benefits
     AnyCompanyBenefitsId -> anyCompanyBenefits(NormalMode),
     SelectCompanyBenefitsId -> selectedCompanyBenefitsCheck(NormalMode),
@@ -93,7 +100,7 @@ class Navigator @Inject()() {
     HowMuchIncapacityBenefitId -> selectBenefits(CheckMode),
     HowMuchEmploymentAndSupportAllowanceId -> selectBenefits(CheckMode),
     HowMuchStatePensionId -> selectBenefits(CheckMode),
-    OtherBenefitsNameId -> howMuchOtherBenefitsCheck,
+    OtherBenefitId -> otherBenefitsName(CheckMode),
     //Company Benefits
     AnyCompanyBenefitsId -> anyCompanyBenefits(CheckMode),
     SelectCompanyBenefitsId -> selectedCompanyBenefitsCheck(CheckMode),
@@ -149,11 +156,8 @@ class Navigator @Inject()() {
   //Benefits----------------------------------
 
   private def anyBenefits(mode: Mode)(userAnswers: UserAnswers): Call = userAnswers.anyBenefits match {
-    case Some(true) =>
-      userAnswers.selectBenefits match {
-        case None => routes.SelectBenefitsController.onPageLoad(mode)
-        case _ => selectBenefits(mode)(userAnswers)
-      }
+    case Some(true)  =>
+      routes.SelectBenefitsController.onPageLoad(mode)
     case Some(false) =>
       if(mode == NormalMode) routes.AnyCompanyBenefitsController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
     case None =>
@@ -174,8 +178,8 @@ class Navigator @Inject()() {
         routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(mode)
       } else if (benefits.contains(Benefits.STATE_PENSION) && userAnswers.howMuchStatePension.isEmpty) {
         routes.HowMuchStatePensionController.onPageLoad(mode)
-      } else if (benefits.contains(Benefits.OTHER_TAXABLE_BENEFIT) && userAnswers.howMuchOtherTaxableIncome.isEmpty) {
-        routes.OtherBenefitsNameController.onPageLoad(mode)
+      } else if (benefits.contains(Benefits.OTHER_TAXABLE_BENEFIT)) {
+        routes.OtherBenefitController.onPageLoad(mode, Index(0))
       } else {
         if (mode == NormalMode) routes.AnyCompanyBenefitsController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
       }
@@ -183,15 +187,13 @@ class Navigator @Inject()() {
   }
 
   private def anyOtherBenefits(userAnswers: UserAnswers): Call = userAnswers.anyOtherBenefits match {
-    case Some(true) => routes.OtherBenefitsNameController.onPageLoad(NormalMode)
+    case Some(true) => routes.OtherBenefitController.onPageLoad(NormalMode, Index(userAnswers.otherBenefit.get.length))
     case Some(false) => routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
-  private def howMuchOtherBenefitsCheck(userAnswers: UserAnswers): Call = userAnswers.howMuchOtherBenefit match {
-    case None => routes.HowMuchOtherBenefitController.onPageLoad(CheckMode)
-    case _ => routes.CheckYourAnswersController.onPageLoad()
-  }
+  def otherBenefitsName(mode: Mode)(userAnswers: UserAnswers): Call =
+    if (mode == NormalMode) routes.AnyOtherBenefitsController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
 
 
   //Company benefits--------------------------
@@ -382,4 +384,11 @@ class Navigator @Inject()() {
     case CheckMode =>
       editRouteMap.getOrElse(id, _ => routes.CheckYourAnswersController.onPageLoad())
   }
+//  To be used with looping taxable income
+//  def nextPageWithIndex(id: Identifier, mode: Mode): UserAnswers => Call = mode match {
+//    case NormalMode =>
+//      routeMapWithIndex.lift(id).getOrElse(_ => routes.IndexController.onPageLoad())
+//    case CheckMode =>
+//      editRouteMapWithIndex.lift(id).getOrElse(_ => routes.CheckYourAnswersController.onPageLoad())
+//  }
 }

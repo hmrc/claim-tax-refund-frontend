@@ -15,30 +15,34 @@
  *@
 
 @import config.FrontendAppConfig
-@import uk.gov.hmrc.play.views.html._
 @import controllers.routes._
 @import models.Mode
+@import uk.gov.hmrc.play.views.html._
 @import viewmodels.InputViewModel
 
-@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: SelectTaxYear)(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, form: Form[OtherBenefit], mode: Mode, index: Index, taxYear: SelectTaxYear)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("otherBenefitsName.title",taxYear.asString),
+    title = messages("otherBenefit.title"),
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @helpers.form(action = OtherBenefitsNameController.onSubmit(mode), 'autoComplete -> "off") {
+    @helpers.form(action = OtherBenefitController.onSubmit(mode, index), 'autoComplete -> "off") {
 
         @components.back_link()
 
         @components.error_summary(form.errors)
 
-        @components.heading(messages("otherBenefitsName.heading", taxYear.asString))
+        @components.heading(messages("otherBenefit.heading"), taxYear = Some(taxYear.asString))
 
         @components.input_text(
-            InputViewModel("value", form),
-            label = messages("otherBenefitsName.heading", taxYear.asString),
-            labelClass=Some("visually-hidden")
+            InputViewModel("name", form),
+            label = "Name"
+        )
+
+        @components.input_text(
+            InputViewModel("amount", form),
+            label = "Amount"
         )
 
         @components.submit_button()
