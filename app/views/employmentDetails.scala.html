@@ -15,9 +15,9 @@
  *@
 
 @import config.FrontendAppConfig
-@import uk.gov.hmrc.play.views.html._
 @import controllers.routes._
 @import models.Mode
+@import uk.gov.hmrc.play.views.html._
 @import viewmodels.InputViewModel
 
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, results: Seq[Employment], taxYear: SelectTaxYear)(implicit request: Request[_], messages: Messages)
@@ -25,7 +25,8 @@
 @main_template(
     title = messages("employmentDetails.title", taxYear.asString),
     appConfig = appConfig,
-    bodyClasses = None) {
+    bodyClasses = None
+) {
 
     @helpers.form(action = EmploymentDetailsController.onSubmit(mode), 'autoComplete -> "off") {
 
@@ -33,7 +34,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading(messages("employmentDetails.heading", taxYear.asString))
+        @components.heading(heading = messages("employmentDetails.heading"), taxYear = Some(taxYear.asString))
 
         <table>
             <thead>

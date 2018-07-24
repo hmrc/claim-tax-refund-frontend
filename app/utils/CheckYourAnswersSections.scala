@@ -17,13 +17,21 @@
 package utils
 
 import controllers.routes
-import models.CheckMode
+import models.{CheckMode, Index}
 import viewmodels.AnswerSection
 
 class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: UserAnswers) {
 
   def sections: Seq[AnswerSection] = {
-    Seq(claimSection, benefitSection, companyBenefitSection, taxableIncomeSection, paymentSection, contactSection)
+    Seq(
+      claimSection,
+      benefitSection,
+      otherBenefitsSection,
+      companyBenefitSection,
+      taxableIncomeSection,
+      paymentSection,
+      contactSection
+    )
   }
 
   def claimSection = AnswerSection(Some("checkYourAnswers.claimSection"), Seq(
@@ -41,11 +49,21 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
     cyaHelper.howMuchJobseekersAllowance,
     cyaHelper.howMuchEmploymentAndSupportAllowance,
     cyaHelper.howMuchIncapacityBenefit,
-    cyaHelper.howMuchStatePension,
-    cyaHelper.otherBenefitsName,
-    cyaHelper.howMuchOtherBenefit,
-    cyaHelper.anyOtherBenefits
+    cyaHelper.howMuchStatePension
   ).flatten)
+
+  def otherBenefitsSection: AnswerSection = {
+    if (userAnswers.otherBenefit.isDefined) {
+      AnswerSection(
+        headingKey = Some("otherBenefit.checkYourAnswersLabel"),
+        rows = cyaHelper.otherBenefits.flatten,
+        addLinkText = Some("otherBenefit.add"),
+        addLinkUrl = Some(routes.OtherBenefitController.onPageLoad(CheckMode, Index(userAnswers.otherBenefit.get.size)).url)
+      )
+    } else {
+      AnswerSection(None, Seq.empty)
+    }
+  }
 
   def companyBenefitSection = AnswerSection(Some("checkYourAnswers.companyBenefitsSection"), Seq(
     cyaHelper.anyCompanyBenefits,

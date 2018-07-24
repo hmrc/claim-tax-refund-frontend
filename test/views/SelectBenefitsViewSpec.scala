@@ -43,11 +43,11 @@ class SelectBenefitsViewSpec extends ViewBehaviours with CheckboxViewBehaviours[
   def createViewUsingForm = (form: Form[_]) => selectBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "SelectBenefits view" must {
-    behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))
+    behave like normalPage(createView, messageKeyPrefix, None)
 
     behave like pageWithBackLink(createView)
 
-    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+    behave like pageWithSecondaryHeader(createView, messages("site.service_name.with_tax_year", taxYear.asString(messages)))
 
     behave like checkboxPage(legend = Some(messages(s"$messageKeyPrefix.heading", taxYear.asString(messages))))
   }

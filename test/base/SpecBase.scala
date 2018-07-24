@@ -17,12 +17,14 @@
 package base
 
 import config.FrontendAppConfig
+import models.OtherBenefit
 import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice._
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.Injector
 import play.api.test.FakeRequest
 import uk.gov.hmrc.auth.core.retrieve.ItmpAddress
+import utils.SequenceUtil
 
 trait SpecBase extends PlaySpec with GuiceOneAppPerSuite {
 
@@ -35,6 +37,8 @@ trait SpecBase extends PlaySpec with GuiceOneAppPerSuite {
   def fakeRequest = FakeRequest("", "")
 
   def messages: Messages = messagesApi.preferred(fakeRequest)
+
+  def sequenceUtil: SequenceUtil[OtherBenefit] = injector.instanceOf[SequenceUtil[OtherBenefit]]
 
   val itmpAddress = ItmpAddress(
     Some("Line1"),

@@ -17,11 +17,16 @@
 package utils
 
 import base.SpecBase
+import controllers.routes
+import models.{CheckMode, Index}
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.mockito.MockitoSugar
 import play.api.i18n.Messages
+import viewmodels.AnswerRow
 
 class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with BeforeAndAfterEach {
+
+
 
   "sections have correct label" must {
     val answers = MockUserAnswers.minimalValidUserAnswers
@@ -71,9 +76,10 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       val answers = MockUserAnswers.benefitsUserAnswers
       val helper = new CheckYourAnswersHelper(answers)(messages: Messages)
       val sections = new CheckYourAnswersSections(helper, answers)
-      val rows = sections.benefitSection.rows
+      val rows: Seq[AnswerRow] = sections.benefitSection.rows
+      val otherBenefitSection = sections.otherBenefitsSection
 
-      rows.size mustBe 11
+      rows.size mustBe 8
       rows.head.label.key mustBe "anyBenefits.checkYourAnswersLabel"
       rows(1).label.key mustBe "selectBenefits.checkYourAnswersLabel"
       rows(2).label.key mustBe "howMuchBereavementAllowance.checkYourAnswersLabel"
@@ -82,9 +88,11 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       rows(5).label.key mustBe "howMuchEmploymentAndSupportAllowance.checkYourAnswersLabel"
       rows(6).label.key mustBe "howMuchIncapacityBenefit.checkYourAnswersLabel"
       rows(7).label.key mustBe "howMuchStatePension.checkYourAnswersLabel"
-      rows(8).label.key mustBe "otherBenefitsName.checkYourAnswersLabel"
-      rows(9).label.key mustBe "howMuchOtherBenefit.checkYourAnswersLabel"
-      rows(10).label.key mustBe "anyOtherBenefits.checkYourAnswersLabel"
+
+      otherBenefitSection.rows.size mustBe 3
+      otherBenefitSection.headingKey.get mustBe "otherBenefit.checkYourAnswersLabel"
+      otherBenefitSection.addLinkText.get mustBe "otherBenefit.add"
+      otherBenefitSection.addLinkUrl.get mustBe routes.OtherBenefitController.onPageLoad(CheckMode, Index(otherBenefitSection.rows.size)).url
     }
 
     "Company benefits section" in {
