@@ -42,7 +42,7 @@
     @if(answerSection.addLinkText.isDefined && answerSection.addLinkUrl.isDefined) {
         <li class="tabular-data__entry tabular-data__entry--grouped">
             <div class="tabular-data__data tabular-data__data--2-12">
-                <a href=@answerSection.addLinkUrl>@answerSection.addLinkText</a>
+                <a href=@answerSection.addLinkUrl.get>@messages(answerSection.addLinkText.get)</a>
             </div>
         </li>
     }

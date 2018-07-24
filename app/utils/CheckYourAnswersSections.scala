@@ -17,7 +17,7 @@
 package utils
 
 import controllers.routes
-import models.{CheckMode, Index, NormalMode}
+import models.{CheckMode, Index}
 import viewmodels.AnswerSection
 
 class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: UserAnswers) {
@@ -55,9 +55,9 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
   def otherBenefitsSection: AnswerSection = {
     if (userAnswers.otherBenefit.isDefined) {
       AnswerSection(
-        headingKey = Some("Other taxable benefit details"),
+        headingKey = Some("otherBenefit.checkYourAnswersLabel"),
         rows = cyaHelper.otherBenefits.flatten,
-        addLinkText = Some("Add another taxable benefit"),
+        addLinkText = Some("otherBenefit.add"),
         addLinkUrl = Some(routes.OtherBenefitController.onPageLoad(CheckMode, Index(userAnswers.otherBenefit.get.size)).url)
       )
     } else {

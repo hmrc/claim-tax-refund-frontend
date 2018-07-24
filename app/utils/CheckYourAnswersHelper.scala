@@ -84,35 +84,27 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
   }
 
   def howMuchBereavementAllowance: Option[AnswerRow] = userAnswers.howMuchBereavementAllowance map {
-    x => AnswerRow("howMuchBereavementAllowance.checkYourAnswersLabel", s"$x", false, routes.HowMuchBereavementAllowanceController.onPageLoad(CheckMode).url)
+    x => AnswerRow("howMuchBereavementAllowance.checkYourAnswersLabel", s"£$x", false, routes.HowMuchBereavementAllowanceController.onPageLoad(CheckMode).url)
   }
 
   def howMuchCarersAllowance: Option[AnswerRow] = userAnswers.howMuchCarersAllowance map {
-    x => AnswerRow("howMuchCarersAllowance.checkYourAnswersLabel", s"$x", false, routes.HowMuchCarersAllowanceController.onPageLoad(CheckMode).url)
+    x => AnswerRow("howMuchCarersAllowance.checkYourAnswersLabel", s"£$x", false, routes.HowMuchCarersAllowanceController.onPageLoad(CheckMode).url)
   }
 
   def howMuchJobseekersAllowance: Option[AnswerRow] = userAnswers.howMuchJobseekersAllowance map {
-    x =>
-      AnswerRow("howMuchJobseekersAllowance.checkYourAnswersLabel",
-        s"$x", false, routes.HowMuchJobseekersAllowanceController.onPageLoad(CheckMode).url)
+    x => AnswerRow("howMuchJobseekersAllowance.checkYourAnswersLabel", s"£$x", false, routes.HowMuchJobseekersAllowanceController.onPageLoad(CheckMode).url)
   }
 
   def howMuchIncapacityBenefit: Option[AnswerRow] = userAnswers.howMuchIncapacityBenefit map {
-    x =>
-      AnswerRow("howMuchIncapacityBenefit.checkYourAnswersLabel",
-        s"$x", false, routes.HowMuchIncapacityBenefitController.onPageLoad(CheckMode).url)
+    x => AnswerRow("howMuchIncapacityBenefit.checkYourAnswersLabel", s"£$x", false, routes.HowMuchIncapacityBenefitController.onPageLoad(CheckMode).url)
   }
 
   def howMuchEmploymentAndSupportAllowance: Option[AnswerRow] = userAnswers.howMuchEmploymentAndSupportAllowance map {
-    x =>
-      AnswerRow("howMuchEmploymentAndSupportAllowance.checkYourAnswersLabel",
-        s"$x", false, routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(CheckMode).url)
+    x => AnswerRow("howMuchEmploymentAndSupportAllowance.checkYourAnswersLabel", s"£$x", false, routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(CheckMode).url)
   }
 
   def howMuchStatePension: Option[AnswerRow] = userAnswers.howMuchStatePension map {
-    x =>
-      AnswerRow("howMuchStatePension.checkYourAnswersLabel",
-        s"$x", false, routes.HowMuchStatePensionController.onPageLoad(CheckMode).url)
+    x => AnswerRow("howMuchStatePension.checkYourAnswersLabel", s"£$x", false, routes.HowMuchStatePensionController.onPageLoad(CheckMode).url)
   }
 
   def otherBenefits: Seq[Option[AnswerRow]] = {
@@ -122,18 +114,11 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
       otherBenefits.zipWithIndex.flatMap {
         case (benefits, index) =>
           Seq(
-            Some(AnswerRow(benefits.name, benefits.amount, answerIsMessageKey = false, routes.OtherBenefitController.onPageLoad(CheckMode, Index(index)).url))
+            Some(AnswerRow(benefits.name, s"£${benefits.amount}", answerIsMessageKey = false, routes.OtherBenefitController.onPageLoad(CheckMode, Index(index)).url))
           )
       }
     }
   }.getOrElse(Seq.empty)
-
-  def anyOtherBenefits: Option[AnswerRow] = userAnswers.anyOtherBenefits map {
-    x =>
-      AnswerRow("anyOtherBenefits.checkYourAnswersLabel",
-        if (x) "site.yes" else "site.no",
-        true, routes.AnyOtherBenefitsController.onPageLoad(CheckMode).url)
-  }
 
   //Company benefits
   //------------------------------------------------------------------
