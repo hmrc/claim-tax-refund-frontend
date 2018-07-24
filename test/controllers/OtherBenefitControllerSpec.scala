@@ -32,8 +32,9 @@ class OtherBenefitControllerSpec extends ControllerSpecBase {
 
   def onwardRoute: Call = routes.AnyOtherBenefitsController.onPageLoad(NormalMode)
 
-  val testAnswer = OtherBenefit("qwerty", "")
+  val testAnswer = OtherBenefit("qwerty", "123")
   val form = new OtherBenefitForm(frontendAppConfig)(Seq.empty, 0)
+  val formFilled = new OtherBenefitForm(frontendAppConfig)(Seq.empty, 1)
   private val taxYear = CYMinus2
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
 
@@ -41,7 +42,8 @@ class OtherBenefitControllerSpec extends ControllerSpecBase {
     new OtherBenefitController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, sequenceUtil, new OtherBenefitForm(frontendAppConfig))
 
-  def viewAsString(form: Form[_] = form): String = otherBenefit(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages).toString
+  def viewAsString(form: Form[OtherBenefit], index: Index): String =
+    otherBenefit(frontendAppConfig, form, NormalMode, index, taxYear)(fakeRequest, messages).toString
 
   "OtherBenefit Controller" must {
 
@@ -49,14 +51,24 @@ class OtherBenefitControllerSpec extends ControllerSpecBase {
       val result = controller(fakeDataRetrievalAction()).onPageLoad(NormalMode, 0)(fakeRequest)
 
       status(result) mustBe OK
-      contentAsString(result) mustBe viewAsString()
+      contentAsString(result) mustBe viewAsString(form, 0)
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
       when(mockUserAnswers.otherBenefit).thenReturn(Some(Seq(testAnswer)))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, 0)(fakeRequest)
 
-      contentAsString(result) mustBe viewAsString(form.fill(testAnswer))
+      contentAsString(result) mustBe viewAsString(form.fill(testAnswer), 0)
+    }
+
+    "return a form when index is greater than otherBenefit value length" in {
+
+      when(mockUserAnswers.otherBenefit).thenReturn(Some(Seq(OtherBenefit("qwerty", "123"))))
+
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, 1)(fakeRequest)
+
+      contentAsString(result) mustBe viewAsString(formFilled, 1)
+
     }
 
     "redirect to the next page when valid data is submitted" in {
@@ -74,7 +86,7 @@ class OtherBenefitControllerSpec extends ControllerSpecBase {
       val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode, 0)(postRequest)
 
       status(result) mustBe BAD_REQUEST
-      contentAsString(result) mustBe viewAsString(boundForm)
+      contentAsString(result) mustBe viewAsString(boundForm, 0)
     }
 
     "redirect to Session Expired for a GET if no existing data is found" in {

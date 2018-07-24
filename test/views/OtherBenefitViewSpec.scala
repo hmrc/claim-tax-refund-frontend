@@ -35,7 +35,7 @@ class OtherBenefitViewSpec extends QuestionViewBehaviours[OtherBenefit] with Moc
 
   def createView: () => HtmlFormat.Appendable = () => otherBenefit(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages)
 
-  def createViewUsingForm: Form[String] => HtmlFormat.Appendable = (form: Form[String]) =>
+  def createViewUsingForm: Form[OtherBenefit] => HtmlFormat.Appendable = (form: Form[OtherBenefit]) =>
     otherBenefit(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages)
 
   "OtherBenefit view" must {
@@ -45,15 +45,8 @@ class OtherBenefitViewSpec extends QuestionViewBehaviours[OtherBenefit] with Moc
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-/*    behave like stringPage(
-      createView = createViewUsingForm,
-      messageKeyPrefix = messageKeyPrefix,
-      expectedFormAction = routes.OtherBenefitsNameController.onSubmit(NormalMode, 0).url,
-      expectedHintKeyLine1 = None,
-      expectedHintKeyLine2 = None,
-      expectedPrefix = None,
-      args = taxYear.asString(messages)
-    )*/
-
+    behave like pageWithTextFields(
+      createViewUsingForm, messageKeyPrefix, routes.OtherBenefitController.onSubmit(NormalMode, 0).url, "name", "amount"
+    )
   }
 }
