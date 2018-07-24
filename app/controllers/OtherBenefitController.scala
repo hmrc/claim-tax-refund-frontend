@@ -78,7 +78,7 @@ class OtherBenefitController @Inject()(
                 OtherBenefitId.toString,
                 sequenceUtil.updateSeq(benefitNames, index, value)
               ).map(cacheMap =>
-                Redirect(navigator.nextPageWithIndex(OtherBenefitId(index), mode)(new UserAnswers(cacheMap))))
+                Redirect(navigator.nextPage(OtherBenefitId, mode)(new UserAnswers(cacheMap))))
             }
           )
       }.getOrElse {
