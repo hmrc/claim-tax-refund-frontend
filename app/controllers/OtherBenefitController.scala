@@ -69,7 +69,7 @@ class OtherBenefitController @Inject()(
         selectedTaxYear =>
           val taxYear = selectedTaxYear
           form.bindFromRequest().fold(
-            (formWithErrors: Form[_]) =>
+            (formWithErrors: Form[OtherBenefit]) =>
               Future.successful(BadRequest(otherBenefit(appConfig, formWithErrors, mode, index, taxYear))),
             value => {
               val benefitNames: Seq[OtherBenefit] = request.userAnswers.otherBenefit.getOrElse(Seq(value))

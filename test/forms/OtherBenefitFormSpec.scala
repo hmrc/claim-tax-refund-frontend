@@ -25,9 +25,6 @@ import play.api.data.{Form, FormError}
 
 class OtherBenefitFormSpec extends FormBehaviours with MockitoSugar {
 
-
-  override val form: Form[_] = new OtherBenefitForm(appConfig)(Seq(OtherBenefit("", "")), 0)
-
   private val currencyRegex = """(?=.)^\$?(([1-9][0-9]{0,2}(,[0-9]{3})*)|[0-9]+)?(\.[0-9]{1,2})?$"""
   val nameKeyBlank = "otherBenefit.name.blank"
   val amountKeyBlank = "otherBenefit.amount.blank"
@@ -41,9 +38,11 @@ class OtherBenefitFormSpec extends FormBehaviours with MockitoSugar {
   }
 
   val validData: Map[String, String] = Map(
-    "name" -> "qwerty",
-    "amount" -> "123"
+  "name" -> "qwerty",
+  "amount" -> "123"
   )
+
+  override val form: Form[OtherBenefit] = new OtherBenefitForm(appConfig)(Seq.empty, 0)
 
   def otherBenefitsForm(otherBenefits: Seq[OtherBenefit], index: Index): Form[OtherBenefit] = new OtherBenefitForm(appConfig)(otherBenefits, index)
 
@@ -56,27 +55,27 @@ class OtherBenefitFormSpec extends FormBehaviours with MockitoSugar {
     }
 
     "fail to bind with missing name" in {
-      val result: Form[OtherBenefit] = otherBenefitsForm(Seq.empty, 0).bind(Map("amount" -> "123"))
+      val result: Form[OtherBenefit] = form.bind(Map("amount" -> "123"))
       result.errors.size shouldBe 1
       result.errors shouldBe Seq(FormError("name", nameKeyBlank))
     }
 
     "fail to bind if name is duplicate" in {
       val result: Form[OtherBenefit] =
-        otherBenefitsForm(Seq(OtherBenefit("qwerty", "123")), 1).bind(Map("name" -> "qwerty", "amount" -> "123"))
+        otherBenefitsForm(Seq(OtherBenefit("qwerty", "123")), 1).bind(validData)
 
       result.errors.size shouldBe 1
       result.errors shouldBe Seq(FormError("name", duplicateBenefitKey))
     }
 
     "fail to bind with missing amount" in {
-      val result: Form[OtherBenefit] = otherBenefitsForm(Seq.empty, 0).bind(Map("name" -> "qwerty"))
+      val result: Form[OtherBenefit] = form.bind(Map("name" -> "qwerty"))
       result.errors.size shouldBe 1
       result.errors shouldBe Seq(FormError("amount", amountKeyBlank))
     }
 
-    "fail to bind with incorrect amount" in {
-      val result: Form[OtherBenefit] = otherBenefitsForm(Seq.empty, 0).bind(Map("name" -> "qwerty", "amount" -> "qwerty"))
+    "fail to bind with invalid amount" in {
+      val result: Form[OtherBenefit] = form.bind(Map("name" -> "qwerty", "amount" -> "qwerty"))
       result.errors.size shouldBe 1
       result.errors shouldBe Seq(FormError("amount", amountKeyInvalid))
     }
