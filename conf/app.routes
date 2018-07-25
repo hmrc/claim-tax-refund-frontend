@@ -192,15 +192,10 @@ POST       /select-taxable-income                                           cont
 GET        /change-select-taxable-income                                    controllers.SelectTaxableIncomeController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-select-taxable-income                                    controllers.SelectTaxableIncomeController.onSubmit(mode: Mode = CheckMode)
 
-GET        /how-much-other-taxable-income                                   controllers.HowMuchOtherTaxableIncomeController.onPageLoad(mode: Mode = NormalMode)
-POST       /how-much-other-taxable-income                                   controllers.HowMuchOtherTaxableIncomeController.onSubmit(mode: Mode = NormalMode)
-GET        /change-how-much-other-taxable-income                            controllers.HowMuchOtherTaxableIncomeController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-how-much-other-taxable-income                            controllers.HowMuchOtherTaxableIncomeController.onSubmit(mode: Mode = CheckMode)
-
-GET        /other-taxable-income-name                                       controllers.OtherTaxableIncomeNameController.onPageLoad(mode: Mode = NormalMode)
-POST       /other-taxable-income-name                                       controllers.OtherTaxableIncomeNameController.onSubmit(mode: Mode = NormalMode)
-GET        /change-other-taxable-income-name                                controllers.OtherTaxableIncomeNameController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-other-taxable-income-name                                controllers.OtherTaxableIncomeNameController.onSubmit(mode: Mode = CheckMode)
+GET        /other-taxable-income-:index                                     controllers.OtherTaxableIncomeController.onPageLoad(mode: Mode = NormalMode, index: Index)
+POST       /other-taxable-income-:index                                     controllers.OtherTaxableIncomeController.onSubmit(mode: Mode = NormalMode, index: Index)
+GET        /change-other-taxable-income-:index                              controllers.OtherTaxableIncomeController.onPageLoad(mode: Mode = CheckMode, index: Index)
+POST       /change-other-taxable-income-:index                              controllers.OtherTaxableIncomeController.onSubmit(mode: Mode = CheckMode, index: Index)
 
 GET        /any-taxable-rental-income                                       controllers.AnyTaxableRentalIncomeController.onPageLoad(mode: Mode = NormalMode)
 POST       /any-taxable-rental-income                                       controllers.AnyTaxableRentalIncomeController.onSubmit(mode: Mode = NormalMode)
@@ -222,10 +217,10 @@ POST       /any-taxable-foreign-income                                      cont
 GET        /change-any-taxable-foreign-income                               controllers.AnyTaxableForeignIncomeController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-any-taxable-foreign-income                               controllers.AnyTaxableForeignIncomeController.onSubmit(mode: Mode = CheckMode)
 
-GET        /any-taxable-other-income                                        controllers.AnyTaxableOtherIncomeController.onPageLoad(mode: Mode = NormalMode)
-POST       /any-taxable-other-income                                        controllers.AnyTaxableOtherIncomeController.onSubmit(mode: Mode = NormalMode)
-GET        /change-any-taxable-other-income                                 controllers.AnyTaxableOtherIncomeController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-any-taxable-other-income                                 controllers.AnyTaxableOtherIncomeController.onSubmit(mode: Mode = CheckMode)
+GET        /any-taxable-other-income-:index                                 controllers.AnyTaxableOtherIncomeController.onPageLoad(mode: Mode = NormalMode, index: Index)
+POST       /any-taxable-other-income-:index                                 controllers.AnyTaxableOtherIncomeController.onSubmit(mode: Mode = NormalMode, index: Index)
+GET        /change-any-taxable-other-income-:index                          controllers.AnyTaxableOtherIncomeController.onPageLoad(mode: Mode = CheckMode, index: Index)
+POST       /change-any-taxable-other-income-:index                          controllers.AnyTaxableOtherIncomeController.onSubmit(mode: Mode = CheckMode, index: Index)
 
 GET        /payment-address-correct                                         controllers.PaymentAddressCorrectController.onPageLoad(mode: Mode = NormalMode)
 POST       /payment-address-correct                                         controllers.PaymentAddressCorrectController.onSubmit(mode: Mode = NormalMode)

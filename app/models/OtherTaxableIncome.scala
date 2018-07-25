@@ -14,17 +14,15 @@
  * limitations under the License.
  */
 
-package forms
+package models
 
-import com.google.inject.Inject
-import config.FrontendAppConfig
-import forms.mappings.Constraints
-import play.api.data.Form
-import play.api.data.Forms._
+import play.api.libs.json.{Format, Json}
 
-class OtherTaxableIncomeNameForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
+case class OtherTaxableIncome (
+                              name: String,
+                              amount: String
+                              )
 
-  private val errorBlankKey = "otherTaxableIncomeName.blank"
-
-  def apply(): Form[String] = Form("value" -> text.verifying(nonEmpty(errorBlankKey)))
+object OtherTaxableIncome {
+  implicit val formats: Format[OtherTaxableIncome] = Json.format[OtherTaxableIncome]
 }

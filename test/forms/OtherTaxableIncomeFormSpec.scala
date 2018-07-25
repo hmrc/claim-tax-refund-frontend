@@ -23,7 +23,7 @@ import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito._
 import play.api.data.Form
 
-class OtherTaxableIncomeNameFormSpec extends FormBehaviours with MockitoSugar {
+class OtherTaxableIncomeFormSpec extends FormBehaviours with MockitoSugar {
 
   val errorKeyBlank = "otherTaxableIncomeName.blank"
 
@@ -34,7 +34,7 @@ class OtherTaxableIncomeNameFormSpec extends FormBehaviours with MockitoSugar {
 
   val validData: Map[String, String] = Map("value" -> "test answer")
 
-  override val form: Form[_] = new OtherTaxableIncomeNameForm(appConfig)()
+  override val form: Form[_] = new OtherTaxableIncomeForm(appConfig)()
 
   "OtherTaxableIncomeName Form" must {
 

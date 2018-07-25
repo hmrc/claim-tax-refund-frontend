@@ -39,7 +39,7 @@ object TaxableIncome extends Enumeration {
       case "bank-or-building-society-interest" => (HowMuchBankInterestId.toString, AnyTaxableBankInterestId.toString)
       case "investment-or-dividends" => (HowMuchInvestmentsId.toString, AnyTaxableInvestmentsId.toString)
       case "foreign-income" => (HowMuchForeignIncomeId.toString, AnyTaxableForeignIncomeId.toString)
-      case "other-taxable-income" => (OtherTaxableIncomeNameId.toString, AnyTaxableOtherIncomeId.toString)
+      case "other-taxable-income" => (OtherTaxableIncomeId.toString, AnyTaxableOtherIncomeId.toString)
     }
   }
 

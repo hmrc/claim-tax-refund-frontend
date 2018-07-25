@@ -21,24 +21,24 @@ import utils.{FakeNavigator, MockUserAnswers}
 import connectors.FakeDataCacheConnector
 import controllers.actions._
 import play.api.test.Helpers._
-import forms.OtherTaxableIncomeNameForm
+import forms.OtherTaxableIncomeForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.mockito.Mockito.when
 import views.html.otherTaxableIncomeName
 
-class OtherTaxableIncomeNameControllerSpec extends ControllerSpecBase {
+class OtherTaxableIncomeControllerSpec extends ControllerSpecBase {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
   val testAnswer = "answer"
-  val form = new OtherTaxableIncomeNameForm(frontendAppConfig)()
+  val form = new OtherTaxableIncomeForm(frontendAppConfig)()
   private val taxYear = CYMinus2
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new OtherTaxableIncomeNameController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, new OtherTaxableIncomeNameForm(frontendAppConfig))
+    new OtherTaxableIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+      dataRetrievalAction, new DataRequiredActionImpl, new OtherTaxableIncomeForm(frontendAppConfig))
 
 
   def viewAsString(form: Form[_] = form) = otherTaxableIncomeName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString

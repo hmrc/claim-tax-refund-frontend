@@ -17,7 +17,6 @@
 package views
 
 import controllers.routes
-import forms.HowMuchOtherTaxableIncomeForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar

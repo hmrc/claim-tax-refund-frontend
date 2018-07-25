@@ -17,7 +17,7 @@
 package views
 
 import controllers.routes
-import forms.OtherTaxableIncomeNameForm
+import forms.OtherTaxableIncomeForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
@@ -30,7 +30,7 @@ class OtherTaxableIncomeNameViewSpec extends StringViewBehaviours with MockitoSu
   private val messageKeyPrefix = "otherTaxableIncomeName"
   private val taxYear = CYMinus2
 
-  override val form: Form[String] = new OtherTaxableIncomeNameForm(frontendAppConfig)()
+  override val form: Form[String] = new OtherTaxableIncomeForm(frontendAppConfig)()
 
   def createView = () => otherTaxableIncomeName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 

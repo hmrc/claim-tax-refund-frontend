@@ -16,14 +16,13 @@
 
 package controllers
 
-import javax.inject.Inject
-
 import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.AnyTaxPaidForm
 import identifiers._
-import models.{AnyTaxPaid, Mode, SelectTaxYear}
+import javax.inject.Inject
+import models._
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, Result}
@@ -48,33 +47,33 @@ class AnyTaxableOtherIncomeController @Inject()(appConfig: FrontendAppConfig,
 
   private val form: Form[AnyTaxPaid] = formProvider(notSelectedKey, blankKey, invalidKey)
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.anyTaxableOtherIncome match {
         case None => form
         case Some(value) => form.fill(value)
       }
 
-      val details: Option[Result] = for (
-        selectedTaxYear: SelectTaxYear <- request.userAnswers.selectTaxYear;
-        taxableIncomeName: String <- request.userAnswers.otherTaxableIncomeName
-      ) yield {
-        Ok(anyTaxableOtherIncome(appConfig, preparedForm, mode, selectedTaxYear, taxableIncomeName))
+      val details: Option[Result] = for {
+        selectedTaxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
+        otherTaxableIncome: Seq[OtherTaxableIncome] <- request.userAnswers.otherTaxableIncome
+      } yield {
+        Ok(anyTaxableOtherIncome(appConfig, preparedForm, mode, index, selectedTaxYear, otherTaxableIncome(index).name))
       }
       details.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      val details: Option[Future[Result]] = for (
-        selectedTaxYear: SelectTaxYear <- request.userAnswers.selectTaxYear;
-        taxableIncomeName: String <- request.userAnswers.otherTaxableIncomeName
-      ) yield {
+      val details: Option[Future[Result]] = for {
+        selectedTaxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
+        otherTaxableIncome: Seq[OtherTaxableIncome] <- request.userAnswers.otherTaxableIncome
+      } yield {
         form.bindFromRequest().fold(
           (formWithErrors: Form[_]) =>
-            Future.successful(BadRequest(anyTaxableOtherIncome(appConfig, formWithErrors, mode, selectedTaxYear, taxableIncomeName))),
+            Future.successful(BadRequest(anyTaxableOtherIncome(appConfig, formWithErrors, mode, index, selectedTaxYear, otherTaxableIncome(index).name))),
           value =>
             dataCacheConnector.save[AnyTaxPaid](request.externalId, AnyTaxableOtherIncomeId.toString, value).map(cacheMap =>
               Redirect(navigator.nextPage(AnyTaxableOtherIncomeId, mode)(new UserAnswers(cacheMap))))

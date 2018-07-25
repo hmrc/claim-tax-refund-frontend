@@ -16,6 +16,10 @@
 
 package identifiers
 
-case object OtherTaxableIncomeNameId extends Identifier {
+import models.Index
+
+case class OtherTaxableIncomeId(index: Index) extends Identifier
+
+object OtherTaxableIncomeId {
   override def toString: String = "otherTaxableIncomeName"
 }

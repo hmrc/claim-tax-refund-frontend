@@ -20,14 +20,14 @@
 @import models.Mode
 @import viewmodels.InputViewModel
 
-@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: SelectTaxYear, incomeName: String)(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, index: Index, taxYear: SelectTaxYear, incomeName: String)(implicit request: Request[_], messages: Messages)
 
 @main_template(
     title = messages("anyTaxableOtherIncome.title", incomeName, taxYear.asString),
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @helpers.form(action = AnyTaxableOtherIncomeController.onSubmit(mode), 'autoComplete -> "off") {
+    @helpers.form(action = AnyTaxableOtherIncomeController.onSubmit(mode, index), 'autoComplete -> "off") {
 
         @components.back_link()
 
