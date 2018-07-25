@@ -18,27 +18,67 @@ package forms
 
 import config.FrontendAppConfig
 import forms.behaviours.FormBehaviours
-import models.MandatoryField
+import models.{Index, MandatoryField, OtherCompanyBenefit}
+import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
-import play.api.data.Form
+import play.api.data.{Form, FormError}
 
 class OtherCompanyBenefitFormSpec extends FormBehaviours with MockitoSugar {
 
-  val errorKeyBlank = "otherCompanyBenefit.blank"
+  private val currencyRegex = """(?=.)^\$?(([1-9][0-9]{0,2}(,[0-9]{3})*)|[0-9]+)?(\.[0-9]{1,2})?$"""
+  val nameKeyBlank = "otherCompanyBenefit.name.blank"
+  val amountKeyBlank = "otherCompanyBenefit.amount.blank"
+  val amountKeyInvalid = "otherCompanyBenefit.amount.invalid"
+  val duplicateBenefitKey = "otherCompanyBenefit.duplicate"
 
   def appConfig: FrontendAppConfig = {
     val instance = mock[FrontendAppConfig]
+    when(instance.currencyRegex) thenReturn currencyRegex
     instance
   }
 
-  val validData: Map[String, String] = Map("value" -> "test answer")
+  val validData: Map[String, String] = Map(
+    "name" -> "qwerty",
+    "amount" -> "123"
+  )
 
-  override val form: Form[_] = new OtherCompanyBenefitForm(appConfig)()
+  override val form: Form[OtherCompanyBenefit] = new OtherCompanyBenefitForm(appConfig)(Seq.empty, 0)
 
-  "OtherCompanyBenefit Form" must {
+  def otherBenefitsForm(otherBenefits: Seq[OtherCompanyBenefit], index: Index): Form[OtherCompanyBenefit] =
+    new OtherCompanyBenefitForm(appConfig)(otherBenefits, index)
 
-    behave like formWithMandatoryTextFields(
-      MandatoryField("value", errorKeyBlank)
-    )
+  "OtherCompanyBenefitsName Form" must {
+
+    "bind successfully with valid name and amount" in {
+      val result: Form[OtherCompanyBenefit] = otherBenefitsForm(Seq(OtherCompanyBenefit("qwerty", "123")), 0).bind(validData)
+      result.errors.size shouldBe 0
+      result.get shouldBe OtherCompanyBenefit("qwerty", "123")
+    }
+
+    "fail to bind with missing name" in {
+      val result: Form[OtherCompanyBenefit] = form.bind(Map("amount" -> "123"))
+      result.errors.size shouldBe 1
+      result.errors shouldBe Seq(FormError("name", nameKeyBlank))
+    }
+
+    "fail to bind if name is duplicate" in {
+      val result: Form[OtherCompanyBenefit] =
+        otherBenefitsForm(Seq(OtherCompanyBenefit("qwerty", "123")), 1).bind(validData)
+
+      result.errors.size shouldBe 1
+      result.errors shouldBe Seq(FormError("name", duplicateBenefitKey))
+    }
+
+    "fail to bind with missing amount" in {
+      val result: Form[OtherCompanyBenefit] = form.bind(Map("name" -> "qwerty"))
+      result.errors.size shouldBe 1
+      result.errors shouldBe Seq(FormError("amount", amountKeyBlank))
+    }
+
+    "fail to bind with invalid amount" in {
+      val result: Form[OtherCompanyBenefit] = form.bind(Map("name" -> "qwerty", "amount" -> "qwerty"))
+      result.errors.size shouldBe 1
+      result.errors shouldBe Seq(FormError("amount", amountKeyInvalid))
+    }
   }
 }

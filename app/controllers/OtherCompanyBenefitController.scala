@@ -25,8 +25,9 @@ import controllers.actions._
 import config.FrontendAppConfig
 import forms.OtherCompanyBenefitForm
 import identifiers.OtherCompanyBenefitId
-import models.Mode
-import utils.{Navigator, UserAnswers}
+import models.{Index, Mode, OtherCompanyBenefit}
+import play.api.mvc.{Action, AnyContent}
+import utils.{Navigator, SequenceUtil, UserAnswers}
 import views.html.otherCompanyBenefit
 
 import scala.concurrent.Future
@@ -39,37 +40,49 @@ class OtherCompanyBenefitController @Inject()(
                                         authenticate: AuthAction,
                                         getData: DataRetrievalAction,
                                         requireData: DataRequiredAction,
+                                        sequenceUtil: SequenceUtil[OtherCompanyBenefit],
                                         formBuilder: OtherCompanyBenefitForm) extends FrontendController with I18nSupport {
 
-  private val form: Form[String] = formBuilder()
 
-  def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
+      val form = formBuilder(request.userAnswers.otherCompanyBenefit.getOrElse(Seq.empty), index)
+
       val preparedForm = request.userAnswers.otherCompanyBenefit match {
+        case Some(value) =>
+          if (index >= value.length) form else form.fill(value(index))
         case None => form
-        case Some(value) => form.fill(value)
       }
 
-      request.userAnswers.selectTaxYear.map{
-        taxYear =>
-          Ok(otherCompanyBenefit(appConfig, preparedForm, mode, taxYear))
+      request.userAnswers.selectTaxYear.map {
+        selectedTaxYear =>
+          Ok(otherCompanyBenefit(appConfig, preparedForm, mode, index, selectedTaxYear))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
   }
 
-  def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
+      val form = formBuilder(request.userAnswers.otherCompanyBenefit.getOrElse(Seq.empty), index)
+
       request.userAnswers.selectTaxYear.map {
-        taxYear =>
+        selectedTaxYear =>
+          val taxYear = selectedTaxYear
           form.bindFromRequest().fold(
-            (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(otherCompanyBenefit(appConfig, formWithErrors, mode, taxYear))),
-            (value) =>
-              dataCacheConnector.save[String](request.externalId, OtherCompanyBenefitId.toString, value).map(cacheMap =>
+            (formWithErrors: Form[OtherCompanyBenefit]) =>
+              Future.successful(BadRequest(otherCompanyBenefit(appConfig, formWithErrors, mode, index, taxYear))),
+            value => {
+              val companyBenefitNames: Seq[OtherCompanyBenefit] = request.userAnswers.otherCompanyBenefit.getOrElse(Seq(value))
+              dataCacheConnector.save[Seq[OtherCompanyBenefit]](
+                request.externalId,
+                OtherCompanyBenefitId.toString,
+                sequenceUtil.updateSeq(companyBenefitNames, index, value)
+              ).map(cacheMap =>
                 Redirect(navigator.nextPage(OtherCompanyBenefitId, mode)(new UserAnswers(cacheMap))))
+            }
           )
-      }.getOrElse{
+      }.getOrElse {
         Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
       }
   }

@@ -156,9 +156,18 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
         s"$x", false, routes.HowMuchMedicalBenefitsController.onPageLoad(CheckMode).url)
   }
 
-  def otherCompanyBenefit: Option[AnswerRow] = userAnswers.otherCompanyBenefit map {
-    x => AnswerRow("otherCompanyBenefit.checkYourAnswersLabel", s"$x", false, routes.OtherCompanyBenefitController.onPageLoad(CheckMode).url)
-  }
+  def otherCompanyBenefit: Seq[Option[AnswerRow]] = {
+    for {
+      otherCompanyBenefit <- userAnswers.otherCompanyBenefit
+    } yield {
+      otherCompanyBenefit.zipWithIndex.flatMap {
+        case (companyBenefits, index) =>
+          Seq(
+            Some(AnswerRow(companyBenefits.name, s"£${companyBenefits.amount}", answerIsMessageKey = false, routes.OtherBenefitController.onPageLoad(CheckMode, Index(index)).url))
+          )
+      }
+    }
+  }.getOrElse(Seq.empty)
 
   def anyOtherCompanyBenefits: Option[AnswerRow] = userAnswers.anyOtherCompanyBenefits map {
     x => AnswerRow("anyOtherCompanyBenefits.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.AnyOtherCompanyBenefitsController.onPageLoad(CheckMode).url)

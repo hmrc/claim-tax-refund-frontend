@@ -18,23 +18,25 @@ package views
 
 import controllers.routes
 import forms.OtherCompanyBenefitForm
-import models.NormalMode
+import models.{NormalMode, OtherCompanyBenefit}
 import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
-import views.behaviours.StringViewBehaviours
+import play.twirl.api.HtmlFormat
+import views.behaviours.QuestionViewBehaviours
 import views.html.otherCompanyBenefit
 
-class OtherCompanyBenefitViewSpec extends StringViewBehaviours with MockitoSugar {
+class OtherCompanyBenefitViewSpec extends QuestionViewBehaviours[OtherCompanyBenefit] with MockitoSugar {
 
   private val messageKeyPrefix = "otherCompanyBenefit"
   private val taxYear = CYMinus2
 
-  override val form: Form[String] = new OtherCompanyBenefitForm(frontendAppConfig)()
+  override val form: Form[OtherCompanyBenefit] = new OtherCompanyBenefitForm(frontendAppConfig)(Seq.empty, 0)
 
-  def createView = () => otherCompanyBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createView: () => HtmlFormat.Appendable = () => otherCompanyBenefit(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) => otherCompanyBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createViewUsingForm: Form[OtherCompanyBenefit] => HtmlFormat.Appendable = (form: Form[OtherCompanyBenefit]) =>
+    otherCompanyBenefit(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages)
 
   "OtherCompanyBenefit view" must {
     behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))
@@ -43,15 +45,8 @@ class OtherCompanyBenefitViewSpec extends StringViewBehaviours with MockitoSugar
 
     behave like pageWithSecondaryHeader(createView, messages("index.title"))
 
-    behave like stringPage(
-      createView = createViewUsingForm,
-      messageKeyPrefix = messageKeyPrefix,
-      expectedFormAction = routes.OtherCompanyBenefitController.onSubmit(NormalMode).url,
-      expectedHintKeyLine1 = None,
-      expectedHintKeyLine2 = None,
-      expectedPrefix = None,
-      args = taxYear.asString(messages)
+    behave like pageWithTextFields(
+      createViewUsingForm, messageKeyPrefix, routes.OtherBenefitController.onSubmit(NormalMode, 0).url, "name", "amount"
     )
-
   }
 }

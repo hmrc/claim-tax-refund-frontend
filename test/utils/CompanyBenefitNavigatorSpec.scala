@@ -79,7 +79,7 @@ class CompanyBenefitNavigatorSpec extends SpecBase with MockitoSugar {
             )
           )
 
-          navigator.nextPage(SelectCompanyBenefitsId, NormalMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(NormalMode)
+          navigator.nextPage(SelectCompanyBenefitsId, NormalMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(NormalMode, 0)
         }
 
         "go to AnyTaxableIncome when all benefits checked and amounts provided" in {
@@ -101,7 +101,7 @@ class CompanyBenefitNavigatorSpec extends SpecBase with MockitoSugar {
 
         "go to OtherCompanyBenefit if this option was selected on SelectCompanyBenefit" in {
           when(answers.selectCompanyBenefits) thenReturn Some(Seq(CompanyBenefits.OTHER_COMPANY_BENEFIT))
-          navigator.nextPage(HowMuchCarBenefitsId, NormalMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(NormalMode)
+          navigator.nextPage(HowMuchCarBenefitsId, NormalMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(NormalMode, 0)
         }
       }
 
@@ -118,7 +118,7 @@ class CompanyBenefitNavigatorSpec extends SpecBase with MockitoSugar {
 
       "go to OtherCompanyBenefit from AnyOtherCompanyBenefits when answer is yes" in {
         when(answers.anyOtherCompanyBenefits) thenReturn Some(true)
-        navigator.nextPage(AnyOtherCompanyBenefitsId, NormalMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(NormalMode)
+        navigator.nextPage(AnyOtherCompanyBenefitsId, NormalMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(NormalMode, 0)
       }
     }
 
@@ -173,7 +173,7 @@ class CompanyBenefitNavigatorSpec extends SpecBase with MockitoSugar {
           val answers = MockUserAnswers.companyBenefitsUserAnswers
           when(answers.otherCompanyBenefit) thenReturn None
 
-          navigator.nextPage(SelectCompanyBenefitsId, CheckMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(CheckMode)
+          navigator.nextPage(SelectCompanyBenefitsId, CheckMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(CheckMode, 0)
         }
       }
 
@@ -201,7 +201,7 @@ class CompanyBenefitNavigatorSpec extends SpecBase with MockitoSugar {
           val answers = MockUserAnswers.companyBenefitsUserAnswers
           when(answers.otherCompanyBenefit) thenReturn None
 
-          navigator.nextPage(HowMuchCarBenefitsId, CheckMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(CheckMode)
+          navigator.nextPage(HowMuchCarBenefitsId, CheckMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(CheckMode, 0)
         }
       }
 
@@ -222,7 +222,7 @@ class CompanyBenefitNavigatorSpec extends SpecBase with MockitoSugar {
           val answers = MockUserAnswers.companyBenefitsUserAnswers
           when(answers.otherCompanyBenefit) thenReturn None
 
-          navigator.nextPage(HowMuchFuelBenefitId, CheckMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(CheckMode)
+          navigator.nextPage(HowMuchFuelBenefitId, CheckMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(CheckMode, 0)
         }
       }
 
@@ -236,7 +236,7 @@ class CompanyBenefitNavigatorSpec extends SpecBase with MockitoSugar {
           val answers = MockUserAnswers.companyBenefitsUserAnswers
           when(answers.otherCompanyBenefit) thenReturn None
 
-          navigator.nextPage(HowMuchMedicalBenefitsId, CheckMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(CheckMode)
+          navigator.nextPage(HowMuchMedicalBenefitsId, CheckMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(CheckMode, 0)
         }
       }
 

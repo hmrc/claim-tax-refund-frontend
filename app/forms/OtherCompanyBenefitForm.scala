@@ -18,13 +18,33 @@ package forms
 
 import com.google.inject.Inject
 import config.FrontendAppConfig
-import forms.mappings.Constraints
+import forms.mappings.{Constraints, Mappings}
+import models.{Index, OtherCompanyBenefit}
 import play.api.data.Form
 import play.api.data.Forms._
 
-class OtherCompanyBenefitForm @Inject()(appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
+class OtherCompanyBenefitForm @Inject()(appConfig: FrontendAppConfig) extends FormErrorHelper with Mappings with Constraints {
 
-  private val errorBlankKey = "otherCompanyBenefit.blank"
+  private val currencyRegex = appConfig.currencyRegex
+  private val nameBlankKey = "otherCompanyBenefit.name.blank"
+  private val amountBlankKey = "otherCompanyBenefit.amount.blank"
+  private val amountInvalidKey = "otherCompanyBenefit.amount.invalid"
+  private val duplicateBenefitKey = "otherCompanyBenefit.duplicate"
 
-  def apply(): Form[String] = Form("value" -> text.verifying(nonEmpty(errorBlankKey)))
+  def apply(otherCompanyBenefit: Seq[OtherCompanyBenefit], index: Index): Form[OtherCompanyBenefit] = {
+    Form(
+      mapping(
+        "name" -> text(nameBlankKey).verifying(duplicateBenefitKey, a => filter(otherCompanyBenefit, index, a).forall(p => p.name != a)),
+        "amount" -> text(amountBlankKey).verifying(amountInvalidKey, a => a.matches(currencyRegex))
+      )(OtherCompanyBenefit.apply)(OtherCompanyBenefit.unapply)
+    )
+  }
+
+  def filter(seq: Seq[OtherCompanyBenefit], index: Index, name: String): Seq[OtherCompanyBenefit] = {
+    if (Index(index) < seq.length && seq(index).name.nonEmpty && seq(index).name == name) {
+      seq.filterNot(_ == seq(index))
+    } else {
+      seq
+    }
+  }
 }
