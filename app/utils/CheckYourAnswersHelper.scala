@@ -160,10 +160,6 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
     x => AnswerRow("otherCompanyBenefit.checkYourAnswersLabel", s"$x", false, routes.OtherCompanyBenefitController.onPageLoad(CheckMode).url)
   }
 
-  def howMuchOtherCompanyBenefit: Option[AnswerRow] = userAnswers.howMuchOtherCompanyBenefit map {
-    x => AnswerRow("howMuchOtherCompanyBenefit.checkYourAnswersLabel", s"$x", false, routes.HowMuchOtherCompanyBenefitController.onPageLoad(CheckMode).url)
-  }
-
   def anyOtherCompanyBenefits: Option[AnswerRow] = userAnswers.anyOtherCompanyBenefits map {
     x => AnswerRow("anyOtherCompanyBenefits.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.AnyOtherCompanyBenefitsController.onPageLoad(CheckMode).url)
   }

@@ -53,7 +53,6 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.howMuchFuelBenefit) thenReturn None
     when(answers.howMuchMedicalBenefits) thenReturn None
     when(answers.otherCompanyBenefit) thenReturn None
-    when(answers.howMuchOtherCompanyBenefit) thenReturn None
     when(answers.anyOtherCompanyBenefits) thenReturn None
 
     //taxable income details
@@ -158,7 +157,6 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.howMuchMedicalBenefits) thenReturn Some("1234")
     when(answers.howMuchFuelBenefit) thenReturn Some("1234")
     when(answers.otherCompanyBenefit) thenReturn Some("other company benefit")
-    when(answers.howMuchOtherCompanyBenefit) thenReturn Some("1234")
     when(answers.anyOtherCompanyBenefits) thenReturn Some(false)
 
     answers

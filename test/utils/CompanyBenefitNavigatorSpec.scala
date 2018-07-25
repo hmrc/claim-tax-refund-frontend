@@ -107,12 +107,8 @@ class CompanyBenefitNavigatorSpec extends SpecBase with MockitoSugar {
 
       // onwards route from OtherCompanyBenefit always follows the same pattern
 
-      "go to HowMuchOtherCompanyBenefit from OtherCompanyBenefit" in {
-        navigator.nextPage(OtherCompanyBenefitId, NormalMode)(answers) mustBe routes.HowMuchOtherCompanyBenefitController.onPageLoad(NormalMode)
-      }
-
-      "go to AnyOtherCompanyBenefits from HowMuchOtherCompanyBenefit" in {
-        navigator.nextPage(HowMuchOtherCompanyBenefitId, NormalMode)(answers) mustBe routes.AnyOtherCompanyBenefitsController.onPageLoad(NormalMode)
+      "go to AnyOtherCompanyBenefits from otherCompanyBenefit" in {
+        navigator.nextPage(OtherCompanyBenefitId, NormalMode)(answers) mustBe routes.AnyOtherCompanyBenefitsController.onPageLoad(NormalMode)
       }
 
       "go to AnyTaxableIncome from AnyOtherCompanyBenefits when answer is no" in {
@@ -248,20 +244,6 @@ class CompanyBenefitNavigatorSpec extends SpecBase with MockitoSugar {
         "go to CheckYourAnswersController when name and amount stored" in {
           val answers = MockUserAnswers.companyBenefitsUserAnswers
           navigator.nextPage(OtherCompanyBenefitId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
-        }
-
-        "go to HowMuchOtherCompanyBenefit when no amount stored" in {
-          val answers = MockUserAnswers.companyBenefitsUserAnswers
-          when(answers.howMuchOtherCompanyBenefit) thenReturn None
-
-          navigator.nextPage(OtherCompanyBenefitId, CheckMode)(answers) mustBe routes.HowMuchOtherCompanyBenefitController.onPageLoad(CheckMode)
-        }
-      }
-
-      "Navigating from HowMuchOtherCompanyBenefit" must {
-        "go to CheckYourAnswersController when amount stored" in {
-          val answers = MockUserAnswers.companyBenefitsUserAnswers
-          navigator.nextPage(HowMuchOtherCompanyBenefitId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
         }
       }
     }

@@ -35,7 +35,6 @@ class CompanyBenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
     HowMuchFuelBenefitId.toString -> JsString("1234"),
     HowMuchMedicalBenefitsId.toString -> JsString("1234"),
     OtherCompanyBenefitId.toString -> JsString("qwerty"),
-    HowMuchOtherCompanyBenefitId.toString ->  JsString("1234"),
     AnyOtherCompanyBenefitsId.toString -> JsBoolean(false)
   ))
   private val cascadeUpsert = new CascadeUpsert
@@ -59,7 +58,6 @@ class CompanyBenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
             HowMuchFuelBenefitId.toString -> JsString("1234"),
             HowMuchMedicalBenefitsId.toString -> JsString("1234"),
             OtherCompanyBenefitId.toString -> JsString("qwerty"),
-            HowMuchOtherCompanyBenefitId.toString -> JsString("1234"),
             AnyOtherCompanyBenefitsId.toString -> JsBoolean(false)
           ))
           val result = cascadeUpsert(AnyCompanyBenefitsId.toString, JsBoolean(false), originalCacheMap)
@@ -87,7 +85,6 @@ class CompanyBenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
         HowMuchFuelBenefitId.toString -> JsString("1234"),
         HowMuchMedicalBenefitsId.toString -> JsString("1234"),
         OtherCompanyBenefitId.toString -> JsString("qwerty"),
-        HowMuchOtherCompanyBenefitId.toString -> JsString("1234"),
         AnyOtherCompanyBenefitsId.toString -> JsBoolean(false)
       )
     }
@@ -108,7 +105,6 @@ class CompanyBenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
         HowMuchCarBenefitsId.toString -> JsString("1234"),
         HowMuchMedicalBenefitsId.toString -> JsString("1234"),
         OtherCompanyBenefitId.toString -> JsString("qwerty"),
-        HowMuchOtherCompanyBenefitId.toString -> JsString("1234"),
         AnyOtherCompanyBenefitsId.toString -> JsBoolean(false)
       )
     }
@@ -129,7 +125,6 @@ class CompanyBenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
         HowMuchCarBenefitsId.toString -> JsString("1234"),
         HowMuchFuelBenefitId.toString -> JsString("1234"),
         OtherCompanyBenefitId.toString -> JsString("qwerty"),
-        HowMuchOtherCompanyBenefitId.toString -> JsString("1234"),
         AnyOtherCompanyBenefitsId.toString -> JsBoolean(false)
       )
     }
@@ -166,7 +161,6 @@ class CompanyBenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
         )),
         HowMuchFuelBenefitId.toString -> JsString("1234"),
         OtherCompanyBenefitId.toString -> JsString("qwerty"),
-        HowMuchOtherCompanyBenefitId.toString -> JsString("1234"),
         AnyOtherCompanyBenefitsId.toString -> JsBoolean(false)
       )
     }

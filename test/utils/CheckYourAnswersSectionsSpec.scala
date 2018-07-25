@@ -101,15 +101,14 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       val sections = new CheckYourAnswersSections(helper, answers)
       val rows = sections.companyBenefitSection.rows
 
-      rows.size mustBe 8
+      rows.size mustBe 7
       rows.head.label.key mustBe "anyCompanyBenefits.checkYourAnswersLabel"
       rows(1).label.key mustBe "selectCompanyBenefits.checkYourAnswersLabel"
       rows(2).label.key mustBe "howMuchCarBenefits.checkYourAnswersLabel"
       rows(3).label.key mustBe "howMuchFuelBenefit.checkYourAnswersLabel"
       rows(4).label.key mustBe "howMuchMedicalBenefits.checkYourAnswersLabel"
       rows(5).label.key mustBe "otherCompanyBenefit.checkYourAnswersLabel"
-      rows(6).label.key mustBe "howMuchOtherCompanyBenefit.checkYourAnswersLabel"
-      rows(7).label.key mustBe "anyOtherCompanyBenefits.checkYourAnswersLabel"
+      rows(6).label.key mustBe "anyOtherCompanyBenefits.checkYourAnswersLabel"
     }
 
     "Taxable income section" in {

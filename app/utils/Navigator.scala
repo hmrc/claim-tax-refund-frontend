@@ -50,16 +50,15 @@ class Navigator @Inject()() {
     HowMuchIncapacityBenefitId -> selectBenefits(NormalMode),
     HowMuchEmploymentAndSupportAllowanceId -> selectBenefits(NormalMode),
     HowMuchStatePensionId -> selectBenefits(NormalMode),
-    AnyOtherBenefitsId -> anyOtherBenefits,
     OtherBenefitId -> otherBenefitsName(NormalMode),
+    AnyOtherBenefitsId -> anyOtherBenefits,
     //Company benefits
     AnyCompanyBenefitsId -> anyCompanyBenefits(NormalMode),
     SelectCompanyBenefitsId -> selectedCompanyBenefitsCheck(NormalMode),
     HowMuchCarBenefitsId -> selectedCompanyBenefitsCheck(NormalMode),
     HowMuchFuelBenefitId -> selectedCompanyBenefitsCheck(NormalMode),
     HowMuchMedicalBenefitsId -> selectedCompanyBenefitsCheck(NormalMode),
-    OtherCompanyBenefitId -> (_ => routes.HowMuchOtherCompanyBenefitController.onPageLoad(NormalMode)),
-    HowMuchOtherCompanyBenefitId -> (_ => routes.AnyOtherCompanyBenefitsController.onPageLoad(NormalMode)),
+    OtherCompanyBenefitId -> otherCompanyBenefitsName(NormalMode),
     AnyOtherCompanyBenefitsId -> anyOtherCompanyBenefits,
     //Taxable income
     AnyTaxableIncomeId -> anyTaxableIncome(NormalMode),
@@ -107,7 +106,7 @@ class Navigator @Inject()() {
     HowMuchCarBenefitsId -> selectedCompanyBenefitsCheck(CheckMode),
     HowMuchFuelBenefitId -> selectedCompanyBenefitsCheck(CheckMode),
     HowMuchMedicalBenefitsId -> selectedCompanyBenefitsCheck(CheckMode),
-    OtherCompanyBenefitId -> howMuchOtherCompanyBenefitsCheck,
+    OtherCompanyBenefitId -> otherCompanyBenefitsName(CheckMode),
     //Taxable Income
     AnyTaxableIncomeId -> anyTaxableIncome(CheckMode),
     SelectTaxableIncomeId -> selectedTaxableIncomeCheck(CheckMode),
@@ -233,11 +232,8 @@ class Navigator @Inject()() {
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
-  private def howMuchOtherCompanyBenefitsCheck(userAnswers: UserAnswers): Call = userAnswers.howMuchOtherCompanyBenefit match {
-    case None => routes.HowMuchOtherCompanyBenefitController.onPageLoad(CheckMode)
-    case _ => routes.CheckYourAnswersController.onPageLoad()
-  }
-
+  def otherCompanyBenefitsName(mode: Mode)(userAnswers: UserAnswers): Call =
+    if (mode == NormalMode) routes.AnyOtherCompanyBenefitsController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
 
   //Taxable income--------------------------
 

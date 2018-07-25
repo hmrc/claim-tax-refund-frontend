@@ -82,8 +82,6 @@ class UserAnswers(val cacheMap: CacheMap) {
 
   def otherCompanyBenefit: Option[String] = cacheMap.getEntry[String](OtherCompanyBenefitId.toString)
 
-  def howMuchOtherCompanyBenefit: Option[String] = cacheMap.getEntry[String](HowMuchOtherCompanyBenefitId.toString)
-
   def anyOtherCompanyBenefits: Option[Boolean] = cacheMap.getEntry[Boolean](AnyOtherCompanyBenefitsId.toString)
 
   //Taxable income details

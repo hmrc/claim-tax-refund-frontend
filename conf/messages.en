@@ -262,12 +262,6 @@ selectBenefits.other-taxable-benefit = Other taxable benefit
 selectBenefits.bereavement-allowance = Bereavement Allowance
 selectBenefits.carers-allowance = Carer''s Allowance
 
-howMuchOtherCompanyBenefit.title = How much {0} did you get between {1}?
-howMuchOtherCompanyBenefit.heading = How much {0} did you get between {1}?
-howMuchOtherCompanyBenefit.checkYourAnswersLabel = Other company benefit
-howMuchOtherCompanyBenefit.blank = Enter the amount you got for this company benefit
-howMuchOtherCompanyBenefit.invalid = Enter a valid amount you got for this company benefit
-
 enterPayeReference.title = Enter your employer or pension provider''s PAYE reference
 enterPayeReference.heading = Enter your employer or pension provider''s PAYE reference
 enterPayeReference.checkYourAnswersLabel = PAYE reference

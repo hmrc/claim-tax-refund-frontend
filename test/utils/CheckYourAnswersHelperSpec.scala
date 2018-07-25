@@ -283,14 +283,6 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     }
   }
 
-  "howMuchOtherCompanyBenefit" must {
-    s"have the correct label and answer" in {
-      when(answers.howMuchOtherCompanyBenefit) thenReturn Some(amount)
-      helper.howMuchOtherCompanyBenefit.get.label.key mustBe s"howMuchOtherCompanyBenefit.checkYourAnswersLabel"
-      helper.howMuchOtherCompanyBenefit.get.answer.key mustBe amount
-    }
-  }
-
   "anyOtherCompanyBenefits (yes)" must {
     s"have the correct label and answer" in {
       when(answers.anyOtherCompanyBenefits) thenReturn Some(true)

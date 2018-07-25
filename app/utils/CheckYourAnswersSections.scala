@@ -72,7 +72,6 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
     cyaHelper.howMuchFuelBenefit,
     cyaHelper.howMuchMedicalBenefits,
     cyaHelper.otherCompanyBenefit,
-    cyaHelper.howMuchOtherCompanyBenefit,
     cyaHelper.anyOtherCompanyBenefits
   ).flatten)
 
