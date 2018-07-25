@@ -100,6 +100,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       val helper = new CheckYourAnswersHelper(answers)(messages: Messages)
       val sections = new CheckYourAnswersSections(helper, answers)
       val rows = sections.companyBenefitSection.rows
+      val otherCompanyBenefitSection = sections.otherCompanyBenefitSection
 
       rows.size mustBe 5
       rows.head.label.key mustBe "anyCompanyBenefits.checkYourAnswersLabel"
@@ -107,6 +108,11 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       rows(2).label.key mustBe "howMuchCarBenefits.checkYourAnswersLabel"
       rows(3).label.key mustBe "howMuchFuelBenefit.checkYourAnswersLabel"
       rows(4).label.key mustBe "howMuchMedicalBenefits.checkYourAnswersLabel"
+
+      otherCompanyBenefitSection.rows.size mustBe 3
+      otherCompanyBenefitSection.headingKey.get mustBe "otherCompanyBenefit.checkYourAnswersLabel"
+      otherCompanyBenefitSection.addLinkText.get mustBe "otherCompanyBenefit.add"
+      otherCompanyBenefitSection.addLinkUrl.get mustBe routes.OtherCompanyBenefitController.onPageLoad(CheckMode, Index(otherCompanyBenefitSection.rows.size)).url
     }
 
     "Taxable income section" in {
