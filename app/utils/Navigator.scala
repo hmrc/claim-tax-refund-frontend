@@ -58,7 +58,7 @@ class Navigator @Inject()() {
     HowMuchCarBenefitsId -> selectedCompanyBenefitsCheck(NormalMode),
     HowMuchFuelBenefitId -> selectedCompanyBenefitsCheck(NormalMode),
     HowMuchMedicalBenefitsId -> selectedCompanyBenefitsCheck(NormalMode),
-    OtherCompanyBenefitsNameId -> (_ => routes.HowMuchOtherCompanyBenefitController.onPageLoad(NormalMode)),
+    OtherCompanyBenefitId -> (_ => routes.HowMuchOtherCompanyBenefitController.onPageLoad(NormalMode)),
     HowMuchOtherCompanyBenefitId -> (_ => routes.AnyOtherCompanyBenefitsController.onPageLoad(NormalMode)),
     AnyOtherCompanyBenefitsId -> anyOtherCompanyBenefits,
     //Taxable income
@@ -107,7 +107,7 @@ class Navigator @Inject()() {
     HowMuchCarBenefitsId -> selectedCompanyBenefitsCheck(CheckMode),
     HowMuchFuelBenefitId -> selectedCompanyBenefitsCheck(CheckMode),
     HowMuchMedicalBenefitsId -> selectedCompanyBenefitsCheck(CheckMode),
-    OtherCompanyBenefitsNameId -> howMuchOtherCompanyBenefitsCheck,
+    OtherCompanyBenefitId -> howMuchOtherCompanyBenefitsCheck,
     //Taxable Income
     AnyTaxableIncomeId -> anyTaxableIncome(CheckMode),
     SelectTaxableIncomeId -> selectedTaxableIncomeCheck(CheckMode),
@@ -218,8 +218,8 @@ class Navigator @Inject()() {
         routes.HowMuchFuelBenefitController.onPageLoad(mode)
       } else if (benefits.contains(CompanyBenefits.MEDICAL_BENEFIT) && userAnswers.howMuchMedicalBenefits.isEmpty) {
         routes.HowMuchMedicalBenefitsController.onPageLoad(mode)
-      } else if (benefits.contains(CompanyBenefits.OTHER_COMPANY_BENEFIT) && userAnswers.otherCompanyBenefitsName.isEmpty) {
-        routes.OtherCompanyBenefitsNameController.onPageLoad(mode)
+      } else if (benefits.contains(CompanyBenefits.OTHER_COMPANY_BENEFIT) && userAnswers.otherCompanyBenefit.isEmpty) {
+        routes.OtherCompanyBenefitController.onPageLoad(mode)
       } else {
         if (mode == NormalMode) routes.AnyTaxableIncomeController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
       }
@@ -228,7 +228,7 @@ class Navigator @Inject()() {
   }
 
   private def anyOtherCompanyBenefits(userAnswers: UserAnswers): Call = userAnswers.anyOtherCompanyBenefits match {
-    case Some(true) => routes.OtherCompanyBenefitsNameController.onPageLoad(NormalMode)
+    case Some(true) => routes.OtherCompanyBenefitController.onPageLoad(NormalMode)
     case Some(false) => routes.AnyTaxableIncomeController.onPageLoad(NormalMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }

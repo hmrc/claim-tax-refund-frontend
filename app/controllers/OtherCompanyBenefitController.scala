@@ -17,22 +17,21 @@
 package controllers
 
 import javax.inject.Inject
-
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import connectors.DataCacheConnector
 import controllers.actions._
 import config.FrontendAppConfig
-import forms.OtherCompanyBenefitsNameForm
-import identifiers.OtherCompanyBenefitsNameId
+import forms.OtherCompanyBenefitForm
+import identifiers.OtherCompanyBenefitId
 import models.Mode
 import utils.{Navigator, UserAnswers}
-import views.html.otherCompanyBenefitsName
+import views.html.otherCompanyBenefit
 
 import scala.concurrent.Future
 
-class OtherCompanyBenefitsNameController @Inject()(
+class OtherCompanyBenefitController @Inject()(
                                         appConfig: FrontendAppConfig,
                                         override val messagesApi: MessagesApi,
                                         dataCacheConnector: DataCacheConnector,
@@ -40,20 +39,20 @@ class OtherCompanyBenefitsNameController @Inject()(
                                         authenticate: AuthAction,
                                         getData: DataRetrievalAction,
                                         requireData: DataRequiredAction,
-                                        formBuilder: OtherCompanyBenefitsNameForm) extends FrontendController with I18nSupport {
+                                        formBuilder: OtherCompanyBenefitForm) extends FrontendController with I18nSupport {
 
   private val form: Form[String] = formBuilder()
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val preparedForm = request.userAnswers.otherCompanyBenefitsName match {
+      val preparedForm = request.userAnswers.otherCompanyBenefit match {
         case None => form
         case Some(value) => form.fill(value)
       }
 
       request.userAnswers.selectTaxYear.map{
         taxYear =>
-          Ok(otherCompanyBenefitsName(appConfig, preparedForm, mode, taxYear))
+          Ok(otherCompanyBenefit(appConfig, preparedForm, mode, taxYear))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
@@ -65,10 +64,10 @@ class OtherCompanyBenefitsNameController @Inject()(
         taxYear =>
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(otherCompanyBenefitsName(appConfig, formWithErrors, mode, taxYear))),
+              Future.successful(BadRequest(otherCompanyBenefit(appConfig, formWithErrors, mode, taxYear))),
             (value) =>
-              dataCacheConnector.save[String](request.externalId, OtherCompanyBenefitsNameId.toString, value).map(cacheMap =>
-                Redirect(navigator.nextPage(OtherCompanyBenefitsNameId, mode)(new UserAnswers(cacheMap))))
+              dataCacheConnector.save[String](request.externalId, OtherCompanyBenefitId.toString, value).map(cacheMap =>
+                Redirect(navigator.nextPage(OtherCompanyBenefitId, mode)(new UserAnswers(cacheMap))))
           )
       }.getOrElse{
         Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))

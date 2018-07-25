@@ -18,32 +18,32 @@ package controllers
 
 import connectors.FakeDataCacheConnector
 import controllers.actions._
-import forms.OtherCompanyBenefitsNameForm
+import forms.OtherCompanyBenefitForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
 import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
-import views.html.otherCompanyBenefitsName
 import org.mockito.Mockito.when
+import views.html.otherCompanyBenefit
 
-class OtherCompanyBenefitsNameControllerSpec extends ControllerSpecBase with MockitoSugar {
+class OtherCompanyBenefitControllerSpec extends ControllerSpecBase with MockitoSugar {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
   val testAnswer = "answer"
-  val form = new OtherCompanyBenefitsNameForm(frontendAppConfig)()
+  val form = new OtherCompanyBenefitForm(frontendAppConfig)()
   private val taxYear = CYMinus2
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new OtherCompanyBenefitsNameController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, new OtherCompanyBenefitsNameForm(frontendAppConfig))
+    new OtherCompanyBenefitController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+      dataRetrievalAction, new DataRequiredActionImpl, new OtherCompanyBenefitForm(frontendAppConfig))
 
-  def viewAsString(form: Form[_] = form) = otherCompanyBenefitsName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = form) = otherCompanyBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
 
-  "OtherCompanyBenefitsName Controller" must {
+  "OtherCompanyBenefit Controller" must {
 
     "return OK and the correct view for a GET" in {
       val result = controller(fakeDataRetrievalAction()).onPageLoad(NormalMode)(fakeRequest)
@@ -53,7 +53,7 @@ class OtherCompanyBenefitsNameControllerSpec extends ControllerSpecBase with Moc
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      when(mockUserAnswers.otherCompanyBenefitsName).thenReturn(Some(testAnswer))
+      when(mockUserAnswers.otherCompanyBenefit).thenReturn(Some(testAnswer))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
       contentAsString(result) mustBe viewAsString(form.fill(testAnswer))

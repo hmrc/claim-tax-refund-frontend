@@ -34,7 +34,7 @@ class CompanyBenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
     HowMuchCarBenefitsId.toString -> JsString("1234"),
     HowMuchFuelBenefitId.toString -> JsString("1234"),
     HowMuchMedicalBenefitsId.toString -> JsString("1234"),
-    OtherCompanyBenefitsNameId.toString -> JsString("qwerty"),
+    OtherCompanyBenefitId.toString -> JsString("qwerty"),
     HowMuchOtherCompanyBenefitId.toString ->  JsString("1234"),
     AnyOtherCompanyBenefitsId.toString -> JsBoolean(false)
   ))
@@ -58,7 +58,7 @@ class CompanyBenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
             HowMuchCarBenefitsId.toString -> JsString("1234"),
             HowMuchFuelBenefitId.toString -> JsString("1234"),
             HowMuchMedicalBenefitsId.toString -> JsString("1234"),
-            OtherCompanyBenefitsNameId.toString -> JsString("qwerty"),
+            OtherCompanyBenefitId.toString -> JsString("qwerty"),
             HowMuchOtherCompanyBenefitId.toString -> JsString("1234"),
             AnyOtherCompanyBenefitsId.toString -> JsBoolean(false)
           ))
@@ -86,7 +86,7 @@ class CompanyBenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
         )),
         HowMuchFuelBenefitId.toString -> JsString("1234"),
         HowMuchMedicalBenefitsId.toString -> JsString("1234"),
-        OtherCompanyBenefitsNameId.toString -> JsString("qwerty"),
+        OtherCompanyBenefitId.toString -> JsString("qwerty"),
         HowMuchOtherCompanyBenefitId.toString -> JsString("1234"),
         AnyOtherCompanyBenefitsId.toString -> JsBoolean(false)
       )
@@ -107,7 +107,7 @@ class CompanyBenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
         )),
         HowMuchCarBenefitsId.toString -> JsString("1234"),
         HowMuchMedicalBenefitsId.toString -> JsString("1234"),
-        OtherCompanyBenefitsNameId.toString -> JsString("qwerty"),
+        OtherCompanyBenefitId.toString -> JsString("qwerty"),
         HowMuchOtherCompanyBenefitId.toString -> JsString("1234"),
         AnyOtherCompanyBenefitsId.toString -> JsBoolean(false)
       )
@@ -128,7 +128,7 @@ class CompanyBenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
         )),
         HowMuchCarBenefitsId.toString -> JsString("1234"),
         HowMuchFuelBenefitId.toString -> JsString("1234"),
-        OtherCompanyBenefitsNameId.toString -> JsString("qwerty"),
+        OtherCompanyBenefitId.toString -> JsString("qwerty"),
         HowMuchOtherCompanyBenefitId.toString -> JsString("1234"),
         AnyOtherCompanyBenefitsId.toString -> JsBoolean(false)
       )
@@ -165,7 +165,7 @@ class CompanyBenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
           CompanyBenefits.OTHER_COMPANY_BENEFIT
         )),
         HowMuchFuelBenefitId.toString -> JsString("1234"),
-        OtherCompanyBenefitsNameId.toString -> JsString("qwerty"),
+        OtherCompanyBenefitId.toString -> JsString("qwerty"),
         HowMuchOtherCompanyBenefitId.toString -> JsString("1234"),
         AnyOtherCompanyBenefitsId.toString -> JsBoolean(false)
       )

@@ -23,7 +23,7 @@ import models.{CheckMode, CompanyBenefits, NormalMode}
 import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito._
 
-class CompanyBenefitsNavigatorSpec extends SpecBase with MockitoSugar {
+class CompanyBenefitNavigatorSpec extends SpecBase with MockitoSugar {
 
   private val navigator = new Navigator
   private val answers = MockUserAnswers.nothingAnswered
@@ -79,7 +79,7 @@ class CompanyBenefitsNavigatorSpec extends SpecBase with MockitoSugar {
             )
           )
 
-          navigator.nextPage(SelectCompanyBenefitsId, NormalMode)(answers) mustBe routes.OtherCompanyBenefitsNameController.onPageLoad(NormalMode)
+          navigator.nextPage(SelectCompanyBenefitsId, NormalMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(NormalMode)
         }
 
         "go to AnyTaxableIncome when all benefits checked and amounts provided" in {
@@ -99,16 +99,16 @@ class CompanyBenefitsNavigatorSpec extends SpecBase with MockitoSugar {
           navigator.nextPage(HowMuchCarBenefitsId, NormalMode)(answers) mustBe routes.HowMuchMedicalBenefitsController.onPageLoad(NormalMode)
         }
 
-        "go to OtherCompanyBenefitsName if this option was selected on SelectCompanyBenefit" in {
+        "go to OtherCompanyBenefit if this option was selected on SelectCompanyBenefit" in {
           when(answers.selectCompanyBenefits) thenReturn Some(Seq(CompanyBenefits.OTHER_COMPANY_BENEFIT))
-          navigator.nextPage(HowMuchCarBenefitsId, NormalMode)(answers) mustBe routes.OtherCompanyBenefitsNameController.onPageLoad(NormalMode)
+          navigator.nextPage(HowMuchCarBenefitsId, NormalMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(NormalMode)
         }
       }
 
-      // onwards route from OtherCompanyBenefitsName always follows the same pattern
+      // onwards route from OtherCompanyBenefit always follows the same pattern
 
-      "go to HowMuchOtherCompanyBenefit from OtherCompanyBenefitsName" in {
-        navigator.nextPage(OtherCompanyBenefitsNameId, NormalMode)(answers) mustBe routes.HowMuchOtherCompanyBenefitController.onPageLoad(NormalMode)
+      "go to HowMuchOtherCompanyBenefit from OtherCompanyBenefit" in {
+        navigator.nextPage(OtherCompanyBenefitId, NormalMode)(answers) mustBe routes.HowMuchOtherCompanyBenefitController.onPageLoad(NormalMode)
       }
 
       "go to AnyOtherCompanyBenefits from HowMuchOtherCompanyBenefit" in {
@@ -120,9 +120,9 @@ class CompanyBenefitsNavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(AnyOtherCompanyBenefitsId, NormalMode)(answers) mustBe routes.AnyTaxableIncomeController.onPageLoad(NormalMode)
       }
 
-      "go to OtherCompanyBenefitsName from AnyOtherCompanyBenefits when answer is yes" in {
+      "go to OtherCompanyBenefit from AnyOtherCompanyBenefits when answer is yes" in {
         when(answers.anyOtherCompanyBenefits) thenReturn Some(true)
-        navigator.nextPage(AnyOtherCompanyBenefitsId, NormalMode)(answers) mustBe routes.OtherCompanyBenefitsNameController.onPageLoad(NormalMode)
+        navigator.nextPage(AnyOtherCompanyBenefitsId, NormalMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(NormalMode)
       }
     }
 
@@ -173,11 +173,11 @@ class CompanyBenefitsNavigatorSpec extends SpecBase with MockitoSugar {
           navigator.nextPage(SelectCompanyBenefitsId, CheckMode)(answers) mustBe routes.HowMuchFuelBenefitController.onPageLoad(CheckMode)
         }
 
-        "go to OtherCompanyBenefitsName when other company benefit selected but no associated name and amount" in {
+        "go to OtherCompanyBenefit when other company benefit selected but no associated name and amount" in {
           val answers = MockUserAnswers.companyBenefitsUserAnswers
-          when(answers.otherCompanyBenefitsName) thenReturn None
+          when(answers.otherCompanyBenefit) thenReturn None
 
-          navigator.nextPage(SelectCompanyBenefitsId, CheckMode)(answers) mustBe routes.OtherCompanyBenefitsNameController.onPageLoad(CheckMode)
+          navigator.nextPage(SelectCompanyBenefitsId, CheckMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(CheckMode)
         }
       }
 
@@ -201,11 +201,11 @@ class CompanyBenefitsNavigatorSpec extends SpecBase with MockitoSugar {
           navigator.nextPage(HowMuchCarBenefitsId, CheckMode)(answers) mustBe routes.HowMuchMedicalBenefitsController.onPageLoad(CheckMode)
         }
 
-        "go to OtherCompanyBenefitsName when other company benefit selected without an associated name and amount" in {
+        "go to OtherCompanyBenefit when other company benefit selected without an associated name and amount" in {
           val answers = MockUserAnswers.companyBenefitsUserAnswers
-          when(answers.otherCompanyBenefitsName) thenReturn None
+          when(answers.otherCompanyBenefit) thenReturn None
 
-          navigator.nextPage(HowMuchCarBenefitsId, CheckMode)(answers) mustBe routes.OtherCompanyBenefitsNameController.onPageLoad(CheckMode)
+          navigator.nextPage(HowMuchCarBenefitsId, CheckMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(CheckMode)
         }
       }
 
@@ -222,11 +222,11 @@ class CompanyBenefitsNavigatorSpec extends SpecBase with MockitoSugar {
           navigator.nextPage(HowMuchFuelBenefitId, CheckMode)(answers) mustBe routes.HowMuchMedicalBenefitsController.onPageLoad(CheckMode)
         }
 
-        "go to OtherCompanyBenefitsName when other company benefit selected without an associated name and amount" in {
+        "go to OtherCompanyBenefit when other company benefit selected without an associated name and amount" in {
           val answers = MockUserAnswers.companyBenefitsUserAnswers
-          when(answers.otherCompanyBenefitsName) thenReturn None
+          when(answers.otherCompanyBenefit) thenReturn None
 
-          navigator.nextPage(HowMuchFuelBenefitId, CheckMode)(answers) mustBe routes.OtherCompanyBenefitsNameController.onPageLoad(CheckMode)
+          navigator.nextPage(HowMuchFuelBenefitId, CheckMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(CheckMode)
         }
       }
 
@@ -236,25 +236,25 @@ class CompanyBenefitsNavigatorSpec extends SpecBase with MockitoSugar {
           navigator.nextPage(HowMuchMedicalBenefitsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
         }
 
-        "go to OtherCompanyBenefitsName when other company benefit selected without an associated name and amount" in {
+        "go to OtherCompanyBenefit when other company benefit selected without an associated name and amount" in {
           val answers = MockUserAnswers.companyBenefitsUserAnswers
-          when(answers.otherCompanyBenefitsName) thenReturn None
+          when(answers.otherCompanyBenefit) thenReturn None
 
-          navigator.nextPage(HowMuchMedicalBenefitsId, CheckMode)(answers) mustBe routes.OtherCompanyBenefitsNameController.onPageLoad(CheckMode)
+          navigator.nextPage(HowMuchMedicalBenefitsId, CheckMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(CheckMode)
         }
       }
 
-      "Navigating from OtherCompanyBenefitsName" must {
+      "Navigating from OtherCompanyBenefit" must {
         "go to CheckYourAnswersController when name and amount stored" in {
           val answers = MockUserAnswers.companyBenefitsUserAnswers
-          navigator.nextPage(OtherCompanyBenefitsNameId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+          navigator.nextPage(OtherCompanyBenefitId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
         }
 
         "go to HowMuchOtherCompanyBenefit when no amount stored" in {
           val answers = MockUserAnswers.companyBenefitsUserAnswers
           when(answers.howMuchOtherCompanyBenefit) thenReturn None
 
-          navigator.nextPage(OtherCompanyBenefitsNameId, CheckMode)(answers) mustBe routes.HowMuchOtherCompanyBenefitController.onPageLoad(CheckMode)
+          navigator.nextPage(OtherCompanyBenefitId, CheckMode)(answers) mustBe routes.HowMuchOtherCompanyBenefitController.onPageLoad(CheckMode)
         }
       }
 

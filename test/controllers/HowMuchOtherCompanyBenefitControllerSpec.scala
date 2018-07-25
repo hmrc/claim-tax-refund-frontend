@@ -46,7 +46,7 @@ class HowMuchOtherCompanyBenefitControllerSpec extends ControllerSpecBase {
   "HowMuchOtherCompanyBenefit Controller" must {
 
     "return OK and the correct view for a GET" in {
-      when(mockUserAnswers.otherCompanyBenefitsName).thenReturn(Some(otherBenefitName))
+      when(mockUserAnswers.otherCompanyBenefit).thenReturn(Some(otherBenefitName))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe OK
@@ -54,7 +54,7 @@ class HowMuchOtherCompanyBenefitControllerSpec extends ControllerSpecBase {
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      when(mockUserAnswers.otherCompanyBenefitsName).thenReturn(Some(otherBenefitName))
+      when(mockUserAnswers.otherCompanyBenefit).thenReturn(Some(otherBenefitName))
       when(mockUserAnswers.howMuchOtherCompanyBenefit).thenReturn(Some(testAnswer))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
@@ -62,7 +62,7 @@ class HowMuchOtherCompanyBenefitControllerSpec extends ControllerSpecBase {
     }
 
     "redirect to the next page when valid data is submitted" in {
-      when(mockUserAnswers.otherCompanyBenefitsName).thenReturn(Some(otherBenefitName))
+      when(mockUserAnswers.otherCompanyBenefit).thenReturn(Some(otherBenefitName))
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", testAnswer))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(postRequest)
 
@@ -71,7 +71,7 @@ class HowMuchOtherCompanyBenefitControllerSpec extends ControllerSpecBase {
     }
 
     "return a Bad Request and errors when invalid data is submitted" in {
-      when(mockUserAnswers.otherCompanyBenefitsName).thenReturn(Some(otherBenefitName))
+      when(mockUserAnswers.otherCompanyBenefit).thenReturn(Some(otherBenefitName))
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", ""))
       val boundForm = form.bind(Map("value" -> ""))
 
@@ -115,7 +115,7 @@ class HowMuchOtherCompanyBenefitControllerSpec extends ControllerSpecBase {
     }
 
     "redirect to Session Expired if no other benefit name have been selected" in {
-      when(mockUserAnswers.otherCompanyBenefitsName).thenReturn(None)
+      when(mockUserAnswers.otherCompanyBenefit).thenReturn(None)
 
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
@@ -124,7 +124,7 @@ class HowMuchOtherCompanyBenefitControllerSpec extends ControllerSpecBase {
     }
 
     "redirect to Session Expired if no other benefit name have been selected on submit" in {
-      when(mockUserAnswers.otherCompanyBenefitsName).thenReturn(None)
+      when(mockUserAnswers.otherCompanyBenefit).thenReturn(None)
 
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(fakeRequest)
 

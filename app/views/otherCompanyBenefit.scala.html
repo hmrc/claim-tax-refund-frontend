@@ -23,21 +23,21 @@
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: SelectTaxYear)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("otherCompanyBenefitsName.title", taxYear.asString),
+    title = messages("otherCompanyBenefit.title", taxYear.asString),
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @helpers.form(action = OtherCompanyBenefitsNameController.onSubmit(mode), 'autoComplete -> "off") {
+    @helpers.form(action = OtherCompanyBenefitController.onSubmit(mode), 'autoComplete -> "off") {
 
         @components.back_link()
 
         @components.error_summary(form.errors)
 
-        @components.heading(messages("otherCompanyBenefitsName.heading", taxYear.asString))
+        @components.heading(messages("otherCompanyBenefit.heading", taxYear.asString))
 
         @components.input_text(
             InputViewModel("value", form),
-            label = messages("otherCompanyBenefitsName.heading", taxYear.asString),
+            label = messages("otherCompanyBenefit.heading", taxYear.asString),
             labelClass=Some("visually-hidden")
         )
 

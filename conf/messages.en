@@ -81,7 +81,7 @@ checkYourAnswers.pdfHeader = Summary
 checkYourAnswers.userSection = User details
 checkYourAnswers.claimSection = Claim details
 checkYourAnswers.benefitsSection = Benefit details
-checkYourAnswers.companyBenefitsSection = Company benefits details
+checkYourAnswers.companyBenefitSection = Company benefits details
 checkYourAnswers.taxableIncomeSection = Taxable income details
 checkYourAnswers.paymentSection = Payment details
 checkYourAnswers.contactSection = Contact details
@@ -245,10 +245,10 @@ howMuchFuelBenefit.checkYourAnswersLabel = Fuel benefit
 howMuchFuelBenefit.blank = Enter the amount of fuel benefit you got
 howMuchFuelBenefit.invalid = Enter a valid amount of fuel benefit
 
-otherCompanyBenefitsName.title = What is the name of the other company benefit you got between {0}?
-otherCompanyBenefitsName.heading = What is the name of the other company benefit you got between {0}?
-otherCompanyBenefitsName.checkYourAnswersLabel = Other company benefits name
-otherCompanyBenefitsName.blank = Enter the name of other company benefit you got
+otherCompanyBenefit.title = What is the name of the other company benefit you got between {0}?
+otherCompanyBenefit.heading = What is the name of the other company benefit you got between {0}?
+otherCompanyBenefit.checkYourAnswersLabel = Other company benefits name
+otherCompanyBenefit.blank = Enter the name of other company benefit you got
 
 selectBenefits.title = Which taxable benefits did you get?
 selectBenefits.heading = Which taxable benefits did you get?

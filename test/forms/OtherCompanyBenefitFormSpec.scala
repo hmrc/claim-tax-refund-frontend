@@ -16,15 +16,29 @@
 
 package forms
 
-import com.google.inject.Inject
 import config.FrontendAppConfig
-import forms.mappings.Constraints
+import forms.behaviours.FormBehaviours
+import models.MandatoryField
+import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
-import play.api.data.Forms._
 
-class OtherCompanyBenefitsNameForm @Inject()(appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
+class OtherCompanyBenefitFormSpec extends FormBehaviours with MockitoSugar {
 
-  private val errorBlankKey = "otherCompanyBenefitsName.blank"
+  val errorKeyBlank = "otherCompanyBenefit.blank"
 
-  def apply(): Form[String] = Form("value" -> text.verifying(nonEmpty(errorBlankKey)))
+  def appConfig: FrontendAppConfig = {
+    val instance = mock[FrontendAppConfig]
+    instance
+  }
+
+  val validData: Map[String, String] = Map("value" -> "test answer")
+
+  override val form: Form[_] = new OtherCompanyBenefitForm(appConfig)()
+
+  "OtherCompanyBenefit Form" must {
+
+    behave like formWithMandatoryTextFields(
+      MandatoryField("value", errorKeyBlank)
+    )
+  }
 }

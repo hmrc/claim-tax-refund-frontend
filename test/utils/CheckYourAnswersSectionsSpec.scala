@@ -42,7 +42,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
     }
 
     "have the right section title for company benefits details" in {
-      sections.companyBenefitSection.headingKey mustBe Some("checkYourAnswers.companyBenefitsSection")
+      sections.companyBenefitSection.headingKey mustBe Some("checkYourAnswers.companyBenefitSection")
     }
 
     "have the right section title for taxable income details" in {
@@ -107,7 +107,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       rows(2).label.key mustBe "howMuchCarBenefits.checkYourAnswersLabel"
       rows(3).label.key mustBe "howMuchFuelBenefit.checkYourAnswersLabel"
       rows(4).label.key mustBe "howMuchMedicalBenefits.checkYourAnswersLabel"
-      rows(5).label.key mustBe "otherCompanyBenefitsName.checkYourAnswersLabel"
+      rows(5).label.key mustBe "otherCompanyBenefit.checkYourAnswersLabel"
       rows(6).label.key mustBe "howMuchOtherCompanyBenefit.checkYourAnswersLabel"
       rows(7).label.key mustBe "anyOtherCompanyBenefits.checkYourAnswersLabel"
     }

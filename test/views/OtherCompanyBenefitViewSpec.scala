@@ -17,26 +17,26 @@
 package views
 
 import controllers.routes
-import forms.OtherCompanyBenefitsNameForm
+import forms.OtherCompanyBenefitForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
 import views.behaviours.StringViewBehaviours
-import views.html.otherCompanyBenefitsName
+import views.html.otherCompanyBenefit
 
-class OtherCompanyBenefitsNameViewSpec extends StringViewBehaviours with MockitoSugar {
+class OtherCompanyBenefitViewSpec extends StringViewBehaviours with MockitoSugar {
 
-  private val messageKeyPrefix = "otherCompanyBenefitsName"
+  private val messageKeyPrefix = "otherCompanyBenefit"
   private val taxYear = CYMinus2
 
-  override val form: Form[String] = new OtherCompanyBenefitsNameForm(frontendAppConfig)()
+  override val form: Form[String] = new OtherCompanyBenefitForm(frontendAppConfig)()
 
-  def createView = () => otherCompanyBenefitsName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createView = () => otherCompanyBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) => otherCompanyBenefitsName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[String]) => otherCompanyBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
-  "OtherCompanyBenefitsName view" must {
+  "OtherCompanyBenefit view" must {
     behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))
 
     behave like pageWithBackLink(createView)
@@ -46,7 +46,7 @@ class OtherCompanyBenefitsNameViewSpec extends StringViewBehaviours with Mockito
     behave like stringPage(
       createView = createViewUsingForm,
       messageKeyPrefix = messageKeyPrefix,
-      expectedFormAction = routes.OtherCompanyBenefitsNameController.onSubmit(NormalMode).url,
+      expectedFormAction = routes.OtherCompanyBenefitController.onSubmit(NormalMode).url,
       expectedHintKeyLine1 = None,
       expectedHintKeyLine2 = None,
       expectedPrefix = None,

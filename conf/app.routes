@@ -137,10 +137,10 @@ POST       /select-benefits                                                 cont
 GET        /change-select-benefits                                          controllers.SelectBenefitsController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-select-benefits                                          controllers.SelectBenefitsController.onSubmit(mode: Mode = CheckMode)
 
-GET        /other-company-benefits-name                                     controllers.OtherCompanyBenefitsNameController.onPageLoad(mode: Mode = NormalMode)
-POST       /other-company-benefits-name                                     controllers.OtherCompanyBenefitsNameController.onSubmit(mode: Mode = NormalMode)
-GET        /change-other-company-benefits-name                              controllers.OtherCompanyBenefitsNameController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-other-company-benefits-name                              controllers.OtherCompanyBenefitsNameController.onSubmit(mode: Mode = CheckMode)
+GET        /other-company-benefits-name                                     controllers.OtherCompanyBenefitController.onPageLoad(mode: Mode = NormalMode)
+POST       /other-company-benefits-name                                     controllers.OtherCompanyBenefitController.onSubmit(mode: Mode = NormalMode)
+GET        /change-other-company-benefits-name                              controllers.OtherCompanyBenefitController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-other-company-benefits-name                              controllers.OtherCompanyBenefitController.onSubmit(mode: Mode = CheckMode)
 
 GET        /any-other-company-benefits                                      controllers.AnyOtherCompanyBenefitsController.onPageLoad(mode: Mode = NormalMode)
 POST       /any-other-company-benefits                                      controllers.AnyOtherCompanyBenefitsController.onSubmit(mode: Mode = NormalMode)

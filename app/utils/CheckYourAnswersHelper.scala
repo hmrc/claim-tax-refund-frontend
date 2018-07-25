@@ -156,8 +156,8 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
         s"$x", false, routes.HowMuchMedicalBenefitsController.onPageLoad(CheckMode).url)
   }
 
-  def otherCompanyBenefitsName: Option[AnswerRow] = userAnswers.otherCompanyBenefitsName map {
-    x => AnswerRow("otherCompanyBenefitsName.checkYourAnswersLabel", s"$x", false, routes.OtherCompanyBenefitsNameController.onPageLoad(CheckMode).url)
+  def otherCompanyBenefit: Option[AnswerRow] = userAnswers.otherCompanyBenefit map {
+    x => AnswerRow("otherCompanyBenefit.checkYourAnswersLabel", s"$x", false, routes.OtherCompanyBenefitController.onPageLoad(CheckMode).url)
   }
 
   def howMuchOtherCompanyBenefit: Option[AnswerRow] = userAnswers.howMuchOtherCompanyBenefit map {
