@@ -45,13 +45,17 @@ class AnyTaxableOtherIncomeController @Inject()(appConfig: FrontendAppConfig,
   private val blankKey = "anyTaxableOtherIncome.blank"
   private val invalidKey = "anyTaxableOtherIncome.invalid"
 
-  private val form: Form[AnyTaxPaid] = formProvider(notSelectedKey, blankKey, invalidKey)
+//  private val form: Form[AnyTaxPaid] = formProvider(notSelectedKey, blankKey, invalidKey)
 
   def onPageLoad(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
+
+      val form: Form[AnyTaxPaid] = formProvider(request.userAnswers.anyTaxableOtherIncome.getOrElse(Seq.empty))
+
       val preparedForm = request.userAnswers.anyTaxableOtherIncome match {
+        case Some(value) =>
+          if (index >= value.length) form else form.fill(value(index))
         case None => form
-        case Some(value) => form.fill(value)
       }
 
       val details: Option[Result] = for {
@@ -67,6 +71,9 @@ class AnyTaxableOtherIncomeController @Inject()(appConfig: FrontendAppConfig,
 
   def onSubmit(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
+
+      val form: Form[AnyTaxPaid] = formProvider(request.userAnswers.anyTaxableOtherIncome.getOrElse(Seq.empty))
+
       val details: Option[Future[Result]] = for {
         selectedTaxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
         otherTaxableIncome: Seq[OtherTaxableIncome] <- request.userAnswers.otherTaxableIncome

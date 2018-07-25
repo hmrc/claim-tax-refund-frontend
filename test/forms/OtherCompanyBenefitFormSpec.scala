@@ -18,18 +18,18 @@ package forms
 
 import config.FrontendAppConfig
 import forms.behaviours.FormBehaviours
-import models.{Index, MandatoryField, OtherTaxableIncome}
+import models.{Index, MandatoryField, OtherCompanyBenefit}
+import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
-import org.mockito.Mockito._
 import play.api.data.{Form, FormError}
 
-class OtherTaxableIncomeFormSpec extends FormBehaviours with MockitoSugar {
+class OtherCompanyBenefitFormSpec extends FormBehaviours with MockitoSugar {
 
   private val currencyRegex = """(?=.)^\$?(([1-9][0-9]{0,2}(,[0-9]{3})*)|[0-9]+)?(\.[0-9]{1,2})?$"""
-  val nameKeyBlank = "otherTaxableIncome.name.blank"
-  val amountKeyBlank = "otherTaxableIncome.amount.blank"
-  val amountKeyInvalid = "otherTaxableIncome.amount.invalid"
-  val duplicateBenefitKey = "otherTaxableIncome.duplicate"
+  val nameKeyBlank = "otherCompanyBenefit.name.blank"
+  val amountKeyBlank = "otherCompanyBenefit.amount.blank"
+  val amountKeyInvalid = "otherCompanyBenefit.amount.invalid"
+  val duplicateBenefitKey = "otherCompanyBenefit.duplicate"
 
   def appConfig: FrontendAppConfig = {
     val instance = mock[FrontendAppConfig]
@@ -37,42 +37,46 @@ class OtherTaxableIncomeFormSpec extends FormBehaviours with MockitoSugar {
     instance
   }
 
-  val validData: Map[String, String] = Map("value" -> "test answer")
+  val validData: Map[String, String] = Map(
+    "name" -> "qwerty",
+    "amount" -> "123"
+  )
 
-  override val form: Form[OtherTaxableIncome] = new OtherTaxableIncomeForm(appConfig)(Seq.empty, 0)
+  override val form: Form[OtherCompanyBenefit] = new OtherCompanyBenefitForm(appConfig)(Seq.empty, 0)
 
-  def otherTaxableIncomeForm(otherTaxableIncome: Seq[OtherTaxableIncome], index: Index): Form[OtherTaxableIncome] = new OtherTaxableIncomeForm(appConfig)(otherTaxableIncome, index)
+  def otherCompanyBenefitForm(otherBenefits: Seq[OtherCompanyBenefit], index: Index): Form[OtherCompanyBenefit] =
+    new OtherCompanyBenefitForm(appConfig)(otherBenefits, index)
 
-  "OtherTaxableIncomeName Form" must {
+  "OtherCompanyBenefitsName Form" must {
 
     "bind successfully with valid name and amount" in {
-      val result: Form[OtherTaxableIncome] = otherTaxableIncomeForm(Seq(OtherTaxableIncome("qwerty", "123")), 0).bind(validData)
+      val result: Form[OtherCompanyBenefit] = otherCompanyBenefitForm(Seq(OtherCompanyBenefit("qwerty", "123")), 0).bind(validData)
       result.errors.size shouldBe 0
-      result.get shouldBe OtherTaxableIncome("qwerty", "123")
+      result.get shouldBe OtherCompanyBenefit("qwerty", "123")
     }
 
     "fail to bind with missing name" in {
-      val result: Form[OtherTaxableIncome] = form.bind(Map("amount" -> "123"))
+      val result: Form[OtherCompanyBenefit] = form.bind(Map("amount" -> "123"))
       result.errors.size shouldBe 1
       result.errors shouldBe Seq(FormError("name", nameKeyBlank))
     }
 
     "fail to bind if name is duplicate" in {
-      val result: Form[OtherTaxableIncome] =
-        otherTaxableIncomeForm(Seq(OtherTaxableIncome("qwerty", "123")), 1).bind(validData)
+      val result: Form[OtherCompanyBenefit] =
+        otherCompanyBenefitForm(Seq(OtherCompanyBenefit("qwerty", "123")), 1).bind(validData)
 
       result.errors.size shouldBe 1
       result.errors shouldBe Seq(FormError("name", duplicateBenefitKey))
     }
 
     "fail to bind with missing amount" in {
-      val result: Form[OtherTaxableIncome] = form.bind(Map("name" -> "qwerty"))
+      val result: Form[OtherCompanyBenefit] = form.bind(Map("name" -> "qwerty"))
       result.errors.size shouldBe 1
       result.errors shouldBe Seq(FormError("amount", amountKeyBlank))
     }
 
     "fail to bind with invalid amount" in {
-      val result: Form[OtherTaxableIncome] = form.bind(Map("name" -> "qwerty", "amount" -> "qwerty"))
+      val result: Form[OtherCompanyBenefit] = form.bind(Map("name" -> "qwerty", "amount" -> "qwerty"))
       result.errors.size shouldBe 1
       result.errors shouldBe Seq(FormError("amount", amountKeyInvalid))
     }

@@ -37,7 +37,7 @@ object CompanyBenefits extends Enumeration {
       case "company-car-benefit" => HowMuchCarBenefitsId.toString
       case "fuel-benefit" => HowMuchFuelBenefitId.toString
       case "medical-benefit" => HowMuchMedicalBenefitsId.toString
-      case "other-company-benefit" => OtherCompanyBenefitsNameId.toString
+      case "other-company-benefit" => OtherCompanyBenefitId.toString
     }
   }
 

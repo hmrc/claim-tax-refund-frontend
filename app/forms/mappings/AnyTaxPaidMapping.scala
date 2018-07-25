@@ -23,9 +23,10 @@ import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfTrue
 
 trait AnyTaxPaidMapping extends Mappings {
 
-  def anyTaxPaidMapping(requiredKey: String,
-                             requiredTaxAmountKey: String,
-                             taxAmountInvalidKey: String):
+  def anyTaxPaidMapping(
+                         requiredKey: String,
+                         requiredTaxAmountKey: String,
+                         taxAmountInvalidKey: String):
   Mapping[AnyTaxPaid] = {
     val currencyRegex = """(?=.)^\$?(([1-9][0-9]{0,2}(,[0-9]{3})*)|[0-9]+)?(\.[0-9]{1,2})?$"""
 

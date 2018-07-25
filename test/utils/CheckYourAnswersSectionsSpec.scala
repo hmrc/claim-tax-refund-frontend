@@ -42,7 +42,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
     }
 
     "have the right section title for company benefits details" in {
-      sections.companyBenefitSection.headingKey mustBe Some("checkYourAnswers.companyBenefitsSection")
+      sections.companyBenefitSection.headingKey mustBe Some("checkYourAnswers.companyBenefitSection")
     }
 
     "have the right section title for taxable income details" in {
@@ -100,16 +100,19 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       val helper = new CheckYourAnswersHelper(answers)(messages: Messages)
       val sections = new CheckYourAnswersSections(helper, answers)
       val rows = sections.companyBenefitSection.rows
+      val otherCompanyBenefitSection = sections.otherCompanyBenefitSection
 
-      rows.size mustBe 8
+      rows.size mustBe 5
       rows.head.label.key mustBe "anyCompanyBenefits.checkYourAnswersLabel"
       rows(1).label.key mustBe "selectCompanyBenefits.checkYourAnswersLabel"
       rows(2).label.key mustBe "howMuchCarBenefits.checkYourAnswersLabel"
       rows(3).label.key mustBe "howMuchFuelBenefit.checkYourAnswersLabel"
       rows(4).label.key mustBe "howMuchMedicalBenefits.checkYourAnswersLabel"
-      rows(5).label.key mustBe "otherCompanyBenefitsName.checkYourAnswersLabel"
-      rows(6).label.key mustBe "howMuchOtherCompanyBenefit.checkYourAnswersLabel"
-      rows(7).label.key mustBe "anyOtherCompanyBenefits.checkYourAnswersLabel"
+
+      otherCompanyBenefitSection.rows.size mustBe 3
+      otherCompanyBenefitSection.headingKey.get mustBe "otherCompanyBenefit.checkYourAnswersLabel"
+      otherCompanyBenefitSection.addLinkText.get mustBe "otherCompanyBenefit.add"
+      otherCompanyBenefitSection.addLinkUrl.get mustBe routes.OtherCompanyBenefitController.onPageLoad(CheckMode, Index(otherCompanyBenefitSection.rows.size)).url
     }
 
     "Taxable income section" in {
@@ -117,8 +120,9 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       val helper = new CheckYourAnswersHelper(answers)(messages: Messages)
       val sections = new CheckYourAnswersSections(helper, answers)
       val rows = sections.taxableIncomeSection.rows
+      val otherTaxableIncomeSection = sections.otherTaxableIncomeSection
 
-      rows.size mustBe 19
+      rows.size mustBe 14
       rows.head.label.key mustBe "anyTaxableIncome.checkYourAnswersLabel"
       rows(1).label.key mustBe "selectTaxableIncome.checkYourAnswersLabel"
       rows(2).label.key mustBe "howMuchRentalIncome.checkYourAnswersLabel"
@@ -133,11 +137,11 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       rows(11).label.key mustBe "howMuchForeignIncome.checkYourAnswersLabel"
       rows(12).label.key mustBe "anyTaxableForeignIncomeOption.checkYourAnswersLabel"
       rows(13).label.key mustBe "anyTaxableForeignIncome.checkYourAnswersLabel"
-      rows(14).label.key mustBe "otherTaxableIncomeName.checkYourAnswersLabel"
-      rows(15).label.key mustBe "howMuchOtherTaxableIncome.checkYourAnswersLabel"
-      rows(16).label.key mustBe "anyTaxableOtherIncomeOption.checkYourAnswersLabel"
-      rows(17).label.key mustBe "anyTaxableOtherIncome.checkYourAnswersLabel"
-      rows(18).label.key mustBe "anyOtherTaxableIncome.checkYourAnswersLabel"
+
+      otherTaxableIncomeSection.rows.size mustBe 3
+      otherTaxableIncomeSection.headingKey.get mustBe "otherTaxableIncome.checkYourAnswersLabel"
+      otherTaxableIncomeSection.addLinkText.get mustBe "otherTaxableIncome.add"
+      otherTaxableIncomeSection.addLinkUrl.get mustBe routes.OtherTaxableIncomeController.onPageLoad(CheckMode, Index(otherTaxableIncomeSection.rows.size)).url
     }
 
     "Payment details section (Self)" in {
