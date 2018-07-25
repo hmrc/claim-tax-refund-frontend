@@ -46,7 +46,7 @@ class HowMuchInvestmentOrDividendViewSpec extends StringViewBehaviours with Mock
     behave like stringPage(
       createView = createViewUsingForm,
       messageKeyPrefix = messageKeyPrefix,
-      expectedFormAction = routes.HowMuchOtherCompanyBenefitController.onSubmit(NormalMode).url,
+      expectedFormAction = routes.AnyOtherCompanyBenefitsController.onSubmit(NormalMode).url,
       expectedHintKeyLine1 = None,
       expectedHintKeyLine2 = None,
       expectedPrefix = Some(messages("global.poundSign")),

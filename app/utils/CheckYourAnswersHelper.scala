@@ -156,13 +156,18 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
         s"$x", false, routes.HowMuchMedicalBenefitsController.onPageLoad(CheckMode).url)
   }
 
-  def otherCompanyBenefitsName: Option[AnswerRow] = userAnswers.otherCompanyBenefitsName map {
-    x => AnswerRow("otherCompanyBenefitsName.checkYourAnswersLabel", s"$x", false, routes.OtherCompanyBenefitsNameController.onPageLoad(CheckMode).url)
-  }
-
-  def howMuchOtherCompanyBenefit: Option[AnswerRow] = userAnswers.howMuchOtherCompanyBenefit map {
-    x => AnswerRow("howMuchOtherCompanyBenefit.checkYourAnswersLabel", s"$x", false, routes.HowMuchOtherCompanyBenefitController.onPageLoad(CheckMode).url)
-  }
+  def otherCompanyBenefit: Seq[Option[AnswerRow]] = {
+    for {
+      otherCompanyBenefit <- userAnswers.otherCompanyBenefit
+    } yield {
+      otherCompanyBenefit.zipWithIndex.flatMap {
+        case (companyBenefits, index) =>
+          Seq(
+            Some(AnswerRow(companyBenefits.name, s"£${companyBenefits.amount}", answerIsMessageKey = false, routes.OtherCompanyBenefitController.onPageLoad(CheckMode, Index(index)).url))
+          )
+      }
+    }
+  }.getOrElse(Seq.empty)
 
   def anyOtherCompanyBenefits: Option[AnswerRow] = userAnswers.anyOtherCompanyBenefits map {
     x => AnswerRow("anyOtherCompanyBenefits.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.AnyOtherCompanyBenefitsController.onPageLoad(CheckMode).url)
@@ -231,17 +236,16 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
   }
 
   def otherTaxableIncome: Seq[Option[AnswerRow]] = {
-        for {
-          otherTaxableIncome <- userAnswers.otherTaxableIncome
-        } yield {
-          otherTaxableIncome.zipWithIndex.flatMap {
-            case (income, index) =>
-              Seq(
-                Some(AnswerRow(income.name, s"£${income.amount}", answerIsMessageKey = false, routes.OtherBenefitController.onPageLoad(CheckMode, Index(index)).url))
-              )
-          }
-        }
-//    x => AnswerRow("otherTaxableIncomeName.checkYourAnswersLabel", s"$x", false, routes.OtherTaxableIncomeNameController.onPageLoad(CheckMode).url)
+    for {
+      otherTaxableIncome <- userAnswers.otherTaxableIncome
+    } yield {
+      otherTaxableIncome.zipWithIndex.flatMap {
+        case (income, index) =>
+          Seq(
+            Some(AnswerRow(income.name, s"£${income.amount}", answerIsMessageKey = false, routes.OtherBenefitController.onPageLoad(CheckMode, Index(index)).url))
+          )
+      }
+    }
   }.getOrElse(Seq.empty)
 
   def anyOtherTaxableIncome: Option[AnswerRow] = userAnswers.anyOtherTaxableIncome map {

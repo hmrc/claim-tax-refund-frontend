@@ -81,7 +81,7 @@ checkYourAnswers.pdfHeader = Summary
 checkYourAnswers.userSection = User details
 checkYourAnswers.claimSection = Claim details
 checkYourAnswers.benefitsSection = Benefit details
-checkYourAnswers.companyBenefitsSection = Company benefits details
+checkYourAnswers.companyBenefitSection = Company benefits details
 checkYourAnswers.taxableIncomeSection = Taxable income details
 checkYourAnswers.paymentSection = Payment details
 checkYourAnswers.contactSection = Contact details
@@ -117,8 +117,8 @@ anyTaxableIncome.checkYourAnswersLabel = Did you get any other taxable income?
 anyTaxableIncome.blank = Select yes if you got any other taxable income
 anyTaxableIncome.listHeading = Taxable income can be something like:
 
-howMuchCarBenefits.title = How much company car benefit did you get between {0}?
-howMuchCarBenefits.heading = How much company car benefit did you get between {0}?
+howMuchCarBenefits.title = How much company car benefit did you get?
+howMuchCarBenefits.heading = How much company car benefit did you get?
 howMuchCarBenefits.checkYourAnswersLabel = Company car benefit
 howMuchCarBenefits.blank = Enter the amount of company car benefit you got
 howMuchCarBenefits.invalid = Enter a valid amount of company car benefit
@@ -158,14 +158,14 @@ howMuchStatePension.checkYourAnswersLabel = State Pension
 howMuchStatePension.blank = Enter the amount of State Pension you got
 howMuchStatePension.invalid = Enter a valid amount of State Pension
 
-howMuchMedicalBenefits.title = How much medical benefit did you get between {0}?
-howMuchMedicalBenefits.heading = How much medical benefit did you get between {0}?
+howMuchMedicalBenefits.title = How much medical benefit did you get?
+howMuchMedicalBenefits.heading = How much medical benefit did you get?
 howMuchMedicalBenefits.checkYourAnswersLabel = Medical benefit
 howMuchMedicalBenefits.blank = Enter the amount of medical benefit you got
 howMuchMedicalBenefits.invalid = Enter a valid amount of medical benefit
 
-anyOtherTaxableIncome.title = Did you get any other taxable income between {0}?
-anyOtherTaxableIncome.heading = Did you get any other taxable income between {0}?
+anyOtherTaxableIncome.title = Did you get any other taxable income?
+anyOtherTaxableIncome.heading = Did you get any other taxable income?
 anyOtherTaxableIncome.checkYourAnswersLabel = Did you get any other taxable income?
 anyOtherTaxableIncome.blank = Select yes if you got any other taxable income
 
@@ -224,8 +224,8 @@ employmentDetails.employer = Employer
 employmentDetails.staffNumber = Staff Number
 employmentDetails.hintText = Check with your employer or pension provider first if you do not recognise any of the names shown. Their trading name may be different to their ownership name.
 
-selectCompanyBenefits.title = Select the company benefits you got between {0}?
-selectCompanyBenefits.heading = Select the company benefits you got between {0}?
+selectCompanyBenefits.title = Which taxable company benefits did you get?
+selectCompanyBenefits.heading = Which taxable company benefits did you get?
 selectCompanyBenefits.checkYourAnswersLabel = Company benefits you got
 selectCompanyBenefits.blank = Select the company benefits you got
 selectCompanyBenefits.company-car-benefit = Company car benefit
@@ -233,22 +233,26 @@ selectCompanyBenefits.fuel-benefit = Fuel benefit
 selectCompanyBenefits.medical-benefit = Medical benefit
 selectCompanyBenefits.other-company-benefit = Other company benefits
 
-anyCompanyBenefits.title = Did you get any company benefits from your employer between {0}?
-anyCompanyBenefits.heading = Did you get any company benefits from your employer between {0}?
+anyCompanyBenefits.title = Did you get any company benefits from your employer?
+anyCompanyBenefits.heading = Did you get any company benefits from your employer?
 anyCompanyBenefits.checkYourAnswersLabel = Did you get any company benefits
 anyCompanyBenefits.blank =  Select yes if you claimed any company benefits
 anyCompanyBenefits.listHeading = A company benefit can be something like:
 
-howMuchFuelBenefit.title = How much fuel benefit did you get between {0}?
-howMuchFuelBenefit.heading = How much fuel benefit did you get between {0}?
+howMuchFuelBenefit.title = How much fuel benefit did you get?
+howMuchFuelBenefit.heading = How much fuel benefit did you get?
 howMuchFuelBenefit.checkYourAnswersLabel = Fuel benefit
 howMuchFuelBenefit.blank = Enter the amount of fuel benefit you got
 howMuchFuelBenefit.invalid = Enter a valid amount of fuel benefit
 
-otherCompanyBenefitsName.title = What is the name of the other company benefit you got between {0}?
-otherCompanyBenefitsName.heading = What is the name of the other company benefit you got between {0}?
-otherCompanyBenefitsName.checkYourAnswersLabel = Other company benefits name
-otherCompanyBenefitsName.blank = Enter the name of other company benefit you got
+otherCompanyBenefit.title = What is the name of the other company benefit you got?
+otherCompanyBenefit.heading = What is the name of the other company benefit you got?
+otherCompanyBenefit.checkYourAnswersLabel = Other taxable company benefit details
+otherCompanyBenefit.name.blank = Enter the name of other company benefit you got
+otherCompanyBenefit.amount.blank = Enter the amount of the other company benefit you got
+otherCompanyBenefit.amount.invalid = Enter a valid amount of the company benefit benefit you got
+otherCompanyBenefit.duplicate = You have already entered this other taxable company benefit name
+otherCompanyBenefit.add = Add another taxable company benefit
 
 selectBenefits.title = Which taxable benefits did you get?
 selectBenefits.heading = Which taxable benefits did you get?
@@ -262,12 +266,6 @@ selectBenefits.other-taxable-benefit = Other taxable benefit
 selectBenefits.bereavement-allowance = Bereavement Allowance
 selectBenefits.carers-allowance = Carer''s Allowance
 
-howMuchOtherCompanyBenefit.title = How much {0} did you get between {1}?
-howMuchOtherCompanyBenefit.heading = How much {0} did you get between {1}?
-howMuchOtherCompanyBenefit.checkYourAnswersLabel = Other company benefit
-howMuchOtherCompanyBenefit.blank = Enter the amount you got for this company benefit
-howMuchOtherCompanyBenefit.invalid = Enter a valid amount you got for this company benefit
-
 enterPayeReference.title = Enter your employer or pension provider''s PAYE reference
 enterPayeReference.heading = Enter your employer or pension provider''s PAYE reference
 enterPayeReference.checkYourAnswersLabel = PAYE reference
@@ -275,8 +273,8 @@ enterPayeReference.hint = For example 123/AB456. You can find this on your paysl
 enterPayeReference.blank = Enter your employer or pension provider''s PAYE reference
 enterPayeReference.invalid = Enter a valid PAYE reference
 
-anyOtherCompanyBenefits.title = Did you get any other company benefits between {0}?
-anyOtherCompanyBenefits.heading = Did you get any other company benefits between {0}?
+anyOtherCompanyBenefits.title = Did you get any other company benefits?
+anyOtherCompanyBenefits.heading = Did you get any other company benefits?
 anyOtherCompanyBenefits.checkYourAnswersLabel = Did you get any other company benefits?
 anyOtherCompanyBenefits.blank = Select yes if you got any other company benefits
 
@@ -344,7 +342,7 @@ howMuchOtherTaxableIncome.invalid = Enter a valid amount of other taxable income
 
 otherTaxableIncome.title = Tell us about the other taxable income you got
 otherTaxableIncome.heading = Tell us about the other taxable income you got
-otherTaxableIncome.checkYourAnswersLabel = Other taxable income name
+otherTaxableIncome.checkYourAnswersLabel = Other taxable income details
 otherTaxableIncome.name.blank = Enter the name of the other taxable income you got
 otherTaxableIncome.amount.blank = Enter the amount of the other taxable income you got
 otherTaxableIncome.amount.invalid = Enter a valid amount of the other taxable income you got
@@ -389,8 +387,8 @@ anyTaxableForeignIncome.notSelected = Select yes if you paid income tax on forei
 anyTaxableForeignIncome.blank = Enter the amount of income tax you paid on foreign income
 anyTaxableForeignIncome.anyTaxPaidAmountField = How much income tax did you pay on foreign income?
 
-anyTaxableOtherIncome.title = Did you pay income tax on {0} between {1}?
-anyTaxableOtherIncome.heading = Did you pay income tax on {0} between {1}?
+anyTaxableOtherIncome.title = Did you pay income tax on {0}?
+anyTaxableOtherIncome.heading = Did you pay income tax on {0}?
 anyTaxableOtherIncomeOption.checkYourAnswersLabel = Did you pay income tax on this other income
 anyTaxableOtherIncome.checkYourAnswersLabel = Income tax you paid on other taxable income
 anyTaxableOtherIncome.invalid = Enter a valid amount of income tax you paid on this income

@@ -52,8 +52,7 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.howMuchCarBenefits) thenReturn None
     when(answers.howMuchFuelBenefit) thenReturn None
     when(answers.howMuchMedicalBenefits) thenReturn None
-    when(answers.otherCompanyBenefitsName) thenReturn None
-    when(answers.howMuchOtherCompanyBenefit) thenReturn None
+    when(answers.otherCompanyBenefit) thenReturn None
     when(answers.anyOtherCompanyBenefits) thenReturn None
 
     //taxable income details
@@ -67,8 +66,7 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.anyTaxableInvestments) thenReturn None
     when(answers.howMuchForeignIncome) thenReturn None
     when(answers.anyTaxableForeignIncome) thenReturn None
-    when(answers.otherTaxableIncomeName) thenReturn None
-    when(answers.howMuchOtherTaxableIncome) thenReturn None
+    when(answers.otherTaxableIncome) thenReturn None
     when(answers.anyTaxableOtherIncome) thenReturn None
     when(answers.anyOtherTaxableIncome) thenReturn None
 
@@ -157,9 +155,7 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.howMuchCarBenefits) thenReturn Some("1234")
     when(answers.howMuchMedicalBenefits) thenReturn Some("1234")
     when(answers.howMuchFuelBenefit) thenReturn Some("1234")
-    when(answers.otherCompanyBenefitsName) thenReturn Some("other company benefit")
-    when(answers.howMuchOtherCompanyBenefit) thenReturn Some("1234")
-    when(answers.anyOtherCompanyBenefits) thenReturn Some(false)
+    when(answers.otherCompanyBenefit) thenReturn Some(Seq(OtherCompanyBenefit("qwerty", "12"), OtherCompanyBenefit("qwerty1", "34"), OtherCompanyBenefit("qwerty2", "56")))
 
     answers
   }
@@ -185,8 +181,7 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.anyTaxableInvestments) thenReturn Some(AnyTaxPaid.Yes("1234"))
     when(answers.howMuchForeignIncome) thenReturn Some("1234")
     when(answers.anyTaxableForeignIncome) thenReturn Some(AnyTaxPaid.Yes("1234"))
-    when(answers.otherTaxableIncomeName) thenReturn Some("1234")
-    when(answers.howMuchOtherTaxableIncome) thenReturn Some("1234")
+    when(answers.otherTaxableIncome) thenReturn Some(Seq(OtherTaxableIncome("qwerty", "12"), OtherTaxableIncome("qwerty1", "34"), OtherTaxableIncome("qwerty2", "56")))
     when(answers.anyTaxableOtherIncome) thenReturn Some(AnyTaxPaid.Yes("1234"))
     when(answers.anyOtherTaxableIncome) thenReturn Some(false)
 

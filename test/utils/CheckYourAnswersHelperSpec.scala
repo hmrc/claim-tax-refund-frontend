@@ -274,20 +274,21 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     }
   }
 
-  "otherCompanyBenefitsName" must {
-    s"have the correct label and answer" in {
-      val companyBenefitName = "other benefit"
-      when(answers.otherCompanyBenefitsName) thenReturn Some(companyBenefitName)
-      helper.otherCompanyBenefitsName.get.label.key mustBe s"otherCompanyBenefitsName.checkYourAnswersLabel"
-      helper.otherCompanyBenefitsName.get.answer.key mustBe companyBenefitName
+  "otherCompanyBenefit" must {
+    s"have the correct answer" in {
+      val otherCompanyBenefit = Seq(OtherCompanyBenefit("qwerty", "1234"))
+      when(answers.otherCompanyBenefit) thenReturn Some(otherCompanyBenefit)
+
+      helper.otherCompanyBenefit.head.get.label.key mustBe "qwerty"
+      helper.otherCompanyBenefit.head.get.answer.key mustBe s"£$amount"
     }
   }
 
-  "howMuchOtherCompanyBenefit" must {
-    s"have the correct label and answer" in {
-      when(answers.howMuchOtherCompanyBenefit) thenReturn Some(amount)
-      helper.howMuchOtherCompanyBenefit.get.label.key mustBe s"howMuchOtherCompanyBenefit.checkYourAnswersLabel"
-      helper.howMuchOtherCompanyBenefit.get.answer.key mustBe amount
+  "otherCompanyBenefit" must {
+    s"return a empty Seq when empty" in {
+      when(answers.otherCompanyBenefit) thenReturn None
+
+      helper.otherCompanyBenefit mustBe Seq()
     }
   }
 
@@ -475,20 +476,11 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     }
   }
 
-  "otherTaxableIncomeName" must {
+  "otherTaxableIncome" must {
     s"have correct label and answer" in {
-      val taxableIncomeName = "Other taxable income"
-      when(answers.otherTaxableIncomeName) thenReturn Some(taxableIncomeName)
-      helper.otherTaxableIncomeName.get.label.key mustBe s"otherTaxableIncomeName.checkYourAnswersLabel"
-      helper.otherTaxableIncomeName.get.answer.key mustBe taxableIncomeName
-    }
-  }
-
-  "howMuchOtherTaxableIncome" must {
-    s"have correct label and answer" in {
-      when(answers.howMuchOtherTaxableIncome) thenReturn Some(amount)
-      helper.howMuchOtherTaxableIncome.get.label.key mustBe s"howMuchOtherTaxableIncome.checkYourAnswersLabel"
-      helper.howMuchOtherTaxableIncome.get.answer.key mustBe amount
+      when(answers.otherTaxableIncome) thenReturn Some(Seq(OtherTaxableIncome("qwerty", "1234")))
+      helper.otherTaxableIncome.head.get.label.key mustBe "qwerty"
+      helper.otherTaxableIncome.head.get.answer.key mustBe s"£$amount"
     }
   }
 
