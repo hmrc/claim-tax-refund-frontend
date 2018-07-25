@@ -33,7 +33,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading(messages("howMuchRentalIncome.heading", taxYear.asString))
+        @components.heading(messages("howMuchRentalIncome.heading"), taxYear = Some(taxYear.asString))
 
         @components.input_text(InputViewModel("value", form),
             label = messages("howMuchRentalIncome.heading", taxYear.asString),

@@ -21,7 +21,7 @@ echo "otherTaxableIncomeName.blank = otherTaxableIncomeName" >> ../conf/messages
 echo "Adding helper line into UserAnswers"
 awk '/class/ {\
      print;\
-     print "  def otherTaxableIncomeName: Option[String] = cacheMap.getEntry[String](OtherTaxableIncomeNameId.toString)";\
+     print "  def otherTaxableIncomeName: Option[String] = cacheMap.getEntry[String](OtherTaxableIncomeId.toString)";\
      print "";\
      next }1' ../app/utils/UserAnswers.scala > tmp && mv tmp ../app/utils/UserAnswers.scala
 

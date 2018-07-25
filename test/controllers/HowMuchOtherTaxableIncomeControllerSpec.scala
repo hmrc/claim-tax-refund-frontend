@@ -21,7 +21,6 @@ import utils.{FakeNavigator, MockUserAnswers}
 import connectors.FakeDataCacheConnector
 import controllers.actions._
 import play.api.test.Helpers._
-import forms.HowMuchOtherTaxableIncomeForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.mockito.Mockito.when

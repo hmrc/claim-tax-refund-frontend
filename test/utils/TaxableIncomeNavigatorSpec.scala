@@ -113,7 +113,7 @@ class TaxableIncomeNavigatorSpec extends SpecBase with MockitoSugar {
         }
 
         "go to HowMuchOtherTaxableIncome from OtherTaxableIncomeName" in {
-          navigator.nextPage(OtherTaxableIncomeNameId, NormalMode)(answers) mustBe routes.HowMuchOtherTaxableIncomeController.onPageLoad(NormalMode)
+          navigator.nextPage(OtherTaxableIncomeId, NormalMode)(answers) mustBe routes.HowMuchOtherTaxableIncomeController.onPageLoad(NormalMode)
         }
 
         "go to AnyTaxableOtherIncome from HowMuchOtherTaxableIncome" in {
@@ -488,21 +488,21 @@ class TaxableIncomeNavigatorSpec extends SpecBase with MockitoSugar {
         "OtherTaxableIncomeName" must {
           "go to CheckYourAnswersController when all selected taxable incomes have associated values" in {
             val answers = MockUserAnswers.taxableIncomeUserAnswers
-            navigator.nextPage(OtherTaxableIncomeNameId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+            navigator.nextPage(OtherTaxableIncomeId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
           }
 
           "go to HowMuchOtherIncome when how much other income does not have an associated amount" in {
             val answers = MockUserAnswers.taxableIncomeUserAnswers
             when(answers.howMuchOtherTaxableIncome) thenReturn None
 
-            navigator.nextPage(OtherTaxableIncomeNameId, CheckMode)(answers) mustBe routes.HowMuchOtherTaxableIncomeController.onPageLoad(CheckMode)
+            navigator.nextPage(OtherTaxableIncomeId, CheckMode)(answers) mustBe routes.HowMuchOtherTaxableIncomeController.onPageLoad(CheckMode)
           }
 
           "go to AnyTaxableOtherIncome when any taxable other income not selected" in {
             val answers = MockUserAnswers.taxableIncomeUserAnswers
             when(answers.anyTaxableOtherIncome) thenReturn None
 
-            navigator.nextPage(OtherTaxableIncomeNameId, CheckMode)(answers) mustBe routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode)
+            navigator.nextPage(OtherTaxableIncomeId, CheckMode)(answers) mustBe routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode)
           }
         }
 

@@ -123,20 +123,20 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
       "anyTaxableForeignIncome",
       userAnswers.anyTaxableForeignIncome,
       routes.AnyTaxableForeignIncomeController.onPageLoad(CheckMode).url
-    ),
-    cyaHelper.otherTaxableIncomeName,
-    cyaHelper.howMuchOtherTaxableIncome,
-    cyaHelper.anyTaxPaid(
-      "anyTaxableOtherIncomeOption",
-      userAnswers.anyTaxableOtherIncome,
-      routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode).url
-    ),
-    cyaHelper.taxPaid(
-      "anyTaxableOtherIncome",
-      userAnswers.anyTaxableOtherIncome,
-      routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode).url
-    ),
-    cyaHelper.anyOtherTaxableIncome
+    )
+//    cyaHelper.otherTaxableIncome,
+//    cyaHelper.howMuchOtherTaxableIncome,
+//    cyaHelper.anyTaxPaid(
+//      "anyTaxableOtherIncomeOption",
+//      userAnswers.anyTaxableOtherIncome,
+//      routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode).url
+//    ),
+//    cyaHelper.taxPaid(
+//      "anyTaxableOtherIncome",
+//      userAnswers.anyTaxableOtherIncome,
+//      routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode).url
+//    ),
+//    cyaHelper.anyOtherTaxableIncome
   ).flatten)
 
   def paymentSection = AnswerSection(Some("checkYourAnswers.paymentSection"), Seq(
