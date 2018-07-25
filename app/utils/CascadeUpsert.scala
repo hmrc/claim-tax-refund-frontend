@@ -84,8 +84,7 @@ class CascadeUpsert {
         HowMuchCarBenefitsId.toString,
         HowMuchFuelBenefitId.toString,
         HowMuchMedicalBenefitsId.toString,
-        OtherCompanyBenefitsNameId.toString,
-        HowMuchOtherCompanyBenefitId.toString,
+        OtherCompanyBenefitId.toString,
         AnyOtherCompanyBenefitsId.toString
       )))
     }
@@ -138,7 +137,7 @@ class CascadeUpsert {
           if (!selectedBenefits.as[JsArray].value.contains(benefit) && benefit != JsString(CompanyBenefits.OTHER_COMPANY_BENEFIT.toString)) {
             cm copy (data = cm.data - CompanyBenefits.getIdString(benefit.as[String]))
           } else if (!selectedBenefits.as[JsArray].value.contains(JsString(CompanyBenefits.OTHER_COMPANY_BENEFIT.toString))) {
-            cm copy (data = cm.data - (OtherCompanyBenefitsNameId.toString, HowMuchOtherCompanyBenefitId.toString, AnyOtherCompanyBenefitsId.toString))
+            cm copy (data = cm.data - (OtherCompanyBenefitId.toString, AnyOtherCompanyBenefitsId.toString))
           } else {
             cm
           }
