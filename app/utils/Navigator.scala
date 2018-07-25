@@ -106,7 +106,7 @@ class Navigator @Inject()() {
     HowMuchCarBenefitsId -> selectedCompanyBenefitsCheck(CheckMode),
     HowMuchFuelBenefitId -> selectedCompanyBenefitsCheck(CheckMode),
     HowMuchMedicalBenefitsId -> selectedCompanyBenefitsCheck(CheckMode),
-    OtherCompanyBenefitId -> otherCompanyBenefitsName(CheckMode),
+    OtherCompanyBenefitId -> otherCompanyBenefit(CheckMode),
     //Taxable Income
     AnyTaxableIncomeId -> anyTaxableIncome(CheckMode),
     SelectTaxableIncomeId -> selectedTaxableIncomeCheck(CheckMode),
@@ -232,7 +232,7 @@ class Navigator @Inject()() {
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
-  def otherCompanyBenefitsName(mode: Mode)(userAnswers: UserAnswers): Call =
+  def otherCompanyBenefit(mode: Mode)(userAnswers: UserAnswers): Call =
     if (mode == NormalMode) routes.AnyOtherCompanyBenefitsController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
 
   //Taxable income--------------------------
