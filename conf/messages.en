@@ -247,7 +247,7 @@ howMuchFuelBenefit.invalid = Enter a valid amount of fuel benefit
 
 otherCompanyBenefit.title = What is the name of the other company benefit you got?
 otherCompanyBenefit.heading = What is the name of the other company benefit you got?
-otherCompanyBenefit.checkYourAnswersLabel = Other company benefits name
+otherCompanyBenefit.checkYourAnswersLabel = Other taxable company benefit details
 otherCompanyBenefit.name.blank = Enter the name of other company benefit you got
 otherCompanyBenefit.amount.blank = Enter the amount of the other company benefit you got
 otherCompanyBenefit.amount.invalid = Enter a valid amount of the company benefit benefit you got

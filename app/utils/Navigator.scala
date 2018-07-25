@@ -58,7 +58,7 @@ class Navigator @Inject()() {
     HowMuchCarBenefitsId -> selectedCompanyBenefitsCheck(NormalMode),
     HowMuchFuelBenefitId -> selectedCompanyBenefitsCheck(NormalMode),
     HowMuchMedicalBenefitsId -> selectedCompanyBenefitsCheck(NormalMode),
-    OtherCompanyBenefitId -> otherCompanyBenefitsName(NormalMode),
+    OtherCompanyBenefitId -> otherCompanyBenefit(NormalMode),
     AnyOtherCompanyBenefitsId -> anyOtherCompanyBenefits,
     //Taxable income
     AnyTaxableIncomeId -> anyTaxableIncome(NormalMode),
