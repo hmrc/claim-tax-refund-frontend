@@ -19,7 +19,7 @@ package utils
 import base.SpecBase
 import controllers.routes
 import identifiers._
-import models.{CheckMode, CompanyBenefits, NormalMode}
+import models.{CheckMode, CompanyBenefits, NormalMode, OtherCompanyBenefit}
 import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito._
 
@@ -117,8 +117,11 @@ class CompanyBenefitNavigatorSpec extends SpecBase with MockitoSugar {
       }
 
       "go to OtherCompanyBenefit from AnyOtherCompanyBenefits when answer is yes" in {
+        val answers = mock[UserAnswers]
+
         when(answers.anyOtherCompanyBenefits) thenReturn Some(true)
-        navigator.nextPage(AnyOtherCompanyBenefitsId, NormalMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(NormalMode, 0)
+        when(answers.otherCompanyBenefit) thenReturn Some(Seq(OtherCompanyBenefit("qwerty", "123")))
+        navigator.nextPage(AnyOtherCompanyBenefitsId, NormalMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(NormalMode, 1)
       }
     }
 
