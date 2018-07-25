@@ -28,6 +28,7 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
       benefitSection,
       otherBenefitsSection,
       companyBenefitSection,
+      otherCompanyBenefitSection,
       taxableIncomeSection,
       paymentSection,
       contactSection
@@ -65,15 +66,25 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
     }
   }
 
-  def companyBenefitSection = AnswerSection(Some("checkYourAnswers.companyBenefitsSection"), Seq(
+  def otherCompanyBenefitSection: AnswerSection = {
+    if (userAnswers.otherCompanyBenefit.isDefined) {
+      AnswerSection(
+        headingKey = Some("otherCompanyBenefit.checkYourAnswersLabel"),
+        rows = cyaHelper.otherCompanyBenefit.flatten,
+        addLinkText = Some("otherCompanyBenefit.add"),
+        addLinkUrl = Some(routes.OtherCompanyBenefitController.onPageLoad(CheckMode, Index(userAnswers.otherCompanyBenefit.get.size)).url)
+      )
+    } else {
+      AnswerSection(None, Seq.empty)
+    }
+  }
+
+  def companyBenefitSection = AnswerSection(Some("checkYourAnswers.companyBenefitSection"), Seq(
     cyaHelper.anyCompanyBenefits,
     cyaHelper.selectCompanyBenefits,
     cyaHelper.howMuchCarBenefits,
     cyaHelper.howMuchFuelBenefit,
-    cyaHelper.howMuchMedicalBenefits,
-    cyaHelper.otherCompanyBenefitsName,
-    cyaHelper.howMuchOtherCompanyBenefit,
-    cyaHelper.anyOtherCompanyBenefits
+    cyaHelper.howMuchMedicalBenefits
   ).flatten)
 
 

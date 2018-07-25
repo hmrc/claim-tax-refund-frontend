@@ -14,8 +14,12 @@
  * limitations under the License.
  */
 
-package identifiers
+package models
 
-case object HowMuchOtherCompanyBenefitId extends Identifier {
-  override def toString: String = "howMuchOtherCompanyBenefit"
+import play.api.libs.json.Json
+
+case class OtherCompanyBenefit(name: String, amount: String)
+
+object OtherCompanyBenefit {
+  implicit val format = Json.format[OtherCompanyBenefit]
 }
