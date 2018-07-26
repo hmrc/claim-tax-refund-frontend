@@ -179,7 +179,8 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
 
   def anyTaxPaid(label: String, answer: Option[AnyTaxPaid], route: String): Option[AnswerRow] = answer map {
     x =>
-      AnswerRow(s"$label.checkYourAnswersLabel",
+      AnswerRow(
+        label,
         x match {
           case AnyTaxPaid.Yes(amount) => "site.yes"
           case AnyTaxPaid.No => "site.no"
@@ -191,7 +192,8 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
 
   def taxPaid(label: String, answer: Option[AnyTaxPaid], route: String): Option[AnswerRow] = answer match {
     case Some(AnyTaxPaid.Yes(amount)) =>
-      Some(AnswerRow(s"$label.checkYourAnswersLabel",
+      Some(AnswerRow(
+        label,
         s"$amount",
         false,
         route
@@ -237,14 +239,31 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
 
   def otherTaxableIncome: Seq[Option[AnswerRow]] = {
     for {
-      otherTaxableIncome <- userAnswers.otherTaxableIncome
+      otherTaxableIncome: Seq[OtherTaxableIncome] <- userAnswers.otherTaxableIncome
+      anyTaxableOtherIncome: Seq[AnyTaxPaid] <- userAnswers.anyTaxableOtherIncome
     } yield {
-      otherTaxableIncome.zipWithIndex.flatMap {
-        case (income, index) =>
+      (otherTaxableIncome zip anyTaxableOtherIncome).zipWithIndex.flatMap {
+        case (value, index) =>
           Seq(
-            Some(AnswerRow(income.name, s"£${income.amount}", answerIsMessageKey = false, routes.OtherBenefitController.onPageLoad(CheckMode, Index(index)).url))
+            Some(AnswerRow(
+              value._1.name,
+              s"£${value._1.amount}",
+              answerIsMessageKey = false,
+              routes.OtherTaxableIncomeController.onPageLoad(CheckMode, Index(index)).url
+            )),
+            anyTaxPaid(
+              messages("anyTaxableOtherIncome.heading", value._1.name),
+              Some(value._2),
+              routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode, Index(index)).url
+            ),
+            taxPaid(
+              messages("anyTaxableOtherIncome.incomeTaxLabel", value._1.name),
+              Some(value._2),
+              routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode, Index(index)).url
+            )
           )
       }
+
     }
   }.getOrElse(Seq.empty)
 
