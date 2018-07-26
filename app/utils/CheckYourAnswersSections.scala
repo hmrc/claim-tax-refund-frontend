@@ -94,45 +94,45 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
     cyaHelper.selectTaxableIncome,
     cyaHelper.howMuchRentalIncome,
     cyaHelper.anyTaxPaid(
-      "anyTaxableRentalIncomeOption",
+      "anyTaxableRentalIncomeOption.checkYourAnswersLabel",
       userAnswers.anyTaxableRentalIncome,
-      routes.AnyOtherTaxableIncomeController.onPageLoad(CheckMode).url
+      routes.AnyTaxableRentalIncomeController.onPageLoad(CheckMode).url
     ),
     cyaHelper.taxPaid(
-      "anyTaxableRentalIncome",
+      "anyTaxableRentalIncome.checkYourAnswersLabel",
       userAnswers.anyTaxableRentalIncome,
-      routes.AnyOtherTaxableIncomeController.onPageLoad(CheckMode).url
+      routes.AnyTaxableRentalIncomeController.onPageLoad(CheckMode).url
     ),
     cyaHelper.howMuchBankInterest,
     cyaHelper.anyTaxPaid(
-      "anyTaxableBankInterestOption",
+      "anyTaxableBankInterestOption.checkYourAnswersLabel",
       userAnswers.anyTaxableBankInterest,
       routes.AnyTaxableBankInterestController.onPageLoad(CheckMode).url
     ),
     cyaHelper.taxPaid(
-      "anyTaxableBankInterest",
+      "anyTaxableBankInterest.checkYourAnswersLabel",
       userAnswers.anyTaxableBankInterest,
       routes.AnyTaxableBankInterestController.onPageLoad(CheckMode).url
     ),
     cyaHelper.howMuchInvestmentOrDividend,
     cyaHelper.anyTaxPaid(
-      "anyTaxableInvestmentsOption",
+      "anyTaxableInvestmentsOption.checkYourAnswersLabel",
       userAnswers.anyTaxableInvestments,
       routes.AnyTaxableInvestmentsController.onPageLoad(CheckMode).url
     ),
     cyaHelper.taxPaid(
-      "anyTaxableInvestments",
+      "anyTaxableInvestments.checkYourAnswersLabel",
       userAnswers.anyTaxableInvestments,
       routes.AnyTaxableInvestmentsController.onPageLoad(CheckMode).url
     ),
     cyaHelper.howMuchForeignIncome,
     cyaHelper.anyTaxPaid(
-      "anyTaxableForeignIncomeOption",
+      "anyTaxableForeignIncomeOption.checkYourAnswersLabel",
       userAnswers.anyTaxableForeignIncome,
       routes.AnyTaxableForeignIncomeController.onPageLoad(CheckMode).url
     ),
     cyaHelper.taxPaid(
-      "anyTaxableForeignIncome",
+      "anyTaxableForeignIncome.checkYourAnswersLabel",
       userAnswers.anyTaxableForeignIncome,
       routes.AnyTaxableForeignIncomeController.onPageLoad(CheckMode).url
     )

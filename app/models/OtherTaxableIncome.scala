@@ -19,8 +19,8 @@ package models
 import play.api.libs.json.{Format, Json}
 
 case class OtherTaxableIncome (
-                              name: String,
-                              amount: String
+                                name: String,
+                                amount: String
                               )
 
 object OtherTaxableIncome {

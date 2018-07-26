@@ -47,10 +47,9 @@ class AnyTaxableOtherIncomeControllerSpec extends ControllerSpecBase {
   val formProvider = new AnyTaxPaidForm
   private val form = formProvider(notSelectedKey, blankKey, invalidKey)
 
-
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyTaxableOtherIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, formProvider)
+      dataRetrievalAction, new DataRequiredActionImpl, sequenceUtil, formProvider)
 
   def viewAsString(form: Form[_] = form) = anyTaxableOtherIncome(frontendAppConfig, form, NormalMode, 0, taxYear, incomeName)(fakeRequest, messages).toString
 
@@ -66,7 +65,7 @@ class AnyTaxableOtherIncomeControllerSpec extends ControllerSpecBase {
 
     "populate the view correctly on a GET when YES has previously been answered" in {
       when(mockUserAnswers.otherTaxableIncome).thenReturn(Some(Seq(OtherTaxableIncome(incomeName, "123"))))
-      when(mockUserAnswers.anyTaxableOtherIncome).thenReturn(Some(AnyTaxPaid.Yes(testAnswer)))
+      when(mockUserAnswers.anyTaxableOtherIncome).thenReturn(Some(Seq(AnyTaxPaid.Yes(testAnswer))))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, 0)(fakeRequest)
 
       contentAsString(result) mustBe viewAsString(form.fill(AnyTaxPaid.Yes(testAnswer)))
@@ -74,7 +73,7 @@ class AnyTaxableOtherIncomeControllerSpec extends ControllerSpecBase {
 
     "populate the view correctly on a GET when NO has previously been answered" in {
       when(mockUserAnswers.otherTaxableIncome).thenReturn(Some(Seq(OtherTaxableIncome(incomeName, "123"))))
-      when(mockUserAnswers.anyTaxableOtherIncome).thenReturn(Some(AnyTaxPaid.No))
+      when(mockUserAnswers.anyTaxableOtherIncome).thenReturn(Some(Seq(AnyTaxPaid.No)))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, 0)(fakeRequest)
 
       contentAsString(result) mustBe viewAsString(form.fill(AnyTaxPaid.No))

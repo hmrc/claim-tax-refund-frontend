@@ -18,7 +18,7 @@ package models
 
 import play.api.libs.json._
 
-sealed trait AnyTaxPaid
+trait AnyTaxPaid
 
 object AnyTaxPaid {
 

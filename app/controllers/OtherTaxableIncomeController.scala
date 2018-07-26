@@ -45,7 +45,7 @@ class OtherTaxableIncomeController @Inject()(
 
   def onPageLoad(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val form = formBuilder(request.userAnswers.otherTaxableIncome.getOrElse(Seq.empty), index)
+      val form: Form[OtherTaxableIncome] = formBuilder(request.userAnswers.otherTaxableIncome.getOrElse(Seq.empty), index)
 
       val preparedForm = request.userAnswers.otherTaxableIncome match {
         case Some(value) =>
@@ -64,7 +64,7 @@ class OtherTaxableIncomeController @Inject()(
 
   def onSubmit(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      val form = formBuilder(request.userAnswers.otherTaxableIncome.getOrElse(Seq.empty), index)
+      val form: Form[OtherTaxableIncome] = formBuilder(request.userAnswers.otherTaxableIncome.getOrElse(Seq.empty), index)
 
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
