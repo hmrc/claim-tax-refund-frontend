@@ -30,7 +30,7 @@ import views.html.otherTaxableIncome
 
 class OtherTaxableIncomeControllerSpec extends ControllerSpecBase {
 
-  def onwardRoute: Call = routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)
+  def onwardRoute: Call = routes.AnyTaxableOtherIncomeController.onPageLoad(NormalMode, 0)
 
   val testAnswer = OtherTaxableIncome("answer", "123")
   val form = new OtherTaxableIncomeForm(frontendAppConfig)(Seq.empty, 0)

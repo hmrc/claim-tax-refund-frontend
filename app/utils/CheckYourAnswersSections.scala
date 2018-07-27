@@ -136,19 +136,6 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
       userAnswers.anyTaxableForeignIncome,
       routes.AnyTaxableForeignIncomeController.onPageLoad(CheckMode).url
     )
-//    cyaHelper.otherTaxableIncome,
-//    cyaHelper.howMuchOtherTaxableIncome,
-//    cyaHelper.anyTaxPaid(
-//      "anyTaxableOtherIncomeOption",
-//      userAnswers.anyTaxableOtherIncome,
-//      routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode).url
-//    ),
-//    cyaHelper.taxPaid(
-//      "anyTaxableOtherIncome",
-//      userAnswers.anyTaxableOtherIncome,
-//      routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode).url
-//    ),
-//    cyaHelper.anyOtherTaxableIncome
   ).flatten)
 
   def otherTaxableIncomeSection: AnswerSection = {

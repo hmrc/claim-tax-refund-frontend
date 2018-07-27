@@ -311,9 +311,18 @@ class Navigator @Inject()() {
     case _ => routes.CheckYourAnswersController.onPageLoad()
   }
 
-  def otherTaxableIncome(mode: Mode, index: Index)(userAnswers: UserAnswers): Call =
-    if (mode == NormalMode) routes.AnyTaxableOtherIncomeController.onPageLoad(mode, index) else routes.CheckYourAnswersController.onPageLoad()
-
+  def otherTaxableIncome(mode: Mode, index: Index)(userAnswers: UserAnswers): Call = userAnswers.anyTaxableOtherIncome match {
+    case Some(anyTaxableOtherIncome) =>
+      anyTaxableOtherIncome(index) match {
+        case AnyTaxPaid.Yes(_) | AnyTaxPaid.No =>
+          routes.CheckYourAnswersController.onPageLoad()
+        case _ =>
+          routes.AnyTaxableOtherIncomeController.onPageLoad(mode, index)
+      }
+    case None =>
+      routes.AnyTaxableOtherIncomeController.onPageLoad(mode, index)
+    case _ => routes.SessionExpiredController.onPageLoad()
+  }
 
   //Payment----------------------------
 

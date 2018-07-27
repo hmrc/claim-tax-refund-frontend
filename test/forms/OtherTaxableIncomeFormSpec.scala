@@ -37,7 +37,7 @@ class OtherTaxableIncomeFormSpec extends FormBehaviours with MockitoSugar {
     instance
   }
 
-  val validData: Map[String, String] = Map("value" -> "test answer")
+  val validData: Map[String, String] = Map("name" -> "qwerty", "amount" -> "123")
 
   override val form: Form[OtherTaxableIncome] = new OtherTaxableIncomeForm(appConfig)(Seq.empty, 0)
 
@@ -46,7 +46,7 @@ class OtherTaxableIncomeFormSpec extends FormBehaviours with MockitoSugar {
   "OtherTaxableIncomeName Form" must {
 
     "bind successfully with valid name and amount" in {
-      val result: Form[OtherTaxableIncome] = otherTaxableIncomeForm(Seq(OtherTaxableIncome("qwerty", "123")), 0).bind(validData)
+      val result: Form[OtherTaxableIncome] = otherTaxableIncomeForm(Seq.empty, 0).bind(validData)
       result.errors.size shouldBe 0
       result.get shouldBe OtherTaxableIncome("qwerty", "123")
     }
