@@ -480,14 +480,14 @@ class TaxableIncomeNavigatorSpec extends SpecBase with MockitoSugar {
         "OtherTaxableIncome" must {
           "go to CheckYourAnswersController when all selected taxable incomes have associated values" in {
             val answers = MockUserAnswers.taxableIncomeUserAnswers
-            navigator.nextPage(OtherTaxableIncomeId(0), CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+            navigator.nextPageWithIndex(OtherTaxableIncomeId(0), CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
           }
 
           "go to AnyTaxableOtherIncome when any taxable other income not selected" in {
             val answers = MockUserAnswers.taxableIncomeUserAnswers
             when(answers.anyTaxableOtherIncome) thenReturn None
 
-            navigator.nextPage(OtherTaxableIncomeId(0), CheckMode)(answers) mustBe routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode, 0)
+            navigator.nextPageWithIndex(OtherTaxableIncomeId(0), CheckMode)(answers) mustBe routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode, 0)
           }
         }
 
