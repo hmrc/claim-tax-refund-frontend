@@ -16,6 +16,7 @@
 
 package utils
 
+import akka.japi.Option
 import controllers.routes
 import models.{CheckMode, Index}
 import viewmodels.AnswerSection
@@ -60,7 +61,8 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
         headingKey = Some("otherBenefit.checkYourAnswersLabel"),
         rows = cyaHelper.otherBenefits.flatten,
         addLinkText = Some("otherBenefit.add"),
-        addLinkUrl = Some(routes.OtherBenefitController.onPageLoad(CheckMode, Index(userAnswers.otherBenefit.get.size)).url)
+        addLinkUrl = Some(routes.OtherBenefitController.onPageLoad(CheckMode, Index(userAnswers.otherBenefit.get.size)).url),
+        columnHeadings = Some("checkYourAnswers.columnHeading.name" -> "checkYourAnswers.columnHeading.amount")
       )
     } else {
       AnswerSection(None, Seq.empty)
@@ -73,7 +75,8 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
         headingKey = Some("otherCompanyBenefit.checkYourAnswersLabel"),
         rows = cyaHelper.otherCompanyBenefit.flatten,
         addLinkText = Some("otherCompanyBenefit.add"),
-        addLinkUrl = Some(routes.OtherCompanyBenefitController.onPageLoad(CheckMode, Index(userAnswers.otherCompanyBenefit.get.size)).url)
+        addLinkUrl = Some(routes.OtherCompanyBenefitController.onPageLoad(CheckMode, Index(userAnswers.otherCompanyBenefit.get.size)).url),
+        columnHeadings = Some("checkYourAnswers.columnHeading.name" -> "checkYourAnswers.columnHeading.amount")
       )
     } else {
       AnswerSection(None, Seq.empty)
@@ -144,7 +147,8 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
         headingKey = Some("otherTaxableIncome.checkYourAnswersLabel"),
         rows = cyaHelper.otherTaxableIncome.flatten,
         addLinkText = Some("otherTaxableIncome.add"),
-        addLinkUrl = Some(routes.OtherTaxableIncomeController.onPageLoad(CheckMode, Index(userAnswers.otherTaxableIncome.get.size)).url)
+        addLinkUrl = Some(routes.OtherTaxableIncomeController.onPageLoad(CheckMode, Index(userAnswers.otherTaxableIncome.get.size)).url),
+        columnHeadings = Some("checkYourAnswers.columnHeading.income" -> "checkYourAnswers.columnHeading.amountAndTax")
       )
     } else {
       AnswerSection(None, Seq.empty)

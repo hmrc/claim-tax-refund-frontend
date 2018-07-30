@@ -313,15 +313,18 @@ class Navigator @Inject()() {
 
   def otherTaxableIncome(mode: Mode, index: Index)(userAnswers: UserAnswers): Call = userAnswers.anyTaxableOtherIncome match {
     case Some(anyTaxableOtherIncome) =>
-      anyTaxableOtherIncome(index) match {
-        case AnyTaxPaid.Yes(_) | AnyTaxPaid.No =>
-          routes.CheckYourAnswersController.onPageLoad()
-        case _ =>
-          routes.AnyTaxableOtherIncomeController.onPageLoad(mode, index)
+      if (index >= anyTaxableOtherIncome.size) {
+        routes.AnyTaxableOtherIncomeController.onPageLoad(mode, index)
+      } else {
+        anyTaxableOtherIncome(index) match {
+          case AnyTaxPaid.Yes(_) | AnyTaxPaid.No =>
+            routes.CheckYourAnswersController.onPageLoad()
+          case _ =>
+            routes.AnyTaxableOtherIncomeController.onPageLoad(mode, index)
+        }
       }
     case None =>
       routes.AnyTaxableOtherIncomeController.onPageLoad(mode, index)
-    case _ => routes.SessionExpiredController.onPageLoad()
   }
 
   //Payment----------------------------
