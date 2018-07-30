@@ -483,7 +483,7 @@ class TaxableIncomeNavigatorSpec extends SpecBase with MockitoSugar {
             navigator.nextPageWithIndex(OtherTaxableIncomeId(0), CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
           }
 
-          "go to AnyTaxableOtherIncome when any taxable other income not selected" in {
+          "go to AnyTaxableOtherIncome when corresponding any taxable other income not answered" in {
             val answers = MockUserAnswers.taxableIncomeUserAnswers
             when(answers.anyTaxableOtherIncome) thenReturn None
 

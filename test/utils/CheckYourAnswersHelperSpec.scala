@@ -360,7 +360,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
       val answer = answers.anyTaxableRentalIncome
 
       helper.anyTaxPaid("", answer, route).get.answer.key mustBe yes
-      helper.taxPaid("", answer, route).get.answer.key mustBe amount
+      helper.taxPaid("", answer, route).get.answer.key mustBe s"£$amount"
     }
 
     s"have correct label and answer (no)" in {
@@ -374,7 +374,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "howMuchBankInterest" must {
     s"have correct label and answer" in {
       when(answers.howMuchBankInterest) thenReturn Some(amount)
-      helper.howMuchBankInterest.get.label.key mustBe s"howMuchBankInterest.checkYourAnswersLabel"
+      helper.howMuchBankInterest.get.label.key mustBe "howMuchBankInterest.checkYourAnswersLabel"
       helper.howMuchBankInterest.get.answer.key mustBe amount
     }
   }
@@ -387,7 +387,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
       val answer = answers.anyTaxableBankInterest
 
       helper.anyTaxPaid("", answer, route).get.answer.key mustBe yes
-      helper.taxPaid("", answer, route).get.answer.key mustBe amount
+      helper.taxPaid("", answer, route).get.answer.key mustBe s"£$amount"
     }
 
     s"have correct label and answer (no)" in {
@@ -401,7 +401,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "howMuchInvestmentOrDividend" must {
     s"have correct label and answer" in {
       when(answers.howMuchInvestmentOrDividend) thenReturn Some(amount)
-      helper.howMuchInvestmentOrDividend.get.label.key mustBe s"howMuchInvestmentOrDividend.checkYourAnswersLabel"
+      helper.howMuchInvestmentOrDividend.get.label.key mustBe "howMuchInvestmentOrDividend.checkYourAnswersLabel"
       helper.howMuchInvestmentOrDividend.get.answer.key mustBe amount
     }
   }
@@ -414,13 +414,12 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
       val answer = answers.anyTaxableInvestments
 
       helper.anyTaxPaid("", answer, route).get.answer.key mustBe yes
-      helper.taxPaid("", answer, route).get.answer.key mustBe amount
+      helper.taxPaid("", answer, route).get.answer.key mustBe s"£$amount"
     }
 
     s"have correct label and answer (no)" in {
       when(answers.anyTaxableBankInterest) thenReturn Some(AnyTaxPaid.No)
       val answer = answers.anyTaxableBankInterest
-
       helper.anyTaxPaid("", answer, route).get.answer.key mustBe no
     }
   }
@@ -428,7 +427,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "howMuchForeignIncome" must {
     s"have correct label and answer" in {
       when(answers.howMuchForeignIncome) thenReturn Some(amount)
-      helper.howMuchForeignIncome.get.label.key mustBe s"howMuchForeignIncome.checkYourAnswersLabel"
+      helper.howMuchForeignIncome.get.label.key mustBe "howMuchForeignIncome.checkYourAnswersLabel"
       helper.howMuchForeignIncome.get.answer.key mustBe amount
     }
   }
@@ -441,7 +440,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
       val answer = answers.anyTaxableForeignIncome
 
       helper.anyTaxPaid("", answer, route).get.answer.key mustBe yes
-      helper.taxPaid("", answer, route).get.answer.key mustBe amount
+      helper.taxPaid("", answer, route).get.answer.key mustBe s"£$amount"
     }
 
     s"have correct label and answer (no)" in {
@@ -460,11 +459,11 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
       helper.otherTaxableIncome.head.get.label.key mustBe "qwerty"
       helper.otherTaxableIncome.head.get.answer.key mustBe s"£$amount"
       helper.otherTaxableIncome.head.get.url mustBe routes.OtherTaxableIncomeController.onPageLoad(CheckMode, 0).url
-      helper.otherTaxableIncome(1).get.label.key mustBe messages("anyTaxableOtherIncome.heading", "qwerty")
+      helper.otherTaxableIncome(1).get.label.key mustBe messages("anyTaxableOtherIncomeOption.checkYourAnswersLabel", "qwerty")
       helper.otherTaxableIncome(1).get.answer.key mustBe "site.yes"
       helper.otherTaxableIncome(1).get.url mustBe routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode, 0).url
-      helper.otherTaxableIncome(2).get.label.key mustBe messages("anyTaxableOtherIncome.incomeTaxLabel", "qwerty")
-      helper.otherTaxableIncome(2).get.answer.key mustBe "123"
+      helper.otherTaxableIncome(2).get.label.key mustBe messages("anyTaxableOtherIncome.checkYourAnswersLabel", "qwerty")
+      helper.otherTaxableIncome(2).get.answer.key mustBe "£123"
       helper.otherTaxableIncome(2).get.url mustBe routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode, 0).url
     }
   }
@@ -477,7 +476,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
       val answer: Option[Seq[AnyTaxPaid]] = answers.anyTaxableOtherIncome
 
       helper.anyTaxPaid("", Some(answer.get.head), route).get.answer.key mustBe yes
-      helper.taxPaid("", Some(answer.get.head), route).get.answer.key mustBe amount
+      helper.taxPaid("", Some(answer.get.head), route).get.answer.key mustBe s"£$amount"
     }
 
     s"have correct label and answer (no)" in {

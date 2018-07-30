@@ -85,6 +85,10 @@ checkYourAnswers.companyBenefitSection = Company benefits details
 checkYourAnswers.taxableIncomeSection = Taxable income details
 checkYourAnswers.paymentSection = Payment details
 checkYourAnswers.contactSection = Contact details
+checkYourAnswers.columnHeading.name = Name
+checkYourAnswers.columnHeading.amount = Amount
+checkYourAnswers.columnHeading.income = Income details
+checkYourAnswers.columnHeading.amountAndTax = Amount and tax
 
 unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account
@@ -247,12 +251,12 @@ howMuchFuelBenefit.invalid = Enter a valid amount of fuel benefit
 
 otherCompanyBenefit.title = What is the name of the other company benefit you got?
 otherCompanyBenefit.heading = What is the name of the other company benefit you got?
-otherCompanyBenefit.checkYourAnswersLabel = Other taxable company benefit details
+otherCompanyBenefit.checkYourAnswersLabel = Other company benefit details
 otherCompanyBenefit.name.blank = Enter the name of other company benefit you got
 otherCompanyBenefit.amount.blank = Enter the amount of the other company benefit you got
 otherCompanyBenefit.amount.invalid = Enter a valid amount of the company benefit benefit you got
 otherCompanyBenefit.duplicate = You have already entered this other taxable company benefit name
-otherCompanyBenefit.add = Add another taxable company benefit
+otherCompanyBenefit.add = Add another company benefit
 
 selectBenefits.title = Which taxable benefits did you get?
 selectBenefits.heading = Which taxable benefits did you get?
@@ -389,14 +393,12 @@ anyTaxableForeignIncome.anyTaxPaidAmountField = How much income tax did you pay 
 
 anyTaxableOtherIncome.title = Did you pay income tax on {0}?
 anyTaxableOtherIncome.heading = Did you pay income tax on {0}?
-anyTaxableOtherIncomeOption.checkYourAnswersLabel = Did you pay income tax on this other income
-anyTaxableOtherIncome.checkYourAnswersLabel = Income tax you paid on other taxable income
+anyTaxableOtherIncomeOption.checkYourAnswersLabel = Did you pay income tax on {0}?
+anyTaxableOtherIncome.checkYourAnswersLabel = Income tax you paid on {0}
 anyTaxableOtherIncome.invalid = Enter a valid amount of income tax you paid on this income
 anyTaxableOtherIncome.notSelected = Select yes if you paid income tax on this income
 anyTaxableOtherIncome.blank = Enter the amount of income tax you paid on this income
 anyTaxableOtherIncome.anyTaxPaidAmountField = How much income tax did you pay on {0}?
-anyTaxableOtherIncome.incomeTaxLabel = Income tax you paid on {0}
-
 
 paymentAddressCorrect.title = Do you want to send any payment to this address?
 paymentAddressCorrect.heading = Do you want to send any payment to this address?

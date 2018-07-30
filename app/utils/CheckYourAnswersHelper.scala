@@ -194,7 +194,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
     case Some(AnyTaxPaid.Yes(amount)) =>
       Some(AnswerRow(
         label,
-        s"$amount",
+        s"£$amount",
         false,
         route
       ))
@@ -252,12 +252,12 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
               routes.OtherTaxableIncomeController.onPageLoad(CheckMode, Index(index)).url
             )),
             anyTaxPaid(
-              messages("anyTaxableOtherIncome.heading", value._1.name),
+              messages("anyTaxableOtherIncomeOption.checkYourAnswersLabel", value._1.name),
               Some(value._2),
               routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode, Index(index)).url
             ),
             taxPaid(
-              messages("anyTaxableOtherIncome.incomeTaxLabel", value._1.name),
+              messages("anyTaxableOtherIncome.checkYourAnswersLabel", value._1.name),
               Some(value._2),
               routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode, Index(index)).url
             )
