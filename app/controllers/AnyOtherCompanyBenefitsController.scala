@@ -17,7 +17,6 @@
 package controllers
 
 import javax.inject.Inject
-
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
@@ -27,6 +26,7 @@ import config.FrontendAppConfig
 import forms.BooleanForm
 import identifiers.AnyOtherCompanyBenefitsId
 import models.Mode
+import play.api.mvc.{Action, AnyContent}
 import utils.{Navigator, UserAnswers}
 import views.html.anyOtherCompanyBenefits
 
@@ -44,29 +44,24 @@ class AnyOtherCompanyBenefitsController @Inject()(appConfig: FrontendAppConfig,
   private val errorKey = "anyOtherCompanyBenefits.blank"
   val form: Form[Boolean] = formProvider(errorKey)
 
-  def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val preparedForm = request.userAnswers.anyOtherCompanyBenefits match {
-        case None => form
-        case Some(value) => form.fill(value)
-      }
-
       request.userAnswers.selectTaxYear.map {
         taxYear =>
-          Ok(anyOtherCompanyBenefits(appConfig, preparedForm, mode, taxYear))
+          Ok(anyOtherCompanyBenefits(appConfig, form, mode, taxYear))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
   }
 
-  def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
       request.userAnswers.selectTaxYear.map {
         taxYear =>
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
               Future.successful(BadRequest(anyOtherCompanyBenefits(appConfig, formWithErrors, mode, taxYear))),
-            (value) =>
+            value =>
               dataCacheConnector.save[Boolean](request.externalId, AnyOtherCompanyBenefitsId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(AnyOtherCompanyBenefitsId, mode)(new UserAnswers(cacheMap))))
           )

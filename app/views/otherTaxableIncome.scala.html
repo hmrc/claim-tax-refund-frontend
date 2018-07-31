@@ -20,26 +20,30 @@
 @import models.Mode
 @import viewmodels.InputViewModel
 
-@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: SelectTaxYear, taxableIncomeName: String)(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, form: Form[OtherTaxableIncome], mode: Mode, index: Index, taxYear: SelectTaxYear)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("howMuchOtherTaxableIncome.title", taxableIncomeName, taxYear.asString),
+    title = messages("otherTaxableIncome.title"),
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @helpers.form(action = HowMuchOtherTaxableIncomeController.onSubmit(mode), 'autoComplete -> "off") {
+    @helpers.form(action = OtherTaxableIncomeController.onSubmit(mode, index), 'autoComplete -> "off") {
 
         @components.back_link()
 
         @components.error_summary(form.errors)
 
-        @components.heading(messages("howMuchOtherTaxableIncome.heading", taxableIncomeName, taxYear.asString))
+        @components.heading(messages("otherTaxableIncome.heading"), taxYear = Some(taxYear.asString))
 
         @components.input_text(
-            InputViewModel("value", form),
-            label = messages("howMuchOtherTaxableIncome.heading", taxYear.asString),
-            labelClass=Some("visually-hidden"),
-            prefix = Some(messages("global.poundSign")))
+            InputViewModel("name", form),
+            label = "Name"
+        )
+
+        @components.input_text(
+            InputViewModel("amount", form),
+            label = "Amount"
+        )
 
         @components.submit_button()
     }

@@ -51,6 +51,14 @@ class AnyOtherBenefitsControllerSpec extends ControllerSpecBase {
       contentAsString(result) mustBe viewAsString()
     }
 
+    "not populate the view on a GET when the question has previously been answered as the user always needs to answer this question" in {
+      when(mockUserAnswers.anyOtherBenefits).thenReturn(Some(true))
+
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
+
+      contentAsString(result) mustBe viewAsString(form)
+    }
+
     "redirect to the next page when valid data is submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
 

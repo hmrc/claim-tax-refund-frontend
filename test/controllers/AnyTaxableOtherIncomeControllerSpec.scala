@@ -21,7 +21,7 @@ import controllers.actions._
 import forms.AnyTaxPaidForm
 import identifiers.{AnyTaxPaidId, TaxPaidAmountId}
 import models.SelectTaxYear.CYMinus2
-import models.{AnyTaxPaid, NormalMode}
+import models.{AnyTaxPaid, NormalMode, OtherTaxableIncome}
 import org.mockito.Mockito.when
 import play.api.data.Form
 import play.api.libs.json.{JsBoolean, JsString, Json}
@@ -47,52 +47,51 @@ class AnyTaxableOtherIncomeControllerSpec extends ControllerSpecBase {
   val formProvider = new AnyTaxPaidForm
   private val form = formProvider(notSelectedKey, blankKey, invalidKey)
 
-
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyTaxableOtherIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, formProvider)
+      dataRetrievalAction, new DataRequiredActionImpl, sequenceUtil, formProvider)
 
-  def viewAsString(form: Form[_] = form) = anyTaxableOtherIncome(frontendAppConfig, form, NormalMode, taxYear, incomeName)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = form) = anyTaxableOtherIncome(frontendAppConfig, form, NormalMode, 0, taxYear, incomeName)(fakeRequest, messages).toString
 
   "AnyTaxableOtherIncome Controller" must {
 
     "return OK and the correct view for a GET" in {
-      when(mockUserAnswers.otherTaxableIncomeName).thenReturn(Some(incomeName))
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
+      when(mockUserAnswers.otherTaxableIncome).thenReturn(Some(Seq(OtherTaxableIncome(incomeName, "123"))))
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, 0)(fakeRequest)
 
       status(result) mustBe OK
       contentAsString(result) mustBe viewAsString()
     }
 
     "populate the view correctly on a GET when YES has previously been answered" in {
-      when(mockUserAnswers.otherTaxableIncomeName).thenReturn(Some(incomeName))
-      when(mockUserAnswers.anyTaxableOtherIncome).thenReturn(Some(AnyTaxPaid.Yes(testAnswer)))
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
+      when(mockUserAnswers.otherTaxableIncome).thenReturn(Some(Seq(OtherTaxableIncome(incomeName, "123"))))
+      when(mockUserAnswers.anyTaxableOtherIncome).thenReturn(Some(Seq(AnyTaxPaid.Yes(testAnswer))))
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, 0)(fakeRequest)
 
       contentAsString(result) mustBe viewAsString(form.fill(AnyTaxPaid.Yes(testAnswer)))
     }
 
     "populate the view correctly on a GET when NO has previously been answered" in {
-      when(mockUserAnswers.otherTaxableIncomeName).thenReturn(Some(incomeName))
-      when(mockUserAnswers.anyTaxableOtherIncome).thenReturn(Some(AnyTaxPaid.No))
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
+      when(mockUserAnswers.otherTaxableIncome).thenReturn(Some(Seq(OtherTaxableIncome(incomeName, "123"))))
+      when(mockUserAnswers.anyTaxableOtherIncome).thenReturn(Some(Seq(AnyTaxPaid.No)))
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, 0)(fakeRequest)
 
       contentAsString(result) mustBe viewAsString(form.fill(AnyTaxPaid.No))
     }
 
     "redirect to the next page when valid YES data is submitted" in {
-      when(mockUserAnswers.otherTaxableIncomeName).thenReturn(Some(incomeName))
+      when(mockUserAnswers.otherTaxableIncome).thenReturn(Some(Seq(OtherTaxableIncome(incomeName, "123"))))
       val postRequest = fakeRequest.withFormUrlEncodedBody(("anyTaxPaid", "true"),("taxPaidAmount", testAnswer))
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(postRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode, 0)(postRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(onwardRoute.url)
     }
 
     "redirect to the next page when valid NO data is submitted" in {
-      when(mockUserAnswers.otherTaxableIncomeName).thenReturn(Some(incomeName))
+      when(mockUserAnswers.otherTaxableIncome).thenReturn(Some(Seq(OtherTaxableIncome(incomeName, "123"))))
       val postRequest = fakeRequest.withFormUrlEncodedBody(("anyTaxPaid", "false"))
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(postRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode, 0)(postRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(onwardRoute.url)
@@ -102,14 +101,14 @@ class AnyTaxableOtherIncomeControllerSpec extends ControllerSpecBase {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
       val boundForm = form.bind(Map("value" -> "invalid value"))
 
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(postRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode, 0)(postRequest)
 
       status(result) mustBe BAD_REQUEST
       contentAsString(result) mustBe viewAsString(boundForm)
     }
 
     "redirect to Session Expired for a GET if no existing data is found" in {
-      val result = controller(dontGetAnyData).onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(dontGetAnyData).onPageLoad(NormalMode, 0)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
@@ -117,7 +116,7 @@ class AnyTaxableOtherIncomeControllerSpec extends ControllerSpecBase {
 
     "redirect to Session Expired for a POST if no existing data is found" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
-      val result = controller(dontGetAnyData).onSubmit(NormalMode)(postRequest)
+      val result = controller(dontGetAnyData).onSubmit(NormalMode, 0)(postRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
@@ -125,7 +124,7 @@ class AnyTaxableOtherIncomeControllerSpec extends ControllerSpecBase {
 
     "redirect to Session Expired if no taxYears have been selected" in {
       when(mockUserAnswers.selectTaxYear).thenReturn(None)
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, 0)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
@@ -133,23 +132,23 @@ class AnyTaxableOtherIncomeControllerSpec extends ControllerSpecBase {
 
     "redirect to Session Expired if no taxYears have been selected on submit" in {
       when(mockUserAnswers.selectTaxYear).thenReturn(None)
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(fakeRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode, 0)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
     }
 
     "redirect to Session Expired if no other income name has been provided " in {
-      when(mockUserAnswers.otherTaxableIncomeName).thenReturn(None)
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
+      when(mockUserAnswers.otherTaxableIncome).thenReturn(None)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, 0)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
     }
 
     "redirect to Session Expired if no other income name has been provided on submit" in {
-      when(mockUserAnswers.otherTaxableIncomeName).thenReturn(None)
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(fakeRequest)
+      when(mockUserAnswers.otherTaxableIncome).thenReturn(None)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode, 0)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)

@@ -38,9 +38,9 @@ class AnyTaxableOtherIncomeViewSpec extends QuestionViewBehaviours[AnyTaxPaid] {
   val formProvider = new AnyTaxPaidForm()
   val form = formProvider(notSelectedKey, blankKey, invalidKey)
 
-  def createView = () => anyTaxableOtherIncome(frontendAppConfig, form, NormalMode, taxYear, incomeName)(fakeRequest, messages)
+  def createView = () => anyTaxableOtherIncome(frontendAppConfig, form, NormalMode, 0, taxYear, incomeName)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[_]) => anyTaxableOtherIncome(frontendAppConfig, form, NormalMode, taxYear, incomeName)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[_]) => anyTaxableOtherIncome(frontendAppConfig, form, NormalMode, 0, taxYear, incomeName)(fakeRequest, messages)
 
   "AnyTaxableOtherIncome view" must {
 
@@ -53,7 +53,7 @@ class AnyTaxableOtherIncomeViewSpec extends QuestionViewBehaviours[AnyTaxPaid] {
     yesNoPage(
       createView = createViewUsingForm,
       messageKeyPrefix = messageKeyPrefix,
-      expectedFormAction = routes.AnyTaxableOtherIncomeController.onSubmit(NormalMode).url,
+      expectedFormAction = routes.AnyTaxableOtherIncomeController.onSubmit(NormalMode, 0).url,
       expectedHintTextKey = None,
       args = incomeName, taxYear.asString(messages)
     )

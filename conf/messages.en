@@ -85,6 +85,10 @@ checkYourAnswers.companyBenefitSection = Company benefits details
 checkYourAnswers.taxableIncomeSection = Taxable income details
 checkYourAnswers.paymentSection = Payment details
 checkYourAnswers.contactSection = Contact details
+checkYourAnswers.columnHeading.name = Name
+checkYourAnswers.columnHeading.amount = Amount
+checkYourAnswers.columnHeading.income = Income details
+checkYourAnswers.columnHeading.amountAndTax = Amount and tax
 
 unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account
@@ -123,8 +127,8 @@ howMuchCarBenefits.checkYourAnswersLabel = Company car benefit
 howMuchCarBenefits.blank = Enter the amount of company car benefit you got
 howMuchCarBenefits.invalid = Enter a valid amount of company car benefit
 
-howMuchRentalIncome.title = How much property rental income did you get between {0}?
-howMuchRentalIncome.heading = How much property rental income did you get between {0}?
+howMuchRentalIncome.title = How much property rental income did you get?
+howMuchRentalIncome.heading = How much property rental income did you get?
 howMuchRentalIncome.checkYourAnswersLabel = Rental income
 howMuchRentalIncome.blank = Enter the amount of rental income you got
 howMuchRentalIncome.invalid = Enter a valid amount of rental income
@@ -164,8 +168,8 @@ howMuchMedicalBenefits.checkYourAnswersLabel = Medical benefit
 howMuchMedicalBenefits.blank = Enter the amount of medical benefit you got
 howMuchMedicalBenefits.invalid = Enter a valid amount of medical benefit
 
-anyOtherTaxableIncome.title = Did you get any other taxable income between {0}?
-anyOtherTaxableIncome.heading = Did you get any other taxable income between {0}?
+anyOtherTaxableIncome.title = Did you get any other taxable income?
+anyOtherTaxableIncome.heading = Did you get any other taxable income?
 anyOtherTaxableIncome.checkYourAnswersLabel = Did you get any other taxable income?
 anyOtherTaxableIncome.blank = Select yes if you got any other taxable income
 
@@ -247,12 +251,12 @@ howMuchFuelBenefit.invalid = Enter a valid amount of fuel benefit
 
 otherCompanyBenefit.title = What is the name of the other company benefit you got?
 otherCompanyBenefit.heading = What is the name of the other company benefit you got?
-otherCompanyBenefit.checkYourAnswersLabel = Other taxable company benefit details
+otherCompanyBenefit.checkYourAnswersLabel = Other company benefit details
 otherCompanyBenefit.name.blank = Enter the name of other company benefit you got
 otherCompanyBenefit.amount.blank = Enter the amount of the other company benefit you got
 otherCompanyBenefit.amount.invalid = Enter a valid amount of the company benefit benefit you got
 otherCompanyBenefit.duplicate = You have already entered this other taxable company benefit name
-otherCompanyBenefit.add = Add another taxable company benefit
+otherCompanyBenefit.add = Add another company benefit
 
 selectBenefits.title = Which taxable benefits did you get?
 selectBenefits.heading = Which taxable benefits did you get?
@@ -299,14 +303,14 @@ otherBenefit.amount.invalid = Enter a valid amount of the other taxable benefit 
 otherBenefit.duplicate = You have already entered this other taxable benefit name
 otherBenefit.add = Add another taxable benefit
 
-howMuchForeignIncome.title = How much foreign income did you get between {0}?
-howMuchForeignIncome.heading = How much foreign income did you get between {0}?
+howMuchForeignIncome.title = How much foreign income did you get?
+howMuchForeignIncome.heading = How much foreign income did you get?
 howMuchForeignIncome.checkYourAnswersLabel = Foreign income
 howMuchForeignIncome.blank = Enter the amount of foreign income you got
 howMuchForeignIncome.invalid = Enter a valid amount of foreign income
 
-howMuchBankInterest.title = How much bank or building society interest income did you get between {0}?
-howMuchBankInterest.heading = How much bank or building society interest income did you get between {0}?
+howMuchBankInterest.title = How much bank or building society interest income did you get?
+howMuchBankInterest.heading = How much bank or building society interest income did you get?
 howMuchBankInterest.checkYourAnswersLabel = Bank or building society interest
 howMuchBankInterest.blank = Enter the amount of bank or building society interest you got
 howMuchBankInterest.invalid = Enter a valid amount of bank or building society interest
@@ -318,8 +322,8 @@ detailsOfEmploymentOrPension.checkYourAnswersLabel = Details of employment or pe
 detailsOfEmploymentOrPension.blank = Enter details of your employment or pension
 detailsOfEmploymentOrPension.tooLong = Details of employment or pension exceeds the maximum 500 characters
 
-selectTaxableIncome.title = Which taxable income did you get between {0}?
-selectTaxableIncome.heading = Which taxable income did you get between {0}?
+selectTaxableIncome.title = Which taxable income did you get?
+selectTaxableIncome.heading = Which taxable income did you get?
 selectTaxableIncome.checkYourAnswersLabel = Other taxable income you got
 selectTaxableIncome.blank = Select a taxable income
 selectTaxableIncome.rental-income = Property rental income
@@ -328,8 +332,8 @@ selectTaxableIncome.investment-or-dividends = Investments or dividends
 selectTaxableIncome.foreign-income = Foreign income
 selectTaxableIncome.other-taxable-income = Other taxable income
 
-howMuchInvestmentOrDividend.title = How much income did you get from investments or dividends between {0}?
-howMuchInvestmentOrDividend.heading = How much income did you get from investments or dividends between {0}?
+howMuchInvestmentOrDividend.title = How much income did you get from investments or dividends?
+howMuchInvestmentOrDividend.heading = How much income did you get from investments or dividends?
 howMuchInvestmentOrDividend.checkYourAnswersLabel = Investments or dividends income
 howMuchInvestmentOrDividend.blank = Enter the amount of investment or dividend income you got
 howMuchInvestmentOrDividend.invalid = Enter a valid amount investment or dividend income
@@ -340,13 +344,17 @@ howMuchOtherTaxableIncome.checkYourAnswersLabel =  How much other taxable income
 howMuchOtherTaxableIncome.blank = Enter the amount of other taxable income you got
 howMuchOtherTaxableIncome.invalid = Enter a valid amount of other taxable income
 
-otherTaxableIncomeName.title = What is the name of the other taxable income you got between {0}?
-otherTaxableIncomeName.heading = What is the name of the other taxable income you got between {0}?
-otherTaxableIncomeName.checkYourAnswersLabel = Other taxable income name
-otherTaxableIncomeName.blank = Enter the name of the other taxable income you got
+otherTaxableIncome.title = Tell us about the other taxable income you got
+otherTaxableIncome.heading = Tell us about the other taxable income you got
+otherTaxableIncome.checkYourAnswersLabel = Other taxable income details
+otherTaxableIncome.name.blank = Enter the name of the other taxable income you got
+otherTaxableIncome.amount.blank = Enter the amount of the other taxable income you got
+otherTaxableIncome.amount.invalid = Enter a valid amount of the other taxable income you got
+otherTaxableIncome.duplicate = You have already entered this other taxable income name
+otherTaxableIncome.add = Add another taxable income
 
-anyTaxableRentalIncome.title = Did you pay income tax on property rental income between {0}?
-anyTaxableRentalIncome.heading = Did you pay income tax on property rental income between {0}?
+anyTaxableRentalIncome.title = Did you pay income tax on property rental income?
+anyTaxableRentalIncome.heading = Did you pay income tax on property rental income?
 anyTaxableRentalIncomeOption.checkYourAnswersLabel = Did you pay income tax on property rental income?
 anyTaxableRentalIncome.checkYourAnswersLabel = Income tax you paid on property rental income
 anyTaxableRentalIncome.invalid = Enter a valid amount of income tax paid on property rental income
@@ -354,8 +362,8 @@ anyTaxableRentalIncome.notSelected = Select yes if you paid income tax on proper
 anyTaxableRentalIncome.blank = Enter the amount of income tax you paid on property rental income
 anyTaxableRentalIncome.anyTaxPaidAmountField = How much income tax did you pay on property rental income?
 
-anyTaxableBankInterest.title = Did you pay income tax on bank or building society interest between {0}?
-anyTaxableBankInterest.heading = Did you pay income tax on bank or building society interest between {0}?
+anyTaxableBankInterest.title = Did you pay income tax on bank or building society interest?
+anyTaxableBankInterest.heading = Did you pay income tax on bank or building society interest?
 anyTaxableBankInterest.hint = This may be shown on an annual statement from your bank or building society.
 anyTaxableBankInterestOption.checkYourAnswersLabel = Did you pay income tax on bank or building society interest?
 anyTaxableBankInterest.checkYourAnswersLabel = Income tax you paid on bank or building society interest
@@ -365,8 +373,8 @@ anyTaxableBankInterest.blank = Enter the amount of income tax you paid on bank o
 anyTaxableBankInterest.anyTaxPaidAmountField = How much income tax did you pay on bank or building society interest?
 
 
-anyTaxableInvestments.title = Did you pay income tax on investment or dividend income between {0}?
-anyTaxableInvestments.heading = Did you pay income tax on investment or dividend income between {0}?
+anyTaxableInvestments.title = Did you pay income tax on investment or dividend income?
+anyTaxableInvestments.heading = Did you pay income tax on investment or dividend income?
 anyTaxableInvestmentsOption.checkYourAnswersLabel = Did you pay income tax on investment or dividend income?
 anyTaxableInvestments.checkYourAnswersLabel = Income tax you paid on investment or dividend income
 anyTaxableInvestments.invalid = Enter a valid amount of income tax you paid on investment or dividend income
@@ -374,8 +382,8 @@ anyTaxableInvestments.notSelected = Select yes if you paid income tax on investm
 anyTaxableInvestments.blank = Enter the amount of income tax you paid on investment or dividend income
 anyTaxableInvestments.anyTaxPaidAmountField = How much income tax did you pay on investment or dividend income?
 
-anyTaxableForeignIncome.title = Did you pay income tax on foreign income between {0}?
-anyTaxableForeignIncome.heading = Did you pay income tax on foreign income between {0}?
+anyTaxableForeignIncome.title = Did you pay income tax on foreign income?
+anyTaxableForeignIncome.heading = Did you pay income tax on foreign income?
 anyTaxableForeignIncomeOption.checkYourAnswersLabel = Did you pay income tax on foreign income?
 anyTaxableForeignIncome.checkYourAnswersLabel = Income tax you paid on foreign income
 anyTaxableForeignIncome.invalid = Enter a valid amount of income tax you paid on foreign income
@@ -383,10 +391,10 @@ anyTaxableForeignIncome.notSelected = Select yes if you paid income tax on forei
 anyTaxableForeignIncome.blank = Enter the amount of income tax you paid on foreign income
 anyTaxableForeignIncome.anyTaxPaidAmountField = How much income tax did you pay on foreign income?
 
-anyTaxableOtherIncome.title = Did you pay income tax on {0} between {1}?
-anyTaxableOtherIncome.heading = Did you pay income tax on {0} between {1}?
-anyTaxableOtherIncomeOption.checkYourAnswersLabel = Did you pay income tax on this other income
-anyTaxableOtherIncome.checkYourAnswersLabel = Income tax you paid on other taxable income
+anyTaxableOtherIncome.title = Did you pay income tax on {0}?
+anyTaxableOtherIncome.heading = Did you pay income tax on {0}?
+anyTaxableOtherIncomeOption.checkYourAnswersLabel = Did you pay income tax on {0}?
+anyTaxableOtherIncome.checkYourAnswersLabel = Income tax you paid on {0}
 anyTaxableOtherIncome.invalid = Enter a valid amount of income tax you paid on this income
 anyTaxableOtherIncome.notSelected = Select yes if you paid income tax on this income
 anyTaxableOtherIncome.blank = Enter the amount of income tax you paid on this income

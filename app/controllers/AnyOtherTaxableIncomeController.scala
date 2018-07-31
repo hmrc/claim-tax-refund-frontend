@@ -25,6 +25,7 @@ import javax.inject.Inject
 import models.Mode
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import utils.{Navigator, UserAnswers}
 import views.html.anyOtherTaxableIncome
@@ -43,29 +44,24 @@ class AnyOtherTaxableIncomeController @Inject()(appConfig: FrontendAppConfig,
   private val errorKey = "anyOtherTaxableIncome.blank"
   val form: Form[Boolean] = formProvider(errorKey)
 
-  def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val preparedForm = request.userAnswers.anyOtherTaxableIncome match {
-        case None => form
-        case Some(value) => form.fill(value)
-      }
-
       request.userAnswers.selectTaxYear.map {
         taxYear =>
-          Ok(anyOtherTaxableIncome(appConfig, preparedForm, mode, taxYear))
+          Ok(anyOtherTaxableIncome(appConfig, form, mode, taxYear))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
   }
 
-  def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
       request.userAnswers.selectTaxYear.map {
         taxYear =>
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
               Future.successful(BadRequest(anyOtherTaxableIncome(appConfig, formWithErrors, mode, taxYear))),
-            (value) =>
+            value =>
               dataCacheConnector.save[Boolean](request.externalId, AnyOtherTaxableIncomeId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(AnyOtherTaxableIncomeId, mode)(new UserAnswers(cacheMap))))
           )

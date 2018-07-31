@@ -179,7 +179,8 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
 
   def anyTaxPaid(label: String, answer: Option[AnyTaxPaid], route: String): Option[AnswerRow] = answer map {
     x =>
-      AnswerRow(s"$label.checkYourAnswersLabel",
+      AnswerRow(
+        label,
         x match {
           case AnyTaxPaid.Yes(amount) => "site.yes"
           case AnyTaxPaid.No => "site.no"
@@ -191,8 +192,9 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
 
   def taxPaid(label: String, answer: Option[AnyTaxPaid], route: String): Option[AnswerRow] = answer match {
     case Some(AnyTaxPaid.Yes(amount)) =>
-      Some(AnswerRow(s"$label.checkYourAnswersLabel",
-        s"$amount",
+      Some(AnswerRow(
+        label,
+        s"£$amount",
         false,
         route
       ))
@@ -235,13 +237,35 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
     x => AnswerRow("howMuchForeignIncome.checkYourAnswersLabel", s"$x", false, routes.HowMuchForeignIncomeController.onPageLoad(CheckMode).url)
   }
 
-  def otherTaxableIncomeName: Option[AnswerRow] = userAnswers.otherTaxableIncomeName map {
-    x => AnswerRow("otherTaxableIncomeName.checkYourAnswersLabel", s"$x", false, routes.OtherTaxableIncomeNameController.onPageLoad(CheckMode).url)
-  }
+  def otherTaxableIncome: Seq[Option[AnswerRow]] = {
+    for {
+      otherTaxableIncome: Seq[OtherTaxableIncome] <- userAnswers.otherTaxableIncome
+      anyTaxableOtherIncome: Seq[AnyTaxPaid] <- userAnswers.anyTaxableOtherIncome
+    } yield {
+      (otherTaxableIncome zip anyTaxableOtherIncome).zipWithIndex.flatMap {
+        case (value, index) =>
+          Seq(
+            Some(AnswerRow(
+              value._1.name,
+              s"£${value._1.amount}",
+              answerIsMessageKey = false,
+              routes.OtherTaxableIncomeController.onPageLoad(CheckMode, Index(index)).url
+            )),
+            anyTaxPaid(
+              messages("anyTaxableOtherIncomeOption.checkYourAnswersLabel", value._1.name),
+              Some(value._2),
+              routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode, Index(index)).url
+            ),
+            taxPaid(
+              messages("anyTaxableOtherIncome.checkYourAnswersLabel", value._1.name),
+              Some(value._2),
+              routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode, Index(index)).url
+            )
+          )
+      }
 
-  def howMuchOtherTaxableIncome: Option[AnswerRow] = userAnswers.howMuchOtherTaxableIncome map {
-    x => AnswerRow("howMuchOtherTaxableIncome.checkYourAnswersLabel", s"$x", false, routes.HowMuchOtherTaxableIncomeController.onPageLoad(CheckMode).url)
-  }
+    }
+  }.getOrElse(Seq.empty)
 
   def anyOtherTaxableIncome: Option[AnswerRow] = userAnswers.anyOtherTaxableIncome map {
     x =>

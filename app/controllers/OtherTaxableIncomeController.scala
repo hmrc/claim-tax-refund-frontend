@@ -17,22 +17,22 @@
 package controllers
 
 import javax.inject.Inject
-
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import connectors.DataCacheConnector
 import controllers.actions._
 import config.FrontendAppConfig
-import forms.OtherTaxableIncomeNameForm
-import identifiers.OtherTaxableIncomeNameId
-import models.Mode
-import utils.{Navigator, UserAnswers}
-import views.html.otherTaxableIncomeName
+import forms.OtherTaxableIncomeForm
+import identifiers.OtherTaxableIncomeId
+import models.{Index, Mode, OtherTaxableIncome}
+import play.api.mvc.{Action, AnyContent}
+import utils.{Navigator, SequenceUtil, UserAnswers}
+import views.html.otherTaxableIncome
 
 import scala.concurrent.Future
 
-class OtherTaxableIncomeNameController @Inject()(
+class OtherTaxableIncomeController @Inject()(
                                         appConfig: FrontendAppConfig,
                                         override val messagesApi: MessagesApi,
                                         dataCacheConnector: DataCacheConnector,
@@ -40,37 +40,47 @@ class OtherTaxableIncomeNameController @Inject()(
                                         authenticate: AuthAction,
                                         getData: DataRetrievalAction,
                                         requireData: DataRequiredAction,
-                                        formBuilder: OtherTaxableIncomeNameForm) extends FrontendController with I18nSupport {
+                                        sequenceUtil: SequenceUtil[OtherTaxableIncome],
+                                        formBuilder: OtherTaxableIncomeForm) extends FrontendController with I18nSupport {
 
-  private val form: Form[String] = formBuilder()
-
-  def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val preparedForm = request.userAnswers.otherTaxableIncomeName match {
+      val form: Form[OtherTaxableIncome] = formBuilder(request.userAnswers.otherTaxableIncome.getOrElse(Seq.empty), index)
+
+      val preparedForm = request.userAnswers.otherTaxableIncome match {
+        case Some(value) =>
+          if (index >= value.length) form else form.fill(value(index))
         case None => form
-        case Some(value) => form.fill(value)
       }
 
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
           val taxYear = selectedTaxYear
-          Ok(otherTaxableIncomeName(appConfig, preparedForm, mode, taxYear))
+          Ok(otherTaxableIncome(appConfig, preparedForm, mode, index, taxYear))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
   }
 
-  def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
+      val form: Form[OtherTaxableIncome] = formBuilder(request.userAnswers.otherTaxableIncome.getOrElse(Seq.empty), index)
+
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
           val taxYear = selectedTaxYear
           form.bindFromRequest().fold(
-            (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(otherTaxableIncomeName(appConfig, formWithErrors, mode, taxYear))),
-            (value) =>
-              dataCacheConnector.save[String](request.externalId, OtherTaxableIncomeNameId.toString, value).map(cacheMap =>
-                Redirect(navigator.nextPage(OtherTaxableIncomeNameId, mode)(new UserAnswers(cacheMap))))
+            (formWithErrors: Form[OtherTaxableIncome]) =>
+              Future.successful(BadRequest(otherTaxableIncome(appConfig, formWithErrors, mode, index, taxYear))),
+            value => {
+              val otherTaxableIncome: Seq[OtherTaxableIncome] = request.userAnswers.otherTaxableIncome.getOrElse(Seq(value))
+              dataCacheConnector.save[Seq[OtherTaxableIncome]](
+                request.externalId,
+                OtherTaxableIncomeId.toString,
+                sequenceUtil.updateSeq(otherTaxableIncome, index, value)
+              ).map(cacheMap =>
+                Redirect(navigator.nextPageWithIndex(OtherTaxableIncomeId(index), mode)(new UserAnswers(cacheMap))))
+            }
           )
       }.getOrElse {
         Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))

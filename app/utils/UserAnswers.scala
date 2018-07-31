@@ -107,11 +107,9 @@ class UserAnswers(val cacheMap: CacheMap) {
 
   def anyTaxableForeignIncome: Option[AnyTaxPaid] = cacheMap.getEntry[AnyTaxPaid](AnyTaxableForeignIncomeId.toString)
 
-  def otherTaxableIncomeName: Option[String] = cacheMap.getEntry[String](OtherTaxableIncomeNameId.toString)
+  def otherTaxableIncome: Option[Seq[OtherTaxableIncome]] = cacheMap.getEntry[Seq[OtherTaxableIncome]](OtherTaxableIncomeId.toString)
 
-  def howMuchOtherTaxableIncome: Option[String] = cacheMap.getEntry[String](HowMuchOtherTaxableIncomeId.toString)
-
-  def anyTaxableOtherIncome: Option[AnyTaxPaid] = cacheMap.getEntry[AnyTaxPaid](AnyTaxableOtherIncomeId.toString)
+  def anyTaxableOtherIncome: Option[Seq[AnyTaxPaid]] = cacheMap.getEntry[Seq[AnyTaxPaid]](AnyTaxableOtherIncomeId.toString)
 
   def anyOtherTaxableIncome: Option[Boolean] = cacheMap.getEntry[Boolean](AnyOtherTaxableIncomeId.toString)
 

@@ -66,8 +66,7 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.anyTaxableInvestments) thenReturn None
     when(answers.howMuchForeignIncome) thenReturn None
     when(answers.anyTaxableForeignIncome) thenReturn None
-    when(answers.otherTaxableIncomeName) thenReturn None
-    when(answers.howMuchOtherTaxableIncome) thenReturn None
+    when(answers.otherTaxableIncome) thenReturn None
     when(answers.anyTaxableOtherIncome) thenReturn None
     when(answers.anyOtherTaxableIncome) thenReturn None
 
@@ -182,9 +181,8 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.anyTaxableInvestments) thenReturn Some(AnyTaxPaid.Yes("1234"))
     when(answers.howMuchForeignIncome) thenReturn Some("1234")
     when(answers.anyTaxableForeignIncome) thenReturn Some(AnyTaxPaid.Yes("1234"))
-    when(answers.otherTaxableIncomeName) thenReturn Some("1234")
-    when(answers.howMuchOtherTaxableIncome) thenReturn Some("1234")
-    when(answers.anyTaxableOtherIncome) thenReturn Some(AnyTaxPaid.Yes("1234"))
+    when(answers.otherTaxableIncome) thenReturn Some(Seq(OtherTaxableIncome("qwerty", "12"), OtherTaxableIncome("qwerty1", "34"), OtherTaxableIncome("qwerty2", "56")))
+    when(answers.anyTaxableOtherIncome) thenReturn Some(Seq(AnyTaxPaid.Yes("1234"), AnyTaxPaid.No, AnyTaxPaid.Yes("678")))
     when(answers.anyOtherTaxableIncome) thenReturn Some(false)
 
     answers

@@ -103,8 +103,7 @@ class CascadeUpsert {
         AnyTaxableInvestmentsId.toString,
         HowMuchForeignIncomeId.toString,
         AnyTaxableForeignIncomeId.toString,
-        OtherTaxableIncomeNameId.toString,
-        HowMuchOtherTaxableIncomeId.toString,
+        OtherTaxableIncomeId.toString,
         AnyTaxableOtherIncomeId.toString,
         AnyOtherTaxableIncomeId.toString
       )))
@@ -155,7 +154,7 @@ class CascadeUpsert {
           if (!selectedBenefits.as[JsArray].value.contains(benefit) && benefit != JsString(TaxableIncome.OTHER_TAXABLE_INCOME.toString)) {
             cm copy (data = cm.data - (TaxableIncome.getIdString(benefit.as[String])._1, TaxableIncome.getIdString(benefit.as[String])._2))
           } else if (!selectedBenefits.as[JsArray].value.contains(JsString(TaxableIncome.OTHER_TAXABLE_INCOME.toString))) {
-            cm copy (data = cm.data - (OtherTaxableIncomeNameId.toString, HowMuchOtherTaxableIncomeId.toString, AnyTaxableOtherIncomeId.toString, AnyOtherTaxableIncomeId.toString))
+            cm copy (data = cm.data - (OtherTaxableIncomeId.toString, AnyTaxableOtherIncomeId.toString, AnyOtherTaxableIncomeId.toString))
           } else {
             cm
           }
