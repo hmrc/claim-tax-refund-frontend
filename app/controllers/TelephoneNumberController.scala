@@ -17,12 +17,12 @@
 package controllers
 
 import config.FrontendAppConfig
-import connectors.DataCacheConnector
+import connectors.{AddressLookupConnector, DataCacheConnector}
 import controllers.actions._
 import forms.TelephoneNumberForm
 import identifiers.{AnyTelephoneId, TelephoneNumberId}
 import javax.inject.Inject
-import models.{Mode, TelephoneOption}
+import models.{AddressLookup, CheckMode, Mode, TelephoneOption}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
@@ -45,6 +45,8 @@ class TelephoneNumberController @Inject()(
                                            formBuilder: TelephoneNumberForm,
                                            implicit val formPartialRetriever: FormPartialRetriever,
                                            implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
+                                           formBuilder: TelephoneNumberForm,
+                                           addressLookupConnector: AddressLookupConnector) extends FrontendController with I18nSupport {
 
   private val form: Form[TelephoneOption] = formBuilder()
 
@@ -53,6 +55,22 @@ class TelephoneNumberController @Inject()(
       val preparedForm = request.userAnswers.anyTelephoneNumber match {
         case None => form
         case Some(value) => form.fill(value)
+      }
+
+      request.getQueryString(key = "id") match {
+        case Some(id) => {
+          val address = for {
+            address <- addressLookupConnector.getAddress(id)
+          } yield {
+            address
+          }
+          address.map{
+            address =>
+              dataCacheConnector.save[AddressLookup](request.externalId, key = "lookupAddress", address)
+              Redirect(routes.CheckYourAnswersController.onPageLoad())
+          }
+        }
+        case None => None
       }
       Ok(telephoneNumber(appConfig, preparedForm, mode))
   }

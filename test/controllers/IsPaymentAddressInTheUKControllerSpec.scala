@@ -16,34 +16,41 @@
 
 package controllers
 
-import connectors.FakeDataCacheConnector
+import connectors.{AddressLookupConnector, FakeDataCacheConnector}
 import controllers.actions._
 import forms.BooleanForm
-import identifiers.IsPaymentAddressInTheUKId
 import models.NormalMode
+import org.mockito.Mockito._
+import org.mockito.Matchers._
+import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
-import play.api.libs.json.JsBoolean
+import play.api.mvc.Call
 import play.api.test.Helpers._
-import uk.gov.hmrc.http.cache.client.CacheMap
-import utils.FakeNavigator
+import utils.{FakeNavigator, MockUserAnswers}
 import views.html.isPaymentAddressInTheUK
 
-class IsPaymentAddressInTheUKControllerSpec extends ControllerSpecBase {
+import scala.concurrent.Future
 
-  def onwardRoute = routes.IndexController.onPageLoad()
+class IsPaymentAddressInTheUKControllerSpec extends ControllerSpecBase with MockitoSugar {
+
+  def onwardRoute: Call = routes.IndexController.onPageLoad()
 
   val formProvider = new BooleanForm()
+  val mockAddressLookup = mock[AddressLookupConnector]
   val form = formProvider()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new IsPaymentAddressInTheUKController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, formProvider, formPartialRetriever, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl, formProvider, mockAddressLookup)
 
   def viewAsString(form: Form[_] = form) = isPaymentAddressInTheUK(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+  def viewAsString(form: Form[_] = form): String = isPaymentAddressInTheUK(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
 
   "IsPaymentAddressInTheUK Controller" must {
 
     "return OK and the correct view for a GET" in {
+      when (mockAddressLookup.initialise(any())(any(), any())) thenReturn Future.successful(None)
       val result = controller().onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe OK
@@ -51,17 +58,24 @@ class IsPaymentAddressInTheUKControllerSpec extends ControllerSpecBase {
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      val validData = Map(IsPaymentAddressInTheUKId.toString -> JsBoolean(true))
-      val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validData)))
+      when (mockAddressLookup.initialise(any())(any(), any())).thenReturn(Future.successful(None))
+      val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
+      when (mockUserAnswers.isPaymentAddressInTheUK) thenReturn Some(true)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
-      val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)
+      contentAsString(result) mustBe viewAsString(form.fill(value = true))
+    }
 
-      contentAsString(result) mustBe viewAsString(form.fill(true))
+    "redirect to address lookup address when able to connect to the api" in {
+      val url: String = "http://localhost:9028/lookup-address/ca36139b-cee5-4a99-902c-ce7b9963d7ce/lookup"
+      when (mockAddressLookup.initialise(any())(any(), any())).thenReturn(Future.successful(Some(url)))
+      val result = controller().onPageLoad(NormalMode)(fakeRequest)
+      status(result) mustBe SEE_OTHER
+      redirectLocation(result) mustBe Some("http://localhost:9028/lookup-address/ca36139b-cee5-4a99-902c-ce7b9963d7ce/lookup")
     }
 
     "redirect to the next page when valid data is submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
-
       val result = controller().onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER

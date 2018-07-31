@@ -16,31 +16,35 @@
 
 package controllers
 
-import connectors.FakeDataCacheConnector
+import connectors.{AddressLookupConnector, FakeDataCacheConnector}
 import controllers.actions._
 import forms.TelephoneNumberForm
 import identifiers.{AnyTelephoneId, TelephoneNumberId}
 import models.{NormalMode, TelephoneOption}
+import org.mockito.Mock
 import org.mockito.Mockito.when
+import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
 import play.api.libs.json.{JsBoolean, JsString, Json}
 import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.telephoneNumber
 
-class TelephoneNumberControllerSpec extends ControllerSpecBase {
+class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
   val testAnswer = "0191 111 1111"
   val formProvider = new TelephoneNumberForm()
   val form = formProvider()
+  val mockAddressLookup = mock[AddressLookupConnector]
   val validYesData = Map(AnyTelephoneId.toString -> Json.obj(AnyTelephoneId.toString -> JsBoolean(true), TelephoneNumberId.toString -> JsString(testAnswer)))
   val validNoData = Map(AnyTelephoneId.toString -> Json.obj(AnyTelephoneId.toString -> JsBoolean(false)))
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new TelephoneNumberController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+      dataRetrievalAction, new DataRequiredActionImpl, formProvider, mockAddressLookup)
       dataRetrievalAction, new DataRequiredActionImpl, formProvider, formPartialRetriever, templateRenderer)
 
   def viewAsString(form: Form[_] = form) = telephoneNumber(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
