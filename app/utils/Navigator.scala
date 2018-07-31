@@ -52,7 +52,6 @@ class Navigator @Inject()() {
     HowMuchStatePensionId -> selectBenefits(NormalMode),
     OtherBenefitId -> otherBenefits(NormalMode),
     AnyOtherBenefitsId -> anyOtherBenefits,
-
     //Company benefits
     AnyCompanyBenefitsId -> anyCompanyBenefits(NormalMode),
     SelectCompanyBenefitsId -> selectedCompanyBenefitsCheck(NormalMode),
@@ -72,8 +71,6 @@ class Navigator @Inject()() {
     AnyTaxableInvestmentsId -> selectedTaxableIncomeCheck(NormalMode),
     HowMuchForeignIncomeId -> (_ => routes.AnyTaxableForeignIncomeController.onPageLoad(NormalMode)),
     AnyTaxableForeignIncomeId -> selectedTaxableIncomeCheck(NormalMode),
-//    OtherTaxableIncomeId -> otherTaxableIncome(CheckMode),
-//    OtherTaxableIncomeId -> (_ => routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)),
     AnyTaxableOtherIncomeId -> (_ => routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)),
     AnyOtherTaxableIncomeId -> anyOtherTaxableIncome,
     //Payment
@@ -119,7 +116,6 @@ class Navigator @Inject()() {
     AnyTaxableInvestmentsId -> selectedTaxableIncomeCheck(CheckMode),
     HowMuchForeignIncomeId -> howMuchForeignIncomeCheck,
     AnyTaxableForeignIncomeId -> selectedTaxableIncomeCheck(CheckMode),
-//    OtherTaxableIncomeId -> otherTaxableIncome(CheckMode),
     //Payment
     WhereToSendPaymentId -> whereToSendPaymentCheck,
     PaymentAddressCorrectId -> paymentAddressCorrectCheck,
