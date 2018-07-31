@@ -15,16 +15,15 @@
  *@
 
 @import config.FrontendAppConfig
-@import uk.gov.hmrc.play.views.html._
 @import controllers.routes._
 @import models.Mode
-@import utils.FormHelpers
+@import uk.gov.hmrc.play.views.html._
 @import viewmodels.InputViewModel
 
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: SelectTaxYear)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("anyOtherTaxableIncome.title", taxYear.asString),
+    title = messages("anyOtherTaxableIncome.title"),
     appConfig = appConfig,
     bodyClasses = None) {
 
@@ -34,7 +33,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading(messages("anyOtherTaxableIncome.heading", taxYear.asString))
+        @components.heading(messages("anyOtherTaxableIncome.heading"), taxYear = Some(taxYear.asString))
 
         @components.input_yes_no(
             InputViewModel("value", form),

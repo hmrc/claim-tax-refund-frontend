@@ -33,7 +33,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading(messages("anyTaxableInvestments.heading", taxYear.asString))
+        @components.heading(messages("anyTaxableInvestments.heading"), taxYear = Some(taxYear.asString))
 
 
         @components.input_yes_no(

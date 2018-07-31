@@ -30,21 +30,24 @@
 }
 @if(answerSection.rows.nonEmpty) {
     <ul role="list" class="tabular-data tabular-data--list">
-    @if(answerSection.addLinkText.isDefined && answerSection.addLinkUrl.isDefined) {
-        <li class="tabular-data__entry tabular-data__entry--grouped">
-            <div class="tabular-data__data tabular-data__data--5-12 bold">Name</div>
-            <div class="tabular-data__data tabular-data__data--5-12 bold">Amount</div>
-        </li>
-    }
-    @for((row, i) <- answerSection.rows.zipWithIndex) {
-        @components.answer_row(row, idPath + "-" + i.toString, changeLink)
-    }
-    @if(answerSection.addLinkText.isDefined && answerSection.addLinkUrl.isDefined) {
-        <li class="tabular-data__entry tabular-data__entry--grouped">
-            <div class="tabular-data__data tabular-data__data--2-12">
-                <a href=@answerSection.addLinkUrl.get>@messages(answerSection.addLinkText.get)</a>
-            </div>
-        </li>
-    }
+
+        @answerSection.columnHeadings.map { headings =>
+            <li class="tabular-data__entry tabular-data__entry--grouped">
+                <div class="tabular-data__data tabular-data__data--5-12 bold">@messages(headings._1)</div>
+                <div class="tabular-data__data tabular-data__data--5-12 bold">@messages(headings._2)</div>
+            </li>
+        }
+
+        @for((row, i) <- answerSection.rows.zipWithIndex) {
+            @components.answer_row(row, idPath + "-" + i.toString, changeLink)
+        }
+
+        @if(answerSection.addLinkText.isDefined && answerSection.addLinkUrl.isDefined) {
+            <li class="tabular-data__entry tabular-data__entry--grouped">
+                <div class="tabular-data__data tabular-data__data--2-12">
+                    <a href=@answerSection.addLinkUrl.get>@messages(answerSection.addLinkText.get)</a>
+                </div>
+            </li>
+        }
     </ul>
 }

@@ -14,17 +14,12 @@
  * limitations under the License.
  */
 
-package forms
+package identifiers
 
-import com.google.inject.Inject
-import config.FrontendAppConfig
-import forms.mappings.Constraints
-import play.api.data.Form
-import play.api.data.Forms._
+import models.Index
 
-class OtherTaxableIncomeNameForm @Inject() (appConfig: FrontendAppConfig) extends FormErrorHelper with Constraints {
+case class OtherTaxableIncomeId(index: Index) extends Identifier
 
-  private val errorBlankKey = "otherTaxableIncomeName.blank"
-
-  def apply(): Form[String] = Form("value" -> text.verifying(nonEmpty(errorBlankKey)))
+object OtherTaxableIncomeId {
+  override def toString: String = "otherTaxableIncomeName"
 }

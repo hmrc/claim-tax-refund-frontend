@@ -46,12 +46,9 @@ class AnyOtherBenefitsController @Inject()(appConfig: FrontendAppConfig,
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val preparedForm = request.userAnswers.anyOtherBenefits match {
-        case _ => form
-      }
       request.userAnswers.selectTaxYear.map {
         taxYear =>
-          Ok(anyOtherBenefits(appConfig, preparedForm, mode, taxYear))
+          Ok(anyOtherBenefits(appConfig, form, mode, taxYear))
       }.getOrElse{
         Redirect(routes.SessionExpiredController.onPageLoad())
       }

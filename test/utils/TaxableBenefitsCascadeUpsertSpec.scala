@@ -39,8 +39,7 @@ class TaxableBenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
     AnyTaxableInvestmentsId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
     HowMuchForeignIncomeId.toString ->  JsString("1234"),
     AnyTaxableForeignIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
-    OtherTaxableIncomeNameId.toString ->  JsString("qwerty"),
-    HowMuchOtherTaxableIncomeId.toString -> Json.toJson("123"),
+    OtherTaxableIncomeId.toString ->  JsString("qwerty"),
     AnyTaxableOtherIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
     AnyOtherTaxableIncomeId.toString -> JsBoolean(false)
   ))
@@ -70,8 +69,7 @@ class TaxableBenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
             AnyTaxableInvestmentsId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
             HowMuchForeignIncomeId.toString ->  JsString("1234"),
             AnyTaxableForeignIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
-            OtherTaxableIncomeNameId.toString ->  JsString("qwerty"),
-            HowMuchOtherTaxableIncomeId.toString -> Json.toJson("123"),
+            OtherTaxableIncomeId.toString ->  JsString("qwerty"),
             AnyTaxableOtherIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
             AnyOtherTaxableIncomeId.toString -> JsBoolean(false)
           ))
@@ -105,8 +103,7 @@ class TaxableBenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
         AnyTaxableInvestmentsId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
         HowMuchForeignIncomeId.toString ->  JsString("1234"),
         AnyTaxableForeignIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
-        OtherTaxableIncomeNameId.toString ->  JsString("qwerty"),
-        HowMuchOtherTaxableIncomeId.toString -> Json.toJson("123"),
+        OtherTaxableIncomeId.toString ->  JsString("qwerty"),
         AnyTaxableOtherIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
         AnyOtherTaxableIncomeId.toString -> JsBoolean(false)
       )
@@ -133,8 +130,7 @@ class TaxableBenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
         AnyTaxableInvestmentsId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
         HowMuchForeignIncomeId.toString ->  JsString("1234"),
         AnyTaxableForeignIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
-        OtherTaxableIncomeNameId.toString ->  JsString("qwerty"),
-        HowMuchOtherTaxableIncomeId.toString -> Json.toJson("123"),
+        OtherTaxableIncomeId.toString ->  JsString("qwerty"),
         AnyTaxableOtherIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
         AnyOtherTaxableIncomeId.toString -> JsBoolean(false)
       )
@@ -161,8 +157,7 @@ class TaxableBenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
         AnyTaxableBankInterestId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
         HowMuchForeignIncomeId.toString ->  JsString("1234"),
         AnyTaxableForeignIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
-        OtherTaxableIncomeNameId.toString ->  JsString("qwerty"),
-        HowMuchOtherTaxableIncomeId.toString -> Json.toJson("123"),
+        OtherTaxableIncomeId.toString ->  JsString("qwerty"),
         AnyTaxableOtherIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
         AnyOtherTaxableIncomeId.toString -> JsBoolean(false)
       )
@@ -189,8 +184,7 @@ class TaxableBenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
         AnyTaxableBankInterestId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
         HowMuchInvestmentsId.toString ->  JsString("1234"),
         AnyTaxableInvestmentsId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
-        OtherTaxableIncomeNameId.toString ->  JsString("qwerty"),
-        HowMuchOtherTaxableIncomeId.toString -> Json.toJson("123"),
+        OtherTaxableIncomeId.toString ->  JsString("qwerty"),
         AnyTaxableOtherIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
         AnyOtherTaxableIncomeId.toString -> JsBoolean(false)
       )
@@ -239,8 +233,7 @@ class TaxableBenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
         AnyTaxableRentalIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
         HowMuchForeignIncomeId.toString ->  JsString("1234"),
         AnyTaxableForeignIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
-        OtherTaxableIncomeNameId.toString ->  JsString("qwerty"),
-        HowMuchOtherTaxableIncomeId.toString -> Json.toJson("123"),
+        OtherTaxableIncomeId.toString ->  JsString("qwerty"),
         AnyTaxableOtherIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
         AnyOtherTaxableIncomeId.toString -> JsBoolean(false)
       )
