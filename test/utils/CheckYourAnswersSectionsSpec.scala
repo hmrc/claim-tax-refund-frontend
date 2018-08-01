@@ -38,7 +38,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
     }
 
     "have the right section title for benefits details" in {
-      sections.benefitSection.headingKey mustBe Some("checkYourAnswers.benefitsSection")
+      sections.benefitSection.headingKey mustBe Some("checkYourAnswers.benefitSection")
     }
 
     "have the right section title for company benefits details" in {

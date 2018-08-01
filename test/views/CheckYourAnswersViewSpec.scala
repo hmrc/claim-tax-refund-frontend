@@ -40,7 +40,7 @@ class CheckYourAnswersViewSpec extends SpecBase with ViewBehaviours with Mockito
   "Page should display correct sections" in {
     val doc = asDocument(view())
     assertContainsText(doc, messagesApi("checkYourAnswers.claimSection"))
-    assertContainsText(doc, messagesApi("checkYourAnswers.benefitsSection"))
+    assertContainsText(doc, messagesApi("checkYourAnswers.benefitSection"))
     assertContainsText(doc, messagesApi("checkYourAnswers.companyBenefitSection"))
     assertContainsText(doc, messagesApi("checkYourAnswers.taxableIncomeSection"))
     assertContainsText(doc, messagesApi("checkYourAnswers.paymentSection"))
