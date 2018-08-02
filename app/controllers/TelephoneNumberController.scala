@@ -56,14 +56,13 @@ class TelephoneNumberController @Inject()(
     val result: Result = addressFound match {
       case None =>
         Ok(telephoneNumber(appConfig, preparedForm, mode))
-//        Redirect(routes.CheckYourAnswersController.onPageLoad().url)
       case _ =>
         request.userAnswers.anyTelephoneNumber match {
-        case Some(_) =>
-          if (mode == NormalMode) Ok(telephoneNumber(appConfig, preparedForm, mode)) else Redirect(routes.CheckYourAnswersController.onPageLoad().url)
-        case None =>
-          Ok(telephoneNumber(appConfig, preparedForm, mode))
-      }
+          case Some(_) =>
+            if (mode == CheckMode) Ok(telephoneNumber(appConfig, preparedForm, mode)) else Redirect(routes.CheckYourAnswersController.onPageLoad().url)
+          case None =>
+            Ok(telephoneNumber(appConfig, preparedForm, mode))
+        }
     }
     result
   }
@@ -78,8 +77,8 @@ class TelephoneNumberController @Inject()(
 
       val addressFound: Future[Option[AddressLookup]] = addressLookupConnector.getAddress
       addressFound.map {
-          address =>
-              dataCacheConnector.save[AddressLookup](request.externalId, PaymentLookupAddressId.toString, address.get)
+        address =>
+            dataCacheConnector.save[AddressLookup](request.externalId, PaymentLookupAddressId.toString, address.get)
       }
 
       forwardRoute(addressFound, preparedForm, mode)

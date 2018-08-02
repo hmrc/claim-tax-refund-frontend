@@ -52,7 +52,7 @@ class AddressLookupConnector @Inject()(appConfig: FrontendAppConfig, http: HttpC
     }
   }
 
-  def getAddress(implicit hc: HeaderCarrier, ec: ExecutionContext, request: Request[_]): Future[Option[AddressLookup]] = {
+  def getAddress()(implicit hc: HeaderCarrier, ec: ExecutionContext, request: Request[_]): Future[Option[AddressLookup]] = {
     request.getQueryString(key = "id") match {
       case Some(id) => {
         val getAddressUrl = s"${appConfig.addressLookupUrl}/api/confirmed?id=$id"

@@ -38,7 +38,7 @@ trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with MockitoSugar {
 
   def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
 
-  def fakeRequest = FakeRequest("", "")
+  def fakeRequest = FakeRequest(method = "", path = "")
 
   def messages: Messages = messagesApi.preferred(fakeRequest)
 

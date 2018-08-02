@@ -24,16 +24,14 @@ import models._
 import org.mockito.Mockito.when
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.mockito.MockitoSugar
-import play.api.Logger
 import play.api.data.Form
-import play.api.libs.json.{JsBoolean, JsString, JsValue, Json}
+import play.api.libs.json.{JsBoolean, JsString, Json}
 import play.api.mvc.{Call, Request}
 import play.api.test.Helpers._
-import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
+import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.http.HttpClient
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.telephoneNumber
-import org.mockito.Matchers._
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -49,7 +47,7 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar
   val formProvider = new TelephoneNumberForm()
   val form = formProvider()
   val httpMock = mock[HttpClient]
-  val mockAddressLookup: AddressLookupConnector = mock[AddressLookupConnector]
+  val mockAddressLookup: AddressLookupConnector = new AddressLookupConnector(frontendAppConfig, httpMock, messagesApi)
   val validYesData = Map(AnyTelephoneId.toString -> Json.obj(AnyTelephoneId.toString -> JsBoolean(true), TelephoneNumberId.toString -> JsString(testAnswer)))
   val validNoData = Map(AnyTelephoneId.toString -> Json.obj(AnyTelephoneId.toString -> JsBoolean(false)))
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
@@ -89,9 +87,11 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar
 
       //status(result) mustBe OK
 
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
+      status(result) mustBe OK
     }
 
-    /*"populate the view correctly on a GET when YES has previously been answered" in {
+    "populate the view correctly on a GET when YES has previously been answered" in {
       when(mockUserAnswers.anyTelephoneNumber).thenReturn(Some(TelephoneOption.Yes(testAnswer)))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
@@ -100,11 +100,11 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar
 
     "populate the view correctly on a GET when NO has previously been answered" in {
       when(mockUserAnswers.anyTelephoneNumber).thenReturn(Some(TelephoneOption.No))
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(CheckMode)(fakeRequest)
 
       contentAsString(result) mustBe viewAsString(form.fill(TelephoneOption.No))
     }
-*/
+
     "redirect to the next page when valid YES data is submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("anyTelephoneNumber", "true"),("telephoneNumber", testAnswer))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(postRequest)
@@ -146,39 +146,19 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
     }
 
-//    "stay on this page in NormalMode" in {
-//
-//      1 mustBe 2
-//    }
-//
-//    "stay on this page in CheckMode when no ID in url from CheckYourAnswers" in {
-//
-//
-//
-//
-//      1 mustBe 2
-//
-//    }
+    "stay on this page in CheckMode when no ID in URL" in {
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(CheckMode)(fakeRequest)
 
-    "redirect to checkYourAnswers when in CheckMode and come from address lookup" in {
-
-      when(mockUserAnswers.anyTelephoneNumber).thenReturn(Some(TelephoneOption.Yes(testAnswer)))
-      //when(mockFakeRequest.getQueryString(key = "id")).thenReturn(Some("1"))
-      //when(fakeRequest.uri).thenReturn("?id=123456")
-
-
-
-
-
-
-      whenReady(controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(CheckMode)(fakeRequest)) {
-        result =>
-          result mustBe SEE_OTHER
-//          result mustBe Some(routes.CheckYourAnswersController.onPageLoad().url)
-      }
-
-      1 mustBe 2
+      status(result) mustBe OK
     }
 
+    "redirect to CYA in CheckMode when there is an ID in the URL" in {
+      when(request.getQueryString(key ="id")).thenReturn(Some("123445"))
+      when(mockAddressLookup.getAddress).thenReturn(Future.successful(Some(AddressLookup(None,None))))
+      when(mockUserAnswers.anyTelephoneNumber).thenReturn(Some(TelephoneOption.No))
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(CheckMode)(fakeRequest)
+
+      status(result) mustBe SEE_OTHER
+    }
   }
 }
