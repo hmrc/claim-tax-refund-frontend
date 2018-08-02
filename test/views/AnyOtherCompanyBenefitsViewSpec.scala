@@ -18,9 +18,11 @@ package views
 
 import controllers.routes
 import forms.BooleanForm
-import models.NormalMode
 import models.SelectTaxYear.CYMinus2
+import models.{NormalMode, OtherCompanyBenefit}
+import org.jsoup.nodes.{Document, Element}
 import play.api.data.Form
+import play.twirl.api.Html
 import views.behaviours.YesNoViewBehaviours
 import views.html.anyOtherCompanyBenefits
 
@@ -28,12 +30,15 @@ class AnyOtherCompanyBenefitsViewSpec extends YesNoViewBehaviours {
 
   private val messageKeyPrefix = "anyOtherCompanyBenefits"
   private val taxYear = CYMinus2
+  private val otherCompanyBenefitNames: Seq[String] = Seq("qwerty")
 
   override val form = new BooleanForm()()
 
-  def createView = () => anyOtherCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createView: () => Html = () =>
+    anyOtherCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear, otherCompanyBenefitNames)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[_]) => anyOtherCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createViewUsingForm: Form[_] => Html = (form: Form[_]) =>
+    anyOtherCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear, otherCompanyBenefitNames)(fakeRequest, messages)
 
   "AnyOtherCompanyBenefits view" must {
 
@@ -50,5 +55,11 @@ class AnyOtherCompanyBenefitsViewSpec extends YesNoViewBehaviours {
       expectedHintTextKey = None,
       args = taxYear.asString(messages)
     )
+
+    "display 'You have told us about:' section" in {
+      val doc: Document = asDocument(createView())
+
+      doc.getElementById("bullet-qwerty").text() mustBe "qwerty"
+    }
   }
 }

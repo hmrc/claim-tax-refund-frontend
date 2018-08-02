@@ -19,36 +19,39 @@ package controllers
 import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.BooleanForm
-import identifiers.AnyOtherTaxableIncomeId
-import models.NormalMode
 import models.SelectTaxYear.CYMinus2
+import models.{NormalMode, OtherTaxableIncome}
 import org.mockito.Mockito.when
 import play.api.data.Form
-import play.api.libs.json.JsBoolean
+import play.api.mvc.Call
 import play.api.test.Helpers._
-import uk.gov.hmrc.http.cache.client.CacheMap
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.anyOtherTaxableIncome
 
 class AnyOtherTaxableIncomeControllerSpec extends ControllerSpecBase {
 
-  def onwardRoute = routes.IndexController.onPageLoad()
+  def onwardRoute: Call = routes.IndexController.onPageLoad()
 
   private val formProvider = new BooleanForm()
   private val form = formProvider()
   private val taxYear = CYMinus2
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
+  private val otherTaxableIncome: Seq[OtherTaxableIncome] = Seq(OtherTaxableIncome("qwerty", "123"))
+  def otherTaxableIncomeNames: Seq[String] = otherTaxableIncome.map(_.name)
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyOtherTaxableIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, formProvider)
 
-  def viewAsString(form: Form[_] = form) = anyOtherTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = form): String =
+    anyOtherTaxableIncome(frontendAppConfig, form, NormalMode, taxYear, otherTaxableIncomeNames)(fakeRequest, messages).toString
 
   "AnyOtherTaxableIncome Controller" must {
 
     "return OK and the correct view for a GET" in {
-      val result = controller(fakeDataRetrievalAction()).onPageLoad(NormalMode)(fakeRequest)
+      when(mockUserAnswers.otherTaxableIncome).thenReturn(Some(otherTaxableIncome))
+
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe OK
       contentAsString(result) mustBe viewAsString()
@@ -63,7 +66,7 @@ class AnyOtherTaxableIncomeControllerSpec extends ControllerSpecBase {
 
     "redirect to the next page when valid data is submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
-      val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode)(postRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(onwardRoute.url)
@@ -72,7 +75,7 @@ class AnyOtherTaxableIncomeControllerSpec extends ControllerSpecBase {
     "return a Bad Request and errors when invalid data is submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
       val boundForm = form.bind(Map("value" -> "invalid value"))
-      val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode)(postRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe BAD_REQUEST
       contentAsString(result) mustBe viewAsString(boundForm)
