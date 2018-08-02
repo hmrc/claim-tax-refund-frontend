@@ -405,3 +405,8 @@ paymentAddressCorrect.title = Do you want to send any payment to this address?
 paymentAddressCorrect.heading = Do you want to send any payment to this address?
 paymentAddressCorrect.checkYourAnswersLabel = Do you want to send any payment to this address?
 paymentAddressCorrect.blank = Select yes if you want to send any payment to this address
+
+deleteOther.title = deleteOther
+deleteOther.heading = deleteOther
+deleteOther.checkYourAnswersLabel = deleteOther
+deleteOther.blank = deleteOther
