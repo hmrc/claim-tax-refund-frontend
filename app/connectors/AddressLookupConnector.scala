@@ -22,6 +22,7 @@ import models.AddressLookup
 import play.api.Logger
 import play.api.i18n.MessagesApi
 import play.api.libs.json.{JsObject, Json}
+import play.api.mvc.Request
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.http.HttpClient
 
@@ -51,9 +52,22 @@ class AddressLookupConnector @Inject()(appConfig: FrontendAppConfig, http: HttpC
     }
   }
 
-  def getAddress(id: String)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[AddressLookup] = {
-    val getAddressUrl = s"${appConfig.addressLookupUrl}/api/confirmed?id=$id"
-    http.GET[AddressLookup](getAddressUrl)
+  def getAddress(implicit hc: HeaderCarrier, ec: ExecutionContext, request: Request[_]): Future[Option[AddressLookup]] = {
+    request.getQueryString(key = "id") match {
+      case Some(id) => {
+        val getAddressUrl = s"${appConfig.addressLookupUrl}/api/confirmed?id=$id"
+        val address = for {
+          address <-http.GET[AddressLookup](getAddressUrl)
+        } yield {
+          address
+        }
+        address.map {
+          address =>
+            Some(address)
+        }
+      }
+      case None => Future.successful(None)
+    }
   }
 
   def config(continueUrl: String): JsObject = {

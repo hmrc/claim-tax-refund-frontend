@@ -24,15 +24,16 @@ import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito._
 import org.mockito.Matchers._
 import play.api.libs.json.{JsValue, Json}
+import play.api.mvc.Request
 import uk.gov.hmrc.play.bootstrap.http.HttpClient
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with ScalaFutures{
+class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with ScalaFutures {
 
   implicit val hc: HeaderCarrier = HeaderCarrier()
   implicit val ec: ExecutionContext = mock[ExecutionContext]
-
+  implicit val request: Request[_] = mock[Request[_]]
 
 
   "AddressLookupConnector" must {
@@ -54,8 +55,8 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with ScalaFu
             202,
             Some(Json.toJson("")),
             responseHeaders = Map("Location" -> List("api/location"))
-            )
           )
+        )
         )
 
       val futureResult = connector.initialise(continueUrl = "")
@@ -65,7 +66,7 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with ScalaFu
       }
     }
 
-    "do something when no location" in {
+    "return error when there is no Location" in {
         val httpMock = mock[HttpClient]
         val connector = new AddressLookupConnector(frontendAppConfig, httpMock, messagesApi)
 
@@ -106,7 +107,7 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with ScalaFu
       val connector = new AddressLookupConnector(frontendAppConfig, httpMock, messagesApi)
       when(httpMock.POST[JsValue, HttpResponse](any(), any(), any())(any(), any(), any(), any()))
         .thenReturn(Future.successful(HttpResponse(400))
-      )
+        )
 
       val futureResult = connector.initialise(continueUrl = "")
       whenReady(futureResult) {
@@ -116,85 +117,94 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with ScalaFu
     }
   }
 
-  "return address when passing an ID" in {
+  "return address when called from telephone controller with ID" in {
     val httpMock = mock[HttpClient]
-
     when(httpMock.GET[AddressLookup](any())(any(), any(), any()))
-      .thenReturn (Future.successful(testReponseAddress.as[AddressLookup])
-    )
+      .thenReturn(Future.successful(testReponseAddress.as[AddressLookup])
+      )
+    when(request.getQueryString(key = "id")).thenReturn(Some("123456789"))
     val connector = new AddressLookupConnector(frontendAppConfig, httpMock, messagesApi)
-    val id = "2ba429b4-7f4b-4105-a9ac-808e04c6ac3c"
-    val futureResult = connector.getAddress(id)
+    val futureResult = connector.getAddress
     val testAddress = testReponseAddress.as[AddressLookup]
-    whenReady(futureResult){
+    whenReady(futureResult) {
       result =>
-        result mustBe testAddress
+        result mustBe Some(testAddress)
     }
+  }
 
+  "return none when no ID is in the URL" in {
+    val httpMock = mock[HttpClient]
+    when(request.getQueryString(key = "id")).thenReturn(None)
+    val connector = new AddressLookupConnector(frontendAppConfig, httpMock, messagesApi)
+    val futureResult = connector.getAddress
+    whenReady(futureResult) {
+      result =>
+        result mustBe None
+    }
   }
 
   val testIntialiseJson = {
-      Json.obj(
-        fields = "continueUrl" -> "api/location",
-        "homeNavHref" -> "http://www.hmrc.gov.uk/",
-        "navTitle" -> messagesApi("index.title"),
-        "showPhaseBanner" -> false,
-        "alphaPhase" -> false,
-        "phaseFeedbackLink" -> "/help/alpha",
-        "phaseBannerHtml" -> "This is a new service – your <a href='/help/alpha'>feedback</a> will help us to improve it.",
-        "showBackButtons" -> true,
-        "includeHMRCBranding" -> true,
-        "deskProServiceName" -> "",
-        "lookupPage" -> Json.obj(
-          fields = "title" -> messagesApi("addressLookup.lookupPage.title"),
-          "heading" -> messagesApi("addressLookup.lookupPage.heading"),
-          "filterLabel" -> messagesApi("addressLookup.lookupPage.filterLabel"),
-          "postcodeLabel" -> messagesApi("addressLookup.lookupPage.postcodeLabel"),
-          "submitLabel" -> messagesApi("addressLookup.lookupPage.submitLabel"),
-          "noResultsFoundMessage" -> messagesApi("addressLookup.lookupPage.noResultsFoundMessage"),
-          "resultLimitExceededMessage" -> messagesApi("addressLookup.lookupPage.resultLimitExceededMessage"),
-          "manualAddressLinkText" -> messagesApi("addressLookup.lookupPage.manualAddressLinkText")
-        ),
-        "selectPage" -> Json.obj(
-          fields = "title" -> messagesApi("addressLookup.selectPage.title"),
-          "heading" -> messagesApi("addressLookup.selectPage.heading"),
-          "proposalListLabel" -> messagesApi("addressLookup.selectPage.proposalListLabel"),
-          "submitLabel" -> messagesApi("addressLookup.selectPage.submitLabel"),
-          "proposalListLimit" -> 50,
-          "showSearchAgainLink" -> false,
-          "searchAgainLinkText" -> messagesApi("addressLookup.selectPage.searchAgainLinkText"),
-          "editAddressLinkText" -> messagesApi("addressLookup.selectPage.editAddressLinkText")
-        ),
-        "confirmPage" -> Json.obj(
-          fields = "title" -> messagesApi("addressLookup.confirmPage.title"),
-          "heading" -> messagesApi("addressLookup.confirmPage.heading"),
-          "infoSubheading" -> messagesApi("addressLookup.confirmPage.infoSubheading"),
-          "infoMessage" -> messagesApi("addressLookup.confirmPage.infoMessage"),
-          "submitLabel" -> messagesApi("addressLookup.confirmPage.submitLabel"),
-          "showSearchAgainLink" -> false,
-          "searchAgainLinkText" -> messagesApi("addressLookup.confirmPage.searchAgainLinkText"),
-          "changeLinkText" -> messagesApi("addressLookup.confirmPage.changeLinkText")
-        ),
-        "editPage" -> Json.obj(
-          fields = "title" -> messagesApi("addressLookup.editPage.title"),
-          "heading" -> messagesApi("addressLookup.editPage.heading"),
-          "line1Label" -> messagesApi("addressLookup.editPage.line1Label"),
-          "line2Label" -> messagesApi("addressLookup.editPage.line2Label"),
-          "line3Label" -> messagesApi("addressLookup.editPage.line3Label"),
-          "townLabel" -> messagesApi("addressLookup.editPage.townLabel"),
-          "postcodeLabel" -> messagesApi("addressLookup.editPage.postcodeLabel"),
-          "countryLabel" -> messagesApi("addressLookup.editPage.countryLabel"),
-          "submitLabel" -> messagesApi("addressLookup.editPage.submitLabel"),
-          "showSearchAgainLink" -> false,
-          "searchAgainLinkText" -> messagesApi("addressLookup.editPage.searchAgainLinkText")
-        ),
-        "timeout" -> Json.obj(
-          fields = "timeoutAmount" -> 900,
-          "timeoutUrl" -> "http://service/timeout-uri"
-        ),
-        "ukMode" -> false
-      )
-}
+    Json.obj(
+      fields = "continueUrl" -> "api/location",
+      "homeNavHref" -> "http://www.hmrc.gov.uk/",
+      "navTitle" -> messagesApi("index.title"),
+      "showPhaseBanner" -> false,
+      "alphaPhase" -> false,
+      "phaseFeedbackLink" -> "/help/alpha",
+      "phaseBannerHtml" -> "This is a new service – your <a href='/help/alpha'>feedback</a> will help us to improve it.",
+      "showBackButtons" -> true,
+      "includeHMRCBranding" -> true,
+      "deskProServiceName" -> "",
+      "lookupPage" -> Json.obj(
+        fields = "title" -> messagesApi("addressLookup.lookupPage.title"),
+        "heading" -> messagesApi("addressLookup.lookupPage.heading"),
+        "filterLabel" -> messagesApi("addressLookup.lookupPage.filterLabel"),
+        "postcodeLabel" -> messagesApi("addressLookup.lookupPage.postcodeLabel"),
+        "submitLabel" -> messagesApi("addressLookup.lookupPage.submitLabel"),
+        "noResultsFoundMessage" -> messagesApi("addressLookup.lookupPage.noResultsFoundMessage"),
+        "resultLimitExceededMessage" -> messagesApi("addressLookup.lookupPage.resultLimitExceededMessage"),
+        "manualAddressLinkText" -> messagesApi("addressLookup.lookupPage.manualAddressLinkText")
+      ),
+      "selectPage" -> Json.obj(
+        fields = "title" -> messagesApi("addressLookup.selectPage.title"),
+        "heading" -> messagesApi("addressLookup.selectPage.heading"),
+        "proposalListLabel" -> messagesApi("addressLookup.selectPage.proposalListLabel"),
+        "submitLabel" -> messagesApi("addressLookup.selectPage.submitLabel"),
+        "proposalListLimit" -> 50,
+        "showSearchAgainLink" -> false,
+        "searchAgainLinkText" -> messagesApi("addressLookup.selectPage.searchAgainLinkText"),
+        "editAddressLinkText" -> messagesApi("addressLookup.selectPage.editAddressLinkText")
+      ),
+      "confirmPage" -> Json.obj(
+        fields = "title" -> messagesApi("addressLookup.confirmPage.title"),
+        "heading" -> messagesApi("addressLookup.confirmPage.heading"),
+        "infoSubheading" -> messagesApi("addressLookup.confirmPage.infoSubheading"),
+        "infoMessage" -> messagesApi("addressLookup.confirmPage.infoMessage"),
+        "submitLabel" -> messagesApi("addressLookup.confirmPage.submitLabel"),
+        "showSearchAgainLink" -> false,
+        "searchAgainLinkText" -> messagesApi("addressLookup.confirmPage.searchAgainLinkText"),
+        "changeLinkText" -> messagesApi("addressLookup.confirmPage.changeLinkText")
+      ),
+      "editPage" -> Json.obj(
+        fields = "title" -> messagesApi("addressLookup.editPage.title"),
+        "heading" -> messagesApi("addressLookup.editPage.heading"),
+        "line1Label" -> messagesApi("addressLookup.editPage.line1Label"),
+        "line2Label" -> messagesApi("addressLookup.editPage.line2Label"),
+        "line3Label" -> messagesApi("addressLookup.editPage.line3Label"),
+        "townLabel" -> messagesApi("addressLookup.editPage.townLabel"),
+        "postcodeLabel" -> messagesApi("addressLookup.editPage.postcodeLabel"),
+        "countryLabel" -> messagesApi("addressLookup.editPage.countryLabel"),
+        "submitLabel" -> messagesApi("addressLookup.editPage.submitLabel"),
+        "showSearchAgainLink" -> false,
+        "searchAgainLinkText" -> messagesApi("addressLookup.editPage.searchAgainLinkText")
+      ),
+      "timeout" -> Json.obj(
+        fields = "timeoutAmount" -> 900,
+        "timeoutUrl" -> "http://service/timeout-uri"
+      ),
+      "ukMode" -> false
+    )
+  }
 
 
   val testReponseAddress = {

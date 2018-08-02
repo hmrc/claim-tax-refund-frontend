@@ -163,7 +163,8 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
     cyaHelper.agentReferenceNumber,
     cyaHelper.isPaymentAddressInTheUK,
     cyaHelper.paymentUKAddress,
-    cyaHelper.paymentInternationalAddress
+    cyaHelper.paymentInternationalAddress,
+    cyaHelper.paymentLookupAddress
   ).flatten)
 
   def contactSection = AnswerSection(Some("checkYourAnswers.contactSection"), Seq(

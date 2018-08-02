@@ -130,6 +130,7 @@ class UserAnswers(val cacheMap: CacheMap) {
 
   def paymentInternationalAddress: Option[InternationalAddress] = cacheMap.getEntry[InternationalAddress](PaymentInternationalAddressId.toString)
 
+  def paymentLookupAddress: Option[AddressLookup] = cacheMap.getEntry[AddressLookup](PaymentLookupAddressId.toString)
 
   //Contact details
   //------------------------------------------------------------------------------

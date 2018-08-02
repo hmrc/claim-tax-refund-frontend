@@ -63,6 +63,7 @@ global.otherListHeading = You have told us about:
 index.title = Claim a tax refund
 index.heading = Claim a tax refund
 
+addressLookup.checkYourAnswersLabel = Do you want to send any payment to this address?
 addressLookup.lookupPage.title = Find the address
 addressLookup.lookupPage.heading = Find the address
 addressLookup.lookupPage.filterLabel = Property name or number

@@ -64,13 +64,6 @@ class IsPaymentAddressInTheUKController @Inject()(appConfig: FrontendAppConfig,
 
       val continueUrl = "http://localhost:9969/claim-tax-refund/enter-telephone-number"
 
-
-      /*val continueUrl = mode match {
-        case NormalMode => "http://localhost:9969/claim-tax-refund/enter-telephone-number"
-        case CheckMode =>  "http://localhost:9969/claim-tax-refund/check-your-answers"
-        case  _  => "http://localhost:9969/claim-tax-refund/unauthorised"
-      }*/
-
       val addressInit = for {
         result: Option[String] <- addressLookup.initialise(continueUrl = continueUrl)
       } yield {

@@ -33,9 +33,9 @@ class AddressLookupSpec extends SpecBase {
       )
     }
 
-    "return correct string format when passed asString" in {
+    "return correct string format when passed asString from Json" in {
       val address: AddressLookup = testAddress.as[AddressLookup]
-      AddressLookup.asString(address) mustBe "Line1, <br>Line2, <br>Line3, <br>Line4, <br>NE1 1LX, <br>United Kingdom, <br>GB"
+      AddressLookup.asString(address) mustBe "Line1<br>Line2<br>Line3<br>Line4<br>NE1 1LX<br>United Kingdom<br>GB"
     }
   }
 

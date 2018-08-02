@@ -32,19 +32,19 @@ object Address {
   implicit val format = Json.format[Address]
 }
 
-case class AddressLookup (address: Option[Address], auditRef: Option[String])
+final case class AddressLookup (address: Option[Address], auditRef: Option[String])
 
 object AddressLookup {
   implicit val format = Json.format[AddressLookup]
 
-  def completedAddress(a: AddressLookup): Seq[String] = Seq (
+    def completedAddress(a: AddressLookup): Seq[String] = Seq (
      a.address.get.lines.get :+
-     a.address.get.postcode.getOrElse("") :+
-     a.address.get.country.get.name.getOrElse("") :+
-     a.address.get.country.get.code.getOrElse("")
+     a.address.get.postcode.get :+
+     a.address.get.country.get.name.get :+
+     a.address.get.country.get.code.get
   ).flatten
 
-  def asString(a: AddressLookup) = completedAddress(a).mkString(", <br>")
+  def asString(a: AddressLookup): String = completedAddress(a).mkString("<br>")
 }
 
 
