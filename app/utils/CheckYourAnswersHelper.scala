@@ -118,7 +118,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
       otherBenefits.zipWithIndex.flatMap {
         case (benefits, index) =>
           Seq(
-            Some(AnswerRow(benefits.name, s"£${benefits.amount}", answerIsMessageKey = false, routes.OtherBenefitController.onPageLoad(CheckMode, Index(index)).url))
+            Some(AnswerRow(benefits.name, s"£${benefits.amount}", answerIsMessageKey = false, routes.OtherBenefitController.onPageLoad(CheckMode, Index(index)).url, deleteLink = true))
           )
       }
     }
