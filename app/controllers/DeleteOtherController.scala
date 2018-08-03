@@ -54,9 +54,8 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
       form.bindFromRequest().fold(
         (formWithErrors: Form[_]) =>
           Future.successful(BadRequest(deleteOther(appConfig, formWithErrors, mode))),
-        value =>
-          dataCacheConnector.save[Boolean](request.externalId, DeleteOtherId.toString, value).map(cacheMap =>
-            Redirect(navigator.nextPage(DeleteOtherId, mode)(new UserAnswers(cacheMap))))
+        _ =>
+          Future.successful(Redirect(routes.CheckYourAnswersController.onPageLoad()))
       )
   }
 }
