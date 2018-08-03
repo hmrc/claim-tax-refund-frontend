@@ -46,11 +46,7 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val preparedForm = request.userAnswers.deleteOther match {
-        case None => form
-        case Some(value) => form.fill(value)
-      }
-      Ok(deleteOther(appConfig, preparedForm, mode))
+      Ok(deleteOther(appConfig, form, mode))
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
@@ -58,7 +54,7 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
       form.bindFromRequest().fold(
         (formWithErrors: Form[_]) =>
           Future.successful(BadRequest(deleteOther(appConfig, formWithErrors, mode))),
-        (value) =>
+        value =>
           dataCacheConnector.save[Boolean](request.externalId, DeleteOtherId.toString, value).map(cacheMap =>
             Redirect(navigator.nextPage(DeleteOtherId, mode)(new UserAnswers(cacheMap))))
       )

@@ -303,11 +303,6 @@ class Navigator @Inject()() {
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
-  private def anyTaxableOtherIncomeCheck(userAnswers: UserAnswers): Call = userAnswers.anyTaxableOtherIncome match {
-    case None => routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode, 0)
-    case _ => routes.CheckYourAnswersController.onPageLoad()
-  }
-
   def otherTaxableIncome(mode: Mode, index: Index)(userAnswers: UserAnswers): Call = userAnswers.anyTaxableOtherIncome match {
     case Some(anyTaxableOtherIncome) =>
       if (index >= anyTaxableOtherIncome.size) {

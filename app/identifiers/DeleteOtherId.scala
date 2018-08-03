@@ -17,5 +17,9 @@
 package identifiers
 
 case object DeleteOtherId extends Identifier {
-  override def toString: String = "deleteOther"
+
+  object DeleteOtherId {
+    override def toString: String = "deleteOther"
+  }
+
 }
