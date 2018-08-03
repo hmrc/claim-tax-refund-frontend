@@ -80,9 +80,7 @@ class Navigator @Inject()() {
     IsPaymentAddressInTheUKId -> isPaymentAddressInUk,
     PaymentUKAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
     PaymentInternationalAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
-    TelephoneNumberId -> (_ => routes.CheckYourAnswersController.onPageLoad()),
-    //Delete other
-    DeleteOtherId -> (_ => routes.CheckYourAnswersController.onPageLoad())
+    TelephoneNumberId -> (_ => routes.CheckYourAnswersController.onPageLoad())
   )
 
   private val editRouteMap: Map[Identifier, UserAnswers => Call] = Map(
