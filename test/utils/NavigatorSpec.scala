@@ -200,7 +200,12 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(IsPaymentAddressInTheUKId, CheckMode)(answers) mustBe routes.PaymentUKAddressController.onPageLoad(CheckMode)
       }
 
+      // DeleteOther navigation
 
+      "go to CYA from DeleteOther when No is selected" in {
+        when(answers.deleteOther) thenReturn Some(false)
+        navigator.nextPage(DeleteOtherId, NormalMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+      }
     }
   }
 }
