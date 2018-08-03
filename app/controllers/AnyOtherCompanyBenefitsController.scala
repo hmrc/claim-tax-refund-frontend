@@ -48,7 +48,7 @@ class AnyOtherCompanyBenefitsController @Inject()(appConfig: FrontendAppConfig,
     implicit request =>
       val result: Option[Result] = for {
         taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
-        otherCompanyBenefitNames: Seq[String] <- request.userAnswers.otherCompanyBenefit.map(_.map(benefit => benefit.name))
+        otherCompanyBenefitNames: Seq[String] <- request.userAnswers.otherCompanyBenefit.map(_.map(_.name))
       } yield {
         Ok(anyOtherCompanyBenefits(appConfig, form, mode, taxYear, otherCompanyBenefitNames))
       }
@@ -62,7 +62,7 @@ class AnyOtherCompanyBenefitsController @Inject()(appConfig: FrontendAppConfig,
     implicit request =>
       val result: Option[Future[Result]] = for {
         taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
-        otherCompanyBenefitNames: Seq[String] <- request.userAnswers.otherCompanyBenefit.map(_.map(benefit => benefit.name))
+        otherCompanyBenefitNames: Seq[String] <- request.userAnswers.otherCompanyBenefit.map(_.map(_.name))
       } yield {
         form.bindFromRequest().fold(
           (formWithErrors: Form[_]) =>
