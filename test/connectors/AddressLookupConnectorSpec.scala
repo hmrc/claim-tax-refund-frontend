@@ -34,20 +34,21 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with ScalaFu
   implicit val hc: HeaderCarrier = HeaderCarrier()
   implicit val ec: ExecutionContext = mock[ExecutionContext]
   implicit val request: Request[_] = mock[Request[_]]
+  implicit val dataCacheConnector = mock[DataCacheConnector]
 
 
   "AddressLookupConnector" must {
 
     "form Json correctly" in {
       val httpMock = mock[HttpClient]
-      val connector = new AddressLookupConnector(frontendAppConfig, httpMock, messagesApi)
+      val connector = new AddressLookupConnector(frontendAppConfig, httpMock, messagesApi, dataCacheConnector)
       val json = connector.config(continueUrl = "api/location")
       json mustBe testIntialiseJson
     }
 
     "return a location when addressLookup.intialise" in {
       val httpMock = mock[HttpClient]
-      val connector = new AddressLookupConnector(frontendAppConfig, httpMock, messagesApi)
+      val connector = new AddressLookupConnector(frontendAppConfig, httpMock, messagesApi, dataCacheConnector)
 
       when(httpMock.POST[JsValue, HttpResponse](any(), any(), any())(any(), any(), any(), any()))
         .thenReturn(Future.successful(
@@ -68,7 +69,7 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with ScalaFu
 
     "return error when there is no Location" in {
         val httpMock = mock[HttpClient]
-        val connector = new AddressLookupConnector(frontendAppConfig, httpMock, messagesApi)
+        val connector = new AddressLookupConnector(frontendAppConfig, httpMock, messagesApi, dataCacheConnector)
 
         when(httpMock.POST[JsValue, HttpResponse](any(), any(), any())(any(), any(), any(), any()))
           .thenReturn(Future.successful(
@@ -89,7 +90,7 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with ScalaFu
 
     "get None when there is an error" in {
       val httpMock = mock[HttpClient]
-      val connector = new AddressLookupConnector(frontendAppConfig, httpMock, messagesApi)
+      val connector = new AddressLookupConnector(frontendAppConfig, httpMock, messagesApi, dataCacheConnector)
 
       when(httpMock.POST[JsValue, HttpResponse](any(), any(), any())(any(), any(), any(), any()))
         .thenReturn(Future.failed(new Exception())
@@ -104,7 +105,7 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with ScalaFu
 
     "return None when HTTP call fails" in {
       val httpMock = mock[HttpClient]
-      val connector = new AddressLookupConnector(frontendAppConfig, httpMock, messagesApi)
+      val connector = new AddressLookupConnector(frontendAppConfig, httpMock, messagesApi, dataCacheConnector)
       when(httpMock.POST[JsValue, HttpResponse](any(), any(), any())(any(), any(), any(), any()))
         .thenReturn(Future.successful(HttpResponse(400))
         )
@@ -123,7 +124,7 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with ScalaFu
       .thenReturn(Future.successful(testReponseAddress.as[AddressLookup])
       )
     when(request.getQueryString(key = "id")).thenReturn(Some("123456789"))
-    val connector = new AddressLookupConnector(frontendAppConfig, httpMock, messagesApi)
+    val connector = new AddressLookupConnector(frontendAppConfig, httpMock, messagesApi, dataCacheConnector)
     val futureResult = connector.getAddress
     val testAddress = testReponseAddress.as[AddressLookup]
     whenReady(futureResult) {
@@ -135,7 +136,7 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with ScalaFu
   "return none when no ID is in the URL" in {
     val httpMock = mock[HttpClient]
     when(request.getQueryString(key = "id")).thenReturn(None)
-    val connector = new AddressLookupConnector(frontendAppConfig, httpMock, messagesApi)
+    val connector = new AddressLookupConnector(frontendAppConfig, httpMock, messagesApi, dataCacheConnector)
     val futureResult = connector.getAddress
     whenReady(futureResult) {
       result =>

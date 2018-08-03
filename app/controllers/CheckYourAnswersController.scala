@@ -18,11 +18,13 @@ package controllers
 
 import com.google.inject.Inject
 import config.FrontendAppConfig
-import connectors.DataCacheConnector
+import connectors.{AddressLookupConnector, DataCacheConnector}
 import controllers.actions.{AuthAction, DataRequiredAction, DataRetrievalAction}
+import identifiers.PaymentLookupAddressId
 import models.SubmissionSuccessful
 import models.templates.Metadata
 import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.mvc.{Action, AnyContent}
 import services.SubmissionService
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.HeaderCarrierConverter
@@ -32,24 +34,32 @@ import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{CheckYourAnswersHelper, CheckYourAnswersSections}
 import views.html.{check_your_answers, pdf_check_your_answers}
 
+import scala.concurrent.Future
+
 class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
                                            override val messagesApi: MessagesApi,
                                            dataCacheConnector: DataCacheConnector,
                                            authenticate: AuthAction,
                                            getData: DataRetrievalAction,
                                            requireData: DataRequiredAction,
+                                           addressLookupConnector: AddressLookupConnector,
+                                           submissionService: SubmissionService) extends FrontendController with I18nSupport {
                                            submissionService: SubmissionService,
                                            implicit val formPartialRetriever: FormPartialRetriever,
                                            implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
 
-  def onPageLoad() = (authenticate andThen getData andThen requireData) {
+  def onPageLoad(): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
+
+      addressLookupConnector.getAddress(request.externalId, PaymentLookupAddressId.toString)
+
       val cyaHelper = new CheckYourAnswersHelper(request.userAnswers)
       val cyaSections = new CheckYourAnswersSections(cyaHelper, request.userAnswers)
+
       Ok(check_your_answers(appConfig, cyaSections.sections))
   }
 
-  def onSubmit() = (authenticate andThen getData andThen requireData).async {
+  def onSubmit(): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
 
       implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromHeadersAndSession(request.headers, Some(request.session))
@@ -57,13 +67,13 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
       val cyaHelper = new CheckYourAnswersHelper(request.userAnswers)
       val cyaSections = new CheckYourAnswersSections(cyaHelper, request.userAnswers)
       val pdfHtml = pdf_check_your_answers(appConfig, cyaSections.sections, request.nino, request.name)
-      dataCacheConnector.save[String](request.externalId, "pdfHtml", pdfHtml.toString())
+      dataCacheConnector.save[String](request.externalId, key = "pdfHtml", pdfHtml.toString())
 
-      implicit val metadata = new Metadata()
-      dataCacheConnector.save(request.externalId, "metadata", metadata)
+      implicit val metadata: Metadata = new Metadata()
+      dataCacheConnector.save(request.externalId, key = "metadata", metadata)
 
 
-    submissionService.ctrSubmission(request.userAnswers) map {
+      submissionService.ctrSubmission(request.userAnswers) map {
         case SubmissionSuccessful => Redirect(routes.SessionExpiredController.onPageLoad())
         case _ =>                    Redirect(routes.SessionExpiredController.onPageLoad())
       }

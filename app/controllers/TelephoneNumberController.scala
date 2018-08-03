@@ -23,10 +23,9 @@ import forms.TelephoneNumberForm
 import identifiers.{AnyTelephoneId, PaymentLookupAddressId, TelephoneNumberId}
 import javax.inject.Inject
 import models._
-import models.requests.DataRequest
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.{Action, AnyContent, Result}
+import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import uk.gov.hmrc.renderer.TemplateRenderer
@@ -52,21 +51,6 @@ class TelephoneNumberController @Inject()(
 
   private val form: Form[TelephoneOption] = formBuilder()
 
-  def forwardRoute(addressFound: Object, preparedForm: Form[TelephoneOption], mode: Mode)(implicit request: DataRequest[AnyContent]): Result = {
-    val result: Result = addressFound match {
-      case None =>
-        Ok(telephoneNumber(appConfig, preparedForm, mode))
-      case _ =>
-        request.userAnswers.anyTelephoneNumber match {
-          case Some(_) =>
-            if (mode == CheckMode) Ok(telephoneNumber(appConfig, preparedForm, mode)) else Redirect(routes.CheckYourAnswersController.onPageLoad().url)
-          case None =>
-            Ok(telephoneNumber(appConfig, preparedForm, mode))
-        }
-    }
-    result
-  }
-
   def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
 
     implicit request =>
@@ -75,13 +59,9 @@ class TelephoneNumberController @Inject()(
         case Some(value) => form.fill(value)
       }
 
-      val addressFound: Future[Option[AddressLookup]] = addressLookupConnector.getAddress
-      addressFound.map {
-        address =>
-            dataCacheConnector.save[AddressLookup](request.externalId, PaymentLookupAddressId.toString, address.get)
-      }
+      addressLookupConnector.getAddress(request.externalId, PaymentLookupAddressId.toString)
 
-      forwardRoute(addressFound, preparedForm, mode)
+      Ok(telephoneNumber(appConfig, preparedForm, mode))
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {

@@ -42,12 +42,13 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar
   implicit val hc: HeaderCarrier = HeaderCarrier()
   implicit val ec: ExecutionContext = mock[ExecutionContext]
   implicit val request: Request[_] = mock[Request[_]]
+  implicit val dataCacheConnector = FakeDataCacheConnector
 
   val testAnswer = "0191 111 1111"
   val formProvider = new TelephoneNumberForm()
   val form = formProvider()
   val httpMock = mock[HttpClient]
-  val mockAddressLookup: AddressLookupConnector = new AddressLookupConnector(frontendAppConfig, httpMock, messagesApi)
+  val mockAddressLookup: AddressLookupConnector = new AddressLookupConnector(frontendAppConfig, httpMock, messagesApi, dataCacheConnector)
   val validYesData = Map(AnyTelephoneId.toString -> Json.obj(AnyTelephoneId.toString -> JsBoolean(true), TelephoneNumberId.toString -> JsString(testAnswer)))
   val validNoData = Map(AnyTelephoneId.toString -> Json.obj(AnyTelephoneId.toString -> JsBoolean(false)))
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers

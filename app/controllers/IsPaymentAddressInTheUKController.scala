@@ -20,7 +20,7 @@ import config.FrontendAppConfig
 import connectors.{AddressLookupConnector, DataCacheConnector}
 import controllers.actions._
 import forms.BooleanForm
-import identifiers.{IsPaymentAddressInTheUKId, SelectTaxYearId}
+import identifiers.{IsPaymentAddressInTheUKId, PaymentLookupAddressId, SelectTaxYearId}
 import javax.inject.Inject
 import identifiers.IsPaymentAddressInTheUKId
 import models.Mode
@@ -53,6 +53,7 @@ class IsPaymentAddressInTheUKController @Inject()(appConfig: FrontendAppConfig,
                                                   implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
 
   private val errorKey = "isPaymentAddressInTheUK.blank"
+
   val form: Form[Boolean] = formProvider(errorKey)
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
@@ -62,7 +63,7 @@ class IsPaymentAddressInTheUKController @Inject()(appConfig: FrontendAppConfig,
         case Some(value) => form.fill(value)
       }
 
-      val continueUrl = "http://localhost:9969/claim-tax-refund/enter-telephone-number"
+      val continueUrl = navigator.nextPage(PaymentLookupAddressId, mode)(new UserAnswers(request.userAnswers.cacheMap)).absoluteURL()
 
       val addressInit = for {
         result: Option[String] <- addressLookup.initialise(continueUrl = continueUrl)

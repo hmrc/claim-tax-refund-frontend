@@ -80,6 +80,8 @@ class Navigator @Inject()() {
     IsPaymentAddressInTheUKId -> isPaymentAddressInUk,
     PaymentUKAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
     PaymentInternationalAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
+    PaymentLookupAddressId -> addressLookup(NormalMode),
+    TelephoneNumberId -> (_ => routes.CheckYourAnswersController.onPageLoad())
     TelephoneNumberId -> (_ => routes.CheckYourAnswersController.onPageLoad()),
 
     DeleteOtherBenefitId -> deleteOtherBenefit,
@@ -125,7 +127,8 @@ class Navigator @Inject()() {
     PaymentAddressCorrectId -> paymentAddressCorrectCheck,
     NomineeFullNameId -> anyAgentRefCheck,
     AnyAgentRefId -> isPaymentAddressInUkCheck,
-    IsPaymentAddressInTheUKId -> paymentAddressCheck
+    IsPaymentAddressInTheUKId -> paymentAddressCheck,
+    PaymentLookupAddressId -> addressLookup(CheckMode)
   )
 
 
@@ -416,6 +419,13 @@ class Navigator @Inject()() {
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
+  private def addressLookup(mode: Mode)(userAnswers: UserAnswers): Call = mode match {
+    case CheckMode => routes.CheckYourAnswersController.onPageLoad()
+    case NormalMode => routes.TelephoneNumberController.onPageLoad(mode)
+  }
+
+
+  def nextPage(id: Identifier, mode: Mode): UserAnswers => Call = mode match {
   def nextPage(id: Identifier, mode: Mode): UserAnswers =>Call = mode match {
     case NormalMode =>
       routeMap.getOrElse(id, _ => routes.IndexController.onPageLoad())
