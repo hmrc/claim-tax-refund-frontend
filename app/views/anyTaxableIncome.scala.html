@@ -38,7 +38,11 @@
 
         <p id="listHeading">@messages("anyTaxableIncome.listHeading")</p>
 
-        @components.list("selectTaxableIncome", TaxableIncome.sortedTaxableIncome.map(_.toString))
+        @components.list(
+            pageKey = Some("selectTaxableIncome"),
+            addCssClass = None,
+            bulletList = TaxableIncome.sortedTaxableIncome.map(_.toString)
+        )
 
         @components.input_yes_no(
             InputViewModel("value", form),

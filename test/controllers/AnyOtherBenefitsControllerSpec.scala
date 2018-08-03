@@ -19,33 +19,39 @@ package controllers
 import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.BooleanForm
-import models.NormalMode
+import models.{NormalMode, OtherBenefit, SelectTaxYear}
 import models.SelectTaxYear.CYMinus2
 import org.mockito.Mockito.when
 import play.api.data.Form
+import play.api.mvc.Call
 import play.api.test.Helpers._
-import utils.{FakeNavigator, MockUserAnswers}
+import utils.{FakeNavigator, MockUserAnswers, UserAnswers}
 import views.html.anyOtherBenefits
 
 class AnyOtherBenefitsControllerSpec extends ControllerSpecBase {
 
-  def onwardRoute = routes.IndexController.onPageLoad()
+  def onwardRoute: Call = routes.IndexController.onPageLoad()
 
   val formProvider = new BooleanForm()
   val form = formProvider()
-  private val taxYear = CYMinus2
-  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
+  private val taxYear: SelectTaxYear = CYMinus2
+  private val mockUserAnswers: UserAnswers = MockUserAnswers.claimDetailsUserAnswers
+  private val otherBenefits: Seq[OtherBenefit] = Seq(OtherBenefit("qwerty", "123"))
+  def otherBenefitNames: Seq[String] = otherBenefits.map(_.name)
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyOtherBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, formProvider)
 
-  def viewAsString(form: Form[_] = form) = anyOtherBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = form): String =
+    anyOtherBenefits(frontendAppConfig, form, NormalMode, taxYear, otherBenefitNames)(fakeRequest, messages).toString
 
   "AnyOtherBenefits Controller" must {
 
     "return OK and the correct view for a GET" in {
-      val result = controller(fakeDataRetrievalAction()).onPageLoad(NormalMode)(fakeRequest)
+      when(mockUserAnswers.otherBenefit).thenReturn(Some(otherBenefits))
+
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe OK
       contentAsString(result) mustBe viewAsString()
@@ -61,8 +67,7 @@ class AnyOtherBenefitsControllerSpec extends ControllerSpecBase {
 
     "redirect to the next page when valid data is submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
-
-      val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode)(postRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(onwardRoute.url)
@@ -72,7 +77,7 @@ class AnyOtherBenefitsControllerSpec extends ControllerSpecBase {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
       val boundForm = form.bind(Map("value" -> "invalid value"))
 
-      val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode)(postRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe BAD_REQUEST
       contentAsString(result) mustBe viewAsString(boundForm)

@@ -38,7 +38,11 @@
 
         <p id="listHeading">@messages("anyBenefits.listHeading")</p>
 
-        @components.list("selectBenefits", Benefits.sortedBenefits.map(_.toString))
+        @components.list(
+            pageKey = Some("selectBenefits"),
+            addCssClass = None,
+            bulletList = Benefits.sortedBenefits.map(_.toString)
+        )
 
         @components.input_yes_no(
             InputViewModel("value", form),

@@ -18,9 +18,11 @@ package views
 
 import controllers.routes
 import forms.BooleanForm
-import models.NormalMode
 import models.SelectTaxYear.CYMinus2
+import models.{NormalMode, OtherBenefit}
+import org.jsoup.nodes.{Document, Element}
 import play.api.data.Form
+import play.twirl.api.Html
 import views.behaviours.YesNoViewBehaviours
 import views.html.anyOtherBenefits
 
@@ -28,12 +30,15 @@ class AnyOtherBenefitsViewSpec extends YesNoViewBehaviours {
 
   private val messageKeyPrefix = "anyOtherBenefits"
   private val taxYear = CYMinus2
+  private val otherBenefitNames: Seq[String] = Seq("qwerty")
 
   override val form = new BooleanForm()()
 
-  def createView = () => anyOtherBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createView: () => Html = () =>
+    anyOtherBenefits(frontendAppConfig, form, NormalMode, taxYear, otherBenefitNames)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[_]) => anyOtherBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createViewUsingForm: Form[_] => Html = (form: Form[_]) =>
+    anyOtherBenefits(frontendAppConfig, form, NormalMode, taxYear, otherBenefitNames)(fakeRequest, messages)
 
   "AnyOtherBenefits view" must {
 
@@ -51,5 +56,10 @@ class AnyOtherBenefitsViewSpec extends YesNoViewBehaviours {
       args = taxYear.asString(messages)
     )
 
+    "display 'You have told us about:' section" in {
+      val doc: Document = asDocument(createView())
+
+      doc.getElementById("bullet-qwerty").text() mustBe "qwerty"
+    }
   }
 }

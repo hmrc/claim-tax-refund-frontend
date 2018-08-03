@@ -15,16 +15,23 @@
  *@
 
 @(
-        pageKey: String,
-        bulletList: Seq[String]
+    pageKey: Option[String] = None,
+    addCssClass: Option[String] = None,
+    bulletList: Seq[String]
 )(implicit messages: Messages)
 
-<div class="form-field" id="component-bullet-list">
-        <ul class="list list-bullet">
-            @for(bullet <- bulletList) {
-                <li id="bullet-@bullet">
-                    @messages(messages(pageKey+"."+bullet))
-                </li>
-            }
-        </ul>
+@cssClass = @{
+    if(addCssClass.isDefined) s"form-group ${addCssClass.get}" else "form-group"
+}
+
+@text(bullet: String) = @{
+    if(pageKey.isDefined) messages(s"${pageKey.get}.$bullet") else bullet
+}
+
+<div class="@cssClass" id="component-bullet-list">
+    <ul class="list list-bullet">
+        @for(bullet <- bulletList) {
+            <li id="bullet-@bullet">@text(bullet)</li>
+        }
+    </ul>
 </div>

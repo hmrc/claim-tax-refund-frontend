@@ -20,12 +20,13 @@
 @import uk.gov.hmrc.play.views.html._
 @import viewmodels.InputViewModel
 
-@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: SelectTaxYear)(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: SelectTaxYear, otherTaxableIncomeNames: Seq[String])(implicit request: Request[_], messages: Messages)
 
 @main_template(
     title = messages("anyOtherTaxableIncome.title"),
     appConfig = appConfig,
-    bodyClasses = None) {
+    bodyClasses = None
+) {
 
     @helpers.form(action = AnyOtherTaxableIncomeController.onSubmit(mode), 'autoComplete -> "off") {
 
@@ -34,6 +35,12 @@
         @components.error_summary(form.errors)
 
         @components.heading(messages("anyOtherTaxableIncome.heading"), taxYear = Some(taxYear.asString))
+
+        <p class="lede">@messages("global.otherListHeading")</p>
+        @components.list(
+            addCssClass = Some("panel-indent"),
+            bulletList = otherTaxableIncomeNames
+        )
 
         @components.input_yes_no(
             InputViewModel("value", form),
