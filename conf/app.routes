@@ -222,7 +222,5 @@ POST       /payment-address-correct                                         cont
 GET        /change-payment-address-correct                                  controllers.PaymentAddressCorrectController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-payment-address-correct                                  controllers.PaymentAddressCorrectController.onSubmit(mode: Mode = CheckMode)
 
-GET        /deleteOther                                                     controllers.DeleteOtherController.onPageLoad(mode: Mode = NormalMode)
-POST       /deleteOther                                                     controllers.DeleteOtherController.onSubmit(mode: Mode = NormalMode)
-GET        /changeDeleteOther                                               controllers.DeleteOtherController.onPageLoad(mode: Mode = CheckMode)
-POST       /changeDeleteOther                                               controllers.DeleteOtherController.onSubmit(mode: Mode = CheckMode)
+GET        /delete-other-:index                                             controllers.DeleteOtherController.onPageLoad(mode: Mode = NormalMode, index: Index, collectionId: String)
+POST       /delete-other-:index                                             controllers.DeleteOtherController.onSubmit(mode: Mode = NormalMode, index: Index, collectionId: String)

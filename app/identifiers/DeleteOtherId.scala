@@ -16,10 +16,8 @@
 
 package identifiers
 
-import models.Index
 
-case class DeleteOtherId[A](index: Index, collections: Seq[A]) extends Identifier
 
-object DeleteOtherId {
-  override def toString: String = "otherTaxableIncomeName"
+case object DeleteOtherId extends Identifier {
+  override def toString: String = "deleteOtherId"
 }

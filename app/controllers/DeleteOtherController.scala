@@ -17,7 +17,6 @@
 package controllers
 
 import javax.inject.Inject
-
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
@@ -25,37 +24,52 @@ import connectors.DataCacheConnector
 import controllers.actions._
 import config.FrontendAppConfig
 import forms.BooleanForm
-import identifiers.DeleteOtherId
-import models.Mode
+import identifiers.{DeleteOtherId, OtherBenefitId}
+import models.{CheckMode, Index, Mode, OtherBenefit}
+import play.api.mvc.{Action, AnyContent, Result}
 import utils.{Navigator, UserAnswers}
 import views.html.deleteOther
 
 import scala.concurrent.Future
 
 class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
-                                         override val messagesApi: MessagesApi,
-                                         dataCacheConnector: DataCacheConnector,
-                                         navigator: Navigator,
-                                         authenticate: AuthAction,
-                                         getData: DataRetrievalAction,
-                                         requireData: DataRequiredAction,
-                                         formProvider: BooleanForm) extends FrontendController with I18nSupport {
+                                      override val messagesApi: MessagesApi,
+                                      dataCacheConnector: DataCacheConnector,
+                                      navigator: Navigator,
+                                      authenticate: AuthAction,
+                                      getData: DataRetrievalAction,
+                                      requireData: DataRequiredAction,
+                                      formProvider: BooleanForm) extends FrontendController with I18nSupport {
 
   private val errorKey = "deleteOther.blank"
   val form: Form[Boolean] = formProvider(errorKey)
 
-  def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode, index: Index, collection: String): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      Ok(deleteOther(appConfig, form, mode))
+      Ok(deleteOther(appConfig, form, mode, index, collection))
   }
 
-  def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode, index: Index, collectionId: String): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
       form.bindFromRequest().fold(
         (formWithErrors: Form[_]) =>
-          Future.successful(BadRequest(deleteOther(appConfig, formWithErrors, mode))),
-        _ =>
-          Future.successful(Redirect(routes.CheckYourAnswersController.onPageLoad()))
+          Future.successful(BadRequest(deleteOther(appConfig, formWithErrors, mode, index, collectionId))),
+        value =>
+          if (value) {
+            val result: Option[Future[Result]] = for {
+              collection: Seq[OtherBenefit] <- request.userAnswers.otherBenefit
+            } yield {
+              val newColl: Seq[OtherBenefit] = collection.filterNot(_ == collection(index))
+              dataCacheConnector.save[Seq[OtherBenefit]](request.externalId, OtherBenefitId.toString, newColl).map(cacheMap =>
+                Redirect(navigator.nextPage(DeleteOtherId, CheckMode)(new UserAnswers(cacheMap))))
+            }
+
+            result.getOrElse {
+              Future.successful(Redirect(routes.CheckYourAnswersController.onPageLoad()))
+            }
+          } else {
+            Future.successful(Redirect(routes.CheckYourAnswersController.onPageLoad()))
+          }
       )
   }
 }
