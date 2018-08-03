@@ -20,7 +20,7 @@
         row: AnswerRow,
         idPath: String,
         changeLink: Boolean = true,
-        deleteLink: Boolean = false
+        deleteUrl: Option[String] = None
 
 )(implicit messages: Messages)
 
@@ -39,7 +39,7 @@
         </div>
     }
 
-    @if(deleteLink) {
+    @if(row.deleteUrl.isDefined) {
         <div class="tabular-data__data tabular-data__data--2-12 u-align--tablet-right">
             <a id="cya-@idPath" href='@row.deleteUrl.get'>
                 <span aria-hidden="true">@messages("site.delete")</span>

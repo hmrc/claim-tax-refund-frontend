@@ -32,7 +32,7 @@ object Message {
     Message(str)
 }
 
-case class AnswerRow(label: Message, answer: Message, url: String, deleteUrl: Option[String], deleteLink: Boolean)
+case class AnswerRow(label: Message, answer: Message, url: String, deleteUrl: Option[String])
 
 object AnswerRow {
 
@@ -41,7 +41,5 @@ object AnswerRow {
              answer: String,
              answerIsMessageKey: Boolean,
              url: String,
-             deleteUrl: Option[String] = None,
-             deleteLink: Boolean = false
-           ): AnswerRow = AnswerRow(Message(label), Message(answer), url, deleteUrl, deleteLink)
+             deleteUrl: Option[String] = None): AnswerRow = AnswerRow(Message(label), Message(answer), url, deleteUrl)
 }

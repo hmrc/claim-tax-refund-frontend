@@ -24,6 +24,10 @@ import viewmodels.AnswerRow
 
 class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messages){
 
+  def deleteOther: Option[AnswerRow] = userAnswers.deleteOther map {
+    x => AnswerRow("deleteOther.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.DeleteOtherController.onPageLoad(CheckMode).url)
+  }
+
   //Claim details
   //------------------------------------------------------------------
 
@@ -119,8 +123,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
               s"£${benefits.amount}",
               answerIsMessageKey = false,
               routes.OtherBenefitController.onPageLoad(CheckMode, Index(index)).url,
-              deleteUrl = Some(routes.DeleteOtherController.onPageLoad(NormalMode).url),
-              deleteLink = true))
+              deleteUrl = Some(routes.DeleteOtherController.onPageLoad(NormalMode).url)))
           )
       }
     }
