@@ -32,10 +32,10 @@ object Message {
     Message(str)
 }
 
-case class AnswerRow(label: Message, answer: Message, url: String)
+case class AnswerRow(label: Message, answer: Message, url: String, deleteLink: Boolean)
 
 object AnswerRow {
 
-  def apply(label: String, answer: String, answerIsMessageKey: Boolean, url: String): AnswerRow =
-    AnswerRow(Message(label), Message(answer), url)
+  def apply(label: String, answer: String, answerIsMessageKey: Boolean, url: String, deleteLink: Boolean = false): AnswerRow =
+    AnswerRow(Message(label), Message(answer), url, deleteLink)
 }
