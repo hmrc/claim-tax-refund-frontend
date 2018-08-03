@@ -55,6 +55,8 @@ global.current-year-minus-3 = {0} to {1}
 global.current-year-minus-4 = {0} to {1}
 global.current-year-minus-5 = {0} to {1}
 
+global.otherListHeading = You have told us about:
+
 index.title = Claim a tax refund
 index.heading = Claim a tax refund
 
@@ -136,7 +138,6 @@ howMuchRentalIncome.invalid = Enter a valid amount of rental income
 anyOtherBenefits.title = Did you get any other taxable benefits?
 anyOtherBenefits.heading = Did you get any other taxable benefits?
 anyOtherBenefits.blank = Select yes if you got any other taxable benefits
-anyOtherBenefits.checkYourAnswersLabel = Did you get any other taxable benefits?
 
 howMuchJobseekersAllowance.title = How much contribution-based Jobseeker''s Allowance did you get?
 howMuchJobseekersAllowance.heading = How much contribution-based Jobseeker''s Allowance did you get?

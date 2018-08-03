@@ -22,10 +22,10 @@ import controllers.actions._
 import forms.BooleanForm
 import identifiers.AnyOtherBenefitsId
 import javax.inject.Inject
-import models.Mode
+import models.{Mode, OtherBenefit, SelectTaxYear}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.{Action, AnyContent}
+import play.api.mvc.{Action, AnyContent, Result}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import utils.{Navigator, UserAnswers}
 import views.html.anyOtherBenefits
@@ -46,26 +46,34 @@ class AnyOtherBenefitsController @Inject()(appConfig: FrontendAppConfig,
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      request.userAnswers.selectTaxYear.map {
-        taxYear =>
-          Ok(anyOtherBenefits(appConfig, form, mode, taxYear))
-      }.getOrElse{
+      val result: Option[Result] = for {
+        taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
+        otherBenefitNames: Seq[String] <- request.userAnswers.otherBenefit.map(_.map(_.name))
+      } yield {
+        Ok(anyOtherBenefits(appConfig, form, mode, taxYear, otherBenefitNames))
+      }
+
+      result.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      request.userAnswers.selectTaxYear.map{
-        taxYear =>
-          form.bindFromRequest().fold(
-            (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(anyOtherBenefits(appConfig, formWithErrors, mode, taxYear))),
-            value =>
-              dataCacheConnector.save[Boolean](request.externalId, AnyOtherBenefitsId.toString, value).map(cacheMap =>
-                Redirect(navigator.nextPage(AnyOtherBenefitsId, mode)(new UserAnswers(cacheMap))))
-          )
-      }.getOrElse{
+      val result: Option[Future[Result]] = for {
+        taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
+        otherBenefitNames: Seq[String] <- request.userAnswers.otherBenefit.map(_.map(_.name))
+      } yield {
+        form.bindFromRequest().fold(
+          (formWithErrors: Form[_]) =>
+            Future.successful(BadRequest(anyOtherBenefits(appConfig, formWithErrors, mode, taxYear, otherBenefitNames))),
+          value =>
+            dataCacheConnector.save[Boolean](request.externalId, AnyOtherBenefitsId.toString, value).map(cacheMap =>
+              Redirect(navigator.nextPage(AnyOtherBenefitsId, mode)(new UserAnswers(cacheMap))))
+        )
+      }
+
+      result.getOrElse {
         Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
       }
   }

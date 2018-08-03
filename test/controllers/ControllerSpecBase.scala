@@ -40,13 +40,20 @@ trait ControllerSpecBase extends SpecBase {
   def dontGetAnyData = new FakeDataRetrievalAction(None)
 
   def someData = new FakeDataRetrievalAction(
-    Some(CacheMap(cacheMapId, Map(SelectTaxYearId.toString -> Json.toJson(SelectTaxYear.CYMinus2)))))
+    Some(CacheMap(cacheMapId, Map(SelectTaxYearId.toString -> Json.toJson(SelectTaxYear.CYMinus2))))
+  )
 
-  def fakeDataRetrievalAction(mockUserAnswers: UserAnswers = MockUserAnswers.claimDetailsUserAnswers) = new DataRetrievalAction {
-    override protected def transform[A](request: AuthenticatedRequest[A]): Future[OptionalDataRequest[A]] = {
-      Future.successful(OptionalDataRequest(request, "123123", "AB123456A", Some(ItmpName(Some("sdadsad"), None, None)),
-        Some(itmpAddress),
-        Some(mockUserAnswers)))
+  def fakeDataRetrievalAction(mockUserAnswers: UserAnswers = MockUserAnswers.claimDetailsUserAnswers): DataRetrievalAction =
+    new DataRetrievalAction {
+      override protected def transform[A](request: AuthenticatedRequest[A]): Future[OptionalDataRequest[A]] = {
+        Future.successful(OptionalDataRequest(
+          request,
+          "123123",
+          "AB123456A",
+          Some(ItmpName(Some("sdadsad"), None, None)),
+          Some(itmpAddress),
+          Some(mockUserAnswers)
+        ))
+      }
     }
-  }
 }
