@@ -48,7 +48,7 @@ class AnyOtherTaxableIncomeController @Inject()(appConfig: FrontendAppConfig,
     implicit request =>
       val result: Option[Result] = for {
         taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
-        otherTaxableIncomeNames: Seq[String] <- request.userAnswers.otherTaxableIncome.map(_.map(income => income.name))
+        otherTaxableIncomeNames: Seq[String] <- request.userAnswers.otherTaxableIncome.map(_.map(_.name))
       } yield {
         Ok(anyOtherTaxableIncome(appConfig, form, mode, taxYear, otherTaxableIncomeNames))
       }
@@ -62,7 +62,7 @@ class AnyOtherTaxableIncomeController @Inject()(appConfig: FrontendAppConfig,
     implicit request =>
       val result: Option[Future[Result]] = for {
         taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
-        otherTaxableIncomeNames: Seq[String] <- request.userAnswers.otherTaxableIncome.map(_.map(income => income.name))
+        otherTaxableIncomeNames: Seq[String] <- request.userAnswers.otherTaxableIncome.map(_.map(_.name))
       } yield {
         form.bindFromRequest().fold(
           (formWithErrors: Form[_]) =>
