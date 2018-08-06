@@ -119,7 +119,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
               s"£${benefits.amount}",
               answerIsMessageKey = false,
               routes.OtherBenefitController.onPageLoad(CheckMode, Index(index)).url,
-              deleteUrl = Some(routes.DeleteOtherController.onPageLoad(Index(index), benefits.name).url)
+              Some(routes.DeleteOtherController.onPageLoad(Index(index), benefits.name, "otherBenefits").url)
             )
            )
           )
@@ -170,7 +170,14 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
       otherCompanyBenefit.zipWithIndex.flatMap {
         case (companyBenefits, index) =>
           Seq(
-            Some(AnswerRow(companyBenefits.name, s"£${companyBenefits.amount}", answerIsMessageKey = false, routes.OtherCompanyBenefitController.onPageLoad(CheckMode, Index(index)).url))
+            Some(AnswerRow(
+              companyBenefits.name,
+              s"£${companyBenefits.amount}",
+              answerIsMessageKey = false,
+              routes.OtherCompanyBenefitController.onPageLoad(CheckMode, Index(index)).url,
+              Some(routes.DeleteOtherController.onPageLoad(Index(index), companyBenefits.name, "otherCompanyBenefits").url)
+            )
+            )
           )
       }
     }
