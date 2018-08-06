@@ -17,69 +17,76 @@
 package controllers
 
 import play.api.data.Form
-import play.api.libs.json.JsBoolean
-import uk.gov.hmrc.http.cache.client.CacheMap
-import utils.FakeNavigator
+import utils.{FakeNavigator, MockUserAnswers}
 import connectors.FakeDataCacheConnector
 import controllers.actions._
 import play.api.test.Helpers._
 import forms.BooleanForm
-import identifiers.DeleteOtherId
-import models.NormalMode
+import models.{CheckMode, Index, NormalMode, OtherBenefit}
 import views.html.deleteOther
+import org.mockito.Mockito.when
+import play.api.mvc.Call
 
 class DeleteOtherControllerSpec extends ControllerSpecBase {
 
-  def onwardRoute = routes.IndexController.onPageLoad()
+  def onwardRoute: Call = routes.IndexController.onPageLoad()
 
   val formProvider = new BooleanForm()
   val form = formProvider()
+  private val mockUserAnswers = MockUserAnswers.benefitsUserAnswers
+
+
+  val itemName = "qwerty"
+  val index = Index(0)
+  val benefitCollectionId = "otherBenefits"
+
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new DeleteOtherController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, formProvider)
 
-  def viewAsString(form: Form[_] = form) = deleteOther(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = form, index: Index, itemName: String, collectionId: String): String =
+    deleteOther(frontendAppConfig, form, NormalMode, index, itemName, collectionId)(fakeRequest, messages).toString
 
   "DeleteOther Controller" must {
 
     "return OK and the correct view for a GET" in {
-      val result = controller().onPageLoad(NormalMode)(fakeRequest)
+      val result = controller().onPageLoad(NormalMode, index, itemName, benefitCollectionId)(fakeRequest)
 
       status(result) mustBe OK
-      contentAsString(result) mustBe viewAsString()
+      contentAsString(result) mustBe viewAsString(form, index, itemName, benefitCollectionId)
     }
 
-    "populate the view correctly on a GET when the question has previously been answered" in {
-      val validData = Map(DeleteOtherId.toString -> JsBoolean(true))
-      val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validData)))
-
-      val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)
-
-      contentAsString(result) mustBe viewAsString(form.fill(true))
-    }
-
-    "redirect to the next page when valid data is submitted" in {
+    "redirect to CheckYourAnswers when value is true" in {
+      mockUserAnswers.otherBenefit.get.size mustBe 3
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
 
-      val result = controller().onSubmit(NormalMode)(postRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode, index, itemName, benefitCollectionId)(postRequest)
+      status(result) mustBe SEE_OTHER
+      redirectLocation(result) mustBe Some(routes.CheckYourAnswersController.onPageLoad().url)
+    }
+
+    "redirect to CheckYourAnswers when valid data is submitted and value is false" in {
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "false"))
+
+      val result = controller().onSubmit(NormalMode, index, itemName, benefitCollectionId)(postRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(onwardRoute.url)
+      redirectLocation(result) mustBe Some(routes.CheckYourAnswersController.onPageLoad().url)
     }
 
     "return a Bad Request and errors when invalid data is submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
       val boundForm = form.bind(Map("value" -> "invalid value"))
 
-      val result = controller().onSubmit(NormalMode)(postRequest)
+      val result = controller().onSubmit(NormalMode, index, itemName, benefitCollectionId)(postRequest)
 
       status(result) mustBe BAD_REQUEST
-      contentAsString(result) mustBe viewAsString(boundForm)
+      contentAsString(result) mustBe viewAsString(boundForm, index, itemName, benefitCollectionId)
     }
 
     "redirect to Session Expired for a GET if no existing data is found" in {
-      val result = controller(dontGetAnyData).onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(dontGetAnyData).onPageLoad(NormalMode, index, itemName, benefitCollectionId)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
@@ -87,7 +94,7 @@ class DeleteOtherControllerSpec extends ControllerSpecBase {
 
     "redirect to Session Expired for a POST if no existing data is found" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
-      val result = controller(dontGetAnyData).onSubmit(NormalMode)(postRequest)
+      val result = controller(dontGetAnyData).onSubmit(NormalMode, index, itemName, benefitCollectionId)(postRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)

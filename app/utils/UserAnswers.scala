@@ -22,8 +22,6 @@ import models.templates.Metadata
 import uk.gov.hmrc.http.cache.client.CacheMap
 
 class UserAnswers(val cacheMap: CacheMap) {
-  def deleteOther: Option[Boolean] = cacheMap.getEntry[Boolean](DeleteOtherId.toString)
-
 
   //Submission data
   //------------------------------------------------------------------------------
@@ -137,5 +135,11 @@ class UserAnswers(val cacheMap: CacheMap) {
   //------------------------------------------------------------------------------
 
   def anyTelephoneNumber: Option[TelephoneOption] = cacheMap.getEntry[TelephoneOption](AnyTelephoneId.toString)
+
+  //Delete other
+  //------------------------------------------------------------------------------
+
+  def deleteOther(): Option[Boolean] = cacheMap.getEntry[Boolean](DeleteOtherId.toString)
+
 
 }

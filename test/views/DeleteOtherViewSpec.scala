@@ -20,25 +20,30 @@ import play.api.data.Form
 import controllers.routes
 import forms.BooleanForm
 import views.behaviours.YesNoViewBehaviours
-import models.NormalMode
+import models.{Index, NormalMode}
 import views.html.deleteOther
 
 class DeleteOtherViewSpec extends YesNoViewBehaviours {
 
   val messageKeyPrefix = "deleteOther"
+  val itemName = "qwerty"
+  val index = Index(1)
+  val benefitCollectionId = "otherBenefit"
 
   override val form = new BooleanForm()()
 
-  def createView = () => deleteOther(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createView = () =>
+    deleteOther(frontendAppConfig, form, NormalMode, index, itemName, benefitCollectionId)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[_]) => deleteOther(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[_]) =>
+    deleteOther(frontendAppConfig, form, NormalMode, index, itemName, benefitCollectionId)(fakeRequest, messages)
 
   "DeleteOther view" must {
 
-    behave like normalPage(createView, messageKeyPrefix, None)
+    behave like normalPage(createView, messageKeyPrefix, None, "qwerty")
 
     behave like pageWithBackLink(createView)
 
-    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.DeleteOtherController.onSubmit(NormalMode).url, None)
+    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.DeleteOtherController.onSubmit(index, itemName, benefitCollectionId).url, None)
   }
 }
