@@ -64,8 +64,8 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
                   collection: Seq[OtherBenefit] <- request.userAnswers.otherBenefit
                 } yield {
                   val newColl: Seq[OtherBenefit] = collection.filterNot(_ == collection(index))
-                  dataCacheConnector.save[Seq[OtherBenefit]](request.externalId, OtherBenefitId.toString, newColl).map(cacheMap =>
-                    Redirect(navigator.nextPage(DeleteOtherId, CheckMode)(new UserAnswers(cacheMap))))
+                  dataCacheConnector.save[Seq[OtherBenefit]](request.externalId, OtherBenefitId.toString, newColl).map(_ =>
+                    Redirect(routes.CheckYourAnswersController.onPageLoad()))
                 }
 
                 result.getOrElse {
@@ -97,6 +97,10 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
                 result.getOrElse {
                   Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
                 }
+
+              case _ =>
+                Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+
             }
           } else {
             Future.successful(Redirect(routes.CheckYourAnswersController.onPageLoad()))
