@@ -119,7 +119,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
               s"£${benefits.amount}",
               answerIsMessageKey = false,
               routes.OtherBenefitController.onPageLoad(CheckMode, Index(index)).url,
-              deleteUrl = Some(routes.DeleteOtherController.onPageLoad(Index(index), "otherBenefits").url)
+              deleteUrl = Some(routes.DeleteOtherController.onPageLoad(Index(index), benefits.name).url)
             )
            )
           )
