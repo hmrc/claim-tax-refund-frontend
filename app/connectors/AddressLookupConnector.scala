@@ -52,20 +52,21 @@ class AddressLookupConnector @Inject()(appConfig: FrontendAppConfig, http: HttpC
     }
   }
 
-  def getAddress(cacheId: String, saveKey: String)(implicit hc: HeaderCarrier, ec: ExecutionContext, request: Request[_]) = {
+  def getAddress(cacheId: String, saveKey: String)(implicit hc: HeaderCarrier, ec: ExecutionContext, request: Request[_]): Future[Product] = {
     request.getQueryString(key = "id") match {
       case Some(id) => {
         val getAddressUrl = s"${appConfig.addressLookupUrl}/api/confirmed?id=$id"
-        val address: Future[AddressLookup] = for {
+        for {
           address <-http.GET[AddressLookup](getAddressUrl)
         } yield {
+          dataCacheConnector.save(cacheId, saveKey, address)
           address
         }
 
-        address.map {
-          address =>
-            dataCacheConnector.save(cacheId,saveKey,address)
-        }
+//        address.map {
+//          address =>
+//            dataCacheConnector.save(cacheId,saveKey,address)
+//        }
       }
       case None => Future.successful(None)
     }

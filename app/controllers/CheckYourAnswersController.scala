@@ -50,13 +50,27 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
 
   def onPageLoad(): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
+      val save: Future[Product] = addressLookupConnector.getAddress(request.externalId, PaymentLookupAddressId.toString)
 
+      save onSuccess {
+        case result =>
+//        addressLookupConnector.getAddress(request.externalId, PaymentLookupAddressId.toString)
+          val cyaHelper = new CheckYourAnswersHelper(request.userAnswers)
+          val cyaSections = new CheckYourAnswersSections(cyaHelper, request.userAnswers)
+          Ok(check_your_answers(appConfig, cyaSections.sections))
+      }
       addressLookupConnector.getAddress(request.externalId, PaymentLookupAddressId.toString)
 
       val cyaHelper = new CheckYourAnswersHelper(request.userAnswers)
       val cyaSections = new CheckYourAnswersSections(cyaHelper, request.userAnswers)
 
       Ok(check_your_answers(appConfig, cyaSections.sections))
+  }
+
+      save onFailure {
+        case t =>
+          Ok
+      }
   }
 
   def onSubmit(): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
