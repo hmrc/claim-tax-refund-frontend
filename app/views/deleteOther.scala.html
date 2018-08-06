@@ -21,14 +21,14 @@
 @import utils.FormHelpers
 @import viewmodels.InputViewModel
 
-@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, index: Index, itemName: String)(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, index: Index, itemName: String, collectionId: String)(implicit request: Request[_], messages: Messages)
 
 @main_template(
     title = messages("deleteOther.title", itemName),
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @helpers.form(action = DeleteOtherController.onSubmit(index, itemName), 'autoComplete -> "off") {
+    @helpers.form(action = DeleteOtherController.onSubmit(index, itemName, collectionId), 'autoComplete -> "off") {
 
         @components.back_link()
 
