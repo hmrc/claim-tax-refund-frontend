@@ -44,16 +44,16 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
   private val errorKey = "deleteOther.blank"
   val form: Form[Boolean] = formProvider(errorKey)
 
-  def onPageLoad(mode: Mode, index: Index, collection: String): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode, index: Index, itemName: String): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      Ok(deleteOther(appConfig, form, mode, index, collection))
+      Ok(deleteOther(appConfig, form, mode, index, itemName))
   }
 
-  def onSubmit(mode: Mode, index: Index, collectionId: String): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode, index: Index, itemName: String): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
       form.bindFromRequest().fold(
         (formWithErrors: Form[_]) =>
-          Future.successful(BadRequest(deleteOther(appConfig, formWithErrors, mode, index, collectionId))),
+          Future.successful(BadRequest(deleteOther(appConfig, formWithErrors, mode, index, itemName))),
         value =>
           if (value) {
             val result: Option[Future[Result]] = for {
