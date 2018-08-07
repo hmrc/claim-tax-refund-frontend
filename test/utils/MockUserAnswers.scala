@@ -82,8 +82,6 @@ object MockUserAnswers extends MockitoSugar {
     //contact details
     when(answers.anyTelephoneNumber) thenReturn None
 
-    when(answers.deleteOther()) thenReturn None
-
     answers
   }
 
