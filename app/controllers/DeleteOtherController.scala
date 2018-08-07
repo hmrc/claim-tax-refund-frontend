@@ -24,7 +24,7 @@ import connectors.DataCacheConnector
 import controllers.actions._
 import config.FrontendAppConfig
 import forms.BooleanForm
-import identifiers.{DeleteOtherId, OtherBenefitId, OtherCompanyBenefitId, OtherTaxableIncomeId}
+import identifiers._
 import models._
 import play.api.mvc.{Action, AnyContent, Result}
 import utils.{Navigator, UserAnswers}
@@ -87,11 +87,15 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
 
               case "otherTaxableIncome" =>
                 val result: Option[Future[Result]] = for {
-                  collection: Seq[OtherTaxableIncome] <- request.userAnswers.otherTaxableIncome
+                  otherTaxableIncome: Seq[OtherTaxableIncome] <- request.userAnswers.otherTaxableIncome
+                  anyTaxableOtherIncome: Seq[AnyTaxPaid] <- request.userAnswers.anyTaxableOtherIncome
                 } yield {
-                  val newColl: Seq[OtherTaxableIncome] = collection.filterNot(_ == collection(index))
-                  dataCacheConnector.save[Seq[OtherTaxableIncome]](request.externalId, OtherTaxableIncomeId.toString, newColl).map(_ =>
-                    Redirect(routes.CheckYourAnswersController.onPageLoad()))
+                  val newOtherTaxableIncome: Seq[OtherTaxableIncome] = otherTaxableIncome.filterNot(_ == otherTaxableIncome(index))
+                  val newAnyTaxableOtherIncome: Seq[AnyTaxPaid] = anyTaxableOtherIncome.filterNot(_ == anyTaxableOtherIncome(index))
+                  for {
+                    _ <- dataCacheConnector.save[Seq[OtherTaxableIncome]](request.externalId, OtherTaxableIncomeId.toString, newOtherTaxableIncome)
+                    _ <- dataCacheConnector.save[Seq[AnyTaxPaid]](request.externalId, AnyTaxableOtherIncomeId.toString, newAnyTaxableOtherIncome)
+                  } yield Redirect(routes.CheckYourAnswersController.onPageLoad())
                 }
 
                 result.getOrElse {
