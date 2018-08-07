@@ -410,18 +410,18 @@ class Navigator @Inject()() {
   private def paymentAddressCheck(userAnswers: UserAnswers): Call = userAnswers.isPaymentAddressInTheUK match {
     case Some(true) => userAnswers.paymentUKAddress match {
       case None => routes.PaymentUKAddressController.onPageLoad(CheckMode)
-      case _ => routes.CheckYourAnswersController.onPageLoad()
+      case _ => routes.CheckYourAnswersController.onPageLoad(None)
     }
     case Some(false) => userAnswers.paymentInternationalAddress match {
       case None => routes.PaymentInternationalAddressController.onPageLoad(CheckMode)
-      case _ => routes.CheckYourAnswersController.onPageLoad()
+      case _ => routes.CheckYourAnswersController.onPageLoad(None)
     }
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
   private def addressLookup(mode: Mode)(userAnswers: UserAnswers): Call = mode match {
-    case CheckMode => routes.CheckYourAnswersController.onPageLoad()
-    case NormalMode => routes.TelephoneNumberController.onPageLoad(mode)
+    case CheckMode => routes.CheckYourAnswersController.onPageLoad(None)
+    case NormalMode => routes.TelephoneNumberController.onPageLoad(mode, None)
   }
 
 
@@ -430,7 +430,7 @@ class Navigator @Inject()() {
     case NormalMode =>
       routeMap.getOrElse(id, _ => routes.IndexController.onPageLoad())
     case CheckMode =>
-      editRouteMap.getOrElse(id, _ => routes.CheckYourAnswersController.onPageLoad())
+      editRouteMap.getOrElse(id, _ => routes.CheckYourAnswersController.onPageLoad(None))
   }
 
   def nextPageWithIndex(id: Identifier, mode: Mode): UserAnswers => Call = mode match {

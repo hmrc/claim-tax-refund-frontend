@@ -26,8 +26,6 @@ import models.templates.Metadata
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
 import services.SubmissionService
-import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.play.HeaderCarrierConverter
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import uk.gov.hmrc.renderer.TemplateRenderer
@@ -48,8 +46,20 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
                                            implicit val formPartialRetriever: FormPartialRetriever,
                                            implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
 
-  def onPageLoad(): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
+  def onPageLoad(addressId: Option[String] = None): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
+      addressId.map {
+        id =>
+          addressLookupConnector.getAddress(request.externalId, PaymentLookupAddressId.toString, id) map {
+            updatedUserAnswers =>
+              val cyaHelper = new CheckYourAnswersHelper(updatedUserAnswers)
+              val cyaSections = new CheckYourAnswersSections(cyaHelper, updatedUserAnswers)
+              Ok(check_your_answers(appConfig, cyaSections.sections))
+          }
+      }.getOrElse {
+        val cyaHelper = new CheckYourAnswersHelper(request.userAnswers)
+        val cyaSections = new CheckYourAnswersSections(cyaHelper, request.userAnswers)
+        Future.successful(Ok(check_your_answers(appConfig, cyaSections.sections)))
       val save: Future[Product] = addressLookupConnector.getAddress(request.externalId, PaymentLookupAddressId.toString)
 
       save onSuccess {
@@ -75,8 +85,6 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
 
   def onSubmit(): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-
-      implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromHeadersAndSession(request.headers, Some(request.session))
 
       val cyaHelper = new CheckYourAnswersHelper(request.userAnswers)
       val cyaSections = new CheckYourAnswersSections(cyaHelper, request.userAnswers)

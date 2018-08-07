@@ -51,17 +51,23 @@ class TelephoneNumberController @Inject()(
 
   private val form: Form[TelephoneOption] = formBuilder()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
-
+  def onPageLoad(mode: Mode, addressId: Option[String]): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
       val preparedForm = request.userAnswers.anyTelephoneNumber match {
         case None => form
         case Some(value) => form.fill(value)
       }
 
-      addressLookupConnector.getAddress(request.externalId, PaymentLookupAddressId.toString)
+      addressId.map {
+        id =>
+          addressLookupConnector.getAddress(request.externalId, PaymentLookupAddressId.toString, id) map {
+            _ =>
+              Ok(telephoneNumber(appConfig, preparedForm, mode))
+          }
+      }.getOrElse {
+        Future.successful(Ok(telephoneNumber(appConfig, preparedForm, mode)))
+      }
 
-      Ok(telephoneNumber(appConfig, preparedForm, mode))
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {

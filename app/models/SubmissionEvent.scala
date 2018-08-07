@@ -30,4 +30,4 @@ class SubmissionEvent @Inject()(data: Map[String, String])(implicit hc: HeaderCa
     detail = hc.toAuditDetails(data.toSeq :_*),
     tags = hc.toAuditTags(
       "Submission from Claim Tax Refund Frontend",
-      routes.CheckYourAnswersController.onPageLoad().url))
+      routes.CheckYourAnswersController.onPageLoad(None).url))

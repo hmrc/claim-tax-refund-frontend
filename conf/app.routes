@@ -8,7 +8,7 @@ GET        /language/:lang                                                  cont
 
 GET        /this-service-has-been-reset                                     controllers.SessionExpiredController.onPageLoad
 
-GET        /check-your-answers                                              controllers.CheckYourAnswersController.onPageLoad
+GET        /check-your-answers                                              controllers.CheckYourAnswersController.onPageLoad(id: Option[String])
 
 GET        /unauthorised                                                    controllers.UnauthorisedController.onPageLoad
 
@@ -17,9 +17,9 @@ POST       /select-claim-tax-year                                           cont
 GET        /change-claim-tax-year                                           controllers.SelectTaxYearController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-claim-tax-year                                           controllers.SelectTaxYearController.onSubmit(mode: Mode = CheckMode)
 
-GET        /enter-telephone-number                                          controllers.TelephoneNumberController.onPageLoad(mode: Mode = NormalMode)
+GET        /enter-telephone-number                                          controllers.TelephoneNumberController.onPageLoad(mode: Mode = NormalMode, id: Option[String])
 POST       /enter-telephone-number                                          controllers.TelephoneNumberController.onSubmit(mode: Mode = NormalMode)
-GET        /change-telephone-number                                         controllers.TelephoneNumberController.onPageLoad(mode: Mode = CheckMode)
+GET        /change-telephone-number                                         controllers.TelephoneNumberController.onPageLoad(mode: Mode = CheckMode, id: Option[String])
 POST       /change-telephone-number                                         controllers.TelephoneNumberController.onSubmit(mode: Mode = CheckMode)
 
 GET        /did-you-get-any-benefits                                        controllers.AnyBenefitsController.onPageLoad(mode: Mode = NormalMode)

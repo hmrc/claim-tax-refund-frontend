@@ -16,22 +16,23 @@
 
 package connectors
 
-import javax.inject.Inject
 import config.FrontendAppConfig
+import javax.inject.Inject
 import models.AddressLookup
+import models.requests.DataRequest
 import play.api.Logger
 import play.api.i18n.MessagesApi
 import play.api.libs.json.{JsObject, Json}
-import play.api.mvc.Request
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.http.HttpClient
+import utils.UserAnswers
 
-import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.{ExecutionContext, Future}
 
 class AddressLookupConnector @Inject()(appConfig: FrontendAppConfig, http: HttpClient, messagesApi: MessagesApi, dataCacheConnector: DataCacheConnector) {
 
-  def initialise(continueUrl: String)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[Option[String]] = {
+  def initialise(continueUrl: String)(implicit hc: HeaderCarrier): Future[Option[String]] = {
 
     val addressLookupUrl = s"${appConfig.addressLookupUrl}/api/init"
     val addressConfig = Json.toJson(config(continueUrl = s"$continueUrl"))
@@ -52,24 +53,12 @@ class AddressLookupConnector @Inject()(appConfig: FrontendAppConfig, http: HttpC
     }
   }
 
-  def getAddress(cacheId: String, saveKey: String)(implicit hc: HeaderCarrier, ec: ExecutionContext, request: Request[_]): Future[Product] = {
-    request.getQueryString(key = "id") match {
-      case Some(id) => {
-        val getAddressUrl = s"${appConfig.addressLookupUrl}/api/confirmed?id=$id"
-        for {
-          address <-http.GET[AddressLookup](getAddressUrl)
-        } yield {
-          dataCacheConnector.save(cacheId, saveKey, address)
-          address
-        }
-
-//        address.map {
-//          address =>
-//            dataCacheConnector.save(cacheId,saveKey,address)
-//        }
-      }
-      case None => Future.successful(None)
-    }
+  def getAddress(cacheId: String, saveKey: String, id: String)(implicit hc: HeaderCarrier, request: DataRequest[_]): Future[UserAnswers] = {
+    val getAddressUrl = s"${appConfig.addressLookupUrl}/api/confirmed?id=$id"
+    for {
+      address  <- http.GET[AddressLookup](getAddressUrl)
+      cacheMap <- dataCacheConnector.save(cacheId, saveKey, address)
+    } yield new UserAnswers(cacheMap)
   }
 
   def config(continueUrl: String): JsObject = {

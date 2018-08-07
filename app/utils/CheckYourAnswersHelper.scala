@@ -388,7 +388,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
           case TelephoneOption.No => "site.no"
         },
         false,
-        routes.TelephoneNumberController.onPageLoad(CheckMode).url
+        routes.TelephoneNumberController.onPageLoad(CheckMode, None).url
       )
   }
 
@@ -397,7 +397,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
       Some(AnswerRow("telephoneNumber.checkYourAnswersLabel",
         s"$number",
         false,
-        routes.TelephoneNumberController.onPageLoad(CheckMode).url
+        routes.TelephoneNumberController.onPageLoad(CheckMode, None).url
       ))
     case _ => None
   }
