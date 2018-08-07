@@ -17,6 +17,7 @@
 package connectors
 
 import base.SpecBase
+import config.FrontendAppConfig
 import models.AddressLookup
 import models.requests.DataRequest
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
@@ -27,6 +28,7 @@ import org.mockito.Matchers._
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.Request
 import uk.gov.hmrc.play.bootstrap.http.HttpClient
+import utils.{MockUserAnswers, UserAnswers}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -37,6 +39,7 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with ScalaFu
   implicit val request: Request[_] = mock[Request[_]]
   implicit val dataCacheConnector = mock[DataCacheConnector]
   implicit val dataRequest = mock[DataRequest[_]]
+  implicit val appConfig = mock[FrontendAppConfig]
 
 
   "AddressLookupConnector" must {
@@ -70,24 +73,24 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with ScalaFu
     }
 
     "return error when there is no Location" in {
-        val httpMock = mock[HttpClient]
-        val connector = new AddressLookupConnector(frontendAppConfig, httpMock, messagesApi, dataCacheConnector)
+      val httpMock = mock[HttpClient]
+      val connector = new AddressLookupConnector(frontendAppConfig, httpMock, messagesApi, dataCacheConnector)
 
-        when(httpMock.POST[JsValue, HttpResponse](any(), any(), any())(any(), any(), any(), any()))
-          .thenReturn(Future.successful(
-            HttpResponse(
-              202,
-              Some(Json.toJson("")),
-              responseHeaders = Map("" -> List(""))
-            )
+      when(httpMock.POST[JsValue, HttpResponse](any(), any(), any())(any(), any(), any(), any()))
+        .thenReturn(Future.successful(
+          HttpResponse(
+            202,
+            Some(Json.toJson("")),
+            responseHeaders = Map("" -> List(""))
           )
         )
+        )
 
-        val futureResult = connector.initialise(continueUrl = "")
-        whenReady(futureResult) {
-          result =>
-            result mustBe Some("[AddressLookupConnector][initialise] - Failed to obtain location from http://localhost:9028/api/init")
-        }
+      val futureResult = connector.initialise(continueUrl = "")
+      whenReady(futureResult) {
+        result =>
+          result mustBe Some("[AddressLookupConnector][initialise] - Failed to obtain location from http://localhost:9028/api/init")
+      }
     }
 
     "get None when there is an error" in {
@@ -120,20 +123,32 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with ScalaFu
     }
   }
 
-  "return address when called from telephone controller with ID" in {
-    val httpMock = mock[HttpClient]
-    when(httpMock.GET[AddressLookup](any())(any(), any(), any()))
-      .thenReturn(Future.successful(testReponseAddress.as[AddressLookup])
-      )
-    when(request.getQueryString(key = "id")).thenReturn(Some("123456789"))
-    val connector = new AddressLookupConnector(frontendAppConfig, httpMock, messagesApi, dataCacheConnector)
-    val futureResult = connector.getAddress(cacheId = "", saveKey = "", id = "")
+  "return cacheMap when called with ID" in {
+
+/*
     val testAddress = testReponseAddress.as[AddressLookup]
-    whenReady(futureResult) {
+*/
+    val httpMock = mock[HttpClient]
+    val connector = new AddressLookupConnector(frontendAppConfig, httpMock, messagesApi, dataCacheConnector)
+
+/*
+
+    when(httpMock.GET[AddressLookup](any())(any(), any(), any()))
+      .thenReturn(Future.successful(testAddress))
+*/
+
+    val futureResult: Future[UserAnswers] =
+      connector.getAddress(cacheId = "12345", saveKey = "saveKey", id = "123456789").map(
       result =>
-        result mustBe Some(testAddress)
-    }
+        result
+    )
+
+    futureResult mustBe ""
   }
+
+
+
+
 
   "return none when no ID is in the URL" in {
     val httpMock = mock[HttpClient]
