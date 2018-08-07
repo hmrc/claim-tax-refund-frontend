@@ -16,8 +16,8 @@
 
 package utils
 
-import javax.inject.Singleton
 import identifiers._
+import javax.inject.Singleton
 import models.{Benefits, CompanyBenefits, TaxableIncome}
 import play.api.libs.json._
 import uk.gov.hmrc.http.cache.client.CacheMap
@@ -49,14 +49,6 @@ class CascadeUpsert {
 
   private def store[A](key: String, value: A, cacheMap: CacheMap)(implicit fmt: Format[A]) =
     cacheMap copy (data = cacheMap.data + (key -> Json.toJson(value)))
-
-  private def clearIfFalse[A](key: String, value: A, keysToRemove: Seq[String], cacheMap: CacheMap)(implicit fmt: Format[A]): CacheMap = {
-    val mapToStore = value match {
-      case JsBoolean(false) => cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemove.contains(s)))
-      case _ => cacheMap
-    }
-    store(key, value, mapToStore)
-  }
 
   private def anyBenefits(value: JsValue, cacheMap: CacheMap): CacheMap =
     if (value.as[Boolean]) {
@@ -126,7 +118,6 @@ class CascadeUpsert {
 
     store(SelectBenefitsId.toString, selectedBenefits, mapToStore)
   }
-
 
   private def storeCompanyBenefit(selectedBenefits: JsValue, cacheMap: CacheMap): CacheMap = {
 

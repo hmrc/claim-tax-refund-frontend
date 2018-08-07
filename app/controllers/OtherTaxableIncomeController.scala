@@ -74,9 +74,7 @@ class OtherTaxableIncomeController @Inject()(
               Future.successful(BadRequest(otherTaxableIncome(appConfig, formWithErrors, mode, index, taxYear))),
             value => {
               val otherTaxableIncome: Seq[OtherTaxableIncome] = request.userAnswers.otherTaxableIncome.getOrElse(Seq(value))
-              dataCacheConnector.save[Seq[OtherTaxableIncome]](
-                request.externalId,
-                OtherTaxableIncomeId.toString,
+              dataCacheConnector.save[Seq[OtherTaxableIncome]](request.externalId, OtherTaxableIncomeId.toString,
                 sequenceUtil.updateSeq(otherTaxableIncome, index, value)
               ).map(cacheMap =>
                 Redirect(navigator.nextPageWithIndex(OtherTaxableIncomeId(index), mode)(new UserAnswers(cacheMap))))
