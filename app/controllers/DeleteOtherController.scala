@@ -59,7 +59,8 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
 
             collectionId match {
 
-              case "otherBenefits" =>
+              case OtherBenefit.collectionId =>
+
                 val result: Option[Future[Result]] = for {
                   collection: Seq[OtherBenefit] <- request.userAnswers.otherBenefit
                 } yield {
@@ -72,7 +73,8 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
                   Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
                 }
 
-              case "otherCompanyBenefits" =>
+              case OtherCompanyBenefit.collectionId =>
+
                 val result: Option[Future[Result]] = for {
                   collection: Seq[OtherCompanyBenefit] <- request.userAnswers.otherCompanyBenefit
                 } yield {
@@ -85,7 +87,7 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
                   Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
                 }
 
-              case "otherTaxableIncome" =>
+              case OtherTaxableIncome.collectionId =>
                 val result: Option[Future[Result]] = for {
                   otherTaxableIncome: Seq[OtherTaxableIncome] <- request.userAnswers.otherTaxableIncome
                   anyTaxableOtherIncome: Seq[AnyTaxPaid] <- request.userAnswers.anyTaxableOtherIncome

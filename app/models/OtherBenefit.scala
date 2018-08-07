@@ -22,4 +22,5 @@ case class OtherBenefit(name: String, amount: String)
 
 object OtherBenefit {
   implicit val format = Json.format[OtherBenefit]
+  implicit val collectionId = "otherBenefits"
 }
