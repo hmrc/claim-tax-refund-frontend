@@ -22,9 +22,8 @@ import connectors.FakeDataCacheConnector
 import controllers.actions._
 import play.api.test.Helpers._
 import forms.BooleanForm
-import models.{CheckMode, Index, NormalMode, OtherBenefit}
+import models.{Index, NormalMode}
 import views.html.deleteOther
-import org.mockito.Mockito.when
 import play.api.mvc.Call
 
 class DeleteOtherControllerSpec extends ControllerSpecBase {
@@ -33,12 +32,18 @@ class DeleteOtherControllerSpec extends ControllerSpecBase {
 
   val formProvider = new BooleanForm()
   val form = formProvider()
-  private val mockUserAnswers = MockUserAnswers.benefitsUserAnswers
+  private val mockUserAnswers = MockUserAnswers
 
 
   val itemName = "qwerty"
+
   val index = Index(0)
+  val invalidIndex = Index(6)
+
   val benefitCollectionId = "otherBenefits"
+  val companyBenefitCollectionId = "otherCompanyBenefits"
+  val taxableIncomeCollectionId = "otherTaxableIncome"
+  val invalidCollectionId = "qwerty"
 
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
@@ -57,13 +62,53 @@ class DeleteOtherControllerSpec extends ControllerSpecBase {
       contentAsString(result) mustBe viewAsString(form, index, itemName, benefitCollectionId)
     }
 
-    "redirect to CheckYourAnswers when value is true" in {
-      mockUserAnswers.otherBenefit.get.size mustBe 3
+    "redirect to CheckYourAnswers when value is true and valid benefit submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
 
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode, index, itemName, benefitCollectionId)(postRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers.benefitsUserAnswers)).onSubmit(NormalMode, index, itemName, benefitCollectionId)(postRequest)
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.CheckYourAnswersController.onPageLoad().url)
+    }
+
+    "redirect to CheckYourAnswers when value is true and valid companyBenefit submitted" in {
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers.companyBenefitsUserAnswers)).onSubmit(NormalMode, index, itemName, companyBenefitCollectionId)(postRequest)
+      status(result) mustBe SEE_OTHER
+      redirectLocation(result) mustBe Some(routes.CheckYourAnswersController.onPageLoad().url)
+    }
+
+    "redirect to CheckYourAnswers when value is true and valid otherTaxableIncome submitted" in {
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers.taxableIncomeUserAnswers)).onSubmit(NormalMode, index, itemName, taxableIncomeCollectionId)(postRequest)
+      status(result) mustBe SEE_OTHER
+      redirectLocation(result) mustBe Some(routes.CheckYourAnswersController.onPageLoad().url)
+    }
+
+    "redirect to SessionExpired when value is true and no otherBenefit userAnswer is found" in {
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+
+      val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode, index, itemName, benefitCollectionId)(postRequest)
+      status(result) mustBe SEE_OTHER
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+    }
+
+    "redirect to SessionExpired when value is true and no otherCompanyBenefit userAnswer is found" in {
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+
+      val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode, index, itemName, companyBenefitCollectionId)(postRequest)
+      status(result) mustBe SEE_OTHER
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+    }
+
+
+    "redirect to SessionExpired when value is true and no otherTaxableIncome userAnswer is found" in {
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+
+      val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode, index, itemName, taxableIncomeCollectionId)(postRequest)
+      status(result) mustBe SEE_OTHER
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
     }
 
     "redirect to CheckYourAnswers when valid data is submitted and value is false" in {
@@ -73,6 +118,14 @@ class DeleteOtherControllerSpec extends ControllerSpecBase {
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.CheckYourAnswersController.onPageLoad().url)
+    }
+
+    "redirect to SessionExpired when invalid id provided" in {
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers.taxableIncomeUserAnswers)).onSubmit(NormalMode, index, itemName, invalidCollectionId)(postRequest)
+      status(result) mustBe SEE_OTHER
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
     }
 
     "return a Bad Request and errors when invalid data is submitted" in {

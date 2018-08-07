@@ -625,5 +625,4 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
       helper.anyTelephoneNumber.get.answer.key mustBe no
     }
   }
-
 }
