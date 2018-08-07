@@ -79,7 +79,7 @@ class CompanyBenefitNavigatorSpec extends SpecBase with MockitoSugar {
             )
           )
 
-          navigator.nextPage(SelectCompanyBenefitsId, NormalMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(NormalMode, 0)
+          navigator.nextPage(SelectCompanyBenefitsId, NormalMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(NormalMode, index = 0)
         }
 
         "go to AnyTaxableIncome when all benefits checked and amounts provided" in {
@@ -101,7 +101,7 @@ class CompanyBenefitNavigatorSpec extends SpecBase with MockitoSugar {
 
         "go to OtherCompanyBenefit if this option was selected on SelectCompanyBenefit" in {
           when(answers.selectCompanyBenefits) thenReturn Some(Seq(CompanyBenefits.OTHER_COMPANY_BENEFIT))
-          navigator.nextPage(HowMuchCarBenefitsId, NormalMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(NormalMode, 0)
+          navigator.nextPage(HowMuchCarBenefitsId, NormalMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(NormalMode, index = 0)
         }
       }
 
@@ -121,7 +121,7 @@ class CompanyBenefitNavigatorSpec extends SpecBase with MockitoSugar {
 
         when(answers.anyOtherCompanyBenefits) thenReturn Some(true)
         when(answers.otherCompanyBenefit) thenReturn Some(Seq(OtherCompanyBenefit("qwerty", "123")))
-        navigator.nextPage(AnyOtherCompanyBenefitsId, NormalMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(NormalMode, 1)
+        navigator.nextPage(AnyOtherCompanyBenefitsId, NormalMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(NormalMode, index = 1)
       }
     }
 
@@ -129,7 +129,7 @@ class CompanyBenefitNavigatorSpec extends SpecBase with MockitoSugar {
       "go to CheckYourAnswersController from AnyCompanyBenefits when Yes is selected and company benefits section complete" in {
         val answers = MockUserAnswers.companyBenefitsUserAnswers
         when(answers.anyCompanyBenefits) thenReturn Some(true)
-        navigator.nextPage(AnyCompanyBenefitsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+        navigator.nextPage(AnyCompanyBenefitsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
       }
 
       "go to SelectCompanyBenefits from AnyCompanyBenefits when Yes is selected and no company benefits selected" in {
@@ -142,13 +142,13 @@ class CompanyBenefitNavigatorSpec extends SpecBase with MockitoSugar {
       "go to CheckYourAnswersController from AnyCompanyBenefits when No is selected" in {
         val answers = MockUserAnswers.companyBenefitsUserAnswers
         when(answers.anyCompanyBenefits) thenReturn Some(false)
-        navigator.nextPage(AnyCompanyBenefitsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+        navigator.nextPage(AnyCompanyBenefitsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
       }
 
       "Navigating from SelectCompanyBenefits" must {
         "go to CheckYourAnswers when all answer selected and all have an associated amount" in {
           val answers = MockUserAnswers.companyBenefitsUserAnswers
-          navigator.nextPage(SelectCompanyBenefitsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+          navigator.nextPage(SelectCompanyBenefitsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
         }
 
         "go to HowMuchCarBenefits when company car benefit selected but no associated amount" in {
@@ -176,14 +176,14 @@ class CompanyBenefitNavigatorSpec extends SpecBase with MockitoSugar {
           val answers = MockUserAnswers.companyBenefitsUserAnswers
           when(answers.otherCompanyBenefit) thenReturn None
 
-          navigator.nextPage(SelectCompanyBenefitsId, CheckMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(CheckMode, 0)
+          navigator.nextPage(SelectCompanyBenefitsId, CheckMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(CheckMode, index =  0)
         }
       }
 
       "Navigating from HowMuchCarBenefits" must {
         "go to CheckYourAnswersController when all selected benefits have associated amounts" in {
           val answers = MockUserAnswers.companyBenefitsUserAnswers
-          navigator.nextPage(HowMuchCarBenefitsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+          navigator.nextPage(HowMuchCarBenefitsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
         }
 
         "go to HowMuchFuelBenefit when fuel benefit selected without an associated amount" in {
@@ -204,14 +204,14 @@ class CompanyBenefitNavigatorSpec extends SpecBase with MockitoSugar {
           val answers = MockUserAnswers.companyBenefitsUserAnswers
           when(answers.otherCompanyBenefit) thenReturn None
 
-          navigator.nextPage(HowMuchCarBenefitsId, CheckMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(CheckMode, 0)
+          navigator.nextPage(HowMuchCarBenefitsId, CheckMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(CheckMode, index = 0)
         }
       }
 
       "Navigating from HowMuchFuelBenefit" must {
         "go to CheckYourAnswersController when all selected benefits have associated amounts" in {
           val answers = MockUserAnswers.companyBenefitsUserAnswers
-          navigator.nextPage(HowMuchFuelBenefitId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+          navigator.nextPage(HowMuchFuelBenefitId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
         }
 
         "go to HowMuchMedicalBenefits when medical benefit selected without an associated amount" in {
@@ -225,28 +225,28 @@ class CompanyBenefitNavigatorSpec extends SpecBase with MockitoSugar {
           val answers = MockUserAnswers.companyBenefitsUserAnswers
           when(answers.otherCompanyBenefit) thenReturn None
 
-          navigator.nextPage(HowMuchFuelBenefitId, CheckMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(CheckMode, 0)
+          navigator.nextPage(HowMuchFuelBenefitId, CheckMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(CheckMode, index = 0)
         }
       }
 
       "Navigating from HowMuchMedicalBenefits" must {
         "go to CheckYourAnswersController when all selected benefits have associated amounts" in {
           val answers = MockUserAnswers.companyBenefitsUserAnswers
-          navigator.nextPage(HowMuchMedicalBenefitsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+          navigator.nextPage(HowMuchMedicalBenefitsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
         }
 
         "go to OtherCompanyBenefit when other company benefit selected without an associated name and amount" in {
           val answers = MockUserAnswers.companyBenefitsUserAnswers
           when(answers.otherCompanyBenefit) thenReturn None
 
-          navigator.nextPage(HowMuchMedicalBenefitsId, CheckMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(CheckMode, 0)
+          navigator.nextPage(HowMuchMedicalBenefitsId, CheckMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(CheckMode, index = 0)
         }
       }
 
       "Navigating from OtherCompanyBenefit" must {
         "go to CheckYourAnswersController when name and amount stored" in {
           val answers = MockUserAnswers.companyBenefitsUserAnswers
-          navigator.nextPage(OtherCompanyBenefitId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+          navigator.nextPage(OtherCompanyBenefitId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
         }
       }
     }

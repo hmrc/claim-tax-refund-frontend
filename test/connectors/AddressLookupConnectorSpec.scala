@@ -18,6 +18,7 @@ package connectors
 
 import base.SpecBase
 import models.AddressLookup
+import models.requests.DataRequest
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.mockito.MockitoSugar
@@ -35,6 +36,7 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with ScalaFu
   implicit val ec: ExecutionContext = mock[ExecutionContext]
   implicit val request: Request[_] = mock[Request[_]]
   implicit val dataCacheConnector = mock[DataCacheConnector]
+  implicit val dataRequest = mock[DataRequest[_]]
 
 
   "AddressLookupConnector" must {
@@ -125,7 +127,7 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with ScalaFu
       )
     when(request.getQueryString(key = "id")).thenReturn(Some("123456789"))
     val connector = new AddressLookupConnector(frontendAppConfig, httpMock, messagesApi, dataCacheConnector)
-    val futureResult = connector.getAddress
+    val futureResult = connector.getAddress(cacheId = "", saveKey = "", id = "")
     val testAddress = testReponseAddress.as[AddressLookup]
     whenReady(futureResult) {
       result =>
@@ -137,7 +139,7 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with ScalaFu
     val httpMock = mock[HttpClient]
     when(request.getQueryString(key = "id")).thenReturn(None)
     val connector = new AddressLookupConnector(frontendAppConfig, httpMock, messagesApi, dataCacheConnector)
-    val futureResult = connector.getAddress
+    val futureResult = connector.getAddress(cacheId = "", saveKey = "", id = "")
     whenReady(futureResult) {
       result =>
         result mustBe None

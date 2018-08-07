@@ -21,6 +21,7 @@ import controllers.actions._
 import forms.TelephoneNumberForm
 import identifiers.{AnyTelephoneId, TelephoneNumberId}
 import models._
+import models.requests.DataRequest
 import org.mockito.Mockito.when
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.mockito.MockitoSugar
@@ -43,6 +44,8 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar
   implicit val ec: ExecutionContext = mock[ExecutionContext]
   implicit val request: Request[_] = mock[Request[_]]
   implicit val dataCacheConnector = FakeDataCacheConnector
+  implicit val dataRequest =  mock[DataRequest[_]]
+
 
   val testAnswer = "0191 111 1111"
   val formProvider = new TelephoneNumberForm()
@@ -55,53 +58,26 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new TelephoneNumberController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-
       dataRetrievalAction, new DataRequiredActionImpl, formProvider, formPartialRetriever, templateRenderer)
   def viewAsString(form: Form[_] = form) = telephoneNumber(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "TelephoneNumberController" must {
 
     "return OK and the correct view for a GET" in {
-
-
-      val httpMock = mock[HttpClient]
-      val connector = mock[AddressLookupConnector]
-//      val connector = new AddressLookupConnector(frontendAppConfig, httpMock, messagesApi)
-
-      when(httpMock.POST[JsValue, HttpResponse](any(), any(), any())(any(), any(), any(), any()))
-        .thenReturn(Future.successful(
-          HttpResponse(
-            202,
-            Some(Json.toJson("")),
-            responseHeaders = Map("Location" -> List("api/location"))
-          )
-        ))
-
-      //when(connector.initialise(continueUrl = "")).thenReturn(Future.successful(None))
-      when(connector.getAddress).thenReturn(
-        Future.successful(Some(AddressLookup(Some(Address(None, None, None)), None)))
-      )
-
-
-      val result = controller().onPageLoad(NormalMode)(request)
-
-
-      //status(result) mustBe OK
-
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, None)(fakeRequest)
       status(result) mustBe OK
     }
 
     "populate the view correctly on a GET when YES has previously been answered" in {
       when(mockUserAnswers.anyTelephoneNumber).thenReturn(Some(TelephoneOption.Yes(testAnswer)))
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, None)(fakeRequest)
 
       contentAsString(result) mustBe viewAsString(form.fill(TelephoneOption.Yes(testAnswer)))
     }
 
     "populate the view correctly on a GET when NO has previously been answered" in {
       when(mockUserAnswers.anyTelephoneNumber).thenReturn(Some(TelephoneOption.No))
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(CheckMode)(fakeRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(CheckMode, None)(fakeRequest)
 
       contentAsString(result) mustBe viewAsString(form.fill(TelephoneOption.No))
     }
@@ -133,7 +109,7 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar
     }
 
     "redirect to Session Expired for a GET if no existing data is found" in {
-      val result = controller(dontGetAnyData).onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(dontGetAnyData).onPageLoad(NormalMode, None)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
@@ -148,16 +124,19 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar
     }
 
     "stay on this page in CheckMode when no ID in URL" in {
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(CheckMode)(fakeRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(CheckMode, None)(fakeRequest)
 
       status(result) mustBe OK
     }
 
     "redirect to CYA in CheckMode when there is an ID in the URL" in {
       when(request.getQueryString(key ="id")).thenReturn(Some("123445"))
-      when(mockAddressLookup.getAddress).thenReturn(Future.successful(Some(AddressLookup(None,None))))
+      when(mockAddressLookup.getAddress(cacheId ="",
+        saveKey = "",
+        id = "")
+      ).thenReturn(Future.successful(???))
       when(mockUserAnswers.anyTelephoneNumber).thenReturn(Some(TelephoneOption.No))
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(CheckMode)(fakeRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(CheckMode, None)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
     }

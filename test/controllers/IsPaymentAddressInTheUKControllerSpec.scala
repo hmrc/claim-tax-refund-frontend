@@ -50,7 +50,7 @@ class IsPaymentAddressInTheUKControllerSpec extends ControllerSpecBase with Mock
   "IsPaymentAddressInTheUK Controller" must {
 
     "return OK and the correct view for a GET" in {
-      when (mockAddressLookup.initialise(any())(any(), any())) thenReturn Future.successful(None)
+      when (mockAddressLookup.initialise(any())(any())) thenReturn Future.successful(None)
       val result = controller().onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe OK
@@ -58,7 +58,7 @@ class IsPaymentAddressInTheUKControllerSpec extends ControllerSpecBase with Mock
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      when (mockAddressLookup.initialise(any())(any(), any())).thenReturn(Future.successful(None))
+      when (mockAddressLookup.initialise(any())(any())).thenReturn(Future.successful(None))
       val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
       when (mockUserAnswers.isPaymentAddressInTheUK) thenReturn Some(true)
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
@@ -68,7 +68,7 @@ class IsPaymentAddressInTheUKControllerSpec extends ControllerSpecBase with Mock
 
     "redirect to address lookup address when able to connect to the api" in {
       val url: String = "http://localhost:9028/lookup-address/ca36139b-cee5-4a99-902c-ce7b9963d7ce/lookup"
-      when (mockAddressLookup.initialise(any())(any(), any())).thenReturn(Future.successful(Some(url)))
+      when (mockAddressLookup.initialise(any())(any())).thenReturn(Future.successful(Some(url)))
       val result = controller().onPageLoad(NormalMode)(fakeRequest)
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some("http://localhost:9028/lookup-address/ca36139b-cee5-4a99-902c-ce7b9963d7ce/lookup")
