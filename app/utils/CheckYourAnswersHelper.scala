@@ -119,7 +119,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
               s"£${benefits.amount}",
               answerIsMessageKey = false,
               routes.OtherBenefitController.onPageLoad(CheckMode, Index(index)).url,
-              Some(routes.DeleteOtherController.onPageLoad(Index(index), benefits.name, "otherBenefits").url)
+              Some(routes.DeleteOtherController.onPageLoad(Index(index), benefits.name, OtherBenefit.collectionId).url)
             )
            )
           )
@@ -175,7 +175,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
               s"£${companyBenefits.amount}",
               answerIsMessageKey = false,
               routes.OtherCompanyBenefitController.onPageLoad(CheckMode, Index(index)).url,
-              Some(routes.DeleteOtherController.onPageLoad(Index(index), companyBenefits.name, "otherCompanyBenefits").url)
+              Some(routes.DeleteOtherController.onPageLoad(Index(index), companyBenefits.name, OtherCompanyBenefit.collectionId).url)
             )
             )
           )
