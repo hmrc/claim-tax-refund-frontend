@@ -29,7 +29,7 @@ import uk.gov.hmrc.play.bootstrap.http.HttpClient
 import utils.UserAnswers
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 class AddressLookupConnector @Inject()(appConfig: FrontendAppConfig, http: HttpClient, messagesApi: MessagesApi, dataCacheConnector: DataCacheConnector) {
 
@@ -55,7 +55,7 @@ class AddressLookupConnector @Inject()(appConfig: FrontendAppConfig, http: HttpC
   }
 
   def getAddress(cacheId: String, saveKey: String, id: String)(implicit hc: HeaderCarrier, request: DataRequest[_]): Future[UserAnswers] = {
-    val getAddressUrl = s"address-lookup-frontend/api/confirmed?id=$id"
+    val getAddressUrl = s"${appConfig.addressLookupUrl}/api/confirmed?id=$id"
     for {
       address: AddressLookup <- http.GET[AddressLookup](getAddressUrl)
       cacheMap: CacheMap <- dataCacheConnector.save(cacheId, saveKey, address)
