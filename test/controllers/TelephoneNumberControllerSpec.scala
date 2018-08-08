@@ -43,15 +43,15 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar
   implicit val hc: HeaderCarrier = HeaderCarrier()
   implicit val ec: ExecutionContext = mock[ExecutionContext]
   implicit val request: Request[_] = mock[Request[_]]
-  implicit val dataCacheConnector = FakeDataCacheConnector
-  implicit val dataRequest =  mock[DataRequest[_]]
+  implicit val dataCacheConnector: FakeDataCacheConnector.type = FakeDataCacheConnector
+  implicit val dataRequest: DataRequest[_] =  mock[DataRequest[_]]
 
 
   val testAnswer = "0191 111 1111"
   val formProvider = new TelephoneNumberForm()
   val form = formProvider()
-  val httpMock = mock[HttpClient]
-  val mockAddressLookup: AddressLookupConnector = new AddressLookupConnector(frontendAppConfig, httpMock, messagesApi, dataCacheConnector)
+  val httpMock: HttpClient = mock[HttpClient]
+  val mockAddressLookup: AddressLookupConnector = new AddressLookupConnector(frontendAppConfig, addressLookupConfig, httpMock, messagesApi, dataCacheConnector)
   val validYesData = Map(AnyTelephoneId.toString -> Json.obj(AnyTelephoneId.toString -> JsBoolean(true), TelephoneNumberId.toString -> JsString(testAnswer)))
   val validNoData = Map(AnyTelephoneId.toString -> Json.obj(AnyTelephoneId.toString -> JsBoolean(false)))
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
@@ -77,7 +77,7 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar
 
     "populate the view correctly on a GET when NO has previously been answered" in {
       when(mockUserAnswers.anyTelephoneNumber).thenReturn(Some(TelephoneOption.No))
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(CheckMode, None)(fakeRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, None)(fakeRequest)
 
       contentAsString(result) mustBe viewAsString(form.fill(TelephoneOption.No))
     }
@@ -127,18 +127,6 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(CheckMode, None)(fakeRequest)
 
       status(result) mustBe OK
-    }
-
-    "redirect to CYA in CheckMode when there is an ID in the URL" in {
-      when(request.getQueryString(key ="id")).thenReturn(Some("123445"))
-      when(mockAddressLookup.getAddress(cacheId ="",
-        saveKey = "",
-        id = "")
-      ).thenReturn(Future.successful(???))
-      when(mockUserAnswers.anyTelephoneNumber).thenReturn(Some(TelephoneOption.No))
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(CheckMode, None)(fakeRequest)
-
-      status(result) mustBe SEE_OTHER
     }
   }
 }

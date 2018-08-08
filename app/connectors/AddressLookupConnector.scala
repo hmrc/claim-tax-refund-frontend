@@ -16,13 +16,13 @@
 
 package connectors
 
-import config.FrontendAppConfig
+import config.{AddressLookupConfig, FrontendAppConfig}
 import javax.inject.Inject
 import models.AddressLookup
 import models.requests.DataRequest
 import play.api.Logger
 import play.api.i18n.MessagesApi
-import play.api.libs.json.{JsObject, Json}
+import play.api.libs.json.Json
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.bootstrap.http.HttpClient
@@ -31,12 +31,19 @@ import utils.UserAnswers
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class AddressLookupConnector @Inject()(appConfig: FrontendAppConfig, http: HttpClient, messagesApi: MessagesApi, dataCacheConnector: DataCacheConnector) {
+class AddressLookupConnector @Inject()(
+                                        appConfig: FrontendAppConfig,
+                                        addressLookupConfig: AddressLookupConfig,
+                                        http: HttpClient,
+                                        messagesApi: MessagesApi,
+                                        dataCacheConnector: DataCacheConnector
+                                      ) {
 
   def initialise(continueUrl: String)(implicit hc: HeaderCarrier): Future[Option[String]] = {
-
     val addressLookupUrl = s"${appConfig.addressLookupUrl}/api/init"
-    val addressConfig = Json.toJson(config(continueUrl = s"$continueUrl"))
+
+    val addressConfig = Json.toJson(addressLookupConfig.config(continueUrl = s"$continueUrl"))
+
     http.POST(addressLookupUrl, body = addressConfig).map {
       response =>
         response.status match {
@@ -56,73 +63,10 @@ class AddressLookupConnector @Inject()(appConfig: FrontendAppConfig, http: HttpC
 
   def getAddress(cacheId: String, saveKey: String, id: String)(implicit hc: HeaderCarrier, request: DataRequest[_]): Future[UserAnswers] = {
     val getAddressUrl = s"${appConfig.addressLookupUrl}/api/confirmed?id=$id"
+
     for {
       address: AddressLookup <- http.GET[AddressLookup](getAddressUrl)
       cacheMap: CacheMap <- dataCacheConnector.save(cacheId, saveKey, address)
     } yield new UserAnswers(cacheMap)
   }
-
-  def config(continueUrl: String): JsObject = {
-    Json.obj(
-      fields = "continueUrl" -> s"$continueUrl",
-      "homeNavHref" -> "http://www.hmrc.gov.uk/",
-      "navTitle" -> messagesApi("index.title"),
-      "showPhaseBanner" -> false,
-      "alphaPhase" -> false,
-      "phaseFeedbackLink" -> "/help/alpha",
-      "phaseBannerHtml" -> "This is a new service – your <a href='/help/alpha'>feedback</a> will help us to improve it.",
-      "showBackButtons" -> true,
-      "includeHMRCBranding" -> true,
-      "deskProServiceName" -> "",
-      "lookupPage" -> Json.obj(
-        fields = "title" -> messagesApi("addressLookup.lookupPage.title"),
-        "heading" -> messagesApi("addressLookup.lookupPage.heading"),
-        "filterLabel" -> messagesApi("addressLookup.lookupPage.filterLabel"),
-        "postcodeLabel" -> messagesApi("addressLookup.lookupPage.postcodeLabel"),
-        "submitLabel" -> messagesApi("addressLookup.lookupPage.submitLabel"),
-        "noResultsFoundMessage" -> messagesApi("addressLookup.lookupPage.noResultsFoundMessage"),
-        "resultLimitExceededMessage" -> messagesApi("addressLookup.lookupPage.resultLimitExceededMessage"),
-        "manualAddressLinkText" -> messagesApi("addressLookup.lookupPage.manualAddressLinkText")
-      ),
-      "selectPage" -> Json.obj(
-        fields = "title" -> messagesApi("addressLookup.selectPage.title"),
-        "heading" -> messagesApi("addressLookup.selectPage.heading"),
-        "proposalListLabel" -> messagesApi("addressLookup.selectPage.proposalListLabel"),
-        "submitLabel" -> messagesApi("addressLookup.selectPage.submitLabel"),
-        "proposalListLimit" -> 50,
-        "showSearchAgainLink" -> false,
-        "searchAgainLinkText" -> messagesApi("addressLookup.selectPage.searchAgainLinkText"),
-        "editAddressLinkText" -> messagesApi("addressLookup.selectPage.editAddressLinkText")
-      ),
-      "confirmPage" -> Json.obj(
-        fields = "title" -> messagesApi("addressLookup.confirmPage.title"),
-        "heading" -> messagesApi("addressLookup.confirmPage.heading"),
-        "infoSubheading" -> messagesApi("addressLookup.confirmPage.infoSubheading"),
-        "infoMessage" -> messagesApi("addressLookup.confirmPage.infoMessage"),
-        "submitLabel" -> messagesApi("addressLookup.confirmPage.submitLabel"),
-        "showSearchAgainLink" -> false,
-        "searchAgainLinkText" -> messagesApi("addressLookup.confirmPage.searchAgainLinkText"),
-        "changeLinkText" -> messagesApi("addressLookup.confirmPage.changeLinkText")
-      ),
-      "editPage" -> Json.obj(
-        fields = "title" -> messagesApi("addressLookup.editPage.title"),
-        "heading" -> messagesApi("addressLookup.editPage.heading"),
-        "line1Label" -> messagesApi("addressLookup.editPage.line1Label"),
-        "line2Label" -> messagesApi("addressLookup.editPage.line2Label"),
-        "line3Label" -> messagesApi("addressLookup.editPage.line3Label"),
-        "townLabel" -> messagesApi("addressLookup.editPage.townLabel"),
-        "postcodeLabel" -> messagesApi("addressLookup.editPage.postcodeLabel"),
-        "countryLabel" -> messagesApi("addressLookup.editPage.countryLabel"),
-        "submitLabel" -> messagesApi("addressLookup.editPage.submitLabel"),
-        "showSearchAgainLink" -> false,
-        "searchAgainLinkText" -> messagesApi("addressLookup.editPage.searchAgainLinkText")
-      ),
-      "timeout" -> Json.obj(
-        fields = "timeoutAmount" -> 900,
-        "timeoutUrl" -> "http://service/timeout-uri"
-      ),
-      "ukMode" -> false
-    )
-  }
-
 }
