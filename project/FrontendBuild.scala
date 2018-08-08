@@ -27,6 +27,7 @@ private object AppDependencies {
   private val playReactivemongoVersion = "5.2.0"
   private val playConditionalFormMappingVersion = "0.2.0"
   private val playLanguageVersion = "3.4.0"
+  private val wireMockVersion = "2.15.0"
   private val bootstrapVersion = "1.7.0"
   private val localTemplateRendererVersion  = "2.0.0"
   private val playPartialsVersion = "6.1.0"
@@ -54,6 +55,7 @@ private object AppDependencies {
   object Test {
     def apply() = new TestDependencies {
       override lazy val test = Seq(
+        "com.github.tomakehurst" % "wiremock" % wireMockVersion % "test,it",
         "uk.gov.hmrc" %% "hmrctest" % hmrcTestVersion % scope,
         "org.scalatest" %% "scalatest" % scalaTestVersion % scope,
         "org.scalatestplus.play" %% "scalatestplus-play" % scalaTestPlusPlayVersion % scope,

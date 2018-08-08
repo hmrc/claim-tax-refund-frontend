@@ -24,6 +24,7 @@ import play.api.Logger
 import play.api.i18n.MessagesApi
 import play.api.libs.json.{JsObject, Json}
 import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.bootstrap.http.HttpClient
 import utils.UserAnswers
 
@@ -54,10 +55,10 @@ class AddressLookupConnector @Inject()(appConfig: FrontendAppConfig, http: HttpC
   }
 
   def getAddress(cacheId: String, saveKey: String, id: String)(implicit hc: HeaderCarrier, request: DataRequest[_]): Future[UserAnswers] = {
-    val getAddressUrl = s"${appConfig.addressLookupUrl}/api/confirmed?id=$id"
+    val getAddressUrl = s"address-lookup-frontend/api/confirmed?id=$id"
     for {
-      address  <- http.GET[AddressLookup](getAddressUrl)
-      cacheMap <- dataCacheConnector.save(cacheId, saveKey, address)
+      address: AddressLookup <- http.GET[AddressLookup](getAddressUrl)
+      cacheMap: CacheMap <- dataCacheConnector.save(cacheId, saveKey, address)
     } yield new UserAnswers(cacheMap)
   }
 
