@@ -20,7 +20,7 @@ import controllers.routes
 import identifiers.{AnyAgentRefId, _}
 import javax.inject.{Inject, Singleton}
 import models.WhereToSendPayment.{Myself, Nominee}
-import models.{Benefits, _}
+import models.{Benefits, CompanyBenefits, TaxableIncome, _}
 import play.api.mvc.Call
 
 @Singleton
@@ -81,7 +81,11 @@ class Navigator @Inject()() {
     PaymentUKAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
     PaymentInternationalAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
     TelephoneNumberId -> (_ => routes.CheckYourAnswersController.onPageLoad()),
-    DeleteOtherId -> (_ => routes.CheckYourAnswersController.onPageLoad())
+
+    DeleteOtherBenefitId -> deleteOtherBenefit,
+    DeleteOtherCompanyBenefitId -> deleteOtherCompanyBenefit,
+    DeleteOtherTaxableIncomeId -> deleteOtherTaxableIncome
+
   )
 
   private val editRouteMap: Map[Identifier, UserAnswers => Call] = Map(
@@ -125,6 +129,47 @@ class Navigator @Inject()() {
   )
 
 
+  private def deleteOtherBenefit(userAnswers: UserAnswers): Call = {
+    val otherBenefits: Seq[OtherBenefit] = userAnswers.otherBenefit.get
+    val selectBenefits: Seq[Benefits.Value] = userAnswers.selectBenefits.get
+
+    if (otherBenefits.isEmpty && selectBenefits.length == 1) {
+      routes.AnyBenefitsController.onPageLoad(CheckMode)
+    } else if (otherBenefits.isEmpty && selectBenefits.length > 1){
+      routes.SelectBenefitsController.onPageLoad(CheckMode)
+    } else {
+      routes.CheckYourAnswersController.onPageLoad()
+    }
+  }
+
+  private def deleteOtherCompanyBenefit(userAnswers: UserAnswers): Call = {
+    val otherCompanyBenefits: Seq[OtherCompanyBenefit] = userAnswers.otherCompanyBenefit.get
+    val selectCompanyBenefits: Seq[CompanyBenefits.Value] = userAnswers.selectCompanyBenefits.get
+
+    if (otherCompanyBenefits.isEmpty && selectCompanyBenefits.length == 1) {
+      routes.AnyCompanyBenefitsController.onPageLoad(CheckMode)
+    } else if (otherCompanyBenefits.isEmpty && selectCompanyBenefits.length > 1){
+      routes.SelectCompanyBenefitsController.onPageLoad(CheckMode)
+    } else {
+      routes.CheckYourAnswersController.onPageLoad()
+    }
+  }
+
+  private def deleteOtherTaxableIncome(userAnswers: UserAnswers): Call = {
+    val otherTaxableIncome: Seq[OtherTaxableIncome] = userAnswers.otherTaxableIncome.get
+    val selectTaxableIncome: Seq[TaxableIncome.Value] = userAnswers.selectTaxableIncome.get
+
+    if (otherTaxableIncome.isEmpty && selectTaxableIncome.size == 1) {
+      routes.AnyTaxableIncomeController.onPageLoad(CheckMode)
+    } else if (otherTaxableIncome.isEmpty && selectTaxableIncome.size > 1){
+      routes.SelectTaxableIncomeController.onPageLoad(CheckMode)
+    } else {
+      routes.CheckYourAnswersController.onPageLoad()
+    }
+  }
+
+
+
   //Claim Details-----------------------------
 
   private def employmentDetails(userAnswers: UserAnswers): Call = userAnswers.employmentDetails match {
@@ -146,7 +191,6 @@ class Navigator @Inject()() {
     case None => routes.DetailsOfEmploymentOrPensionController.onPageLoad(CheckMode)
     case _ => routes.CheckYourAnswersController.onPageLoad()
   }
-
 
   //Benefits----------------------------------
 
@@ -255,7 +299,7 @@ class Navigator @Inject()() {
         routes.HowMuchInvestmentOrDividendController.onPageLoad(mode)
       } else if (taxableIncome.contains(TaxableIncome.FOREIGN_INCOME) && userAnswers.howMuchForeignIncome.isEmpty) {
         routes.HowMuchForeignIncomeController.onPageLoad(mode)
-      } else if (taxableIncome.contains(TaxableIncome.OTHER_TAXABLE_INCOME) && userAnswers.otherTaxableIncome.isEmpty) {
+      } else if (taxableIncome.contains(TaxableIncome.OTHER_TAXABLE_INCOME) && (userAnswers.otherTaxableIncome.isEmpty || userAnswers.otherTaxableIncome.get.isEmpty)) {
         routes.OtherTaxableIncomeController.onPageLoad(mode, Index(0))
       } else {
         if (mode == NormalMode) routes.WhereToSendPaymentController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
@@ -372,7 +416,7 @@ class Navigator @Inject()() {
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
-  def nextPage(id: Identifier, mode: Mode): UserAnswers => Call = mode match {
+  def nextPage(id: Identifier, mode: Mode): UserAnswers =>Call = mode match {
     case NormalMode =>
       routeMap.getOrElse(id, _ => routes.IndexController.onPageLoad())
     case CheckMode =>

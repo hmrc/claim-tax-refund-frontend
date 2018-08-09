@@ -27,6 +27,7 @@ import forms.BooleanForm
 import identifiers._
 import models._
 import play.api.mvc.{Action, AnyContent, Result}
+import uk.gov.hmrc.http.cache.client.CacheMap
 import utils.{Navigator, UserAnswers}
 import views.html.deleteOther
 
@@ -54,7 +55,7 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
       form.bindFromRequest().fold(
         (formWithErrors: Form[_]) =>
           Future.successful(BadRequest(deleteOther(appConfig, formWithErrors, mode, index, itemName, collectionId))),
-        value =>
+        success = value =>
           if (value) {
 
             collectionId match {
@@ -65,8 +66,9 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
                   collection: Seq[OtherBenefit] <- request.userAnswers.otherBenefit
                 } yield {
                   val newColl: Seq[OtherBenefit] = collection.filterNot(_ == collection(index))
-                  dataCacheConnector.save[Seq[OtherBenefit]](request.externalId, OtherBenefitId.toString, newColl).map(_ =>
-                    Redirect(routes.CheckYourAnswersController.onPageLoad()))
+                  dataCacheConnector.save[Seq[OtherBenefit]](request.externalId, OtherBenefitId.toString, newColl).map(cacheMap =>
+                    Redirect(navigator.nextPage(DeleteOtherBenefitId, mode)(new UserAnswers(cacheMap)))
+                  )
                 }
 
                 result.getOrElse {
@@ -79,8 +81,9 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
                   collection: Seq[OtherCompanyBenefit] <- request.userAnswers.otherCompanyBenefit
                 } yield {
                   val newColl: Seq[OtherCompanyBenefit] = collection.filterNot(_ == collection(index))
-                  dataCacheConnector.save[Seq[OtherCompanyBenefit]](request.externalId, OtherCompanyBenefitId.toString, newColl).map(_ =>
-                    Redirect(routes.CheckYourAnswersController.onPageLoad()))
+                  dataCacheConnector.save[Seq[OtherCompanyBenefit]](request.externalId, OtherCompanyBenefitId.toString, newColl).map(cacheMap =>
+                    Redirect(navigator.nextPage(DeleteOtherCompanyBenefitId, mode)(new UserAnswers(cacheMap)))
+                  )
                 }
 
                 result.getOrElse {
@@ -96,10 +99,10 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
                   val newAnyTaxableOtherIncome: Seq[AnyTaxPaid] = anyTaxableOtherIncome.filterNot(_ == anyTaxableOtherIncome(index))
                   for {
                     _ <- dataCacheConnector.save[Seq[OtherTaxableIncome]](request.externalId, OtherTaxableIncomeId.toString, newOtherTaxableIncome)
-                    _ <- dataCacheConnector.save[Seq[AnyTaxPaid]](request.externalId, AnyTaxableOtherIncomeId.toString, newAnyTaxableOtherIncome)
-                  } yield Redirect(routes.CheckYourAnswersController.onPageLoad())
+                    updatedCacheMap: CacheMap <- dataCacheConnector.save[Seq[AnyTaxPaid]](request.externalId, AnyTaxableOtherIncomeId.toString, newAnyTaxableOtherIncome)
+                  } yield
+                    Redirect(navigator.nextPage(DeleteOtherTaxableIncomeId, mode)(new UserAnswers(updatedCacheMap)))
                 }
-
                 result.getOrElse {
                   Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
                 }

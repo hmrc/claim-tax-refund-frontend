@@ -67,7 +67,7 @@ class DeleteOtherControllerSpec extends ControllerSpecBase {
 
       val result = controller(fakeDataRetrievalAction(mockUserAnswers.benefitsUserAnswers)).onSubmit(NormalMode, index, itemName, benefitCollectionId)(postRequest)
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.CheckYourAnswersController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(onwardRoute.url)
     }
 
     "redirect to CheckYourAnswers when value is true and valid companyBenefit submitted" in {
@@ -75,7 +75,7 @@ class DeleteOtherControllerSpec extends ControllerSpecBase {
 
       val result = controller(fakeDataRetrievalAction(mockUserAnswers.companyBenefitsUserAnswers)).onSubmit(NormalMode, index, itemName, companyBenefitCollectionId)(postRequest)
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.CheckYourAnswersController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(onwardRoute.url)
     }
 
     "redirect to CheckYourAnswers when value is true and valid otherTaxableIncome submitted" in {
@@ -83,7 +83,7 @@ class DeleteOtherControllerSpec extends ControllerSpecBase {
 
       val result = controller(fakeDataRetrievalAction(mockUserAnswers.taxableIncomeUserAnswers)).onSubmit(NormalMode, index, itemName, taxableIncomeCollectionId)(postRequest)
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.CheckYourAnswersController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(onwardRoute.url)
     }
 
     "redirect to SessionExpired when value is true and no otherBenefit userAnswer is found" in {
