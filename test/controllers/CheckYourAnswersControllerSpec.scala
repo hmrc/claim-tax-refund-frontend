@@ -21,16 +21,14 @@ import connectors.{AddressLookupConnector, DataCacheConnector, FakeDataCacheConn
 import controllers.actions.{DataRequiredActionImpl, DataRetrievalAction, FakeAuthAction}
 import models.{SubmissionFailed, SubmissionSuccessful}
 import org.scalatest.mockito.MockitoSugar
-import play.api.{Application, Logger}
+import play.api.Application
 import play.api.inject.guice.GuiceApplicationBuilder
-import play.api.mvc.Result
 import play.api.test.Helpers._
 import services.SubmissionService
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.{UserAnswers, WireMockHelper}
 
-import scala.concurrent.{Await, ExecutionContext, Future}
-import scala.concurrent.duration._
+import scala.concurrent.{ExecutionContext, Future}
 
 class CheckYourAnswersControllerSpec extends ControllerSpecBase with MockitoSugar with WireMockHelper{
   implicit val ec: ExecutionContext = mock[ExecutionContext]
