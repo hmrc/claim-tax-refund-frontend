@@ -16,14 +16,29 @@
 
 @import config.FrontendAppConfig
 
-@(pageTitle: String, heading: String, message: String, appConfig: FrontendAppConfig)(implicit request: Request[_], messages: Messages)
+@import uk.gov.hmrc.play.partials.FormPartialRetriever
+@import uk.gov.hmrc.renderer.TemplateRenderer
+@import models.requests.AuthenticatedRequest
 
-@contentHeader = {
-  <h1>@heading</h1>
+@(
+    pageTitle: String,
+    heading: String,
+    errorMessages: Seq[String],
+    appConfig: FrontendAppConfig
+)(
+    implicit
+    request: AuthenticatedRequest[_],
+    messages: Messages,
+    formPartialRetriever: FormPartialRetriever,
+    templateRenderer: TemplateRenderer
+)
+
+@main_template(
+    title = messages(pageTitle),
+    appConfig = appConfig
+) {
+    @components.heading(heading)
+    @for(errorMessage <- errorMessages){
+        <p>@messages(errorMessage)</p>
+    }
 }
-
-@mainContent = {
-  <p>@message</p>
-}
-
-@govuk_wrapper(appConfig = appConfig, title = pageTitle, contentHeader = Some(contentHeader), mainContent = mainContent)

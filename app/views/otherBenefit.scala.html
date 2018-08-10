@@ -19,13 +19,28 @@
 @import models.Mode
 @import uk.gov.hmrc.play.views.html._
 @import viewmodels.InputViewModel
+@import uk.gov.hmrc.play.partials.FormPartialRetriever
+@import uk.gov.hmrc.renderer.TemplateRenderer
 
-@(appConfig: FrontendAppConfig, form: Form[OtherBenefit], mode: Mode, index: Index, taxYear: SelectTaxYear)(implicit request: Request[_], messages: Messages)
+@(
+    appConfig: FrontendAppConfig,
+    form: Form[_],
+    mode: Mode,
+    index: Index,
+    taxYear: SelectTaxYear
+)(
+    implicit
+    request: Request[_],
+    messages: Messages,
+    formPartialRetriever: FormPartialRetriever,
+    templateRenderer: TemplateRenderer
+)
 
 @main_template(
     title = messages("otherBenefit.title"),
     appConfig = appConfig,
-    bodyClasses = None) {
+    bodyClasses = None
+) {
 
     @helpers.form(action = OtherBenefitController.onSubmit(mode, index), 'autoComplete -> "off") {
 

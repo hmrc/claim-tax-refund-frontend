@@ -20,13 +20,29 @@
 @import models.Mode
 @import utils.FormHelpers
 @import viewmodels.InputViewModel
+@import uk.gov.hmrc.renderer.TemplateRenderer
+@import uk.gov.hmrc.play.partials.FormPartialRetriever
 
-@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, index: Index, itemName: String, collectionId: String)(implicit request: Request[_], messages: Messages)
+@(
+    appConfig: FrontendAppConfig,
+    form: Form[_],
+    mode: Mode,
+    index: Index,
+    itemName: String,
+    collectionId: String
+)(
+    implicit
+    request: Request[_],
+    messages: Messages,
+    formPartialRetriever: FormPartialRetriever,
+    templateRenderer: TemplateRenderer
+)
 
 @main_template(
     title = messages("deleteOther.title", itemName),
     appConfig = appConfig,
-    bodyClasses = None) {
+    bodyClasses = None
+) {
 
     @helpers.form(action = DeleteOtherController.onSubmit(index, itemName, collectionId), 'autoComplete -> "off") {
 

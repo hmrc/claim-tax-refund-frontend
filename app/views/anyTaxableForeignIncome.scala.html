@@ -20,7 +20,20 @@
 @import models.Mode
 @import viewmodels.InputViewModel
 
-@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: SelectTaxYear)(implicit request: Request[_], messages: Messages)
+@import uk.gov.hmrc.renderer.TemplateRenderer
+@import uk.gov.hmrc.play.partials.FormPartialRetriever
+@(
+    appConfig: FrontendAppConfig,
+    form: Form[_],
+    mode: Mode,
+    taxYear: SelectTaxYear
+)(
+    implicit
+    request: Request[_],
+    messages: Messages,
+    formPartialRetriever: FormPartialRetriever,
+    templateRenderer: TemplateRenderer
+)
 
 @main_template(
     title = messages("anyTaxableForeignIncome.title", taxYear.asString),

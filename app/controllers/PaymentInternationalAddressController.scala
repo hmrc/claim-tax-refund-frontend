@@ -22,11 +22,12 @@ import controllers.actions._
 import forms.PaymentInternationalAddressForm
 import identifiers.PaymentInternationalAddressId
 import javax.inject.Inject
-
 import models.{InternationalAddress, Mode}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import uk.gov.hmrc.play.partials.FormPartialRetriever
+import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, UserAnswers}
 import views.html.paymentInternationalAddress
 
@@ -40,7 +41,9 @@ class PaymentInternationalAddressController @Inject()(appConfig: FrontendAppConf
                                                       authenticate: AuthAction,
                                                       getData: DataRetrievalAction,
                                                       requireData: DataRequiredAction,
-                                                      formBuilder: PaymentInternationalAddressForm) extends FrontendController with I18nSupport {
+                                                      formBuilder: PaymentInternationalAddressForm,
+                                                      implicit val formPartialRetriever: FormPartialRetriever,
+                                                      implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
 
   private val form: Form[InternationalAddress] = formBuilder()
 

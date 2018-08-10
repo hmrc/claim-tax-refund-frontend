@@ -20,13 +20,26 @@
 @import utils.FormHelpers
 @import models.{Mode, InternationalAddress}
 @import viewmodels.InputViewModel
+@import uk.gov.hmrc.renderer.TemplateRenderer
+@import uk.gov.hmrc.play.partials.FormPartialRetriever
 
-@(appConfig: FrontendAppConfig, form: Form[InternationalAddress], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(
+    appConfig: FrontendAppConfig,
+    form: Form[InternationalAddress],
+    mode: Mode
+)(
+    implicit
+    request: Request[_],
+    messages: Messages,
+    formPartialRetriever: FormPartialRetriever,
+    templateRenderer: TemplateRenderer
+)
 
 @main_template(
     title = messages("paymentInternationalAddress.title"),
     appConfig = appConfig,
-    bodyClasses = None) {
+    bodyClasses = None
+) {
 
     @helpers.form(action = PaymentInternationalAddressController.onSubmit(mode), 'autoComplete -> "off") {
 

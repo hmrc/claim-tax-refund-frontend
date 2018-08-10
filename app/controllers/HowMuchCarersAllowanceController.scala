@@ -26,6 +26,8 @@ import config.FrontendAppConfig
 import forms.HowMuchCarersAllowanceForm
 import identifiers.HowMuchCarersAllowanceId
 import models.Mode
+import uk.gov.hmrc.play.partials.FormPartialRetriever
+import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, UserAnswers}
 import views.html.howMuchCarersAllowance
 
@@ -39,7 +41,9 @@ class HowMuchCarersAllowanceController @Inject()(
                                         authenticate: AuthAction,
                                         getData: DataRetrievalAction,
                                         requireData: DataRequiredAction,
-                                        formBuilder: HowMuchCarersAllowanceForm) extends FrontendController with I18nSupport {
+                                        formBuilder: HowMuchCarersAllowanceForm,
+                                        implicit val formPartialRetriever: FormPartialRetriever,
+                                        implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
 
   private val form: Form[String] = formBuilder()
 
