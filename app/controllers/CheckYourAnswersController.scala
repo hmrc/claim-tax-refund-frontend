@@ -27,6 +27,8 @@ import services.SubmissionService
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.HeaderCarrierConverter
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import uk.gov.hmrc.play.partials.FormPartialRetriever
+import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{CheckYourAnswersHelper, CheckYourAnswersSections}
 import views.html.{check_your_answers, pdf_check_your_answers}
 
@@ -36,7 +38,9 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
                                            authenticate: AuthAction,
                                            getData: DataRetrievalAction,
                                            requireData: DataRequiredAction,
-                                           submissionService: SubmissionService) extends FrontendController with I18nSupport {
+                                           submissionService: SubmissionService,
+                                           implicit val formPartialRetriever: FormPartialRetriever,
+                                           implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
 
   def onPageLoad() = (authenticate andThen getData andThen requireData) {
     implicit request =>

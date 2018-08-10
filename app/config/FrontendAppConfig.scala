@@ -20,6 +20,7 @@ import com.google.inject.{Inject, Singleton}
 import controllers.routes
 import play.api.Mode.Mode
 import play.api.i18n.Lang
+import play.api.mvc.Call
 import play.api.{Configuration, Environment}
 import uk.gov.hmrc.play.config.ServicesConfig
 
@@ -38,39 +39,42 @@ class FrontendAppConfig @Inject()(override val runModeConfiguration: Configurati
   private lazy val contactHost = runModeConfiguration.getString("contact-frontend.host").getOrElse("")
   private val contactFormServiceIdentifier = "claimtaxrefundfrontend"
 
-  lazy val analyticsToken = loadConfig(s"google-analytics.token")
-  lazy val analyticsHost = loadConfig(s"google-analytics.host")
+  lazy val assetsPrefix: String = loadConfig(s"assets.url") + loadConfig(s"assets.version") + '/'
+  lazy val frontendTemplatePath: String = loadConfig("microservice.services.frontend-template-provider.path")
+
+  lazy val analyticsToken: String = loadConfig(s"google-analytics.token")
+  lazy val analyticsHost: String = loadConfig(s"google-analytics.host")
   lazy val reportAProblemPartialUrl = s"$contactHost/contact/problem_reports_ajax?service=$contactFormServiceIdentifier"
   lazy val reportAProblemNonJSUrl = s"$contactHost/contact/problem_reports_nonjs?service=$contactFormServiceIdentifier"
   lazy val betaFeedbackUrl = s"$contactHost/contact/beta-feedback"
   lazy val betaFeedbackUnauthenticatedUrl = s"$contactHost/contact/beta-feedback-unauthenticated"
 
-  lazy val authUrl = baseUrl("auth")
-  lazy val loginUrl = loadConfig("urls.login")
-  lazy val loginContinueUrl = loadConfig("urls.loginContinue")
-  lazy val dmiUrl = baseUrl("digital-mail-integration")
+  lazy val authUrl: String = baseUrl("auth")
+  lazy val loginUrl: String = loadConfig("urls.login")
+  lazy val loginContinueUrl: String = loadConfig("urls.loginContinue")
+  lazy val dmiUrl: String = baseUrl("digital-mail-integration")
 
-  lazy val taiUrl = baseUrl("tai")
+  lazy val taiUrl: String = baseUrl("tai")
 
-  lazy val languageTranslationEnabled = runModeConfiguration.getBoolean("microservice.services.features.welsh-translation").getOrElse(true)
+  lazy val languageTranslationEnabled: Boolean = runModeConfiguration.getBoolean("microservice.services.features.welsh-translation").getOrElse(true)
 
-  lazy val fullNameLength = loadConfigInt("microservice.services.validation.full-name-length")
-  lazy val ninoRegex = loadConfig("microservice.services.validation.nino-regex")
-  lazy val addressLineMaxLength = loadConfigInt("microservice.services.validation.address-line-length")
-  lazy val postcodeRegex = loadConfig("microservice.services.validation.postcode-regex")
-  lazy val countryMaxLength = loadConfigInt("microservice.services.validation.country-length")
-  lazy val agentReferenceMaxLength = loadConfigInt("microservice.services.validation.agent-reference-length")
-  lazy val nomineeFullNameMaxLength = loadConfigInt("microservice.services.validation.payee-full-name-length")
-  lazy val detailsOfEmploymentOrPensionMaxLength = loadConfigInt("microservice.services.validation.details-of-employment-or-pension-max-length")
+  lazy val fullNameLength: Int = loadConfigInt("microservice.services.validation.full-name-length")
+  lazy val ninoRegex: String = loadConfig("microservice.services.validation.nino-regex")
+  lazy val addressLineMaxLength: Int = loadConfigInt("microservice.services.validation.address-line-length")
+  lazy val postcodeRegex: String = loadConfig("microservice.services.validation.postcode-regex")
+  lazy val countryMaxLength: Int = loadConfigInt("microservice.services.validation.country-length")
+  lazy val agentReferenceMaxLength: Int = loadConfigInt("microservice.services.validation.agent-reference-length")
+  lazy val nomineeFullNameMaxLength: Int = loadConfigInt("microservice.services.validation.payee-full-name-length")
+  lazy val detailsOfEmploymentOrPensionMaxLength: Int = loadConfigInt("microservice.services.validation.details-of-employment-or-pension-max-length")
 
-  lazy val telephoneRegex = loadConfig("microservice.services.validation.telephone-regex")
-  lazy val utrRegex = loadConfig("microservice.services.validation.utr-regex")
-  lazy val payeRegex = loadConfig("microservice.services.validation.paye-regex")
-  lazy val currencyRegex = loadConfig("microservice.services.validation.currency-regex")
+  lazy val telephoneRegex: String = loadConfig("microservice.services.validation.telephone-regex")
+  lazy val utrRegex: String = loadConfig("microservice.services.validation.utr-regex")
+  lazy val payeRegex: String = loadConfig("microservice.services.validation.paye-regex")
+  lazy val currencyRegex: String = loadConfig("microservice.services.validation.currency-regex")
 
   def languageMap: Map[String, Lang] = Map(
     "english" -> Lang("en"),
     "cymraeg" -> Lang("cy"))
 
-  def routeToSwitchLanguage = (lang: String) => routes.LanguageSwitchController.switchToLanguage(lang)
+  def routeToSwitchLanguage: String => Call = (lang: String) => routes.LanguageSwitchController.switchToLanguage(lang)
 }

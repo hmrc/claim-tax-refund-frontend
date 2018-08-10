@@ -17,7 +17,6 @@
 package controllers
 
 import javax.inject.Inject
-
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
@@ -27,6 +26,8 @@ import config.FrontendAppConfig
 import forms.DetailsOfEmploymentOrPensionForm
 import identifiers.DetailsOfEmploymentOrPensionId
 import models.Mode
+import uk.gov.hmrc.play.partials.FormPartialRetriever
+import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, UserAnswers}
 import views.html.detailsOfEmploymentOrPension
 
@@ -40,7 +41,9 @@ class DetailsOfEmploymentOrPensionController @Inject()(
                                         authenticate: AuthAction,
                                         getData: DataRetrievalAction,
                                         requireData: DataRequiredAction,
-                                        formBuilder: DetailsOfEmploymentOrPensionForm) extends FrontendController with I18nSupport {
+                                        formBuilder: DetailsOfEmploymentOrPensionForm,
+                                        implicit val formPartialRetriever: FormPartialRetriever,
+                                        implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
 
   private val form: Form[String] = formBuilder()
   private val characterLimit: Int = appConfig.detailsOfEmploymentOrPensionMaxLength

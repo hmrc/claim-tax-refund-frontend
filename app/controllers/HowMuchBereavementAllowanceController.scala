@@ -27,6 +27,8 @@ import forms.HowMuchBereavementAllowanceForm
 import identifiers.HowMuchBereavementAllowanceId
 import models.Mode
 import play.api.mvc.Results
+import uk.gov.hmrc.play.partials.FormPartialRetriever
+import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, UserAnswers}
 import views.html.howMuchBereavementAllowance
 
@@ -40,7 +42,9 @@ class HowMuchBereavementAllowanceController @Inject()(
                                         authenticate: AuthAction,
                                         getData: DataRetrievalAction,
                                         requireData: DataRequiredAction,
-                                        formBuilder: HowMuchBereavementAllowanceForm) extends FrontendController with I18nSupport {
+                                        formBuilder: HowMuchBereavementAllowanceForm,
+                                        implicit val formPartialRetriever: FormPartialRetriever,
+                                        implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
 
   private val form: Form[String] = formBuilder()
 

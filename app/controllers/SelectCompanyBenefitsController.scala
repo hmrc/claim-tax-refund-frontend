@@ -27,6 +27,8 @@ import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import uk.gov.hmrc.play.partials.FormPartialRetriever
+import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, UserAnswers}
 import views.html.selectCompanyBenefits
 
@@ -39,7 +41,9 @@ class SelectCompanyBenefitsController @Inject()(
                                                  navigator: Navigator,
                                                  authenticate: AuthAction,
                                                  getData: DataRetrievalAction,
-                                                 requireData: DataRequiredAction) extends FrontendController with I18nSupport {
+                                                 requireData: DataRequiredAction,
+                                                 implicit val formPartialRetriever: FormPartialRetriever,
+                                                 implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>

@@ -76,8 +76,8 @@ site.service_name = Claim a tax refund
 site.service_name.with_tax_year = Claim a tax refund: {0}
 site.textarea.char_limit = (Limit is {0} characters)
 
-checkYourAnswers.title = Check Your Answers
-checkYourAnswers.heading = Check Your Answers
+checkYourAnswers.title = Check your answers
+checkYourAnswers.heading = Check your answers
 checkYourAnswers.guidance = Guidance for check your answers
 checkYourAnswers.pdfHeader = Summary
 checkYourAnswers.userSection = User details
