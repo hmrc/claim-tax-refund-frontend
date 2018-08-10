@@ -16,28 +16,44 @@
 
 package controllers
 
-import connectors.{AddressLookupConnector, FakeDataCacheConnector}
+import com.github.tomakehurst.wiremock.client.WireMock.{aResponse, get, urlEqualTo}
+import connectors.{AddressLookupConnector, DataCacheConnector, FakeDataCacheConnector}
 import controllers.actions.{DataRequiredActionImpl, DataRetrievalAction, FakeAuthAction}
 import models.{SubmissionFailed, SubmissionSuccessful}
 import org.scalatest.mockito.MockitoSugar
+import play.api.{Application, Logger}
+import play.api.inject.guice.GuiceApplicationBuilder
+import play.api.mvc.Result
 import play.api.test.Helpers._
 import services.SubmissionService
 import uk.gov.hmrc.http.HeaderCarrier
-import utils.UserAnswers
+import utils.{UserAnswers, WireMockHelper}
 
-import scala.concurrent.Future
+import scala.concurrent.{Await, ExecutionContext, Future}
+import scala.concurrent.duration._
 
-class CheckYourAnswersControllerSpec extends ControllerSpecBase with MockitoSugar{
+class CheckYourAnswersControllerSpec extends ControllerSpecBase with MockitoSugar with WireMockHelper{
+  implicit val ec: ExecutionContext = mock[ExecutionContext]
+  implicit val dataCacheConnector: DataCacheConnector = mock[DataCacheConnector]
 
+
+  override implicit lazy val app: Application =
+    new GuiceApplicationBuilder()
+      .configure(
+        conf = "microservice.services.address-lookup-frontend.port" -> server.port
+      )
+      .build()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap,
                  addressLookupConnector: AddressLookupConnector, submissionService: SubmissionService = FakeSuccessfulSubmissionService) =
     new CheckYourAnswersController(frontendAppConfig, messagesApi, FakeDataCacheConnector, FakeAuthAction, dataRetrievalAction,
        new DataRequiredActionImpl, submissionService, formPartialRetriever, templateRenderer)
 
-  implicit val addressLookupConnector = mock[AddressLookupConnector]
+  private lazy implicit val addressLookupConnector: AddressLookupConnector = app.injector.instanceOf[AddressLookupConnector]
+
 
   "Check Your Answers Controller" must {
+
     "return 200 and the correct view for a GET" in {
       val result = controller(someData, addressLookupConnector).onPageLoad()(fakeRequest)
       status(result) mustBe OK
@@ -48,6 +64,23 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with MockitoSuga
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+    }
+
+    "build when new answers are present in the url" in {
+      server.stubFor(
+        get(urlEqualTo("/api/confirmed?id=123456789"))
+          .willReturn(
+            aResponse()
+              .withStatus(200)
+              .withBody(testResponseAddress.toString)
+          )
+      )
+      val result = controller(someData, addressLookupConnector).onPageLoad(Some("123456789"))(fakeRequest)
+      result.map {
+        res =>
+          res mustBe OK
+      }
+      status(result) mustBe OK
     }
 
     "Redirect to Confimration page on a POST when submission is successful" in {

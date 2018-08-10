@@ -63,7 +63,6 @@ class IsPaymentAddressInTheUKController @Inject()(appConfig: FrontendAppConfig,
         case Some(value) => form.fill(value)
       }
 
-//      val continueUrl = routes.PaymentAddressCorrectController.onPageLoad(mode).absoluteURL()
       val continueUrl = navigator.nextPage(PaymentLookupAddressId, mode)(new UserAnswers(request.userAnswers.cacheMap)).absoluteURL()
 
       val addressInit = for {

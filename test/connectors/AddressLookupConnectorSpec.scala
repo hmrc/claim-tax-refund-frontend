@@ -29,7 +29,7 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.mvc.Request
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.http.cache.client.CacheMap
-import utils.{MockUserAnswers, UserAnswers, WireMockHelper}
+import utils.{UserAnswers, WireMockHelper}
 
 import scala.concurrent.duration._
 import scala.concurrent.{Await, ExecutionContext}
@@ -43,11 +43,11 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with WireMoc
       )
       .build()
 
+  implicit val dataRequest: DataRequest[_] = mock[DataRequest[_]]
   implicit val hc: HeaderCarrier = HeaderCarrier()
   implicit val ec: ExecutionContext = mock[ExecutionContext]
   implicit val request: Request[_] = mock[Request[_]]
   implicit val dataCacheConnector: DataCacheConnector = mock[DataCacheConnector]
-  implicit val dataRequest: DataRequest[_] = mock[DataRequest[_]]
   implicit val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
   private lazy val connector: AddressLookupConnector = app.injector.instanceOf[AddressLookupConnector]
