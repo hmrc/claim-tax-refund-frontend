@@ -38,6 +38,7 @@ import utils._
 import views.html.telephoneNumber
 
 import scala.concurrent._
+import scala.concurrent.duration._
 
 class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar with WireMockHelper with ScalaFutures {
 
@@ -60,8 +61,9 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar
   lazy val formProvider = new TelephoneNumberForm()
   lazy val form = formProvider()
   lazy val httpMock: HttpClient = mock[HttpClient]
-  lazy val mockAddressLookup: AddressLookupConnector =
-    new AddressLookupConnector(frontendAppConfig, addressLookupConfig, httpMock, messagesApi, dataCacheConnector)
+  private lazy implicit val addressLookupConnector: AddressLookupConnector = app.injector.instanceOf[AddressLookupConnector]
+
+
   lazy val validYesData =
     Map(AnyTelephoneId.toString -> Json.obj(AnyTelephoneId.toString -> JsBoolean(true), TelephoneNumberId.toString -> JsString(testAnswer)))
   lazy val validNoData = Map(AnyTelephoneId.toString -> Json.obj(AnyTelephoneId.toString -> JsBoolean(false)))
@@ -71,7 +73,9 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new TelephoneNumberController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, formProvider, formPartialRetriever, templateRenderer)
-  def viewAsString(form: Form[_] = form) = telephoneNumber(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+      dataRetrievalAction, new DataRequiredActionImpl, formProvider, addressLookupConnector)
+
+  def viewAsString(form: Form[_] = form): String = telephoneNumber(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
 
   "TelephoneNumberController" must {
 
@@ -97,13 +101,17 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar
           )
       )
 
-      val result: Future[Result] = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, Some("123456789"))(fakeRequest)
+//      val result: Future[Result] = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, Some("123456789"))(fakeRequest)
+      //Await.result(connector.getAddress(cacheId = "12345", saveKey = "saveKey", id = "123456789"), 2.second)
+      //val result = Await.result(controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, Some("123456789"))(fakeRequest), 2.seconds)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, Some("123456789"))(fakeRequest)
       result.map {
         res =>
           res mustBe OK
       }
       status(result) mustBe OK
     }
+
 
     "populate the view correctly on a GET when NO has previously been answered" in {
       when(mockUserAnswers.anyTelephoneNumber).thenReturn(Some(TelephoneOption.No))

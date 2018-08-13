@@ -174,6 +174,7 @@ class CascadeUpsert {
       NomineeFullNameId.toString,
       AgentRefId.toString,
       IsPaymentAddressInTheUKId.toString,
+      PaymentLookupAddressId.toString,
       PaymentUKAddressId.toString,
       PaymentInternationalAddressId.toString
     )
@@ -195,6 +196,7 @@ class CascadeUpsert {
   private def paymentAddressCorrect(value: JsValue, cacheMap: CacheMap): CacheMap = {
     val keysToRemoveYes = Seq[String](
       IsPaymentAddressInTheUKId.toString,
+      PaymentLookupAddressId.toString,
       PaymentUKAddressId.toString,
       PaymentInternationalAddressId.toString
     )
