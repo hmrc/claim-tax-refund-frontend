@@ -28,7 +28,6 @@ private object AppDependencies {
   private val playConditionalFormMappingVersion = "0.2.0"
   private val bootstrapVersion = "1.7.0"
   private val playLanguageVersion = "3.4.0"
-  private val bootstrapVersion = "1.7.0"
 
   val compile = Seq(
     ws,
