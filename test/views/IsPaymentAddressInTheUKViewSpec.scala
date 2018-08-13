@@ -29,9 +29,9 @@ class IsPaymentAddressInTheUKViewSpec extends YesNoViewBehaviours {
 
   override val form = new BooleanForm()()
 
-  def createView = () => isPaymentAddressInTheUK(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createView = () => isPaymentAddressInTheUK(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
-  def createViewUsingForm = (form: Form[_]) => isPaymentAddressInTheUK(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[_]) => isPaymentAddressInTheUK(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "IsPaymentAddressInTheUK view" must {
 

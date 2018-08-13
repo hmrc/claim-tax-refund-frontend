@@ -38,9 +38,9 @@ class SelectCompanyBenefitsViewSpec extends ViewBehaviours with CheckboxViewBeha
   override def createView(): Html = createView(form)
 
   def createView(form: Form[Seq[CompanyBenefits.Value]]): Html =
-    selectCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+    selectCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
-  def createViewUsingForm = (form: Form[_]) => selectCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[_]) => selectCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "SelectCompanyBenefits view" must {
     behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))

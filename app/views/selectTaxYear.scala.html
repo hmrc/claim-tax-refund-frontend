@@ -20,13 +20,26 @@
 @import forms.SelectTaxYearForm
 @import models.Mode
 @import viewmodels.InputViewModel
+@import uk.gov.hmrc.play.partials.FormPartialRetriever
+@import uk.gov.hmrc.renderer.TemplateRenderer
 
-@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(
+    appConfig: FrontendAppConfig,
+    form: Form[_],
+    mode: Mode
+)(
+    implicit
+    request: Request[_],
+    messages: Messages,
+    formPartialRetriever: FormPartialRetriever,
+    templateRenderer: TemplateRenderer
+)
 
 @main_template(
     title = messages("selectTaxYear.title"),
     appConfig = appConfig,
-    bodyClasses = None) {
+    bodyClasses = None
+) {
 
     @helpers.form(action = SelectTaxYearController.onSubmit(mode), 'autoComplete -> "off") {
 

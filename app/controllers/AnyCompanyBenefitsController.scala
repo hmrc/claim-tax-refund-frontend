@@ -17,7 +17,6 @@
 package controllers
 
 import javax.inject.Inject
-
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
@@ -27,19 +26,25 @@ import config.FrontendAppConfig
 import forms.BooleanForm
 import identifiers.AnyCompanyBenefitsId
 import models.Mode
+import uk.gov.hmrc.play.partials.FormPartialRetriever
+import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, UserAnswers}
 import views.html.anyCompanyBenefits
 
 import scala.concurrent.Future
 
-class AnyCompanyBenefitsController @Inject()(appConfig: FrontendAppConfig,
-                                         override val messagesApi: MessagesApi,
-                                         dataCacheConnector: DataCacheConnector,
-                                         navigator: Navigator,
-                                         authenticate: AuthAction,
-                                         getData: DataRetrievalAction,
-                                         requireData: DataRequiredAction,
-                                         formProvider: BooleanForm) extends FrontendController with I18nSupport {
+class AnyCompanyBenefitsController @Inject()(
+                                              appConfig: FrontendAppConfig,
+                                              override val messagesApi: MessagesApi,
+                                              dataCacheConnector: DataCacheConnector,
+                                              navigator: Navigator,
+                                              authenticate: AuthAction,
+                                              getData: DataRetrievalAction,
+                                              requireData: DataRequiredAction,
+                                              formProvider: BooleanForm,
+                                              implicit val formPartialRetriever: FormPartialRetriever,
+                                              implicit val templateRenderer: TemplateRenderer
+                                            ) extends FrontendController with I18nSupport {
 
   private val errorKey = "anyCompanyBenefits.blank"
   val form: Form[Boolean] = formProvider(errorKey)

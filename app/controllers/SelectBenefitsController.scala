@@ -27,6 +27,8 @@ import forms.SelectBenefitsForm
 import identifiers.SelectBenefitsId
 import models.{Benefits, Mode}
 import play.api.mvc.{Action, AnyContent}
+import uk.gov.hmrc.play.partials.FormPartialRetriever
+import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, UserAnswers}
 import views.html.selectBenefits
 
@@ -39,7 +41,9 @@ class SelectBenefitsController @Inject()(
                                           navigator: Navigator,
                                           authenticate: AuthAction,
                                           getData: DataRetrievalAction,
-                                          requireData: DataRequiredAction) extends FrontendController with I18nSupport {
+                                          requireData: DataRequiredAction,
+                                          implicit val formPartialRetriever: FormPartialRetriever,
+                                          implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>

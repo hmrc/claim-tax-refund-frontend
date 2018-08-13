@@ -32,9 +32,9 @@ class HowMuchRentalIncomeViewSpec extends StringViewBehaviours with MockitoSugar
 
   override val form: Form[String] = new HowMuchRentalIncomeForm(frontendAppConfig)()
 
-  def createView = () => howMuchRentalIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createView = () => howMuchRentalIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
-  def createViewUsingForm = (form: Form[String]) => howMuchRentalIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[String]) => howMuchRentalIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "HowMuchRentalIncome view" must {
     behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))

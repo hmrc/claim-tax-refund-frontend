@@ -150,17 +150,17 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
   def howMuchCarBenefits: Option[AnswerRow] = userAnswers.howMuchCarBenefits map {
     x =>
       AnswerRow("howMuchCarBenefits.checkYourAnswersLabel",
-        s"$x", false, routes.HowMuchCarBenefitsController.onPageLoad(CheckMode).url)
+        s"£$x", false, routes.HowMuchCarBenefitsController.onPageLoad(CheckMode).url)
   }
 
   def howMuchFuelBenefit: Option[AnswerRow] = userAnswers.howMuchFuelBenefit map {
-    x => AnswerRow("howMuchFuelBenefit.checkYourAnswersLabel", s"$x", false, routes.HowMuchFuelBenefitController.onPageLoad(CheckMode).url)
+    x => AnswerRow("howMuchFuelBenefit.checkYourAnswersLabel", s"£$x", false, routes.HowMuchFuelBenefitController.onPageLoad(CheckMode).url)
   }
 
   def howMuchMedicalBenefits: Option[AnswerRow] = userAnswers.howMuchMedicalBenefits map {
     x =>
       AnswerRow("howMuchMedicalBenefits.checkYourAnswersLabel",
-        s"$x", false, routes.HowMuchMedicalBenefitsController.onPageLoad(CheckMode).url)
+        s"£$x", false, routes.HowMuchMedicalBenefitsController.onPageLoad(CheckMode).url)
   }
 
   def otherCompanyBenefit: Seq[Option[AnswerRow]] = {
@@ -236,19 +236,19 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
   def howMuchRentalIncome: Option[AnswerRow] = userAnswers.howMuchRentalIncome map {
     x =>
       AnswerRow("howMuchRentalIncome.checkYourAnswersLabel",
-        s"$x", false, routes.HowMuchRentalIncomeController.onPageLoad(CheckMode).url)
+        s"£$x", false, routes.HowMuchRentalIncomeController.onPageLoad(CheckMode).url)
   }
 
   def howMuchBankInterest: Option[AnswerRow] = userAnswers.howMuchBankInterest map {
-    x => AnswerRow("howMuchBankInterest.checkYourAnswersLabel", s"$x", false, routes.HowMuchBankInterestController.onPageLoad(CheckMode).url)
+    x => AnswerRow("howMuchBankInterest.checkYourAnswersLabel", s"£$x", false, routes.HowMuchBankInterestController.onPageLoad(CheckMode).url)
   }
 
   def howMuchInvestmentOrDividend: Option[AnswerRow] = userAnswers.howMuchInvestmentOrDividend map {
-    x => AnswerRow("howMuchInvestmentOrDividend.checkYourAnswersLabel", s"$x", false, routes.HowMuchInvestmentOrDividendController.onPageLoad(CheckMode).url)
+    x => AnswerRow("howMuchInvestmentOrDividend.checkYourAnswersLabel", s"£$x", false, routes.HowMuchInvestmentOrDividendController.onPageLoad(CheckMode).url)
   }
 
   def howMuchForeignIncome: Option[AnswerRow] = userAnswers.howMuchForeignIncome map {
-    x => AnswerRow("howMuchForeignIncome.checkYourAnswersLabel", s"$x", false, routes.HowMuchForeignIncomeController.onPageLoad(CheckMode).url)
+    x => AnswerRow("howMuchForeignIncome.checkYourAnswersLabel", s"£$x", false, routes.HowMuchForeignIncomeController.onPageLoad(CheckMode).url)
   }
 
   def otherTaxableIncome: Seq[Option[AnswerRow]] = {

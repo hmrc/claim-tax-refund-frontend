@@ -27,6 +27,8 @@ import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, Result}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import uk.gov.hmrc.play.partials.FormPartialRetriever
+import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, SequenceUtil, UserAnswers}
 import views.html.anyTaxableOtherIncome
 
@@ -40,7 +42,9 @@ class AnyTaxableOtherIncomeController @Inject()(appConfig: FrontendAppConfig,
                                                 getData: DataRetrievalAction,
                                                 requireData: DataRequiredAction,
                                                 sequenceUtil: SequenceUtil[AnyTaxPaid],
-                                                formProvider: AnyTaxPaidForm) extends FrontendController with I18nSupport {
+                                                formProvider: AnyTaxPaidForm,
+                                                implicit val formPartialRetriever: FormPartialRetriever,
+                                                implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
 
   private val notSelectedKey = "anyTaxableOtherIncome.notSelected"
   private val blankKey = "anyTaxableOtherIncome.blank"

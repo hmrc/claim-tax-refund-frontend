@@ -32,9 +32,9 @@ class AnyTaxableIncomeViewSpec extends YesNoViewBehaviours {
 
   override val form = new BooleanForm()()
 
-  def createView = () => anyTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createView = () => anyTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
-  def createViewUsingForm = (form: Form[_]) => anyTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[_]) => anyTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "AnyTaxableIncome view" must {
 

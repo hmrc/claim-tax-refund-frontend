@@ -16,16 +16,21 @@
 
 package base
 
-import config.FrontendAppConfig
+import config.{CtrFormPartialRetriever, FrontendAppConfig}
+import org.scalatest.mockito.MockitoSugar
 import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice._
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.Injector
+import play.api.mvc.RequestHeader
 import play.api.test.FakeRequest
+import play.twirl.api.Html
 import uk.gov.hmrc.auth.core.retrieve.ItmpAddress
-import utils.SequenceUtil
+import uk.gov.hmrc.play.bootstrap.filters.frontend.crypto.SessionCookieCrypto
+import uk.gov.hmrc.play.bootstrap.http.HttpClient
+import utils.{MockTemplateRenderer, SequenceUtil}
 
-trait SpecBase extends PlaySpec with GuiceOneAppPerSuite {
+trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with MockitoSugar {
 
   def injector: Injector = app.injector
 
@@ -49,4 +54,18 @@ trait SpecBase extends PlaySpec with GuiceOneAppPerSuite {
     Some("United Kingdom"),
     Some("UK")
   )
+
+  implicit val formPartialRetriever: CtrFormPartialRetriever =
+    new MockCtrFormPartialRetriever(httpGet = mock[HttpClient], sessionCookieCrypto = mock[SessionCookieCrypto])
+
+  implicit val templateRenderer: MockTemplateRenderer.type =
+    MockTemplateRenderer
+}
+
+class MockCtrFormPartialRetriever(httpGet:HttpClient, sessionCookieCrypto: SessionCookieCrypto)
+  extends CtrFormPartialRetriever(httpGet, sessionCookieCrypto) with MockitoSugar {
+
+  override def getPartialContent(url: String, templateParameters: Map[String, String], errorMessage: Html)(implicit request:RequestHeader): Html = {
+    Html("")
+  }
 }

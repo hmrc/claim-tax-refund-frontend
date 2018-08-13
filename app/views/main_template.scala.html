@@ -15,15 +15,28 @@
  *@
 
 @import config.FrontendAppConfig
+@import uk.gov.hmrc.renderer.TemplateRenderer
+@import uk.gov.hmrc.play.partials.FormPartialRetriever
 
-@(title: String,
-  appConfig: FrontendAppConfig,
-  sidebarLinks: Option[Html] = None,
-  contentHeader: Option[Html] = None,
-  bodyClasses: Option[String] = None,
-  mainClass: Option[String] = None,
-  scriptElem: Option[Html] = None
-)(mainContent: Html)(implicit request : Request[_], messages: Messages)
+@(
+    title: String,
+    appConfig: FrontendAppConfig,
+    sidebarLinks: Option[Html] = None,
+    contentHeader: Option[Html] = None,
+    bodyClasses: Option[String] = None,
+    mainClass: Option[String] = None,
+    includeGridWrapper: Boolean = false,
+    articleClasses: Option[String] = None,
+    scriptElem: Option[Html] = None
+)(
+    mainContent: Html
+)(
+    implicit
+    request : Request[_],
+    messages: Messages,
+    formPartialRetriever: FormPartialRetriever,
+    templateRenderer: TemplateRenderer
+)
 
 @import uk.gov.hmrc.play.views.html.layouts
 
@@ -35,14 +48,28 @@
     }
 }
 
-@govuk_wrapper(
-    appConfig = appConfig,
-    title = title,
-    mainClass = mainClass,
-    bodyClasses = bodyClasses,
-    sidebar = sidebar,
-    contentHeader = contentHeader,
-    mainContent = layouts.article(mainContent),
-    serviceInfoContent = serviceInfoContent,
-    scriptElem = scriptElem
-)
+@linkElem = @{
+    Map("url" -> controllers.routes.Assets.versioned("stylesheets/claimtaxrefundfrontend-app.css"))
+}
+
+@scriptElem = @{
+    Seq(
+        Map("url" -> controllers.routes.Assets.versioned("javascripts/claimtaxrefundfrontend.js"))
+    )
+}
+
+@{
+    templateRenderer.renderDefaultTemplate(
+        appConfig.frontendTemplatePath,
+        layouts.article(mainContent, includeGridWrapper, articleClasses),
+        Map[String, Any](
+            "pageTitle" -> title,
+            "navTitle" -> messages("site.service_name"),
+            "assetsPath" -> appConfig.assetsPrefix,
+            "sidebar" -> sidebar,
+            "linkElems" -> linkElem,
+            "scriptElems" -> scriptElem,
+            "mainClass" -> mainClass
+        )
+    )
+}
