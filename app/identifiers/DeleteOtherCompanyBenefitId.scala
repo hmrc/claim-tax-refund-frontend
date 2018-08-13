@@ -16,6 +16,4 @@
 
 package identifiers
 
-case object DeleteOtherCompanyBenefitId extends Identifier {
-  override def toString: String = "deleteOtherCompanyBenefitId"
-}
+case object DeleteOtherCompanyBenefitId extends Identifier
