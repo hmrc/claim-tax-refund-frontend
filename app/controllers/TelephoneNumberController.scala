@@ -43,11 +43,10 @@ class TelephoneNumberController @Inject()(
                                            getData: DataRetrievalAction,
                                            requireData: DataRequiredAction,
                                            formBuilder: TelephoneNumberForm,
+                                           addressLookupConnector: AddressLookupConnector,
                                            implicit val formPartialRetriever: FormPartialRetriever,
                                            implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
-                                           formBuilder: TelephoneNumberForm,
-                                           addressLookupConnector: AddressLookupConnector
-                                         ) extends FrontendController with I18nSupport {
+
 
   private val form: Form[TelephoneOption] = formBuilder()
 

@@ -82,10 +82,7 @@ class Navigator @Inject()() {
     PaymentUKAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode, None)),
     PaymentInternationalAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode, None)),
     PaymentLookupAddressId -> addressLookup(NormalMode),
-    TelephoneNumberId -> (_ => routes.CheckYourAnswersController.onPageLoad(None))
-    TelephoneNumberId -> (_ => routes.CheckYourAnswersController.onPageLoad())
-    TelephoneNumberId -> (_ => routes.CheckYourAnswersController.onPageLoad()),
-
+    TelephoneNumberId -> (_ => routes.CheckYourAnswersController.onPageLoad(None)),
     DeleteOtherBenefitId -> deleteOtherBenefit,
     DeleteOtherCompanyBenefitId -> deleteOtherCompanyBenefit,
     DeleteOtherTaxableIncomeId -> deleteOtherTaxableIncome
@@ -143,7 +140,7 @@ class Navigator @Inject()() {
     } else if (otherBenefits.isEmpty && selectBenefits.length > 1){
       routes.SelectBenefitsController.onPageLoad(CheckMode)
     } else {
-      routes.CheckYourAnswersController.onPageLoad()
+      routes.CheckYourAnswersController.onPageLoad(None)
     }
   }
 
@@ -156,7 +153,7 @@ class Navigator @Inject()() {
     } else if (otherCompanyBenefits.isEmpty && selectCompanyBenefits.length > 1){
       routes.SelectCompanyBenefitsController.onPageLoad(CheckMode)
     } else {
-      routes.CheckYourAnswersController.onPageLoad()
+      routes.CheckYourAnswersController.onPageLoad(None)
     }
   }
 
@@ -169,7 +166,7 @@ class Navigator @Inject()() {
     } else if (otherTaxableIncome.isEmpty && selectTaxableIncome.size > 1){
       routes.SelectTaxableIncomeController.onPageLoad(CheckMode)
     } else {
-      routes.CheckYourAnswersController.onPageLoad()
+      routes.CheckYourAnswersController.onPageLoad(None)
     }
   }
 
@@ -431,8 +428,6 @@ class Navigator @Inject()() {
     case NormalMode => routes.TelephoneNumberController.onPageLoad(mode, None)
   }
 
-
-  def nextPage(id: Identifier, mode: Mode): UserAnswers => Call = mode match {
   def nextPage(id: Identifier, mode: Mode): UserAnswers =>Call = mode match {
     case NormalMode =>
       routeMap.getOrElse(id, _ => routes.IndexController.onPageLoad())

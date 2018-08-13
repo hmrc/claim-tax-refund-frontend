@@ -116,7 +116,7 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
 
             }
           } else {
-            Future.successful(Redirect(routes.CheckYourAnswersController.onPageLoad()))
+            Future.successful(Redirect(routes.CheckYourAnswersController.onPageLoad(None)))
           }
       )
   }

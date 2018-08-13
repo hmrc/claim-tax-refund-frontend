@@ -46,9 +46,7 @@ class IsPaymentAddressInTheUKController @Inject()(appConfig: FrontendAppConfig,
                                                   getData: DataRetrievalAction,
                                                   requireData: DataRequiredAction,
                                                   formProvider: BooleanForm,
-                                                  addressLookup: AddressLookupConnector
-                                                 ) extends FrontendController with I18nSupport {
-                                                  formProvider: BooleanForm,
+                                                  addressLookup: AddressLookupConnector,
                                                   implicit val formPartialRetriever: FormPartialRetriever,
                                                   implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
 

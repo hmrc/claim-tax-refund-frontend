@@ -41,7 +41,6 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
                                            getData: DataRetrievalAction,
                                            requireData: DataRequiredAction,
                                            addressLookupConnector: AddressLookupConnector,
-                                           submissionService: SubmissionService) extends FrontendController with I18nSupport {
                                            submissionService: SubmissionService,
                                            implicit val formPartialRetriever: FormPartialRetriever,
                                            implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
@@ -60,26 +59,6 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
         val cyaHelper = new CheckYourAnswersHelper(request.userAnswers)
         val cyaSections = new CheckYourAnswersSections(cyaHelper, request.userAnswers)
         Future.successful(Ok(check_your_answers(appConfig, cyaSections.sections)))
-      val save: Future[Product] = addressLookupConnector.getAddress(request.externalId, PaymentLookupAddressId.toString)
-
-      save onSuccess {
-        case result =>
-//        addressLookupConnector.getAddress(request.externalId, PaymentLookupAddressId.toString)
-          val cyaHelper = new CheckYourAnswersHelper(request.userAnswers)
-          val cyaSections = new CheckYourAnswersSections(cyaHelper, request.userAnswers)
-          Ok(check_your_answers(appConfig, cyaSections.sections))
-      }
-      addressLookupConnector.getAddress(request.externalId, PaymentLookupAddressId.toString)
-
-      val cyaHelper = new CheckYourAnswersHelper(request.userAnswers)
-      val cyaSections = new CheckYourAnswersSections(cyaHelper, request.userAnswers)
-
-      Ok(check_your_answers(appConfig, cyaSections.sections))
-  }
-
-      save onFailure {
-        case t =>
-          Ok
       }
   }
 
@@ -97,7 +76,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
 
       submissionService.ctrSubmission(request.userAnswers) map {
         case SubmissionSuccessful => Redirect(routes.SessionExpiredController.onPageLoad())
-        case _ =>                    Redirect(routes.SessionExpiredController.onPageLoad())
+        case _ => Redirect(routes.SessionExpiredController.onPageLoad())
       }
   }
 }

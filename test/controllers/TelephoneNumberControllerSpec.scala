@@ -72,10 +72,10 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new TelephoneNumberController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, formProvider, formPartialRetriever, templateRenderer)
-      dataRetrievalAction, new DataRequiredActionImpl, formProvider, addressLookupConnector)
+      dataRetrievalAction, new DataRequiredActionImpl, formProvider, addressLookupConnector, formPartialRetriever, templateRenderer)
 
-  def viewAsString(form: Form[_] = form): String = telephoneNumber(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = form): String =
+    telephoneNumber(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "TelephoneNumberController" must {
 
@@ -101,9 +101,6 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar
           )
       )
 
-//      val result: Future[Result] = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, Some("123456789"))(fakeRequest)
-      //Await.result(connector.getAddress(cacheId = "12345", saveKey = "saveKey", id = "123456789"), 2.second)
-      //val result = Await.result(controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, Some("123456789"))(fakeRequest), 2.seconds)
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, Some("123456789"))(fakeRequest)
       result.map {
         res =>

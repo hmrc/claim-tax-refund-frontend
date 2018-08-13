@@ -154,7 +154,7 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         when(answers.otherBenefit) thenReturn Some(Seq(OtherBenefit("qwerty", "123")))
         when(answers.selectBenefits) thenReturn Some(Seq(Benefits.OTHER_TAXABLE_BENEFIT, Benefits.STATE_PENSION, Benefits.OTHER_TAXABLE_BENEFIT))
 
-        navigator.nextPage(DeleteOtherBenefitId, NormalMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+        navigator.nextPage(DeleteOtherBenefitId, NormalMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
       }
 
       "go to AnyCompanyBenefits from DeleteOther when no companyBenefits are selected and all otherCompanyBenefits have been removed" in {
@@ -175,7 +175,7 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         when(answers.otherCompanyBenefit) thenReturn Some(Seq(OtherCompanyBenefit("qwerty", "123")))
         when(answers.selectCompanyBenefits) thenReturn Some(Seq(CompanyBenefits.OTHER_COMPANY_BENEFIT, CompanyBenefits.FUEL_BENEFIT))
 
-        navigator.nextPage(DeleteOtherCompanyBenefitId, NormalMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+        navigator.nextPage(DeleteOtherCompanyBenefitId, NormalMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
       }
 
 
@@ -197,7 +197,7 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         when(answers.otherTaxableIncome) thenReturn Some(Seq(OtherTaxableIncome("qwerty", "123")))
         when(answers.selectTaxableIncome) thenReturn Some(Seq(TaxableIncome.OTHER_TAXABLE_INCOME, TaxableIncome.FOREIGN_INCOME))
 
-        navigator.nextPage(DeleteOtherTaxableIncomeId, NormalMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+        navigator.nextPage(DeleteOtherTaxableIncomeId, NormalMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
       }
     }
 

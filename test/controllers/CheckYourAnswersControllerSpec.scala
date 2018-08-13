@@ -44,8 +44,16 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with MockitoSuga
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap,
                  addressLookupConnector: AddressLookupConnector, submissionService: SubmissionService = FakeSuccessfulSubmissionService) =
-    new CheckYourAnswersController(frontendAppConfig, messagesApi, FakeDataCacheConnector, FakeAuthAction, dataRetrievalAction,
-       new DataRequiredActionImpl, submissionService, formPartialRetriever, templateRenderer)
+    new CheckYourAnswersController(
+      frontendAppConfig, messagesApi,
+      FakeDataCacheConnector, FakeAuthAction,
+      dataRetrievalAction,
+      new DataRequiredActionImpl,
+      addressLookupConnector: AddressLookupConnector,
+      submissionService,
+      formPartialRetriever,
+      templateRenderer
+    )
 
   private lazy implicit val addressLookupConnector: AddressLookupConnector = app.injector.instanceOf[AddressLookupConnector]
 
