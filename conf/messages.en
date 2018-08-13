@@ -12,6 +12,9 @@ error.number = Please enter a valid number
 error.required = Please enter a value
 error.summary.title = There is a problem
 error.summary.text = Check the following
+error.generic.title = There is a problem with the service
+error.generic.message1 = Try again later.
+error.generic.message2 = We have not saved your answers. When the service is available, you will have to start again.
 
 date.day = Day
 date.month = Month
