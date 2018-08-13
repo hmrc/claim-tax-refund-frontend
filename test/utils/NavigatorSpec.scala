@@ -49,6 +49,16 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(EmploymentDetailsId, NormalMode)(answers) mustBe routes.EnterPayeReferenceController.onPageLoad(NormalMode)
       }
 
+      "go to SessionExpired when no employmentDetails is found" in {
+        when(answers.employmentDetails) thenReturn None
+        navigator.nextPage(EmploymentDetailsId, NormalMode)(answers) mustBe routes.SessionExpiredController.onPageLoad()
+      }
+
+      "go to SessionExpired when no employmentDetails is found and in CheckMode" in {
+        when(answers.employmentDetails) thenReturn None
+        navigator.nextPage(EmploymentDetailsId, CheckMode)(answers) mustBe routes.SessionExpiredController.onPageLoad()
+      }
+
       "go to DetailsOfEmploymentOrPension from EnterPayeReference" in {
         navigator.nextPage(EnterPayeReferenceId, NormalMode)(answers) mustBe routes.DetailsOfEmploymentOrPensionController.onPageLoad(NormalMode)
       }
@@ -122,6 +132,72 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
 
       "go to TelephoneNumber from PaymentUKAddress" in {
         navigator.nextPage(PaymentUKAddressId, NormalMode)(answers) mustBe routes.TelephoneNumberController.onPageLoad(NormalMode)
+      }
+
+      //Delete other routes
+
+      "go to AnyBenefits from DeleteOther when no benefits are selected and all otherBenefits have been removed" in {
+        when(answers.otherBenefit) thenReturn Some(Seq.empty)
+        when(answers.selectBenefits) thenReturn Some(Seq(Benefits.OTHER_TAXABLE_BENEFIT))
+
+        navigator.nextPage(DeleteOtherBenefitId, NormalMode)(answers) mustBe routes.AnyBenefitsController.onPageLoad(CheckMode)
+      }
+
+      "go to SelectBenefits from DeleteOther when benefits are selected and all otherBenefits have been removed" in {
+        when(answers.otherBenefit) thenReturn Some(Seq.empty)
+        when(answers.selectBenefits) thenReturn Some(Seq(Benefits.OTHER_TAXABLE_BENEFIT, Benefits.STATE_PENSION, Benefits.OTHER_TAXABLE_BENEFIT))
+
+        navigator.nextPage(DeleteOtherBenefitId, NormalMode)(answers) mustBe routes.SelectBenefitsController.onPageLoad(CheckMode)
+      }
+
+      "go to CYA from DeleteOther when benefits are selected and more than one otherBenefits remains" in {
+        when(answers.otherBenefit) thenReturn Some(Seq(OtherBenefit("qwerty", "123")))
+        when(answers.selectBenefits) thenReturn Some(Seq(Benefits.OTHER_TAXABLE_BENEFIT, Benefits.STATE_PENSION, Benefits.OTHER_TAXABLE_BENEFIT))
+
+        navigator.nextPage(DeleteOtherBenefitId, NormalMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+      }
+
+      "go to AnyCompanyBenefits from DeleteOther when no companyBenefits are selected and all otherCompanyBenefits have been removed" in {
+        when(answers.otherCompanyBenefit) thenReturn Some(Seq.empty)
+        when(answers.selectCompanyBenefits) thenReturn Some(Seq(CompanyBenefits.OTHER_COMPANY_BENEFIT))
+
+        navigator.nextPage(DeleteOtherCompanyBenefitId, NormalMode)(answers) mustBe routes.AnyCompanyBenefitsController.onPageLoad(CheckMode)
+      }
+
+      "go to SelectCompanyBenefits from DeleteOther when other companyBenefits are selected and all otherCompanyBenefits have been removed" in {
+        when(answers.otherCompanyBenefit) thenReturn Some(Seq.empty)
+        when(answers.selectCompanyBenefits) thenReturn Some(Seq(CompanyBenefits.OTHER_COMPANY_BENEFIT, CompanyBenefits.FUEL_BENEFIT))
+
+        navigator.nextPage(DeleteOtherCompanyBenefitId, NormalMode)(answers) mustBe routes.SelectCompanyBenefitsController.onPageLoad(CheckMode)
+      }
+
+      "go to CYA from DeleteOther when companyBenefits are selected and more than one otherCompanyBenefits remains" in {
+        when(answers.otherCompanyBenefit) thenReturn Some(Seq(OtherCompanyBenefit("qwerty", "123")))
+        when(answers.selectCompanyBenefits) thenReturn Some(Seq(CompanyBenefits.OTHER_COMPANY_BENEFIT, CompanyBenefits.FUEL_BENEFIT))
+
+        navigator.nextPage(DeleteOtherCompanyBenefitId, NormalMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+      }
+
+
+      "go to AnyOtherTaxableIncome from DeleteOther when no taxableIncome is selected and all otherTaxableIncome have been removed" in {
+        when(answers.otherTaxableIncome) thenReturn Some(Seq.empty)
+        when(answers.selectTaxableIncome) thenReturn Some(Seq(TaxableIncome.OTHER_TAXABLE_INCOME))
+
+        navigator.nextPage(DeleteOtherTaxableIncomeId, NormalMode)(answers) mustBe routes.AnyTaxableIncomeController.onPageLoad(CheckMode)
+      }
+
+      "go to SelectTaxableIncome from DeleteOther when taxableIncome are selected and all otherTaxableIncome have been removed" in {
+        when(answers.otherTaxableIncome) thenReturn Some(Seq.empty)
+        when(answers.selectTaxableIncome) thenReturn Some(Seq(TaxableIncome.OTHER_TAXABLE_INCOME, TaxableIncome.FOREIGN_INCOME))
+
+        navigator.nextPage(DeleteOtherTaxableIncomeId, NormalMode)(answers) mustBe routes.SelectTaxableIncomeController.onPageLoad(CheckMode)
+      }
+
+      "go to CYA from DeleteOther when taxableIncome are selected and more than one otherTaxableIncome remains" in {
+        when(answers.otherTaxableIncome) thenReturn Some(Seq(OtherTaxableIncome("qwerty", "123")))
+        when(answers.selectTaxableIncome) thenReturn Some(Seq(TaxableIncome.OTHER_TAXABLE_INCOME, TaxableIncome.FOREIGN_INCOME))
+
+        navigator.nextPage(DeleteOtherTaxableIncomeId, NormalMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
       }
     }
 
@@ -199,8 +275,6 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         when(answers.isPaymentAddressInTheUK) thenReturn Some(true)
         navigator.nextPage(IsPaymentAddressInTheUKId, CheckMode)(answers) mustBe routes.PaymentUKAddressController.onPageLoad(CheckMode)
       }
-
-
     }
   }
 }

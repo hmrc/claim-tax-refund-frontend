@@ -28,7 +28,7 @@ class UserAnswers(val cacheMap: CacheMap) {
 
   def userDetails: Option[UserDetails] = cacheMap.getEntry[UserDetails](UserDetailsId.toString)
 
-  def pdfHtml: Option[String]= cacheMap.getEntry[String]("pdfHtml")
+  def pdfHtml: Option[String] = cacheMap.getEntry[String]("pdfHtml")
 
   def metadata: Option[Metadata] = cacheMap.getEntry[Metadata]("metadata")
 
@@ -135,5 +135,5 @@ class UserAnswers(val cacheMap: CacheMap) {
   //------------------------------------------------------------------------------
 
   def anyTelephoneNumber: Option[TelephoneOption] = cacheMap.getEntry[TelephoneOption](AnyTelephoneId.toString)
-
 }
+

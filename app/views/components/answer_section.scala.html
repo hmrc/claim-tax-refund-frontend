@@ -39,7 +39,13 @@
         }
 
         @for((row, i) <- answerSection.rows.zipWithIndex) {
-            @components.answer_row(row, idPath + "-" + i.toString, changeLink)
+
+            @if(row.deleteUrl.isDefined) {
+                @components.answer_row(row, idPath + "-" + i.toString, changeLink, row.deleteUrl)
+            } else {
+                @components.answer_row(row, idPath + "-" + i.toString, changeLink)
+            }
+
         }
 
         @if(answerSection.addLinkText.isDefined && answerSection.addLinkUrl.isDefined) {

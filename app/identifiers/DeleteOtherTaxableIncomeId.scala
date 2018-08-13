@@ -14,13 +14,6 @@
  * limitations under the License.
  */
 
-package models
+package identifiers
 
-import play.api.libs.json.Json
-
-case class OtherCompanyBenefit(name: String, amount: String)
-
-object OtherCompanyBenefit {
-  implicit val format = Json.format[OtherCompanyBenefit]
-  implicit val collectionId = "otherCompanyBenefits"
-}
+case object DeleteOtherTaxableIncomeId extends Identifier

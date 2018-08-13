@@ -114,7 +114,14 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
       otherBenefits.zipWithIndex.flatMap {
         case (benefits, index) =>
           Seq(
-            Some(AnswerRow(benefits.name, s"£${benefits.amount}", answerIsMessageKey = false, routes.OtherBenefitController.onPageLoad(CheckMode, Index(index)).url))
+            Some(AnswerRow(
+              benefits.name,
+              s"£${benefits.amount}",
+              answerIsMessageKey = false,
+              routes.OtherBenefitController.onPageLoad(CheckMode, Index(index)).url,
+              Some(routes.DeleteOtherController.onPageLoad(Index(index), benefits.name, OtherBenefit.collectionId).url)
+            )
+           )
           )
       }
     }
@@ -163,7 +170,14 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
       otherCompanyBenefit.zipWithIndex.flatMap {
         case (companyBenefits, index) =>
           Seq(
-            Some(AnswerRow(companyBenefits.name, s"£${companyBenefits.amount}", answerIsMessageKey = false, routes.OtherCompanyBenefitController.onPageLoad(CheckMode, Index(index)).url))
+            Some(AnswerRow(
+              companyBenefits.name,
+              s"£${companyBenefits.amount}",
+              answerIsMessageKey = false,
+              routes.OtherCompanyBenefitController.onPageLoad(CheckMode, Index(index)).url,
+              Some(routes.DeleteOtherController.onPageLoad(Index(index), companyBenefits.name, OtherCompanyBenefit.collectionId).url)
+            )
+            )
           )
       }
     }
@@ -243,22 +257,23 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
       anyTaxableOtherIncome: Seq[AnyTaxPaid] <- userAnswers.anyTaxableOtherIncome
     } yield {
       (otherTaxableIncome zip anyTaxableOtherIncome).zipWithIndex.flatMap {
-        case (value, index) =>
+        case (taxableIncome, index) =>
           Seq(
             Some(AnswerRow(
-              value._1.name,
-              s"£${value._1.amount}",
+              taxableIncome._1.name,
+              s"£${taxableIncome._1.amount}",
               answerIsMessageKey = false,
-              routes.OtherTaxableIncomeController.onPageLoad(CheckMode, Index(index)).url
+              routes.OtherTaxableIncomeController.onPageLoad(CheckMode, Index(index)).url,
+              Some(routes.DeleteOtherController.onPageLoad(Index(index), taxableIncome._1.name, "otherTaxableIncome").url)
             )),
             anyTaxPaid(
-              messages("anyTaxableOtherIncomeOption.checkYourAnswersLabel", value._1.name),
-              Some(value._2),
+              messages("anyTaxableOtherIncomeOption.checkYourAnswersLabel", taxableIncome._1.name),
+              Some(taxableIncome._2),
               routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode, Index(index)).url
             ),
             taxPaid(
-              messages("anyTaxableOtherIncome.checkYourAnswersLabel", value._1.name),
-              Some(value._2),
+              messages("anyTaxableOtherIncome.checkYourAnswersLabel", taxableIncome._1.name),
+              Some(taxableIncome._2),
               routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode, Index(index)).url
             )
           )
