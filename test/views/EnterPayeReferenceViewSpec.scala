@@ -32,9 +32,9 @@ class EnterPayeReferenceViewSpec extends StringViewBehaviours with MockitoSugar 
 
   override val form: Form[String] = new EnterPayeReferenceForm(appConfig)()
 
-  def createView = () => enterPayeReference(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createView = () => enterPayeReference(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
-  def createViewUsingForm = (form: Form[String]) => enterPayeReference(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[String]) => enterPayeReference(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "EnterPayeReference view" must {
     behave like normalPage(createView, messageKeyPrefix, None)

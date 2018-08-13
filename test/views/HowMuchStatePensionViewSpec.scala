@@ -32,9 +32,9 @@ class HowMuchStatePensionViewSpec extends StringViewBehaviours with MockitoSugar
 
   override val form: Form[String] = new HowMuchStatePensionForm(frontendAppConfig)()
 
-  def createView = () => howMuchStatePension(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createView = () => howMuchStatePension(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
-  def createViewUsingForm = (form: Form[String]) => howMuchStatePension(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[String]) => howMuchStatePension(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "HowMuchStatePension view" must {
     behave like normalPage(createView, messageKeyPrefix, None)

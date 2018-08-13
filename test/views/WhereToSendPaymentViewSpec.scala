@@ -26,9 +26,9 @@ class WhereToSendPaymentViewSpec extends ViewBehaviours {
 
   private val messageKeyPrefix = "whereToSendPayment"
 
-  def createView = () => whereToSendPayment(frontendAppConfig, WhereToSendPaymentForm(), NormalMode)(fakeRequest, messages)
+  def createView = () => whereToSendPayment(frontendAppConfig, WhereToSendPaymentForm(), NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
-  def createViewUsingForm = (form: Form[_]) => whereToSendPayment(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[_]) => whereToSendPayment(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "WhereToSendPayment view" must {
     behave like normalPage(createView, messageKeyPrefix, None)

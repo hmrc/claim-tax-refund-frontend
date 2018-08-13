@@ -30,9 +30,9 @@ class PaymentUKAddressViewSpec extends QuestionViewBehaviours[UkAddress] with Mo
 
   override val form: Form[UkAddress] = new PaymentUKAddressForm(frontendAppConfig)()
 
-  def createView = () => paymentUKAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createView = () => paymentUKAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
-  def createViewUsingForm = (form: Form[UkAddress]) => paymentUKAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[UkAddress]) => paymentUKAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "PaymentUKAddress view" must {
 

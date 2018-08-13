@@ -32,9 +32,9 @@ class EmploymentDetailsViewSpec extends YesNoViewBehaviours {
 
   override val form = new BooleanForm()()
 
-  def createViewUsingForm = (form: Form[_]) => employmentDetails(frontendAppConfig, form, NormalMode, fakeEmployments, taxYear)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[_]) => employmentDetails(frontendAppConfig, form, NormalMode, fakeEmployments, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
-  def createView = () => employmentDetails(frontendAppConfig, form, NormalMode, fakeEmployments, taxYear)(fakeRequest, messages)
+  def createView = () => employmentDetails(frontendAppConfig, form, NormalMode, fakeEmployments, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "EmploymentDetails view" must {
 

@@ -34,9 +34,9 @@ class WhereToSendPaymentControllerSpec extends ControllerSpecBase {
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new WhereToSendPaymentController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl)
+      dataRetrievalAction, new DataRequiredActionImpl, formPartialRetriever, templateRenderer)
 
-  def viewAsString(form: Form[_] = WhereToSendPaymentForm()) = whereToSendPayment(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = WhereToSendPaymentForm()) = whereToSendPayment(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "WhereToSendPayment Controller" must {
 
