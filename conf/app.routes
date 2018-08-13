@@ -221,3 +221,6 @@ GET        /payment-address-correct                                         cont
 POST       /payment-address-correct                                         controllers.PaymentAddressCorrectController.onSubmit(mode: Mode = NormalMode)
 GET        /change-payment-address-correct                                  controllers.PaymentAddressCorrectController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-payment-address-correct                                  controllers.PaymentAddressCorrectController.onSubmit(mode: Mode = CheckMode)
+
+GET        /delete-other-:index                                             controllers.DeleteOtherController.onPageLoad(mode: Mode = NormalMode, index: Index, itemName: String, collectionId: String)
+POST       /delete-other-:index                                             controllers.DeleteOtherController.onSubmit(mode: Mode = NormalMode, index: Index, itemName: String, collectionId: String)

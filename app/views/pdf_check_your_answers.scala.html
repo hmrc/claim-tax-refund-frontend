@@ -53,9 +53,8 @@
         @for((section, i) <- answerSections.zipWithIndex) {
             @{
                 section match {
-                    case a: AnswerSection => components.answer_section(a, i.toString, changeLink = false)
-                    case r: RepeaterAnswerSection => components.repeater_answer_section(r, i.toString, changeLink = false)
-                }
+                    case a: AnswerSection => components.answer_section(a, i.toString
+                    )}
             }
         }
     }

@@ -21,30 +21,24 @@
 @import utils.FormHelpers
 @import viewmodels.InputViewModel
 
-@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: SelectTaxYear, otherCompanyBenefitNames: Seq[String])(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, index: Index, itemName: String, collectionId: String)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("anyOtherCompanyBenefits.title"),
+    title = messages("deleteOther.title", itemName),
     appConfig = appConfig,
-    bodyClasses = None
-) {
+    bodyClasses = None) {
 
-    @helpers.form(action = AnyOtherCompanyBenefitsController.onSubmit(mode), 'autoComplete -> "off") {
+    @helpers.form(action = DeleteOtherController.onSubmit(index, itemName, collectionId), 'autoComplete -> "off") {
 
         @components.back_link()
 
         @components.error_summary(form.errors)
 
-        @components.heading(messages(s"anyOtherCompanyBenefits.heading"), taxYear = Some(taxYear.asString))
-
-        <p class="lede">@messages("global.otherListHeading")</p>
-        @components.list(
-            bulletList = otherCompanyBenefitNames
-        )
+        @components.heading(messages("deleteOther.heading", itemName))
 
         @components.input_yes_no(
             InputViewModel("value", form),
-            label = messages("anyOtherCompanyBenefits.heading", taxYear.asString),
+            label = messages("deleteOther.heading"),
             labelClass = Some("visually-hidden")
         )
 

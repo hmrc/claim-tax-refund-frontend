@@ -51,6 +51,13 @@ class OtherTaxableIncomeFormSpec extends FormBehaviours with MockitoSugar {
       result.get shouldBe OtherTaxableIncome("qwerty", "123")
     }
 
+    "bind successfully with valid name and amount with filter" in {
+      val result: Form[OtherTaxableIncome] =
+        otherTaxableIncomeForm(Seq(OtherTaxableIncome("qwerty", "123")), 0).bind(validData)
+      result.errors.size shouldBe 0
+      result.get shouldBe OtherTaxableIncome("qwerty", "123")
+    }
+
     "fail to bind with missing name" in {
       val result: Form[OtherTaxableIncome] = form.bind(Map("amount" -> "123"))
       result.errors.size shouldBe 1
