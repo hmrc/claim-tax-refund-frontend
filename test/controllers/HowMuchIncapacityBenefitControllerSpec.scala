@@ -38,9 +38,9 @@ class HowMuchIncapacityBenefitControllerSpec extends ControllerSpecBase {
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new HowMuchIncapacityBenefitController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, new HowMuchIncapacityBenefitForm(frontendAppConfig))
+      dataRetrievalAction, new DataRequiredActionImpl, new HowMuchIncapacityBenefitForm(frontendAppConfig), formPartialRetriever, templateRenderer)
 
-  def viewAsString(form: Form[_] = form) = howMuchIncapacityBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = form) = howMuchIncapacityBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "HowMuchIncapacityBenefit Controller" must {
 

@@ -41,10 +41,10 @@ class AnyOtherBenefitsControllerSpec extends ControllerSpecBase {
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyOtherBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, formProvider)
+      dataRetrievalAction, new DataRequiredActionImpl, formProvider, formPartialRetriever, templateRenderer)
 
   def viewAsString(form: Form[_] = form): String =
-    anyOtherBenefits(frontendAppConfig, form, NormalMode, taxYear, otherBenefitNames)(fakeRequest, messages).toString
+    anyOtherBenefits(frontendAppConfig, form, NormalMode, taxYear, otherBenefitNames)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "AnyOtherBenefits Controller" must {
 

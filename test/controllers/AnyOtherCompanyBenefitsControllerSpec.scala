@@ -41,9 +41,9 @@ class AnyOtherCompanyBenefitsControllerSpec extends ControllerSpecBase {
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyOtherCompanyBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, formProvider)
+      dataRetrievalAction, new DataRequiredActionImpl, formProvider, formPartialRetriever, templateRenderer)
 
-  def viewAsString(form: Form[_] = form): String = anyOtherCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear, otherCompanyBenefitNames)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = form): String = anyOtherCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear, otherCompanyBenefitNames)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "AnyOtherCompanyBenefits Controller" must {
 

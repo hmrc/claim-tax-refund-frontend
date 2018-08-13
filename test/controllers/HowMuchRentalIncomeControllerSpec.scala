@@ -38,9 +38,9 @@ class HowMuchRentalIncomeControllerSpec extends ControllerSpecBase {
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new HowMuchRentalIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, new HowMuchRentalIncomeForm(frontendAppConfig))
+      dataRetrievalAction, new DataRequiredActionImpl, new HowMuchRentalIncomeForm(frontendAppConfig), formPartialRetriever, templateRenderer)
 
-  def viewAsString(form: Form[_] = form) = howMuchRentalIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = form) = howMuchRentalIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "HowMuchRentalIncome Controller" must {
 

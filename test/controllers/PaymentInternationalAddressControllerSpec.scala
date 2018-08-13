@@ -34,11 +34,11 @@ class PaymentInternationalAddressControllerSpec extends ControllerSpecBase {
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new PaymentInternationalAddressController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, new PaymentInternationalAddressForm(frontendAppConfig))
+      dataRetrievalAction, new DataRequiredActionImpl, new PaymentInternationalAddressForm(frontendAppConfig), formPartialRetriever, templateRenderer)
 
   val form = new PaymentInternationalAddressForm(frontendAppConfig)()
 
-  def viewAsString(form: Form[InternationalAddress] = form) = paymentInternationalAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
+  def viewAsString(form: Form[InternationalAddress] = form) = paymentInternationalAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "PaymentInternationalAddress Controller" must {
 

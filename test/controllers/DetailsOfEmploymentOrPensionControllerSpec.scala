@@ -32,8 +32,8 @@ class DetailsOfEmploymentOrPensionControllerSpec extends ControllerSpecBase {
   def onwardRoute = routes.IndexController.onPageLoad()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new DetailsOfEmploymentOrPensionController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, new DetailsOfEmploymentOrPensionForm(frontendAppConfig))
+    new DetailsOfEmploymentOrPensionController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute),
+      FakeAuthAction, dataRetrievalAction, new DataRequiredActionImpl, new DetailsOfEmploymentOrPensionForm(frontendAppConfig), formPartialRetriever, templateRenderer)
 
   val testAnswer = "This is some sample text"
   val form = new DetailsOfEmploymentOrPensionForm(frontendAppConfig)()
@@ -42,7 +42,7 @@ class DetailsOfEmploymentOrPensionControllerSpec extends ControllerSpecBase {
   val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
 
 
-  def viewAsString(form: Form[_] = form) = detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = form) = detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "DetailsOfEmploymentOrPension Controller" must {
 

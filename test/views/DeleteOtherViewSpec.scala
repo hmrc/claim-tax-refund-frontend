@@ -33,10 +33,10 @@ class DeleteOtherViewSpec extends YesNoViewBehaviours {
   override val form = new BooleanForm()()
 
   def createView = () =>
-    deleteOther(frontendAppConfig, form, NormalMode, index, itemName, benefitCollectionId)(fakeRequest, messages)
+    deleteOther(frontendAppConfig, form, NormalMode, index, itemName, benefitCollectionId)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   def createViewUsingForm = (form: Form[_]) =>
-    deleteOther(frontendAppConfig, form, NormalMode, index, itemName, benefitCollectionId)(fakeRequest, messages)
+    deleteOther(frontendAppConfig, form, NormalMode, index, itemName, benefitCollectionId)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "DeleteOther view" must {
 

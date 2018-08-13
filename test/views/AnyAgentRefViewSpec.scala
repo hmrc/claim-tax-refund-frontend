@@ -33,9 +33,9 @@ class AnyAgentRefViewSpec extends QuestionViewBehaviours[AnyAgentRef]{
   val formProvider = new AnyAgentReferenceForm()
   val form = formProvider()
 
-  def createView = () => anyAgentRef(frontendAppConfig, form, NormalMode, nomineeName)(fakeRequest, messages)
+  def createView = () => anyAgentRef(frontendAppConfig, form, NormalMode, nomineeName)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
-  def createViewUsingForm = (form: Form[_]) => anyAgentRef(frontendAppConfig, form, NormalMode, nomineeName)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[_]) => anyAgentRef(frontendAppConfig, form, NormalMode, nomineeName)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "AnyAgentRef view" must {
 
@@ -53,7 +53,7 @@ class AnyAgentRefViewSpec extends QuestionViewBehaviours[AnyAgentRef]{
       args = nomineeName
     )
 
-    def yesNoPage(createView: (Form[AnyAgentRef]) => HtmlFormat.Appendable,
+    def yesNoPage(createView: Form[AnyAgentRef] => HtmlFormat.Appendable,
                   messageKeyPrefix: String,
                   expectedFormAction: String,
                   expectedHintTextKey: Option[String],
