@@ -16,6 +16,4 @@
 
 package identifiers
 
-case object DeleteOtherTaxableIncomeId extends Identifier {
-  override def toString: String = "deleteOtherTaxableIncomeId"
-}
+case object DeleteOtherTaxableIncomeId extends Identifier
