@@ -32,9 +32,9 @@ class HowMuchJobseekersAllowanceViewSpec extends StringViewBehaviours with Mocki
 
   override val form: Form[String] = new HowMuchJobseekersAllowanceForm(frontendAppConfig)()
 
-  def createView = () => howMuchJobseekersAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createView = () => howMuchJobseekersAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
-  def createViewUsingForm = (form: Form[String]) => howMuchJobseekersAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[String]) => howMuchJobseekersAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "HowMuchJobseekersAllowance view" must {
     behave like normalPage(createView, messageKeyPrefix, None)

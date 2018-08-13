@@ -35,10 +35,10 @@ class AnyOtherCompanyBenefitsViewSpec extends YesNoViewBehaviours {
   override val form = new BooleanForm()()
 
   def createView: () => Html = () =>
-    anyOtherCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear, otherCompanyBenefitNames)(fakeRequest, messages)
+    anyOtherCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear, otherCompanyBenefitNames)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   def createViewUsingForm: Form[_] => Html = (form: Form[_]) =>
-    anyOtherCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear, otherCompanyBenefitNames)(fakeRequest, messages)
+    anyOtherCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear, otherCompanyBenefitNames)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "AnyOtherCompanyBenefits view" must {
 

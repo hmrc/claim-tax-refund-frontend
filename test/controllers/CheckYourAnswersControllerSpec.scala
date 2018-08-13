@@ -32,7 +32,7 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase {
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap,
                  submissionService: SubmissionService = FakeSuccessfulSubmissionService) =
     new CheckYourAnswersController(frontendAppConfig, messagesApi, FakeDataCacheConnector, FakeAuthAction, dataRetrievalAction,
-       new DataRequiredActionImpl, submissionService)
+       new DataRequiredActionImpl, submissionService, formPartialRetriever, templateRenderer)
 
   "Check Your Answers Controller" must {
     "return 200 and the correct view for a GET" in {

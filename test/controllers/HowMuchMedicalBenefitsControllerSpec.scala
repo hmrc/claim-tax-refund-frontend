@@ -38,9 +38,9 @@ class HowMuchMedicalBenefitsControllerSpec extends ControllerSpecBase {
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new HowMuchMedicalBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, new HowMuchMedicalBenefitsForm(frontendAppConfig))
+      dataRetrievalAction, new DataRequiredActionImpl, new HowMuchMedicalBenefitsForm(frontendAppConfig), formPartialRetriever, templateRenderer)
 
-  def viewAsString(form: Form[_] = form) = howMuchMedicalBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = form) = howMuchMedicalBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "HowMuchMedicalBenefits Controller" must {
 

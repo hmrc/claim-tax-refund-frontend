@@ -41,7 +41,7 @@ class PaymentAddressCorrectControllerSpec extends ControllerSpecBase {
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new PaymentAddressCorrectController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, formProvider)
+      dataRetrievalAction, new DataRequiredActionImpl, formProvider, formPartialRetriever, templateRenderer)
 
   def fakeDataRetrievalActionNoAddress(mockUserAnswers: UserAnswers = MockUserAnswers.claimDetailsUserAnswers) = new DataRetrievalAction {
     override protected def transform[A](request: AuthenticatedRequest[A]): Future[OptionalDataRequest[A]] = {
@@ -57,7 +57,7 @@ class PaymentAddressCorrectControllerSpec extends ControllerSpecBase {
     }
   }
 
-  def viewAsString(form: Form[_] = form) = paymentAddressCorrect(frontendAppConfig, form, NormalMode, itmpAddress)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = form) = paymentAddressCorrect(frontendAppConfig, form, NormalMode, itmpAddress)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "PaymentAddressCorrect Controller" must {
 

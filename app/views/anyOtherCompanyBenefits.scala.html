@@ -20,8 +20,22 @@
 @import models.Mode
 @import utils.FormHelpers
 @import viewmodels.InputViewModel
+@import uk.gov.hmrc.renderer.TemplateRenderer
+@import uk.gov.hmrc.play.partials.FormPartialRetriever
 
-@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: SelectTaxYear, otherCompanyBenefitNames: Seq[String])(implicit request: Request[_], messages: Messages)
+@(
+    appConfig: FrontendAppConfig,
+    form: Form[_],
+    mode: Mode,
+    taxYear: SelectTaxYear,
+    otherCompanyBenefitNames: Seq[String]
+)(
+    implicit
+        request: Request[_],
+        messages: Messages,
+        formPartialRetriever: FormPartialRetriever,
+        templateRenderer: TemplateRenderer
+)
 
 @main_template(
     title = messages("anyOtherCompanyBenefits.title"),

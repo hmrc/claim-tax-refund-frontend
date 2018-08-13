@@ -31,9 +31,10 @@ trait ViewBehaviours extends ViewSpecBase {
       "rendered" must {
         "have the correct banner title" in {
           val doc = asDocument(view())
-          val nav = doc.getElementById("proposition-menu")
-          val span = nav.children.first
-          span.text mustBe messagesApi("site.service_name")
+          //Template as a service handles the test view rendering
+          //that we are passing the required argument to
+          val nav = doc.getElementById("navTitle")
+          nav.text mustBe messagesApi("site.service_name")
         }
 
         "display the correct browser title" in {
@@ -88,7 +89,7 @@ trait ViewBehaviours extends ViewSpecBase {
       "have correct values" in {
         val doc = asDocument(view())
         bulletList.foreach{
-          x=> assertContainsMessages(doc, s"$messageKeyPrefix.$x")
+          x => assertContainsMessages(doc, s"$messageKeyPrefix.$x")
         }
       }
     }

@@ -17,7 +17,6 @@
 package controllers
 
 import javax.inject.Inject
-
 import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
@@ -28,6 +27,8 @@ import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import uk.gov.hmrc.play.partials.FormPartialRetriever
+import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, UserAnswers}
 import views.html.paymentAddressCorrect
 
@@ -40,7 +41,9 @@ class PaymentAddressCorrectController @Inject()(appConfig: FrontendAppConfig,
                                                 authenticate: AuthAction,
                                                 getData: DataRetrievalAction,
                                                 requireData: DataRequiredAction,
-                                                formProvider: BooleanForm) extends FrontendController with I18nSupport {
+                                                formProvider: BooleanForm,
+                                                implicit val formPartialRetriever: FormPartialRetriever,
+                                                implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
 
   private val errorKey = "paymentAddressCorrect.blank"
   val form: Form[Boolean] = formProvider(errorKey)

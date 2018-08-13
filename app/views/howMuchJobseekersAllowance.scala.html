@@ -19,13 +19,27 @@
 @import controllers.routes._
 @import models.Mode
 @import viewmodels.InputViewModel
+@import uk.gov.hmrc.renderer.TemplateRenderer
+@import uk.gov.hmrc.play.partials.FormPartialRetriever
 
-@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, taxYear: SelectTaxYear)(implicit request: Request[_], messages: Messages)
+@(
+    appConfig: FrontendAppConfig,
+    form: Form[_],
+    mode: Mode,
+    taxYear: SelectTaxYear
+)(
+    implicit
+    request: Request[_],
+    messages: Messages,
+    formPartialRetriever: FormPartialRetriever,
+    templateRenderer: TemplateRenderer
+)
 
 @main_template(
     title = messages("howMuchJobseekersAllowance.title"),
     appConfig = appConfig,
-    bodyClasses = None) {
+    bodyClasses = None
+) {
 
     @helpers.form(action = HowMuchJobseekersAllowanceController.onSubmit(mode), 'autoComplete -> "off") {
 

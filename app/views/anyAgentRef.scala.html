@@ -20,13 +20,27 @@
 @import models.Mode
 @import utils.FormHelpers
 @import viewmodels.InputViewModel
+@import uk.gov.hmrc.play.partials.FormPartialRetriever
+@import uk.gov.hmrc.renderer.TemplateRenderer
 
-@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode, nomineeName: String)(implicit request: Request[_], messages: Messages)
+@(
+    appConfig: FrontendAppConfig,
+    form: Form[_],
+    mode: Mode,
+    nomineeName: String
+)(
+    implicit
+        request: Request[_],
+        messages: Messages,
+        formPartialRetriever: FormPartialRetriever,
+        templateRenderer: TemplateRenderer
+)
 
 @main_template(
     title = messages("anyAgentRef.title", nomineeName),
     appConfig = appConfig,
-    bodyClasses = None) {
+    bodyClasses = None
+) {
 
     @helpers.form(action = AnyAgentRefController.onSubmit(mode), 'autoComplete -> "off") {
 

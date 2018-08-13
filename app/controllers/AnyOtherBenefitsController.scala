@@ -27,19 +27,23 @@ import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, Result}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import uk.gov.hmrc.play.partials.FormPartialRetriever
+import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, UserAnswers}
 import views.html.anyOtherBenefits
 
 import scala.concurrent.Future
 
 class AnyOtherBenefitsController @Inject()(appConfig: FrontendAppConfig,
-                                                  override val messagesApi: MessagesApi,
-                                                  dataCacheConnector: DataCacheConnector,
-                                                  navigator: Navigator,
-                                                  authenticate: AuthAction,
-                                                  getData: DataRetrievalAction,
-                                                  requireData: DataRequiredAction,
-                                                  formProvider: BooleanForm) extends FrontendController with I18nSupport {
+                                           override val messagesApi: MessagesApi,
+                                           dataCacheConnector: DataCacheConnector,
+                                           navigator: Navigator,
+                                           authenticate: AuthAction,
+                                           getData: DataRetrievalAction,
+                                           requireData: DataRequiredAction,
+                                           formProvider: BooleanForm,
+                                           implicit val formPartialRetriever: FormPartialRetriever,
+                                           implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
 
   private val errorKey = "anyOtherBenefits.blank"
   val form: Form[Boolean] = formProvider(errorKey)

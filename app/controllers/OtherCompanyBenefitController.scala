@@ -27,21 +27,24 @@ import forms.OtherCompanyBenefitForm
 import identifiers.OtherCompanyBenefitId
 import models.{Index, Mode, OtherCompanyBenefit}
 import play.api.mvc.{Action, AnyContent}
+import uk.gov.hmrc.play.partials.FormPartialRetriever
+import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, SequenceUtil, UserAnswers}
 import views.html.otherCompanyBenefit
 
 import scala.concurrent.Future
 
-class OtherCompanyBenefitController @Inject()(
-                                        appConfig: FrontendAppConfig,
-                                        override val messagesApi: MessagesApi,
-                                        dataCacheConnector: DataCacheConnector,
-                                        navigator: Navigator,
-                                        authenticate: AuthAction,
-                                        getData: DataRetrievalAction,
-                                        requireData: DataRequiredAction,
-                                        sequenceUtil: SequenceUtil[OtherCompanyBenefit],
-                                        formBuilder: OtherCompanyBenefitForm) extends FrontendController with I18nSupport {
+class OtherCompanyBenefitController @Inject()(appConfig: FrontendAppConfig,
+                                              override val messagesApi: MessagesApi,
+                                              dataCacheConnector: DataCacheConnector,
+                                              navigator: Navigator,
+                                              authenticate: AuthAction,
+                                              getData: DataRetrievalAction,
+                                              requireData: DataRequiredAction,
+                                              sequenceUtil: SequenceUtil[OtherCompanyBenefit],
+                                              formBuilder: OtherCompanyBenefitForm,
+                                              implicit val formPartialRetriever: FormPartialRetriever,
+                                              implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
 
 
   def onPageLoad(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData) {

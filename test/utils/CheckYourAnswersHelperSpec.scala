@@ -254,7 +254,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have the correct label and answer" in {
       when(answers.howMuchCarBenefits) thenReturn Some(amount)
       helper.howMuchCarBenefits.get.label.key mustBe s"howMuchCarBenefits.checkYourAnswersLabel"
-      helper.howMuchCarBenefits.get.answer.key mustBe amount
+      helper.howMuchCarBenefits.get.answer.key mustBe s"£$amount"
     }
   }
 
@@ -262,7 +262,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have the correct label and answer" in {
       when(answers.howMuchFuelBenefit) thenReturn Some(amount)
       helper.howMuchFuelBenefit.get.label.key mustBe s"howMuchFuelBenefit.checkYourAnswersLabel"
-      helper.howMuchFuelBenefit.get.answer.key mustBe amount
+      helper.howMuchFuelBenefit.get.answer.key mustBe s"£$amount"
     }
   }
 
@@ -270,7 +270,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have the correct label and answer" in {
       when(answers.howMuchMedicalBenefits) thenReturn Some(amount)
       helper.howMuchMedicalBenefits.get.label.key mustBe s"howMuchMedicalBenefits.checkYourAnswersLabel"
-      helper.howMuchMedicalBenefits.get.answer.key mustBe amount
+      helper.howMuchMedicalBenefits.get.answer.key mustBe s"£$amount"
     }
   }
 
@@ -348,7 +348,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have correct label and answer" in {
       when(answers.howMuchRentalIncome) thenReturn Some(amount)
       helper.howMuchRentalIncome.get.label.key mustBe s"howMuchRentalIncome.checkYourAnswersLabel"
-      helper.howMuchRentalIncome.get.answer.key mustBe amount
+      helper.howMuchRentalIncome.get.answer.key mustBe s"£$amount"
     }
   }
 
@@ -375,7 +375,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have correct label and answer" in {
       when(answers.howMuchBankInterest) thenReturn Some(amount)
       helper.howMuchBankInterest.get.label.key mustBe "howMuchBankInterest.checkYourAnswersLabel"
-      helper.howMuchBankInterest.get.answer.key mustBe amount
+      helper.howMuchBankInterest.get.answer.key mustBe s"£$amount"
     }
   }
 
@@ -402,7 +402,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have correct label and answer" in {
       when(answers.howMuchInvestmentOrDividend) thenReturn Some(amount)
       helper.howMuchInvestmentOrDividend.get.label.key mustBe "howMuchInvestmentOrDividend.checkYourAnswersLabel"
-      helper.howMuchInvestmentOrDividend.get.answer.key mustBe amount
+      helper.howMuchInvestmentOrDividend.get.answer.key mustBe s"£$amount"
     }
   }
 
@@ -428,7 +428,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have correct label and answer" in {
       when(answers.howMuchForeignIncome) thenReturn Some(amount)
       helper.howMuchForeignIncome.get.label.key mustBe "howMuchForeignIncome.checkYourAnswersLabel"
-      helper.howMuchForeignIncome.get.answer.key mustBe amount
+      helper.howMuchForeignIncome.get.answer.key mustBe s"£$amount"
     }
   }
 

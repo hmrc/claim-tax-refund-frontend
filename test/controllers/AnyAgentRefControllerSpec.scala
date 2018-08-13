@@ -42,9 +42,9 @@ class AnyAgentRefControllerSpec extends ControllerSpecBase {
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyAgentRefController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, formProvider)
+      dataRetrievalAction, new DataRequiredActionImpl, formProvider, formPartialRetriever, templateRenderer)
 
-  def viewAsString(form: Form[_] = form) = anyAgentRef(frontendAppConfig, form, NormalMode, nomineeName)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = form) = anyAgentRef(frontendAppConfig, form, NormalMode, nomineeName)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "AnyAgentRef Controller" must {
 
