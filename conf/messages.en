@@ -445,3 +445,11 @@ paymentAddressCorrect.blank = Select yes if you want to send any payment to this
 deleteOther.title = Are you sure you want to remove {0}?
 deleteOther.heading = Are you sure you want to remove {0}?
 deleteOther.blank = Select yes if you want to remove this item
+
+confirmation.title = Claim sent
+confirmation.heading = Claim sent
+confirmation.reference = Your reference number is
+confirmation.whatHappensNext.title = What happens next
+confirmation.whatHappensNext.line1 = We will process your claim within 15 days and contact you by letter or phone.
+confirmation.survey.linkText = What did you think of this service?
+confirmation.survey.time = (takes 30 seconds)

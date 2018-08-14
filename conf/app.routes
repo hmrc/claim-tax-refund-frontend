@@ -224,3 +224,5 @@ POST       /change-payment-address-correct                                  cont
 
 GET        /delete-other-:index                                             controllers.DeleteOtherController.onPageLoad(mode: Mode = NormalMode, index: Index, itemName: String, collectionId: String)
 POST       /delete-other-:index                                             controllers.DeleteOtherController.onSubmit(mode: Mode = NormalMode, index: Index, itemName: String, collectionId: String)
+
+GET        /confirmation                                                    controllers.ConfirmationController.onPageLoad(mode: Mode = NormalMode)
