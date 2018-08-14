@@ -123,15 +123,15 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
 
       "go to TelephoneNumber from PaymentAddressCorrect when Yes is selected" in {
         when(answers.paymentAddressCorrect) thenReturn Some(true)
-        navigator.nextPage(PaymentAddressCorrectId, NormalMode)(answers) mustBe routes.TelephoneNumberController.onPageLoad(NormalMode)
+        navigator.nextPage(PaymentAddressCorrectId, NormalMode)(answers) mustBe routes.TelephoneNumberController.onPageLoad(NormalMode, None)
       }
 
       "go to TelephoneNumber from PaymentInternationalAddress" in {
-        navigator.nextPage(PaymentInternationalAddressId, NormalMode)(answers) mustBe routes.TelephoneNumberController.onPageLoad(NormalMode)
+        navigator.nextPage(PaymentInternationalAddressId, NormalMode)(answers) mustBe routes.TelephoneNumberController.onPageLoad(NormalMode, None)
       }
 
       "go to TelephoneNumber from PaymentUKAddress" in {
-        navigator.nextPage(PaymentUKAddressId, NormalMode)(answers) mustBe routes.TelephoneNumberController.onPageLoad(NormalMode)
+        navigator.nextPage(PaymentUKAddressId, NormalMode)(answers) mustBe routes.TelephoneNumberController.onPageLoad(NormalMode, None)
       }
 
       //Delete other routes
@@ -154,7 +154,7 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         when(answers.otherBenefit) thenReturn Some(Seq(OtherBenefit("qwerty", "123")))
         when(answers.selectBenefits) thenReturn Some(Seq(Benefits.OTHER_TAXABLE_BENEFIT, Benefits.STATE_PENSION, Benefits.OTHER_TAXABLE_BENEFIT))
 
-        navigator.nextPage(DeleteOtherBenefitId, NormalMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+        navigator.nextPage(DeleteOtherBenefitId, NormalMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
       }
 
       "go to AnyCompanyBenefits from DeleteOther when no companyBenefits are selected and all otherCompanyBenefits have been removed" in {
@@ -175,7 +175,7 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         when(answers.otherCompanyBenefit) thenReturn Some(Seq(OtherCompanyBenefit("qwerty", "123")))
         when(answers.selectCompanyBenefits) thenReturn Some(Seq(CompanyBenefits.OTHER_COMPANY_BENEFIT, CompanyBenefits.FUEL_BENEFIT))
 
-        navigator.nextPage(DeleteOtherCompanyBenefitId, NormalMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+        navigator.nextPage(DeleteOtherCompanyBenefitId, NormalMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
       }
 
 
@@ -197,7 +197,7 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         when(answers.otherTaxableIncome) thenReturn Some(Seq(OtherTaxableIncome("qwerty", "123")))
         when(answers.selectTaxableIncome) thenReturn Some(Seq(TaxableIncome.OTHER_TAXABLE_INCOME, TaxableIncome.FOREIGN_INCOME))
 
-        navigator.nextPage(DeleteOtherTaxableIncomeId, NormalMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+        navigator.nextPage(DeleteOtherTaxableIncomeId, NormalMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
       }
     }
 
@@ -206,20 +206,20 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
     "in Check mode" must {
       "go to CheckYourAnswers from an identifier that doesn't exist in the edit route map" in {
         case object UnknownIdentifier extends Identifier
-        navigator.nextPage(UnknownIdentifier, CheckMode)(mock[UserAnswers]) mustBe routes.CheckYourAnswersController.onPageLoad()
+        navigator.nextPage(UnknownIdentifier, CheckMode)(mock[UserAnswers]) mustBe routes.CheckYourAnswersController.onPageLoad(None)
       }
 
       //Claim details section
 
       "go to CYA when Employment details is (yes)" in {
         when(answers.employmentDetails) thenReturn Some(true)
-        navigator.nextPage(EmploymentDetailsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+        navigator.nextPage(EmploymentDetailsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
       }
 
       "when the answer hasn't changed return the user to checkYourAnswer" in {
         when(answers.enterPayeReference) thenReturn Some("123/AB1234")
         when(answers.employmentDetails) thenReturn Some(false)
-        navigator.nextPage(EmploymentDetailsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+        navigator.nextPage(EmploymentDetailsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
       }
 
       "go to Enter PAYE reference when Employment details is (no) and no previous answers" in {
@@ -234,11 +234,11 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
 
       "go to CYA from Enter PAYE reference if details of employment or pension is present" in {
         when(answers.detailsOfEmploymentOrPension) thenReturn Some("employment details")
-        navigator.nextPage(EnterPayeReferenceId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+        navigator.nextPage(EnterPayeReferenceId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
       }
 
       "go to CYA from DetailsOfEmploymentOrPensionController" in {
-        navigator.nextPage(DetailsOfEmploymentOrPensionId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+        navigator.nextPage(DetailsOfEmploymentOrPensionId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
       }
 
       //Payment details section

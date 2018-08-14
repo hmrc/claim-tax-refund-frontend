@@ -16,12 +16,13 @@
 
 package base
 
-import config.{CtrFormPartialRetriever, FrontendAppConfig}
+import config.{AddressLookupConfig, CtrFormPartialRetriever, FrontendAppConfig}
 import org.scalatest.mockito.MockitoSugar
 import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice._
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.Injector
+import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.RequestHeader
 import play.api.test.FakeRequest
 import play.twirl.api.Html
@@ -36,9 +37,11 @@ trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with MockitoSugar {
 
   def frontendAppConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
 
+  def addressLookupConfig: AddressLookupConfig = injector.instanceOf[AddressLookupConfig]
+
   def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
 
-  def fakeRequest = FakeRequest("", "")
+  def fakeRequest = FakeRequest(method = "", path = "")
 
   def messages: Messages = messagesApi.preferred(fakeRequest)
 
@@ -54,6 +57,11 @@ trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with MockitoSugar {
     Some("United Kingdom"),
     Some("UK")
   )
+
+  val testResponseAddress: JsValue = {
+    Json.parse(input = "{\n\"auditRef\":\"e9e2fb3f-268f-4c4c-b928-3dc0b17259f2\",\n\"address\":{\n\"lines\":[\n\"Line1\",\n\"Line2\",\n\"Line3\",\n\"Line4\"\n],\n \"postcode\":\"NE1 1LX\",\n\"country\":{\n\"code\":\"GB\",\n\"name\":\"United Kingdom\"\n}\n}\n}")
+  }
+
 
   implicit val formPartialRetriever: CtrFormPartialRetriever =
     new MockCtrFormPartialRetriever(httpGet = mock[HttpClient], sessionCookieCrypto = mock[SessionCookieCrypto])

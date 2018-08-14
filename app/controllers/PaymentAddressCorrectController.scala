@@ -22,6 +22,7 @@ import connectors.DataCacheConnector
 import controllers.actions._
 import forms.BooleanForm
 import identifiers.PaymentAddressCorrectId
+import javax.inject.Inject
 import models.{Mode, NormalMode}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -59,7 +60,8 @@ class PaymentAddressCorrectController @Inject()(appConfig: FrontendAppConfig,
         case Some(address) if address.line1.exists(_.trim.nonEmpty) &&
           (address.postCode.exists(_.trim.nonEmpty) || address.countryName.exists(_.trim.nonEmpty)) =>
             Ok(paymentAddressCorrect(appConfig, preparedForm, mode, address))
-        case _ => Redirect(routes.IsPaymentAddressInTheUKController.onPageLoad(mode))
+        case _ =>
+          Redirect(routes.IsPaymentAddressInTheUKController.onPageLoad(mode))
       }
   }
 

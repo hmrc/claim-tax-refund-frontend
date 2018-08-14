@@ -78,6 +78,7 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.isPaymentAddressInTheUK) thenReturn None
     when(answers.paymentUKAddress) thenReturn None
     when(answers.paymentInternationalAddress) thenReturn None
+    when(answers.paymentLookupAddress) thenReturn None
 
     //contact details
     when(answers.anyTelephoneNumber) thenReturn None
@@ -87,7 +88,7 @@ object MockUserAnswers extends MockitoSugar {
 
   def minimalValidUserAnswers: UserAnswers = {
     val answers = nothingAnswered
-    val metadata = new Metadata("test_case")
+    val metadata = new Metadata(customerId = "test_case")
 
     when(answers.selectTaxYear) thenReturn Some(CYMinus2)
     when(answers.employmentDetails) thenReturn Some(true)

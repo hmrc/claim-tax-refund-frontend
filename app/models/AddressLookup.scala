@@ -1,0 +1,50 @@
+/*
+ * Copyright 2018 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package models
+
+import play.api.libs.json._
+
+case class Country (name: Option[String], code: Option[String])
+
+object Country {
+  implicit val format = Json.format[Country]
+}
+
+case class Address (lines: Option[Seq[String]],
+                    postcode: Option[String],
+                    country: Option[Country])
+
+object Address {
+  implicit val format = Json.format[Address]
+}
+
+final case class AddressLookup (address: Option[Address], auditRef: Option[String])
+
+object AddressLookup {
+  implicit val format = Json.format[AddressLookup]
+
+    def completedAddress(a: AddressLookup): Seq[String] = Seq (
+     a.address.get.lines.get :+
+     a.address.get.postcode.get :+
+     a.address.get.country.get.name.get :+
+     a.address.get.country.get.code.get
+  ).flatten
+
+  def asString(a: AddressLookup): String = completedAddress(a).mkString("<br>")
+}
+
+
