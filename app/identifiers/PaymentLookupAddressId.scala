@@ -14,20 +14,8 @@
  * limitations under the License.
  */
 
-package models
+package identifiers
 
-import javax.inject.Inject
-
-import controllers.routes
-import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.play.audit.AuditExtensions._
-import uk.gov.hmrc.play.audit.model.DataEvent
-
-class SubmissionEvent @Inject()(data: Map[String, String])(implicit hc: HeaderCarrier)
-  extends DataEvent(
-    auditSource = "claim-tax-refund-frontend",
-    auditType = "submission",
-    detail = hc.toAuditDetails(data.toSeq :_*),
-    tags = hc.toAuditTags(
-      "Submission from Claim Tax Refund Frontend",
-      routes.CheckYourAnswersController.onPageLoad(None).url))
+final case object PaymentLookupAddressId extends Identifier {
+  override def toString: String = "lookupPaymentAddress"
+}

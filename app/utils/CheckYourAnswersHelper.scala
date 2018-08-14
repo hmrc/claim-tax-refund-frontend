@@ -338,7 +338,8 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
     x =>
       AnswerRow("paymentUKAddress.checkYourAnswersLabel",
         UkAddress.asString(
-          UkAddress(x.addressLine1,
+          UkAddress(
+            x.addressLine1,
             x.addressLine2,
             x.addressLine3,
             x.addressLine4,
@@ -351,7 +352,8 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
     x =>
       AnswerRow("paymentInternationalAddress.checkYourAnswersLabel",
         InternationalAddress.asString(
-          InternationalAddress(x.addressLine1,
+          InternationalAddress(
+            x.addressLine1,
             x.addressLine2,
             x.addressLine3,
             x.addressLine4,
@@ -360,6 +362,19 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
         false, routes.PaymentInternationalAddressController.onPageLoad(CheckMode).url)
   }
 
+  def paymentLookupAddress: Option[AnswerRow] = userAnswers.paymentLookupAddress map {
+    x =>
+      AnswerRow(
+        "addressLookup.checkYourAnswersLabel",
+        AddressLookup.asString(
+          AddressLookup(
+            x.address,
+            x.auditRef)
+        ),
+        false,
+        routes.IsPaymentAddressInTheUKController.onPageLoad(CheckMode).url
+      )
+  }
 
   //Contact details
   //------------------------------------------------------------------
@@ -373,7 +388,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
           case TelephoneOption.No => "site.no"
         },
         false,
-        routes.TelephoneNumberController.onPageLoad(CheckMode).url
+        routes.TelephoneNumberController.onPageLoad(CheckMode, None).url
       )
   }
 
@@ -382,7 +397,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
       Some(AnswerRow("telephoneNumber.checkYourAnswersLabel",
         s"$number",
         false,
-        routes.TelephoneNumberController.onPageLoad(CheckMode).url
+        routes.TelephoneNumberController.onPageLoad(CheckMode, None).url
       ))
     case _ => None
   }

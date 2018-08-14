@@ -53,6 +53,7 @@ class FrontendAppConfig @Inject()(override val runModeConfiguration: Configurati
   lazy val loginUrl: String = loadConfig("urls.login")
   lazy val loginContinueUrl: String = loadConfig("urls.loginContinue")
   lazy val dmiUrl: String = baseUrl("digital-mail-integration")
+  lazy val addressLookupUrl = baseUrl(serviceName = "address-lookup-frontend")
 
   lazy val taiUrl: String = baseUrl("tai")
 

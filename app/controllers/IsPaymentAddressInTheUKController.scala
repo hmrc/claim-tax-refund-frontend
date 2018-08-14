@@ -17,14 +17,19 @@
 package controllers
 
 import config.FrontendAppConfig
-import connectors.DataCacheConnector
+import connectors.{AddressLookupConnector, DataCacheConnector}
 import controllers.actions._
 import forms.BooleanForm
+import identifiers.{IsPaymentAddressInTheUKId, PaymentLookupAddressId}
 import javax.inject.Inject
+import models.Mode
 import identifiers.IsPaymentAddressInTheUKId
 import models.Mode
+import models.{CheckMode, Mode, NormalMode, SelectTaxYear}
+import play.api.Logger
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import uk.gov.hmrc.renderer.TemplateRenderer
@@ -41,29 +46,45 @@ class IsPaymentAddressInTheUKController @Inject()(appConfig: FrontendAppConfig,
                                                   getData: DataRetrievalAction,
                                                   requireData: DataRequiredAction,
                                                   formProvider: BooleanForm,
+                                                  addressLookup: AddressLookupConnector,
                                                   implicit val formPartialRetriever: FormPartialRetriever,
                                                   implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
 
   private val errorKey = "isPaymentAddressInTheUK.blank"
+
   val form: Form[Boolean] = formProvider(errorKey)
 
-  def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
       val preparedForm = request.userAnswers.isPaymentAddressInTheUK match {
         case None => form
         case Some(value) => form.fill(value)
       }
-      Ok(isPaymentAddressInTheUK(appConfig, preparedForm, mode))
+
+      val continueUrl = navigator.nextPage(PaymentLookupAddressId, mode)(new UserAnswers(request.userAnswers.cacheMap)).absoluteURL()
+
+      val addressInit = for {
+        result: Option[String] <- addressLookup.initialise(continueUrl = continueUrl)
+      } yield {
+        result map (
+          url => Redirect(url)
+        )
+      }
+
+      addressInit.map(_.getOrElse(
+        Ok(isPaymentAddressInTheUK(appConfig, preparedForm, mode))
+      ))
   }
 
-  def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
       form.bindFromRequest().fold(
         (formWithErrors: Form[_]) =>
           Future.successful(BadRequest(isPaymentAddressInTheUK(appConfig, formWithErrors, mode))),
-        (value) =>
+        value =>
           dataCacheConnector.save[Boolean](request.externalId, IsPaymentAddressInTheUKId.toString, value).map(cacheMap =>
-            Redirect(navigator.nextPage(IsPaymentAddressInTheUKId, mode)(new UserAnswers(cacheMap))))
+            Redirect(navigator.nextPage(IsPaymentAddressInTheUKId, mode)(new UserAnswers(cacheMap)))
+          )
       )
   }
 }

@@ -16,54 +16,103 @@
 
 package controllers
 
-import connectors.FakeDataCacheConnector
+import com.github.tomakehurst.wiremock.client.WireMock._
+import connectors._
 import controllers.actions._
 import forms.TelephoneNumberForm
-import identifiers.{AnyTelephoneId, TelephoneNumberId}
-import models.{NormalMode, TelephoneOption}
+import identifiers._
+import models._
+import models.requests.DataRequest
 import org.mockito.Mockito.when
+import org.scalatest.concurrent.ScalaFutures
+import org.scalatest.mockito.MockitoSugar
+import play.api.Application
 import play.api.data.Form
-import play.api.libs.json.{JsBoolean, JsString, Json}
-import play.api.test.Helpers._
-import utils.{FakeNavigator, MockUserAnswers}
+import play.api.inject.guice.GuiceApplicationBuilder
+import play.api.libs.json._
+import play.api.mvc._
+import play.api.test.Helpers.{status, _}
+import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.play.bootstrap.http.HttpClient
+import utils._
 import views.html.telephoneNumber
 
-class TelephoneNumberControllerSpec extends ControllerSpecBase {
+import scala.concurrent._
+import scala.concurrent.duration._
 
-  def onwardRoute = routes.IndexController.onPageLoad()
+class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar with WireMockHelper with ScalaFutures {
 
-  val testAnswer = "0191 111 1111"
-  val formProvider = new TelephoneNumberForm()
-  val form = formProvider()
-  val validYesData = Map(AnyTelephoneId.toString -> Json.obj(AnyTelephoneId.toString -> JsBoolean(true), TelephoneNumberId.toString -> JsString(testAnswer)))
-  val validNoData = Map(AnyTelephoneId.toString -> Json.obj(AnyTelephoneId.toString -> JsBoolean(false)))
-  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
+  override implicit lazy val app: Application =
+    new GuiceApplicationBuilder()
+      .configure(
+        conf = "microservice.services.address-lookup-frontend.port" -> server.port
+      )
+      .build()
+
+  def onwardRoute: Call = routes.IndexController.onPageLoad()
+
+  implicit val hc: HeaderCarrier = HeaderCarrier()
+  implicit val ec: ExecutionContext = mock[ExecutionContext]
+  implicit val request: Request[_] = mock[Request[_]]
+  implicit val dataCacheConnector: FakeDataCacheConnector.type = FakeDataCacheConnector
+  implicit val dataRequest: DataRequest[_] =  mock[DataRequest[AnyContent]]
+
+  lazy val testAnswer = "0191 111 1111"
+  lazy val formProvider = new TelephoneNumberForm()
+  lazy val form = formProvider()
+  lazy val httpMock: HttpClient = mock[HttpClient]
+  private lazy implicit val addressLookupConnector: AddressLookupConnector = app.injector.instanceOf[AddressLookupConnector]
+
+
+  lazy val validYesData =
+    Map(AnyTelephoneId.toString -> Json.obj(AnyTelephoneId.toString -> JsBoolean(true), TelephoneNumberId.toString -> JsString(testAnswer)))
+  lazy val validNoData = Map(AnyTelephoneId.toString -> Json.obj(AnyTelephoneId.toString -> JsBoolean(false)))
+  private lazy val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
+
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new TelephoneNumberController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, formProvider, formPartialRetriever, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl, formProvider, addressLookupConnector, formPartialRetriever, templateRenderer)
 
-  def viewAsString(form: Form[_] = form) = telephoneNumber(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+  def viewAsString(form: Form[_] = form): String =
+    telephoneNumber(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "TelephoneNumberController" must {
 
     "return OK and the correct view for a GET" in {
-      val result = controller(fakeDataRetrievalAction()).onPageLoad(NormalMode)(fakeRequest)
-
+      val result: Future[Result] = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, None)(fakeRequest)
       status(result) mustBe OK
-      contentAsString(result) mustBe viewAsString()
     }
 
     "populate the view correctly on a GET when YES has previously been answered" in {
       when(mockUserAnswers.anyTelephoneNumber).thenReturn(Some(TelephoneOption.Yes(testAnswer)))
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, None)(fakeRequest)
 
       contentAsString(result) mustBe viewAsString(form.fill(TelephoneOption.Yes(testAnswer)))
     }
 
+    "when ID is available get an address and continue loading" in {
+      server.stubFor(
+        get(urlEqualTo("/api/confirmed?id=123456789"))
+          .willReturn(
+            aResponse()
+              .withStatus(200)
+              .withBody(testResponseAddress.toString)
+          )
+      )
+
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, Some("123456789"))(fakeRequest)
+      result.map {
+        res =>
+          res mustBe OK
+      }
+      status(result) mustBe OK
+    }
+
+
     "populate the view correctly on a GET when NO has previously been answered" in {
       when(mockUserAnswers.anyTelephoneNumber).thenReturn(Some(TelephoneOption.No))
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, None)(fakeRequest)
 
       contentAsString(result) mustBe viewAsString(form.fill(TelephoneOption.No))
     }
@@ -95,7 +144,7 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase {
     }
 
     "redirect to Session Expired for a GET if no existing data is found" in {
-      val result = controller(dontGetAnyData).onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(dontGetAnyData).onPageLoad(NormalMode, None)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
@@ -107,6 +156,12 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase {
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+    }
+
+    "stay on this page in CheckMode when no ID in URL" in {
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(CheckMode, None)(fakeRequest)
+
+      status(result) mustBe OK
     }
   }
 }
