@@ -18,7 +18,11 @@ package models
 
 import play.api.libs.json.{Format, Json}
 
-case class OtherTaxableIncome (name: String, amount: String)
+import scala.xml.Elem
+
+case class OtherTaxableIncome (name: String, amount: String){
+  def toXml: Elem = <taxableIncome><name>{name}</name><amount>{amount}</amount></taxableIncome>
+}
 
 object OtherTaxableIncome {
   implicit val formats: Format[OtherTaxableIncome] = Json.format[OtherTaxableIncome]

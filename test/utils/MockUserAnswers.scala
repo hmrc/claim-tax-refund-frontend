@@ -90,6 +90,7 @@ object MockUserAnswers extends MockitoSugar {
     val answers = nothingAnswered
     val metadata = new Metadata(customerId = "test_case")
 
+    when(answers.userDetails) thenReturn Some(UserDetails("TestName", "ZZ123456A", UkAddress("Line 1", "Line2", None, None, None, "NE1 1LS")))
     when(answers.selectTaxYear) thenReturn Some(CYMinus2)
     when(answers.employmentDetails) thenReturn Some(true)
     when(answers.anyBenefits) thenReturn Some(false)
@@ -220,4 +221,79 @@ object MockUserAnswers extends MockitoSugar {
     answers
   }
 
+  def fullValidUserAnswers: UserAnswers = {
+    val answers = nothingAnswered
+
+    val metadata = new Metadata(customerId = "test_case")
+
+    when(answers.userDetails) thenReturn Some(UserDetails("TestName", "ZZ123456A", UkAddress("Line 1", "Line2", None, None, None, "NE1 1LS")))
+    when(answers.selectTaxYear) thenReturn Some(CYMinus2)
+    when(answers.employmentDetails) thenReturn Some(true)
+
+    when(answers.anyBenefits) thenReturn Some(true)
+    when(answers.selectBenefits) thenReturn Some(
+      Seq(Benefits.CARERS_ALLOWANCE,
+        Benefits.BEREAVEMENT_ALLOWANCE,
+        Benefits.INCAPACITY_BENEFIT,
+        Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE,
+        Benefits.JOBSEEKERS_ALLOWANCE,
+        Benefits.OTHER_TAXABLE_BENEFIT,
+        Benefits.STATE_PENSION
+      )
+    )
+    when(answers.howMuchBereavementAllowance) thenReturn Some("1234")
+    when(answers.howMuchCarersAllowance) thenReturn Some("1234")
+    when(answers.howMuchJobseekersAllowance) thenReturn Some("1234")
+    when(answers.howMuchEmploymentAndSupportAllowance) thenReturn Some("1234")
+    when(answers.howMuchIncapacityBenefit) thenReturn Some("1234")
+    when(answers.howMuchStatePension) thenReturn Some("1234")
+    when(answers.otherBenefit) thenReturn Some(Seq(OtherBenefit("qwerty", "12"), OtherBenefit("qwerty1", "34"), OtherBenefit("qwerty2", "56")))
+
+    when(answers.anyCompanyBenefits) thenReturn Some(true)
+    when(answers.selectCompanyBenefits) thenReturn Some(
+      Seq(
+        CompanyBenefits.COMPANY_CAR_BENEFIT,
+        CompanyBenefits.MEDICAL_BENEFIT,
+        CompanyBenefits.FUEL_BENEFIT,
+        CompanyBenefits.OTHER_COMPANY_BENEFIT)
+    )
+    when(answers.howMuchCarBenefits) thenReturn Some("1234")
+    when(answers.howMuchMedicalBenefits) thenReturn Some("1234")
+    when(answers.howMuchFuelBenefit) thenReturn Some("1234")
+    when(answers.otherCompanyBenefit) thenReturn Some(Seq(OtherCompanyBenefit("qwerty", "12"), OtherCompanyBenefit("qwerty1", "34"), OtherCompanyBenefit("qwerty2", "56")))
+
+    when(answers.anyTaxableIncome) thenReturn Some(true)
+    when(answers.selectTaxableIncome) thenReturn Some(
+      Seq(
+        TaxableIncome.RENTAL_INCOME,
+        TaxableIncome.BANK_OR_BUILDING_SOCIETY_INTEREST,
+        TaxableIncome.INVESTMENT_OR_DIVIDENDS,
+        TaxableIncome.FOREIGN_INCOME,
+        TaxableIncome.OTHER_TAXABLE_INCOME
+      )
+    )
+    when(answers.howMuchRentalIncome) thenReturn Some("1234")
+    when(answers.anyTaxableRentalIncome) thenReturn Some(AnyTaxPaid.Yes("123"))
+    when(answers.howMuchBankInterest) thenReturn Some("1234")
+    when(answers.anyTaxableBankInterest) thenReturn Some(AnyTaxPaid.Yes("123"))
+    when(answers.howMuchInvestmentOrDividend) thenReturn Some("other company benefit")
+    when(answers.anyTaxableInvestments) thenReturn Some(AnyTaxPaid.Yes("123"))
+    when(answers.howMuchForeignIncome) thenReturn Some("1234")
+    when(answers.anyTaxableForeignIncome) thenReturn Some(AnyTaxPaid.Yes("123"))
+    when(answers.otherTaxableIncome) thenReturn Some(Seq(OtherTaxableIncome("qwerty", "12"), OtherTaxableIncome("qwerty1", "34"), OtherTaxableIncome("qwerty2", "56")))
+    when(answers.anyTaxableOtherIncome) thenReturn Some(Seq(AnyTaxPaid.Yes("123"), AnyTaxPaid.No, AnyTaxPaid.Yes("123")))
+    when(answers.anyOtherTaxableIncome) thenReturn Some(false)
+
+    when(answers.whereToSendPayment) thenReturn Some(Nominee)
+    when(answers.nomineeFullName) thenReturn Some("Nominee")
+    when(answers.anyAgentRef) thenReturn Some(AnyAgentRef.Yes("12341234"))
+    when(answers.isPaymentAddressInTheUK) thenReturn Some(false)
+    when(answers.paymentInternationalAddress) thenReturn Some(InternationalAddress("1","2",None,None,None,"Country"))
+    when(answers.anyTelephoneNumber) thenReturn Some(TelephoneOption.Yes("0191123123"))
+
+    when(answers.pdfHtml) thenReturn Some("<html>Test result</html>")
+    when(answers.metadata) thenReturn Some(metadata)
+
+    answers
+  }
 }
