@@ -43,13 +43,13 @@ class Navigator @Inject()() {
     DetailsOfEmploymentOrPensionId -> (_ => routes.AnyBenefitsController.onPageLoad(NormalMode)),
     //Benefits
     AnyBenefitsId -> anyBenefits(NormalMode),
-    SelectBenefitsId -> selectBenefits(NormalMode),
-    HowMuchBereavementAllowanceId -> selectBenefits(NormalMode),
-    HowMuchCarersAllowanceId -> selectBenefits(NormalMode),
-    HowMuchJobseekersAllowanceId -> selectBenefits(NormalMode),
-    HowMuchIncapacityBenefitId -> selectBenefits(NormalMode),
-    HowMuchEmploymentAndSupportAllowanceId -> selectBenefits(NormalMode),
-    HowMuchStatePensionId -> selectBenefits(NormalMode),
+    SelectBenefitsId -> selectedBenefitsCheck(NormalMode),
+    HowMuchBereavementAllowanceId -> selectedBenefitsCheck(NormalMode),
+    HowMuchCarersAllowanceId -> selectedBenefitsCheck(NormalMode),
+    HowMuchJobseekersAllowanceId -> selectedBenefitsCheck(NormalMode),
+    HowMuchIncapacityBenefitId -> selectedBenefitsCheck(NormalMode),
+    HowMuchEmploymentAndSupportAllowanceId -> selectedBenefitsCheck(NormalMode),
+    HowMuchStatePensionId -> selectedBenefitsCheck(NormalMode),
     OtherBenefitId -> otherBenefits(NormalMode),
     AnyOtherBenefitsId -> anyOtherBenefits,
     //Company benefits
@@ -95,13 +95,13 @@ class Navigator @Inject()() {
     EnterPayeReferenceId -> detailsOfEmploymentCheck,
     //Benefits
     AnyBenefitsId -> anyBenefits(CheckMode),
-    SelectBenefitsId -> selectBenefits(CheckMode),
-    HowMuchBereavementAllowanceId -> selectBenefits(CheckMode),
-    HowMuchCarersAllowanceId -> selectBenefits(CheckMode),
-    HowMuchJobseekersAllowanceId -> selectBenefits(CheckMode),
-    HowMuchIncapacityBenefitId -> selectBenefits(CheckMode),
-    HowMuchEmploymentAndSupportAllowanceId -> selectBenefits(CheckMode),
-    HowMuchStatePensionId -> selectBenefits(CheckMode),
+    SelectBenefitsId -> selectedBenefitsCheck(CheckMode),
+    HowMuchBereavementAllowanceId -> selectedBenefitsCheck(CheckMode),
+    HowMuchCarersAllowanceId -> selectedBenefitsCheck(CheckMode),
+    HowMuchJobseekersAllowanceId -> selectedBenefitsCheck(CheckMode),
+    HowMuchIncapacityBenefitId -> selectedBenefitsCheck(CheckMode),
+    HowMuchEmploymentAndSupportAllowanceId -> selectedBenefitsCheck(CheckMode),
+    HowMuchStatePensionId -> selectedBenefitsCheck(CheckMode),
     OtherBenefitId -> otherBenefits(CheckMode),
     //Company Benefits
     AnyCompanyBenefitsId -> anyCompanyBenefits(CheckMode),
@@ -199,14 +199,17 @@ class Navigator @Inject()() {
 
   private def anyBenefits(mode: Mode)(userAnswers: UserAnswers): Call = userAnswers.anyBenefits match {
     case Some(true)  =>
-      routes.SelectBenefitsController.onPageLoad(mode)
+      userAnswers.selectBenefits match {
+        case None => routes.SelectBenefitsController.onPageLoad(mode)
+        case _ => selectedBenefitsCheck(mode)(userAnswers)
+      }
     case Some(false) =>
       if(mode == NormalMode) routes.AnyCompanyBenefitsController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad(None)
     case None =>
       routes.SessionExpiredController.onPageLoad()
   }
 
-  private def selectBenefits(mode: Mode)(userAnswers: UserAnswers): Call = userAnswers.selectBenefits match {
+  private def selectedBenefitsCheck(mode: Mode)(userAnswers: UserAnswers): Call = userAnswers.selectBenefits match {
     case Some(benefits) =>
       if (benefits.contains(Benefits.BEREAVEMENT_ALLOWANCE) && userAnswers.howMuchBereavementAllowance.isEmpty) {
         routes.HowMuchBereavementAllowanceController.onPageLoad(mode)
@@ -220,7 +223,7 @@ class Navigator @Inject()() {
         routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(mode)
       } else if (benefits.contains(Benefits.STATE_PENSION) && userAnswers.howMuchStatePension.isEmpty) {
         routes.HowMuchStatePensionController.onPageLoad(mode)
-      } else if (benefits.contains(Benefits.OTHER_TAXABLE_BENEFIT)) {
+      } else if (benefits.contains(Benefits.OTHER_TAXABLE_BENEFIT) && userAnswers.otherBenefit.isEmpty) {
         routes.OtherBenefitController.onPageLoad(mode, Index(0))
       } else {
         if (mode == NormalMode) routes.AnyCompanyBenefitsController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad(None)
