@@ -26,6 +26,7 @@ import config.FrontendAppConfig
 import forms.BooleanForm
 import identifiers._
 import models._
+import models.requests.DataRequest
 import play.api.mvc.{Action, AnyContent, Result}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.partials.FormPartialRetriever
@@ -34,6 +35,7 @@ import utils.{Navigator, UserAnswers}
 import views.html.deleteOther
 
 import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
                                       override val messagesApi: MessagesApi,
@@ -61,63 +63,68 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
           Future.successful(BadRequest(deleteOther(appConfig, formWithErrors, mode, index, itemName, collectionId))),
         success = value =>
           if (value) {
-
             collectionId match {
-
               case OtherBenefit.collectionId =>
-
-                val result: Option[Future[Result]] = for {
-                  collection: Seq[OtherBenefit] <- request.userAnswers.otherBenefit
-                } yield {
-                  val newColl: Seq[OtherBenefit] = collection.filterNot(_ == collection(index))
-                  dataCacheConnector.save[Seq[OtherBenefit]](request.externalId, OtherBenefitId.toString, newColl).map(cacheMap =>
-                    Redirect(navigator.nextPage(DeleteOtherBenefitId, mode)(new UserAnswers(cacheMap)))
-                  )
-                }
-
-                result.getOrElse {
-                  Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
-                }
-
+                deleteOtherBenefit(request, mode, index)
               case OtherCompanyBenefit.collectionId =>
-
-                val result: Option[Future[Result]] = for {
-                  collection: Seq[OtherCompanyBenefit] <- request.userAnswers.otherCompanyBenefit
-                } yield {
-                  val newColl: Seq[OtherCompanyBenefit] = collection.filterNot(_ == collection(index))
-                  dataCacheConnector.save[Seq[OtherCompanyBenefit]](request.externalId, OtherCompanyBenefitId.toString, newColl).map(cacheMap =>
-                    Redirect(navigator.nextPage(DeleteOtherCompanyBenefitId, mode)(new UserAnswers(cacheMap)))
-                  )
-                }
-
-                result.getOrElse {
-                  Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
-                }
-
+                deleteOtherCompanyBenefit(request, mode, index)
               case OtherTaxableIncome.collectionId =>
-                val result: Option[Future[Result]] = for {
-                  otherTaxableIncome: Seq[OtherTaxableIncome] <- request.userAnswers.otherTaxableIncome
-                  anyTaxableOtherIncome: Seq[AnyTaxPaid] <- request.userAnswers.anyTaxableOtherIncome
-                } yield {
-                  val newOtherTaxableIncome: Seq[OtherTaxableIncome] = otherTaxableIncome.filterNot(_ == otherTaxableIncome(index))
-                  val newAnyTaxableOtherIncome: Seq[AnyTaxPaid] = anyTaxableOtherIncome.filterNot(_ == anyTaxableOtherIncome(index))
-                  for {
-                    _ <- dataCacheConnector.save[Seq[OtherTaxableIncome]](request.externalId, OtherTaxableIncomeId.toString, newOtherTaxableIncome)
-                    updatedCacheMap: CacheMap <- dataCacheConnector.save[Seq[AnyTaxPaid]](request.externalId, AnyTaxableOtherIncomeId.toString, newAnyTaxableOtherIncome)
-                  } yield
-                    Redirect(navigator.nextPage(DeleteOtherTaxableIncomeId, mode)(new UserAnswers(updatedCacheMap)))
-                }
-                result.getOrElse {
-                  Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
-                }
-
+                deleteOtherTaxableIncome(request, mode, index)
               case _ =>
                 Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
-
             }
           } else {
             Future.successful(Redirect(routes.CheckYourAnswersController.onPageLoad(None)))
           }
       )
+  }
+
+  def deleteOtherBenefit(request: DataRequest[AnyContent], mode: Mode, index: Index): Future[Result] = {
+    val result: Option[Future[Result]] = for {
+      otherBenefit: Seq[OtherBenefit] <- request.userAnswers.otherBenefit
+    } yield {
+      val updatedOtherBenefit: Seq[OtherBenefit] = otherBenefit.patch(index, Seq.empty, 1)
+      dataCacheConnector.save[Seq[OtherBenefit]](request.externalId, OtherBenefitId.toString, updatedOtherBenefit).map(cacheMap =>
+        Redirect(navigator.nextPage(DeleteOtherBenefitId, mode)(new UserAnswers(cacheMap)))
+      )
+    }
+
+    result.getOrElse {
+      Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+    }
+  }
+
+  def deleteOtherCompanyBenefit(request: DataRequest[AnyContent], mode: Mode, index: Index): Future[Result] = {
+    val result: Option[Future[Result]] = for {
+      otherCompanyBenefit: Seq[OtherCompanyBenefit] <- request.userAnswers.otherCompanyBenefit
+    } yield {
+      val updatedOtherCompanyBenefit: Seq[OtherCompanyBenefit] = otherCompanyBenefit.patch(index, Seq.empty, 1)
+      dataCacheConnector.save[Seq[OtherCompanyBenefit]](request.externalId, OtherCompanyBenefitId.toString, updatedOtherCompanyBenefit).map(cacheMap =>
+        Redirect(navigator.nextPage(DeleteOtherCompanyBenefitId, mode)(new UserAnswers(cacheMap)))
+      )
+    }
+
+    result.getOrElse {
+      Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+    }
+  }
+
+  def deleteOtherTaxableIncome(request: DataRequest[AnyContent], mode: Mode, index: Index): Future[Result] = {
+    val result: Option[Future[Result]] = for {
+      otherTaxableIncome: Seq[OtherTaxableIncome] <- request.userAnswers.otherTaxableIncome
+      anyTaxableOtherIncome: Seq[AnyTaxPaid] <- request.userAnswers.anyTaxableOtherIncome
+    } yield {
+      val updatedOtherTaxableIncome: Seq[OtherTaxableIncome] = otherTaxableIncome.patch(index, Seq.empty, 1)
+      val updatedAnyTaxableOtherIncome: Seq[AnyTaxPaid] = anyTaxableOtherIncome.patch(index, Seq.empty, 1)
+      for {
+        _ <- dataCacheConnector.save[Seq[OtherTaxableIncome]](request.externalId, OtherTaxableIncomeId.toString, updatedOtherTaxableIncome)
+        updatedCacheMap: CacheMap <- dataCacheConnector.save[Seq[AnyTaxPaid]](request.externalId, AnyTaxableOtherIncomeId.toString, updatedAnyTaxableOtherIncome)
+      } yield
+        Redirect(navigator.nextPage(DeleteOtherTaxableIncomeId, mode)(new UserAnswers(updatedCacheMap)))
+    }
+
+    result.getOrElse {
+      Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+    }
   }
 }
