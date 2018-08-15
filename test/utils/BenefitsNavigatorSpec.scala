@@ -140,6 +140,11 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
 
           navigator.nextPage(SelectBenefitsId, NormalMode)(answers) mustBe routes.OtherBenefitController.onPageLoad(NormalMode, index = 0)
         }
+
+        "go to AnyCompanyBenefits when all benefits checked and amounts provided" in {
+          val answers = MockUserAnswers.benefitsUserAnswers
+          navigator.nextPage(SelectBenefitsId, NormalMode)(answers) mustBe routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
+        }
       }
 
       "Navigating from HowMuchBereavementAllowance" must {
@@ -256,12 +261,19 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
           when(answers.howMuchCarersAllowance) thenReturn Some ("112.44")
           navigator.nextPage(HowMuchCarersAllowanceId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
         }
+
+        "take you to SelectBenefits from AnyBenefits when Yes is selected and no company benefits selected" in {
+          val answers = MockUserAnswers.benefitsUserAnswers
+          when(answers.anyBenefits) thenReturn Some(true)
+          when(answers.selectBenefits) thenReturn None
+          navigator.nextPage(AnyBenefitsId, CheckMode)(answers) mustBe routes.SelectBenefitsController.onPageLoad(CheckMode)
+        }
       }
 
       "when moving from 'SelectBenefits'" must {
         "go to 'HowMuchBereavement' when 'BEREAVEMENT_ALLOWANCE' selected and HowMuch is empty" in {
           val answers = MockUserAnswers.nothingAnswered
-          when (answers.selectBenefits) thenReturn Some(Seq(
+          when(answers.selectBenefits) thenReturn Some(Seq(
             Benefits.BEREAVEMENT_ALLOWANCE
           ))
           navigator.nextPage(SelectBenefitsId, CheckMode)(answers) mustBe routes.HowMuchBereavementAllowanceController.onPageLoad(CheckMode)
