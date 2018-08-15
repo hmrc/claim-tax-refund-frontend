@@ -75,8 +75,9 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
 
 
       submissionService.ctrSubmission(request.userAnswers) map {
-        case SubmissionSuccessful => Redirect(routes.SessionExpiredController.onPageLoad())
-        case _ => Redirect(routes.SessionExpiredController.onPageLoad())
+        //ToDo remove the newSessions from here as only to allow for testing
+        case SubmissionSuccessful => Redirect(routes.SessionExpiredController.onPageLoad()).withNewSession
+        case _ => Redirect(routes.SessionExpiredController.onPageLoad()).withNewSession
       }
   }
 }

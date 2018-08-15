@@ -48,12 +48,13 @@ class FrontendAppConfig @Inject()(override val runModeConfiguration: Configurati
   lazy val reportAProblemNonJSUrl = s"$contactHost/contact/problem_reports_nonjs?service=$contactFormServiceIdentifier"
   lazy val betaFeedbackUrl = s"$contactHost/contact/beta-feedback"
   lazy val betaFeedbackUnauthenticatedUrl = s"$contactHost/contact/beta-feedback-unauthenticated"
+  lazy val feedbackSurveyUrl: String = loadConfig("urls.feedback-survey")
 
   lazy val authUrl: String = baseUrl("auth")
   lazy val loginUrl: String = loadConfig("urls.login")
   lazy val loginContinueUrl: String = loadConfig("urls.loginContinue")
   lazy val dmiUrl: String = baseUrl("digital-mail-integration")
-  lazy val addressLookupUrl = baseUrl(serviceName = "address-lookup-frontend")
+  lazy val addressLookupUrl: String = baseUrl(serviceName = "address-lookup-frontend")
 
   lazy val taiUrl: String = baseUrl("tai")
 
