@@ -81,10 +81,10 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
 
   def deleteOtherBenefit(request: DataRequest[AnyContent], mode: Mode, index: Index): Future[Result] = {
     val result: Option[Future[Result]] = for {
-      collection: Seq[OtherBenefit] <- request.userAnswers.otherBenefit
+      otherBenefit: Seq[OtherBenefit] <- request.userAnswers.otherBenefit
     } yield {
-      val updatedColl: Seq[OtherBenefit] = collection.filterNot(_ == collection(index))
-      dataCacheConnector.save[Seq[OtherBenefit]](request.externalId, OtherBenefitId.toString, updatedColl).map(cacheMap =>
+      val updatedOtherBenefit: Seq[OtherBenefit] = otherBenefit.patch(index, Seq.empty, 1)
+      dataCacheConnector.save[Seq[OtherBenefit]](request.externalId, OtherBenefitId.toString, updatedOtherBenefit).map(cacheMap =>
         Redirect(navigator.nextPage(DeleteOtherBenefitId, mode)(new UserAnswers(cacheMap)))
       )
     }
@@ -96,10 +96,10 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
 
   def deleteOtherCompanyBenefit(request: DataRequest[AnyContent], mode: Mode, index: Index): Future[Result] = {
     val result: Option[Future[Result]] = for {
-      collection: Seq[OtherCompanyBenefit] <- request.userAnswers.otherCompanyBenefit
+      otherCompanyBenefit: Seq[OtherCompanyBenefit] <- request.userAnswers.otherCompanyBenefit
     } yield {
-      val updatedColl: Seq[OtherCompanyBenefit] = collection.filterNot(_ == collection(index))
-      dataCacheConnector.save[Seq[OtherCompanyBenefit]](request.externalId, OtherCompanyBenefitId.toString, updatedColl).map(cacheMap =>
+      val updatedOtherCompanyBenefit: Seq[OtherCompanyBenefit] = otherCompanyBenefit.patch(index, Seq.empty, 1)
+      dataCacheConnector.save[Seq[OtherCompanyBenefit]](request.externalId, OtherCompanyBenefitId.toString, updatedOtherCompanyBenefit).map(cacheMap =>
         Redirect(navigator.nextPage(DeleteOtherCompanyBenefitId, mode)(new UserAnswers(cacheMap)))
       )
     }
@@ -114,7 +114,7 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
       otherTaxableIncome: Seq[OtherTaxableIncome] <- request.userAnswers.otherTaxableIncome
       anyTaxableOtherIncome: Seq[AnyTaxPaid] <- request.userAnswers.anyTaxableOtherIncome
     } yield {
-      val updatedOtherTaxableIncome: Seq[OtherTaxableIncome] = otherTaxableIncome.filterNot(_ == otherTaxableIncome(index))
+      val updatedOtherTaxableIncome: Seq[OtherTaxableIncome] = otherTaxableIncome.patch(index, Seq.empty, 1)
       val updatedAnyTaxableOtherIncome: Seq[AnyTaxPaid] = anyTaxableOtherIncome.patch(index, Seq.empty, 1)
       for {
         _ <- dataCacheConnector.save[Seq[OtherTaxableIncome]](request.externalId, OtherTaxableIncomeId.toString, updatedOtherTaxableIncome)
