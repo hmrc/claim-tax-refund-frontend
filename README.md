@@ -1,29 +1,47 @@
 # Claim a tax refund frontend
-This project uses an existing HMRC digital form as a template for conversion to a Scala web application using code scaffolds
+This project is a Scala web application for the tax form R39 using [code scaffolds](https://github.com/hmrc/hmrc-frontend-scaffold.g8)
 
-## Adding a page using g8Scaffold
+## Get started
 
-The steps to add a new page are as follows:
+Follow these instructions so you can get a copy of the project on your local machine.  You can use this to develop and test the service.
 
-1. In sbt run `g8Scaffold yesNoPage` or whichever scaffold you want to apply - the options are:
-    1. `intPage` - a page with a single text field for a whole-number value
-    2. `optionsPage` - a page with a set of radio buttons
-    3. `questionPage` - a page with multiple questions on it backed by a case class
-    4. `repeater` - a set of screens to allow multiple items to be added
-    5. `yesNoPage` - a page with a pair of yes/no radio options
-    6. `stringPage` - a page with a single text field for a string value
-2. It will ask for a name which should be CamelCased, e.g. `ChildAgedTwo`.  This will be used throughout, so for example you'll get a `ChildAgedTwoController`, `ChildAgedTwoForm` etc. as needed
-3. Exit sbt and run the script `./migrate.sh`
-4. Run `sbt test`
-5. `git add .` and `git commit` your work at this point
+### Before you get started
 
-You'll then need to touch these areas yourself as needed (and the order is less important):
+This service written in Scala and Play 2.5.  It needs:
 
-* Change `NavigatorSpec` and `Navigator` to include your page in the routing
-* If necessary, change `CascadeUpsertSpec` and `CascadeUpsert` to add any data-cleanup logic you may need
-* Add in the messages, and add any guidance etc. you need to the screen.  You can easily test this in the relevant `ViewSpec`
-* Change the URLs in `app.routes` as necessary
-* If you're using a Check Your Answers page, add the new screen to that and add appropriate tests
-* If you added an `optionsPage` you can change the available options in `forms\<YourClass>Form`
-* If you added a `questionPage` you'll need to change `models\<YourClass>`, `forms\<YourClass>Form` and `views\<yourClass>` as needed, along with the relevant tests and messages
-* If you added an `intPage` you may want to change the validation in `forms\<YourClass>Form` - by default it expects non-negative numbers (0 or greater) which you may want to change, or you may need to add a maximum value etc.
+- at least a [JRE 1.8](http://www.oracle.com/technetwork/java/javase/downloads/index.html) to run
+- [sbt](https://www.scala-sbt.org/) to test, build and run a development version
+- a MongoDB instance running locally or in a docker container with open ports
+- service manager [Service manager setup](https://confluence.tools.tax.service.gov.uk/display/DTRG/04+Service+Manager+Setup)
+
+### How to install
+
+1. Clone this repository to your development environment.
+2. Start the MongoDB instance.
+3. Start all CTR services using serive manager `sm --start CTR_ALL -fo`
+4. Inside the claim-tax-refund-frontend folder run `sbt run` to start the service on port 9969.
+5. Open [http://localhost:9969/claim-tax-refund](http://localhost:9969/claim-tax-refund).
+6. Complete authentication wizard, 
+```diff
+- Nino / Confidence Level 200 / Itmp name are all mandatory fields
+```
+
+These steps will open the first page in the service.
+
+### Adding new pages using scaffolds
+
+In your service's root directory is a hidden directory `.g8`, which contains all of the scaffolds available for you to use.  Each will add a new screen or suite of related screens into your service.
+
+To use a scaffold, run `sbt` in interactive mode and issue the command `g8Scaffold scaffoldName`, e.g. `g8Scaffold yesNoPage`.  The scaffold will ask you for some inputs, and create some new files (e.g. the `yesNoPage` scaffold will create a controller, view, and some specs).
+
+Exit out of `sbt` and run the bash script `migrate.sh` in the root directory of your service.  This will modify a couple of files in the service, including routes and messages.
+
+## Tests
+
+### Unit tests
+
+- Inside the claim-tax-refund-frontend folder run `sbt test` to run unit tests for the service.
+
+## Licence
+
+This project is licensed under the [Apache 2.0 License](LICENSE).
