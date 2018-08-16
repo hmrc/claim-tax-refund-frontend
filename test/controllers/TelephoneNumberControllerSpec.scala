@@ -16,7 +16,6 @@
 
 package controllers
 
-import com.github.tomakehurst.wiremock.client.WireMock._
 import connectors._
 import controllers.actions._
 import forms.TelephoneNumberForm
@@ -89,25 +88,6 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar
 
       contentAsString(result) mustBe viewAsString(form.fill(TelephoneOption.Yes(testAnswer)))
     }
-
-    "when ID is available get an address and continue loading" in {
-      server.stubFor(
-        get(urlEqualTo("/api/confirmed?id=123456789"))
-          .willReturn(
-            aResponse()
-              .withStatus(200)
-              .withBody(testResponseAddress.toString)
-          )
-      )
-
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
-      result.map {
-        res =>
-          res mustBe OK
-      }
-      status(result) mustBe OK
-    }
-
 
     "populate the view correctly on a GET when NO has previously been answered" in {
       when(mockUserAnswers.anyTelephoneNumber).thenReturn(Some(TelephoneOption.No))

@@ -119,7 +119,11 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(IsPaymentAddressInTheUKId, NormalMode)(answers) mustBe routes.PaymentUKAddressController.onPageLoad(NormalMode)
       }
 
-      //Telephone section 3 routes
+      //Telephone section 4 routes
+
+      "go to TelephoneNumber from AddressLookupRoutingCallback" in {
+        navigator.nextPage(PaymentLookupAddressId, NormalMode)(answers) mustBe routes.TelephoneNumberController.onPageLoad(NormalMode)
+      }
 
       "go to TelephoneNumber from PaymentAddressCorrect when Yes is selected" in {
         when(answers.paymentAddressCorrect) thenReturn Some(true)
@@ -274,6 +278,10 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
       "go to PaymentUKAddress from IsPaymentAddressInTheUK when Yes is selected" in {
         when(answers.isPaymentAddressInTheUK) thenReturn Some(true)
         navigator.nextPage(IsPaymentAddressInTheUKId, CheckMode)(answers) mustBe routes.PaymentUKAddressController.onPageLoad(CheckMode)
+      }
+
+      "go to CYA from AddressLookupRoutingCallback" in {
+        navigator.nextPage(PaymentLookupAddressId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
       }
     }
   }
