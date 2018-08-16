@@ -21,13 +21,15 @@ import config.FrontendAppConfig
 import connectors.AddressLookupConnector
 import controllers.actions.{AuthAction, DataRequiredAction, DataRetrievalAction}
 import identifiers.PaymentLookupAddressId
-import models.Mode
+import models.{CheckMode, Mode, NormalMode}
 import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import utils.Navigator
 
 import scala.concurrent.Future
 
 class AddressLookupRoutingController @Inject()(appConfig: FrontendAppConfig,
+                                               navigator: Navigator,
                                                addressLookupConnector: AddressLookupConnector,
                                                authenticate: AuthAction,
                                                getData: DataRetrievalAction,
@@ -40,10 +42,16 @@ class AddressLookupRoutingController @Inject()(appConfig: FrontendAppConfig,
         id =>
           addressLookupConnector.getAddress(request.externalId, PaymentLookupAddressId.toString, id) map {
             _ =>
-              Ok
+              mode match {
+                case NormalMode => Redirect(navigator.nextPage(PaymentLookupAddressId, NormalMode)(request.userAnswers))
+                case CheckMode => Redirect(navigator.nextPage(PaymentLookupAddressId, CheckMode)(request.userAnswers))
+              }
           }
       }.getOrElse {
-        Future.successful(Ok)
+        mode match {
+          case NormalMode => Future.successful(Redirect(navigator.nextPage(PaymentLookupAddressId, mode)(request.userAnswers)))
+          case CheckMode => Future.successful(Redirect(navigator.nextPage(PaymentLookupAddressId, mode)(request.userAnswers)))
+        }
       }
   }
 }
