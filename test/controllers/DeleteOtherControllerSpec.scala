@@ -131,7 +131,7 @@ class DeleteOtherControllerSpec extends ControllerSpecBase {
         .onSubmit(NormalMode, index, itemName, benefitCollectionId)(postRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.CheckYourAnswersController.onPageLoad(None).url)
+      redirectLocation(result) mustBe Some(routes.CheckYourAnswersController.onPageLoad().url)
     }
 
     "redirect to SessionExpired when invalid id provided" in {

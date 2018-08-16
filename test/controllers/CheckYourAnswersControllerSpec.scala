@@ -81,7 +81,7 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with MockitoSuga
               .withBody(testResponseAddress.toString)
           )
       )
-      val result = controller(someData, addressLookupConnector).onPageLoad(Some("123456789"))(fakeRequest)
+      val result = controller(someData, addressLookupConnector).onPageLoad()(fakeRequest)
       result.map {
         res =>
           res mustBe OK

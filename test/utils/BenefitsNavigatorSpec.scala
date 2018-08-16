@@ -249,7 +249,7 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
         "take you to 'CheckYourAnswers' then selecting 'No'" in {
           val answers = MockUserAnswers.nothingAnswered
           when (answers.anyBenefits) thenReturn Some(false)
-          navigator.nextPage(AnyBenefitsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
+          navigator.nextPage(AnyBenefitsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
         }
 
         "take you to 'CheckYourAnswers' when not changing your answer" in {
@@ -259,7 +259,7 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
             Benefits.CARERS_ALLOWANCE
           ))
           when(answers.howMuchCarersAllowance) thenReturn Some ("112.44")
-          navigator.nextPage(HowMuchCarersAllowanceId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
+          navigator.nextPage(HowMuchCarersAllowanceId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
         }
 
         "take you to SelectBenefits from AnyBenefits when Yes is selected and no company benefits selected" in {
@@ -278,7 +278,7 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
           ))
           navigator.nextPage(SelectBenefitsId, CheckMode)(answers) mustBe routes.HowMuchBereavementAllowanceController.onPageLoad(CheckMode)
           when (answers.howMuchBereavementAllowance) thenReturn Some("112.44")
-          navigator.nextPage(SelectBenefitsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
+          navigator.nextPage(SelectBenefitsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
         }
 
         "go to 'CheckYourAnswers' when 'BEREAVEMENT_ALLOWANCE' selected and HowMuch is not empty" in {
@@ -287,7 +287,7 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
             Benefits.BEREAVEMENT_ALLOWANCE
           ))
           when (answers.howMuchBereavementAllowance) thenReturn Some("112.44")
-          navigator.nextPage(SelectBenefitsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
+          navigator.nextPage(SelectBenefitsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
         }
 
         "go to 'HowMuchCareers when 'BEREAVEMENT_ALLOWANCE' and 'CARERS_ALLOWANCE' but CAREERS is empty" in {
@@ -315,21 +315,21 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
       "Navigating from OtherBenefitsName" must {
         "go to CheckYourAnswersController when name and amount stored" in {
           val answers = MockUserAnswers.benefitsUserAnswers
-          navigator.nextPage(OtherBenefitId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
+          navigator.nextPage(OtherBenefitId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
         }
 
         "go to CheckYourAnswersController when no amount stored" in {
           val answers = MockUserAnswers.benefitsUserAnswers
           when(answers.anyOtherBenefits) thenReturn None
 
-          navigator.nextPage(OtherBenefitId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
+          navigator.nextPage(OtherBenefitId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
         }
       }
 
       "Navigating from AnyOtherBenefit" must {
         "go to CheckYourAnswersController when amount stored" in {
           val answers = MockUserAnswers.benefitsUserAnswers
-          navigator.nextPage(AnyOtherBenefitsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
+          navigator.nextPage(AnyOtherBenefitsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
         }
       }
     }
