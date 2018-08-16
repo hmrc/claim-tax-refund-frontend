@@ -18,6 +18,8 @@ package models
 
 import play.api.libs.json._
 
+import scala.xml.Elem
+
 case class InternationalAddress(addressLine1: String,
                                 addressLine2: String,
                                 addressLine3: Option[String],
@@ -28,7 +30,9 @@ case class InternationalAddress(addressLine1: String,
 object InternationalAddress {
   implicit val format = Json.format[InternationalAddress]
 
-  def answeredLines(a: InternationalAddress) = Seq(
+  def toXml(a: InternationalAddress): Elem = <internationalAddress>{answeredLines(a).mkString(", ")}</internationalAddress>
+
+  def answeredLines(a: InternationalAddress): Seq[String] = Seq(
     Some(a.addressLine1),
     Some(a.addressLine2),
     a.addressLine3,
@@ -36,5 +40,5 @@ object InternationalAddress {
     a.addressLine5,
     Some(a.country)).flatten
 
-  def asString(a: InternationalAddress) = answeredLines(a).mkString(", <br>")
+  def asString(a: InternationalAddress): String = answeredLines(a).mkString(", <br>")
 }

@@ -86,18 +86,19 @@
     }
     <paymentSection>
         <whereToSendThePayment>@userAnswers.whereToSendPayment</whereToSendThePayment>
-        @if(userAnswers.paymentAddressCorrect.isDefined){<paymentAddressCorrect>
-        @userAnswers.paymentAddressCorrect</paymentAddressCorrect>}
-        <nomineeFullName>@userAnswers.nomineeFullName</nomineeFullName>
-        <anyAgentRef>@userAnswers.anyAgentRef</anyAgentRef>
-        <agentReference>@userAnswers.anyAgentRef</agentReference>
-        <isPaymentAddressInTheUK>@userAnswers.isPaymentAddressInTheUK</isPaymentAddressInTheUK>
-        <paymentUKAddress>@userAnswers.paymentUKAddress</paymentUKAddress>
-        <paymentInternationalAddress>@userAnswers.paymentInternationalAddress</paymentInternationalAddress>
-        <paymentLookupAddress>@userAnswers.paymentLookupAddress</paymentLookupAddress>
+        @if(userAnswers.paymentAddressCorrect.isDefined){<paymentAddressCorrect>@userAnswers.paymentAddressCorrect</paymentAddressCorrect>}
+        @if(userAnswers.nomineeFullName){<nomineeFullname>@userAnswers.nomineeFullName</nomineeFullname>}
+        @if(robotsXmlHelper.getAnyAgentRef(userAnswers.anyAgentRef.get)){<anyAgentRef>@robotsXmlHelper.getAnyAgentRef(userAnswers.anyAgentRef.get)</anyAgentRef>}
+        @if(robotsXmlHelper.getAnyAgentReference(userAnswers.anyAgentRef.get)){<agentReference>@robotsXmlHelper.getAnyAgentReference(userAnswers.anyAgentRef.get)</agentReference>}
+        @if(userAnswers.isPaymentAddressInTheUK){<isPaymentAddressInTheUK>@userAnswers.isPaymentAddressInTheUK</isPaymentAddressInTheUK>}
+        <paymentAddress>
+        @if(userAnswers.paymentUKAddress){@userAnswers.paymentUKAddress}
+        @if(userAnswers.paymentInternationalAddress){@robotsXmlHelper.getInternationalAddress}
+        @if(userAnswers.paymentLookupAddress){@userAnswers.paymentLookupAddress}
+        </paymentAddress>
     </paymentSection>
     <contactSection>
-        <anyTelephoneNumber>@userAnswers.anyTelephoneNumber</anyTelephoneNumber>
-        <telephoneNumber>@userAnswers.anyTelephoneNumber</telephoneNumber>
+        <anyTelephoneNumber>@robotsXmlHelper.getAnyTelephone(userAnswers.anyTelephoneNumber.get)</anyTelephoneNumber>
+        <telephoneNumber>@robotsXmlHelper.getAnyTelephoneNumber(userAnswers.anyTelephoneNumber.get)</telephoneNumber>
     </contactSection>
 </ctr>
