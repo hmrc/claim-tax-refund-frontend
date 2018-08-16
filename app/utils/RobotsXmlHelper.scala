@@ -16,7 +16,7 @@
 
 package utils
 
-import models.{AnyTaxPaid, OtherBenefit, OtherCompanyBenefit, OtherTaxableIncome}
+import models._
 import play.api.i18n.Messages
 
 import scala.xml.Elem
@@ -26,15 +26,33 @@ class RobotsXmlHelper(userAnswers: UserAnswers)(implicit messages: Messages) {
   def getSelectTaxYear: String = userAnswers.selectTaxYear.get.asString
 
   def getIncomeAmount(userAnswer: AnyTaxPaid): String = userAnswer match {
-    case AnyTaxPaid.Yes(amount) =>
-      s"$amount"
+    case AnyTaxPaid.Yes(amount) => s"$amount"
     case _ => ""
   }
 
   def getAnyIncome(userAnswer: AnyTaxPaid): String = userAnswer match {
-    case AnyTaxPaid.Yes(amount) =>
-      Messages("site.yes")
+    case AnyTaxPaid.Yes(_) => Messages("site.yes")
     case _ => Messages("site.no")
+  }
+
+  def getAnyAgentRef(userAnswer: AnyAgentRef): String = userAnswer match {
+    case AnyAgentRef.Yes(_) => Messages("site.yes")
+    case _ => Messages("site.no")
+  }
+
+  def getAnyAgentReference(userAnswer: AnyAgentRef): String = userAnswer match {
+    case AnyAgentRef.Yes(reference) => s"$reference"
+    case _ => ""
+  }
+
+  def getAnyTelephone(userAnswer: TelephoneOption): String = userAnswer match {
+    case TelephoneOption.Yes(_) => Messages("site.yes")
+    case _ => Messages("site.no")
+  }
+
+  def getAnyTelephoneNumber(userAnswer: TelephoneOption): String = userAnswer match {
+    case TelephoneOption.Yes(number) => s"$number"
+    case _ => ""
   }
 
   def getOtherBenefits(userAnswer: Seq[OtherBenefit]): Elem = {
@@ -51,5 +69,11 @@ class RobotsXmlHelper(userAnswers: UserAnswers)(implicit messages: Messages) {
     val data = <otherTaxableIncome>{userAnswer.map(o => o.toXml)}</otherTaxableIncome>
     data
   }
+
+  def getInternationalAddress: Elem = InternationalAddress.toXml(userAnswers.paymentInternationalAddress.get)
+
+  def getUkAddress: Elem = UkAddress.toXml(userAnswers.paymentUKAddress.get)
+
+  def getLookupAddress: Elem = AddressLookup.toXml(userAnswers.paymentLookupAddress.get)
 
 }

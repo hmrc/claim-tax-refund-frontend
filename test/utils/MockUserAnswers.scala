@@ -289,6 +289,7 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.anyAgentRef) thenReturn Some(AnyAgentRef.Yes("12341234"))
     when(answers.isPaymentAddressInTheUK) thenReturn Some(false)
     when(answers.paymentInternationalAddress) thenReturn Some(InternationalAddress("1","2",None,None,None,"Country"))
+
     when(answers.anyTelephoneNumber) thenReturn Some(TelephoneOption.Yes("0191123123"))
 
     when(answers.pdfHtml) thenReturn Some("<html>Test result</html>")

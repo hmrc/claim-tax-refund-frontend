@@ -18,6 +18,8 @@ import base.SpecBase
 import models.{Address, AddressLookup, Country}
 import play.api.libs.json.Json
 
+import scala.xml.Elem
+
 class AddressLookupSpec extends SpecBase {
   "AddressLookup" must {
     "return correct model when passed Json" in {
@@ -33,6 +35,12 @@ class AddressLookupSpec extends SpecBase {
       )
     }
 
+    "return correct xml when passed address" in {
+      val address: AddressLookup = testAddress.as[AddressLookup]
+      val responseElem: Elem = <lookupAddress>Line1, Line2, Line3, Line4, NE1 1LX, United Kingdom, GB</lookupAddress>
+      AddressLookup.toXml(address) mustBe responseElem
+    }
+
     "return correct string format when passed asString from Json" in {
       val address: AddressLookup = testAddress.as[AddressLookup]
       AddressLookup.asString(address) mustBe "Line1<br>Line2<br>Line3<br>Line4<br>NE1 1LX<br>United Kingdom<br>GB"
@@ -40,7 +48,7 @@ class AddressLookupSpec extends SpecBase {
   }
 
   val testAddress = {
-    Json.parse("{\n    \"auditRef\": \"e9e2fb3f-268f-4c4c-b928-3dc0b17259f2\",\n    \"address\": {\n        \"lines\": [\n            \"Line1\",\n            \"Line2\",\n            \"Line3\",\n            \"Line4\"\n        ],\n        \"postcode\": \"NE1 1LX\",\n        \"country\": {\n            \"code\": \"GB\",\n            \"name\": \"United Kingdom\"\n        }\n    }\n}")
+    Json.parse(input = "{\n    \"auditRef\": \"e9e2fb3f-268f-4c4c-b928-3dc0b17259f2\",\n    \"address\": {\n        \"lines\": [\n            \"Line1\",\n            \"Line2\",\n            \"Line3\",\n            \"Line4\"\n        ],\n        \"postcode\": \"NE1 1LX\",\n        \"country\": {\n            \"code\": \"GB\",\n            \"name\": \"United Kingdom\"\n        }\n    }\n}")
   }
 }
 

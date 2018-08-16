@@ -17,6 +17,7 @@
 package models.templates
 
 import base.SpecBase
+import models.WhereToSendPayment
 import models.templates.xml.robots
 import org.scalatest.mockito.MockitoSugar
 import play.api.Logger
@@ -143,6 +144,35 @@ class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
       foreignIncomeIncomeAmount mustBe <howMuch>1234</howMuch>
       foreignIncomeIncomeAnyTaxPaid mustBe <anyTaxPaid>Yes</anyTaxPaid>
       foreignIncomeIncomeTaxPaidAmount mustBe <taxPaid>123</taxPaid>
+
+    }
+
+    "have correct sections in the paymentSection " in {
+      val nodeSeq: NodeSeq = xmlToNode \\ "paymentSection"
+
+      val whereToSendPayment = nodeSeq.\("whereToSendThePayment").head
+      val nomineeName = nodeSeq.\("nomineeFullname").head
+      val anyAgentRef = nodeSeq.\("anyAgentRef").head
+      val agentRef = nodeSeq.\("agentReference").head
+      val addressInUK = nodeSeq.\("isPaymentAddressInTheUK").head
+      val internationalAddress = nodeSeq.\("paymentAddress").head
+
+      whereToSendPayment mustBe <whereToSendThePayment>nominee</whereToSendThePayment>
+      nomineeName mustBe <nomineeFullname>Nominee</nomineeFullname>
+      anyAgentRef mustBe <anyAgentRef>Yes</anyAgentRef>
+      agentRef mustBe <agentReference>12341234</agentReference>
+      addressInUK mustBe <isPaymentAddressInTheUK>false</isPaymentAddressInTheUK>
+      internationalAddress mustBe <paymentAddress><internationalAddress>1,2,Country</internationalAddress></paymentAddress>
+    }
+
+    "have the correct parts in contact section" in {
+      val nodeSeq: NodeSeq = xmlToNode \\ "contactSection"
+
+      val telephoneOption = nodeSeq.\("anyTelephoneNumber").head
+      val telephoneNumber = nodeSeq.\("telephoneNumber").head
+
+      telephoneOption mustBe  <anyTelephoneNumber>Yes</anyTelephoneNumber>
+      telephoneNumber mustBe <telephoneNumber>0191123123</telephoneNumber>
 
     }
   }
