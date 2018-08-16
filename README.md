@@ -28,6 +28,13 @@ This service written in Scala and Play 2.5.  It needs:
 
 These steps will open the first page in the service.
 
+### Dependencies
+
+This service is dependant on these other services:
+- [Auth](https://github.com/hmrc/auth)
+- [Address lookup frontend](https://github.com/hmrc/address-lookup-frontend)
+- [Tai](https://github.com/hmrc/tai)
+
 ## Adding new pages using scaffolds
 
 In your service's root directory is a hidden directory `.g8`, which contains all of the scaffolds available for you to use.  Each will add a new screen or suite of related screens into your service.
