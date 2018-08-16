@@ -28,7 +28,7 @@ This service written in Scala and Play 2.5.  It needs:
 
 These steps will open the first page in the service.
 
-### Adding new pages using scaffolds
+## Adding new pages using scaffolds
 
 In your service's root directory is a hidden directory `.g8`, which contains all of the scaffolds available for you to use.  Each will add a new screen or suite of related screens into your service.
 
