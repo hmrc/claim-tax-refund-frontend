@@ -186,7 +186,7 @@ class TaxableIncomeNavigatorSpec extends SpecBase with MockitoSugar {
       "Navigating from AnyTaxableIncome" must {
         "go to CheckYourAnswersController from AnyTaxableIncome when Yes is selected and taxable income section complete" in {
           val answers = MockUserAnswers.taxableIncomeUserAnswers
-          navigator.nextPage(AnyTaxableIncomeId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
+          navigator.nextPage(AnyTaxableIncomeId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
         }
 
         "go to SelectTaxableIncome from AnyTaxableIncome when Yes is selected and no taxable incomes selected" in {
@@ -198,14 +198,14 @@ class TaxableIncomeNavigatorSpec extends SpecBase with MockitoSugar {
         "go to CheckYourAnswersController from AnyTaxableIncome when No is selected" in {
           val answers = MockUserAnswers.taxableIncomeUserAnswers
           when(answers.anyTaxableIncome) thenReturn Some(false)
-          navigator.nextPage(AnyTaxableIncomeId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
+          navigator.nextPage(AnyTaxableIncomeId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
         }
       }
 
       "Navigating from SelectTaxableIncome" must {
         "go to CheckYourAnswers when all answer selected and all have an associated amount" in {
           val answers = MockUserAnswers.taxableIncomeUserAnswers
-          navigator.nextPage(SelectTaxableIncomeId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
+          navigator.nextPage(SelectTaxableIncomeId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
         }
 
         "go to HowMuchRentalIncome when rental income selected but no associated amount" in {
@@ -248,7 +248,7 @@ class TaxableIncomeNavigatorSpec extends SpecBase with MockitoSugar {
         "HowMuchRentalIncome" must {
           "go to CheckYourAnswersController when all selected taxable incomes have associated values" in {
             val answers = MockUserAnswers.taxableIncomeUserAnswers
-            navigator.nextPage(HowMuchRentalIncomeId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
+            navigator.nextPage(HowMuchRentalIncomeId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
           }
 
           "go to AnyTaxableRentalIncome when any taxable rental income not selected" in {
@@ -262,7 +262,7 @@ class TaxableIncomeNavigatorSpec extends SpecBase with MockitoSugar {
         "AnyTaxableRentalIncome" must {
           "go to CheckYourAnswersController when all selected taxable incomes have associated values" in {
             val answers = MockUserAnswers.taxableIncomeUserAnswers
-            navigator.nextPage(AnyTaxableRentalIncomeId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
+            navigator.nextPage(AnyTaxableRentalIncomeId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
           }
 
           "go to HowMuchRentalIncome when rental income selected without an associated value" in {
@@ -306,7 +306,7 @@ class TaxableIncomeNavigatorSpec extends SpecBase with MockitoSugar {
         "HowMuchBankInterest" must {
           "go to CheckYourAnswersController when all selected taxable incomes have associated values" in {
             val answers = MockUserAnswers.taxableIncomeUserAnswers
-            navigator.nextPage(HowMuchBankInterestId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
+            navigator.nextPage(HowMuchBankInterestId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
           }
 
           "go to AnyTaxableBankInterest when any taxable bank interest not selected" in {
@@ -320,7 +320,7 @@ class TaxableIncomeNavigatorSpec extends SpecBase with MockitoSugar {
         "AnyTaxableBankInterest" must {
           "go to CheckYourAnswersController when all selected taxable incomes have associated values" in {
             val answers = MockUserAnswers.taxableIncomeUserAnswers
-            navigator.nextPage(AnyTaxableBankInterestId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
+            navigator.nextPage(AnyTaxableBankInterestId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
           }
 
           "go to HowMuchRental when rental income selected without an associated value" in {
@@ -364,7 +364,7 @@ class TaxableIncomeNavigatorSpec extends SpecBase with MockitoSugar {
         "HowMuchInvestments" must {
           "go to CheckYourAnswersController when all selected taxable incomes have associated values" in {
             val answers = MockUserAnswers.taxableIncomeUserAnswers
-            navigator.nextPage(HowMuchInvestmentsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
+            navigator.nextPage(HowMuchInvestmentsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
           }
 
           "go to AnyTaxableInvestments when any taxable investments not selected" in {
@@ -378,7 +378,7 @@ class TaxableIncomeNavigatorSpec extends SpecBase with MockitoSugar {
         "AnyTaxableInvestments" must {
           "go to CheckYourAnswersController when all selected taxable incomes have associated values" in {
             val answers = MockUserAnswers.taxableIncomeUserAnswers
-            navigator.nextPage(AnyTaxableInvestmentsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
+            navigator.nextPage(AnyTaxableInvestmentsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
           }
 
           "go to HowMuchRental when rental income selected without an associated value" in {
@@ -422,7 +422,7 @@ class TaxableIncomeNavigatorSpec extends SpecBase with MockitoSugar {
         "HowMuchForeignIncome" must {
           "go to CheckYourAnswersController when all selected taxable incomes have associated values" in {
             val answers = MockUserAnswers.taxableIncomeUserAnswers
-            navigator.nextPage(HowMuchForeignIncomeId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
+            navigator.nextPage(HowMuchForeignIncomeId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
           }
 
           "go to AnyTaxableForeignIncome when any taxable foreign income not selected" in {
@@ -436,7 +436,7 @@ class TaxableIncomeNavigatorSpec extends SpecBase with MockitoSugar {
         "AnyTaxableForeignIncome" must {
           "go to CheckYourAnswersController when all selected taxable incomes have associated values" in {
             val answers = MockUserAnswers.taxableIncomeUserAnswers
-            navigator.nextPage(AnyTaxableForeignIncomeId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
+            navigator.nextPage(AnyTaxableForeignIncomeId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
           }
 
           "go to HowMuchRental when rental income selected without an associated value" in {
@@ -480,7 +480,7 @@ class TaxableIncomeNavigatorSpec extends SpecBase with MockitoSugar {
         "OtherTaxableIncome" must {
           "go to CheckYourAnswersController when all selected taxable incomes have associated values" in {
             val answers = MockUserAnswers.taxableIncomeUserAnswers
-            navigator.nextPageWithIndex(OtherTaxableIncomeId(0), CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
+            navigator.nextPageWithIndex(OtherTaxableIncomeId(0), CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
           }
 
           "go to AnyTaxableOtherIncome when corresponding any taxable other income not answered" in {
@@ -494,7 +494,7 @@ class TaxableIncomeNavigatorSpec extends SpecBase with MockitoSugar {
         "AnyTaxableOtherIncome" must {
           "go to CheckYourAnswersController when all selected taxable incomes have associated values" in {
             val answers = MockUserAnswers.taxableIncomeUserAnswers
-            navigator.nextPage(AnyTaxableOtherIncomeId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad(None)
+            navigator.nextPage(AnyTaxableOtherIncomeId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
           }
         }
       }

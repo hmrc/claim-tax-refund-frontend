@@ -8,7 +8,10 @@ GET        /language/:lang                                                  cont
 
 GET        /this-service-has-been-reset                                     controllers.SessionExpiredController.onPageLoad
 
-GET        /check-your-answers                                              controllers.CheckYourAnswersController.onPageLoad(id: Option[String])
+GET        /check-your-answers                                              controllers.CheckYourAnswersController.onPageLoad
+
+GET        /address-callback-normal-mode                                    controllers.AddressLookupRoutingController.addressLookupCallback(id: Option[String], mode: Mode = NormalMode)
+GET        /address-callback-check-mode                                     controllers.AddressLookupRoutingController.addressLookupCallback(id: Option[String], mode: Mode = CheckMode)
 
 GET        /unauthorised                                                    controllers.UnauthorisedController.onPageLoad
 
@@ -17,9 +20,9 @@ POST       /select-claim-tax-year                                           cont
 GET        /change-claim-tax-year                                           controllers.SelectTaxYearController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-claim-tax-year                                           controllers.SelectTaxYearController.onSubmit(mode: Mode = CheckMode)
 
-GET        /enter-telephone-number                                          controllers.TelephoneNumberController.onPageLoad(mode: Mode = NormalMode, id: Option[String])
+GET        /enter-telephone-number                                          controllers.TelephoneNumberController.onPageLoad(mode: Mode = NormalMode)
 POST       /enter-telephone-number                                          controllers.TelephoneNumberController.onSubmit(mode: Mode = NormalMode)
-GET        /change-telephone-number                                         controllers.TelephoneNumberController.onPageLoad(mode: Mode = CheckMode, id: Option[String])
+GET        /change-telephone-number                                         controllers.TelephoneNumberController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-telephone-number                                         controllers.TelephoneNumberController.onSubmit(mode: Mode = CheckMode)
 
 GET        /did-you-get-any-benefits                                        controllers.AnyBenefitsController.onPageLoad(mode: Mode = NormalMode)

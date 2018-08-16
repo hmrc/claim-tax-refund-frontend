@@ -16,7 +16,6 @@
 
 package controllers
 
-import com.github.tomakehurst.wiremock.client.WireMock._
 import connectors._
 import controllers.actions._
 import forms.TelephoneNumberForm
@@ -26,9 +25,7 @@ import models.requests.DataRequest
 import org.mockito.Mockito.when
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.mockito.MockitoSugar
-import play.api.Application
 import play.api.data.Form
-import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json._
 import play.api.mvc._
 import play.api.test.Helpers.{status, _}
@@ -38,16 +35,8 @@ import utils._
 import views.html.telephoneNumber
 
 import scala.concurrent._
-import scala.concurrent.duration._
 
 class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar with WireMockHelper with ScalaFutures {
-
-  override implicit lazy val app: Application =
-    new GuiceApplicationBuilder()
-      .configure(
-        conf = "microservice.services.address-lookup-frontend.port" -> server.port
-      )
-      .build()
 
   def onwardRoute: Call = routes.IndexController.onPageLoad()
 
@@ -61,7 +50,6 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar
   lazy val formProvider = new TelephoneNumberForm()
   lazy val form = formProvider()
   lazy val httpMock: HttpClient = mock[HttpClient]
-  private lazy implicit val addressLookupConnector: AddressLookupConnector = app.injector.instanceOf[AddressLookupConnector]
 
 
   lazy val validYesData =
@@ -72,7 +60,7 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new TelephoneNumberController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, formProvider, addressLookupConnector, formPartialRetriever, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl, formProvider, formPartialRetriever, templateRenderer)
 
   def viewAsString(form: Form[_] = form): String =
     telephoneNumber(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
@@ -80,39 +68,20 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar
   "TelephoneNumberController" must {
 
     "return OK and the correct view for a GET" in {
-      val result: Future[Result] = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, None)(fakeRequest)
+      val result: Future[Result] = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
       status(result) mustBe OK
     }
 
     "populate the view correctly on a GET when YES has previously been answered" in {
       when(mockUserAnswers.anyTelephoneNumber).thenReturn(Some(TelephoneOption.Yes(testAnswer)))
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, None)(fakeRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
       contentAsString(result) mustBe viewAsString(form.fill(TelephoneOption.Yes(testAnswer)))
     }
 
-    "when ID is available get an address and continue loading" in {
-      server.stubFor(
-        get(urlEqualTo("/api/confirmed?id=123456789"))
-          .willReturn(
-            aResponse()
-              .withStatus(200)
-              .withBody(testResponseAddress.toString)
-          )
-      )
-
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, Some("123456789"))(fakeRequest)
-      result.map {
-        res =>
-          res mustBe OK
-      }
-      status(result) mustBe OK
-    }
-
-
     "populate the view correctly on a GET when NO has previously been answered" in {
       when(mockUserAnswers.anyTelephoneNumber).thenReturn(Some(TelephoneOption.No))
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, None)(fakeRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
       contentAsString(result) mustBe viewAsString(form.fill(TelephoneOption.No))
     }
@@ -144,7 +113,7 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar
     }
 
     "redirect to Session Expired for a GET if no existing data is found" in {
-      val result = controller(dontGetAnyData).onPageLoad(NormalMode, None)(fakeRequest)
+      val result = controller(dontGetAnyData).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
@@ -159,7 +128,7 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar
     }
 
     "stay on this page in CheckMode when no ID in URL" in {
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(CheckMode, None)(fakeRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(CheckMode)(fakeRequest)
 
       status(result) mustBe OK
     }
