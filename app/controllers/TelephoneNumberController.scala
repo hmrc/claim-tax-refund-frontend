@@ -17,7 +17,7 @@
 package controllers
 
 import config.FrontendAppConfig
-import connectors.{AddressLookupConnector, DataCacheConnector}
+import connectors.DataCacheConnector
 import controllers.actions._
 import forms.TelephoneNumberForm
 import identifiers.{AnyTelephoneId, TelephoneNumberId}
@@ -43,7 +43,6 @@ class TelephoneNumberController @Inject()(
                                            getData: DataRetrievalAction,
                                            requireData: DataRequiredAction,
                                            formBuilder: TelephoneNumberForm,
-                                           addressLookupConnector: AddressLookupConnector,
                                            implicit val formPartialRetriever: FormPartialRetriever,
                                            implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
 

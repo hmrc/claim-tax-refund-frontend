@@ -16,13 +16,10 @@
 
 package controllers
 
-import com.github.tomakehurst.wiremock.client.WireMock.{aResponse, get, urlEqualTo}
-import connectors.{AddressLookupConnector, DataCacheConnector, FakeDataCacheConnector}
+import connectors.{DataCacheConnector, FakeDataCacheConnector}
 import controllers.actions.{DataRequiredActionImpl, DataRetrievalAction, FakeAuthAction}
 import models.{SubmissionFailed, SubmissionSuccessful}
 import org.scalatest.mockito.MockitoSugar
-import play.api.Application
-import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.Helpers._
 import services.SubmissionService
 import uk.gov.hmrc.http.HeaderCarrier
@@ -34,70 +31,41 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with MockitoSuga
   implicit val ec: ExecutionContext = mock[ExecutionContext]
   implicit val dataCacheConnector: DataCacheConnector = mock[DataCacheConnector]
 
-
-  override implicit lazy val app: Application =
-    new GuiceApplicationBuilder()
-      .configure(
-        conf = "microservice.services.address-lookup-frontend.port" -> server.port
-      )
-      .build()
-
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap,
-                 addressLookupConnector: AddressLookupConnector, submissionService: SubmissionService = FakeSuccessfulSubmissionService) =
+                 submissionService: SubmissionService = FakeSuccessfulSubmissionService) =
     new CheckYourAnswersController(
       frontendAppConfig, messagesApi,
       FakeDataCacheConnector, FakeAuthAction,
       dataRetrievalAction,
       new DataRequiredActionImpl,
-      addressLookupConnector: AddressLookupConnector,
       submissionService,
       formPartialRetriever,
       templateRenderer
     )
 
-  private lazy implicit val addressLookupConnector: AddressLookupConnector = app.injector.instanceOf[AddressLookupConnector]
-
-
   "Check Your Answers Controller" must {
 
     "return 200 and the correct view for a GET" in {
-      val result = controller(someData, addressLookupConnector).onPageLoad()(fakeRequest)
+      val result = controller(someData).onPageLoad()(fakeRequest)
       status(result) mustBe OK
     }
 
     "redirect to Session Expired for a GET if not existing data is found" in {
-      val result = controller(dontGetAnyData, addressLookupConnector).onPageLoad()(fakeRequest)
+      val result = controller(dontGetAnyData).onPageLoad()(fakeRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
     }
 
-    "build when new answers are present in the url" in {
-      server.stubFor(
-        get(urlEqualTo("/api/confirmed?id=123456789"))
-          .willReturn(
-            aResponse()
-              .withStatus(200)
-              .withBody(testResponseAddress.toString)
-          )
-      )
-      val result = controller(someData, addressLookupConnector).onPageLoad()(fakeRequest)
-      result.map {
-        res =>
-          res mustBe OK
-      }
-      status(result) mustBe OK
-    }
-
     "Redirect to Confimration page on a POST when submission is successful" in {
-      val result = controller(someData, addressLookupConnector, FakeSuccessfulSubmissionService).onSubmit()(fakeRequest)
+      val result = controller(someData, FakeSuccessfulSubmissionService).onSubmit()(fakeRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
     }
 
     "Redirect to Failed to submit on a POST when submission fails" in {
-      val result = controller(someData, addressLookupConnector, FakeFailingSubmissionService).onSubmit()(fakeRequest)
+      val result = controller(someData, FakeFailingSubmissionService).onSubmit()(fakeRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
