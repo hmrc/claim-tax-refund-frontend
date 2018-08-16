@@ -17,10 +17,10 @@
 package controllers
 
 import config.FrontendAppConfig
-import connectors.{AddressLookupConnector, DataCacheConnector}
+import connectors.DataCacheConnector
 import controllers.actions._
 import forms.TelephoneNumberForm
-import identifiers.{AnyTelephoneId, PaymentLookupAddressId, TelephoneNumberId}
+import identifiers.{AnyTelephoneId, TelephoneNumberId}
 import javax.inject.Inject
 import models._
 import play.api.data.Form
@@ -43,30 +43,20 @@ class TelephoneNumberController @Inject()(
                                            getData: DataRetrievalAction,
                                            requireData: DataRequiredAction,
                                            formBuilder: TelephoneNumberForm,
-                                           addressLookupConnector: AddressLookupConnector,
                                            implicit val formPartialRetriever: FormPartialRetriever,
                                            implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
 
 
   private val form: Form[TelephoneOption] = formBuilder()
 
-  def onPageLoad(mode: Mode, addressId: Option[String]): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
+  def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.anyTelephoneNumber match {
         case None => form
         case Some(value) => form.fill(value)
       }
 
-      addressId.map {
-        id =>
-          addressLookupConnector.getAddress(request.externalId, PaymentLookupAddressId.toString, id) map {
-            _ =>
-              Ok(telephoneNumber(appConfig, preparedForm, mode))
-          }
-      }.getOrElse {
-        Future.successful(Ok(telephoneNumber(appConfig, preparedForm, mode)))
-      }
-
+      Ok(telephoneNumber(appConfig, preparedForm, mode))
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {

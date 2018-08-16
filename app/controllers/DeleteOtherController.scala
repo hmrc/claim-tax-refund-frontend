@@ -74,7 +74,7 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
                 Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
             }
           } else {
-            Future.successful(Redirect(routes.CheckYourAnswersController.onPageLoad(None)))
+            Future.successful(Redirect(routes.CheckYourAnswersController.onPageLoad()))
           }
       )
   }

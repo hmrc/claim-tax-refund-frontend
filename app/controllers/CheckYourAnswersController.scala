@@ -18,9 +18,8 @@ package controllers
 
 import com.google.inject.Inject
 import config.FrontendAppConfig
-import connectors.{AddressLookupConnector, DataCacheConnector}
+import connectors.DataCacheConnector
 import controllers.actions.{AuthAction, DataRequiredAction, DataRetrievalAction}
-import identifiers.PaymentLookupAddressId
 import models.SubmissionSuccessful
 import models.templates.Metadata
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -32,34 +31,21 @@ import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{CheckYourAnswersHelper, CheckYourAnswersSections}
 import views.html.{check_your_answers, pdf_check_your_answers}
 
-import scala.concurrent.Future
-
 class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
                                            override val messagesApi: MessagesApi,
                                            dataCacheConnector: DataCacheConnector,
                                            authenticate: AuthAction,
                                            getData: DataRetrievalAction,
                                            requireData: DataRequiredAction,
-                                           addressLookupConnector: AddressLookupConnector,
                                            submissionService: SubmissionService,
                                            implicit val formPartialRetriever: FormPartialRetriever,
                                            implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
 
-  def onPageLoad(addressId: Option[String] = None): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
+  def onPageLoad(): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      addressId.map {
-        id =>
-          addressLookupConnector.getAddress(request.externalId, PaymentLookupAddressId.toString, id) map {
-            updatedUserAnswers =>
-              val cyaHelper = new CheckYourAnswersHelper(updatedUserAnswers)
-              val cyaSections = new CheckYourAnswersSections(cyaHelper, updatedUserAnswers)
-              Ok(check_your_answers(appConfig, cyaSections.sections))
-          }
-      }.getOrElse {
-        val cyaHelper = new CheckYourAnswersHelper(request.userAnswers)
-        val cyaSections = new CheckYourAnswersSections(cyaHelper, request.userAnswers)
-        Future.successful(Ok(check_your_answers(appConfig, cyaSections.sections)))
-      }
+      val cyaHelper = new CheckYourAnswersHelper(request.userAnswers)
+      val cyaSections = new CheckYourAnswersSections(cyaHelper, request.userAnswers)
+      Ok(check_your_answers(appConfig, cyaSections.sections))
   }
 
   def onSubmit(): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
