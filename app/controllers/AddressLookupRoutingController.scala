@@ -41,16 +41,16 @@ class AddressLookupRoutingController @Inject()(appConfig: FrontendAppConfig,
       addressId.map {
         id =>
           addressLookupConnector.getAddress(request.externalId, PaymentLookupAddressId.toString, id) map {
-            _ =>
+            userAnswers =>
               mode match {
-                case NormalMode => Redirect(navigator.nextPage(PaymentLookupAddressId, NormalMode)(request.userAnswers))
-                case CheckMode => Redirect(navigator.nextPage(PaymentLookupAddressId, CheckMode)(request.userAnswers))
+                case NormalMode => Redirect(navigator.nextPage(PaymentLookupAddressId, NormalMode)(userAnswers))
+                case CheckMode => Redirect(navigator.nextPage(PaymentLookupAddressId, CheckMode)(userAnswers))
               }
           }
       }.getOrElse {
         mode match {
-          case NormalMode => Future.successful(Redirect(navigator.nextPage(PaymentLookupAddressId, mode)(request.userAnswers)))
-          case CheckMode => Future.successful(Redirect(navigator.nextPage(PaymentLookupAddressId, mode)(request.userAnswers)))
+          case NormalMode => Future.successful(Redirect(navigator.nextPage(PaymentLookupAddressId, NormalMode)(request.userAnswers)))
+          case CheckMode => Future.successful(Redirect(navigator.nextPage(PaymentLookupAddressId, CheckMode)(request.userAnswers)))
         }
       }
   }

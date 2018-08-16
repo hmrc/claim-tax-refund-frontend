@@ -25,9 +25,7 @@ import models.requests.DataRequest
 import org.mockito.Mockito.when
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.mockito.MockitoSugar
-import play.api.Application
 import play.api.data.Form
-import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json._
 import play.api.mvc._
 import play.api.test.Helpers.{status, _}
@@ -39,13 +37,6 @@ import views.html.telephoneNumber
 import scala.concurrent._
 
 class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar with WireMockHelper with ScalaFutures {
-
-  override implicit lazy val app: Application =
-    new GuiceApplicationBuilder()
-      .configure(
-        conf = "microservice.services.address-lookup-frontend.port" -> server.port
-      )
-      .build()
 
   def onwardRoute: Call = routes.IndexController.onPageLoad()
 
@@ -59,7 +50,6 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar
   lazy val formProvider = new TelephoneNumberForm()
   lazy val form = formProvider()
   lazy val httpMock: HttpClient = mock[HttpClient]
-  private lazy implicit val addressLookupConnector: AddressLookupConnector = app.injector.instanceOf[AddressLookupConnector]
 
 
   lazy val validYesData =
@@ -70,7 +60,7 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new TelephoneNumberController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, formProvider, addressLookupConnector, formPartialRetriever, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl, formProvider, formPartialRetriever, templateRenderer)
 
   def viewAsString(form: Form[_] = form): String =
     telephoneNumber(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
