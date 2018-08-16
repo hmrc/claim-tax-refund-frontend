@@ -20,13 +20,9 @@ import config.FrontendAppConfig
 import connectors.{AddressLookupConnector, DataCacheConnector}
 import controllers.actions._
 import forms.BooleanForm
-import identifiers.{IsPaymentAddressInTheUKId, PaymentLookupAddressId}
+import identifiers.IsPaymentAddressInTheUKId
 import javax.inject.Inject
 import models.Mode
-import identifiers.IsPaymentAddressInTheUKId
-import models.Mode
-import models.{CheckMode, Mode, NormalMode, SelectTaxYear}
-import play.api.Logger
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
@@ -61,7 +57,7 @@ class IsPaymentAddressInTheUKController @Inject()(appConfig: FrontendAppConfig,
         case Some(value) => form.fill(value)
       }
 
-      val continueUrl = navigator.nextPage(PaymentLookupAddressId, mode)(new UserAnswers(request.userAnswers.cacheMap)).absoluteURL()
+      val continueUrl = routes.AddressLookupRoutingController.addressLookupCallback(None, mode).absoluteURL()
 
       val addressInit = for {
         result: Option[String] <- addressLookup.initialise(continueUrl = continueUrl)
