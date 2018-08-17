@@ -76,11 +76,11 @@ object Metadata {
       (__ \ "xmlCreatedAt").read[LocalDateTime](jodaDateReads)
     )(apply _)
 
-  val dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSz"
+  val dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZ"
 
-  val jodaDateReads = Reads[LocalDateTime](js =>
+  val jodaDateReads: Reads[LocalDateTime] = Reads[LocalDateTime](js =>
     js.validate[String].map[LocalDateTime](dtString =>
-      LocalDateTime.parse(dtString, DateTimeFormat.forPattern(dateFormat))
+      LocalDateTime.parse(dtString)
     )
   )
  }

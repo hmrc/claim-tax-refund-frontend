@@ -16,10 +16,9 @@
 
 package services
 
-import javax.inject.Inject
-
 import config.FrontendAppConfig
 import connectors.CtrConnector
+import javax.inject.Inject
 import models._
 import play.api.Logger
 import play.api.libs.json.Json
@@ -38,31 +37,26 @@ class DmsSubmissionService @Inject()(appConfig: FrontendAppConfig,
 
     val submission = Submission(answers)
 
-    ctrConnector.ctrSubmission(Json.toJson(submission)).map(
-      response => {
+    ctrConnector.ctrSubmission(Json.toJson(submission)).map {
+      case Some(submissionResponse) =>
 
-        response match {
-          case Some(submissionResponse) =>
+        val detailToAudit =
+          Submission.asMap(submission) ++
+            Map(
+              "filename" -> submissionResponse.filename,
+              "envelopeId" -> submissionResponse.id
+            )
 
-            val detailToAudit =
-              Submission.asMap(submission) ++
-                Map(
-                  "filename" -> submissionResponse.filename,
-                  "envelopeId" -> submissionResponse.id
-                )
+        val event = new SubmissionEvent(detailToAudit)
 
-            val event = new SubmissionEvent(detailToAudit)
+        auditConnector.sendEvent(event)
 
-            auditConnector.sendEvent(event)
+        Logger.info(s"[DmsSubmissionService][submitSubmission] - submission successful")
 
-            Logger.info(s"[DmsSubmissionService][submitSubmission] - submission successful")
+        SubmissionSuccessful
 
-            SubmissionSuccessful
-
-          case None =>
-            SubmissionFailed
-        }
-      }
-    )
+      case None =>
+        SubmissionFailed
+    }
   }
 }
