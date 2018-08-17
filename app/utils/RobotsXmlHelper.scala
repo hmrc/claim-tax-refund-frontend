@@ -70,6 +70,12 @@ class RobotsXmlHelper(userAnswers: UserAnswers)(implicit messages: Messages) {
     data
   }
 
+  def xmlCheckBoxFormatter[A](userAnswer: Seq[A]): String = {
+    val data = userAnswer.mkString(", ")
+    data
+  }
+
+
   def getInternationalAddress: Elem = InternationalAddress.toXml(userAnswers.paymentInternationalAddress.get)
 
   def getUkAddress: Elem = UkAddress.toXml(userAnswers.paymentUKAddress.get)
