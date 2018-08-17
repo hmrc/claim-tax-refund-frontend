@@ -17,9 +17,8 @@
 package models.templates
 
 import org.joda.time.LocalDateTime
-import org.joda.time.format.DateTimeFormat
-import play.api.libs.json._
 import play.api.libs.functional.syntax._
+import play.api.libs.json._
 
 case class Metadata(customerId: String = "", hmrcReceivedAt: LocalDateTime = LocalDateTime.now, xmlCreatedAt: LocalDateTime = LocalDateTime.now) {
 
@@ -76,11 +75,9 @@ object Metadata {
       (__ \ "xmlCreatedAt").read[LocalDateTime](jodaDateReads)
     )(apply _)
 
-  val dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZ"
-
   val jodaDateReads: Reads[LocalDateTime] = Reads[LocalDateTime](js =>
     js.validate[String].map[LocalDateTime](dtString =>
       LocalDateTime.parse(dtString)
     )
   )
- }
+}
