@@ -1,7 +1,5 @@
 @(userAnswers:utils.UserAnswers,robotsXmlHelper:utils.RobotsXmlHelper)
-<!--
-        <?xml version="1.0" encoding="UTF-8" standalone="no"?>
--->
+<!--<?xml version="1.0" encoding="UTF-8" standalone="no"?>-->
 <ctr>
     <userDetails>
         <name>@userAnswers.userDetails.get.name</name>
@@ -92,7 +90,7 @@
         @if(robotsXmlHelper.getAnyAgentReference(userAnswers.anyAgentRef.get)){<agentReference>@robotsXmlHelper.getAnyAgentReference(userAnswers.anyAgentRef.get)</agentReference>}
         @if(userAnswers.isPaymentAddressInTheUK){<isPaymentAddressInTheUK>@userAnswers.isPaymentAddressInTheUK</isPaymentAddressInTheUK>}
         <paymentAddress>
-        @if(userAnswers.paymentUKAddress){@userAnswers.paymentUKAddress}
+        @if(userAnswers.paymentUKAddress){@robotsXmlHelper.getUkAddress}
         @if(userAnswers.paymentInternationalAddress){@robotsXmlHelper.getInternationalAddress}
         @if(userAnswers.paymentLookupAddress){@userAnswers.paymentLookupAddress}
         </paymentAddress>
