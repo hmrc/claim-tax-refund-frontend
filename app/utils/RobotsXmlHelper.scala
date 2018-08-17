@@ -20,6 +20,7 @@ import models._
 import play.api.i18n.Messages
 
 import scala.xml.Elem
+import scala.xml.XML._
 
 class RobotsXmlHelper(userAnswers: UserAnswers)(implicit messages: Messages) {
 
@@ -55,18 +56,27 @@ class RobotsXmlHelper(userAnswers: UserAnswers)(implicit messages: Messages) {
     case _ => ""
   }
 
-  def getOtherBenefits(userAnswer: Seq[OtherBenefit]): Elem = {
-    val data = <otherTaxableIncome>{userAnswer.map(o => o.toXml)}</otherTaxableIncome>
+  def getOtherBenefits(userAnswer: Seq[OtherBenefit]): Seq[Elem] = {
+    val data: Seq[Elem] = userAnswer.map {
+      value =>
+        loadString(s"<otherBenefit><name>${value.name}</name><amount>${value.amount}</amount></otherBenefit>")
+    }
     data
   }
 
-  def getOtherCompanyBenefits(userAnswer: Seq[OtherCompanyBenefit]): Elem = {
-    val data = <otherTaxableIncome>{userAnswer.map(o => o.toXml)}</otherTaxableIncome>
+  def getOtherCompanyBenefits(userAnswer: Seq[OtherCompanyBenefit]): Seq[Elem] = {
+    val data: Seq[Elem] = userAnswer.map {
+      value =>
+        loadString(s"<companyBenefit><name>${value.name}</name><amount>${value.amount}</amount></companyBenefit>")
+    }
     data
   }
 
-  def getOtherTaxableIncome(userAnswer: Seq[OtherTaxableIncome]): Elem = {
-    val data = <otherTaxableIncome>{userAnswer.map(o => o.toXml)}</otherTaxableIncome>
+  def getOtherTaxableIncome(userAnswer: Seq[OtherTaxableIncome]): Seq[Elem] = {
+    val data: Seq[Elem] = userAnswer.map {
+      value =>
+        loadString(s"<taxableIncome><name>${value.name}</name><amount>${value.amount}</amount></taxableIncome>")
+    }
     data
   }
 
