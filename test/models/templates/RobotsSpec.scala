@@ -125,6 +125,12 @@ class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
       getXpath("taxableIncomeSection", "foreignIncome").\("anyTaxPaid").head mustBe <anyTaxPaid>Yes</anyTaxPaid>
       getXpath("taxableIncomeSection", "foreignIncome").\("taxPaid").head mustBe <taxPaid>123</taxPaid>
 
+      val otherTaxableIncomeSection = getXpath("taxableIncomeSection", "otherTaxableIncome").\("taxableIncome")
+
+      otherTaxableIncomeSection.head mustBe <taxableIncome><name>qwerty</name><amount>12</amount></taxableIncome>
+      otherTaxableIncomeSection(1) mustBe <taxableIncome><name>qwerty1</name><amount>34</amount></taxableIncome>
+      otherTaxableIncomeSection(2) mustBe <taxableIncome><name>qwerty2</name><amount>56</amount></taxableIncome>
+
     }
 
     "have correct sections in the paymentSection when payment address is international" in {
