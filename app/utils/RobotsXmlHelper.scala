@@ -17,6 +17,7 @@
 package utils
 
 import models._
+import models.templates.xml.robots
 import play.api.i18n.Messages
 
 import scala.xml.Elem
@@ -56,6 +57,11 @@ class RobotsXmlHelper(userAnswers: UserAnswers)(implicit messages: Messages) {
     case _ => ""
   }
 
+  def showBenefits: Boolean = userAnswers.anyBenefits match{
+    case Some(true) => true
+    case _ => false
+  }
+
   def getOtherBenefits(userAnswer: Seq[OtherBenefit]): Seq[Elem] = {
     val data: Seq[Elem] = userAnswer.map {
       value =>
@@ -64,12 +70,22 @@ class RobotsXmlHelper(userAnswers: UserAnswers)(implicit messages: Messages) {
     data
   }
 
+  def showCompanyBenefits: Boolean = userAnswers.anyCompanyBenefits match{
+    case Some(true) => true
+    case _ => false
+  }
+
   def getOtherCompanyBenefits(userAnswer: Seq[OtherCompanyBenefit]): Seq[Elem] = {
     val data: Seq[Elem] = userAnswer.map {
       value =>
         loadString(s"<companyBenefit><name>${value.name}</name><amount>${value.amount}</amount></companyBenefit>")
     }
     data
+  }
+
+  def showTaxableIncome: Boolean = userAnswers.anyTaxableIncome match{
+    case Some(true) => true
+    case _ => false
   }
 
   def getOtherTaxableIncome(userAnswer: Seq[OtherTaxableIncome]): Seq[Elem] = {
@@ -90,5 +106,12 @@ class RobotsXmlHelper(userAnswers: UserAnswers)(implicit messages: Messages) {
   def getUkAddress: Elem = UkAddress.toXml(userAnswers.paymentUKAddress.get)
 
   def getLookupAddress: Elem = AddressLookup.toXml(userAnswers.paymentLookupAddress.get)
+
+  def formatedXml: Elem = {
+    val xmlString = robots(userAnswers, this)
+    val FormatedXmlString = xmlString.toString.replaceAll("\t|\n", "")
+    loadString(FormatedXmlString)
+  }
+
 
 }
