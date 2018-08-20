@@ -85,7 +85,6 @@ class RobotsXmlHelper(userAnswers: UserAnswers)(implicit messages: Messages) {
     data
   }
 
-
   def getInternationalAddress: Elem = InternationalAddress.toXml(userAnswers.paymentInternationalAddress.get)
 
   def getUkAddress: Elem = UkAddress.toXml(userAnswers.paymentUKAddress.get)
