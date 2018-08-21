@@ -170,26 +170,27 @@ class CascadeUpsert {
   //Payment details
 
   private def whereToSendPayment(value: JsValue, cacheMap: CacheMap): CacheMap = {
-    val keysToRemoveMyself = Seq[String](
-      NomineeFullNameId.toString,
-      AgentRefId.toString,
-      IsPaymentAddressInTheUKId.toString,
-      PaymentLookupAddressId.toString,
-      PaymentUKAddressId.toString,
-      PaymentInternationalAddressId.toString
-    )
-    val keysToRemoveNominee = Seq[String](
-      PaymentAddressCorrectId.toString,
-      IsPaymentAddressInTheUKId.toString,
-      PaymentUKAddressId.toString,
-      PaymentInternationalAddressId.toString
-    )
-    val mapToStore = value match {
-        case JsString("myself") => cacheMap copy (data = cacheMap.data.filterKeys (s => !keysToRemoveMyself.contains(s)))
-        case JsString("nominee") => cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemoveNominee.contains(s)))
+    if (cacheMap.data.contains(WhereToSendPaymentId.toString) && value != cacheMap.data(WhereToSendPaymentId.toString)) {
+      val mapToStore = value match {
+        case JsString("myself") =>
+          cacheMap copy (data = cacheMap.data - (NomineeFullNameId.toString,
+            AnyAgentRefId.toString,
+            AgentRefId.toString,
+            IsPaymentAddressInTheUKId.toString,
+            PaymentLookupAddressId.toString,
+            PaymentUKAddressId.toString,
+            PaymentInternationalAddressId.toString))
+        case JsString("nominee") =>
+          cacheMap copy (data = cacheMap.data - (PaymentAddressCorrectId.toString,
+            IsPaymentAddressInTheUKId.toString,
+            PaymentUKAddressId.toString,
+            PaymentInternationalAddressId.toString))
         case _ => cacheMap
+      }
+      store(WhereToSendPaymentId.toString, value, mapToStore)
+    } else {
+      store(WhereToSendPaymentId.toString, value, cacheMap)
     }
-    store(WhereToSendPaymentId.toString, value, mapToStore)
   }
 
 
@@ -201,7 +202,7 @@ class CascadeUpsert {
       PaymentInternationalAddressId.toString
     )
     val mapToStore = value match {
-      case JsBoolean (true) => cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemoveYes.contains(s)))
+      case JsBoolean(true) => cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemoveYes.contains(s)))
       case _ => cacheMap
     }
     store(PaymentAddressCorrectId.toString, value, mapToStore)
