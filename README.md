@@ -1,4 +1,6 @@
 # Claim a tax refund frontend
+[![Build Status](https://travis-ci.org/hmrc/claim-tax-refund-frontend.svg)](https://travis-ci.org/hmrc/claim-tax-refund-frontend) [ ![Download](https://api.bintray.com/packages/hmrc/releases/claim-tax-refund-frontend/images/download.svg) ](https://bintray.com/hmrc/releases/claim-tax-refund-frontend/_latestVersion)
+
 This project is a Scala web application for the tax form R39 using [code scaffolds](https://github.com/hmrc/hmrc-frontend-scaffold.g8)
 
 ## Get started
