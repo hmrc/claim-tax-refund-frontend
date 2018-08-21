@@ -24,12 +24,16 @@ import models.SubmissionSuccessful
 import models.templates.Metadata
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
+import play.twirl.api.HtmlFormat
 import services.SubmissionService
+import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import uk.gov.hmrc.renderer.TemplateRenderer
-import utils.{CheckYourAnswersHelper, CheckYourAnswersSections}
+import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, UserAnswers}
 import views.html.{check_your_answers, pdf_check_your_answers}
+
+import scala.concurrent.Future
 
 class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
                                            override val messagesApi: MessagesApi,
@@ -50,20 +54,23 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
 
   def onSubmit(): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-
-      val cyaHelper = new CheckYourAnswersHelper(request.userAnswers)
-      val cyaSections = new CheckYourAnswersSections(cyaHelper, request.userAnswers)
-      val pdfHtml = pdf_check_your_answers(appConfig, cyaSections.sections, request.nino, request.name)
-      dataCacheConnector.save[String](request.externalId, key = "pdfHtml", pdfHtml.toString())
-
+      val cyaHelper: CheckYourAnswersHelper = new CheckYourAnswersHelper(request.userAnswers)
+      val cyaSections: CheckYourAnswersSections = new CheckYourAnswersSections(cyaHelper, request.userAnswers)
+      val pdfHtml: HtmlFormat.Appendable = pdf_check_your_answers(appConfig, cyaSections.sections, request.nino, request.name)
       implicit val metadata: Metadata = new Metadata()
-      dataCacheConnector.save(request.externalId, key = "metadata", metadata)
 
+      val futureSubmission: Future[UserAnswers] = for {
+        _ <- dataCacheConnector.save[String](request.externalId, key = "pdfHtml", pdfHtml.toString())
+        cacheMap: CacheMap <- dataCacheConnector.save(request.externalId, key = "metadata", metadata)
+      } yield new UserAnswers(cacheMap)
 
-      submissionService.ctrSubmission(request.userAnswers) map {
-        //ToDo remove the newSessions from here as only to allow for testing
-        case SubmissionSuccessful => Redirect(routes.SessionExpiredController.onPageLoad()).withNewSession
-        case _ => Redirect(routes.SessionExpiredController.onPageLoad()).withNewSession
+      futureSubmission.flatMap {
+        submission =>
+          submissionService.ctrSubmission(submission) map {
+            //ToDo remove the newSessions from here as only to allow for testing
+            case SubmissionSuccessful => Redirect(routes.ConfirmationController.onPageLoad()).withNewSession
+            case _ => Redirect(routes.SessionExpiredController.onPageLoad()).withNewSession
+          }
       }
   }
 }

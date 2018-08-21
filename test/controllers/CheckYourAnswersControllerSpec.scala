@@ -57,11 +57,11 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with MockitoSuga
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
     }
 
-    "Redirect to Confimration page on a POST when submission is successful" in {
+    "Redirect to Confirmation page on a POST when submission is successful" in {
       val result = controller(someData, FakeSuccessfulSubmissionService).onSubmit()(fakeRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(routes.ConfirmationController.onPageLoad().url)
     }
 
     "Redirect to Failed to submit on a POST when submission fails" in {
