@@ -147,7 +147,7 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
         rows = cyaHelper.otherTaxableIncome.flatten,
         addLinkText = Some("otherTaxableIncome.add"),
         addLinkUrl = Some(routes.OtherTaxableIncomeController.onPageLoad(CheckMode, Index(userAnswers.otherTaxableIncome.get.size)).url),
-        columnHeadings = Some("checkYourAnswers.columnHeading.income" -> "checkYourAnswers.columnHeading.amountAndTax")
+        columnHeadings = None
       )
     } else {
       AnswerSection(None, Seq.empty)

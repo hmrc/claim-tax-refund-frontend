@@ -48,7 +48,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading(messages("anyTaxableIncome.heading", taxYear.asString))
+        @components.heading(messages("anyTaxableIncome.heading"), taxYear = Some(taxYear.asString))
 
         <p id="listHeading">@messages("anyTaxableIncome.listHeading")</p>
 

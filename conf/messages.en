@@ -102,8 +102,9 @@ session_expired.guidance = For your security, we cleared your details because yo
 
 site.back = Back
 site.delete = Remove
+site.delete.item = Remove {0}
 site.edit = Change
-site.hidden-delete = Delete {0}
+site.hidden-delete = Remove {0}
 site.hidden-edit = Change {0}
 site.no = No
 site.yes = Yes
@@ -125,7 +126,7 @@ checkYourAnswers.paymentSection = Payment details
 checkYourAnswers.contactSection = Contact details
 checkYourAnswers.columnHeading.name = Name
 checkYourAnswers.columnHeading.amount = Amount
-checkYourAnswers.columnHeading.income = Income details
+checkYourAnswers.otherTaxableIncome.label = Amount of {0} income
 checkYourAnswers.columnHeading.amountAndTax = Amount and tax
 
 unauthorised.title = You can’t access this service with this account
@@ -153,8 +154,8 @@ anyBenefits.checkYourAnswersLabel = Did you get any taxable benefits?
 anyBenefits.blank = Select yes if you got any taxable benefits
 anyBenefits.listHeading = A benefit can be something like:
 
-anyTaxableIncome.title = Did you get any other taxable income between {0}?
-anyTaxableIncome.heading = Did you get any other taxable income between {0}?
+anyTaxableIncome.title = Did you get any other taxable income?
+anyTaxableIncome.heading = Did you get any other taxable income?
 anyTaxableIncome.checkYourAnswersLabel = Did you get any other taxable income?
 anyTaxableIncome.blank = Select yes if you got any other taxable income
 anyTaxableIncome.listHeading = Taxable income can be something like:
