@@ -72,6 +72,7 @@ object MockUserAnswers extends MockitoSugar {
 
     //payment details
     when(answers.whereToSendPayment) thenReturn None
+    when(answers.itmpAddress) thenReturn None
     when(answers.paymentAddressCorrect) thenReturn None
     when(answers.nomineeFullName) thenReturn None
     when(answers.anyAgentRef) thenReturn None
@@ -96,6 +97,7 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.anyCompanyBenefits) thenReturn Some(false)
     when(answers.anyTaxableIncome) thenReturn Some(false)
     when(answers.whereToSendPayment) thenReturn Some(Myself)
+    when(answers.itmpAddress) thenReturn None
     when(answers.paymentAddressCorrect) thenReturn Some(true)
     when(answers.anyTelephoneNumber) thenReturn Some(TelephoneOption.No)
 

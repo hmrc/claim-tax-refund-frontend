@@ -20,10 +20,12 @@ import controllers.routes
 import models.SelectTaxYear.{CYMinus1, CYMinus2, CYMinus3, CYMinus4, CYMinus5}
 import models._
 import play.api.i18n.Messages
+import play.api.libs.json.Format
+import uk.gov.hmrc.auth.core.retrieve.ItmpAddress
 import viewmodels.AnswerRow
 
-class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messages){
-
+class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messages) {
+  import ItmpAddressFormat.format
   //Claim details
   //------------------------------------------------------------------
 
@@ -301,6 +303,26 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers) (implicit messages: Messa
 
   def paymentAddressCorrect: Option[AnswerRow] = userAnswers.paymentAddressCorrect map {
     x => AnswerRow("paymentAddressCorrect.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.PaymentAddressCorrectController.onPageLoad(CheckMode).url)
+  }
+
+  def itmpAddress: Option[AnswerRow] = userAnswers.itmpAddress map {
+    x =>
+      AnswerRow(
+        "itmpAddress.checkYourAnswersLabel",
+        ItmpAddressFormat.asString(
+          ItmpAddress(
+            x.line1,
+            x.line2,
+            x.line3,
+            x.line4,
+            x.line5,
+            x.postCode,
+            x.countryName,
+            x.countryCode
+          )),
+        true,
+        routes.PaymentAddressCorrectController.onPageLoad(CheckMode).url
+      )
   }
 
   def nomineeFullName: Option[AnswerRow] = userAnswers.nomineeFullName map {
