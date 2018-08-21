@@ -381,8 +381,10 @@ class Navigator @Inject()() {
   }
 
   private def whereToSendPaymentCheck(userAnswers: UserAnswers): Call = userAnswers.whereToSendPayment match {
-    case Some(Nominee) => routes.NomineeFullNameController.onPageLoad(CheckMode)
-    case Some(Myself) => routes.PaymentAddressCorrectController.onPageLoad(CheckMode)
+    case Some(Nominee) =>
+      if (userAnswers.nomineeFullName.isEmpty) routes.NomineeFullNameController.onPageLoad(CheckMode) else routes.CheckYourAnswersController.onPageLoad()
+    case Some(Myself) =>
+      if (userAnswers.isPaymentAddressInTheUK.isEmpty) routes.PaymentAddressCorrectController.onPageLoad(CheckMode) else routes.CheckYourAnswersController.onPageLoad()
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
