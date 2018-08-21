@@ -69,28 +69,22 @@ class PaymentAddressCorrectController @Inject()(appConfig: FrontendAppConfig,
 
   def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      request.address match {
-        case Some(address)
-          if address.line1.exists(_.trim.nonEmpty) && (address.postCode.exists(_.trim.nonEmpty) || address.countryName.exists(_.trim.nonEmpty)) =>
-            form.bindFromRequest().fold(
-              (formWithErrors: Form[_]) =>
-                Future.successful(BadRequest(paymentAddressCorrect(appConfig, formWithErrors, mode, address))),
-              value => {
-                if (value) {
-                  for {
-                    _ <- dataCacheConnector.save[Boolean](request.externalId, PaymentAddressCorrectId.toString, value)
-                    updatedCacheMap <- dataCacheConnector.save[ItmpAddress](request.externalId, ItmpAddressId.toString, address)
-                  } yield
-                    Redirect(navigator.nextPage(PaymentAddressCorrectId, mode)(new UserAnswers(updatedCacheMap)))
-                } else {
-                  dataCacheConnector.save[Boolean](request.externalId, PaymentAddressCorrectId.toString, value).map(cacheMap =>
-                    Redirect(navigator.nextPage(PaymentAddressCorrectId, mode)(new UserAnswers(cacheMap)))
-                  )
-                }
-              }
+      form.bindFromRequest().fold(
+        (formWithErrors: Form[_]) =>
+          Future.successful(BadRequest(paymentAddressCorrect(appConfig, formWithErrors, mode, request.address.get))),
+        value => {
+          if (value) {
+            for {
+              _ <- dataCacheConnector.save[Boolean](request.externalId, PaymentAddressCorrectId.toString, value)
+              updatedCacheMap <- dataCacheConnector.save[ItmpAddress](request.externalId, ItmpAddressId.toString, request.address.get)
+            } yield
+              Redirect(navigator.nextPage(PaymentAddressCorrectId, mode)(new UserAnswers(updatedCacheMap)))
+          } else {
+            dataCacheConnector.save[Boolean](request.externalId, PaymentAddressCorrectId.toString, value).map(cacheMap =>
+              Redirect(navigator.nextPage(PaymentAddressCorrectId, mode)(new UserAnswers(cacheMap)))
             )
-        case _ =>
-          Future.successful(Redirect(routes.IsPaymentAddressInTheUKController.onPageLoad(NormalMode)))
-      }
+          }
+        }
+      )
   }
 }
