@@ -9,6 +9,7 @@ GET        /language/:lang                                                  cont
 GET        /this-service-has-been-reset                                     controllers.SessionExpiredController.onPageLoad
 
 GET        /check-your-answers                                              controllers.CheckYourAnswersController.onPageLoad
+POST       /check-your-answers                                              controllers.CheckYourAnswersController.onSubmit
 
 GET        /address-callback-normal-mode                                    controllers.AddressLookupRoutingController.addressLookupCallback(id: Option[String], mode: Mode = NormalMode)
 GET        /address-callback-check-mode                                     controllers.AddressLookupRoutingController.addressLookupCallback(id: Option[String], mode: Mode = CheckMode)

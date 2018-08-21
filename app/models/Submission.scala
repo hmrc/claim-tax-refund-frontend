@@ -17,14 +17,14 @@
 package models
 
 import models.templates.Metadata
-import play.api.libs.json.Json
+import play.api.libs.json.{Format, Json}
 import utils.UserAnswers
 
 case class Submission(pdfHtml: String, metadata: String)
 
 object Submission {
 
-  implicit val format = Json.format[Submission]
+  implicit val format: Format[Submission] = Json.format[Submission]
 
   def apply(answers: UserAnswers): Submission = {
 
