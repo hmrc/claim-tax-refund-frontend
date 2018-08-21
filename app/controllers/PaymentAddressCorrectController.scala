@@ -49,7 +49,7 @@ class PaymentAddressCorrectController @Inject()(appConfig: FrontendAppConfig,
 
   private val errorKey = "paymentAddressCorrect.blank"
   val form: Form[Boolean] = formProvider(errorKey)
-  implicit val format: Format[ItmpAddress] = ItmpAddressFormat.format
+  import ItmpAddressFormat.format
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>

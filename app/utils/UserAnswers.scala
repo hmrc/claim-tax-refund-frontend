@@ -19,12 +19,12 @@ package utils
 import identifiers._
 import models._
 import models.templates.Metadata
-import play.api.libs.json.Format
 import uk.gov.hmrc.auth.core.retrieve.ItmpAddress
 import uk.gov.hmrc.http.cache.client.CacheMap
 
 class UserAnswers(val cacheMap: CacheMap) {
-  implicit val format: Format[ItmpAddress] = ItmpAddressFormat.format
+
+  import ItmpAddressFormat.format
   //Submission data
   //------------------------------------------------------------------------------
 
