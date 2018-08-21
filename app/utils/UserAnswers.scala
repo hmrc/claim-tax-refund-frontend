@@ -19,10 +19,12 @@ package utils
 import identifiers._
 import models._
 import models.templates.Metadata
+import uk.gov.hmrc.auth.core.retrieve.ItmpAddress
 import uk.gov.hmrc.http.cache.client.CacheMap
 
 class UserAnswers(val cacheMap: CacheMap) {
 
+  import ItmpAddressFormat.format
   //Submission data
   //------------------------------------------------------------------------------
 
@@ -119,6 +121,8 @@ class UserAnswers(val cacheMap: CacheMap) {
   def whereToSendPayment: Option[WhereToSendPayment] = cacheMap.getEntry[WhereToSendPayment](WhereToSendPaymentId.toString)
 
   def paymentAddressCorrect: Option[Boolean] = cacheMap.getEntry[Boolean](PaymentAddressCorrectId.toString)
+
+  def itmpAddress: Option[ItmpAddress] = cacheMap.getEntry[ItmpAddress](ItmpAddressId.toString)
 
   def nomineeFullName: Option[String] = cacheMap.getEntry[String](NomineeFullNameId.toString)
 

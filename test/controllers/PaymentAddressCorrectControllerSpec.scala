@@ -24,17 +24,18 @@ import models.NormalMode
 import models.requests.{AuthenticatedRequest, OptionalDataRequest}
 import play.api.data.Form
 import play.api.libs.json.JsBoolean
+import play.api.mvc.Call
 import play.api.test.Helpers._
 import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
 import uk.gov.hmrc.http.cache.client.CacheMap
-import utils.{FakeNavigator, MockUserAnswers, UserAnswers}
+import utils.{FakeNavigator, MockUserAnswers}
 import views.html.paymentAddressCorrect
 
 import scala.concurrent.Future
 
 class PaymentAddressCorrectControllerSpec extends ControllerSpecBase {
 
-  def onwardRoute = routes.IndexController.onPageLoad()
+  def onwardRoute: Call = routes.IndexController.onPageLoad()
 
   val formProvider = new BooleanForm()
   val form = formProvider()
@@ -43,21 +44,54 @@ class PaymentAddressCorrectControllerSpec extends ControllerSpecBase {
     new PaymentAddressCorrectController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, formProvider, formPartialRetriever, templateRenderer)
 
-  def fakeDataRetrievalActionNoAddress(mockUserAnswers: UserAnswers = MockUserAnswers.claimDetailsUserAnswers) = new DataRetrievalAction {
+  def fakeDataRetrievalActionItmpAddress(itmpAddress: Option[ItmpAddress]): DataRetrievalAction = new DataRetrievalAction {
     override protected def transform[A](request: AuthenticatedRequest[A]): Future[OptionalDataRequest[A]] = {
       Future.successful(
         OptionalDataRequest(
-          request,
-          "123123",
-          "AB123456A",
-          Some(ItmpName(Some("sdadsad"), None, None)),
-          Some(ItmpAddress(None, None, None, None, None, None, None, None)),
-          Some(mockUserAnswers))
+          request = request,
+          externalId = "123123",
+          nino = "AB123456A",
+          name = Some(ItmpName(Some("sdadsad"), None, None)),
+          address = itmpAddress,
+          userAnswers = Some(MockUserAnswers.claimDetailsUserAnswers))
       )
     }
   }
 
-  def viewAsString(form: Form[_] = form) = paymentAddressCorrect(frontendAppConfig, form, NormalMode, itmpAddress)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+  val emptyItmpAddress: ItmpAddress = ItmpAddress(
+    line1 = None,
+    line2 = None,
+    line3 = None,
+    line4 = None,
+    line5 = None,
+    postCode = None,
+    countryName = None,
+    countryCode = None
+  )
+
+  val ukItmpAddress: ItmpAddress = ItmpAddress(
+    line1 = Some("1 some street"),
+    line2 = None,
+    line3 = None,
+    line4 = None,
+    line5 = None,
+    postCode = Some("NE31YH"),
+    countryName = Some("United Kingdom"),
+    countryCode = Some("UK")
+  )
+
+  val internationalItmpAddress: ItmpAddress = ItmpAddress(
+    line1 = Some("La Rue De Bastille"),
+    line2 = None,
+    line3 = None,
+    line4 = None,
+    line5 = None,
+    postCode = None,
+    countryName = Some("France"),
+    countryCode = Some("FR")
+  )
+
+  def viewAsString(form: Form[_] = form): String = paymentAddressCorrect(frontendAppConfig, form, NormalMode, itmpAddress)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "PaymentAddressCorrect Controller" must {
 
@@ -77,8 +111,17 @@ class PaymentAddressCorrectControllerSpec extends ControllerSpecBase {
       contentAsString(result) mustBe viewAsString(form.fill(true))
     }
 
-    "redirect to the next page when valid data is submitted" in {
+    "redirect to the next page when valid data TRUE is submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+
+      val result = controller().onSubmit(NormalMode)(postRequest)
+
+      status(result) mustBe SEE_OTHER
+      redirectLocation(result) mustBe Some(onwardRoute.url)
+    }
+
+    "redirect to the next page when valid data FALSE is submitted" in {
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "false"))
 
       val result = controller().onSubmit(NormalMode)(postRequest)
 
@@ -111,18 +154,33 @@ class PaymentAddressCorrectControllerSpec extends ControllerSpecBase {
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
     }
 
-    "redirect to is address in UK if no itmp address information is present" in {
-      val result = controller(fakeDataRetrievalActionNoAddress()).onPageLoad(NormalMode)(fakeRequest)
+    "redirect to is address in UK if no itmp address information is present on load" in {
+      val result = controller(fakeDataRetrievalActionItmpAddress(Some(emptyItmpAddress))).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.IsPaymentAddressInTheUKController.onPageLoad(NormalMode).url)
     }
 
-    "redirect to is address in UK if no itmp address information is present on submit" in {
-      val result = controller(fakeDataRetrievalActionNoAddress()).onSubmit(NormalMode)(fakeRequest)
+    "load paymentAddressCorrect if valid uk address on page load" in {
+      val result = controller(fakeDataRetrievalActionItmpAddress(Some(ukItmpAddress))).onPageLoad(NormalMode)(fakeRequest)
+      status(result) mustBe OK
+    }
 
+    "load paymentAddressCorrect if valid international address on page load" in {
+      val result = controller(fakeDataRetrievalActionItmpAddress(Some(internationalItmpAddress))).onPageLoad(NormalMode)(fakeRequest)
+      status(result) mustBe OK
+    }
+
+    "redirect to paymentAddressCorrect if valid uk address on submit" in {
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+      val result = controller(fakeDataRetrievalActionItmpAddress(Some(ukItmpAddress))).onSubmit(NormalMode)(postRequest)
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.IsPaymentAddressInTheUKController.onPageLoad(NormalMode).url)
+    }
+
+    "redirect to paymentAddressCorrect if valid international address on submit" in {
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+      val result = controller(fakeDataRetrievalActionItmpAddress(Some(internationalItmpAddress))).onSubmit(NormalMode)(postRequest)
+      status(result) mustBe SEE_OTHER
     }
   }
 }

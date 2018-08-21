@@ -16,17 +16,18 @@
 
 package controllers
 
-import javax.inject.Inject
 import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.BooleanForm
-import identifiers.PaymentAddressCorrectId
+import identifiers.{ItmpAddressId, PaymentAddressCorrectId}
 import javax.inject.Inject
-import models.{Mode, NormalMode}
+import models.{ItmpAddressFormat, Mode, NormalMode}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.libs.json.Format
 import play.api.mvc.{Action, AnyContent}
+import uk.gov.hmrc.auth.core.retrieve.ItmpAddress
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import uk.gov.hmrc.renderer.TemplateRenderer
@@ -48,6 +49,7 @@ class PaymentAddressCorrectController @Inject()(appConfig: FrontendAppConfig,
 
   private val errorKey = "paymentAddressCorrect.blank"
   val form: Form[Boolean] = formProvider(errorKey)
+  import ItmpAddressFormat.format
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
@@ -57,8 +59,8 @@ class PaymentAddressCorrectController @Inject()(appConfig: FrontendAppConfig,
       }
 
       request.address match {
-        case Some(address) if address.line1.exists(_.trim.nonEmpty) &&
-          (address.postCode.exists(_.trim.nonEmpty) || address.countryName.exists(_.trim.nonEmpty)) =>
+        case Some(address)
+          if address.line1.exists(_.trim.nonEmpty) && (address.postCode.exists(_.trim.nonEmpty) || address.countryName.exists(_.trim.nonEmpty)) =>
             Ok(paymentAddressCorrect(appConfig, preparedForm, mode, address))
         case _ =>
           Redirect(routes.IsPaymentAddressInTheUKController.onPageLoad(mode))
@@ -67,17 +69,22 @@ class PaymentAddressCorrectController @Inject()(appConfig: FrontendAppConfig,
 
   def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      request.address match {
-        case Some(address) if address.line1.exists(_.trim.nonEmpty) &&
-          (address.postCode.exists(_.trim.nonEmpty) || address.countryName.exists(_.trim.nonEmpty)) =>
-            form.bindFromRequest().fold(
-              (formWithErrors: Form[_]) =>
-                Future.successful(BadRequest(paymentAddressCorrect(appConfig, formWithErrors, mode, request.address.get))),
-              value =>
-                dataCacheConnector.save[Boolean](request.externalId, PaymentAddressCorrectId.toString, value).map(cacheMap =>
-                  Redirect(navigator.nextPage(PaymentAddressCorrectId, mode)(new UserAnswers(cacheMap))))
+      form.bindFromRequest().fold(
+        (formWithErrors: Form[_]) =>
+          Future.successful(BadRequest(paymentAddressCorrect(appConfig, formWithErrors, mode, request.address.get))),
+        value => {
+          if (value) {
+            for {
+              _ <- dataCacheConnector.save[Boolean](request.externalId, PaymentAddressCorrectId.toString, value)
+              updatedCacheMap <- dataCacheConnector.save[ItmpAddress](request.externalId, ItmpAddressId.toString, request.address.get)
+            } yield
+              Redirect(navigator.nextPage(PaymentAddressCorrectId, mode)(new UserAnswers(updatedCacheMap)))
+          } else {
+            dataCacheConnector.save[Boolean](request.externalId, PaymentAddressCorrectId.toString, value).map(cacheMap =>
+              Redirect(navigator.nextPage(PaymentAddressCorrectId, mode)(new UserAnswers(cacheMap)))
             )
-        case _ => Future.successful(Redirect(routes.IsPaymentAddressInTheUKController.onPageLoad(NormalMode)))
-      }
+          }
+        }
+      )
   }
 }
