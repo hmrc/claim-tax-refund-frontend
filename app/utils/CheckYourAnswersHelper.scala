@@ -25,7 +25,7 @@ import uk.gov.hmrc.auth.core.retrieve.ItmpAddress
 import viewmodels.AnswerRow
 
 class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messages) {
-  implicit val format: Format[ItmpAddress] = ItmpAddressFormat.format
+  import ItmpAddressFormat.format
   //Claim details
   //------------------------------------------------------------------
 
