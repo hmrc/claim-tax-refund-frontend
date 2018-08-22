@@ -14,7 +14,6 @@ This service written in Scala and Play 2.5.  It needs:
 - at least a [JRE 1.8](http://www.oracle.com/technetwork/java/javase/downloads/index.html) to run
 - [sbt](https://www.scala-sbt.org/) to test, build and run a development version
 - a MongoDB instance running locally or in a docker container with open ports
-- service manager [Service manager setup](https://confluence.tools.tax.service.gov.uk/display/DTRG/04+Service+Manager+Setup)
 
 ### How to install
 
