@@ -7,6 +7,7 @@
 		<name>@userAnswers.userDetails.get.name</name>
 		<nino>@userAnswers.userDetails.get.nino</nino>
 	</userDetails>
+
 	<claimSection>
 		<selectedTaxYear>@robotsXmlHelper.selectTaxYear</selectedTaxYear>
 		@userAnswers.employmentDetails.map{ value =>
@@ -65,7 +66,7 @@
 		}
 		@if(userAnswers.otherCompanyBenefit){
 			<otherCompanyBenefitsSection>
-				<otherCompanyBenefit>@robotsXmlHelper.otherCompanyBenefits(userAnswers.otherCompanyBenefit.get)</otherCompanyBenefit>
+				@robotsXmlHelper.otherCompanyBenefits(userAnswers.otherCompanyBenefit.get)
 			</otherCompanyBenefitsSection>
 		}
 	</companyBenefitsSection>
@@ -100,7 +101,11 @@
 			<anyTaxPaid>@robotsXmlHelper.anyIncome(userAnswers.anyTaxableForeignIncome.get)</anyTaxPaid>
 			<taxPaid>@robotsXmlHelper.incomeAmount(userAnswers.anyTaxableForeignIncome.get)</taxPaid>
 		</foreignIncome>}
-		@if(userAnswers.otherTaxableIncome.isDefined){<otherTaxableIncome>@robotsXmlHelper.otherTaxableIncome(userAnswers.otherTaxableIncome.get)</otherTaxableIncome>}
+		@if(userAnswers.otherTaxableIncome.isDefined){
+			<otherTaxableIncome>
+				@robotsXmlHelper.otherTaxableIncome(userAnswers.otherTaxableIncome.get)
+			</otherTaxableIncome>
+		}
 	</taxableIncomeSection>}
 	<paymentSection>
 		@userAnswers.whereToSendPayment.map{ value =>
@@ -120,20 +125,21 @@
 		}
 		@userAnswers.isPaymentAddressInTheUK.map{ value =>
 			<isPaymentAddressInTheUK>@userAnswers.isPaymentAddressInTheUK</isPaymentAddressInTheUK>
+
 		}
 		<paymentAddress>
-			@userAnswers.paymentUKAddress.map{ value =>
-				@robotsXmlHelper.ukAddress
-			}
-			@userAnswers.paymentInternationalAddress.map{ value =>
-				@robotsXmlHelper.internationalAddress
-			}
-			@userAnswers.paymentLookupAddress.map{ value =>
-				@robotsXmlHelper.lookupAddress
-			}
+		@userAnswers.paymentUKAddress.map{ value =>
+			@robotsXmlHelper.ukAddress
+		}
+		@userAnswers.paymentInternationalAddress.map{ value =>
+			@robotsXmlHelper.internationalAddress
+		}
+		@userAnswers.paymentLookupAddress.map{ value =>
+			@robotsXmlHelper.lookupAddress
+		}
 		</paymentAddress>
-
 	</paymentSection>
+
 	<contactSection>
 		<anyTelephoneNumber>@robotsXmlHelper.anyTelephone(userAnswers.anyTelephoneNumber.get)</anyTelephoneNumber>
 		<telephoneNumber>@robotsXmlHelper.anyTelephoneNumber(userAnswers.anyTelephoneNumber.get)</telephoneNumber>

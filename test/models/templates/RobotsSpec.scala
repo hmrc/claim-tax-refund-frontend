@@ -21,9 +21,7 @@ import models.{Address, AddressLookup, Country, UkAddress}
 import org.scalatest.mockito.MockitoSugar
 import utils.{MockUserAnswers, RobotsXmlHelper, UserAnswers, WireMockHelper}
 import org.mockito.Mockito.when
-import play.api.Logger
 
-import scala.xml.XML._
 import scala.xml._
 
 class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
@@ -32,12 +30,6 @@ class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
   private val fullXml: Elem = new RobotsXmlHelper(fullUserAnswers)(messages).formattedXml
 
   private val validMinimalXml: Elem = <ctr><userDetails><name>TestName</name><nino>ZZ123456A</nino></userDetails><claimSection><selectedTaxYear>6 April 2016 to 5 April 2017</selectedTaxYear><employmentDetails>true</employmentDetails></claimSection><paymentSection><whereToSendThePayment>myself</whereToSendThePayment><paymentAddressCorrect>true</paymentAddressCorrect><paymentAddress/></paymentSection><contactSection><anyTelephoneNumber>No</anyTelephoneNumber><telephoneNumber/></contactSection></ctr>
-
-  def getXpath(elementSectionKey: String, elementKey: String, fullXml: Elem = fullXml): Node = {
-
-      val nodeSeq = fullXml \\ elementSectionKey
-      nodeSeq.\(elementKey).head
-  }
 
   "robots Xml" must {
 
@@ -49,8 +41,8 @@ class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
 
     "have correct sections in claimSection when employmentDetails are true" in {
 
-      getXpath(elementSectionKey = "claimSection", elementKey = "selectedTaxYear") mustBe <selectedTaxYear>6 April 2016 to 5 April 2017</selectedTaxYear>
-      getXpath(elementSectionKey = "claimSection", elementKey = "employmentDetails") mustBe <employmentDetails>true</employmentDetails>
+      fullXml \ "claimSection" \ "selectedTaxYear" must contain(<selectedTaxYear>6 April 2016 to 5 April 2017</selectedTaxYear>)
+      fullXml \ "claimSection" \ "employmentDetails" must contain (<employmentDetails>true</employmentDetails>)
     }
 
     "have correct sections in claimSection when employmentDetails are false" in {
@@ -62,41 +54,39 @@ class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
 
       val newXmlToNode: Elem = new RobotsXmlHelper(fullUserAnswers)(messages).formattedXml
 
-      getXpath(elementSectionKey = "claimSection", elementKey = "selectedTaxYear", newXmlToNode) mustBe <selectedTaxYear>6 April 2016 to 5 April 2017</selectedTaxYear>
-      getXpath(elementSectionKey = "claimSection", elementKey = "employmentDetails", newXmlToNode) mustBe <employmentDetails>false</employmentDetails>
-      getXpath(elementSectionKey = "claimSection", elementKey = "payeReference", newXmlToNode) mustBe <payeReference>123456789</payeReference>
-      getXpath(elementSectionKey = "claimSection", elementKey = "detailsOfEmploymentOrPension", newXmlToNode) mustBe <detailsOfEmploymentOrPension>Employment details</detailsOfEmploymentOrPension>
+      newXmlToNode \ "claimSection" \ "selectedTaxYear"  must contain(<selectedTaxYear>6 April 2016 to 5 April 2017</selectedTaxYear>)
+      newXmlToNode \ "claimSection" \ "employmentDetails" must contain(<employmentDetails>false</employmentDetails>)
+      newXmlToNode \ "claimSection" \ "payeReference" must contain(<payeReference>123456789</payeReference>)
+      newXmlToNode \ "claimSection" \ "detailsOfEmploymentOrPension" must contain(<detailsOfEmploymentOrPension>Employment details</detailsOfEmploymentOrPension>)
 
     }
 
     "have correct sections in benefitSection" in {
 
-			Logger.warn (s"\n\n\n\n\n$fullXml")
-      getXpath(elementSectionKey = "benefitSection", elementKey = "anyBenefits") mustBe <anyBenefits>true</anyBenefits>
-      getXpath(elementSectionKey = "benefitSection", elementKey = "selectBenefits") mustBe <selectBenefits>carers-allowance, bereavement-allowance, incapacity-benefit, employment-and-support-allowance, jobseekers-allowance, other-taxable-benefit, state-pension</selectBenefits>
-      getXpath(elementSectionKey = "benefitSection", elementKey = "howMuchBereavementAllowance") mustBe <howMuchBereavementAllowance>1234</howMuchBereavementAllowance>
-      getXpath(elementSectionKey = "benefitSection", elementKey = "howMuchCarersAllowance") mustBe <howMuchCarersAllowance>1234</howMuchCarersAllowance>
-      getXpath(elementSectionKey = "benefitSection", elementKey = "howMuchJobseekersAllowance") mustBe <howMuchJobseekersAllowance>1234</howMuchJobseekersAllowance>
-      getXpath(elementSectionKey = "benefitSection", elementKey = "howMuchEmploymentAndSupportAllowance") mustBe <howMuchEmploymentAndSupportAllowance>1234</howMuchEmploymentAndSupportAllowance>
-      getXpath(elementSectionKey = "benefitSection", elementKey = "howMuchIncapacityBenefit") mustBe <howMuchIncapacityBenefit>1234</howMuchIncapacityBenefit>
-      getXpath(elementSectionKey = "benefitSection", elementKey = "howMuchStatePension") mustBe <howMuchStatePension>1234</howMuchStatePension>
+      fullXml \ "benefitSection" \ "anyBenefits" must contain(<anyBenefits>true</anyBenefits>)
+      fullXml \ "benefitSection" \ "selectBenefits" must contain(<selectBenefits>carers-allowance, bereavement-allowance, incapacity-benefit, employment-and-support-allowance, jobseekers-allowance, other-taxable-benefit, state-pension</selectBenefits>)
+      fullXml \ "benefitSection" \ "howMuchBereavementAllowance" must contain(<howMuchBereavementAllowance>1234</howMuchBereavementAllowance>)
+      fullXml \ "benefitSection" \ "howMuchCarersAllowance" must contain(<howMuchCarersAllowance>1234</howMuchCarersAllowance>)
+      fullXml \ "benefitSection" \ "howMuchJobseekersAllowance" must contain(<howMuchJobseekersAllowance>1234</howMuchJobseekersAllowance>)
+      fullXml \ "benefitSection" \ "howMuchEmploymentAndSupportAllowance" must contain(<howMuchEmploymentAndSupportAllowance>1234</howMuchEmploymentAndSupportAllowance>)
+      fullXml \ "benefitSection" \ "howMuchIncapacityBenefit" must contain(<howMuchIncapacityBenefit>1234</howMuchIncapacityBenefit>)
+      fullXml \ "benefitSection" \ "howMuchStatePension" must contain(<howMuchStatePension>1234</howMuchStatePension>)
 
-      val otherBenefits: NodeSeq = fullXml \\ "otherBenefits" \ "otherBenefit"
-
-      otherBenefits.head mustBe <otherBenefit><name>qwerty</name><amount>12</amount></otherBenefit>
-      otherBenefits(1) mustBe <otherBenefit><name>qwerty1</name><amount>34</amount></otherBenefit>
-      otherBenefits(2) mustBe <otherBenefit><name>qwerty2</name><amount>56</amount></otherBenefit>
+      val otherBenefits: NodeSeq = fullXml  \"benefitSection" \ "otherBenefits" \\ "otherBenefit"
+      otherBenefits must contain(<otherBenefit><name>qwerty</name><amount>12</amount></otherBenefit>)
+      otherBenefits must contain(<otherBenefit><name>qwerty1</name><amount>34</amount></otherBenefit>)
+      otherBenefits must contain(<otherBenefit><name>qwerty2</name><amount>56</amount></otherBenefit>)
     }
 
     "have correct sections in companyBenefitSection" in {
 
-      getXpath(elementSectionKey = "companyBenefitsSection", elementKey = "anyCompanyBenefits") mustBe <anyCompanyBenefits>true</anyCompanyBenefits>
-      getXpath(elementSectionKey = "companyBenefitsSection", elementKey = "selectCompanyBenefits") mustBe <selectCompanyBenefits>company-car-benefit, medical-benefit, fuel-benefit, other-company-benefit</selectCompanyBenefits>
-      getXpath(elementSectionKey = "companyBenefitsSection", elementKey = "howMuchCarBenefits") mustBe <howMuchCarBenefits>1234</howMuchCarBenefits>
-      getXpath(elementSectionKey = "companyBenefitsSection", elementKey = "howMuchFuelBenefit") mustBe <howMuchFuelBenefit>1234</howMuchFuelBenefit>
-      getXpath(elementSectionKey = "companyBenefitsSection", elementKey = "howMuchMedicalBenefits") mustBe <howMuchMedicalBenefits>1234</howMuchMedicalBenefits>
+      fullXml \"companyBenefitsSection" \ "anyCompanyBenefits" must contain(<anyCompanyBenefits>true</anyCompanyBenefits>)
+      fullXml \"companyBenefitsSection" \ "selectCompanyBenefits" must contain(<selectCompanyBenefits>company-car-benefit, medical-benefit, fuel-benefit, other-company-benefit</selectCompanyBenefits>)
+      fullXml \"companyBenefitsSection" \ "howMuchCarBenefits" must contain(<howMuchCarBenefits>1234</howMuchCarBenefits>)
+      fullXml \"companyBenefitsSection" \ "howMuchFuelBenefit" must contain(<howMuchFuelBenefit>1234</howMuchFuelBenefit>)
+      fullXml \"companyBenefitsSection" \ "howMuchMedicalBenefits" must contain(<howMuchMedicalBenefits>1234</howMuchMedicalBenefits>)
 
-      val otherCompanyBenefitsSection = getXpath(elementSectionKey = "otherCompanyBenefitsSection", elementKey = "otherCompanyBenefit").\("companyBenefit")
+      val otherCompanyBenefitsSection = fullXml \ "companyBenefitsSection" \ "otherCompanyBenefitsSection" \\ "companyBenefit"
 
       otherCompanyBenefitsSection.head mustBe <companyBenefit><name>qwerty</name><amount>12</amount></companyBenefit>
       otherCompanyBenefitsSection(1) mustBe <companyBenefit><name>qwerty1</name><amount>34</amount></companyBenefit>
@@ -106,26 +96,26 @@ class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
 
     "have correct sections in taxableIncomeSection" in {
 
-      getXpath(elementSectionKey = "taxableIncomeSection", elementKey = "anyTaxableIncome") mustBe <anyTaxableIncome>true</anyTaxableIncome>
-      getXpath(elementSectionKey = "taxableIncomeSection", elementKey = "selectTaxableIncome") mustBe <selectTaxableIncome>rental-income, bank-or-building-society-interest, investment-or-dividends, foreign-income, other-taxable-income</selectTaxableIncome>
+      fullXml \ "taxableIncomeSection" \ "anyTaxableIncome" must contain( <anyTaxableIncome>true</anyTaxableIncome>)
+      fullXml \ "taxableIncomeSection" \ "selectTaxableIncome" must contain( <selectTaxableIncome>rental-income, bank-or-building-society-interest, investment-or-dividends, foreign-income, other-taxable-income</selectTaxableIncome>)
 
-      getXpath(elementSectionKey = "taxableIncomeSection", elementKey = "rentalIncome").\("howMuch").head mustBe <howMuch>1234</howMuch>
-      getXpath(elementSectionKey = "taxableIncomeSection", elementKey = "rentalIncome").\("anyTaxPaid").head mustBe <anyTaxPaid>Yes</anyTaxPaid>
-      getXpath(elementSectionKey = "taxableIncomeSection", elementKey = "rentalIncome").\("taxPaid").head mustBe <taxPaid>123</taxPaid>
+      fullXml \ "taxableIncomeSection" \ "rentalIncome"  \ "howMuch" must contain(<howMuch>1234</howMuch>)
+      fullXml \ "taxableIncomeSection" \ "rentalIncome"  \ "anyTaxPaid" must contain( <anyTaxPaid>Yes</anyTaxPaid>)
+      fullXml \ "taxableIncomeSection" \ "rentalIncome"  \ "taxPaid" must contain( <taxPaid>123</taxPaid>)
 
-      getXpath(elementSectionKey = "taxableIncomeSection", elementKey = "bankInterest").\("howMuch").head mustBe <howMuch>1234</howMuch>
-      getXpath(elementSectionKey = "taxableIncomeSection", elementKey = "bankInterest").\("anyTaxPaid").head mustBe <anyTaxPaid>Yes</anyTaxPaid>
-      getXpath(elementSectionKey = "taxableIncomeSection", elementKey = "bankInterest").\("taxPaid").head mustBe <taxPaid>123</taxPaid>
+      fullXml \ "taxableIncomeSection" \ "bankInterest"  \ "howMuch" must contain( <howMuch>1234</howMuch>)
+      fullXml \ "taxableIncomeSection" \ "bankInterest"  \ "anyTaxPaid" must contain( <anyTaxPaid>Yes</anyTaxPaid>)
+      fullXml \ "taxableIncomeSection" \ "bankInterest"  \ "taxPaid" must contain( <taxPaid>123</taxPaid>)
 
-      getXpath(elementSectionKey = "taxableIncomeSection", elementKey = "investmentOrDividend").\("howMuch").head mustBe <howMuch>1234</howMuch>
-      getXpath(elementSectionKey = "taxableIncomeSection", elementKey = "investmentOrDividend").\("anyTaxPaid").head mustBe <anyTaxPaid>Yes</anyTaxPaid>
-      getXpath(elementSectionKey = "taxableIncomeSection", elementKey = "investmentOrDividend").\("taxPaid").head mustBe <taxPaid>123</taxPaid>
+      fullXml \ "taxableIncomeSection" \ "investmentOrDividend"  \ "howMuch" must contain( <howMuch>1234</howMuch>)
+      fullXml \ "taxableIncomeSection" \ "investmentOrDividend"  \ "anyTaxPaid" must contain( <anyTaxPaid>Yes</anyTaxPaid>)
+      fullXml \ "taxableIncomeSection" \ "investmentOrDividend"  \ "taxPaid" must contain( <taxPaid>123</taxPaid>)
 
-      getXpath(elementSectionKey = "taxableIncomeSection", elementKey = "foreignIncome").\("howMuch").head mustBe <howMuch>1234</howMuch>
-      getXpath(elementSectionKey = "taxableIncomeSection", elementKey = "foreignIncome").\("anyTaxPaid").head mustBe <anyTaxPaid>Yes</anyTaxPaid>
-      getXpath(elementSectionKey = "taxableIncomeSection", elementKey = "foreignIncome").\("taxPaid").head mustBe <taxPaid>123</taxPaid>
+      fullXml \ "taxableIncomeSection" \ "foreignIncome"  \ "howMuch" must contain( <howMuch>1234</howMuch>)
+      fullXml \ "taxableIncomeSection" \ "foreignIncome"  \ "anyTaxPaid" must contain( <anyTaxPaid>Yes</anyTaxPaid>)
+      fullXml \ "taxableIncomeSection" \ "foreignIncome"  \ "taxPaid" must contain( <taxPaid>123</taxPaid>)
 
-      val otherTaxableIncomeSection = getXpath(elementSectionKey = "taxableIncomeSection", elementKey = "otherTaxableIncome").\("taxableIncome")
+      val otherTaxableIncomeSection = fullXml \ "taxableIncomeSection" \ "otherTaxableIncome" \ "taxableIncome"
 
       otherTaxableIncomeSection.head mustBe <taxableIncome><name>qwerty</name><amount>12</amount></taxableIncome>
       otherTaxableIncomeSection(1) mustBe <taxableIncome><name>qwerty1</name><amount>34</amount></taxableIncome>
@@ -134,6 +124,8 @@ class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
     }
 
     "hide sections when not selected" in {
+      val fullUserAnswers: UserAnswers = MockUserAnswers.fullValidUserAnswers
+
       when (fullUserAnswers.anyBenefits) thenReturn Some(false)
       when (fullUserAnswers.anyCompanyBenefits) thenReturn Some(false)
       when (fullUserAnswers.anyTaxableIncome) thenReturn Some(false)
@@ -146,15 +138,16 @@ class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
 
     "have correct sections in the paymentSection when payment address is international" in {
 
-      getXpath(elementSectionKey = "paymentSection", elementKey = "whereToSendThePayment") mustBe <whereToSendThePayment>nominee</whereToSendThePayment>
-      getXpath(elementSectionKey = "paymentSection", elementKey = "nomineeFullname") mustBe <nomineeFullname>Nominee</nomineeFullname>
-      getXpath(elementSectionKey = "paymentSection", elementKey = "anyAgentRef") mustBe <anyAgentRef>Yes</anyAgentRef>
-      getXpath(elementSectionKey = "paymentSection", elementKey = "agentReference") mustBe <agentReference>12341234</agentReference>
-      getXpath(elementSectionKey = "paymentSection", elementKey = "isPaymentAddressInTheUK") mustBe <isPaymentAddressInTheUK>false</isPaymentAddressInTheUK>
-      getXpath(elementSectionKey = "paymentSection", elementKey = "paymentAddress") mustBe <paymentAddress><internationalAddress>1, 2, Country</internationalAddress></paymentAddress>
+      fullXml \ "paymentSection" \ "whereToSendThePayment" must contain(<whereToSendThePayment>nominee</whereToSendThePayment>)
+      fullXml \ "paymentSection" \ "nomineeFullname" must contain(<nomineeFullname>Nominee</nomineeFullname>)
+      fullXml \ "paymentSection" \ "anyAgentRef" must contain(<anyAgentRef>Yes</anyAgentRef>)
+      fullXml \ "paymentSection" \ "agentReference" must contain(<agentReference>12341234</agentReference>)
+      fullXml \ "paymentSection" \ "isPaymentAddressInTheUK" must contain(<isPaymentAddressInTheUK>false</isPaymentAddressInTheUK>)
+      fullXml \ "paymentSection" \ "paymentAddress" must contain(<paymentAddress><internationalAddress>1, 2, Country</internationalAddress></paymentAddress>)
     }
 
     "have correct sections in the paymentSection when payment address is in the UK" in {
+      val fullUserAnswers: UserAnswers = MockUserAnswers.fullValidUserAnswers
 
       when(fullUserAnswers.isPaymentAddressInTheUK) thenReturn Some(true)
       when(fullUserAnswers.paymentInternationalAddress) thenReturn None
@@ -162,16 +155,19 @@ class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
 
       val newXmlToNode: Elem = new RobotsXmlHelper(fullUserAnswers)(messages).formattedXml
 
-      getXpath(elementSectionKey = "paymentSection", elementKey = "whereToSendThePayment", newXmlToNode) mustBe <whereToSendThePayment>nominee</whereToSendThePayment>
-      getXpath(elementSectionKey = "paymentSection", elementKey = "nomineeFullname", newXmlToNode) mustBe <nomineeFullname>Nominee</nomineeFullname>
-      getXpath(elementSectionKey = "paymentSection", elementKey = "anyAgentRef", newXmlToNode) mustBe <anyAgentRef>Yes</anyAgentRef>
-      getXpath(elementSectionKey = "paymentSection", elementKey = "agentReference", newXmlToNode) mustBe <agentReference>12341234</agentReference>
-      getXpath(elementSectionKey = "paymentSection", elementKey = "isPaymentAddressInTheUK", newXmlToNode) mustBe <isPaymentAddressInTheUK>true</isPaymentAddressInTheUK>
-      getXpath(elementSectionKey = "paymentSection", elementKey = "paymentAddress", newXmlToNode) mustBe <paymentAddress><ukAddress>qwerty, qwerty1, AB1 0CD</ukAddress></paymentAddress>
+      newXmlToNode \ "paymentSection" \ "whereToSendThePayment" must contain(<whereToSendThePayment>nominee</whereToSendThePayment>)
+      newXmlToNode \ "paymentSection" \ "nomineeFullname" must contain(<nomineeFullname>Nominee</nomineeFullname>)
+      newXmlToNode \ "paymentSection" \ "anyAgentRef" must contain(<anyAgentRef>Yes</anyAgentRef>)
+      newXmlToNode \ "paymentSection" \ "agentReference" must contain(<agentReference>12341234</agentReference>)
+      newXmlToNode \ "paymentSection" \ "isPaymentAddressInTheUK" must contain(<isPaymentAddressInTheUK>true</isPaymentAddressInTheUK>)
+      newXmlToNode \ "paymentSection" \ "paymentAddress" must contain(<paymentAddress><ukAddress>qwerty, qwerty1, AB1 0CD</ukAddress></paymentAddress>)
     }
 
     "have correct sections in the paymentSection when payment address is a lookup" in {
+      val fullUserAnswers: UserAnswers = MockUserAnswers.fullValidUserAnswers
+
       when(fullUserAnswers.isPaymentAddressInTheUK) thenReturn None
+      when(fullUserAnswers.paymentUKAddress) thenReturn None
       when(fullUserAnswers.paymentInternationalAddress) thenReturn None
       when(fullUserAnswers.paymentLookupAddress) thenReturn Some(AddressLookup(
         address = Some(
@@ -184,13 +180,13 @@ class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
       ))
 
       val newXmlToNode: Elem = new RobotsXmlHelper(fullUserAnswers)(messages).formattedXml
-      getXpath(elementSectionKey = "paymentSection", elementKey = "paymentAddress", newXmlToNode) mustBe <paymentAddress><ukAddress>qwerty, qwerty1, AB1 0CD</ukAddress><lookupAddress>Line1, Line2, Line3, Line4, NE1 1LX, United Kingdom, GB</lookupAddress></paymentAddress>
+      newXmlToNode \ "paymentSection" \ "paymentAddress" must contain(<paymentAddress><lookupAddress>Line1, Line2, Line3, Line4, NE1 1LX, United Kingdom, GB</lookupAddress></paymentAddress>)
     }
 
     "have the correct parts in contact section" in {
 
-      getXpath(elementSectionKey = "contactSection", elementKey = "anyTelephoneNumber") mustBe  <anyTelephoneNumber>Yes</anyTelephoneNumber>
-      getXpath(elementSectionKey = "contactSection", elementKey = "telephoneNumber") mustBe <telephoneNumber>0191123123</telephoneNumber>
+      fullXml \ "contactSection" \ "anyTelephoneNumber" must contain(<anyTelephoneNumber>Yes</anyTelephoneNumber>)
+      fullXml \ "contactSection" \ "telephoneNumber" must contain(<telephoneNumber>0191123123</telephoneNumber>)
     }
 
     "minimal valid answers must form correctly" in {
