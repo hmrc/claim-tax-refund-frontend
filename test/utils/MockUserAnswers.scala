@@ -186,13 +186,11 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.anyTaxableForeignIncome) thenReturn Some(AnyTaxPaid.Yes("1234"))
     when(answers.otherTaxableIncome) thenReturn Some(Seq(
       OtherTaxableIncome("qwerty", "12"),
-      OtherTaxableIncome("qwerty1", "34"),
-      OtherTaxableIncome("qwerty2", "56")
+      OtherTaxableIncome("qwerty1", "34")
     ))
     when(answers.anyTaxableOtherIncome) thenReturn Some(Seq(
       AnyTaxPaid.Yes("1234"),
-      AnyTaxPaid.No,
-      AnyTaxPaid.Yes("678")
+      AnyTaxPaid.No
     ))
     when(answers.anyOtherTaxableIncome) thenReturn Some(false)
 
