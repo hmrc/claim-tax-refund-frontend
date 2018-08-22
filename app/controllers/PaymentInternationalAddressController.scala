@@ -53,17 +53,28 @@ class PaymentInternationalAddressController @Inject()(appConfig: FrontendAppConf
         case None => form
         case Some(value) => form.fill(value)
       }
-      Ok(paymentInternationalAddress(appConfig, preparedForm, mode))
+
+      request.userAnswers.selectTaxYear.map {
+        taxYear =>
+          Ok(paymentInternationalAddress(appConfig, preparedForm, mode, taxYear))
+      }.getOrElse {
+        Redirect(routes.SessionExpiredController.onPageLoad())
+      }
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      form.bindFromRequest().fold(
-        (formWithErrors: Form[InternationalAddress]) =>
-          Future.successful(BadRequest(paymentInternationalAddress(appConfig, formWithErrors, mode))),
-        (value) =>
-          dataCacheConnector.save[InternationalAddress](request.externalId, PaymentInternationalAddressId.toString, value).map(cacheMap =>
-            Redirect(navigator.nextPage(PaymentInternationalAddressId, mode)(new UserAnswers(cacheMap))))
-      )
+      request.userAnswers.selectTaxYear.map {
+        taxYear =>
+          form.bindFromRequest().fold(
+            (formWithErrors: Form[InternationalAddress]) =>
+              Future.successful(BadRequest(paymentInternationalAddress(appConfig, formWithErrors, mode, taxYear))),
+            value =>
+              dataCacheConnector.save[InternationalAddress](request.externalId, PaymentInternationalAddressId.toString, value).map(cacheMap =>
+                Redirect(navigator.nextPage(PaymentInternationalAddressId, mode)(new UserAnswers(cacheMap))))
+          )
+      }.getOrElse {
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+      }
   }
 }

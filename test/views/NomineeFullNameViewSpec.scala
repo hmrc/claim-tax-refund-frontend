@@ -19,6 +19,7 @@ package views
 import controllers.routes
 import forms.NomineeFullNameForm
 import models.NormalMode
+import models.SelectTaxYear.CYMinus1
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
 import views.behaviours.StringViewBehaviours
@@ -27,19 +28,22 @@ import views.html.nomineeFullName
 class NomineeFullNameViewSpec extends StringViewBehaviours with MockitoSugar {
 
   private val messageKeyPrefix = "nomineeFullName"
+  private val taxYear = CYMinus1
 
   override val form: Form[String] = new NomineeFullNameForm(frontendAppConfig)()
 
-  def createView = () => nomineeFullName(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createView = () =>
+    nomineeFullName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
-  def createViewUsingForm = (form: Form[String]) => nomineeFullName(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createViewUsingForm = (form: Form[String]) =>
+    nomineeFullName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "NomineeFullName view" must {
     behave like normalPage(createView, messageKeyPrefix, None)
 
     behave like pageWithBackLink(createView)
 
-    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+    behave like pageWithSecondaryHeader(createView, messages("site.service_name.with_tax_year", taxYear.asString(messages)))
 
     behave like stringPage(
       createView = createViewUsingForm,

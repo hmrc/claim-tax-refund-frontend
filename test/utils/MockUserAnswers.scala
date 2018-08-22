@@ -122,6 +122,7 @@ object MockUserAnswers extends MockitoSugar {
   def benefitsUserAnswers: UserAnswers = {
     val answers = nothingAnswered
 
+    when(answers.selectTaxYear) thenReturn Some(CYMinus2)
     when(answers.anyBenefits) thenReturn Some(true)
     when(answers.selectBenefits) thenReturn Some(
       Seq(Benefits.CARERS_ALLOWANCE,
@@ -147,6 +148,7 @@ object MockUserAnswers extends MockitoSugar {
   def companyBenefitsUserAnswers: UserAnswers = {
     val answers = nothingAnswered
 
+    when(answers.selectTaxYear) thenReturn Some(CYMinus2)
     when(answers.anyCompanyBenefits) thenReturn Some(true)
     when(answers.selectCompanyBenefits) thenReturn Some(
       Seq(
@@ -166,6 +168,7 @@ object MockUserAnswers extends MockitoSugar {
   def taxableIncomeUserAnswers: UserAnswers = {
     val answers = nothingAnswered
 
+    when(answers.selectTaxYear) thenReturn Some(CYMinus2)
     when(answers.anyTaxableIncome) thenReturn Some(true)
     when(answers.selectTaxableIncome) thenReturn Some(
       Seq(
@@ -194,6 +197,7 @@ object MockUserAnswers extends MockitoSugar {
   def selfPaymentDetailsUserAnswers: UserAnswers = {
     val answers = nothingAnswered
 
+    when(answers.selectTaxYear) thenReturn Some(CYMinus2)
     when(answers.whereToSendPayment) thenReturn Some(Myself)
     when(answers.paymentAddressCorrect) thenReturn Some(false)
     when(answers.isPaymentAddressInTheUK) thenReturn Some(true)
@@ -205,6 +209,7 @@ object MockUserAnswers extends MockitoSugar {
   def nomineePaymentDetailsUserAnswers: UserAnswers = {
     val answers = nothingAnswered
 
+    when(answers.selectTaxYear) thenReturn Some(CYMinus2)
     when(answers.whereToSendPayment) thenReturn Some(Nominee)
     when(answers.nomineeFullName) thenReturn Some("Nominee")
     when(answers.anyAgentRef) thenReturn Some(AnyAgentRef.Yes("12341234"))
@@ -217,6 +222,7 @@ object MockUserAnswers extends MockitoSugar {
   def contactDetailsUserAnswers: UserAnswers = {
     val answers = nothingAnswered
 
+    when(answers.selectTaxYear) thenReturn Some(CYMinus2)
     when(answers.anyTelephoneNumber) thenReturn Some(TelephoneOption.Yes("0191123123"))
 
     answers

@@ -21,6 +21,7 @@ import play.api.data.Form
 import controllers.routes
 import forms.EnterPayeReferenceForm
 import models.NormalMode
+import models.SelectTaxYear.CYMinus4
 import org.scalatest.mockito.MockitoSugar
 import views.behaviours.StringViewBehaviours
 import views.html.enterPayeReference
@@ -29,19 +30,20 @@ class EnterPayeReferenceViewSpec extends StringViewBehaviours with MockitoSugar 
 
   private val messageKeyPrefix = "enterPayeReference"
   private val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
+  private val taxYear = CYMinus4
 
   override val form: Form[String] = new EnterPayeReferenceForm(appConfig)()
 
-  def createView = () => enterPayeReference(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createView = () => enterPayeReference(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
-  def createViewUsingForm = (form: Form[String]) => enterPayeReference(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createViewUsingForm = (form: Form[String]) => enterPayeReference(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "EnterPayeReference view" must {
     behave like normalPage(createView, messageKeyPrefix, None)
 
     behave like pageWithBackLink(createView)
 
-    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+    behave like pageWithSecondaryHeader(createView, messages("site.service_name.with_tax_year", taxYear.asString(messages)))
 
     behave like stringPage(
       createView = createViewUsingForm,

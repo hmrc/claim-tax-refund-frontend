@@ -19,6 +19,7 @@ package views
 import play.api.data.Form
 import controllers.routes
 import forms.BooleanForm
+import models.SelectTaxYear.CYMinus3
 import views.behaviours.YesNoViewBehaviours
 import models.{Index, NormalMode}
 import views.html.deleteOther
@@ -29,14 +30,29 @@ class DeleteOtherViewSpec extends YesNoViewBehaviours {
   val itemName = "qwerty"
   val index = Index(1)
   val benefitCollectionId = "otherBenefit"
+  private val taxYear = CYMinus3
 
   override val form = new BooleanForm()()
 
   def createView = () =>
-    deleteOther(frontendAppConfig, form, NormalMode, index, itemName, benefitCollectionId)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+    deleteOther(
+      appConfig = frontendAppConfig,
+      form = form,
+      mode = NormalMode,
+      index = index,
+      itemName = itemName,
+      collectionId = benefitCollectionId,
+      taxYear = taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   def createViewUsingForm = (form: Form[_]) =>
-    deleteOther(frontendAppConfig, form, NormalMode, index, itemName, benefitCollectionId)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+    deleteOther(
+      appConfig = frontendAppConfig,
+      form = form,
+      mode = NormalMode,
+      index = index,
+      itemName = itemName,
+      collectionId = benefitCollectionId,
+      taxYear = taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "DeleteOther view" must {
 

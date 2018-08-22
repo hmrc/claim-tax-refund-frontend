@@ -18,6 +18,7 @@ package views
 
 import controllers.routes
 import forms.AnyAgentReferenceForm
+import models.SelectTaxYear.CYMinus1
 import models.{AnyAgentRef, NormalMode}
 import play.api.data.{Form, FormError}
 import play.twirl.api.HtmlFormat
@@ -29,13 +30,15 @@ class AnyAgentRefViewSpec extends QuestionViewBehaviours[AnyAgentRef]{
   private val messageKeyPrefix = "anyAgentRef"
   private val nomineeName = "Test Nominee"
   private val testAgentRef = "123456"
+  private val taxYear = CYMinus1
 
   val formProvider = new AnyAgentReferenceForm()
   val form = formProvider()
 
-  def createView = () => anyAgentRef(frontendAppConfig, form, NormalMode, nomineeName)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createView = () => anyAgentRef(frontendAppConfig, form, NormalMode, nomineeName, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
-  def createViewUsingForm = (form: Form[_]) => anyAgentRef(frontendAppConfig, form, NormalMode, nomineeName)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createViewUsingForm = (form: Form[_]) =>
+    anyAgentRef(frontendAppConfig, form, NormalMode, nomineeName, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "AnyAgentRef view" must {
 
@@ -43,7 +46,7 @@ class AnyAgentRefViewSpec extends QuestionViewBehaviours[AnyAgentRef]{
 
     behave like pageWithBackLink(createView)
 
-    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+    behave like pageWithSecondaryHeader(createView, messages("site.service_name.with_tax_year", taxYear.asString(messages)))
 
     yesNoPage(
       createView = createViewUsingForm,

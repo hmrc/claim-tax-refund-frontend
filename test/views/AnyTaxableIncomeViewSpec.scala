@@ -38,18 +38,17 @@ class AnyTaxableIncomeViewSpec extends YesNoViewBehaviours {
 
   "AnyTaxableIncome view" must {
 
-    behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))
+    behave like normalPage(createView, messageKeyPrefix, None)
 
     behave like pageWithBackLink(createView)
 
-    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+    behave like pageWithSecondaryHeader(createView, messages("site.service_name.with_tax_year", taxYear.asString(messages)))
 
     behave like yesNoPage(
       createView = createViewUsingForm,
       messageKeyPrefix = messageKeyPrefix,
       expectedFormAction = routes.AnyTaxableIncomeController.onSubmit(NormalMode).url,
-      expectedHintTextKey = None,
-      args = taxYear.asString(messages)
+      expectedHintTextKey = None
     )
 
     behave like pageWithList(createView, messageKeyPrefix,

@@ -153,8 +153,8 @@ anyBenefits.checkYourAnswersLabel = Did you get any taxable benefits?
 anyBenefits.blank = Select yes if you got any taxable benefits
 anyBenefits.listHeading = A benefit can be something like:
 
-anyTaxableIncome.title = Did you get any other taxable income between {0}?
-anyTaxableIncome.heading = Did you get any other taxable income between {0}?
+anyTaxableIncome.title = Did you get any other taxable income?
+anyTaxableIncome.heading = Did you get any other taxable income?
 anyTaxableIncome.checkYourAnswersLabel = Did you get any other taxable income?
 anyTaxableIncome.blank = Select yes if you got any other taxable income
 anyTaxableIncome.listHeading = Taxable income can be something like:
@@ -352,8 +352,8 @@ howMuchBankInterest.checkYourAnswersLabel = Bank or building society interest
 howMuchBankInterest.blank = Enter the amount of bank or building society interest you got
 howMuchBankInterest.invalid = Enter a valid amount of bank or building society interest
 
-detailsOfEmploymentOrPension.title = What were the details of your employment or pension between {0}?
-detailsOfEmploymentOrPension.heading = What were the details of your employment or pension between {0}?
+detailsOfEmploymentOrPension.title = What were the details of your employment or pension?
+detailsOfEmploymentOrPension.heading = What were the details of your employment or pension?
 detailsOfEmploymentOrPension.hintText = Tell us the name of your employer or pension provider and the start and end dates
 detailsOfEmploymentOrPension.checkYourAnswersLabel = Details of employment or pension
 detailsOfEmploymentOrPension.blank = Enter details of your employment or pension

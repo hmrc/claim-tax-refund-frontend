@@ -26,7 +26,8 @@
     appConfig: FrontendAppConfig,
     form: Form[_],
     mode: Mode,
-    address: ItmpAddress
+    address: ItmpAddress,
+    taxYear: SelectTaxYear
 )(
     implicit
     request: Request[_],
@@ -47,7 +48,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading(messages("paymentAddressCorrect.heading"))
+        @components.heading(messages("paymentAddressCorrect.heading"), taxYear = Some(taxYear.asString))
 
         <div class="panel form-group" id="usersAddress">
             @if(address.line1.exists(_.trim.nonEmpty)) {@address.line1<br>}

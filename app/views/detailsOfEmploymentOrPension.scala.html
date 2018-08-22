@@ -36,7 +36,7 @@
 )
 
 @main_template(
-    title = messages("detailsOfEmploymentOrPension.title",taxYear.asString),
+    title = messages("detailsOfEmploymentOrPension.title"),
     appConfig = appConfig,
     bodyClasses = None) {
 
@@ -46,11 +46,11 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading(messages("detailsOfEmploymentOrPension.heading", taxYear.asString))
+        @components.heading(messages("detailsOfEmploymentOrPension.heading"), taxYear = Some(taxYear.asString))
 
         @components.input_textarea(
             InputViewModel("value", form),
-            label = messages("detailsOfEmploymentOrPension.heading", taxYear.asString),
+            label = messages("detailsOfEmploymentOrPension.heading"),
             labelClass=Some("visually-hidden"),
             hint = Some(messages("detailsOfEmploymentOrPension.hintText")),
             charLimit=Some(characterLimit)

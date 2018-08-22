@@ -19,6 +19,7 @@ package views
 import controllers.routes
 import forms.BooleanForm
 import models.NormalMode
+import models.SelectTaxYear.CYMinus2
 import play.api.data.Form
 import views.behaviours.YesNoViewBehaviours
 import views.html.isPaymentAddressInTheUK
@@ -26,12 +27,13 @@ import views.html.isPaymentAddressInTheUK
 class IsPaymentAddressInTheUKViewSpec extends YesNoViewBehaviours {
 
   val messageKeyPrefix = "isPaymentAddressInTheUK"
+  private val taxYear = CYMinus2
 
   override val form = new BooleanForm()()
 
-  def createView = () => isPaymentAddressInTheUK(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createView = () => isPaymentAddressInTheUK(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
-  def createViewUsingForm = (form: Form[_]) => isPaymentAddressInTheUK(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createViewUsingForm = (form: Form[_]) => isPaymentAddressInTheUK(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "IsPaymentAddressInTheUK view" must {
 
@@ -39,7 +41,7 @@ class IsPaymentAddressInTheUKViewSpec extends YesNoViewBehaviours {
 
     behave like pageWithBackLink(createView)
 
-    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+    behave like pageWithSecondaryHeader(createView, messages("site.service_name.with_tax_year", taxYear.asString(messages)))
 
     behave like yesNoPage(
       createView = createViewUsingForm,

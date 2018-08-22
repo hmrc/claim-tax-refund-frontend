@@ -19,16 +19,18 @@ package controllers
 import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.WhereToSendPaymentForm
-import identifiers.WhereToSendPaymentId
+import models.SelectTaxYear.CYMinus2
 import models.{NormalMode, WhereToSendPayment}
+import org.mockito.Mockito.when
 import play.api.data.Form
-import play.api.libs.json.JsString
 import play.api.test.Helpers._
-import uk.gov.hmrc.http.cache.client.CacheMap
-import utils.FakeNavigator
+import utils.{FakeNavigator, MockUserAnswers}
 import views.html.whereToSendPayment
 
 class WhereToSendPaymentControllerSpec extends ControllerSpecBase {
+
+  private val taxYear = CYMinus2
+  private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
@@ -36,22 +38,22 @@ class WhereToSendPaymentControllerSpec extends ControllerSpecBase {
     new WhereToSendPaymentController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, formPartialRetriever, templateRenderer)
 
-  def viewAsString(form: Form[_] = WhereToSendPaymentForm()) = whereToSendPayment(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+  def viewAsString(form: Form[_] = WhereToSendPaymentForm()) =
+    whereToSendPayment(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "WhereToSendPayment Controller" must {
 
     "return OK and the correct view for a GET" in {
-      val result = controller().onPageLoad(NormalMode)(fakeRequest)
+      when(mockUserAnswers.whereToSendPayment).thenReturn(None)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe OK
       contentAsString(result) mustBe viewAsString()
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      val validData = Map(WhereToSendPaymentId.toString -> JsString(WhereToSendPayment.values.head.toString))
-      val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validData)))
-
-      val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)
+      when(mockUserAnswers.whereToSendPayment).thenReturn(Some(WhereToSendPayment.values.head))
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
       contentAsString(result) mustBe viewAsString(WhereToSendPaymentForm().fill(WhereToSendPayment.values.head))
     }
@@ -59,7 +61,7 @@ class WhereToSendPaymentControllerSpec extends ControllerSpecBase {
     "redirect to the next page when valid data is submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", WhereToSendPaymentForm.options.head.value))
 
-      val result = controller().onSubmit(NormalMode)(postRequest)
+      val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(onwardRoute.url)
@@ -69,7 +71,7 @@ class WhereToSendPaymentControllerSpec extends ControllerSpecBase {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
       val boundForm = WhereToSendPaymentForm().bind(Map("value" -> "invalid value"))
 
-      val result = controller().onSubmit(NormalMode)(postRequest)
+      val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe BAD_REQUEST
       contentAsString(result) mustBe viewAsString(boundForm)

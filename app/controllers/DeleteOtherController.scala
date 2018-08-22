@@ -53,31 +53,42 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
 
   def onPageLoad(mode: Mode, index: Index, itemName: String, collectionId: String): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      Ok(deleteOther(appConfig, form, mode, index, itemName, collectionId))
+      request.userAnswers.selectTaxYear.map {
+        taxYear =>
+          Ok(deleteOther(appConfig, form, mode, index, itemName, collectionId, taxYear))
+      }.getOrElse {
+        Redirect(routes.SessionExpiredController.onPageLoad())
+      }
   }
 
-  def onSubmit(mode: Mode, index: Index, itemName: String, collectionId: String): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
-    implicit request =>
-      form.bindFromRequest().fold(
-        (formWithErrors: Form[_]) =>
-          Future.successful(BadRequest(deleteOther(appConfig, formWithErrors, mode, index, itemName, collectionId))),
-        success = value =>
-          if (value) {
-            collectionId match {
-              case OtherBenefit.collectionId =>
-                deleteOtherBenefit(request, mode, index)
-              case OtherCompanyBenefit.collectionId =>
-                deleteOtherCompanyBenefit(request, mode, index)
-              case OtherTaxableIncome.collectionId =>
-                deleteOtherTaxableIncome(request, mode, index)
-              case _ =>
-                Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
-            }
-          } else {
-            Future.successful(Redirect(routes.CheckYourAnswersController.onPageLoad()))
-          }
-      )
-  }
+  def onSubmit(mode: Mode, index: Index, itemName: String, collectionId: String): Action[AnyContent] =
+    (authenticate andThen getData andThen requireData).async {
+      implicit request =>
+        request.userAnswers.selectTaxYear.map {
+          taxYear =>
+            form.bindFromRequest().fold(
+              (formWithErrors: Form[_]) =>
+                Future.successful(BadRequest(deleteOther(appConfig, formWithErrors, mode, index, itemName, collectionId, taxYear))),
+              success = value =>
+                if (value) {
+                  collectionId match {
+                    case OtherBenefit.collectionId =>
+                      deleteOtherBenefit(request, mode, index)
+                    case OtherCompanyBenefit.collectionId =>
+                      deleteOtherCompanyBenefit(request, mode, index)
+                    case OtherTaxableIncome.collectionId =>
+                      deleteOtherTaxableIncome(request, mode, index)
+                    case _ =>
+                      Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+                  }
+                } else {
+                  Future.successful(Redirect(routes.CheckYourAnswersController.onPageLoad()))
+                }
+            )
+        }.getOrElse {
+          Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+        }
+    }
 
   def deleteOtherBenefit(request: DataRequest[AnyContent], mode: Mode, index: Index): Future[Result] = {
     val result: Option[Future[Result]] = for {
