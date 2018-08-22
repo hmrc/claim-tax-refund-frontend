@@ -51,10 +51,10 @@
         @components.heading(messages("anyOtherBenefits.heading"), taxYear = Some(taxYear.asString))
 
         <p class="lede">@messages("global.otherListHeading")</p>
+
         @components.list(
             bulletList = otherBenefitNames
         )
-
 
         @components.input_yes_no(
             InputViewModel("value", form),
