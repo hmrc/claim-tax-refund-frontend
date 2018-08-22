@@ -139,7 +139,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       rows(12).label.key mustBe "anyTaxableForeignIncomeOption.checkYourAnswersLabel"
       rows(13).label.key mustBe "anyTaxableForeignIncome.checkYourAnswersLabel"
 
-      otherTaxableIncomeSection.rows.size mustBe 14
+      otherTaxableIncomeSection.rows.size mustBe 9
       otherTaxableIncomeSection.headingKey.get mustBe "otherTaxableIncome.checkYourAnswersLabel"
       otherTaxableIncomeSection.rows.head.label.key mustBe "qwerty"
       otherTaxableIncomeSection.rows(1).label.key mustBe messages("checkYourAnswers.otherTaxableIncome.label", "qwerty")
@@ -158,16 +158,6 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       otherTaxableIncomeSection.rows(7).answer.key mustBe "site.no"
       otherTaxableIncomeSection.rows(8).label.key mustBe "qwerty1"
       otherTaxableIncomeSection.rows(8).deleteUrl.get mustBe routes.DeleteOtherController.onPageLoad(index = 1, itemName = "qwerty1", collectionId = "otherTaxableIncome").url
-
-      otherTaxableIncomeSection.rows(9).label.key mustBe "qwerty2"
-      otherTaxableIncomeSection.rows(10).label.key mustBe messages("checkYourAnswers.otherTaxableIncome.label", "qwerty2")
-      otherTaxableIncomeSection.rows(10).answer.key mustBe "£56"
-      otherTaxableIncomeSection.rows(11).label.key mustBe messages("anyTaxableOtherIncomeOption.checkYourAnswersLabel", "qwerty2")
-      otherTaxableIncomeSection.rows(11).answer.key mustBe "site.yes"
-      otherTaxableIncomeSection.rows(12).label.key mustBe messages("anyTaxableOtherIncome.checkYourAnswersLabel", "qwerty2")
-      otherTaxableIncomeSection.rows(12).answer.key mustBe "£678"
-      otherTaxableIncomeSection.rows(13).label.key mustBe "qwerty2"
-      otherTaxableIncomeSection.rows(13).deleteUrl.get mustBe routes.DeleteOtherController.onPageLoad(index = 2, itemName = "qwerty2", collectionId = "otherTaxableIncome").url
 
       otherTaxableIncomeSection.addLinkText.get mustBe "otherTaxableIncome.add"
       otherTaxableIncomeSection.addLinkUrl.get mustBe routes.OtherTaxableIncomeController.onPageLoad(CheckMode, Index(answers.otherTaxableIncome.get.size)).url
