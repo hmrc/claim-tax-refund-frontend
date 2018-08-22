@@ -5,85 +5,134 @@
 		<nino>@userAnswers.userDetails.get.nino</nino>
 	</userDetails>
 	<claimSection>
-		<selectedTaxYear>@robotsXmlHelper.getSelectTaxYear</selectedTaxYear>
-		@if(userAnswers.employmentDetails.isDefined){
-		<employmentDetails>@userAnswers.employmentDetails</employmentDetails>}
-		@if(userAnswers.enterPayeReference.isDefined){<payeReference>@userAnswers.enterPayeReference</payeReference>}
-		@if(userAnswers.detailsOfEmploymentOrPension.isDefined){<detailsOfEmploymentOrPension>@userAnswers.detailsOfEmploymentOrPension</detailsOfEmploymentOrPension>}
+		<selectedTaxYear>@robotsXmlHelper.selectTaxYear</selectedTaxYear>
+		@userAnswers.employmentDetails.map{ value =>
+			<employmentDetails>@value</employmentDetails>
+		}
+		@userAnswers.enterPayeReference.map{ value =>
+			<payeReference>@userAnswers.enterPayeReference</payeReference>
+		}
+		@userAnswers.detailsOfEmploymentOrPension.map{ value =>
+			<detailsOfEmploymentOrPension>@userAnswers.detailsOfEmploymentOrPension</detailsOfEmploymentOrPension>
+		}
 	</claimSection>
-	@if(robotsXmlHelper.showBenefits){
+
+	@if(userAnswers.anyBenefits.getOrElse(false)){
 	<benefitSection>
 		<anyBenefits>@userAnswers.anyBenefits</anyBenefits>
-		<selectBenefits>@robotsXmlHelper.xmlCheckBoxFormatter(userAnswers.selectBenefits.get)</selectBenefits>
-		@if(userAnswers.howMuchBereavementAllowance.isDefined){<howMuchBereavementAllowance>@userAnswers.howMuchBereavementAllowance</howMuchBereavementAllowance>}
-		@if(userAnswers.howMuchCarersAllowance.isDefined){<howMuchCarersAllowance>@userAnswers.howMuchCarersAllowance</howMuchCarersAllowance>}
-		@if(userAnswers.howMuchJobseekersAllowance.isDefined){<howMuchJobseekersAllowance>@userAnswers.howMuchJobseekersAllowance</howMuchJobseekersAllowance>}
-		@if(userAnswers.howMuchEmploymentAndSupportAllowance.isDefined){<howMuchEmploymentAndSupportAllowance>@userAnswers.howMuchEmploymentAndSupportAllowance</howMuchEmploymentAndSupportAllowance>}
-		@if(userAnswers.howMuchIncapacityBenefit.isDefined){<howMuchIncapacityBenefit>@userAnswers.howMuchIncapacityBenefit</howMuchIncapacityBenefit>}
-		@if(userAnswers.howMuchStatePension.isDefined){<howMuchStatePension>@userAnswers.howMuchStatePension</howMuchStatePension>}
-		@if(userAnswers.otherBenefit.isDefined){
-		<otherBenefitsSection>
-			<otherTaxableIncome>@robotsXmlHelper.getOtherBenefits(userAnswers.otherBenefit.get)</otherTaxableIncome>
-		</otherBenefitsSection>}
+		<selectBenefits>@userAnswers.selectBenefits.get.mkString(", ")</selectBenefits>
+		@userAnswers.howMuchBereavementAllowance.map{ value =>
+			<howMuchBereavementAllowance>@value</howMuchBereavementAllowance>
+		}
+		@userAnswers.howMuchCarersAllowance.map { value =>
+			<howMuchCarersAllowance>@value</howMuchCarersAllowance>
+		}
+		@userAnswers.howMuchJobseekersAllowance.map { value =>
+			<howMuchJobseekersAllowance>@value</howMuchJobseekersAllowance>
+		}
+		@userAnswers.howMuchEmploymentAndSupportAllowance.map{ value =>
+			<howMuchEmploymentAndSupportAllowance>@value</howMuchEmploymentAndSupportAllowance>
+		}
+		@userAnswers.howMuchIncapacityBenefit.map { value =>
+			<howMuchIncapacityBenefit>@value</howMuchIncapacityBenefit>
+		}
+		@userAnswers.howMuchStatePension.map{ value =>
+			<howMuchStatePension>@value</howMuchStatePension>
+		}
+		@userAnswers.otherBenefit.map{ value =>
+			<otherBenefitsSection>
+				<otherTaxableIncome>@robotsXmlHelper.otherBenefits(value)</otherTaxableIncome>
+			</otherBenefitsSection>
+
+		}
 	</benefitSection>}
-	@if(robotsXmlHelper.showCompanyBenefits){
+
+	@if(userAnswers.anyCompanyBenefits.getOrElse(false)){
 	<companyBenefitsSection>
 		<anyCompanyBenefits>@userAnswers.anyCompanyBenefits</anyCompanyBenefits>
-		<selectCompanyBenefits>@robotsXmlHelper.xmlCheckBoxFormatter(userAnswers.selectCompanyBenefits.get)</selectCompanyBenefits>
-		@if(userAnswers.howMuchCarBenefits.isDefined){<howMuchCarBenefits>@userAnswers.howMuchCarBenefits</howMuchCarBenefits>}
-		@if(userAnswers.howMuchFuelBenefit.isDefined){<howMuchFuelBenefit>@userAnswers.howMuchFuelBenefit</howMuchFuelBenefit>}
-		@if(userAnswers.howMuchMedicalBenefits.isDefined){<howMuchMedicalBenefits>@userAnswers.howMuchMedicalBenefits</howMuchMedicalBenefits>}
-		@if(userAnswers.otherCompanyBenefit.isDefined){
-		<otherCompanyBenefitsSection>
-			<otherTaxableIncome>@robotsXmlHelper.getOtherCompanyBenefits(userAnswers.otherCompanyBenefit.get)</otherTaxableIncome>
-		</otherCompanyBenefitsSection>}
-	</companyBenefitsSection>}
-	@if(robotsXmlHelper.showTaxableIncome){
+		<selectCompanyBenefits>@userAnswers.selectCompanyBenefits.get.mkString(", ")</selectCompanyBenefits>
+		@userAnswers.howMuchCarBenefits.map{ value =>
+			<howMuchCarBenefits>@value</howMuchCarBenefits>
+		}
+		@userAnswers.howMuchFuelBenefit.map{ value =>
+			<howMuchFuelBenefit>@value</howMuchFuelBenefit>
+		}
+		@userAnswers.howMuchMedicalBenefits.map{ value =>
+			<howMuchMedicalBenefits>@value</howMuchMedicalBenefits>
+		}
+		@if(userAnswers.otherCompanyBenefit){
+			<otherCompanyBenefitsSection>
+				<otherTaxableIncome>@robotsXmlHelper.otherCompanyBenefits(userAnswers.otherCompanyBenefit.get)</otherTaxableIncome>
+			</otherCompanyBenefitsSection>
+		}
+	</companyBenefitsSection>
+	}
+
+
+	@if(userAnswers.anyTaxableIncome.getOrElse(false)){
 	<taxableIncomeSection>
 		<anyTaxableIncome>@userAnswers.anyTaxableIncome</anyTaxableIncome>
-		<selectTaxableIncome>@robotsXmlHelper.xmlCheckBoxFormatter(userAnswers.selectTaxableIncome.get)</selectTaxableIncome>
+		<selectTaxableIncome>@userAnswers.selectTaxableIncome.get.mkString(", ")</selectTaxableIncome>
 		@if(userAnswers.howMuchRentalIncome.isDefined){
 		<rentalIncome>
 			<howMuch>@userAnswers.howMuchRentalIncome</howMuch>
-			<anyTaxPaid>@robotsXmlHelper.getAnyIncome(userAnswers.anyTaxableRentalIncome.get)</anyTaxPaid>
-			<taxPaid>@robotsXmlHelper.getIncomeAmount(userAnswers.anyTaxableRentalIncome.get)</taxPaid>
+			<anyTaxPaid>@robotsXmlHelper.anyIncome(userAnswers.anyTaxableRentalIncome.get)</anyTaxPaid>
+			<taxPaid>@robotsXmlHelper.incomeAmount(userAnswers.anyTaxableRentalIncome.get)</taxPaid>
 		</rentalIncome>}
 		@if(userAnswers.howMuchBankInterest.isDefined){
 		<bankInterest>
 			<howMuch>@userAnswers.howMuchBankInterest</howMuch>
-			<anyTaxPaid>@robotsXmlHelper.getAnyIncome(userAnswers.anyTaxableBankInterest.get)</anyTaxPaid>
-			<taxPaid>@robotsXmlHelper.getIncomeAmount(userAnswers.anyTaxableBankInterest.get)</taxPaid>
+			<anyTaxPaid>@robotsXmlHelper.anyIncome(userAnswers.anyTaxableBankInterest.get)</anyTaxPaid>
+			<taxPaid>@robotsXmlHelper.incomeAmount(userAnswers.anyTaxableBankInterest.get)</taxPaid>
 		</bankInterest>}
 		@if(userAnswers.howMuchInvestmentOrDividend.isDefined){
 		<investmentOrDividend>
 			<howMuch>@userAnswers.howMuchInvestmentOrDividend</howMuch>
-			<anyTaxPaid>@robotsXmlHelper.getAnyIncome(userAnswers.anyTaxableInvestments.get)</anyTaxPaid>
-			<taxPaid>@robotsXmlHelper.getIncomeAmount(userAnswers.anyTaxableInvestments.get)</taxPaid>
+			<anyTaxPaid>@robotsXmlHelper.anyIncome(userAnswers.anyTaxableInvestments.get)</anyTaxPaid>
+			<taxPaid>@robotsXmlHelper.incomeAmount(userAnswers.anyTaxableInvestments.get)</taxPaid>
 		</investmentOrDividend>}
 		@if(userAnswers.howMuchForeignIncome.isDefined){
 		<foreignIncome>
 			<howMuch>@userAnswers.howMuchForeignIncome</howMuch>
-			<anyTaxPaid>@robotsXmlHelper.getAnyIncome(userAnswers.anyTaxableForeignIncome.get)</anyTaxPaid>
-			<taxPaid>@robotsXmlHelper.getIncomeAmount(userAnswers.anyTaxableForeignIncome.get)</taxPaid>
+			<anyTaxPaid>@robotsXmlHelper.anyIncome(userAnswers.anyTaxableForeignIncome.get)</anyTaxPaid>
+			<taxPaid>@robotsXmlHelper.incomeAmount(userAnswers.anyTaxableForeignIncome.get)</taxPaid>
 		</foreignIncome>}
-		@if(userAnswers.otherTaxableIncome.isDefined){<otherTaxableIncome>@robotsXmlHelper.getOtherTaxableIncome(userAnswers.otherTaxableIncome.get)</otherTaxableIncome>}
+		@if(userAnswers.otherTaxableIncome.isDefined){<otherTaxableIncome>@robotsXmlHelper.otherTaxableIncome(userAnswers.otherTaxableIncome.get)</otherTaxableIncome>}
 	</taxableIncomeSection>}
 	<paymentSection>
-		@if(userAnswers.whereToSendPayment){<whereToSendThePayment>@userAnswers.whereToSendPayment</whereToSendThePayment>}
+		@userAnswers.whereToSendPayment.map{ value =>
+			<whereToSendThePayment>@value</whereToSendThePayment>
+		}
 		@if(userAnswers.paymentAddressCorrect.isDefined){
-		<paymentAddressCorrect>@userAnswers.paymentAddressCorrect</paymentAddressCorrect>}
-		@if(userAnswers.nomineeFullName){<nomineeFullname>@userAnswers.nomineeFullName</nomineeFullname>}
-		@if(userAnswers.anyAgentRef){<anyAgentRef>@robotsXmlHelper.getAnyAgentRef(userAnswers.anyAgentRef.get)</anyAgentRef>}
-		@if(userAnswers.anyAgentRef){<agentReference>@robotsXmlHelper.getAnyAgentReference(userAnswers.anyAgentRef.get)</agentReference>}
-		@if(userAnswers.isPaymentAddressInTheUK){<isPaymentAddressInTheUK>@userAnswers.isPaymentAddressInTheUK</isPaymentAddressInTheUK>}
+			<paymentAddressCorrect>@userAnswers.paymentAddressCorrect</paymentAddressCorrect>
+		}
+		@userAnswers.nomineeFullName.map{ value =>
+			<nomineeFullname>@value</nomineeFullname>
+		}
+		@userAnswers.anyAgentRef.map{ value =>
+			<anyAgentRef>@robotsXmlHelper.anyAgentRef(userAnswers.anyAgentRef.get)</anyAgentRef>
+		}
+		@userAnswers.anyAgentRef.map{ value =>
+			<agentReference>@robotsXmlHelper.anyAgentReference(userAnswers.anyAgentRef.get)</agentReference>
+		}
+		@userAnswers.isPaymentAddressInTheUK.map{ value =>
+			<isPaymentAddressInTheUK>@userAnswers.isPaymentAddressInTheUK</isPaymentAddressInTheUK>
+		}
 		<paymentAddress>
-			@if(userAnswers.paymentUKAddress){@robotsXmlHelper.getUkAddress}
-			@if(userAnswers.paymentInternationalAddress){@robotsXmlHelper.getInternationalAddress}
-			@if(userAnswers.paymentLookupAddress){@robotsXmlHelper.getLookupAddress}
+			@userAnswers.paymentUKAddress.map{ value =>
+				@robotsXmlHelper.ukAddress
+			}
+			@userAnswers.paymentInternationalAddress.map{ value =>
+				@robotsXmlHelper.internationalAddress
+			}
+			@userAnswers.paymentLookupAddress.map{ value =>
+				@robotsXmlHelper.lookupAddress
+			}
 		</paymentAddress>
+
 	</paymentSection>
 	<contactSection>
-		<anyTelephoneNumber>@robotsXmlHelper.getAnyTelephone(userAnswers.anyTelephoneNumber.get)</anyTelephoneNumber>
-		<telephoneNumber>@robotsXmlHelper.getAnyTelephoneNumber(userAnswers.anyTelephoneNumber.get)</telephoneNumber>
+		<anyTelephoneNumber>@robotsXmlHelper.anyTelephone(userAnswers.anyTelephoneNumber.get)</anyTelephoneNumber>
+		<telephoneNumber>@robotsXmlHelper.anyTelephoneNumber(userAnswers.anyTelephoneNumber.get)</telephoneNumber>
 	</contactSection>
 </ctr>

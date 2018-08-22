@@ -21,6 +21,7 @@ import models.{Address, AddressLookup, Country, UkAddress}
 import org.scalatest.mockito.MockitoSugar
 import utils.{MockUserAnswers, RobotsXmlHelper, UserAnswers, WireMockHelper}
 import org.mockito.Mockito.when
+import play.api.Logger
 
 import scala.xml.XML._
 import scala.xml._
@@ -28,7 +29,7 @@ import scala.xml._
 class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
 
   private val fullUserAnswers: UserAnswers = MockUserAnswers.fullValidUserAnswers
-  private val fullXml: Elem = new RobotsXmlHelper(fullUserAnswers)(messages).formatedXml
+  private val fullXml: Elem = new RobotsXmlHelper(fullUserAnswers)(messages).formattedXml
   private val xmlToNode: Elem = loadString(fullXml.toString)
 
   private val validMinimalXml: Elem = <ctr><userDetails><name>TestName</name><nino>ZZ123456A</nino></userDetails><claimSection><selectedTaxYear>6 April 2016 to 5 April 2017</selectedTaxYear><employmentDetails>true</employmentDetails></claimSection><paymentSection><whereToSendThePayment>myself</whereToSendThePayment><paymentAddressCorrect>true</paymentAddressCorrect><paymentAddress/></paymentSection><contactSection><anyTelephoneNumber>No</anyTelephoneNumber><telephoneNumber/></contactSection></ctr>
@@ -60,7 +61,7 @@ class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
       when(fullUserAnswers.enterPayeReference) thenReturn Some("123456789")
       when(fullUserAnswers.detailsOfEmploymentOrPension) thenReturn Some("Employment details")
 
-      val newXmlToNode: Elem = new RobotsXmlHelper(fullUserAnswers)(messages).formatedXml
+      val newXmlToNode: Elem = new RobotsXmlHelper(fullUserAnswers)(messages).formattedXml
 
       getXpath(elementSectionKey = "claimSection", elementKey = "selectedTaxYear", newXmlToNode) mustBe <selectedTaxYear>6 April 2016 to 5 April 2017</selectedTaxYear>
       getXpath(elementSectionKey = "claimSection", elementKey = "employmentDetails", newXmlToNode) mustBe <employmentDetails>false</employmentDetails>
@@ -71,6 +72,7 @@ class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
 
     "have correct sections in benefitSection" in {
 
+			Logger.warn (s"\n\n\n\n\n$fullXml")
       getXpath(elementSectionKey = "benefitSection", elementKey = "anyBenefits") mustBe <anyBenefits>true</anyBenefits>
       getXpath(elementSectionKey = "benefitSection", elementKey = "selectBenefits") mustBe <selectBenefits>carers-allowance, bereavement-allowance, incapacity-benefit, employment-and-support-allowance, jobseekers-allowance, other-taxable-benefit, state-pension</selectBenefits>
       getXpath(elementSectionKey = "benefitSection", elementKey = "howMuchBereavementAllowance") mustBe <howMuchBereavementAllowance>1234</howMuchBereavementAllowance>
@@ -133,14 +135,14 @@ class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
     }
 
     "hide sections when not selected" in {
-      when (fullUserAnswers.anyBenefits) thenReturn(Some(false))
-      when (fullUserAnswers.anyCompanyBenefits) thenReturn(Some(false))
-      when (fullUserAnswers.anyTaxableIncome) thenReturn(Some(false))
-      val newXmlToNode: Elem = new RobotsXmlHelper(fullUserAnswers)(messages).formatedXml
+      when (fullUserAnswers.anyBenefits) thenReturn Some(false)
+      when (fullUserAnswers.anyCompanyBenefits) thenReturn Some(false)
+      when (fullUserAnswers.anyTaxableIncome) thenReturn Some(false)
+      val newXmlToNode: Elem = new RobotsXmlHelper(fullUserAnswers)(messages).formattedXml
 
-      newXmlToNode.toString.contains("<anyBenefits>") mustBe false
-      newXmlToNode.toString.contains("<anyCompanyBenefits>") mustBe false
-      newXmlToNode.toString.contains("<anyTaxableIncome>") mustBe false
+      newXmlToNode.contains(<anyBenefits></anyBenefits>) mustBe false
+      newXmlToNode.contains(<anyCompanyBenefits></anyCompanyBenefits>) mustBe false
+      newXmlToNode.contains(<anyTaxableIncome></anyTaxableIncome>) mustBe false
     }
 
     "have correct sections in the paymentSection when payment address is international" in {
@@ -159,7 +161,7 @@ class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
       when(fullUserAnswers.paymentInternationalAddress) thenReturn None
       when(fullUserAnswers.paymentUKAddress) thenReturn Some(UkAddress("qwerty", "qwerty1", None, None, None, "AB1 0CD"))
 
-      val newXmlToNode: Elem = new RobotsXmlHelper(fullUserAnswers)(messages).formatedXml
+      val newXmlToNode: Elem = new RobotsXmlHelper(fullUserAnswers)(messages).formattedXml
 
       getXpath(elementSectionKey = "paymentSection", elementKey = "whereToSendThePayment", newXmlToNode) mustBe <whereToSendThePayment>nominee</whereToSendThePayment>
       getXpath(elementSectionKey = "paymentSection", elementKey = "nomineeFullname", newXmlToNode) mustBe <nomineeFullname>Nominee</nomineeFullname>
@@ -172,7 +174,7 @@ class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
     "have correct sections in the paymentSection when payment address is a lookup" in {
       when(fullUserAnswers.isPaymentAddressInTheUK) thenReturn None
       when(fullUserAnswers.paymentInternationalAddress) thenReturn None
-      when(fullUserAnswers.paymentLookupAddress) thenReturn(Some(AddressLookup(
+      when(fullUserAnswers.paymentLookupAddress) thenReturn Some(AddressLookup(
         address = Some(
           Address(
             lines = Some(Seq("Line1", "Line2", "Line3", "Line4")),
@@ -180,9 +182,9 @@ class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
             country = Some(Country(Some("United Kingdom"),Some("GB")))
           )),
         auditRef = Some("e9e2fb3f-268f-4c4c-b928-3dc0b17259f2")
-      )))
+      ))
 
-      val newXmlToNode: Elem = new RobotsXmlHelper(fullUserAnswers)(messages).formatedXml
+      val newXmlToNode: Elem = new RobotsXmlHelper(fullUserAnswers)(messages).formattedXml
       getXpath(elementSectionKey = "paymentSection", elementKey = "paymentAddress", newXmlToNode) mustBe <paymentAddress><ukAddress>qwerty, qwerty1, AB1 0CD</ukAddress><lookupAddress>Line1, Line2, Line3, Line4, NE1 1LX, United Kingdom, GB</lookupAddress></paymentAddress>
     }
 
@@ -193,7 +195,7 @@ class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
     }
 
     "minimal valid answers must form correctly" in {
-      val xml: Elem = new RobotsXmlHelper(MockUserAnswers.minimalValidUserAnswers)(messages).formatedXml
+      val xml: Elem = new RobotsXmlHelper(MockUserAnswers.minimalValidUserAnswers)(messages).formattedXml
 
       xml mustBe validMinimalXml
     }
