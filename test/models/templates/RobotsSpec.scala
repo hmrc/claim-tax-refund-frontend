@@ -30,13 +30,12 @@ class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
 
   private val fullUserAnswers: UserAnswers = MockUserAnswers.fullValidUserAnswers
   private val fullXml: Elem = new RobotsXmlHelper(fullUserAnswers)(messages).formattedXml
-  private val xmlToNode: Elem = loadString(fullXml.toString)
 
   private val validMinimalXml: Elem = <ctr><userDetails><name>TestName</name><nino>ZZ123456A</nino></userDetails><claimSection><selectedTaxYear>6 April 2016 to 5 April 2017</selectedTaxYear><employmentDetails>true</employmentDetails></claimSection><paymentSection><whereToSendThePayment>myself</whereToSendThePayment><paymentAddressCorrect>true</paymentAddressCorrect><paymentAddress/></paymentSection><contactSection><anyTelephoneNumber>No</anyTelephoneNumber><telephoneNumber/></contactSection></ctr>
 
-  def getXpath(elementSectionKey: String, elementKey: String, xmlToNode: Elem = xmlToNode): Node = {
+  def getXpath(elementSectionKey: String, elementKey: String, fullXml: Elem = fullXml): Node = {
 
-      val nodeSeq = xmlToNode \\ elementSectionKey
+      val nodeSeq = fullXml \\ elementSectionKey
       nodeSeq.\(elementKey).head
   }
 
@@ -44,8 +43,8 @@ class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
 
     "have correct sections in userDetails" in {
 
-      getXpath(elementSectionKey = "userDetails", elementKey = "name") mustBe <name>TestName</name>
-      getXpath(elementSectionKey = "userDetails", elementKey = "nino") mustBe <nino>ZZ123456A</nino>
+      fullXml \ "userDetails" \ "name" must contain(<name>TestName</name>)
+      fullXml \ "userDetails" \ "nino" must contain(<nino>ZZ123456A</nino>)
     }
 
     "have correct sections in claimSection when employmentDetails are true" in {
@@ -82,7 +81,7 @@ class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
       getXpath(elementSectionKey = "benefitSection", elementKey = "howMuchIncapacityBenefit") mustBe <howMuchIncapacityBenefit>1234</howMuchIncapacityBenefit>
       getXpath(elementSectionKey = "benefitSection", elementKey = "howMuchStatePension") mustBe <howMuchStatePension>1234</howMuchStatePension>
 
-      val otherBenefits = getXpath(elementSectionKey= "otherBenefitsSection", elementKey= "otherTaxableIncome").\("otherBenefit")
+      val otherBenefits: NodeSeq = fullXml \\ "otherBenefits" \ "otherBenefit"
 
       otherBenefits.head mustBe <otherBenefit><name>qwerty</name><amount>12</amount></otherBenefit>
       otherBenefits(1) mustBe <otherBenefit><name>qwerty1</name><amount>34</amount></otherBenefit>
@@ -97,7 +96,7 @@ class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
       getXpath(elementSectionKey = "companyBenefitsSection", elementKey = "howMuchFuelBenefit") mustBe <howMuchFuelBenefit>1234</howMuchFuelBenefit>
       getXpath(elementSectionKey = "companyBenefitsSection", elementKey = "howMuchMedicalBenefits") mustBe <howMuchMedicalBenefits>1234</howMuchMedicalBenefits>
 
-      val otherCompanyBenefitsSection = getXpath(elementSectionKey = "otherCompanyBenefitsSection", elementKey = "otherTaxableIncome").\("companyBenefit")
+      val otherCompanyBenefitsSection = getXpath(elementSectionKey = "otherCompanyBenefitsSection", elementKey = "otherCompanyBenefit").\("companyBenefit")
 
       otherCompanyBenefitsSection.head mustBe <companyBenefit><name>qwerty</name><amount>12</amount></companyBenefit>
       otherCompanyBenefitsSection(1) mustBe <companyBenefit><name>qwerty1</name><amount>34</amount></companyBenefit>

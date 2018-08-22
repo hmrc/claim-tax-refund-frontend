@@ -19,6 +19,7 @@ package utils
 import models._
 import models.templates.xml.robots
 import play.api.i18n.Messages
+import play.twirl.api.XmlFormat
 
 import scala.xml.Elem
 import scala.xml.XML._
@@ -78,11 +79,5 @@ class RobotsXmlHelper(userAnswers: UserAnswers)(implicit messages: Messages) {
 
   def lookupAddress: Elem = AddressLookup.toXml(userAnswers.paymentLookupAddress.get)
 
-  def formattedXml: Elem = {
-    val xmlString = robots(userAnswers, this)
-    val FormattedXmlString = xmlString.toString.replaceAll("\t|\n", "")
-    loadString(FormattedXmlString)
-  }
-
-
+  def formattedXml: Elem = loadString(robots(userAnswers, this).toString.replaceAll("\t|\n", ""))
 }

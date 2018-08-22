@@ -1,4 +1,7 @@
-@(userAnswers:utils.UserAnswers,robotsXmlHelper:utils.RobotsXmlHelper)<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+@import utils._
+
+@(userAnswers: UserAnswers, robotsXmlHelper: RobotsXmlHelper)
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <ctr>
 	<userDetails>
 		<name>@userAnswers.userDetails.get.name</name>
@@ -40,9 +43,9 @@
 			<howMuchStatePension>@value</howMuchStatePension>
 		}
 		@userAnswers.otherBenefit.map{ value =>
-			<otherBenefitsSection>
-				<otherTaxableIncome>@robotsXmlHelper.otherBenefits(value)</otherTaxableIncome>
-			</otherBenefitsSection>
+			<otherBenefits>
+				@robotsXmlHelper.otherBenefits(value)
+			</otherBenefits>
 
 		}
 	</benefitSection>}
@@ -62,7 +65,7 @@
 		}
 		@if(userAnswers.otherCompanyBenefit){
 			<otherCompanyBenefitsSection>
-				<otherTaxableIncome>@robotsXmlHelper.otherCompanyBenefits(userAnswers.otherCompanyBenefit.get)</otherTaxableIncome>
+				<otherCompanyBenefit>@robotsXmlHelper.otherCompanyBenefits(userAnswers.otherCompanyBenefit.get)</otherCompanyBenefit>
 			</otherCompanyBenefitsSection>
 		}
 	</companyBenefitsSection>
