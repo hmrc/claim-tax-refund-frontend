@@ -25,92 +25,63 @@ import scala.xml.XML._
 
 class RobotsXmlHelper(userAnswers: UserAnswers)(implicit messages: Messages) {
 
-  def getSelectTaxYear: String = userAnswers.selectTaxYear.get.asString
+  def selectTaxYear: String = userAnswers.selectTaxYear.get.asString
 
-  def getIncomeAmount(userAnswer: AnyTaxPaid): String = userAnswer match {
+  def incomeAmount(userAnswer: AnyTaxPaid): String = userAnswer match {
     case AnyTaxPaid.Yes(amount) => s"$amount"
     case _ => ""
   }
 
-  def getAnyIncome(userAnswer: AnyTaxPaid): String = userAnswer match {
+  def anyIncome(userAnswer: AnyTaxPaid): String = userAnswer match {
     case AnyTaxPaid.Yes(_) => Messages("site.yes")
     case _ => Messages("site.no")
   }
 
-  def getAnyAgentRef(userAnswer: AnyAgentRef): String = userAnswer match {
+  def anyAgentRef(userAnswer: AnyAgentRef): String = userAnswer match {
     case AnyAgentRef.Yes(_) => Messages("site.yes")
     case _ => Messages("site.no")
   }
 
-  def getAnyAgentReference(userAnswer: AnyAgentRef): String = userAnswer match {
+  def anyAgentReference(userAnswer: AnyAgentRef): String = userAnswer match {
     case AnyAgentRef.Yes(reference) => s"$reference"
     case _ => ""
   }
 
-  def getAnyTelephone(userAnswer: TelephoneOption): String = userAnswer match {
+  def anyTelephone(userAnswer: TelephoneOption): String = userAnswer match {
     case TelephoneOption.Yes(_) => Messages("site.yes")
     case _ => Messages("site.no")
   }
 
-  def getAnyTelephoneNumber(userAnswer: TelephoneOption): String = userAnswer match {
+  def anyTelephoneNumber(userAnswer: TelephoneOption): String = userAnswer match {
     case TelephoneOption.Yes(number) => s"$number"
     case _ => ""
   }
 
-  def showBenefits: Boolean = userAnswers.anyBenefits match{
-    case Some(true) => true
-    case _ => false
+  def otherBenefits(userAnswer: Seq[OtherBenefit]): Seq[Elem] = userAnswer.map {
+    value =>
+      <otherBenefit><name>{value.name}</name><amount>{value.amount}</amount></otherBenefit>
   }
 
-  def getOtherBenefits(userAnswer: Seq[OtherBenefit]): Seq[Elem] = {
-    val data: Seq[Elem] = userAnswer.map {
-      value =>
-        loadString(s"<otherBenefit><name>${value.name}</name><amount>${value.amount}</amount></otherBenefit>")
-    }
-    data
+  def otherCompanyBenefits(userAnswer: Seq[OtherCompanyBenefit]): Seq[Elem] = userAnswer.map {
+    value =>
+      <companyBenefit><name>{value.name}</name><amount>{value.amount}</amount></companyBenefit>
   }
 
-  def showCompanyBenefits: Boolean = userAnswers.anyCompanyBenefits match{
-    case Some(true) => true
-    case _ => false
+  def otherTaxableIncome(userAnswer: Seq[OtherTaxableIncome]): Seq[Elem] = userAnswer.map {
+    value =>
+      <taxableIncome><name>{value.name}</name><amount>{value.amount}</amount></taxableIncome>
   }
 
-  def getOtherCompanyBenefits(userAnswer: Seq[OtherCompanyBenefit]): Seq[Elem] = {
-    val data: Seq[Elem] = userAnswer.map {
-      value =>
-        loadString(s"<companyBenefit><name>${value.name}</name><amount>${value.amount}</amount></companyBenefit>")
-    }
-    data
-  }
+  def internationalAddress: Elem = InternationalAddress.toXml(userAnswers.paymentInternationalAddress.get)
 
-  def showTaxableIncome: Boolean = userAnswers.anyTaxableIncome match{
-    case Some(true) => true
-    case _ => false
-  }
+  def ukAddress: Elem = UkAddress.toXml(userAnswers.paymentUKAddress.get)
 
-  def getOtherTaxableIncome(userAnswer: Seq[OtherTaxableIncome]): Seq[Elem] = {
-    val data: Seq[Elem] = userAnswer.map {
-      value =>
-        loadString(s"<taxableIncome><name>${value.name}</name><amount>${value.amount}</amount></taxableIncome>")
-    }
-    data
-  }
+  def lookupAddress: Elem = AddressLookup.toXml(userAnswers.paymentLookupAddress.get)
 
-  def xmlCheckBoxFormatter[A](userAnswer: Seq[A]): String = {
-    val data = userAnswer.mkString(", ")
-    data
-  }
-
-  def getInternationalAddress: Elem = InternationalAddress.toXml(userAnswers.paymentInternationalAddress.get)
-
-  def getUkAddress: Elem = UkAddress.toXml(userAnswers.paymentUKAddress.get)
-
-  def getLookupAddress: Elem = AddressLookup.toXml(userAnswers.paymentLookupAddress.get)
-
-  def formatedXml: Elem = {
+  def formattedXml: Elem = {
     val xmlString = robots(userAnswers, this)
-    val FormatedXmlString = xmlString.toString.replaceAll("\t|\n", "")
-    loadString(FormatedXmlString)
+    val FormattedXmlString = xmlString.toString.replaceAll("\t|\n", "")
+    loadString(FormattedXmlString)
   }
 
 
