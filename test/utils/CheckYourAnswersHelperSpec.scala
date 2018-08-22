@@ -457,14 +457,18 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
       when(answers.anyTaxableOtherIncome) thenReturn Some(Seq(AnyTaxPaid.Yes("123")))
 
       helper.otherTaxableIncome.head.get.label.key mustBe "qwerty"
-      helper.otherTaxableIncome.head.get.answer.key mustBe s"£$amount"
-      helper.otherTaxableIncome.head.get.url mustBe routes.OtherTaxableIncomeController.onPageLoad(CheckMode, 0).url
-      helper.otherTaxableIncome(1).get.label.key mustBe messages("anyTaxableOtherIncomeOption.checkYourAnswersLabel", "qwerty")
-      helper.otherTaxableIncome(1).get.answer.key mustBe "site.yes"
-      helper.otherTaxableIncome(1).get.url mustBe routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode, 0).url
-      helper.otherTaxableIncome(2).get.label.key mustBe messages("anyTaxableOtherIncome.checkYourAnswersLabel", "qwerty")
-      helper.otherTaxableIncome(2).get.answer.key mustBe "£123"
+      helper.otherTaxableIncome(1).get.label.key mustBe messages("checkYourAnswers.otherTaxableIncome.label", "qwerty")
+      helper.otherTaxableIncome(1).get.answer.key mustBe s"£$amount"
+      helper.otherTaxableIncome(1).get.url mustBe routes.OtherTaxableIncomeController.onPageLoad(CheckMode, 0).url
+      helper.otherTaxableIncome(2).get.label.key mustBe messages("anyTaxableOtherIncomeOption.checkYourAnswersLabel", "qwerty")
+      helper.otherTaxableIncome(2).get.answer.key mustBe "site.yes"
       helper.otherTaxableIncome(2).get.url mustBe routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode, 0).url
+      helper.otherTaxableIncome(3).get.label.key mustBe messages("anyTaxableOtherIncome.checkYourAnswersLabel", "qwerty")
+      helper.otherTaxableIncome(3).get.answer.key mustBe "£123"
+      helper.otherTaxableIncome(3).get.url mustBe routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode, 0).url
+      helper.otherTaxableIncome(4).get.label.key mustBe "qwerty"
+      helper.otherTaxableIncome(4).get.deleteUrl.get mustBe
+        routes.DeleteOtherController.onPageLoad(index = 0, itemName = "qwerty", collectionId = "otherTaxableIncome").url
     }
   }
 
