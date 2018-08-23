@@ -27,14 +27,14 @@ class RobotsXmlHelper(userAnswers: UserAnswers)(implicit messages: Messages) {
 
   def selectTaxYear: String = userAnswers.selectTaxYear.get.asString
 
-  def incomeAmount(userAnswer: AnyTaxPaid): String = userAnswer match {
-    case AnyTaxPaid.Yes(amount) => s"$amount"
-    case _ => ""
-  }
-
-  def anyIncome(userAnswer: AnyTaxPaid): String = userAnswer match {
+  def anyTaxPaid(userAnswer: AnyTaxPaid): String = userAnswer match {
     case AnyTaxPaid.Yes(_) => messages("site.yes")
     case _ => messages("site.no")
+  }
+
+  def taxPaidAmount(userAnswer: AnyTaxPaid): String = userAnswer match {
+    case AnyTaxPaid.Yes(amount) => s"$amount"
+    case _ => ""
   }
 
   def anyAgentRef(userAnswer: AnyAgentRef): String = userAnswer match {
@@ -42,7 +42,7 @@ class RobotsXmlHelper(userAnswers: UserAnswers)(implicit messages: Messages) {
     case _ => messages("site.no")
   }
 
-  def anyAgentReference(userAnswer: AnyAgentRef): String = userAnswer match {
+  def agentRef(userAnswer: AnyAgentRef): String = userAnswer match {
     case AnyAgentRef.Yes(reference) => s"$reference"
     case _ => ""
   }
@@ -52,7 +52,7 @@ class RobotsXmlHelper(userAnswers: UserAnswers)(implicit messages: Messages) {
     case _ => messages("site.no")
   }
 
-  def anyTelephoneNumber(userAnswer: TelephoneOption): String = userAnswer match {
+  def telephoneNumber(userAnswer: TelephoneOption): String = userAnswer match {
     case TelephoneOption.Yes(number) => s"$number"
     case _ => ""
   }
