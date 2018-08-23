@@ -52,17 +52,27 @@ class PaymentUKAddressController @Inject()(appConfig: FrontendAppConfig,
         case None => form
         case Some(value) => form.fill(value)
       }
-      Ok(paymentUKAddress(appConfig, preparedForm, mode))
+      request.userAnswers.selectTaxYear.map {
+        taxYear =>
+          Ok(paymentUKAddress(appConfig, preparedForm, mode, taxYear))
+      }.getOrElse {
+        Redirect(routes.SessionExpiredController.onPageLoad())
+      }
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      form.bindFromRequest().fold(
-        (formWithErrors: Form[UkAddress]) =>
-          Future.successful(BadRequest(paymentUKAddress(appConfig, formWithErrors, mode))),
-        (value) =>
-          dataCacheConnector.save[UkAddress](request.externalId, PaymentUKAddressId.toString, value).map(cacheMap =>
-            Redirect(navigator.nextPage(PaymentUKAddressId, mode)(new UserAnswers(cacheMap))))
-      )
+      request.userAnswers.selectTaxYear.map {
+        taxYear =>
+          form.bindFromRequest().fold(
+            (formWithErrors: Form[UkAddress]) =>
+              Future.successful(BadRequest(paymentUKAddress(appConfig, formWithErrors, mode, taxYear))),
+            value =>
+              dataCacheConnector.save[UkAddress](request.externalId, PaymentUKAddressId.toString, value).map(cacheMap =>
+                Redirect(navigator.nextPage(PaymentUKAddressId, mode)(new UserAnswers(cacheMap))))
+          )
+      }.getOrElse {
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+      }
   }
 }

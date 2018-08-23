@@ -43,7 +43,7 @@ trait ControllerSpecBase extends SpecBase {
     Some(CacheMap(cacheMapId, Map(SelectTaxYearId.toString -> Json.toJson(SelectTaxYear.CYMinus2))))
   )
 
-  def fakeDataRetrievalAction(mockUserAnswers: UserAnswers = MockUserAnswers.claimDetailsUserAnswers): DataRetrievalAction =
+  def fakeDataRetrievalAction(mockUserAnswers: UserAnswers = MockUserAnswers.minimalValidUserAnswers): DataRetrievalAction =
     new DataRetrievalAction {
       override protected def transform[A](request: AuthenticatedRequest[A]): Future[OptionalDataRequest[A]] = {
         Future.successful(OptionalDataRequest(

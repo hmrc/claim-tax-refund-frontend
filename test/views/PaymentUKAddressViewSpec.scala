@@ -18,6 +18,7 @@ package views
 
 import controllers.routes
 import forms.PaymentUKAddressForm
+import models.SelectTaxYear.CYMinus1
 import models.{NormalMode, UkAddress}
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
@@ -27,12 +28,15 @@ import views.html.paymentUKAddress
 class PaymentUKAddressViewSpec extends QuestionViewBehaviours[UkAddress] with MockitoSugar {
 
   private val messageKeyPrefix = "paymentUKAddress"
+  private val taxYear = CYMinus1
 
   override val form: Form[UkAddress] = new PaymentUKAddressForm(frontendAppConfig)()
 
-  def createView = () => paymentUKAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createView = () =>
+    paymentUKAddress(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
-  def createViewUsingForm = (form: Form[UkAddress]) => paymentUKAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createViewUsingForm = (form: Form[UkAddress]) =>
+    paymentUKAddress(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "PaymentUKAddress view" must {
 
@@ -40,7 +44,7 @@ class PaymentUKAddressViewSpec extends QuestionViewBehaviours[UkAddress] with Mo
 
     behave like pageWithBackLink(createView)
 
-    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+    behave like pageWithSecondaryHeader(createView, messages("site.service_name.with_tax_year", taxYear.asString(messages)))
 
     behave like pageWithTextFields(createViewUsingForm, messageKeyPrefix, routes.PaymentUKAddressController.onSubmit(NormalMode)
       .url, "addressLine1", "addressLine2", "addressLine3", "addressLine4", "addressLine5", "postcode")

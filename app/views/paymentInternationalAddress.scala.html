@@ -26,7 +26,8 @@
 @(
     appConfig: FrontendAppConfig,
     form: Form[InternationalAddress],
-    mode: Mode
+    mode: Mode,
+    taxYear: SelectTaxYear
 )(
     implicit
     request: Request[_],
@@ -47,7 +48,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading(messages("paymentInternationalAddress.heading"))
+        @components.heading(messages("paymentInternationalAddress.heading"), taxYear = Some(taxYear.asString))
 
         @components.input_text(InputViewModel[InternationalAddress]("addressLine1", form), label = messages("global.addressLine1"))
 

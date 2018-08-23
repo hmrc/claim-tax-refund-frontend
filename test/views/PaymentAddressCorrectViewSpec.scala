@@ -19,6 +19,7 @@ package views
 import controllers.routes
 import forms.BooleanForm
 import models.NormalMode
+import models.SelectTaxYear.CYMinus1
 import play.api.data.Form
 import uk.gov.hmrc.auth.core.retrieve.ItmpAddress
 import views.behaviours.YesNoViewBehaviours
@@ -27,6 +28,7 @@ import views.html.paymentAddressCorrect
 class PaymentAddressCorrectViewSpec extends YesNoViewBehaviours {
 
   private val messageKeyPrefix = "paymentAddressCorrect"
+  private val taxYear = CYMinus1
   private val testAddress = ItmpAddress(
     Some("Line 1"),
     Some("Line 2"),
@@ -40,9 +42,11 @@ class PaymentAddressCorrectViewSpec extends YesNoViewBehaviours {
 
   override val form = new BooleanForm()()
 
-  def createView = () => paymentAddressCorrect(frontendAppConfig, form, NormalMode, testAddress)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createView = () =>
+    paymentAddressCorrect(frontendAppConfig, form, NormalMode, testAddress, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
-  def createViewUsingForm = (form: Form[_]) => paymentAddressCorrect(frontendAppConfig, form, NormalMode, testAddress)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createViewUsingForm = (form: Form[_]) =>
+    paymentAddressCorrect(frontendAppConfig, form, NormalMode, testAddress, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "PaymentAddressCorrect view" must {
 
@@ -50,7 +54,7 @@ class PaymentAddressCorrectViewSpec extends YesNoViewBehaviours {
 
     behave like pageWithBackLink(createView)
 
-    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+    behave like pageWithSecondaryHeader(createView, messages("site.service_name.with_tax_year", taxYear.asString(messages)))
 
     behave like yesNoPage(
       createView = createViewUsingForm,

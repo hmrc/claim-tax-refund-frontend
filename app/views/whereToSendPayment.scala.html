@@ -28,7 +28,8 @@
 @(
     appConfig: FrontendAppConfig,
     form: Form[_],
-    mode: Mode
+    mode: Mode,
+    taxYear: SelectTaxYear
 )(
     implicit
     request: Request[_],
@@ -49,7 +50,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading(messages("whereToSendPayment.heading"))
+        @components.heading(messages("whereToSendPayment.heading"), taxYear = Some(taxYear.asString))
 
         @components.input_radio(
             viewModel = InputViewModel("value", form),

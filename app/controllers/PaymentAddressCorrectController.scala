@@ -22,10 +22,9 @@ import controllers.actions._
 import forms.BooleanForm
 import identifiers.{ItmpAddressId, PaymentAddressCorrectId}
 import javax.inject.Inject
-import models.{ItmpAddressFormat, Mode, NormalMode}
+import models.{ItmpAddressFormat, Mode}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.libs.json.Format
 import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.auth.core.retrieve.ItmpAddress
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
@@ -49,6 +48,7 @@ class PaymentAddressCorrectController @Inject()(appConfig: FrontendAppConfig,
 
   private val errorKey = "paymentAddressCorrect.blank"
   val form: Form[Boolean] = formProvider(errorKey)
+
   import ItmpAddressFormat.format
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
@@ -58,33 +58,44 @@ class PaymentAddressCorrectController @Inject()(appConfig: FrontendAppConfig,
         case Some(value) => form.fill(value)
       }
 
-      request.address match {
-        case Some(address)
-          if address.line1.exists(_.trim.nonEmpty) && (address.postCode.exists(_.trim.nonEmpty) || address.countryName.exists(_.trim.nonEmpty)) =>
-            Ok(paymentAddressCorrect(appConfig, preparedForm, mode, address))
-        case _ =>
-          Redirect(routes.IsPaymentAddressInTheUKController.onPageLoad(mode))
+      request.userAnswers.selectTaxYear.map {
+        taxYear =>
+          request.address match {
+            case Some(address)
+              if address.line1.exists(_.trim.nonEmpty) && (address.postCode.exists(_.trim.nonEmpty) || address.countryName.exists(_.trim.nonEmpty)) =>
+              Ok(paymentAddressCorrect(appConfig, preparedForm, mode, address, taxYear))
+            case _ =>
+              Redirect(routes.IsPaymentAddressInTheUKController.onPageLoad(mode))
+          }
+      }.getOrElse {
+        Redirect(routes.SessionExpiredController.onPageLoad())
       }
+
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      form.bindFromRequest().fold(
-        (formWithErrors: Form[_]) =>
-          Future.successful(BadRequest(paymentAddressCorrect(appConfig, formWithErrors, mode, request.address.get))),
-        value => {
-          if (value) {
-            for {
-              _ <- dataCacheConnector.save[Boolean](request.externalId, PaymentAddressCorrectId.toString, value)
-              updatedCacheMap <- dataCacheConnector.save[ItmpAddress](request.externalId, ItmpAddressId.toString, request.address.get)
-            } yield
-              Redirect(navigator.nextPage(PaymentAddressCorrectId, mode)(new UserAnswers(updatedCacheMap)))
-          } else {
-            dataCacheConnector.save[Boolean](request.externalId, PaymentAddressCorrectId.toString, value).map(cacheMap =>
-              Redirect(navigator.nextPage(PaymentAddressCorrectId, mode)(new UserAnswers(cacheMap)))
-            )
+      request.userAnswers.selectTaxYear.map {
+        taxYear =>
+        form.bindFromRequest().fold(
+          (formWithErrors: Form[_]) =>
+            Future.successful(BadRequest(paymentAddressCorrect(appConfig, formWithErrors, mode, request.address.get, taxYear))),
+          value => {
+            if (value) {
+              for {
+                _ <- dataCacheConnector.save[Boolean](request.externalId, PaymentAddressCorrectId.toString, value)
+                updatedCacheMap <- dataCacheConnector.save[ItmpAddress](request.externalId, ItmpAddressId.toString, request.address.get)
+              } yield
+                Redirect(navigator.nextPage(PaymentAddressCorrectId, mode)(new UserAnswers(updatedCacheMap)))
+            } else {
+              dataCacheConnector.save[Boolean](request.externalId, PaymentAddressCorrectId.toString, value).map(cacheMap =>
+                Redirect(navigator.nextPage(PaymentAddressCorrectId, mode)(new UserAnswers(cacheMap)))
+              )
+            }
           }
-        }
-      )
+        )
+      }.getOrElse{
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+      }
   }
 }

@@ -20,6 +20,7 @@ import connectors.{AddressLookupConnector, FakeDataCacheConnector}
 import controllers.actions._
 import forms.BooleanForm
 import models.NormalMode
+import models.SelectTaxYear.CYMinus2
 import org.mockito.Mockito._
 import org.mockito.Matchers._
 import org.scalatest.mockito.MockitoSugar
@@ -36,8 +37,10 @@ class IsPaymentAddressInTheUKControllerSpec extends ControllerSpecBase with Mock
   def onwardRoute: Call = routes.IndexController.onPageLoad()
 
   val formProvider = new BooleanForm()
-  val mockAddressLookup = mock[AddressLookupConnector]
   val form = formProvider()
+  private val mockAddressLookup = mock[AddressLookupConnector]
+  private val taxYear = CYMinus2
+  private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new IsPaymentAddressInTheUKController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
@@ -46,14 +49,15 @@ class IsPaymentAddressInTheUKControllerSpec extends ControllerSpecBase with Mock
   def viewAsString(form: Form[_] = form) : String = isPaymentAddressInTheUK(
     frontendAppConfig,
     form,
-    NormalMode
+    NormalMode,
+    taxYear
   )(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "IsPaymentAddressInTheUK Controller" must {
 
     "return OK and the correct view for a GET" in {
       when (mockAddressLookup.initialise(any())(any())) thenReturn Future.successful(None)
-      val result = controller().onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(fakeDataRetrievalAction()).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe OK
       contentAsString(result) mustBe viewAsString()
@@ -61,7 +65,6 @@ class IsPaymentAddressInTheUKControllerSpec extends ControllerSpecBase with Mock
 
     "populate the view correctly on a GET when the question has previously been answered" in {
       when (mockAddressLookup.initialise(any())(any())).thenReturn(Future.successful(None))
-      val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
       when (mockUserAnswers.isPaymentAddressInTheUK) thenReturn Some(true)
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
@@ -71,14 +74,14 @@ class IsPaymentAddressInTheUKControllerSpec extends ControllerSpecBase with Mock
     "redirect to address lookup address when able to connect to the api" in {
       val url: String = "http://localhost:9028/lookup-address/ca36139b-cee5-4a99-902c-ce7b9963d7ce/lookup"
       when (mockAddressLookup.initialise(any())(any())).thenReturn(Future.successful(Some(url)))
-      val result = controller().onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(fakeDataRetrievalAction()).onPageLoad(NormalMode)(fakeRequest)
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some("http://localhost:9028/lookup-address/ca36139b-cee5-4a99-902c-ce7b9963d7ce/lookup")
     }
 
     "redirect to the next page when valid data is submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
-      val result = controller().onSubmit(NormalMode)(postRequest)
+      val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(onwardRoute.url)
@@ -88,7 +91,7 @@ class IsPaymentAddressInTheUKControllerSpec extends ControllerSpecBase with Mock
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
       val boundForm = form.bind(Map("value" -> "invalid value"))
 
-      val result = controller().onSubmit(NormalMode)(postRequest)
+      val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe BAD_REQUEST
       contentAsString(result) mustBe viewAsString(boundForm)

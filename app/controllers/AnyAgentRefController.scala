@@ -22,9 +22,10 @@ import controllers.actions._
 import forms.AnyAgentReferenceForm
 import identifiers.AnyAgentRefId
 import javax.inject.Inject
-import models.{AnyAgentRef, Mode}
+import models.{AnyAgentRef, Mode, SelectTaxYear}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.mvc.Result
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import uk.gov.hmrc.renderer.TemplateRenderer
@@ -52,26 +53,35 @@ class AnyAgentRefController @Inject()(appConfig: FrontendAppConfig,
         case None => form
         case Some(value) => form.fill(value)
       }
-      request.userAnswers.nomineeFullName.map {
-        nomineeName =>
-          Ok(anyAgentRef(appConfig, preparedForm, mode, nomineeName))
-      }.getOrElse {
+
+      val result: Option[Result] = for {
+        taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
+        nomineeName: String <- request.userAnswers.nomineeFullName
+      } yield {
+        Ok(anyAgentRef(appConfig, preparedForm, mode, nomineeName, taxYear))
+      }
+
+      result.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      request.userAnswers.nomineeFullName.map {
-        nomineeName =>
-          form.bindFromRequest().fold(
-            (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(anyAgentRef(appConfig, formWithErrors, mode, nomineeName))),
-            (value) =>
-              dataCacheConnector.save[AnyAgentRef](request.externalId, AnyAgentRefId.toString, value).map(cacheMap =>
-                Redirect(navigator.nextPage(AnyAgentRefId, mode)(new UserAnswers(cacheMap))))
-          )
-      }.getOrElse {
+      val result: Option[Future[Result]] = for {
+        taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
+        nomineeName: String <- request.userAnswers.nomineeFullName
+      } yield {
+        form.bindFromRequest().fold(
+          (formWithErrors: Form[_]) =>
+            Future.successful(BadRequest(anyAgentRef(appConfig, formWithErrors, mode, nomineeName, taxYear))),
+          value =>
+            dataCacheConnector.save[AnyAgentRef](request.externalId, AnyAgentRefId.toString, value).map(cacheMap =>
+              Redirect(navigator.nextPage(AnyAgentRefId, mode)(new UserAnswers(cacheMap))))
+        )
+      }
+
+      result.getOrElse {
         Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
       }
   }

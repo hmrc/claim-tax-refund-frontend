@@ -35,14 +35,15 @@ class DetailsOfEmploymentOrPensionControllerSpec extends ControllerSpecBase {
     new DetailsOfEmploymentOrPensionController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute),
       FakeAuthAction, dataRetrievalAction, new DataRequiredActionImpl, new DetailsOfEmploymentOrPensionForm(frontendAppConfig), formPartialRetriever, templateRenderer)
 
-  val testAnswer = "This is some sample text"
-  val form = new DetailsOfEmploymentOrPensionForm(frontendAppConfig)()
+  private val form = new DetailsOfEmploymentOrPensionForm(frontendAppConfig)()
+  private val testAnswer = "This is some sample text"
   private val taxYear = CYMinus2
-  val characterLimit = 500
-  val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
+  private val characterLimit = 500
+  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
 
 
-  def viewAsString(form: Form[_] = form) = detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+  def viewAsString(form: Form[_] = form) =
+    detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "DetailsOfEmploymentOrPension Controller" must {
 
