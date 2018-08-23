@@ -49,8 +49,7 @@ class HowMuchBereavementAllowanceViewSpec extends StringViewBehaviours with Mock
       messageKeyPrefix = messageKeyPrefix,
       expectedFormAction = routes.HowMuchBereavementAllowanceController.onSubmit(NormalMode).url,
       expectedHintKeyLine1 = None,
-      expectedHintKeyLine2 = None,
-      expectedPrefix = Some(messages("global.poundSign"))
+      expectedHintKeyLine2 = None
     )
 
   }
