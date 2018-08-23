@@ -18,6 +18,8 @@ package models
 
 import base.SpecBase
 
+import scala.xml.Elem
+
 class InternationalAddressSpec extends SpecBase {
 
   "answered lines" must {
@@ -30,6 +32,15 @@ class InternationalAddressSpec extends SpecBase {
     "contain address lines 3, 4 and 5 if they have been answered" in {
       val address = InternationalAddress("line1", "line2", Some("line3"), Some("line4"), Some("line5"), "country")
       InternationalAddress.answeredLines(address) mustBe Seq("line1", "line2", "line3", "line4", "line5", "country")
+    }
+  }
+
+
+  "as Xml" must {
+    "pass the correct xml back" in {
+      val address = InternationalAddress("line1", "line2", None, Some("line4"), None, "country")
+      val expectedElem: Elem = <internationalAddress>line1, line2, line4, country</internationalAddress>
+      InternationalAddress.toXml(address) mustBe expectedElem
     }
   }
 
