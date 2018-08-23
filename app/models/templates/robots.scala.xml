@@ -1,0 +1,149 @@
+@import utils._
+
+@(userAnswers: UserAnswers, robotsXmlHelper: RobotsXmlHelper)
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ctr>
+	<userDetails>
+		<name>@userAnswers.userDetails.get.name</name>
+		<nino>@userAnswers.userDetails.get.nino</nino>
+	</userDetails>
+
+	<claimSection>
+		<selectedTaxYear>@robotsXmlHelper.selectTaxYear</selectedTaxYear>
+		@userAnswers.employmentDetails.map{ value =>
+			<employmentDetails>@value</employmentDetails>
+		}
+		@userAnswers.enterPayeReference.map{ value =>
+			<payeReference>@userAnswers.enterPayeReference</payeReference>
+		}
+		@userAnswers.detailsOfEmploymentOrPension.map{ value =>
+			<detailsOfEmploymentOrPension>@userAnswers.detailsOfEmploymentOrPension</detailsOfEmploymentOrPension>
+		}
+	</claimSection>
+
+	@if(userAnswers.anyBenefits.getOrElse(false)){
+	<benefitSection>
+		<anyBenefits>@userAnswers.anyBenefits</anyBenefits>
+		<selectBenefits>@userAnswers.selectBenefits.get.mkString(", ")</selectBenefits>
+		@userAnswers.howMuchBereavementAllowance.map{ value =>
+			<howMuchBereavementAllowance>@value</howMuchBereavementAllowance>
+		}
+		@userAnswers.howMuchCarersAllowance.map { value =>
+			<howMuchCarersAllowance>@value</howMuchCarersAllowance>
+		}
+		@userAnswers.howMuchJobseekersAllowance.map { value =>
+			<howMuchJobseekersAllowance>@value</howMuchJobseekersAllowance>
+		}
+		@userAnswers.howMuchEmploymentAndSupportAllowance.map{ value =>
+			<howMuchEmploymentAndSupportAllowance>@value</howMuchEmploymentAndSupportAllowance>
+		}
+		@userAnswers.howMuchIncapacityBenefit.map { value =>
+			<howMuchIncapacityBenefit>@value</howMuchIncapacityBenefit>
+		}
+		@userAnswers.howMuchStatePension.map{ value =>
+			<howMuchStatePension>@value</howMuchStatePension>
+		}
+		@userAnswers.otherBenefit.map{ value =>
+			<otherBenefits>
+				@robotsXmlHelper.otherBenefits(value)
+			</otherBenefits>
+		}
+	</benefitSection>
+	}
+
+	@if(userAnswers.anyCompanyBenefits.getOrElse(false)){
+	<companyBenefitsSection>
+		<anyCompanyBenefits>@userAnswers.anyCompanyBenefits</anyCompanyBenefits>
+		<selectCompanyBenefits>@userAnswers.selectCompanyBenefits.get.mkString(", ")</selectCompanyBenefits>
+		@userAnswers.howMuchCarBenefits.map{ value =>
+			<howMuchCarBenefits>@value</howMuchCarBenefits>
+		}
+		@userAnswers.howMuchFuelBenefit.map{ value =>
+			<howMuchFuelBenefit>@value</howMuchFuelBenefit>
+		}
+		@userAnswers.howMuchMedicalBenefits.map{ value =>
+			<howMuchMedicalBenefits>@value</howMuchMedicalBenefits>
+		}
+		@userAnswers.otherCompanyBenefit.map{ value =>
+			<otherCompanyBenefits>
+				@robotsXmlHelper.otherCompanyBenefits(value)
+			</otherCompanyBenefits>
+		}
+	</companyBenefitsSection>
+	}
+
+	@if(userAnswers.anyTaxableIncome.getOrElse(false)){
+	<taxableIncomeSection>
+		<anyTaxableIncome>@userAnswers.anyTaxableIncome</anyTaxableIncome>
+		<selectTaxableIncome>@userAnswers.selectTaxableIncome.get.mkString(", ")</selectTaxableIncome>
+		@userAnswers.howMuchRentalIncome.map{ value =>
+			<rentalIncome>
+				<howMuch>@value</howMuch>
+				<anyTaxPaid>@robotsXmlHelper.anyTaxPaid(userAnswers.anyTaxableRentalIncome.get)</anyTaxPaid>
+				<taxPaid>@robotsXmlHelper.taxPaidAmount(userAnswers.anyTaxableRentalIncome.get)</taxPaid>
+			</rentalIncome>
+		}
+		@userAnswers.howMuchBankInterest.map{ value =>
+			<bankInterest>
+				<howMuch>@value</howMuch>
+				<anyTaxPaid>@robotsXmlHelper.anyTaxPaid(userAnswers.anyTaxableBankInterest.get)</anyTaxPaid>
+				<taxPaid>@robotsXmlHelper.taxPaidAmount(userAnswers.anyTaxableBankInterest.get)</taxPaid>
+			</bankInterest>
+		}
+		@userAnswers.howMuchInvestmentOrDividend.map{ value =>
+			<investmentOrDividend>
+				<howMuch>@value</howMuch>
+				<anyTaxPaid>@robotsXmlHelper.anyTaxPaid(userAnswers.anyTaxableInvestments.get)</anyTaxPaid>
+				<taxPaid>@robotsXmlHelper.taxPaidAmount(userAnswers.anyTaxableInvestments.get)</taxPaid>
+			</investmentOrDividend>
+		}
+		@userAnswers.howMuchForeignIncome.map{ value =>
+			<foreignIncome>
+				<howMuch>@value</howMuch>
+				<anyTaxPaid>@robotsXmlHelper.anyTaxPaid(userAnswers.anyTaxableForeignIncome.get)</anyTaxPaid>
+				<taxPaid>@robotsXmlHelper.taxPaidAmount(userAnswers.anyTaxableForeignIncome.get)</taxPaid>
+			</foreignIncome>
+		}
+		@userAnswers.otherTaxableIncome.map{ value =>
+			<otherTaxableIncome>
+				@robotsXmlHelper.otherTaxableIncome(value)
+			</otherTaxableIncome>
+		}
+	</taxableIncomeSection>
+	}
+
+	<paymentSection>
+		@userAnswers.whereToSendPayment.map{ value =>
+			<whereToSendThePayment>@value</whereToSendThePayment>
+		}
+		@userAnswers.paymentAddressCorrect.map{ value =>
+			<paymentAddressCorrect>@value</paymentAddressCorrect>
+		}
+		@userAnswers.nomineeFullName.map{ value =>
+			<nomineeFullname>@value</nomineeFullname>
+		}
+		@if(userAnswers.anyAgentRef.isDefined){
+			<anyAgentRef>@robotsXmlHelper.anyAgentRef(userAnswers.anyAgentRef.get)</anyAgentRef>
+			<agentReference>@robotsXmlHelper.agentRef(userAnswers.anyAgentRef.get)</agentReference>
+		}
+		@if(userAnswers.isPaymentAddressInTheUK.isDefined){
+			<isPaymentAddressInTheUK>@userAnswers.isPaymentAddressInTheUK</isPaymentAddressInTheUK>
+		}
+		<paymentAddress>
+			@if(userAnswers.paymentUKAddress.isDefined){
+				@robotsXmlHelper.ukAddress
+			}
+			@if(userAnswers.paymentInternationalAddress.isDefined){
+				@robotsXmlHelper.internationalAddress
+			}
+			@if(userAnswers.paymentLookupAddress.isDefined){
+				@robotsXmlHelper.lookupAddress
+			}
+		</paymentAddress>
+	</paymentSection>
+
+	<contactSection>
+		<anyTelephoneNumber>@robotsXmlHelper.anyTelephone(userAnswers.anyTelephoneNumber.get)</anyTelephoneNumber>
+		<telephoneNumber>@robotsXmlHelper.telephoneNumber(userAnswers.anyTelephoneNumber.get)</telephoneNumber>
+	</contactSection>
+</ctr>

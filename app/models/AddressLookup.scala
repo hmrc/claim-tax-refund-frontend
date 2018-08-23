@@ -18,6 +18,8 @@ package models
 
 import play.api.libs.json._
 
+import scala.xml.Elem
+
 case class Country (name: Option[String], code: Option[String])
 
 object Country {
@@ -37,7 +39,9 @@ final case class AddressLookup (address: Option[Address], auditRef: Option[Strin
 object AddressLookup {
   implicit val format = Json.format[AddressLookup]
 
-    def completedAddress(a: AddressLookup): Seq[String] = Seq (
+  def toXml(a: AddressLookup): Elem = <lookupAddress>{completedAddress(a).mkString(", ")}</lookupAddress>
+
+  def completedAddress(a: AddressLookup): Seq[String] = Seq (
      a.address.get.lines.get :+
      a.address.get.postcode.get :+
      a.address.get.country.get.name.get :+
