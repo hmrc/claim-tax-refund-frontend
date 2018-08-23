@@ -63,7 +63,8 @@
         @components.input_text(InputViewModel("taxPaidAmount", form),
             messages("anyTaxableOtherIncome.anyTaxPaidAmountField", incomeName),
             Some("panel"),
-            prefix = Some(messages("global.poundSign")))
+            currency = true
+        )
         </div>
 
         @components.submit_button()

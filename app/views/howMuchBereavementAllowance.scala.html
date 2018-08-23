@@ -53,7 +53,7 @@
             InputViewModel("value", form),
             label = messages("howMuchBereavementAllowance.heading", taxYear.asString),
             labelClass = Some("visually-hidden"),
-            prefix = Some(messages("global.poundSign"))
+            currency = true
         )
 
         @components.submit_button()

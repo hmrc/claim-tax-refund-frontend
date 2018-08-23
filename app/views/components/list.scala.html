@@ -28,10 +28,22 @@
     if(pageKey.isDefined) messages(s"${pageKey.get}.$bullet") else bullet
 }
 
-<div class="@cssClass" id="component-bullet-list">
+@list = {
     <ul class="list list-bullet">
         @for(bullet <- bulletList) {
             <li id="bullet-@bullet">@text(bullet)</li>
         }
     </ul>
+}
+
+@single = {
+    <p id="bullet-@{bulletList.head}">@text(bulletList.head)</p>
+}
+
+<div class="@cssClass" id="component-bullet-list">
+    @if(bulletList.size == 1) {
+        @single
+    } else {
+        @list
+    }
 </div>
