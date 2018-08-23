@@ -52,7 +52,7 @@
         @components.input_text(InputViewModel("value", form),
             label = messages("howMuchBankInterest.heading", taxYear.asString),
             labelClass=Some("visually-hidden"),
-            prefix = Some(messages("global.poundSign"))
+            currency = true
         )
 
         @components.submit_button()

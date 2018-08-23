@@ -17,14 +17,14 @@
 @import viewmodels.InputViewModelBase
 
 @(
-viewModel: InputViewModelBase,
-label: String,
-divClass: Option[String] = None,
-inputClass: Option[String] = None,
-hintLine1: Option[String] = None,
-hintLine2: Option[String] = None,
-labelClass: Option[String] = None,
-prefix: Option[String] = None
+        viewModel: InputViewModelBase,
+        label: String,
+        divClass: Option[String] = None,
+        inputClass: Option[String] = None,
+        hintLine1: Option[String] = None,
+        hintLine2: Option[String] = None,
+        labelClass: Option[String] = None,
+        currency: Boolean = false
 )(implicit messages: Messages)
 
 <div class="form-group @if(divClass.nonEmpty){@divClass} @if(viewModel.errorKey.nonEmpty){form-field--error}">
@@ -41,14 +41,16 @@ prefix: Option[String] = None
         }
     </label>
     <div class="form-control-wrapper">
-        @if(prefix.nonEmpty){@prefix}
+        @if(currency){
+            <span class="govuk-currency-input__inner__unit">£</span>
+        }
         <input
-                class="form-control @inputClass"
-                type="text"
-                id="@{viewModel.id}"
-                name="@{viewModel.id}"
-                value="@{viewModel.value}"
-                @if(viewModel.errorKey.nonEmpty){aria-describedby="error-message-@{viewModel.id}-input"}
+            class="form-control @if(currency){govuk-currency-input__inner__input} @inputClass"
+            type="text"
+            id="@{viewModel.id}"
+            name="@{viewModel.id}"
+            value="@{viewModel.value}"
+            @if(viewModel.errorKey.nonEmpty){aria-describedby="error-message-@{viewModel.id}-input"}
         />
     </div>
 </div>
