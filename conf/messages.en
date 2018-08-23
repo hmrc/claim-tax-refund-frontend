@@ -49,9 +49,6 @@ global.postcode = Postcode
 global.postcode.blank = Enter a postcode
 global.postcode.invalid = Enter a valid postcode
 
-global.poundSign = £
-global.colon = :
-
 global.current-year-minus-1 = {0} to {1}
 global.current-year-minus-2 = {0} to {1}
 global.current-year-minus-3 = {0} to {1}

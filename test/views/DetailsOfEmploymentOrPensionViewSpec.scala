@@ -52,7 +52,6 @@ class DetailsOfEmploymentOrPensionViewSpec extends StringViewBehaviours with Moc
       expectedFormAction = routes.DetailsOfEmploymentOrPensionController.onSubmit(NormalMode).url,
       expectedHintKeyLine1 = Some("detailsOfEmploymentOrPension.hintText"),
       expectedHintKeyLine2 = None,
-      expectedPrefix = None,
       args = taxYear.asString(messages)
     )
 

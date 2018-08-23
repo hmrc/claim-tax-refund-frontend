@@ -49,7 +49,6 @@ class HowMuchMedicalBenefitsViewSpec extends StringViewBehaviours with MockitoSu
       expectedFormAction = routes.HowMuchMedicalBenefitsController.onSubmit(NormalMode).url,
       expectedHintKeyLine1 = None,
       expectedHintKeyLine2 = None,
-      expectedPrefix = Some(messages("global.poundSign")),
       args = taxYear.asString(messages)
     )
 

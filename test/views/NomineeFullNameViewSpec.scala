@@ -50,8 +50,7 @@ class NomineeFullNameViewSpec extends StringViewBehaviours with MockitoSugar {
       messageKeyPrefix = messageKeyPrefix,
       expectedFormAction = routes.NomineeFullNameController.onSubmit(NormalMode).url,
       expectedHintKeyLine1 = None,
-      expectedHintKeyLine2 = None,
-      expectedPrefix = None
+      expectedHintKeyLine2 = None
     )
 
   }

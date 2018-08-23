@@ -28,7 +28,6 @@ trait StringViewBehaviours extends QuestionViewBehaviours[String] {
                  expectedFormAction: String,
                  expectedHintKeyLine1: Option[String],
                  expectedHintKeyLine2: Option[String],
-                 expectedPrefix: Option[String],
                  args: Any*) = {
 
     "behave like a page with a string value field" when {
@@ -43,7 +42,6 @@ trait StringViewBehaviours extends QuestionViewBehaviours[String] {
 
         "contain a prefix for the value" in {
           val doc = asDocument(createView(form))
-          if (expectedPrefix.isDefined) assertContainsText(doc, expectedPrefix.get)
         }
 
         "contain an input for the value" in {
