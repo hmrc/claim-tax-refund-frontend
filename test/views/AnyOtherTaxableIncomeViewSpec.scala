@@ -18,9 +18,9 @@ package views
 
 import controllers.routes
 import forms.BooleanForm
+import models.NormalMode
 import models.SelectTaxYear.CYMinus2
-import models.{NormalMode, OtherTaxableIncome}
-import org.jsoup.nodes.{Document, Element}
+import org.jsoup.nodes.Document
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 import views.behaviours.YesNoViewBehaviours
@@ -46,7 +46,7 @@ class AnyOtherTaxableIncomeViewSpec extends YesNoViewBehaviours {
 
     behave like pageWithBackLink(createView)
 
-    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+    behave like pageWithSecondaryHeader(createView, messages("site.service_name.with_tax_year", taxYear.asString(messages)))
 
     behave like yesNoPage(
       createView = createViewUsingForm,

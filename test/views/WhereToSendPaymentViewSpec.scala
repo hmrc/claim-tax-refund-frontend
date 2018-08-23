@@ -18,6 +18,7 @@ package views
 
 import forms.WhereToSendPaymentForm
 import models.NormalMode
+import models.SelectTaxYear.CYMinus1
 import play.api.data.Form
 import views.behaviours.ViewBehaviours
 import views.html.whereToSendPayment
@@ -25,17 +26,20 @@ import views.html.whereToSendPayment
 class WhereToSendPaymentViewSpec extends ViewBehaviours {
 
   private val messageKeyPrefix = "whereToSendPayment"
+  private val taxYear = CYMinus1
 
-  def createView = () => whereToSendPayment(frontendAppConfig, WhereToSendPaymentForm(), NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createView = () =>
+    whereToSendPayment(frontendAppConfig, WhereToSendPaymentForm(), NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
-  def createViewUsingForm = (form: Form[_]) => whereToSendPayment(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createViewUsingForm = (form: Form[_]) =>
+    whereToSendPayment(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "WhereToSendPayment view" must {
     behave like normalPage(createView, messageKeyPrefix, None)
 
     behave like pageWithBackLink(createView)
 
-    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+    behave like pageWithSecondaryHeader(createView, messages("site.service_name.with_tax_year", taxYear.asString(messages)))
   }
 
   "WhereToSendPayment view" when {

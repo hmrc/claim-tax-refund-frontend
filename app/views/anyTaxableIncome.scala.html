@@ -37,7 +37,7 @@
 )
 
 @main_template(
-    title = messages("anyTaxableIncome.title", taxYear.asString),
+    title = messages("anyTaxableIncome.title"),
     appConfig = appConfig,
     bodyClasses = None
 ) {
@@ -60,7 +60,7 @@
 
         @components.input_yes_no(
             InputViewModel("value", form),
-            label = messages("anyTaxableIncome.heading", taxYear.asString),
+            label = messages("anyTaxableIncome.heading"),
             labelClass = Some("visually-hidden")
         )
 

@@ -18,6 +18,7 @@ package views
 
 import controllers.routes
 import forms.TelephoneNumberForm
+import models.SelectTaxYear.CYMinus1
 import models.{NormalMode, TelephoneOption}
 import play.api.data.{Form, FormError}
 import play.twirl.api.HtmlFormat
@@ -28,20 +29,23 @@ class TelephoneNumberViewSpec extends QuestionViewBehaviours[TelephoneOption]{
 
   private val messageKeyPrefix = "telephoneNumber"
   private val testPhoneNumber = "0191 1111 111"
+  private val taxYear = CYMinus1
 
   val formProvider = new TelephoneNumberForm()
   val form = formProvider()
 
-  def createView = () => telephoneNumber(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createView = () =>
+    telephoneNumber(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
-  def createViewUsingForm = (form: Form[_]) => telephoneNumber(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createViewUsingForm = (form: Form[_]) =>
+    telephoneNumber(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "TelephoneNumber view" must {
     behave like normalPage(createView, messageKeyPrefix, None)
 
     behave like pageWithBackLink(createView)
 
-    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+    behave like pageWithSecondaryHeader(createView, messages("site.service_name.with_tax_year", taxYear.asString(messages)))
 
     yesNoPage(
       createView = createViewUsingForm,

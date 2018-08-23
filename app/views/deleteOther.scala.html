@@ -29,7 +29,8 @@
     mode: Mode,
     index: Index,
     itemName: String,
-    collectionId: String
+    collectionId: String,
+    taxYear: SelectTaxYear
 )(
     implicit request: Request[_],
     messages: Messages,
@@ -49,7 +50,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading(messages("deleteOther.heading", itemName))
+        @components.heading(messages("deleteOther.heading", itemName), taxYear = Some(taxYear.asString))
 
         @components.input_yes_no(
             InputViewModel("value", form),

@@ -18,6 +18,7 @@ package views
 
 import controllers.routes
 import forms.PaymentInternationalAddressForm
+import models.SelectTaxYear.CYMinus1
 import models.{InternationalAddress, NormalMode}
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
@@ -27,12 +28,15 @@ import views.html.paymentInternationalAddress
 class PaymentInternationalAddressViewSpec extends QuestionViewBehaviours[InternationalAddress] with MockitoSugar {
 
   private val messageKeyPrefix = "paymentInternationalAddress"
+  private val taxYear = CYMinus1
 
   override val form: Form[InternationalAddress] = new PaymentInternationalAddressForm(frontendAppConfig)()
 
-  def createView = () => paymentInternationalAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createView = () =>
+    paymentInternationalAddress(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
-  def createViewUsingForm = (form: Form[InternationalAddress]) => paymentInternationalAddress(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createViewUsingForm = (form: Form[InternationalAddress]) =>
+    paymentInternationalAddress(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "PaymentInternationalAddress view" must {
 
@@ -40,8 +44,17 @@ class PaymentInternationalAddressViewSpec extends QuestionViewBehaviours[Interna
 
     behave like pageWithBackLink(createView)
 
-    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+    behave like pageWithSecondaryHeader(createView, messages("site.service_name.with_tax_year", taxYear.asString(messages)))
 
-    behave like pageWithTextFields(createViewUsingForm, messageKeyPrefix, routes.PaymentInternationalAddressController.onSubmit(NormalMode).url, "addressLine1", "addressLine2", "addressLine3", "addressLine4", "addressLine5", "country")
+    behave like pageWithTextFields(
+      createViewUsingForm,
+      messageKeyPrefix,
+      routes.PaymentInternationalAddressController.onSubmit(NormalMode).url,
+      "addressLine1",
+      "addressLine2",
+      "addressLine3",
+      "addressLine4", "addressLine5",
+      "country"
+    )
   }
 }

@@ -20,6 +20,7 @@ import connectors._
 import controllers.actions._
 import forms.TelephoneNumberForm
 import identifiers._
+import models.SelectTaxYear.CYMinus2
 import models._
 import models.requests.DataRequest
 import org.mockito.Mockito.when
@@ -51,11 +52,12 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar
   lazy val form = formProvider()
   lazy val httpMock: HttpClient = mock[HttpClient]
 
+  private val taxYear = CYMinus2
 
   lazy val validYesData =
     Map(AnyTelephoneId.toString -> Json.obj(AnyTelephoneId.toString -> JsBoolean(true), TelephoneNumberId.toString -> JsString(testAnswer)))
   lazy val validNoData = Map(AnyTelephoneId.toString -> Json.obj(AnyTelephoneId.toString -> JsBoolean(false)))
-  private lazy val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
+  private lazy val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers
 
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
@@ -63,7 +65,7 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar
       dataRetrievalAction, new DataRequiredActionImpl, formProvider, formPartialRetriever, templateRenderer)
 
   def viewAsString(form: Form[_] = form): String =
-    telephoneNumber(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+    telephoneNumber(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "TelephoneNumberController" must {
 

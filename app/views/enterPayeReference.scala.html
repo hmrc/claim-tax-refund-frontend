@@ -25,7 +25,8 @@
 @(
     appConfig: FrontendAppConfig,
     form: Form[_],
-    mode: Mode
+    mode: Mode,
+    taxYear: SelectTaxYear
 )(
     implicit
     request: Request[_],
@@ -46,7 +47,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading(messages("enterPayeReference.heading"))
+        @components.heading(messages("enterPayeReference.heading"), taxYear = Some(taxYear.asString))
 
         @components.input_text(InputViewModel("value", form),
             label = messages("enterPayeReference.heading"),

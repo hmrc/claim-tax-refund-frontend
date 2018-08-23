@@ -16,15 +16,16 @@
 
 package controllers
 
-import play.api.data.Form
-import utils.{FakeNavigator, MockUserAnswers}
 import connectors.FakeDataCacheConnector
 import controllers.actions._
-import play.api.test.Helpers._
 import forms.BooleanForm
+import models.SelectTaxYear.CYMinus2
 import models.{Index, NormalMode}
-import views.html.deleteOther
+import play.api.data.Form
 import play.api.mvc.Call
+import play.api.test.Helpers._
+import utils.{FakeNavigator, MockUserAnswers}
+import views.html.deleteOther
 
 class DeleteOtherControllerSpec extends ControllerSpecBase {
 
@@ -33,7 +34,7 @@ class DeleteOtherControllerSpec extends ControllerSpecBase {
   val formProvider = new BooleanForm()
   val form = formProvider()
   private val mockUserAnswers = MockUserAnswers
-
+  private val taxYear = CYMinus2
 
   val itemName = "qwerty"
 
@@ -51,12 +52,12 @@ class DeleteOtherControllerSpec extends ControllerSpecBase {
       dataRetrievalAction, new DataRequiredActionImpl, formProvider, formPartialRetriever, templateRenderer)
 
   def viewAsString(form: Form[_] = form, index: Index, itemName: String, collectionId: String): String =
-    deleteOther(frontendAppConfig, form, NormalMode, index, itemName, collectionId)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+    deleteOther(frontendAppConfig, form, NormalMode, index, itemName, collectionId, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "DeleteOther Controller" must {
 
     "return OK and the correct view for a GET" in {
-      val result = controller()
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers.minimalValidUserAnswers))
         .onPageLoad(NormalMode, index, itemName, benefitCollectionId)(fakeRequest)
 
       status(result) mustBe OK
@@ -127,7 +128,7 @@ class DeleteOtherControllerSpec extends ControllerSpecBase {
     "redirect to CheckYourAnswers when valid data is submitted and value is false" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "false"))
 
-      val result = controller()
+      val result = controller(fakeDataRetrievalAction())
         .onSubmit(NormalMode, index, itemName, benefitCollectionId)(postRequest)
 
       status(result) mustBe SEE_OTHER
@@ -148,7 +149,7 @@ class DeleteOtherControllerSpec extends ControllerSpecBase {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
       val boundForm = form.bind(Map("value" -> "invalid value"))
 
-      val result = controller()
+      val result = controller(fakeDataRetrievalAction())
         .onSubmit(NormalMode, index, itemName, benefitCollectionId)(postRequest)
 
       status(result) mustBe BAD_REQUEST

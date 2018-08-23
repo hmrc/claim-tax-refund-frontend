@@ -27,8 +27,9 @@
     appConfig: FrontendAppConfig,
     form: Form[_],
     mode: Mode,
-    nomineeName: String
-)(
+    nomineeName: String,
+    taxYear: SelectTaxYear
+    )(
     implicit
         request: Request[_],
         messages: Messages,
@@ -48,17 +49,21 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading(messages("anyAgentRef.heading", nomineeName))
+        @components.heading(messages("anyAgentRef.heading", nomineeName), taxYear = Some(taxYear.asString))
 
         @components.input_yes_no(
-            InputViewModel("anyAgentRef", form),
+            viewModel = InputViewModel("anyAgentRef", form),
             label = messages("anyAgentRef.heading", nomineeName),
             labelClass = Some("visually-hidden"),
             yesAssoc = Some("yesAgentRef")
         )
 
         <div id="yesAgentRef" class="js-hidden">
-            @components.input_text(InputViewModel("agentRef", form), messages("anyAgentRef.agentRefField"), Some("panel"))
+            @components.input_text(
+                viewModel = InputViewModel("agentRef", form),
+                label = messages("anyAgentRef.agentRefField"),
+                divClass = Some("panel")
+            )
         </div>
 
         @components.submit_button()

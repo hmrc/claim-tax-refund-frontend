@@ -57,30 +57,40 @@ class IsPaymentAddressInTheUKController @Inject()(appConfig: FrontendAppConfig,
         case Some(value) => form.fill(value)
       }
 
-      val continueUrl = routes.AddressLookupRoutingController.addressLookupCallback(None, mode).absoluteURL()
+      request.userAnswers.selectTaxYear.map {
+        taxYear =>
+          val continueUrl = routes.AddressLookupRoutingController.addressLookupCallback(None, mode).absoluteURL()
+          val addressInit = for {
+            result: Option[String] <- addressLookup.initialise(continueUrl = continueUrl)
+          } yield {
+            result map (
+              url => Redirect(url)
+              )
+          }
 
-      val addressInit = for {
-        result: Option[String] <- addressLookup.initialise(continueUrl = continueUrl)
-      } yield {
-        result map (
-          url => Redirect(url)
-        )
+          addressInit.map(_.getOrElse(
+            Ok(isPaymentAddressInTheUK(appConfig, preparedForm, mode, taxYear))
+          ))
+
+      }.getOrElse{
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
       }
-
-      addressInit.map(_.getOrElse(
-        Ok(isPaymentAddressInTheUK(appConfig, preparedForm, mode))
-      ))
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      form.bindFromRequest().fold(
-        (formWithErrors: Form[_]) =>
-          Future.successful(BadRequest(isPaymentAddressInTheUK(appConfig, formWithErrors, mode))),
-        value =>
-          dataCacheConnector.save[Boolean](request.externalId, IsPaymentAddressInTheUKId.toString, value).map(cacheMap =>
-            Redirect(navigator.nextPage(IsPaymentAddressInTheUKId, mode)(new UserAnswers(cacheMap)))
+      request.userAnswers.selectTaxYear.map {
+        taxYear =>
+          form.bindFromRequest().fold(
+            (formWithErrors: Form[_]) =>
+              Future.successful(BadRequest(isPaymentAddressInTheUK(appConfig, formWithErrors, mode, taxYear))),
+            value =>
+              dataCacheConnector.save[Boolean](request.externalId, IsPaymentAddressInTheUKId.toString, value).map(cacheMap =>
+                Redirect(navigator.nextPage(IsPaymentAddressInTheUKId, mode)(new UserAnswers(cacheMap)))
+              )
           )
-      )
+      }.getOrElse{
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+      }
   }
 }

@@ -20,6 +20,7 @@ import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.AnyAgentReferenceForm
 import identifiers.{AgentRefId, AnyAgentRefId}
+import models.SelectTaxYear.CYMinus2
 import models.{AnyAgentRef, NormalMode}
 import org.mockito.Mockito.when
 import play.api.data.Form
@@ -38,13 +39,14 @@ class AnyAgentRefControllerSpec extends ControllerSpecBase {
   val validYesData = Map(AnyAgentRefId.toString -> Json.obj(AnyAgentRefId.toString -> JsBoolean(true), AgentRefId.toString -> JsString("AB1234")))
   val validNoData = Map(AnyAgentRefId.toString -> Json.obj(AnyAgentRefId.toString -> JsBoolean(false)))
   val nomineeName = "Test Nominee"
+  private val taxYear = CYMinus2
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyAgentRefController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, formProvider, formPartialRetriever, templateRenderer)
 
-  def viewAsString(form: Form[_] = form) = anyAgentRef(frontendAppConfig, form, NormalMode, nomineeName)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+  def viewAsString(form: Form[_] = form) = anyAgentRef(frontendAppConfig, form, NormalMode, nomineeName, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "AnyAgentRef Controller" must {
 

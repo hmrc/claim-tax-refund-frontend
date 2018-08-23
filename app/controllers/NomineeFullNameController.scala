@@ -34,16 +34,16 @@ import views.html.nomineeFullName
 import scala.concurrent.Future
 
 class NomineeFullNameController @Inject()(
-                                         appConfig: FrontendAppConfig,
-                                         override val messagesApi: MessagesApi,
-                                         dataCacheConnector: DataCacheConnector,
-                                         navigator: Navigator,
-                                         authenticate: AuthAction,
-                                         getData: DataRetrievalAction,
-                                         requireData: DataRequiredAction,
-                                         formBuilder: NomineeFullNameForm,
-                                         implicit val formPartialRetriever: FormPartialRetriever,
-                                         implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
+                                           appConfig: FrontendAppConfig,
+                                           override val messagesApi: MessagesApi,
+                                           dataCacheConnector: DataCacheConnector,
+                                           navigator: Navigator,
+                                           authenticate: AuthAction,
+                                           getData: DataRetrievalAction,
+                                           requireData: DataRequiredAction,
+                                           formBuilder: NomineeFullNameForm,
+                                           implicit val formPartialRetriever: FormPartialRetriever,
+                                           implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
 
   private val form: Form[String] = formBuilder()
 
@@ -53,17 +53,28 @@ class NomineeFullNameController @Inject()(
         case None => form
         case Some(value) => form.fill(value)
       }
-      Ok(nomineeFullName(appConfig, preparedForm, mode))
+
+      request.userAnswers.selectTaxYear.map {
+        taxYear =>
+          Ok(nomineeFullName(appConfig, preparedForm, mode, taxYear))
+      }.getOrElse {
+        Redirect(routes.SessionExpiredController.onPageLoad())
+      }
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      form.bindFromRequest().fold(
-        (formWithErrors: Form[_]) =>
-          Future.successful(BadRequest(nomineeFullName(appConfig, formWithErrors, mode))),
-        (value) =>
-          dataCacheConnector.save[String](request.externalId, NomineeFullNameId.toString, value).map(cacheMap =>
-            Redirect(navigator.nextPage(NomineeFullNameId, mode)(new UserAnswers(cacheMap))))
-      )
+      request.userAnswers.selectTaxYear.map {
+        taxYear =>
+          form.bindFromRequest().fold(
+            (formWithErrors: Form[_]) =>
+              Future.successful(BadRequest(nomineeFullName(appConfig, formWithErrors, mode, taxYear))),
+            value =>
+              dataCacheConnector.save[String](request.externalId, NomineeFullNameId.toString, value).map(cacheMap =>
+                Redirect(navigator.nextPage(NomineeFullNameId, mode)(new UserAnswers(cacheMap))))
+          )
+      }.getOrElse {
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+      }
   }
 }

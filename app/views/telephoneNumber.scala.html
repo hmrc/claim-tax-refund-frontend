@@ -25,7 +25,8 @@
 @(
     appConfig: FrontendAppConfig,
     form: Form[_],
-    mode: Mode
+    mode: Mode,
+    taxYear: SelectTaxYear
 )(
     implicit
     request: Request[_],
@@ -46,7 +47,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading(messages("telephoneNumber.heading"))
+        @components.heading(messages("telephoneNumber.heading"), taxYear = Some(taxYear.asString))
 
         <p>@messages("telephoneNumber.hintPara1")</p>
 

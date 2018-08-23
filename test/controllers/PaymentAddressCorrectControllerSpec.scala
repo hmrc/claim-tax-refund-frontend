@@ -19,15 +19,14 @@ package controllers
 import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.BooleanForm
-import identifiers.PaymentAddressCorrectId
 import models.NormalMode
+import models.SelectTaxYear.CYMinus2
 import models.requests.{AuthenticatedRequest, OptionalDataRequest}
+import org.mockito.Mockito.when
 import play.api.data.Form
-import play.api.libs.json.JsBoolean
 import play.api.mvc.Call
 import play.api.test.Helpers._
 import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
-import uk.gov.hmrc.http.cache.client.CacheMap
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.paymentAddressCorrect
 
@@ -39,6 +38,8 @@ class PaymentAddressCorrectControllerSpec extends ControllerSpecBase {
 
   val formProvider = new BooleanForm()
   val form = formProvider()
+  private val taxYear = CYMinus2
+  private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new PaymentAddressCorrectController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
@@ -91,22 +92,26 @@ class PaymentAddressCorrectControllerSpec extends ControllerSpecBase {
     countryCode = Some("FR")
   )
 
-  def viewAsString(form: Form[_] = form): String = paymentAddressCorrect(frontendAppConfig, form, NormalMode, itmpAddress)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+  def viewAsString(form: Form[_] = form): String =
+    paymentAddressCorrect(
+      frontendAppConfig,
+      form,
+      NormalMode,
+      itmpAddress,
+      taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "PaymentAddressCorrect Controller" must {
 
     "return OK and the correct view for a GET" in {
-      val result = controller().onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(fakeDataRetrievalActionItmpAddress(Some(itmpAddress))).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe OK
       contentAsString(result) mustBe viewAsString()
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      val validData = Map(PaymentAddressCorrectId.toString -> JsBoolean(true))
-      val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validData)))
-
-      val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)
+      when(mockUserAnswers.paymentAddressCorrect).thenReturn(Some(true))
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
       contentAsString(result) mustBe viewAsString(form.fill(true))
     }
@@ -114,7 +119,7 @@ class PaymentAddressCorrectControllerSpec extends ControllerSpecBase {
     "redirect to the next page when valid data TRUE is submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
 
-      val result = controller().onSubmit(NormalMode)(postRequest)
+      val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(onwardRoute.url)
@@ -123,7 +128,7 @@ class PaymentAddressCorrectControllerSpec extends ControllerSpecBase {
     "redirect to the next page when valid data FALSE is submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "false"))
 
-      val result = controller().onSubmit(NormalMode)(postRequest)
+      val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(onwardRoute.url)
@@ -133,7 +138,7 @@ class PaymentAddressCorrectControllerSpec extends ControllerSpecBase {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
       val boundForm = form.bind(Map("value" -> "invalid value"))
 
-      val result = controller().onSubmit(NormalMode)(postRequest)
+      val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe BAD_REQUEST
       contentAsString(result) mustBe viewAsString(boundForm)
