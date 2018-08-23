@@ -29,7 +29,8 @@ class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
   private val fullUserAnswers: UserAnswers = MockUserAnswers.fullValidUserAnswers
   private val fullXml: Elem = new RobotsXmlHelper(fullUserAnswers)(messages).formattedXml
 
-  private val validMinimalXml: Elem = <ctr><userDetails><name>TestName</name><nino>ZZ123456A</nino></userDetails><claimSection><selectedTaxYear>6 April 2016 to 5 April 2017</selectedTaxYear><employmentDetails>true</employmentDetails></claimSection><paymentSection><whereToSendThePayment>myself</whereToSendThePayment><paymentAddressCorrect>true</paymentAddressCorrect><paymentAddress/></paymentSection><contactSection><anyTelephoneNumber>No</anyTelephoneNumber><telephoneNumber/></contactSection></ctr>
+  private val validMinimalXml: Elem =
+    <ctr><userDetails><name>TestName</name><nino>ZZ123456A</nino></userDetails><claimSection><selectedTaxYear>6 April 2016 to 5 April 2017</selectedTaxYear><employmentDetails>true</employmentDetails></claimSection><paymentSection><whereToSendThePayment>myself</whereToSendThePayment><paymentAddressCorrect>true</paymentAddressCorrect><paymentAddress/></paymentSection><contactSection><anyTelephoneNumber>No</anyTelephoneNumber><telephoneNumber/></contactSection></ctr>
 
   "robots Xml" must {
 
@@ -42,11 +43,10 @@ class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
     "have correct sections in claimSection when employmentDetails are true" in {
 
       fullXml \ "claimSection" \ "selectedTaxYear" must contain(<selectedTaxYear>6 April 2016 to 5 April 2017</selectedTaxYear>)
-      fullXml \ "claimSection" \ "employmentDetails" must contain (<employmentDetails>true</employmentDetails>)
+      fullXml \ "claimSection" \ "employmentDetails" must contain(<employmentDetails>true</employmentDetails>)
     }
 
     "have correct sections in claimSection when employmentDetails are false" in {
-      val fullUserAnswers: UserAnswers = MockUserAnswers.fullValidUserAnswers
 
       when(fullUserAnswers.employmentDetails) thenReturn Some(false)
       when(fullUserAnswers.enterPayeReference) thenReturn Some("123456789")
@@ -58,7 +58,6 @@ class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
       newXmlToNode \ "claimSection" \ "employmentDetails" must contain(<employmentDetails>false</employmentDetails>)
       newXmlToNode \ "claimSection" \ "payeReference" must contain(<payeReference>123456789</payeReference>)
       newXmlToNode \ "claimSection" \ "detailsOfEmploymentOrPension" must contain(<detailsOfEmploymentOrPension>Employment details</detailsOfEmploymentOrPension>)
-
     }
 
     "have correct sections in benefitSection" in {
@@ -72,63 +71,62 @@ class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
       fullXml \ "benefitSection" \ "howMuchIncapacityBenefit" must contain(<howMuchIncapacityBenefit>1234</howMuchIncapacityBenefit>)
       fullXml \ "benefitSection" \ "howMuchStatePension" must contain(<howMuchStatePension>1234</howMuchStatePension>)
 
-      val otherBenefits: NodeSeq = fullXml  \"benefitSection" \ "otherBenefits" \\ "otherBenefit"
-      otherBenefits must contain(<otherBenefit><name>qwerty</name><amount>12</amount></otherBenefit>)
-      otherBenefits must contain(<otherBenefit><name>qwerty1</name><amount>34</amount></otherBenefit>)
-      otherBenefits must contain(<otherBenefit><name>qwerty2</name><amount>56</amount></otherBenefit>)
+      val otherBenefits: NodeSeq = fullXml  \ "benefitSection" \ "otherBenefits" \ "otherBenefit"
+
+      otherBenefits.head mustBe <otherBenefit><name>qwerty</name><amount>12</amount></otherBenefit>
+      otherBenefits(1) mustBe <otherBenefit><name>qwerty1</name><amount>34</amount></otherBenefit>
+      otherBenefits(2) mustBe <otherBenefit><name>qwerty2</name><amount>56</amount></otherBenefit>
     }
 
     "have correct sections in companyBenefitSection" in {
 
-      fullXml \"companyBenefitsSection" \ "anyCompanyBenefits" must contain(<anyCompanyBenefits>true</anyCompanyBenefits>)
-      fullXml \"companyBenefitsSection" \ "selectCompanyBenefits" must contain(<selectCompanyBenefits>company-car-benefit, medical-benefit, fuel-benefit, other-company-benefit</selectCompanyBenefits>)
-      fullXml \"companyBenefitsSection" \ "howMuchCarBenefits" must contain(<howMuchCarBenefits>1234</howMuchCarBenefits>)
-      fullXml \"companyBenefitsSection" \ "howMuchFuelBenefit" must contain(<howMuchFuelBenefit>1234</howMuchFuelBenefit>)
-      fullXml \"companyBenefitsSection" \ "howMuchMedicalBenefits" must contain(<howMuchMedicalBenefits>1234</howMuchMedicalBenefits>)
+      fullXml \ "companyBenefitsSection" \ "anyCompanyBenefits" must contain(<anyCompanyBenefits>true</anyCompanyBenefits>)
+      fullXml \ "companyBenefitsSection" \ "selectCompanyBenefits" must contain(<selectCompanyBenefits>company-car-benefit, medical-benefit, fuel-benefit, other-company-benefit</selectCompanyBenefits>)
+      fullXml \ "companyBenefitsSection" \ "howMuchCarBenefits" must contain(<howMuchCarBenefits>1234</howMuchCarBenefits>)
+      fullXml \ "companyBenefitsSection" \ "howMuchFuelBenefit" must contain(<howMuchFuelBenefit>1234</howMuchFuelBenefit>)
+      fullXml \ "companyBenefitsSection" \ "howMuchMedicalBenefits" must contain(<howMuchMedicalBenefits>1234</howMuchMedicalBenefits>)
 
-      val otherCompanyBenefitsSection = fullXml \ "companyBenefitsSection" \ "otherCompanyBenefitsSection" \\ "companyBenefit"
+      val otherCompanyBenefits: NodeSeq = fullXml \ "companyBenefitsSection" \ "otherCompanyBenefits" \ "companyBenefit"
 
-      otherCompanyBenefitsSection.head mustBe <companyBenefit><name>qwerty</name><amount>12</amount></companyBenefit>
-      otherCompanyBenefitsSection(1) mustBe <companyBenefit><name>qwerty1</name><amount>34</amount></companyBenefit>
-      otherCompanyBenefitsSection(2) mustBe <companyBenefit><name>qwerty2</name><amount>56</amount></companyBenefit>
-
+      otherCompanyBenefits.head mustBe <companyBenefit><name>qwerty</name><amount>12</amount></companyBenefit>
+      otherCompanyBenefits(1) mustBe <companyBenefit><name>qwerty1</name><amount>34</amount></companyBenefit>
+      otherCompanyBenefits(2) mustBe <companyBenefit><name>qwerty2</name><amount>56</amount></companyBenefit>
     }
 
     "have correct sections in taxableIncomeSection" in {
 
-      fullXml \ "taxableIncomeSection" \ "anyTaxableIncome" must contain( <anyTaxableIncome>true</anyTaxableIncome>)
-      fullXml \ "taxableIncomeSection" \ "selectTaxableIncome" must contain( <selectTaxableIncome>rental-income, bank-or-building-society-interest, investment-or-dividends, foreign-income, other-taxable-income</selectTaxableIncome>)
+      fullXml \ "taxableIncomeSection" \ "anyTaxableIncome" must contain(<anyTaxableIncome>true</anyTaxableIncome>)
+      fullXml \ "taxableIncomeSection" \ "selectTaxableIncome" must contain(<selectTaxableIncome>rental-income, bank-or-building-society-interest, investment-or-dividends, foreign-income, other-taxable-income</selectTaxableIncome>)
 
-      fullXml \ "taxableIncomeSection" \ "rentalIncome"  \ "howMuch" must contain(<howMuch>1234</howMuch>)
-      fullXml \ "taxableIncomeSection" \ "rentalIncome"  \ "anyTaxPaid" must contain( <anyTaxPaid>Yes</anyTaxPaid>)
-      fullXml \ "taxableIncomeSection" \ "rentalIncome"  \ "taxPaid" must contain( <taxPaid>123</taxPaid>)
+      fullXml \ "taxableIncomeSection" \ "rentalIncome" \ "howMuch" must contain(<howMuch>1234</howMuch>)
+      fullXml \ "taxableIncomeSection" \ "rentalIncome" \ "anyTaxPaid" must contain( <anyTaxPaid>Yes</anyTaxPaid>)
+      fullXml \ "taxableIncomeSection" \ "rentalIncome" \ "taxPaid" must contain( <taxPaid>123</taxPaid>)
 
-      fullXml \ "taxableIncomeSection" \ "bankInterest"  \ "howMuch" must contain( <howMuch>1234</howMuch>)
-      fullXml \ "taxableIncomeSection" \ "bankInterest"  \ "anyTaxPaid" must contain( <anyTaxPaid>Yes</anyTaxPaid>)
-      fullXml \ "taxableIncomeSection" \ "bankInterest"  \ "taxPaid" must contain( <taxPaid>123</taxPaid>)
+      fullXml \ "taxableIncomeSection" \ "bankInterest" \ "howMuch" must contain( <howMuch>1234</howMuch>)
+      fullXml \ "taxableIncomeSection" \ "bankInterest" \ "anyTaxPaid" must contain( <anyTaxPaid>Yes</anyTaxPaid>)
+      fullXml \ "taxableIncomeSection" \ "bankInterest" \ "taxPaid" must contain( <taxPaid>123</taxPaid>)
 
-      fullXml \ "taxableIncomeSection" \ "investmentOrDividend"  \ "howMuch" must contain( <howMuch>1234</howMuch>)
-      fullXml \ "taxableIncomeSection" \ "investmentOrDividend"  \ "anyTaxPaid" must contain( <anyTaxPaid>Yes</anyTaxPaid>)
-      fullXml \ "taxableIncomeSection" \ "investmentOrDividend"  \ "taxPaid" must contain( <taxPaid>123</taxPaid>)
+      fullXml \ "taxableIncomeSection" \ "investmentOrDividend" \ "howMuch" must contain( <howMuch>1234</howMuch>)
+      fullXml \ "taxableIncomeSection" \ "investmentOrDividend" \ "anyTaxPaid" must contain( <anyTaxPaid>Yes</anyTaxPaid>)
+      fullXml \ "taxableIncomeSection" \ "investmentOrDividend" \ "taxPaid" must contain( <taxPaid>123</taxPaid>)
 
-      fullXml \ "taxableIncomeSection" \ "foreignIncome"  \ "howMuch" must contain( <howMuch>1234</howMuch>)
-      fullXml \ "taxableIncomeSection" \ "foreignIncome"  \ "anyTaxPaid" must contain( <anyTaxPaid>Yes</anyTaxPaid>)
-      fullXml \ "taxableIncomeSection" \ "foreignIncome"  \ "taxPaid" must contain( <taxPaid>123</taxPaid>)
+      fullXml \ "taxableIncomeSection" \ "foreignIncome" \ "howMuch" must contain( <howMuch>1234</howMuch>)
+      fullXml \ "taxableIncomeSection" \ "foreignIncome" \ "anyTaxPaid" must contain( <anyTaxPaid>Yes</anyTaxPaid>)
+      fullXml \ "taxableIncomeSection" \ "foreignIncome" \ "taxPaid" must contain( <taxPaid>123</taxPaid>)
 
-      val otherTaxableIncomeSection = fullXml \ "taxableIncomeSection" \ "otherTaxableIncome" \ "taxableIncome"
+      val otherTaxableIncome = fullXml \ "taxableIncomeSection" \ "otherTaxableIncome" \ "taxableIncome"
 
-      otherTaxableIncomeSection.head mustBe <taxableIncome><name>qwerty</name><amount>12</amount></taxableIncome>
-      otherTaxableIncomeSection(1) mustBe <taxableIncome><name>qwerty1</name><amount>34</amount></taxableIncome>
-      otherTaxableIncomeSection(2) mustBe <taxableIncome><name>qwerty2</name><amount>56</amount></taxableIncome>
-
+      otherTaxableIncome.head mustBe <taxableIncome><name>qwerty</name><amount>12</amount></taxableIncome>
+      otherTaxableIncome(1) mustBe <taxableIncome><name>qwerty1</name><amount>34</amount></taxableIncome>
+      otherTaxableIncome(2) mustBe <taxableIncome><name>qwerty2</name><amount>56</amount></taxableIncome>
     }
 
     "hide sections when not selected" in {
-      val fullUserAnswers: UserAnswers = MockUserAnswers.fullValidUserAnswers
 
-      when (fullUserAnswers.anyBenefits) thenReturn Some(false)
-      when (fullUserAnswers.anyCompanyBenefits) thenReturn Some(false)
-      when (fullUserAnswers.anyTaxableIncome) thenReturn Some(false)
+      when(fullUserAnswers.anyBenefits) thenReturn Some(false)
+      when(fullUserAnswers.anyCompanyBenefits) thenReturn Some(false)
+      when(fullUserAnswers.anyTaxableIncome) thenReturn Some(false)
+
       val newXmlToNode: Elem = new RobotsXmlHelper(fullUserAnswers)(messages).formattedXml
 
       newXmlToNode.contains(<anyBenefits></anyBenefits>) mustBe false
@@ -147,7 +145,6 @@ class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
     }
 
     "have correct sections in the paymentSection when payment address is in the UK" in {
-      val fullUserAnswers: UserAnswers = MockUserAnswers.fullValidUserAnswers
 
       when(fullUserAnswers.isPaymentAddressInTheUK) thenReturn Some(true)
       when(fullUserAnswers.paymentInternationalAddress) thenReturn None
@@ -164,22 +161,21 @@ class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
     }
 
     "have correct sections in the paymentSection when payment address is a lookup" in {
-      val fullUserAnswers: UserAnswers = MockUserAnswers.fullValidUserAnswers
 
       when(fullUserAnswers.isPaymentAddressInTheUK) thenReturn None
       when(fullUserAnswers.paymentUKAddress) thenReturn None
       when(fullUserAnswers.paymentInternationalAddress) thenReturn None
       when(fullUserAnswers.paymentLookupAddress) thenReturn Some(AddressLookup(
-        address = Some(
-          Address(
-            lines = Some(Seq("Line1", "Line2", "Line3", "Line4")),
-            postcode = Some("NE1 1LX"),
-            country = Some(Country(Some("United Kingdom"),Some("GB")))
-          )),
+        address = Some(Address(
+          lines = Some(Seq("Line1", "Line2", "Line3", "Line4")),
+          postcode = Some("NE1 1LX"),
+          country = Some(Country(Some("United Kingdom"),Some("GB")))
+        )),
         auditRef = Some("e9e2fb3f-268f-4c4c-b928-3dc0b17259f2")
       ))
 
       val newXmlToNode: Elem = new RobotsXmlHelper(fullUserAnswers)(messages).formattedXml
+
       newXmlToNode \ "paymentSection" \ "paymentAddress" must contain(<paymentAddress><lookupAddress>Line1, Line2, Line3, Line4, NE1 1LX, United Kingdom, GB</lookupAddress></paymentAddress>)
     }
 

@@ -47,9 +47,9 @@
 			<otherBenefits>
 				@robotsXmlHelper.otherBenefits(value)
 			</otherBenefits>
-
 		}
-	</benefitSection>}
+	</benefitSection>
+	}
 
 	@if(userAnswers.anyCompanyBenefits.getOrElse(false)){
 	<companyBenefitsSection>
@@ -65,48 +65,53 @@
 			<howMuchMedicalBenefits>@value</howMuchMedicalBenefits>
 		}
 		@if(userAnswers.otherCompanyBenefit){
-			<otherCompanyBenefitsSection>
+			<otherCompanyBenefits>
 				@robotsXmlHelper.otherCompanyBenefits(userAnswers.otherCompanyBenefit.get)
-			</otherCompanyBenefitsSection>
+			</otherCompanyBenefits>
 		}
 	</companyBenefitsSection>
 	}
-
 
 	@if(userAnswers.anyTaxableIncome.getOrElse(false)){
 	<taxableIncomeSection>
 		<anyTaxableIncome>@userAnswers.anyTaxableIncome</anyTaxableIncome>
 		<selectTaxableIncome>@userAnswers.selectTaxableIncome.get.mkString(", ")</selectTaxableIncome>
 		@if(userAnswers.howMuchRentalIncome.isDefined){
-		<rentalIncome>
-			<howMuch>@userAnswers.howMuchRentalIncome</howMuch>
-			<anyTaxPaid>@robotsXmlHelper.anyIncome(userAnswers.anyTaxableRentalIncome.get)</anyTaxPaid>
-			<taxPaid>@robotsXmlHelper.incomeAmount(userAnswers.anyTaxableRentalIncome.get)</taxPaid>
-		</rentalIncome>}
+			<rentalIncome>
+				<howMuch>@userAnswers.howMuchRentalIncome</howMuch>
+				<anyTaxPaid>@robotsXmlHelper.anyIncome(userAnswers.anyTaxableRentalIncome.get)</anyTaxPaid>
+				<taxPaid>@robotsXmlHelper.incomeAmount(userAnswers.anyTaxableRentalIncome.get)</taxPaid>
+			</rentalIncome>
+		}
 		@if(userAnswers.howMuchBankInterest.isDefined){
-		<bankInterest>
-			<howMuch>@userAnswers.howMuchBankInterest</howMuch>
-			<anyTaxPaid>@robotsXmlHelper.anyIncome(userAnswers.anyTaxableBankInterest.get)</anyTaxPaid>
-			<taxPaid>@robotsXmlHelper.incomeAmount(userAnswers.anyTaxableBankInterest.get)</taxPaid>
-		</bankInterest>}
+			<bankInterest>
+				<howMuch>@userAnswers.howMuchBankInterest</howMuch>
+				<anyTaxPaid>@robotsXmlHelper.anyIncome(userAnswers.anyTaxableBankInterest.get)</anyTaxPaid>
+				<taxPaid>@robotsXmlHelper.incomeAmount(userAnswers.anyTaxableBankInterest.get)</taxPaid>
+			</bankInterest>
+		}
 		@if(userAnswers.howMuchInvestmentOrDividend.isDefined){
-		<investmentOrDividend>
-			<howMuch>@userAnswers.howMuchInvestmentOrDividend</howMuch>
-			<anyTaxPaid>@robotsXmlHelper.anyIncome(userAnswers.anyTaxableInvestments.get)</anyTaxPaid>
-			<taxPaid>@robotsXmlHelper.incomeAmount(userAnswers.anyTaxableInvestments.get)</taxPaid>
-		</investmentOrDividend>}
+			<investmentOrDividend>
+				<howMuch>@userAnswers.howMuchInvestmentOrDividend</howMuch>
+				<anyTaxPaid>@robotsXmlHelper.anyIncome(userAnswers.anyTaxableInvestments.get)</anyTaxPaid>
+				<taxPaid>@robotsXmlHelper.incomeAmount(userAnswers.anyTaxableInvestments.get)</taxPaid>
+			</investmentOrDividend>
+		}
 		@if(userAnswers.howMuchForeignIncome.isDefined){
-		<foreignIncome>
-			<howMuch>@userAnswers.howMuchForeignIncome</howMuch>
-			<anyTaxPaid>@robotsXmlHelper.anyIncome(userAnswers.anyTaxableForeignIncome.get)</anyTaxPaid>
-			<taxPaid>@robotsXmlHelper.incomeAmount(userAnswers.anyTaxableForeignIncome.get)</taxPaid>
-		</foreignIncome>}
+			<foreignIncome>
+				<howMuch>@userAnswers.howMuchForeignIncome</howMuch>
+				<anyTaxPaid>@robotsXmlHelper.anyIncome(userAnswers.anyTaxableForeignIncome.get)</anyTaxPaid>
+				<taxPaid>@robotsXmlHelper.incomeAmount(userAnswers.anyTaxableForeignIncome.get)</taxPaid>
+			</foreignIncome>
+		}
 		@if(userAnswers.otherTaxableIncome.isDefined){
 			<otherTaxableIncome>
 				@robotsXmlHelper.otherTaxableIncome(userAnswers.otherTaxableIncome.get)
 			</otherTaxableIncome>
 		}
-	</taxableIncomeSection>}
+	</taxableIncomeSection>
+	}
+
 	<paymentSection>
 		@userAnswers.whereToSendPayment.map{ value =>
 			<whereToSendThePayment>@value</whereToSendThePayment>
@@ -125,18 +130,17 @@
 		}
 		@userAnswers.isPaymentAddressInTheUK.map{ value =>
 			<isPaymentAddressInTheUK>@userAnswers.isPaymentAddressInTheUK</isPaymentAddressInTheUK>
-
 		}
 		<paymentAddress>
-		@userAnswers.paymentUKAddress.map{ value =>
-			@robotsXmlHelper.ukAddress
-		}
-		@userAnswers.paymentInternationalAddress.map{ value =>
-			@robotsXmlHelper.internationalAddress
-		}
-		@userAnswers.paymentLookupAddress.map{ value =>
-			@robotsXmlHelper.lookupAddress
-		}
+			@userAnswers.paymentUKAddress.map{ value =>
+				@robotsXmlHelper.ukAddress
+			}
+			@userAnswers.paymentInternationalAddress.map{ value =>
+				@robotsXmlHelper.internationalAddress
+			}
+			@userAnswers.paymentLookupAddress.map{ value =>
+				@robotsXmlHelper.lookupAddress
+			}
 		</paymentAddress>
 	</paymentSection>
 
