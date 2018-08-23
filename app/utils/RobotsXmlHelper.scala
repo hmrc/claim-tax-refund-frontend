@@ -19,7 +19,6 @@ package utils
 import models._
 import models.templates.xml.robots
 import play.api.i18n.Messages
-import play.twirl.api.XmlFormat
 
 import scala.xml.Elem
 import scala.xml.XML._
@@ -34,13 +33,13 @@ class RobotsXmlHelper(userAnswers: UserAnswers)(implicit messages: Messages) {
   }
 
   def anyIncome(userAnswer: AnyTaxPaid): String = userAnswer match {
-    case AnyTaxPaid.Yes(_) => Messages("site.yes")
-    case _ => Messages("site.no")
+    case AnyTaxPaid.Yes(_) => messages("site.yes")
+    case _ => messages("site.no")
   }
 
   def anyAgentRef(userAnswer: AnyAgentRef): String = userAnswer match {
-    case AnyAgentRef.Yes(_) => Messages("site.yes")
-    case _ => Messages("site.no")
+    case AnyAgentRef.Yes(_) => messages("site.yes")
+    case _ => messages("site.no")
   }
 
   def anyAgentReference(userAnswer: AnyAgentRef): String = userAnswer match {
@@ -49,8 +48,8 @@ class RobotsXmlHelper(userAnswers: UserAnswers)(implicit messages: Messages) {
   }
 
   def anyTelephone(userAnswer: TelephoneOption): String = userAnswer match {
-    case TelephoneOption.Yes(_) => Messages("site.yes")
-    case _ => Messages("site.no")
+    case TelephoneOption.Yes(_) => messages("site.yes")
+    case _ => messages("site.no")
   }
 
   def anyTelephoneNumber(userAnswer: TelephoneOption): String = userAnswer match {
