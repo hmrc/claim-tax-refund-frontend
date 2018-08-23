@@ -93,7 +93,6 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       otherBenefitSection.headingKey.get mustBe "otherBenefit.checkYourAnswersLabel"
       otherBenefitSection.addLinkText.get mustBe "otherBenefit.add"
       otherBenefitSection.addLinkUrl.get mustBe routes.OtherBenefitController.onPageLoad(CheckMode, Index(answers.otherBenefit.get.size)).url
-//      println(s"#############\n\n${answers.otherBenefit}")
     }
 
     "Company benefits section" in {
