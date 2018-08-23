@@ -262,22 +262,36 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
         case (taxableIncome, index) =>
           Seq(
             Some(AnswerRow(
-              taxableIncome._1.name,
-              s"£${taxableIncome._1.amount}",
+              label = taxableIncome._1.name,
+              answer = s"£${taxableIncome._1.amount}",
               answerIsMessageKey = false,
-              routes.OtherTaxableIncomeController.onPageLoad(CheckMode, Index(index)).url,
-              Some(routes.DeleteOtherController.onPageLoad(Index(index), taxableIncome._1.name, "otherTaxableIncome").url)
+              url = routes.OtherTaxableIncomeController.onPageLoad(CheckMode, Index(index)).url,
+              isHeadingRow = true
+            )),
+            Some(AnswerRow(
+              label = messages("checkYourAnswers.otherTaxableIncome.label", taxableIncome._1.name),
+              answer = s"£${taxableIncome._1.amount}",
+              answerIsMessageKey = false,
+              url = routes.OtherTaxableIncomeController.onPageLoad(CheckMode, Index(index)).url
             )),
             anyTaxPaid(
-              messages("anyTaxableOtherIncomeOption.checkYourAnswersLabel", taxableIncome._1.name),
-              Some(taxableIncome._2),
-              routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode, Index(index)).url
+              label = messages("anyTaxableOtherIncomeOption.checkYourAnswersLabel", taxableIncome._1.name),
+              answer = Some(taxableIncome._2),
+              route = routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode, Index(index)).url
             ),
             taxPaid(
-              messages("anyTaxableOtherIncome.checkYourAnswersLabel", taxableIncome._1.name),
-              Some(taxableIncome._2),
-              routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode, Index(index)).url
-            )
+              label = messages("anyTaxableOtherIncome.checkYourAnswersLabel", taxableIncome._1.name),
+              answer = Some(taxableIncome._2),
+              route = routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode, Index(index)).url
+            ),
+            Some(AnswerRow(
+              label = taxableIncome._1.name,
+              answer = s"£${taxableIncome._1.amount}",
+              answerIsMessageKey = false,
+              url = routes.OtherTaxableIncomeController.onPageLoad(CheckMode, Index(index)).url,
+              deleteUrl = Some(routes.DeleteOtherController.onPageLoad(Index(index), taxableIncome._1.name, "otherTaxableIncome").url),
+              isDeleteLinkRow = true
+            ))
           )
       }
 
