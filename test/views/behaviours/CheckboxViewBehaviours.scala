@@ -56,7 +56,7 @@ trait CheckboxViewBehaviours[A] extends ViewSpecBase {
         val doc = asDocument(createView())
         for { ((label, value), i) <- values.zipWithIndex } yield {
           val id = form(fieldKey)(s"[$i]").id
-          doc.select(s"label[for=$id]").text mustEqual messages(label)
+          doc.select(s"label[for=$id]").text mustEqual messages(label).capitalize
         }
       }
 
