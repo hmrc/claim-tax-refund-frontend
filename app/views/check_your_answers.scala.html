@@ -36,16 +36,19 @@
     appConfig = appConfig,
     bodyClasses = None
 ) {
-
     <h1 class="heading-xlarge">@messages("checkYourAnswers.heading")</h1>
-
-    <p>@messages("checkYourAnswers.guidance")</p>
 
     @for((section, i) <- answerSections.zipWithIndex){
         @components.answer_section(section, i.toString)
     }
 
+    <h2>@messages("checkYourAnswers.nowSendYourApplication")</h2>
+
+    <p>@messages("checkYourAnswers.declaration")</p>
+
     @helpers.form(action = controllers.routes.CheckYourAnswersController.onSubmit) {
-        @components.submit_button()
+        @components.submit_button("checkYourAnswers.acceptAndSend")
     }
+
+
 }

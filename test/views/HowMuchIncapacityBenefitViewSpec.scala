@@ -48,8 +48,7 @@ class HowMuchIncapacityBenefitViewSpec extends StringViewBehaviours with Mockito
       messageKeyPrefix = messageKeyPrefix,
       expectedFormAction = routes.HowMuchIncapacityBenefitController.onSubmit(NormalMode).url,
       expectedHintKeyLine1 = None,
-      expectedHintKeyLine2 = None,
-      expectedPrefix = Some(messages("global.poundSign"))
+      expectedHintKeyLine2 = None
     )
 
   }

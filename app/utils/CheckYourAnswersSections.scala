@@ -60,8 +60,7 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
         headingKey = Some("otherBenefit.checkYourAnswersLabel"),
         rows = cyaHelper.otherBenefits.flatten,
         addLinkText = Some("otherBenefit.add"),
-        addLinkUrl = Some(routes.OtherBenefitController.onPageLoad(CheckMode, Index(userAnswers.otherBenefit.get.size)).url),
-        columnHeadings = Some("checkYourAnswers.columnHeading.name" -> "checkYourAnswers.columnHeading.amount")
+        addLinkUrl = Some(routes.OtherBenefitController.onPageLoad(CheckMode, Index(userAnswers.otherBenefit.get.size)).url)
       )
     } else {
       AnswerSection(None, Seq.empty)
@@ -74,8 +73,7 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
         headingKey = Some("otherCompanyBenefit.checkYourAnswersLabel"),
         rows = cyaHelper.otherCompanyBenefit.flatten,
         addLinkText = Some("otherCompanyBenefit.add"),
-        addLinkUrl = Some(routes.OtherCompanyBenefitController.onPageLoad(CheckMode, Index(userAnswers.otherCompanyBenefit.get.size)).url),
-        columnHeadings = Some("checkYourAnswers.columnHeading.name" -> "checkYourAnswers.columnHeading.amount")
+        addLinkUrl = Some(routes.OtherCompanyBenefitController.onPageLoad(CheckMode, Index(userAnswers.otherCompanyBenefit.get.size)).url)
       )
     } else {
       AnswerSection(None, Seq.empty)
@@ -146,8 +144,7 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
         headingKey = Some("otherTaxableIncome.checkYourAnswersLabel"),
         rows = cyaHelper.otherTaxableIncome.flatten,
         addLinkText = Some("otherTaxableIncome.add"),
-        addLinkUrl = Some(routes.OtherTaxableIncomeController.onPageLoad(CheckMode, Index(userAnswers.otherTaxableIncome.get.size)).url),
-        columnHeadings = None
+        addLinkUrl = Some(routes.OtherTaxableIncomeController.onPageLoad(CheckMode, Index(userAnswers.otherTaxableIncome.get.size)).url)
       )
     } else {
       AnswerSection(None, Seq.empty)

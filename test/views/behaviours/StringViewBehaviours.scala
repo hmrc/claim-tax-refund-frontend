@@ -28,7 +28,6 @@ trait StringViewBehaviours extends QuestionViewBehaviours[String] {
                  expectedFormAction: String,
                  expectedHintKeyLine1: Option[String],
                  expectedHintKeyLine2: Option[String],
-                 expectedPrefix: Option[String],
                  args: Any*) = {
 
     "behave like a page with a string value field" when {
@@ -39,11 +38,6 @@ trait StringViewBehaviours extends QuestionViewBehaviours[String] {
           val expectedHintTextLine1 = expectedHintKeyLine1 map (k => messages(k))
           val expectedHintTextLine2 = expectedHintKeyLine2 map (k => messages(k))
           assertContainsLabel(doc, "value", messages(s"$messageKeyPrefix.heading", args: _*), expectedHintTextLine1, expectedHintTextLine2)
-        }
-
-        "contain a prefix for the value" in {
-          val doc = asDocument(createView(form))
-          if (expectedPrefix.isDefined) assertContainsText(doc, expectedPrefix.get)
         }
 
         "contain an input for the value" in {

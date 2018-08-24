@@ -52,8 +52,7 @@ class AnyOtherTaxableIncomeViewSpec extends YesNoViewBehaviours {
       createView = createViewUsingForm,
       messageKeyPrefix = messageKeyPrefix,
       expectedFormAction = routes.AnyOtherTaxableIncomeController.onSubmit(NormalMode).url,
-      expectedHintTextKey = None,
-      args = taxYear.asString(messages)
+      expectedHintTextKey = None
     )
 
     "display 'You have told us about:' section" in {

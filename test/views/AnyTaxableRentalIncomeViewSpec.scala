@@ -53,8 +53,7 @@ class AnyTaxableRentalIncomeViewSpec extends QuestionViewBehaviours[AnyTaxPaid] 
       createView = createViewUsingForm,
       messageKeyPrefix = messageKeyPrefix,
       expectedFormAction = routes.AnyTaxableRentalIncomeController.onSubmit(NormalMode).url,
-      expectedHintTextKey = None,
-      args = taxYear.asString(messages)
+      expectedHintTextKey = None
     )
 
     def yesNoPage(createView: (Form[AnyTaxPaid]) => HtmlFormat.Appendable,
