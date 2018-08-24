@@ -53,8 +53,7 @@ class AnyTaxableBankInterestViewSpec extends QuestionViewBehaviours[AnyTaxPaid] 
       createView = createViewUsingForm,
       messageKeyPrefix = messageKeyPrefix,
       expectedFormAction = routes.AnyTaxableBankInterestController.onSubmit(NormalMode).url,
-      expectedHintTextKey = Some("anyTaxableBankInterest.hint"),
-      args = taxYear.asString(messages)
+      expectedHintTextKey = Some("anyTaxableBankInterest.hint")
     )
 
     def yesNoPage(createView: (Form[AnyTaxPaid]) => HtmlFormat.Appendable,

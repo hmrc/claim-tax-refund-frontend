@@ -48,8 +48,7 @@ class EmploymentDetailsViewSpec extends YesNoViewBehaviours {
       createView = createViewUsingForm,
       messageKeyPrefix = messageKeyPrefix,
       expectedFormAction = routes.EmploymentDetailsController.onSubmit(NormalMode).url,
-      expectedHintTextKey = Some("employmentDetails.hintText"),
-      args = taxYear.asString(messages)
+      expectedHintTextKey = Some("employmentDetails.hintText")
     )
 
     "contain a table" in {

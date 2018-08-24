@@ -48,8 +48,7 @@ class HowMuchEmploymentAndSupportAllowanceViewSpec extends StringViewBehaviours 
       messageKeyPrefix = messageKeyPrefix,
       expectedFormAction = routes.HowMuchEmploymentAndSupportAllowanceController.onSubmit(NormalMode).url,
       expectedHintKeyLine1 = None,
-      expectedHintKeyLine2 = None,
-      expectedPrefix = Some(messages("global.poundSign"))
+      expectedHintKeyLine2 = None
     )
 
   }

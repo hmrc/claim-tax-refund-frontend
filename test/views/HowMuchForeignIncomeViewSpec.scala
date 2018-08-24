@@ -48,9 +48,7 @@ class HowMuchForeignIncomeViewSpec extends StringViewBehaviours with MockitoSuga
       messageKeyPrefix = messageKeyPrefix,
       expectedFormAction = routes.HowMuchForeignIncomeController.onSubmit(NormalMode).url,
       expectedHintKeyLine1 = None,
-      expectedHintKeyLine2 = None,
-      expectedPrefix = Some(messages("global.poundSign")),
-      args = taxYear.asString(messages)
+      expectedHintKeyLine2 = None
     )
 
   }

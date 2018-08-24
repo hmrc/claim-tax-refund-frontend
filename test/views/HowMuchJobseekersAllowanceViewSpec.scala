@@ -48,8 +48,7 @@ class HowMuchJobseekersAllowanceViewSpec extends StringViewBehaviours with Mocki
       messageKeyPrefix = messageKeyPrefix,
       expectedFormAction = routes.HowMuchJobseekersAllowanceController.onSubmit(NormalMode).url,
       expectedHintKeyLine1 = None,
-      expectedHintKeyLine2 = None,
-      expectedPrefix = Some(messages("global.poundSign"))
+      expectedHintKeyLine2 = None
     )
 
   }
