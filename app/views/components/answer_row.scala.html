@@ -24,12 +24,8 @@
         implicit messages: Messages
 )
 
-@labelWidth = @{
-    if(row.deleteUrl.isDefined) 6 else 5
-}
-
 @answerWidth = @{
-    if(row.deleteUrl.isDefined) 2 else 5
+    if(row.deleteUrl.isDefined) 3 else 5
 }
 
 @if(row.isDeleteLinkRow) {
@@ -49,7 +45,7 @@
 }
 @if(!row.isDeleteLinkRow && !row.isHeadingRow) {
 <li class="tabular-data__entry tabular-data__entry--grouped divider--bottom">
-    <div id="cya-@idPath-question" class="tabular-data__data tabular-data__data--@labelWidth-12">@row.label.print</div>
+    <div id="cya-@idPath-question" class="tabular-data__data tabular-data__data--5-12">@row.label.print</div>
     <div id="cya-@idPath-answer" class="tabular-data__data tabular-data__data--@answerWidth-12">@Html(row.answer.print)</div>
 
     @if(changeLink) {
