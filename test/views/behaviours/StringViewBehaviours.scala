@@ -40,10 +40,6 @@ trait StringViewBehaviours extends QuestionViewBehaviours[String] {
           assertContainsLabel(doc, "value", messages(s"$messageKeyPrefix.heading", args: _*), expectedHintTextLine1, expectedHintTextLine2)
         }
 
-        "contain a prefix for the value" in {
-          val doc = asDocument(createView(form))
-        }
-
         "contain an input for the value" in {
           val doc = asDocument(createView(form))
           assertRenderedById(doc, "value")
