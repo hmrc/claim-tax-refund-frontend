@@ -121,10 +121,7 @@ checkYourAnswers.companyBenefitSection = Company benefit details
 checkYourAnswers.taxableIncomeSection = Taxable income details
 checkYourAnswers.paymentSection = Payment details
 checkYourAnswers.contactSection = Contact details
-checkYourAnswers.columnHeading.name = Name
-checkYourAnswers.columnHeading.amount = Amount
 checkYourAnswers.otherTaxableIncome.label = Amount of {0} income
-checkYourAnswers.columnHeading.amountAndTax = Amount and tax
 
 unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account

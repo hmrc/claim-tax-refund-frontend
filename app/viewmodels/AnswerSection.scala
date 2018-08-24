@@ -16,10 +16,7 @@
 
 package viewmodels
 
-import play.twirl.api.Html
-
 case class AnswerSection(headingKey: Option[String],
                          rows: Seq[AnswerRow],
                          addLinkText: Option[String] = None,
-                         addLinkUrl: Option[String] = None,
-                         columnHeadings: Option[(String, String)] = None) extends Section
+                         addLinkUrl: Option[String] = None) extends Section
