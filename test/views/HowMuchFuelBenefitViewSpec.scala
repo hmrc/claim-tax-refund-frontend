@@ -48,8 +48,7 @@ class HowMuchFuelBenefitViewSpec extends StringViewBehaviours with MockitoSugar 
       messageKeyPrefix = messageKeyPrefix,
       expectedFormAction = routes.HowMuchFuelBenefitController.onSubmit(NormalMode).url,
       expectedHintKeyLine1 = None,
-      expectedHintKeyLine2 = None,
-      args = taxYear.asString(messages)
+      expectedHintKeyLine2 = None
     )
 
   }

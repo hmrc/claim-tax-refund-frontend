@@ -51,8 +51,7 @@ class DetailsOfEmploymentOrPensionViewSpec extends StringViewBehaviours with Moc
       messageKeyPrefix = messageKeyPrefix,
       expectedFormAction = routes.DetailsOfEmploymentOrPensionController.onSubmit(NormalMode).url,
       expectedHintKeyLine1 = Some("detailsOfEmploymentOrPension.hintText"),
-      expectedHintKeyLine2 = None,
-      args = taxYear.asString(messages)
+      expectedHintKeyLine2 = None
     )
 
     "Display the correct message when the character counter can't be shown on the page" in {

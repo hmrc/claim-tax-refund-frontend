@@ -48,8 +48,7 @@ class HowMuchMedicalBenefitsViewSpec extends StringViewBehaviours with MockitoSu
       messageKeyPrefix = messageKeyPrefix,
       expectedFormAction = routes.HowMuchMedicalBenefitsController.onSubmit(NormalMode).url,
       expectedHintKeyLine1 = None,
-      expectedHintKeyLine2 = None,
-      args = taxYear.asString(messages)
+      expectedHintKeyLine2 = None
     )
 
   }

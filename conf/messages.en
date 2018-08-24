@@ -122,6 +122,9 @@ checkYourAnswers.taxableIncomeSection = Taxable income details
 checkYourAnswers.paymentSection = Payment details
 checkYourAnswers.contactSection = Contact details
 checkYourAnswers.otherTaxableIncome.label = Amount of {0} income
+checkYourAnswers.nowSendYourApplication = Now send your application
+checkYourAnswers.declaration = By submitting this claim you are confirming that, to the best of your knowledge, the details you are providing are correct.
+checkYourAnswers.acceptAndSend = Accept and send claim
 
 unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account

@@ -48,8 +48,7 @@ class AnyCompanyBenefitsViewSpec extends YesNoViewBehaviours {
       createView = createViewUsingForm,
       messageKeyPrefix = messageKeyPrefix,
       expectedFormAction = routes.AnyBenefitsController.onSubmit(NormalMode).url,
-      expectedHintTextKey = None,
-      args = taxYear.asString(messages)
+      expectedHintTextKey = None
     )
 
     behave like pageWithList(createView, messageKeyPrefix,
