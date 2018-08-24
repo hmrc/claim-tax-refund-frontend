@@ -38,14 +38,14 @@
         }
         @for(((label, v), i) <- inputs.zipWithIndex) {
             @defining(
-                (0 until inputs.size).flatMap { j =>
+                inputs.indices.flatMap { j =>
                     field(s"[$j]").value
                 }
             ) { answers =>
                 <div class="multiple-choice">
                     <input id="@field(s"[$i]").id" type="checkbox" name="@field(s"[$i]").name" value="@v" @if(answers.contains(v)){ checked="checked"} @if(trackGa){data-journey-click="childcare-calculator-frontend:click:@field(s"[$i]").id"} />
                     <label for="@field(s"[$i]").id">
-                    @messages(label)
+                    @messages(label).capitalize
                     </label>
                 </div>
             }

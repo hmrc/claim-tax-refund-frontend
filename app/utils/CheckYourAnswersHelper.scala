@@ -75,14 +75,17 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
   def selectBenefits: Option[AnswerRow] = userAnswers.selectBenefits map {
     val keyPrefix = "selectBenefits."
     x => AnswerRow(keyPrefix + "checkYourAnswersLabel", x.map {
-      case Benefits.BEREAVEMENT_ALLOWANCE => Messages(keyPrefix + "bereavement-allowance")
-      case Benefits.CARERS_ALLOWANCE => Messages(keyPrefix + "carers-allowance")
-      case Benefits.JOBSEEKERS_ALLOWANCE => Messages(keyPrefix + "jobseekers-allowance")
-      case Benefits.INCAPACITY_BENEFIT => Messages(keyPrefix + "incapacity-benefit")
-      case Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE => Messages(keyPrefix + "employment-and-support-allowance")
-      case Benefits.STATE_PENSION => Messages(keyPrefix + "state-pension")
-      case Benefits.OTHER_TAXABLE_BENEFIT => Messages(keyPrefix + "other-taxable-benefit")
-    }.mkString("<br>"), false, routes.SelectBenefitsController.onPageLoad(CheckMode).url)
+      case Benefits.BEREAVEMENT_ALLOWANCE => messages(keyPrefix + "bereavement-allowance").capitalize
+      case Benefits.CARERS_ALLOWANCE => messages(keyPrefix + "carers-allowance").capitalize
+      case Benefits.JOBSEEKERS_ALLOWANCE => messages(keyPrefix + "jobseekers-allowance").capitalize
+      case Benefits.INCAPACITY_BENEFIT => messages(keyPrefix + "incapacity-benefit").capitalize
+      case Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE => messages(keyPrefix + "employment-and-support-allowance").capitalize
+      case Benefits.STATE_PENSION => messages(keyPrefix + "state-pension").capitalize
+      case Benefits.OTHER_TAXABLE_BENEFIT => messages(keyPrefix + "other-taxable-benefit").capitalize
+    }.mkString("<br>"),
+      false,
+      routes.SelectBenefitsController.onPageLoad(CheckMode).url
+    )
   }
 
   def howMuchBereavementAllowance: Option[AnswerRow] = userAnswers.howMuchBereavementAllowance map {
@@ -142,10 +145,10 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
   def selectCompanyBenefits: Option[AnswerRow] = userAnswers.selectCompanyBenefits map {
     val keyPrefix = "selectCompanyBenefits."
     x => AnswerRow(keyPrefix + "checkYourAnswersLabel", x.map {
-      case CompanyBenefits.COMPANY_CAR_BENEFIT => Messages(keyPrefix + "company-car-benefit")
-      case CompanyBenefits.FUEL_BENEFIT => Messages(keyPrefix + "fuel-benefit")
-      case CompanyBenefits.MEDICAL_BENEFIT => Messages(keyPrefix + "medical-benefit")
-      case CompanyBenefits.OTHER_COMPANY_BENEFIT => Messages(keyPrefix + "other-company-benefit")
+      case CompanyBenefits.COMPANY_CAR_BENEFIT => messages(keyPrefix + "company-car-benefit").capitalize
+      case CompanyBenefits.FUEL_BENEFIT => messages(keyPrefix + "fuel-benefit").capitalize
+      case CompanyBenefits.MEDICAL_BENEFIT => messages(keyPrefix + "medical-benefit").capitalize
+      case CompanyBenefits.OTHER_COMPANY_BENEFIT => messages(keyPrefix + "other-company-benefit").capitalize
     }.mkString("<br>"), false, routes.SelectCompanyBenefitsController.onPageLoad(CheckMode).url)
   }
 
@@ -227,11 +230,11 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
   def selectTaxableIncome: Option[AnswerRow] = userAnswers.selectTaxableIncome map {
     val keyPrefix = "selectTaxableIncome."
     x => AnswerRow(keyPrefix + "checkYourAnswersLabel", x.map {
-      case TaxableIncome.RENTAL_INCOME => Messages(keyPrefix + "rental-income")
-      case TaxableIncome.BANK_OR_BUILDING_SOCIETY_INTEREST => Messages(keyPrefix + "bank-or-building-society-interest")
-      case TaxableIncome.INVESTMENT_OR_DIVIDENDS => Messages(keyPrefix + "investment-or-dividends")
-      case TaxableIncome.FOREIGN_INCOME => Messages(keyPrefix + "foreign-income")
-      case TaxableIncome.OTHER_TAXABLE_INCOME => Messages(keyPrefix + "other-taxable-income")
+      case TaxableIncome.RENTAL_INCOME => messages(keyPrefix + "rental-income").capitalize
+      case TaxableIncome.BANK_OR_BUILDING_SOCIETY_INTEREST => messages(keyPrefix + "bank-or-building-society-interest").capitalize
+      case TaxableIncome.INVESTMENT_OR_DIVIDENDS => messages(keyPrefix + "investment-or-dividends").capitalize
+      case TaxableIncome.FOREIGN_INCOME => messages(keyPrefix + "foreign-income").capitalize
+      case TaxableIncome.OTHER_TAXABLE_INCOME => messages(keyPrefix + "other-taxable-income").capitalize
     }.mkString("<br>"), false, routes.SelectTaxableIncomeController.onPageLoad(CheckMode).url)
   }
 
