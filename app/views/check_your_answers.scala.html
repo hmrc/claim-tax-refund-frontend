@@ -42,7 +42,13 @@
         @components.answer_section(section, i.toString)
     }
 
+    <h2>@messages("checkYourAnswers.nowSendYourApplication")</h2>
+
+    <p>@messages("checkYourAnswers.declaration")</p>
+
     @helpers.form(action = controllers.routes.CheckYourAnswersController.onSubmit) {
-        @components.submit_button()
+        @components.submit_button("checkYourAnswers.acceptAndSend")
     }
+
+
 }

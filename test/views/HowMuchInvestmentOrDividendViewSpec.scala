@@ -48,8 +48,7 @@ class HowMuchInvestmentOrDividendViewSpec extends StringViewBehaviours with Mock
       messageKeyPrefix = messageKeyPrefix,
       expectedFormAction = routes.AnyOtherCompanyBenefitsController.onSubmit(NormalMode).url,
       expectedHintKeyLine1 = None,
-      expectedHintKeyLine2 = None,
-      args = taxYear.asString(messages)
+      expectedHintKeyLine2 = None
     )
 
   }

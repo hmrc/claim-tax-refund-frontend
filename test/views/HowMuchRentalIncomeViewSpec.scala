@@ -48,8 +48,7 @@ class HowMuchRentalIncomeViewSpec extends StringViewBehaviours with MockitoSugar
       messageKeyPrefix = messageKeyPrefix,
       expectedFormAction = routes.HowMuchRentalIncomeController.onSubmit(NormalMode).url,
       expectedHintKeyLine1 = None,
-      expectedHintKeyLine2 = None,
-      args = taxYear.asString(messages)
+      expectedHintKeyLine2 = None
     )
   }
 }
