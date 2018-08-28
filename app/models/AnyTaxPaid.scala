@@ -18,6 +18,8 @@ package models
 
 import play.api.libs.json._
 
+import scala.xml.NodeSeq
+
 trait AnyTaxPaid
 
 object AnyTaxPaid {
@@ -37,7 +39,7 @@ object AnyTaxPaid {
     }
   }
 
-  implicit lazy val writes = new Writes[AnyTaxPaid] {
+  implicit lazy val writes: Writes[AnyTaxPaid] = new Writes[AnyTaxPaid] {
     def writes(anyTaxPaidObject: AnyTaxPaid): JsObject = {
       anyTaxPaidObject match {
         case Yes(taxPaidAmount) =>
@@ -48,4 +50,8 @@ object AnyTaxPaid {
     }
   }
 
+  def toXml(userAnswer: AnyTaxPaid): NodeSeq = userAnswer match {
+    case AnyTaxPaid.Yes(amount) => <anyTaxPaid>Yes</anyTaxPaid><taxPaid>{amount}</taxPaid>
+    case _ => <anyTaxPaid>No</anyTaxPaid>
+  }
 }
