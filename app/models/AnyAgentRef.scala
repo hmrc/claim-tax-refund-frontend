@@ -18,6 +18,8 @@ package models
 
 import play.api.libs.json._
 
+import scala.xml.NodeSeq
+
 sealed trait AnyAgentRef
 
 object AnyAgentRef {
@@ -36,7 +38,7 @@ object AnyAgentRef {
     }
   }
 
-  implicit lazy val writes = new Writes[AnyAgentRef] {
+  implicit lazy val writes: Writes[AnyAgentRef] = new Writes[AnyAgentRef] {
     def writes(agentRefObject: AnyAgentRef): JsObject = {
       agentRefObject match {
         case Yes(agentRef) =>
@@ -45,5 +47,10 @@ object AnyAgentRef {
           Json.obj("anyAgentRef" ->false)
       }
     }
+  }
+
+  def toXml(userAnswer: AnyAgentRef): NodeSeq = userAnswer match {
+    case AnyAgentRef.Yes(agentRef) => <anyAgentRef>Yes</anyAgentRef><agentReference>{agentRef}</agentReference>
+    case _ => <anyAgentRef>No</anyAgentRef>
   }
 }

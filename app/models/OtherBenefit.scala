@@ -18,9 +18,16 @@ package models
 
 import play.api.libs.json.Json
 
+import scala.xml.Elem
+
 case class OtherBenefit(name: String, amount: String)
 
 object OtherBenefit {
   implicit val format = Json.format[OtherBenefit]
   implicit val collectionId = "otherBenefits"
+
+  def toXml(userAnswer: Seq[OtherBenefit]): Seq[Elem] = userAnswer.map {
+    value =>
+      <otherBenefit><name>{value.name}</name><amount>{value.amount}</amount></otherBenefit>
+  }
 }

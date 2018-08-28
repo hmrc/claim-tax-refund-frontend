@@ -1,6 +1,17 @@
 @import utils._
+@import models.SelectTaxYear._
+@import models.OtherBenefit._
+@import models.OtherCompanyBenefit._
+@import models.OtherTaxableIncome._
+@import models.InternationalAddress._
+@import models.UkAddress._
+@import models.AddressLookup._
+@import models.AnyTaxPaid._
+@import models.AnyAgentRef._
+@import models.TelephoneOption._
+@import play.api.i18n.Messages
 
-@(userAnswers: UserAnswers, robotsXmlHelper: RobotsXmlHelper)
+@(userAnswers: UserAnswers)(implicit messages: Messages)
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <ctr>
 	<userDetails>
@@ -9,7 +20,9 @@
 	</userDetails>
 
 	<claimSection>
-		<selectedTaxYear>@robotsXmlHelper.selectTaxYear</selectedTaxYear>
+		@userAnswers.selectTaxYear.map{ value =>
+			<selectedTaxYear>@value.asString</selectedTaxYear>
+		}
 		@userAnswers.employmentDetails.map{ value =>
 			<employmentDetails>@value</employmentDetails>
 		}
@@ -45,7 +58,7 @@
 		}
 		@userAnswers.otherBenefit.map{ value =>
 			<otherBenefits>
-				@robotsXmlHelper.otherBenefits(value)
+				@OtherBenefit.toXml(value)
 			</otherBenefits>
 		}
 	</benefitSection>
@@ -66,7 +79,7 @@
 		}
 		@userAnswers.otherCompanyBenefit.map{ value =>
 			<otherCompanyBenefits>
-				@robotsXmlHelper.otherCompanyBenefits(value)
+				@OtherCompanyBenefit.toXml(value)
 			</otherCompanyBenefits>
 		}
 	</companyBenefitsSection>
@@ -79,34 +92,38 @@
 		@userAnswers.howMuchRentalIncome.map{ value =>
 			<rentalIncome>
 				<howMuch>@value</howMuch>
-				<anyTaxPaid>@robotsXmlHelper.anyTaxPaid(userAnswers.anyTaxableRentalIncome.get)</anyTaxPaid>
-				<taxPaid>@robotsXmlHelper.taxPaidAmount(userAnswers.anyTaxableRentalIncome.get)</taxPaid>
+				@userAnswers.anyTaxableRentalIncome.map{ value =>
+					@AnyTaxPaid.toXml(value)
+				}
 			</rentalIncome>
 		}
 		@userAnswers.howMuchBankInterest.map{ value =>
 			<bankInterest>
 				<howMuch>@value</howMuch>
-				<anyTaxPaid>@robotsXmlHelper.anyTaxPaid(userAnswers.anyTaxableBankInterest.get)</anyTaxPaid>
-				<taxPaid>@robotsXmlHelper.taxPaidAmount(userAnswers.anyTaxableBankInterest.get)</taxPaid>
+				@userAnswers.anyTaxableBankInterest.map{ value =>
+					@AnyTaxPaid.toXml(value)
+				}
 			</bankInterest>
 		}
 		@userAnswers.howMuchInvestmentOrDividend.map{ value =>
 			<investmentOrDividend>
 				<howMuch>@value</howMuch>
-				<anyTaxPaid>@robotsXmlHelper.anyTaxPaid(userAnswers.anyTaxableInvestments.get)</anyTaxPaid>
-				<taxPaid>@robotsXmlHelper.taxPaidAmount(userAnswers.anyTaxableInvestments.get)</taxPaid>
+				@userAnswers.anyTaxableInvestments.map{ value =>
+					@AnyTaxPaid.toXml(value)
+				}
 			</investmentOrDividend>
 		}
 		@userAnswers.howMuchForeignIncome.map{ value =>
 			<foreignIncome>
 				<howMuch>@value</howMuch>
-				<anyTaxPaid>@robotsXmlHelper.anyTaxPaid(userAnswers.anyTaxableForeignIncome.get)</anyTaxPaid>
-				<taxPaid>@robotsXmlHelper.taxPaidAmount(userAnswers.anyTaxableForeignIncome.get)</taxPaid>
+				@userAnswers.anyTaxableForeignIncome.map{ value =>
+					@AnyTaxPaid.toXml(value)
+				}
 			</foreignIncome>
 		}
 		@userAnswers.otherTaxableIncome.map{ value =>
 			<otherTaxableIncome>
-				@robotsXmlHelper.otherTaxableIncome(value)
+				@OtherTaxableIncome.toXml(value)
 			</otherTaxableIncome>
 		}
 	</taxableIncomeSection>
@@ -122,28 +139,28 @@
 		@userAnswers.nomineeFullName.map{ value =>
 			<nomineeFullname>@value</nomineeFullname>
 		}
-		@if(userAnswers.anyAgentRef.isDefined){
-			<anyAgentRef>@robotsXmlHelper.anyAgentRef(userAnswers.anyAgentRef.get)</anyAgentRef>
-			<agentReference>@robotsXmlHelper.agentRef(userAnswers.anyAgentRef.get)</agentReference>
+		@userAnswers.anyAgentRef.map{ value =>
+			@AnyAgentRef.toXml(value)
 		}
-		@if(userAnswers.isPaymentAddressInTheUK.isDefined){
-			<isPaymentAddressInTheUK>@userAnswers.isPaymentAddressInTheUK</isPaymentAddressInTheUK>
+		@userAnswers.isPaymentAddressInTheUK.map{ value =>
+			<isPaymentAddressInTheUK>@value</isPaymentAddressInTheUK>
 		}
 		<paymentAddress>
-			@if(userAnswers.paymentUKAddress.isDefined){
-				@robotsXmlHelper.ukAddress
+			@userAnswers.paymentUKAddress.map{ value =>
+				@UkAddress.toXml(value)
 			}
-			@if(userAnswers.paymentInternationalAddress.isDefined){
-				@robotsXmlHelper.internationalAddress
+			@userAnswers.paymentInternationalAddress.map{ value =>
+				@InternationalAddress.toXml(value)
 			}
-			@if(userAnswers.paymentLookupAddress.isDefined){
-				@robotsXmlHelper.lookupAddress
+			@userAnswers.paymentLookupAddress.map{ value =>
+				@AddressLookup.toXml(value)
 			}
 		</paymentAddress>
 	</paymentSection>
 
 	<contactSection>
-		<anyTelephoneNumber>@robotsXmlHelper.anyTelephone(userAnswers.anyTelephoneNumber.get)</anyTelephoneNumber>
-		<telephoneNumber>@robotsXmlHelper.telephoneNumber(userAnswers.anyTelephoneNumber.get)</telephoneNumber>
+		@userAnswers.anyTelephoneNumber.map{ value =>
+			@TelephoneOption.toXml(value)
+		}
 	</contactSection>
 </ctr>

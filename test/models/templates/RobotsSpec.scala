@@ -17,20 +17,25 @@
 package models.templates
 
 import base.SpecBase
+import models.templates.xml.robots
 import models.{Address, AddressLookup, Country, UkAddress}
-import org.scalatest.mockito.MockitoSugar
-import utils.{MockUserAnswers, RobotsXmlHelper, UserAnswers, WireMockHelper}
 import org.mockito.Mockito.when
+import org.scalatest.mockito.MockitoSugar
+import utils.{MockUserAnswers, UserAnswers, WireMockHelper}
 
+import scala.xml.XML._
 import scala.xml._
 
 class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
 
   private val fullUserAnswers: UserAnswers = MockUserAnswers.fullValidUserAnswers
-  private val fullXml: Elem = new RobotsXmlHelper(fullUserAnswers)(messages).formattedXml
+
+  private val fullXml: Elem = loadString(robots(fullUserAnswers)(messages).toString.replaceAll("\t|\n", ""))
+
+  private def formatXml(userAnswers: UserAnswers): Elem = loadString(robots(userAnswers)(messages).toString.replaceAll("\t|\n", ""))
 
   private val validMinimalXml: Elem =
-    <ctr><userDetails><name>TestName</name><nino>ZZ123456A</nino></userDetails><claimSection><selectedTaxYear>6 April 2016 to 5 April 2017</selectedTaxYear><employmentDetails>true</employmentDetails></claimSection><paymentSection><whereToSendThePayment>myself</whereToSendThePayment><paymentAddressCorrect>true</paymentAddressCorrect><paymentAddress/></paymentSection><contactSection><anyTelephoneNumber>No</anyTelephoneNumber><telephoneNumber/></contactSection></ctr>
+    <ctr><userDetails><name>TestName</name><nino>ZZ123456A</nino></userDetails><claimSection><selectedTaxYear>6 April 2016 to 5 April 2017</selectedTaxYear><employmentDetails>true</employmentDetails></claimSection><paymentSection><whereToSendThePayment>myself</whereToSendThePayment><paymentAddressCorrect>true</paymentAddressCorrect><paymentAddress/></paymentSection><contactSection><anyTelephoneNumber>No</anyTelephoneNumber></contactSection></ctr>
 
   "robots Xml" must {
 
@@ -52,7 +57,7 @@ class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
       when(fullUserAnswers.enterPayeReference) thenReturn Some("123456789")
       when(fullUserAnswers.detailsOfEmploymentOrPension) thenReturn Some("Employment details")
 
-      val newXmlToNode: Elem = new RobotsXmlHelper(fullUserAnswers)(messages).formattedXml
+      val newXmlToNode: Elem = formatXml(fullUserAnswers)
 
       newXmlToNode \ "claimSection" \ "selectedTaxYear"  must contain(<selectedTaxYear>6 April 2016 to 5 April 2017</selectedTaxYear>)
       newXmlToNode \ "claimSection" \ "employmentDetails" must contain(<employmentDetails>false</employmentDetails>)
@@ -127,7 +132,7 @@ class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
       when(fullUserAnswers.anyCompanyBenefits) thenReturn Some(false)
       when(fullUserAnswers.anyTaxableIncome) thenReturn Some(false)
 
-      val newXmlToNode: Elem = new RobotsXmlHelper(fullUserAnswers)(messages).formattedXml
+      val newXmlToNode: Elem = formatXml(fullUserAnswers)
 
       newXmlToNode.contains(<anyBenefits></anyBenefits>) mustBe false
       newXmlToNode.contains(<anyCompanyBenefits></anyCompanyBenefits>) mustBe false
@@ -150,7 +155,7 @@ class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
       when(fullUserAnswers.paymentInternationalAddress) thenReturn None
       when(fullUserAnswers.paymentUKAddress) thenReturn Some(UkAddress("qwerty", "qwerty1", None, None, None, "AB1 0CD"))
 
-      val newXmlToNode: Elem = new RobotsXmlHelper(fullUserAnswers)(messages).formattedXml
+      val newXmlToNode: Elem = formatXml(fullUserAnswers)
 
       newXmlToNode \ "paymentSection" \ "whereToSendThePayment" must contain(<whereToSendThePayment>nominee</whereToSendThePayment>)
       newXmlToNode \ "paymentSection" \ "nomineeFullname" must contain(<nomineeFullname>Nominee</nomineeFullname>)
@@ -174,7 +179,7 @@ class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
         auditRef = Some("e9e2fb3f-268f-4c4c-b928-3dc0b17259f2")
       ))
 
-      val newXmlToNode: Elem = new RobotsXmlHelper(fullUserAnswers)(messages).formattedXml
+      val newXmlToNode: Elem = formatXml(fullUserAnswers)
 
       newXmlToNode \ "paymentSection" \ "paymentAddress" must contain(<paymentAddress><lookupAddress>Line1, Line2, Line3, Line4, NE1 1LX, United Kingdom, GB</lookupAddress></paymentAddress>)
     }
@@ -186,7 +191,7 @@ class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
     }
 
     "minimal valid answers must form correctly" in {
-      val xml: Elem = new RobotsXmlHelper(MockUserAnswers.minimalValidUserAnswers)(messages).formattedXml
+      val xml: Elem = formatXml(MockUserAnswers.minimalValidUserAnswers)
 
       xml mustBe validMinimalXml
     }
