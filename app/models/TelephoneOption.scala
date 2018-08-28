@@ -18,6 +18,8 @@ package models
 
 import play.api.libs.json._
 
+import scala.xml.NodeSeq
+
 sealed trait TelephoneOption
 
 object TelephoneOption {
@@ -36,7 +38,7 @@ object TelephoneOption {
     }
   }
 
-  implicit lazy val writes = new Writes[TelephoneOption] {
+  implicit lazy val writes: Writes[TelephoneOption] = new Writes[TelephoneOption] {
     def writes(telephoneObject: TelephoneOption): JsObject = {
       telephoneObject match {
         case Yes(number) =>
@@ -47,4 +49,8 @@ object TelephoneOption {
     }
   }
 
+  def toXml(userAnswer: TelephoneOption): NodeSeq = userAnswer match {
+    case TelephoneOption.Yes(telephoneNumber) => <anyTelephoneNumber>Yes</anyTelephoneNumber><telephoneNumber>{telephoneNumber}</telephoneNumber>
+    case _ => <anyTelephoneNumber>No</anyTelephoneNumber>
+  }
 }
