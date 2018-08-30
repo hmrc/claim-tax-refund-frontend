@@ -52,4 +52,4 @@ Exit out of `sbt` and run the bash script `migrate.sh` in the root directory of 
 
 ## Licence
 
-This project is licensed under the [Apache 2.0 License](LICENSE).
+This project is licensed under the [Apache 2.0 License](LICENSE). 
