@@ -35,6 +35,22 @@ class TaxableIncomeNavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(AnyTaxableIncomeId, NormalMode)(answers) mustBe routes.SelectTaxableIncomeController.onPageLoad(NormalMode)
       }
 
+      "go to SelectTaxableIncome page from AnyTaxableIncome when one TaxableIncome has been selected and answer is yes" in {
+        val answers = MockUserAnswers.nothingAnswered
+        when(answers.anyTaxableIncome) thenReturn Some(true)
+        when(answers.selectTaxableIncome) thenReturn Some(Seq(TaxableIncome.FOREIGN_INCOME))
+
+        navigator.nextPage(AnyTaxableIncomeId, NormalMode)(answers) mustBe routes.SelectTaxableIncomeController.onPageLoad(NormalMode)
+      }
+
+      "go to SelectTaxableIncome page from AnyTaxableIncome when more than one TaxableIncome has been selected and answer is yes" in {
+        val answers = MockUserAnswers.nothingAnswered
+        when(answers.anyTaxableIncome) thenReturn Some(true)
+        when(answers.selectTaxableIncome) thenReturn Some(Seq(TaxableIncome.FOREIGN_INCOME, TaxableIncome.RENTAL_INCOME))
+
+        navigator.nextPage(AnyTaxableIncomeId, NormalMode)(answers) mustBe routes.SelectTaxableIncomeController.onPageLoad(NormalMode)
+      }
+
       "Navigating from SelectTaxableIncome" must {
         "go to HowMuchRentalIncome when rental-income checkbox is the first answer selected" in {
           when(answers.selectTaxableIncome) thenReturn Some(

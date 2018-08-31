@@ -199,9 +199,14 @@ class Navigator @Inject()() {
 
   private def anyBenefits(mode: Mode)(userAnswers: UserAnswers): Call = userAnswers.anyBenefits match {
     case Some(true)  =>
-      userAnswers.selectBenefits match {
-        case None => routes.SelectBenefitsController.onPageLoad(mode)
-        case _ => selectedBenefitsCheck(mode)(userAnswers)
+      mode match {
+        case NormalMode =>
+          routes.SelectBenefitsController.onPageLoad(mode)
+        case CheckMode =>
+          userAnswers.selectBenefits match {
+            case None => routes.SelectBenefitsController.onPageLoad(mode)
+            case _ => selectedBenefitsCheck(mode)(userAnswers)
+          }
       }
     case Some(false) =>
       if(mode == NormalMode) routes.AnyCompanyBenefitsController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
@@ -244,9 +249,14 @@ class Navigator @Inject()() {
 
   private def anyCompanyBenefits(mode: Mode)(userAnswers: UserAnswers): Call = userAnswers.anyCompanyBenefits match {
     case Some(true) =>
-      userAnswers.selectCompanyBenefits match {
-        case None => routes.SelectCompanyBenefitsController.onPageLoad(mode)
-        case _ => selectedCompanyBenefitsCheck(mode)(userAnswers)
+      mode match {
+        case NormalMode =>
+          routes.SelectCompanyBenefitsController.onPageLoad(NormalMode)
+        case CheckMode =>
+          userAnswers.selectCompanyBenefits match {
+            case None => routes.SelectCompanyBenefitsController.onPageLoad(mode)
+            case _ => selectedCompanyBenefitsCheck(mode)(userAnswers)
+        }
       }
     case Some(false) =>
       if(mode == NormalMode) routes.AnyTaxableIncomeController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
@@ -284,12 +294,17 @@ class Navigator @Inject()() {
 
   private def anyTaxableIncome(mode: Mode)(userAnswers: UserAnswers): Call = userAnswers.anyTaxableIncome match {
     case Some(true) =>
-      userAnswers.selectTaxableIncome match {
-        case None => routes.SelectTaxableIncomeController.onPageLoad(mode)
-        case _ => selectedTaxableIncomeCheck(mode)(userAnswers)
+      mode match {
+        case NormalMode =>
+          routes.SelectTaxableIncomeController.onPageLoad(mode)
+        case CheckMode =>
+          userAnswers.selectTaxableIncome match {
+            case None => routes.SelectTaxableIncomeController.onPageLoad(mode)
+            case _ => selectedTaxableIncomeCheck(mode)(userAnswers)
+          }
       }
     case Some(false) =>
-      if(mode == NormalMode) routes.WhereToSendPaymentController.onPageLoad(NormalMode) else routes.CheckYourAnswersController.onPageLoad()
+      if (mode == NormalMode) routes.WhereToSendPaymentController.onPageLoad(NormalMode) else routes.CheckYourAnswersController.onPageLoad()
     case None =>
       routes.SessionExpiredController.onPageLoad()
   }
