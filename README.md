@@ -19,7 +19,7 @@ This service written in Scala and Play 2.5.  It needs:
 
 1. Clone this repository to your development environment.
 2. Start the MongoDB instance.
-3. Start all CTR services using serive manager `sm --start CTR_ALL -fo`
+3. Start all CTR services using service manager `sm --start CTR_ALL -fo`
 4. Inside the claim-tax-refund-frontend folder run `sbt run` to start the service on port 9969.
 5. Open [http://localhost:9969/claim-tax-refund](http://localhost:9969/claim-tax-refund).
 6. Complete authentication wizard, 
