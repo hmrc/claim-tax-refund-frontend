@@ -35,6 +35,23 @@ class CompanyBenefitNavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(AnyCompanyBenefitsId, NormalMode)(answers) mustBe routes.SelectCompanyBenefitsController.onPageLoad(NormalMode)
       }
 
+      "go to SelectAnyCompanyBenefits page from AnyCompanyBenefits when one CompanyBenefits has been selected and answer is yes" in {
+        val answers = MockUserAnswers.nothingAnswered
+        when(answers.anyCompanyBenefits) thenReturn Some(true)
+        when(answers.selectCompanyBenefits) thenReturn Some(Seq(CompanyBenefits.FUEL_BENEFIT))
+
+        navigator.nextPage(AnyCompanyBenefitsId, NormalMode)(answers) mustBe routes.SelectCompanyBenefitsController.onPageLoad(NormalMode)
+      }
+
+      "go to SelectAnyCompanyBenefits page from AnyCompanyBenefits when more than one CompanyBenefits has been selected and answer is yes" in {
+        val answers = MockUserAnswers.nothingAnswered
+        when(answers.anyCompanyBenefits) thenReturn Some(true)
+        when(answers.selectCompanyBenefits) thenReturn Some(Seq(CompanyBenefits.FUEL_BENEFIT, CompanyBenefits.COMPANY_CAR_BENEFIT))
+
+        navigator.nextPage(AnyCompanyBenefitsId, NormalMode)(answers) mustBe routes.SelectCompanyBenefitsController.onPageLoad(NormalMode)
+      }
+
+
       "Navigating from SelectCompanyBenefits" must {
         "go to COMPANY_CAR_BENEFIT when company-car-benefit checkbox is the first answer selected" in {
           when(answers.selectCompanyBenefits) thenReturn Some(
