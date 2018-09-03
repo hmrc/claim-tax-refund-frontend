@@ -31,16 +31,14 @@ case class Metadata(customerId: String = "", hmrcReceivedAt: LocalDateTime = Loc
   val attachmentCount: Int = 0
   val numberOfPages: Int = 2
 
-  val formId: String = ""
-
-  val businessArea: String = ""
-  val classificationType: String = ""
-  val source: String = ""
-  val target: String = ""
+  val formId: String = "R39_EN"
+  val businessArea: String = "PSA"
+  val classificationType: String = "PSA-DFS Repayments"
+  val source: String = "R39_EN"
+  val target: String = "DMS"
   val store: Boolean = true
   val robotXml: Boolean = false
 }
-
 
 object Metadata {
 
