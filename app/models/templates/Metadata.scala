@@ -37,7 +37,7 @@ case class Metadata(customerId: String = "", hmrcReceivedAt: LocalDateTime = Loc
   val source: String = "R39_EN"
   val target: String = "DMS"
   val store: Boolean = true
-  val robotXml: Boolean = false
+  val robotXml: Boolean = true
 }
 
 object Metadata {
