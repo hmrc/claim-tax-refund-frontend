@@ -73,8 +73,8 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
       val futureSubmission: Future[UserAnswers] = for {
         _ <- dataCacheConnector.save[String](request.externalId, key = "pdfHtml", pdfHtml.toString())
         _ <- dataCacheConnector.save[String](request.externalId, key = "xml", xml)
-        cacheMap: CacheMap <- dataCacheConnector.save(request.externalId, key = "metadata", metadata)
-      } yield new UserAnswers(cacheMap)
+        updatedCacheMap: CacheMap <- dataCacheConnector.save(request.externalId, key = "metadata", metadata)
+      } yield new UserAnswers(updatedCacheMap)
 
       futureSubmission.flatMap {
         submission =>
