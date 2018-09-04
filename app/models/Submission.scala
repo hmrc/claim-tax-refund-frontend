@@ -20,7 +20,7 @@ import models.templates.Metadata
 import play.api.libs.json.{Format, Json}
 import utils.UserAnswers
 
-case class Submission(pdfHtml: String, metadata: String)
+case class Submission(pdf: String, metadata: String, xml: String)
 
 object Submission {
 
@@ -28,20 +28,22 @@ object Submission {
 
   def apply(answers: UserAnswers): Submission = {
 
-    require(answers.pdfHtml.isDefined, "PDF has not been created")
+    require(answers.pdf.isDefined, "PDF has not been created")
+    require(answers.xml.isDefined, "XML has not been created")
     require(answers.metadata.isDefined, new Metadata("Metadata has not been created"))
 
     val meta = Json.toJson(answers.metadata).toString()
-    val pdf = answers.pdfHtml.getOrElse("Failed to get PDF")
+    val pdf = answers.pdf.getOrElse("Failed to get PDF")
+    val xml = answers.xml.getOrElse("Failed to get XML")
 
-    Submission(pdf, meta)
+    Submission(pdf, meta, xml)
   }
 
   def asMap(e: Submission): Map[String, String] = {
-
     Map(
-      "pdfHtml" -> e.pdfHtml,
-      "metaData" -> e.metadata.toString
+      "pdf" -> e.pdf,
+      "metaData" -> e.metadata.toString,
+      "xml" -> e.xml
     )
   }
 }
