@@ -22,10 +22,13 @@ import connectors.DataCacheConnector
 import controllers.actions.{AuthAction, DataRequiredAction, DataRetrievalAction}
 import models.SubmissionSuccessful
 import models.templates.Metadata
+import models.templates.xml.robots
+import models._
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
 import play.twirl.api.HtmlFormat
 import services.SubmissionService
+import uk.gov.hmrc.auth.core.retrieve.ItmpName
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.play.partials.FormPartialRetriever
@@ -44,12 +47,19 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
                                            submissionService: SubmissionService,
                                            implicit val formPartialRetriever: FormPartialRetriever,
                                            implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
+  import ItmpNameFormat.format
 
-  def onPageLoad(): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
+  def onPageLoad(): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      val cyaHelper = new CheckYourAnswersHelper(request.userAnswers)
-      val cyaSections = new CheckYourAnswersSections(cyaHelper, request.userAnswers)
-      Ok(check_your_answers(appConfig, cyaSections.sections))
+      for {
+        _ <- dataCacheConnector.save[ItmpName](request.externalId, key = "name", request.name.getOrElse(ItmpName(Some("No name returned from ITMP"), None, None)))
+        updatedCacheMap: CacheMap <- dataCacheConnector.save[String](request.externalId, key = "nino", request.nino)
+      } yield {
+        val updatedUserAnswers = new UserAnswers(updatedCacheMap)
+        val cyaHelper = new CheckYourAnswersHelper(updatedUserAnswers)
+        val cyaSections = new CheckYourAnswersSections(cyaHelper, updatedUserAnswers)
+        Ok(check_your_answers(appConfig, cyaSections.sections))
+      }
   }
 
   def onSubmit(): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
@@ -57,10 +67,12 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
       val cyaHelper: CheckYourAnswersHelper = new CheckYourAnswersHelper(request.userAnswers)
       val cyaSections: CheckYourAnswersSections = new CheckYourAnswersSections(cyaHelper, request.userAnswers)
       val pdfHtml: HtmlFormat.Appendable = pdf_check_your_answers(appConfig, cyaSections.sections, request.nino, request.name)
+      val xml: String = robots(request.userAnswers).toString.replaceAll("\t|\n", "")
       implicit val metadata: Metadata = new Metadata()
 
       val futureSubmission: Future[UserAnswers] = for {
         _ <- dataCacheConnector.save[String](request.externalId, key = "pdfHtml", pdfHtml.toString())
+        _ <- dataCacheConnector.save[String](request.externalId, key = "xml", xml)
         cacheMap: CacheMap <- dataCacheConnector.save(request.externalId, key = "metadata", metadata)
       } yield new UserAnswers(cacheMap)
 

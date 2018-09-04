@@ -22,6 +22,7 @@ import models._
 import models.templates.Metadata
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
+import uk.gov.hmrc.auth.core.retrieve.ItmpName
 
 object MockUserAnswers extends MockitoSugar {
 
@@ -91,7 +92,9 @@ object MockUserAnswers extends MockitoSugar {
     val answers = nothingAnswered
     val metadata = new Metadata(customerId = "test_case")
 
-    when(answers.userDetails) thenReturn Some(UserDetails("TestName", "ZZ123456A", UkAddress("Line 1", "Line2", None, None, None, "NE1 1LS")))
+    when(answers.name) thenReturn Some(ItmpName(Some("TestName"), None, Some("TestLastName")))
+    when(answers.nino) thenReturn Some("ZZ123456A")
+
     when(answers.selectTaxYear) thenReturn Some(CYMinus2)
     when(answers.employmentDetails) thenReturn Some(true)
     when(answers.anyBenefits) thenReturn Some(false)
@@ -105,6 +108,7 @@ object MockUserAnswers extends MockitoSugar {
 
     when(answers.pdfHtml) thenReturn Some("<html>Test result</html>")
     when(answers.metadata) thenReturn Some(metadata)
+    when(answers.xml) thenReturn Some("<xml>Test XML</xml>")
 
     answers
   }
@@ -240,7 +244,9 @@ object MockUserAnswers extends MockitoSugar {
 
     val metadata = new Metadata(customerId = "test_case")
 
-    when(answers.userDetails) thenReturn Some(UserDetails("TestName", "ZZ123456A", UkAddress("Line 1", "Line2", None, None, None, "NE1 1LS")))
+    when(answers.name) thenReturn Some(ItmpName(Some("TestName"), None, Some("TestLastName")))
+    when(answers.nino) thenReturn Some("ZZ123456A")
+
     when(answers.selectTaxYear) thenReturn Some(CYMinus2)
     when(answers.employmentDetails) thenReturn Some(true)
 
@@ -308,6 +314,7 @@ object MockUserAnswers extends MockitoSugar {
 
     when(answers.pdfHtml) thenReturn Some("<html>Test result</html>")
     when(answers.metadata) thenReturn Some(metadata)
+    when(answers.xml) thenReturn Some("<xml>Test XML</xml>")
 
     answers
   }

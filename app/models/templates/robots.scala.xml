@@ -9,158 +9,170 @@
 @import models.AnyTaxPaid._
 @import models.AnyAgentRef._
 @import models.TelephoneOption._
+@import models.ItmpNameFormat._
 @import play.api.i18n.Messages
 
 @(userAnswers: UserAnswers)(implicit messages: Messages)
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <ctr>
 	<userDetails>
-		<name>@userAnswers.userDetails.get.name</name>
-		<nino>@userAnswers.userDetails.get.nino</nino>
+		@userAnswers.name.map{ value =>
+		<name>@ItmpNameFormat.asString(value)</name>
+		}
+		@userAnswers.nino.map{ value =>
+		<nino>@value</nino>
+		}
 	</userDetails>
 
 	<claimSection>
 		@userAnswers.selectTaxYear.map{ value =>
-			<selectedTaxYear>@value.asString</selectedTaxYear>
+		<selectedTaxYear>@value.asString</selectedTaxYear>
 		}
 		@userAnswers.employmentDetails.map{ value =>
-			<employmentDetails>@value</employmentDetails>
+		<employmentDetails>@value</employmentDetails>
 		}
 		@userAnswers.enterPayeReference.map{ value =>
-			<payeReference>@userAnswers.enterPayeReference</payeReference>
+		<payeReference>@userAnswers.enterPayeReference</payeReference>
 		}
 		@userAnswers.detailsOfEmploymentOrPension.map{ value =>
-			<detailsOfEmploymentOrPension>@userAnswers.detailsOfEmploymentOrPension</detailsOfEmploymentOrPension>
+		<detailsOfEmploymentOrPension>@userAnswers.detailsOfEmploymentOrPension</detailsOfEmploymentOrPension>
 		}
 	</claimSection>
 
-	@if(userAnswers.anyBenefits.getOrElse(false)){
+
 	<benefitSection>
-		<anyBenefits>@userAnswers.anyBenefits</anyBenefits>
-		<selectBenefits>@userAnswers.selectBenefits.get.mkString(", ")</selectBenefits>
+		@userAnswers.anyBenefits.map{ value =>
+		<anyBenefits>@value</anyBenefits>
+		}
+		@userAnswers.selectBenefits.map{ value =>
+		<selectBenefits>@value.mkString(", ")</selectBenefits>
+		}
 		@userAnswers.howMuchBereavementAllowance.map{ value =>
-			<howMuchBereavementAllowance>@value</howMuchBereavementAllowance>
+		<howMuchBereavementAllowance>@value</howMuchBereavementAllowance>
 		}
 		@userAnswers.howMuchCarersAllowance.map { value =>
-			<howMuchCarersAllowance>@value</howMuchCarersAllowance>
+		<howMuchCarersAllowance>@value</howMuchCarersAllowance>
 		}
 		@userAnswers.howMuchJobseekersAllowance.map { value =>
-			<howMuchJobseekersAllowance>@value</howMuchJobseekersAllowance>
+		<howMuchJobseekersAllowance>@value</howMuchJobseekersAllowance>
 		}
 		@userAnswers.howMuchEmploymentAndSupportAllowance.map{ value =>
-			<howMuchEmploymentAndSupportAllowance>@value</howMuchEmploymentAndSupportAllowance>
+		<howMuchEmploymentAndSupportAllowance>@value</howMuchEmploymentAndSupportAllowance>
 		}
 		@userAnswers.howMuchIncapacityBenefit.map { value =>
-			<howMuchIncapacityBenefit>@value</howMuchIncapacityBenefit>
+		<howMuchIncapacityBenefit>@value</howMuchIncapacityBenefit>
 		}
 		@userAnswers.howMuchStatePension.map{ value =>
-			<howMuchStatePension>@value</howMuchStatePension>
+		<howMuchStatePension>@value</howMuchStatePension>
 		}
 		@userAnswers.otherBenefit.map{ value =>
-			<otherBenefits>
-				@OtherBenefit.toXml(value)
-			</otherBenefits>
+		<otherBenefits>
+			@OtherBenefit.toXml(value)
+		</otherBenefits>
 		}
 	</benefitSection>
-	}
 
-	@if(userAnswers.anyCompanyBenefits.getOrElse(false)){
 	<companyBenefitsSection>
-		<anyCompanyBenefits>@userAnswers.anyCompanyBenefits</anyCompanyBenefits>
-		<selectCompanyBenefits>@userAnswers.selectCompanyBenefits.get.mkString(", ")</selectCompanyBenefits>
+		@userAnswers.anyCompanyBenefits.map{ value =>
+		<anyCompanyBenefits>@value</anyCompanyBenefits>
+		}
+		@userAnswers.selectCompanyBenefits.map{ value =>
+		<selectCompanyBenefits>@value.mkString(", ")</selectCompanyBenefits>
+		}
 		@userAnswers.howMuchCarBenefits.map{ value =>
-			<howMuchCarBenefits>@value</howMuchCarBenefits>
+		<howMuchCarBenefits>@value</howMuchCarBenefits>
 		}
 		@userAnswers.howMuchFuelBenefit.map{ value =>
-			<howMuchFuelBenefit>@value</howMuchFuelBenefit>
+		<howMuchFuelBenefit>@value</howMuchFuelBenefit>
 		}
 		@userAnswers.howMuchMedicalBenefits.map{ value =>
-			<howMuchMedicalBenefits>@value</howMuchMedicalBenefits>
+		<howMuchMedicalBenefits>@value</howMuchMedicalBenefits>
 		}
 		@userAnswers.otherCompanyBenefit.map{ value =>
-			<otherCompanyBenefits>
-				@OtherCompanyBenefit.toXml(value)
-			</otherCompanyBenefits>
+		<otherCompanyBenefits>
+			@OtherCompanyBenefit.toXml(value)
+		</otherCompanyBenefits>
 		}
 	</companyBenefitsSection>
-	}
 
-	@if(userAnswers.anyTaxableIncome.getOrElse(false)){
 	<taxableIncomeSection>
-		<anyTaxableIncome>@userAnswers.anyTaxableIncome</anyTaxableIncome>
-		<selectTaxableIncome>@userAnswers.selectTaxableIncome.get.mkString(", ")</selectTaxableIncome>
+		@userAnswers.anyTaxableIncome.map{ value =>
+		<anyTaxableIncome>@value</anyTaxableIncome>
+		}
+		@userAnswers.selectTaxableIncome.map{ value =>
+		<selectTaxableIncome>@value.mkString(", ")</selectTaxableIncome>
+		}
 		@userAnswers.howMuchRentalIncome.map{ value =>
-			<rentalIncome>
-				<howMuch>@value</howMuch>
-				@userAnswers.anyTaxableRentalIncome.map{ value =>
-					@AnyTaxPaid.toXml(value)
-				}
-			</rentalIncome>
+		<rentalIncome>
+			<howMuch>@value</howMuch>
+			@userAnswers.anyTaxableRentalIncome.map{ value =>
+			@AnyTaxPaid.toXml(value)
+			}
+		</rentalIncome>
 		}
 		@userAnswers.howMuchBankInterest.map{ value =>
-			<bankInterest>
-				<howMuch>@value</howMuch>
-				@userAnswers.anyTaxableBankInterest.map{ value =>
-					@AnyTaxPaid.toXml(value)
-				}
-			</bankInterest>
+		<bankInterest>
+			<howMuch>@value</howMuch>
+			@userAnswers.anyTaxableBankInterest.map{ value =>
+			@AnyTaxPaid.toXml(value)
+			}
+		</bankInterest>
 		}
 		@userAnswers.howMuchInvestmentOrDividend.map{ value =>
-			<investmentOrDividend>
-				<howMuch>@value</howMuch>
-				@userAnswers.anyTaxableInvestments.map{ value =>
-					@AnyTaxPaid.toXml(value)
-				}
-			</investmentOrDividend>
+		<investmentOrDividend>
+			<howMuch>@value</howMuch>
+			@userAnswers.anyTaxableInvestments.map{ value =>
+			@AnyTaxPaid.toXml(value)
+			}
+		</investmentOrDividend>
 		}
 		@userAnswers.howMuchForeignIncome.map{ value =>
-			<foreignIncome>
-				<howMuch>@value</howMuch>
-				@userAnswers.anyTaxableForeignIncome.map{ value =>
-					@AnyTaxPaid.toXml(value)
-				}
-			</foreignIncome>
+		<foreignIncome>
+			<howMuch>@value</howMuch>
+			@userAnswers.anyTaxableForeignIncome.map{ value =>
+			@AnyTaxPaid.toXml(value)
+			}
+		</foreignIncome>
 		}
 		@userAnswers.otherTaxableIncome.map{ value =>
-			<otherTaxableIncome>
-				@OtherTaxableIncome.toXml(value)
-			</otherTaxableIncome>
+		<otherTaxableIncome>
+			@OtherTaxableIncome.toXml(value)
+		</otherTaxableIncome>
 		}
 	</taxableIncomeSection>
-	}
 
 	<paymentSection>
 		@userAnswers.whereToSendPayment.map{ value =>
-			<whereToSendThePayment>@value</whereToSendThePayment>
+		<whereToSendThePayment>@value</whereToSendThePayment>
 		}
 		@userAnswers.paymentAddressCorrect.map{ value =>
-			<paymentAddressCorrect>@value</paymentAddressCorrect>
+		<paymentAddressCorrect>@value</paymentAddressCorrect>
 		}
 		@userAnswers.nomineeFullName.map{ value =>
-			<nomineeFullname>@value</nomineeFullname>
+		<nomineeFullname>@value</nomineeFullname>
 		}
 		@userAnswers.anyAgentRef.map{ value =>
-			@AnyAgentRef.toXml(value)
+		@AnyAgentRef.toXml(value)
 		}
 		@userAnswers.isPaymentAddressInTheUK.map{ value =>
-			<isPaymentAddressInTheUK>@value</isPaymentAddressInTheUK>
+		<isPaymentAddressInTheUK>@value</isPaymentAddressInTheUK>
 		}
 		<paymentAddress>
 			@userAnswers.paymentUKAddress.map{ value =>
-				@UkAddress.toXml(value)
+			@UkAddress.toXml(value)
 			}
 			@userAnswers.paymentInternationalAddress.map{ value =>
-				@InternationalAddress.toXml(value)
+			@InternationalAddress.toXml(value)
 			}
 			@userAnswers.paymentLookupAddress.map{ value =>
-				@AddressLookup.toXml(value)
+			@AddressLookup.toXml(value)
 			}
 		</paymentAddress>
 	</paymentSection>
 
 	<contactSection>
 		@userAnswers.anyTelephoneNumber.map{ value =>
-			@TelephoneOption.toXml(value)
+		@TelephoneOption.toXml(value)
 		}
 	</contactSection>
 </ctr>
