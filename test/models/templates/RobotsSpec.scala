@@ -35,13 +35,13 @@ class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
   private def formatXml(userAnswers: UserAnswers): Elem = loadString(robots(userAnswers)(messages).toString.replaceAll("\t|\n", ""))
 
   private val validMinimalXml: Elem =
-    <ctr><userDetails><name>TestName</name><nino>ZZ123456A</nino></userDetails><claimSection><selectedTaxYear>6 April 2016 to 5 April 2017</selectedTaxYear><employmentDetails>true</employmentDetails></claimSection><paymentSection><whereToSendThePayment>myself</whereToSendThePayment><paymentAddressCorrect>true</paymentAddressCorrect><paymentAddress/></paymentSection><contactSection><anyTelephoneNumber>No</anyTelephoneNumber></contactSection></ctr>
+    <ctr><userDetails><name>TestName TestLastName</name><nino>ZZ123456A</nino></userDetails><claimSection><selectedTaxYear>6 April 2016 to 5 April 2017</selectedTaxYear><employmentDetails>true</employmentDetails></claimSection><benefitSection><anyBenefits>false</anyBenefits></benefitSection><companyBenefitsSection><anyCompanyBenefits>false</anyCompanyBenefits></companyBenefitsSection><taxableIncomeSection><anyTaxableIncome>false</anyTaxableIncome></taxableIncomeSection><paymentSection><whereToSendThePayment>myself</whereToSendThePayment><paymentAddressCorrect>true</paymentAddressCorrect><paymentAddress/></paymentSection><contactSection><anyTelephoneNumber>No</anyTelephoneNumber></contactSection></ctr>
 
   "robots Xml" must {
 
     "have correct sections in userDetails" in {
 
-      fullXml \ "userDetails" \ "name" must contain(<name>TestName</name>)
+      fullXml \ "userDetails" \ "name" must contain(<name>TestName TestLastName</name>)
       fullXml \ "userDetails" \ "nino" must contain(<nino>ZZ123456A</nino>)
     }
 
