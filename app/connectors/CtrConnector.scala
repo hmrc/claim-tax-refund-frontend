@@ -33,7 +33,7 @@ class CtrConnector @Inject()(appConfig: FrontendAppConfig, http: HttpClient) {
 
   def ctrSubmission(submissionJson: JsValue)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[Option[SubmissionResponse]] = {
 
-    val submissionUrl = s"${appConfig.ctrUrl}/claim-tax-refund/submission"
+    val submissionUrl = s"${appConfig.ctrUrl}/claim-tax-refund/submit"
 
     http.POST(submissionUrl, submissionJson).map {
       response =>
