@@ -53,6 +53,7 @@ trait MicroService {
     .settings(
       Keys.fork in test := true,
       Keys.fork in IntegrationTest := false,
+      javaOptions in Test += "-Dconfig.file=conf/test.application.conf",
       unmanagedSourceDirectories in IntegrationTest <<= (baseDirectory in IntegrationTest)(base => Seq(base / "it")),
       addTestReportOption(IntegrationTest, "int-test-reports"),
       testGrouping in IntegrationTest := TestPhases.oneForkedJvmPerTest((definedTests in IntegrationTest).value),
