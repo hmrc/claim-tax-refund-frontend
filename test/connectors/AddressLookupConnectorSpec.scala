@@ -124,8 +124,6 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with WireMoc
     }
 
     "return cacheMap when called with ID" in {
-      val testAddress: String = testResponseAddress.toString
-
       server.stubFor(
         get(urlEqualTo("/api/confirmed?id=123456789"))
           .willReturn(
@@ -135,7 +133,7 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with WireMoc
           )
       )
 
-      val result: UserAnswers = Await.result(connector.getAddress(cacheId = "12345", saveKey = "saveKey", id = "123456789"), 2.second)
+      val result: UserAnswers = Await.result(connector.getAddress(cacheId = "12345", saveKey = "saveKey", id = "123456789"), 5.second)
       result.cacheMap mustBe CacheMap("12345", Map("saveKey" -> testResponseAddress))
     }
   }
