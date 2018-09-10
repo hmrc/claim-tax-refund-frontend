@@ -55,6 +55,9 @@ class FrontendAppConfig @Inject()(override val runModeConfiguration: Configurati
   lazy val loginContinueUrl: String = loadConfig("urls.loginContinue")
   lazy val ctrUrl: String = baseUrl("claim-tax-refund")
   lazy val addressLookupUrl: String = baseUrl(serviceName = "address-lookup-frontend")
+  lazy val addressLookupContinueUrlNormalMode: String = loadConfig(key = "microservice.services.address-lookup-frontend.continueUrlNormalMode")
+  lazy val addressLookupContinueUrlCheckMode: String = loadConfig(key = "microservice.services.address-lookup-frontend.continueUrlCheckMode")
+
 
   lazy val taiUrl: String = baseUrl("tai")
 
