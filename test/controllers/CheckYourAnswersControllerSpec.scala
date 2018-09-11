@@ -21,13 +21,14 @@ import controllers.actions.{DataRequiredActionImpl, DataRetrievalAction, FakeAut
 import models.{SubmissionFailed, SubmissionSuccessful}
 import org.mockito.Matchers._
 import org.mockito.Mockito._
+import org.scalatest.concurrent.ScalaFutures
 import play.api.test.Helpers._
 import services.SubmissionService
 import utils.WireMockHelper
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class CheckYourAnswersControllerSpec extends ControllerSpecBase with WireMockHelper{
+class CheckYourAnswersControllerSpec extends ControllerSpecBase with WireMockHelper with ScalaFutures{
   implicit val ec: ExecutionContext = mock[ExecutionContext]
   implicit val dataCacheConnector: DataCacheConnector = mock[DataCacheConnector]
 
@@ -59,6 +60,16 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with WireMockHel
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
     }
 
+    "return RuntimeException" in {
+      when(dataCacheConnector.save(any(), any(), any())(any())) thenReturn Future.failed(new RuntimeException)
+      val result = controller(someData).onSubmit()(fakeRequest)
+
+      whenReady(result.failed) {
+        result =>
+          result mustBe a[RuntimeException]
+      }
+    }
+
     "Redirect to Confirmation page on a POST when submission is successful" in {
       when(mockSubmissionService.ctrSubmission(any())(any())) thenReturn Future.successful(SubmissionSuccessful)
       val result = controller(someData).onSubmit()(fakeRequest)
@@ -74,5 +85,7 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with WireMockHel
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
     }
+
+
   }
 }
