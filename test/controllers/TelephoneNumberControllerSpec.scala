@@ -19,19 +19,14 @@ package controllers
 import connectors._
 import controllers.actions._
 import forms.TelephoneNumberForm
-import identifiers._
 import models.SelectTaxYear.CYMinus2
 import models._
-import models.requests.DataRequest
 import org.mockito.Mockito.when
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
-import play.api.libs.json._
 import play.api.mvc._
 import play.api.test.Helpers.{status, _}
-import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.play.bootstrap.http.HttpClient
 import utils._
 import views.html.telephoneNumber
 
@@ -41,24 +36,11 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar
 
   def onwardRoute: Call = routes.IndexController.onPageLoad()
 
-  implicit val hc: HeaderCarrier = HeaderCarrier()
-  implicit val ec: ExecutionContext = mock[ExecutionContext]
-  implicit val request: Request[_] = mock[Request[_]]
-  implicit val dataCacheConnector: FakeDataCacheConnector.type = FakeDataCacheConnector
-  implicit val dataRequest: DataRequest[_] =  mock[DataRequest[AnyContent]]
-
-  lazy val testAnswer = "0191 111 1111"
-  lazy val formProvider = new TelephoneNumberForm()
-  lazy val form = formProvider()
-  lazy val httpMock: HttpClient = mock[HttpClient]
-
+  private val testAnswer = "0191 111 1111"
+  private val formProvider = new TelephoneNumberForm()
+  private val form = formProvider()
   private val taxYear = CYMinus2
-
-  lazy val validYesData =
-    Map(AnyTelephoneId.toString -> Json.obj(AnyTelephoneId.toString -> JsBoolean(true), TelephoneNumberId.toString -> JsString(testAnswer)))
-  lazy val validNoData = Map(AnyTelephoneId.toString -> Json.obj(AnyTelephoneId.toString -> JsBoolean(false)))
-  private lazy val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers
-
+  private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new TelephoneNumberController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,

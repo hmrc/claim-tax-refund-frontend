@@ -31,7 +31,7 @@ class UserAnswers(val cacheMap: CacheMap) {
 
   def nino: Option[String] = cacheMap.getEntry[String]("nino")
 
-  def pdfHtml: Option[String] = cacheMap.getEntry[String]("pdfHtml")
+  def pdf: Option[String] = cacheMap.getEntry[String]("pdf")
 
   def xml: Option[String] = cacheMap.getEntry[String]("xml")
 

@@ -16,12 +16,44 @@
 
 package services
 
-import models.SubmissionResult
+import config.FrontendAppConfig
+import connectors.CtrConnector
+import javax.inject.Inject
+import models._
+import play.api.Logger
+import play.api.libs.json.Json
 import uk.gov.hmrc.http.HeaderCarrier
-import utils.UserAnswers
+import uk.gov.hmrc.play.bootstrap.audit.DefaultAuditConnector
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-trait SubmissionService {
-  def ctrSubmission(answers: UserAnswers)(implicit hc: HeaderCarrier): Future[SubmissionResult]
+class SubmissionService @Inject()(appConfig: FrontendAppConfig,
+                                  ctrConnector: CtrConnector,
+                                  auditConnector: DefaultAuditConnector) {
+
+  def ctrSubmission(submission: Submission)(implicit hc: HeaderCarrier): Future[SubmissionResult] = {
+
+    ctrConnector.ctrSubmission(Json.toJson(submission)).map {
+      case Some(submissionResponse) =>
+
+        val detailToAudit =
+          Submission.asMap(submission) ++
+            Map(
+              "filename" -> submissionResponse.filename,
+              "envelopeId" -> submissionResponse.id
+            )
+
+        val event = new SubmissionEvent(detailToAudit)
+
+        auditConnector.sendEvent(event)
+
+        Logger.info(s"[DmsSubmissionService][submitSubmission] - submission successful")
+
+        SubmissionSuccessful
+
+      case None =>
+        SubmissionFailed
+    }
+  }
 }

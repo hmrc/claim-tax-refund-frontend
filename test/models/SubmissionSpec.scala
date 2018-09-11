@@ -17,73 +17,32 @@
 package models
 
 import base.SpecBase
-import models.templates.Metadata
-import org.joda.time.LocalDateTime
 import play.api.libs.json.Json
-import utils.MockUserAnswers
 
 class SubmissionSpec extends SpecBase {
 
-  private val answers = MockUserAnswers.minimalValidUserAnswers
-  private val submission = Submission(answers)
-  private val timeNow = new LocalDateTime
-  private val testMetadata = new Metadata("test_case", timeNow, timeNow)
-
-  ".apply" must {
-
-    "build " in {
-      val result = Submission("<html>Test result</html>", Json.toJson(testMetadata).toString)
-
-      val fakeSubmission = Submission("<html>Test result</html>", Json.toJson(testMetadata).toString)
-
-      fakeSubmission mustBe result
-    }
-  }
+  private val testMetadata = "<xml><metadata></metadata></xml>"
+  private val testPdf = "<html>Test</html>"
+  private val testXml = "<xml><robot></robot></xml>"
+  private val submission = Submission(testPdf, testMetadata, testXml)
 
   ".asMap" must {
 
     "return a map" in {
-      val submission = Submission ("<html>Test result</html>", Json.toJson(testMetadata).toString)
-
       Submission.asMap(submission) mustBe Map(
-        "pdfHtml" -> "<html>Test result</html>",
-        "metaData" -> Json.toJson(testMetadata).toString
+        "pdf" -> testPdf,
+        "metaData" -> testMetadata,
+        "xml" -> testXml
       )
     }
   }
 
   "Submission data must " must {
-
-    "contain expected keys for backend" in {
+    "contain pdf, metadata and robotXml" in {
       val result = Json.toJson(submission)
-      assert(result.toString.contains("pdfHtml"))
-    }
-
-    "contain metadata" in {
-      val result = Json.toJson(submission)
+      assert(result.toString.contains("pdf"))
       assert(result.toString.contains("metadata"))
-    }
-
-    "contain keys in metadata" in {
-      val result = Json.toJson(submission).toString
-
-      assert(result.contains("metadata"))
-      assert(result.contains("hmrcReceivedAt"))
-      assert(result.contains("xmlCreatedAt"))
-      assert(result.contains("submissionReference"))
-      assert(result.contains("reconciliationId"))
-      assert(result.contains("fileFormat"))
-      assert(result.contains("mimeType"))
-      assert(result.contains("casKey"))
-      assert(result.contains("submissionMark"))
-      assert(result.contains("attachmentCount"))
-      assert(result.contains("numberOfPages"))
-      assert(result.contains("formId"))
-      assert(result.contains("businessArea"))
-      assert(result.contains("classificationType"))
-      assert(result.contains("source"))
-      assert(result.contains("target"))
-      assert(result.contains("store"))
+      assert(result.toString.contains("xml"))
     }
   }
 }

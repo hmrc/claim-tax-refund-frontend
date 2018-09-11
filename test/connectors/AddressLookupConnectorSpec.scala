@@ -29,7 +29,6 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.inject.bind
 import play.api.libs.json.Format
 import play.api.mvc.Request
-import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.http.cache.client.CacheMap
 import utils.{UserAnswers, WireMockHelper}
 
@@ -63,7 +62,6 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with WireMoc
       .build()
 
   implicit val dataRequest: DataRequest[_] = mock[DataRequest[_]]
-  implicit val hc: HeaderCarrier = HeaderCarrier()
   implicit val ec: ExecutionContext = mock[ExecutionContext]
   implicit val request: Request[_] = mock[Request[_]]
   implicit val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
@@ -72,7 +70,7 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with WireMoc
 
   "AddressLookupConnector" must {
 
-    "return a location when addressLookup.intialise" in {
+    "return a location when addressLookup.initialise" in {
       server.stubFor(
         post(urlEqualTo("/api/init"))
           .willReturn(

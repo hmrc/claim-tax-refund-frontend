@@ -106,7 +106,7 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.anyTelephoneNumber) thenReturn Some(TelephoneOption.No)
 
 
-    when(answers.pdfHtml) thenReturn Some("<html>Test result</html>")
+    when(answers.pdf) thenReturn Some("<html>Test result</html>")
     when(answers.metadata) thenReturn Some(metadata)
     when(answers.xml) thenReturn Some("<xml>Test XML</xml>")
 
@@ -312,7 +312,7 @@ object MockUserAnswers extends MockitoSugar {
 
     when(answers.anyTelephoneNumber) thenReturn Some(TelephoneOption.Yes("0191123123"))
 
-    when(answers.pdfHtml) thenReturn Some("<html>Test result</html>")
+    when(answers.pdf) thenReturn Some("<html>Test result</html>")
     when(answers.metadata) thenReturn Some(metadata)
     when(answers.xml) thenReturn Some("<xml>Test XML</xml>")
 

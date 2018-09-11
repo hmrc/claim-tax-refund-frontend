@@ -66,22 +66,26 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
     implicit request =>
       val cyaHelper: CheckYourAnswersHelper = new CheckYourAnswersHelper(request.userAnswers)
       val cyaSections: CheckYourAnswersSections = new CheckYourAnswersSections(cyaHelper, request.userAnswers)
-      val pdfHtml: HtmlFormat.Appendable = pdf_check_your_answers(appConfig, cyaSections.sections, request.nino, request.name)
+      val pdf: HtmlFormat.Appendable = pdf_check_your_answers(appConfig, cyaSections.sections, request.nino, request.name)
       val xml: String = robots(request.userAnswers).toString.replaceAll("\t|\n", "")
-      implicit val metadata: Metadata = new Metadata()
+      val metadata: Metadata = new Metadata()
 
-      val futureSubmission: Future[UserAnswers] = for {
-        _ <- dataCacheConnector.save[String](request.externalId, key = "pdfHtml", pdfHtml.toString())
+      val futureSubmission: Future[Submission] = for {
+        _ <- dataCacheConnector.save[String](request.externalId, key = "pdf", pdf.toString())
         _ <- dataCacheConnector.save[String](request.externalId, key = "xml", xml)
-        updatedCacheMap: CacheMap <- dataCacheConnector.save(request.externalId, key = "metadata", metadata)
-      } yield new UserAnswers(updatedCacheMap)
+        _ <- dataCacheConnector.save[String](request.externalId, key = "metadata", metadata.toString)
+      } yield new Submission(pdf.toString(), metadata.toString, xml)
+
+      futureSubmission.recoverWith{
+        case e: Exception =>
+          Future.failed(new RuntimeException("[CheckYourAnswersController][onSubmit] failed", e))
+      }
 
       futureSubmission.flatMap {
         submission =>
           submissionService.ctrSubmission(submission) map {
-            //ToDo remove the newSessions from here as only to allow for testing
-            case SubmissionSuccessful => Redirect(routes.ConfirmationController.onPageLoad()).withNewSession
-            case _ => Redirect(routes.SessionExpiredController.onPageLoad()).withNewSession
+            case SubmissionSuccessful => Redirect(routes.ConfirmationController.onPageLoad())
+            case _ => Redirect(routes.SessionExpiredController.onPageLoad())
           }
       }
   }
