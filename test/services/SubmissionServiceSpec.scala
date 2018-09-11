@@ -29,7 +29,7 @@ import uk.gov.hmrc.play.bootstrap.audit.DefaultAuditConnector
 
 import scala.concurrent.Future
 
-class DmsSubmissionServiceSpec extends SpecBase with MockitoSugar with ScalaFutures with BeforeAndAfterEach {
+class SubmissionServiceSpec extends SpecBase with MockitoSugar with ScalaFutures with BeforeAndAfterEach {
 
   private val submission = Submission("pdf", "metadata", "xml")
   private val mockAuditConnector = mock[DefaultAuditConnector]

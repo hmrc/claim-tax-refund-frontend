@@ -52,7 +52,7 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with WireMoc
 
   "AddressLookupConnector" must {
 
-    "return a location when addressLookup.intialise" in {
+    "return a location when addressLookup.initialise" in {
       server.stubFor(
         post(urlEqualTo("/api/init"))
           .willReturn(
