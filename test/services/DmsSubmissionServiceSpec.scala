@@ -48,7 +48,7 @@ class DmsSubmissionServiceSpec extends SpecBase with MockitoSugar with ScalaFutu
         val mockCtrConnector = mock[CtrConnector]
         when(mockCtrConnector.ctrSubmission(any())(any(), any())) thenReturn Future.successful(Some(SubmissionResponse("id", "filename")))
 
-        val service = new DmsSubmissionService(frontendAppConfig, mockCtrConnector, mockAuditConnector)
+        val service = new SubmissionService(frontendAppConfig, mockCtrConnector, mockAuditConnector)
         implicit val hc = new HeaderCarrier
 
         val eventCaptor = ArgumentCaptor.forClass(classOf[SubmissionEvent])
@@ -68,7 +68,7 @@ class DmsSubmissionServiceSpec extends SpecBase with MockitoSugar with ScalaFutu
         val mockCtrConnector = mock[CtrConnector]
         when(mockCtrConnector.ctrSubmission(any())(any(), any())) thenReturn Future.successful(Some(SubmissionResponse("id", "filename")))
 
-        val service = new DmsSubmissionService(frontendAppConfig, mockCtrConnector, mockAuditConnector)
+        val service = new SubmissionService(frontendAppConfig, mockCtrConnector, mockAuditConnector)
         implicit val hc = new HeaderCarrier
 
         val eventCaptor = ArgumentCaptor.forClass(classOf[SubmissionEvent])
@@ -97,7 +97,7 @@ class DmsSubmissionServiceSpec extends SpecBase with MockitoSugar with ScalaFutu
         val mockCtrConnector = mock[CtrConnector]
         when(mockCtrConnector.ctrSubmission(any())(any(), any())) thenReturn Future.successful(None)
 
-        val service = new DmsSubmissionService(frontendAppConfig, mockCtrConnector, mockAuditConnector)
+        val service = new SubmissionService(frontendAppConfig, mockCtrConnector, mockAuditConnector)
         implicit val hc = new HeaderCarrier
 
         val eventCaptor = ArgumentCaptor.forClass(classOf[SubmissionEvent])
@@ -117,7 +117,7 @@ class DmsSubmissionServiceSpec extends SpecBase with MockitoSugar with ScalaFutu
         val mockCtrConnector = mock[CtrConnector]
         when(mockCtrConnector.ctrSubmission(any())(any(), any())) thenReturn Future.successful(None)
 
-        val service = new DmsSubmissionService(frontendAppConfig, mockCtrConnector, mockAuditConnector)
+        val service = new SubmissionService(frontendAppConfig, mockCtrConnector, mockAuditConnector)
         implicit val hc = new HeaderCarrier
 
         val eventCaptor = ArgumentCaptor.forClass(classOf[SubmissionEvent])

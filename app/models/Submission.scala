@@ -16,9 +16,7 @@
 
 package models
 
-import models.templates.Metadata
 import play.api.libs.json.{Format, Json}
-import utils.UserAnswers
 
 case class Submission(pdf: String, metadata: String, xml: String)
 
@@ -26,24 +24,11 @@ object Submission {
 
   implicit val format: Format[Submission] = Json.format[Submission]
 
-  def apply(answers: UserAnswers): Submission = {
-
-    require(answers.pdf.isDefined, "PDF has not been created")
-    require(answers.xml.isDefined, "XML has not been created")
-    require(answers.metadata.isDefined, new Metadata("Metadata has not been created"))
-
-    val meta = Json.toJson(answers.metadata).toString()
-    val pdf = answers.pdf.getOrElse("Failed to get PDF")
-    val xml = answers.xml.getOrElse("Failed to get XML")
-
-    Submission(pdf, meta, xml)
-  }
-
-  def asMap(e: Submission): Map[String, String] = {
+  def asMap(submission: Submission): Map[String, String] = {
     Map(
-      "pdf" -> e.pdf,
-      "metaData" -> e.metadata.toString,
-      "xml" -> e.xml
+      "pdf" -> submission.pdf,
+      "metaData" -> submission.metadata,
+      "xml" -> submission.xml
     )
   }
 }

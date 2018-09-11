@@ -82,13 +82,13 @@ class MetadataSpec extends WordSpec with MustMatchers with OptionValues with Pro
       "submissionMark" -> "",
       "attachmentCount" -> 0,
       "numberOfPages" -> 2,
-      "formId" -> "",
-      "businessArea" -> "",
-      "classificationType" -> "",
-      "source" -> "",
-      "target" -> "",
+      "formId" -> "R39_EN",
+      "businessArea" -> "PSA",
+      "classificationType" -> "PSA-DFS Repayments",
+      "source" -> "R39_EN",
+      "target" -> "DMS",
       "store" -> true,
-      "robotXml" -> false
+      "robotXml" -> true
     )
 }
 

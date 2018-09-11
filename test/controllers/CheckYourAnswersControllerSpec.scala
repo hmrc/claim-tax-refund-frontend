@@ -19,20 +19,22 @@ package controllers
 import connectors.{DataCacheConnector, FakeDataCacheConnector}
 import controllers.actions.{DataRequiredActionImpl, DataRetrievalAction, FakeAuthAction}
 import models.{SubmissionFailed, SubmissionSuccessful}
-import org.scalatest.mockito.MockitoSugar
+import org.mockito.Matchers._
+import org.mockito.Mockito._
 import play.api.test.Helpers._
 import services.SubmissionService
-import uk.gov.hmrc.http.HeaderCarrier
-import utils.{UserAnswers, WireMockHelper}
+import utils.WireMockHelper
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class CheckYourAnswersControllerSpec extends ControllerSpecBase with MockitoSugar with WireMockHelper{
+class CheckYourAnswersControllerSpec extends ControllerSpecBase with WireMockHelper{
   implicit val ec: ExecutionContext = mock[ExecutionContext]
   implicit val dataCacheConnector: DataCacheConnector = mock[DataCacheConnector]
 
+  private val mockSubmssionService: SubmissionService = mock[SubmissionService]
+
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap,
-                 submissionService: SubmissionService = FakeSuccessfulSubmissionService) =
+                 submissionService: SubmissionService = mockSubmssionService) =
     new CheckYourAnswersController(
       frontendAppConfig, messagesApi,
       FakeDataCacheConnector, FakeAuthAction,
@@ -58,25 +60,19 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with MockitoSuga
     }
 
     "Redirect to Confirmation page on a POST when submission is successful" in {
-      val result = controller(someData, FakeSuccessfulSubmissionService).onSubmit()(fakeRequest)
+      when(mockSubmssionService.ctrSubmission(any())(any())) thenReturn Future.successful(SubmissionSuccessful)
+      val result = controller(someData).onSubmit()(fakeRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.ConfirmationController.onPageLoad().url)
     }
 
     "Redirect to Failed to submit on a POST when submission fails" in {
-      val result = controller(someData, FakeFailingSubmissionService).onSubmit()(fakeRequest)
+      when(mockSubmssionService.ctrSubmission(any())(any())) thenReturn Future.successful(SubmissionFailed)
+      val result = controller(someData).onSubmit()(fakeRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
     }
   }
-}
-
-object FakeSuccessfulSubmissionService extends SubmissionService {
-  override def ctrSubmission(answers: UserAnswers)(implicit hc: HeaderCarrier) : Future[SubmissionSuccessful.type] = Future.successful(SubmissionSuccessful)
-}
-
-object FakeFailingSubmissionService extends SubmissionService {
-  override def ctrSubmission(answers: UserAnswers)(implicit hc: HeaderCarrier) : Future[SubmissionFailed.type] = Future.successful(SubmissionFailed)
 }

@@ -40,7 +40,7 @@ class CtrConnectorSpec extends SpecBase with MockitoSugar with ScalaFutures {
 
       val answers = MockUserAnswers.minimalValidUserAnswers
 
-      val submission = Submission(answers)
+      val submission = Submission("","","")
 
       val httpMock = mock[HttpClient]
       when(httpMock.POST[JsValue, HttpResponse](any(), any(), any())(any(), any(), any(), any()))
@@ -59,7 +59,7 @@ class CtrConnectorSpec extends SpecBase with MockitoSugar with ScalaFutures {
 
       val answers = MockUserAnswers.minimalValidUserAnswers
 
-      val submission = Submission(answers)
+      val submission = Submission("","","")
 
       val httpMock = mock[HttpClient]
       when(httpMock.POST[JsValue, HttpResponse](any(), any(), any())(any(), any(), any(), any()))
@@ -78,7 +78,7 @@ class CtrConnectorSpec extends SpecBase with MockitoSugar with ScalaFutures {
 
       val answers = MockUserAnswers.minimalValidUserAnswers
 
-      val submission = Submission(answers)
+      val submission = Submission("","","")
 
       val httpMock = mock[HttpClient]
       when(httpMock.POST[JsValue, HttpResponse](any(), any(), any())(any(), any(), any(), any()))

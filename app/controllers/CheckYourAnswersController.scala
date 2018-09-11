@@ -79,7 +79,6 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
       futureSubmission.flatMap {
         submission =>
           submissionService.ctrSubmission(submission) map {
-            //ToDo remove the newSessions from here as only to allow for testing
             case SubmissionSuccessful => Redirect(routes.ConfirmationController.onPageLoad())
             case _ => Redirect(routes.SessionExpiredController.onPageLoad())
           }
