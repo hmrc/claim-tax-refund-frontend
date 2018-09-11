@@ -31,10 +31,10 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with WireMockHel
   implicit val ec: ExecutionContext = mock[ExecutionContext]
   implicit val dataCacheConnector: DataCacheConnector = mock[DataCacheConnector]
 
-  private val mockSubmssionService: SubmissionService = mock[SubmissionService]
+  private val mockSubmissionService: SubmissionService = mock[SubmissionService]
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap,
-                 submissionService: SubmissionService = mockSubmssionService) =
+                 submissionService: SubmissionService = mockSubmissionService) =
     new CheckYourAnswersController(
       frontendAppConfig, messagesApi,
       FakeDataCacheConnector, FakeAuthAction,
@@ -60,7 +60,7 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with WireMockHel
     }
 
     "Redirect to Confirmation page on a POST when submission is successful" in {
-      when(mockSubmssionService.ctrSubmission(any())(any())) thenReturn Future.successful(SubmissionSuccessful)
+      when(mockSubmissionService.ctrSubmission(any())(any())) thenReturn Future.successful(SubmissionSuccessful)
       val result = controller(someData).onSubmit()(fakeRequest)
 
       status(result) mustBe SEE_OTHER
@@ -68,7 +68,7 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with WireMockHel
     }
 
     "Redirect to Failed to submit on a POST when submission fails" in {
-      when(mockSubmssionService.ctrSubmission(any())(any())) thenReturn Future.successful(SubmissionFailed)
+      when(mockSubmissionService.ctrSubmission(any())(any())) thenReturn Future.successful(SubmissionFailed)
       val result = controller(someData).onSubmit()(fakeRequest)
 
       status(result) mustBe SEE_OTHER

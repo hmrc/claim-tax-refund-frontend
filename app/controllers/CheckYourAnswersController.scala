@@ -68,13 +68,18 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
       val cyaSections: CheckYourAnswersSections = new CheckYourAnswersSections(cyaHelper, request.userAnswers)
       val pdf: HtmlFormat.Appendable = pdf_check_your_answers(appConfig, cyaSections.sections, request.nino, request.name)
       val xml: String = robots(request.userAnswers).toString.replaceAll("\t|\n", "")
-      implicit val metadata: Metadata = new Metadata()
+      val metadata: Metadata = new Metadata()
 
-      val futureSubmission: Future[UserAnswers] = for {
-        _ <- dataCacheConnector.save[String](s"${request.externalId}-new", key = "pdf", pdf.toString())
-        _ <- dataCacheConnector.save[String](s"${request.externalId}-new", key = "xml", xml)
-        newCacheMap: CacheMap <- dataCacheConnector.save(s"${request.externalId}-new", key = "metadata", metadata)
-      } yield new UserAnswers(newCacheMap)
+      val futureSubmission: Future[Submission] = for {
+        _ <- dataCacheConnector.save[String](request.externalId, key = "pdf", pdf.toString())
+        _ <- dataCacheConnector.save[String](request.externalId, key = "xml", xml)
+        _ <- dataCacheConnector.save[String](request.externalId, key = "metadata", metadata.toString)
+      } yield new Submission(pdf.toString(), metadata.toString, xml)
+
+      futureSubmission.recoverWith{
+        case e: Exception =>
+          Future.failed(new RuntimeException("[CheckYourAnswersController][onSubmit] failed", e))
+      }
 
       futureSubmission.flatMap {
         submission =>

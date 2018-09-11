@@ -30,7 +30,6 @@ import play.api.data.Form
 import play.api.libs.json._
 import play.api.mvc._
 import play.api.test.Helpers.{status, _}
-import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.http.HttpClient
 import utils._
 import views.html.telephoneNumber
@@ -41,7 +40,6 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar
 
   def onwardRoute: Call = routes.IndexController.onPageLoad()
 
-  implicit val hc: HeaderCarrier = HeaderCarrier()
   implicit val ec: ExecutionContext = mock[ExecutionContext]
   implicit val request: Request[_] = mock[Request[_]]
   implicit val dataCacheConnector: FakeDataCacheConnector.type = FakeDataCacheConnector

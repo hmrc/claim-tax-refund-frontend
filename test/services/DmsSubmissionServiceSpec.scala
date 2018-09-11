@@ -19,112 +19,69 @@ package services
 import base.SpecBase
 import connectors.CtrConnector
 import models._
+import org.mockito.ArgumentCaptor
 import org.mockito.Matchers._
 import org.mockito.Mockito._
-import org.mockito.{ArgumentCaptor, Matchers}
+import org.scalatest.BeforeAndAfterEach
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.mockito.MockitoSugar
-import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.play.audit.http.connector.AuditResult
 import uk.gov.hmrc.play.bootstrap.audit.DefaultAuditConnector
-import utils.MockUserAnswers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class DmsSubmissionServiceSpec extends SpecBase with MockitoSugar with ScalaFutures {
+class DmsSubmissionServiceSpec extends SpecBase with MockitoSugar with ScalaFutures with BeforeAndAfterEach {
 
-  implicit val hcCaptor = ArgumentCaptor.forClass(classOf[HeaderCarrier])
-  implicit val ecCaptor = ArgumentCaptor.forClass(classOf[ExecutionContext])
+  private val submission = Submission("pdf", "metadata", "xml")
+  private val mockAuditConnector = mock[DefaultAuditConnector]
+  private val mockCtrConnector = mock[CtrConnector]
 
-  ".ctrSubmission" when {
+  val service = new SubmissionService(frontendAppConfig, mockCtrConnector, mockAuditConnector)
 
+  override def beforeEach(): Unit = {
+    super.beforeEach()
+    reset(mockAuditConnector, mockCtrConnector)
+  }
+
+  "ctrSubmission" when {
     "the submission is successful" must {
-
       "return success" in {
-        val mockAuditConnector = mock[DefaultAuditConnector]
-
-        val answers = MockUserAnswers.minimalValidUserAnswers
-
-        val mockCtrConnector = mock[CtrConnector]
         when(mockCtrConnector.ctrSubmission(any())(any(), any())) thenReturn Future.successful(Some(SubmissionResponse("id", "filename")))
 
-        val service = new SubmissionService(frontendAppConfig, mockCtrConnector, mockAuditConnector)
-        implicit val hc = new HeaderCarrier
+        val futureResult = service.ctrSubmission(submission)
 
-        val eventCaptor = ArgumentCaptor.forClass(classOf[SubmissionEvent])
-        val futureResult = service.ctrSubmission(answers)
-
-        whenReady(futureResult) { result =>
-          result mustBe SubmissionSuccessful
+        whenReady(futureResult) {
+          result =>
+            result mustBe SubmissionSuccessful
         }
       }
 
       "audit the event" in {
-        val mockAuditConnector = mock[DefaultAuditConnector]
-        when(mockAuditConnector.sendEvent(Matchers.any())(Matchers.any(), Matchers.any())).thenReturn(Future.successful(AuditResult.Success))
-
-        val answers = MockUserAnswers.minimalValidUserAnswers
-
-        val mockCtrConnector = mock[CtrConnector]
         when(mockCtrConnector.ctrSubmission(any())(any(), any())) thenReturn Future.successful(Some(SubmissionResponse("id", "filename")))
 
-        val service = new SubmissionService(frontendAppConfig, mockCtrConnector, mockAuditConnector)
-        implicit val hc = new HeaderCarrier
-
         val eventCaptor = ArgumentCaptor.forClass(classOf[SubmissionEvent])
-        val futureResult = service.ctrSubmission(answers)
+        val futureResult = service.ctrSubmission(submission)
 
-        whenReady(futureResult) { result =>
-          verify(mockAuditConnector).sendEvent(eventCaptor.capture)(hcCaptor.capture, ecCaptor.capture)
+        whenReady(futureResult) {
+          _ =>
+            verify(mockAuditConnector).sendEvent(eventCaptor.capture)(any(), any())
 
-          eventCaptor.getValue.detail.get("envelopeId") mustBe Some("id")
-          eventCaptor.getValue.detail.get("filename") mustBe Some("filename")
+            eventCaptor.getValue.detail.get("envelopeId") mustBe Some("id")
+            eventCaptor.getValue.detail.get("filename") mustBe Some("filename")
 
-          eventCaptor.getValue.tags must contain(
-            "transactionName" -> "Submission from Claim Tax Refund Frontend"
-          )
+            eventCaptor.getValue.tags must contain("transactionName" -> "Submission from Claim Tax Refund Frontend")
         }
       }
     }
 
     "the submission fails" must {
-
       "return failure" in {
-        val mockAuditConnector = mock[DefaultAuditConnector]
-
-        val answers = MockUserAnswers.minimalValidUserAnswers
-
-        val mockCtrConnector = mock[CtrConnector]
         when(mockCtrConnector.ctrSubmission(any())(any(), any())) thenReturn Future.successful(None)
 
-        val service = new SubmissionService(frontendAppConfig, mockCtrConnector, mockAuditConnector)
-        implicit val hc = new HeaderCarrier
+        val futureResult = service.ctrSubmission(submission)
 
-        val eventCaptor = ArgumentCaptor.forClass(classOf[SubmissionEvent])
-        val futureResult = service.ctrSubmission(answers)
-
-        whenReady(futureResult) { result =>
-          result mustBe SubmissionFailed
-        }
-      }
-
-      "not audit the event" in {
-        val mockAuditConnector = mock[DefaultAuditConnector]
-        when(mockAuditConnector.sendEvent(Matchers.any())(Matchers.any(), Matchers.any())).thenReturn(Future.successful(AuditResult.Success))
-
-        val answers = MockUserAnswers.minimalValidUserAnswers
-
-        val mockCtrConnector = mock[CtrConnector]
-        when(mockCtrConnector.ctrSubmission(any())(any(), any())) thenReturn Future.successful(None)
-
-        val service = new SubmissionService(frontendAppConfig, mockCtrConnector, mockAuditConnector)
-        implicit val hc = new HeaderCarrier
-
-        val eventCaptor = ArgumentCaptor.forClass(classOf[SubmissionEvent])
-        val futureResult = service.ctrSubmission(answers)
-
-        whenReady(futureResult) { result =>
-          verify(mockAuditConnector, never).sendEvent(eventCaptor.capture)(hcCaptor.capture, ecCaptor.capture)
+        whenReady(futureResult) {
+          result =>
+            result mustBe SubmissionFailed
         }
       }
     }

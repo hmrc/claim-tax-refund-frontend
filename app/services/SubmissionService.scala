@@ -24,7 +24,6 @@ import play.api.Logger
 import play.api.libs.json.Json
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.audit.DefaultAuditConnector
-import utils.UserAnswers
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -33,9 +32,7 @@ class SubmissionService @Inject()(appConfig: FrontendAppConfig,
                                   ctrConnector: CtrConnector,
                                   auditConnector: DefaultAuditConnector) {
 
-  def ctrSubmission(answers: UserAnswers)(implicit hc: HeaderCarrier): Future[SubmissionResult] = {
-
-    val submission = Submission("","","")
+  def ctrSubmission(submission: Submission)(implicit hc: HeaderCarrier): Future[SubmissionResult] = {
 
     ctrConnector.ctrSubmission(Json.toJson(submission)).map {
       case Some(submissionResponse) =>
