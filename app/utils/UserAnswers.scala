@@ -17,8 +17,7 @@
 package utils
 
 import identifiers._
-import models._
-import models.templates.Metadata
+import models.{Metadata, _}
 import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
 import uk.gov.hmrc.http.cache.client.CacheMap
 

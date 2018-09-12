@@ -16,66 +16,243 @@
 
 package models
 
-import models.templates.Metadata
 import org.joda.time.LocalDateTime
-import org.scalacheck.Gen
 import org.scalatest.prop.PropertyChecks
 import org.scalatest.{MustMatchers, OptionValues, WordSpec}
 import play.api.libs.json.{JsValue, Json}
 
+import scala.xml._
+import scala.xml.Utility._
+
 class MetadataSpec extends WordSpec with MustMatchers with OptionValues with PropertyChecks {
 
-  val localDT: LocalDateTime = LocalDateTime.now
+  private val localDT = LocalDateTime.now()
+  private val testMetadata: Metadata = new Metadata("12345678", localDT, localDT)
+
+  private val testXml: NodeSeq = Metadata.toXml(testMetadata)
+
+  "metadata xml" must {
+    "contain correct header" in {
+      testXml \ "document" \ "header" \ "title" must contain(<title>{localDT.toString("ssMMyyddmmHH")}</title>)
+      testXml \ "document" \ "header" \ "format" must contain(<format>pdf</format>)
+      testXml \ "document" \ "header" \ "mime_type" must contain(<mime_type>application/pdf</mime_type>)
+      testXml \ "document" \ "header" \ "store" must contain(<store>{true}</store>)
+      testXml \ "document" \ "header" \ "source" must contain(<source>R39_EN</source>)
+      testXml \ "document" \ "header" \ "target" must contain(<target>DMS</target>)
+      testXml \ "document" \ "header" \ "reconciliation_id" must contain(<reconciliation_id>{localDT.toString("ssMMyyddmmHH")}</reconciliation_id>)
+    }
+
+    "contain correct metadata xml for hmrc_time_of_receipt" in {
+      testXml \ "document" \ "metadata" \ "attribute" must contain(
+        trim(
+          <attribute>
+            <attribute_name>hmrc_time_of_receipt</attribute_name>
+            <attribute_type>time</attribute_type>
+            <attribute_values>
+              <attribute_value>{testMetadata.hmrcReceivedAt.toString("dd/MM/yyyy HH:mm:ss")}</attribute_value>
+            </attribute_values>
+          </attribute>
+        )
+      )
+    }
+
+    "contain correct metadata xml for time_xml_created" in {
+      testXml \ "document" \ "metadata" \ "attribute" must contain(
+        trim(
+          <attribute>
+            <attribute_name>time_xml_created</attribute_name>
+            <attribute_type>time</attribute_type>
+            <attribute_values>
+              <attribute_value>{testMetadata.xmlCreatedAt.toString("dd/MM/yyyy HH:mm:ss")}</attribute_value>
+            </attribute_values>
+          </attribute>
+        )
+      )
+    }
+
+    "contain correct metadata xml for submission_reference" in {
+      testXml \ "document" \ "metadata" \ "attribute" must contain(
+        trim(
+          <attribute>
+            <attribute_name>submission_reference</attribute_name>
+            <attribute_type>string</attribute_type>
+            <attribute_values>
+              <attribute_value>{testMetadata.submissionReference}</attribute_value>
+            </attribute_values>
+          </attribute>
+        )
+      )
+    }
+
+    "contain correct metadata xml for form_id" in {
+      testXml \ "document" \ "metadata" \ "attribute" must contain(
+        trim(
+          <attribute>
+            <attribute_name>form_id</attribute_name>
+            <attribute_type>string</attribute_type>
+            <attribute_values>
+              <attribute_value>{testMetadata.formId}</attribute_value>
+            </attribute_values>
+          </attribute>
+        )
+      )
+    }
+
+    "contain correct metadata xml for number_pages" in {
+      testXml \ "document" \ "metadata" \ "attribute" must contain(
+        trim(
+          <attribute>
+            <attribute_name>number_pages</attribute_name>
+            <attribute_type>integer</attribute_type>
+            <attribute_values>
+              <attribute_value>{testMetadata.numberOfPages.toString}</attribute_value>
+            </attribute_values>
+          </attribute>
+        )
+      )
+    }
+
+    "contain correct metadata xml for source" in {
+      testXml \ "document" \ "metadata" \ "attribute" must contain(
+        trim(
+          <attribute>
+            <attribute_name>source</attribute_name>
+            <attribute_type>string</attribute_type>
+            <attribute_values>
+              <attribute_value>{testMetadata.source}</attribute_value>
+            </attribute_values>
+          </attribute>
+        )
+      )
+    }
+
+    "contain correct metadata xml for customer_id" in {
+      testXml \ "document" \ "metadata" \ "attribute" must contain(
+        trim(
+          <attribute>
+            <attribute_name>customer_id</attribute_name>
+            <attribute_type>string</attribute_type>
+            <attribute_values>
+              <attribute_value>{testMetadata.customerId}</attribute_value>
+            </attribute_values>
+          </attribute>
+        )
+      )
+    }
+
+    "contain correct metadata xml for submission_mark" in {
+      testXml \ "document" \ "metadata" \ "attribute" must contain(
+        trim(
+          <attribute>
+            <attribute_name>submission_mark</attribute_name>
+            <attribute_type>string</attribute_type>
+            <attribute_values>
+              <attribute_value>{testMetadata.submissionMark}</attribute_value>
+            </attribute_values>
+          </attribute>
+        )
+      )
+    }
+
+    "contain correct metadata xml for cas_key" in {
+      testXml \ "document" \ "metadata" \ "attribute" must contain(
+        trim(
+          <attribute>
+            <attribute_name>cas_key</attribute_name>
+            <attribute_type>string</attribute_type>
+            <attribute_values>
+              <attribute_value>{testMetadata.casKey}</attribute_value>
+            </attribute_values>
+          </attribute>
+        )
+      )
+    }
+
+    "contain correct metadata xml for classification_type" in {
+      testXml \ "document" \ "metadata" \ "attribute" must contain(
+        trim(
+          <attribute>
+            <attribute_name>classification_type</attribute_name>
+            <attribute_type>string</attribute_type>
+            <attribute_values>
+              <attribute_value>{testMetadata.classificationType}</attribute_value>
+            </attribute_values>
+          </attribute>
+        )
+      )
+    }
+
+    "contain correct metadata xml for business_area" in {
+      testXml \ "document" \ "metadata" \ "attribute" must contain(
+        trim(
+          <attribute>
+            <attribute_name>business_area</attribute_name>
+            <attribute_type>string</attribute_type>
+            <attribute_values>
+              <attribute_value>{testMetadata.businessArea}</attribute_value>
+            </attribute_values>
+          </attribute>
+        )
+      )
+    }
+
+    "contain correct metadata xml for attachment_count" in {
+      testXml \ "document" \ "metadata" \ "attribute" must contain(
+        trim(
+          <attribute>
+            <attribute_name>attachment_count</attribute_name>
+            <attribute_type>integer</attribute_type>
+            <attribute_values>
+              <attribute_value>{testMetadata.attachmentCount.toString}</attribute_value>
+            </attribute_values>
+          </attribute>
+        )
+      )
+    }
+  }
 
   ".writes" must {
-
     "contain the correct fields" in {
+      val json = Json.toJson(testMetadata)
 
-      forAll(Gen.alphaNumStr) {
-        customerId =>
-          val metadata = Metadata(customerId, localDT, localDT)
-          val json = Json.toJson(metadata)
-
-          json mustEqual Json.obj(
-            "customerId" -> metadata.customerId,
-            "hmrcReceivedAt" -> metadata.hmrcReceivedAt.toString,
-            "xmlCreatedAt" -> metadata.xmlCreatedAt.toString,
-            "submissionReference" -> metadata.timeStamp,
-            "reconciliationId" -> metadata.timeStamp,
-            "fileFormat" -> metadata.fileFormat,
-            "mimeType" -> metadata.mimeType,
-            "casKey" -> metadata.casKey,
-            "submissionMark" -> metadata.submissionMark,
-            "attachmentCount" -> metadata.attachmentCount,
-            "numberOfPages" -> metadata.numberOfPages,
-            "formId" -> metadata.formId,
-            "businessArea" -> metadata.businessArea,
-            "classificationType" -> metadata.classificationType,
-            "source" -> metadata.source,
-            "target" -> metadata.target,
-            "store" -> metadata.store,
-            "robotXml" -> metadata.robotXml
-          )
-      }
+      json mustEqual Json.obj(
+        "customerId" -> testMetadata.customerId,
+        "hmrcReceivedAt" -> testMetadata.hmrcReceivedAt.toString,
+        "xmlCreatedAt" -> testMetadata.xmlCreatedAt.toString,
+        "submissionReference" -> testMetadata.timeStamp,
+        "reconciliationId" -> testMetadata.timeStamp,
+        "fileFormat" -> testMetadata.fileFormat,
+        "mimeType" -> testMetadata.mimeType,
+        "casKey" -> testMetadata.casKey,
+        "submissionMark" -> testMetadata.submissionMark,
+        "attachmentCount" -> testMetadata.attachmentCount,
+        "numberOfPages" -> testMetadata.numberOfPages,
+        "formId" -> testMetadata.formId,
+        "businessArea" -> testMetadata.businessArea,
+        "classificationType" -> testMetadata.classificationType,
+        "source" -> testMetadata.source,
+        "target" -> testMetadata.target,
+        "store" -> testMetadata.store,
+        "robotXml" -> testMetadata.robotXml
+      )
     }
   }
 
   ".reads" must {
     "be successfully parsed" in {
-      val metadata = new Metadata("Test meta", localDT, localDT)
-      val fakeJson = jsonOutput(localDT)
-      val json = Json.toJson(metadata)
+      val fakeJson = jsonOutput
+      val json = Json.toJson(testMetadata)
       fakeJson mustBe json
     }
   }
 
-  def jsonOutput(localDateTime: LocalDateTime): JsValue =
+  def jsonOutput: JsValue =
     Json.obj(
-      "customerId" -> "Test meta",
-      "hmrcReceivedAt" -> localDateTime.toString,
-      "xmlCreatedAt" -> localDateTime.toString,
-      "submissionReference" -> localDateTime.toString("ssMMyyddmmHH"),
-      "reconciliationId" -> localDateTime.toString("ssMMyyddmmHH"),
+      "customerId" -> "12345678",
+      "hmrcReceivedAt" -> localDT.toString,
+      "xmlCreatedAt" -> localDT.toString,
+      "submissionReference" -> localDT.toString("ssMMyyddmmHH"),
+      "reconciliationId" -> localDT.toString("ssMMyyddmmHH"),
       "fileFormat" -> "pdf",
       "mimeType" -> "application/pdf",
       "casKey" -> "",
