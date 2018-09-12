@@ -20,13 +20,12 @@ import base.SpecBase
 import models.templates.xml.robots
 import models.{Address, AddressLookup, Country, UkAddress}
 import org.mockito.Mockito.when
-import org.scalatest.mockito.MockitoSugar
-import utils.{MockUserAnswers, UserAnswers, WireMockHelper}
+import utils.{MockUserAnswers, UserAnswers}
 
 import scala.xml.XML._
 import scala.xml._
-
-class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
+import scala.xml.Utility._
+class RobotsSpec extends SpecBase {
 
   private val fullUserAnswers: UserAnswers = MockUserAnswers.fullValidUserAnswers
 
@@ -34,8 +33,35 @@ class RobotsSpec extends  SpecBase with WireMockHelper with MockitoSugar {
 
   private def formatXml(userAnswers: UserAnswers): Elem = loadString(robots(userAnswers)(messages).toString.replaceAll("\t|\n", ""))
 
-  private val validMinimalXml: Elem =
-    <ctr><userDetails><name>TestName TestLastName</name><nino>ZZ123456A</nino></userDetails><claimSection><selectedTaxYear>6 April 2016 to 5 April 2017</selectedTaxYear><employmentDetails>true</employmentDetails></claimSection><benefitSection><anyBenefits>false</anyBenefits></benefitSection><companyBenefitsSection><anyCompanyBenefits>false</anyCompanyBenefits></companyBenefitsSection><taxableIncomeSection><anyTaxableIncome>false</anyTaxableIncome></taxableIncomeSection><paymentSection><whereToSendThePayment>myself</whereToSendThePayment><paymentAddressCorrect>true</paymentAddressCorrect><paymentAddress/></paymentSection><contactSection><anyTelephoneNumber>No</anyTelephoneNumber></contactSection></ctr>
+  private val validMinimalXml: Node =
+    trim(
+      <ctr>
+        <userDetails>
+          <name>TestName TestLastName</name> <nino>ZZ123456A</nino>
+        </userDetails>
+        <claimSection>
+          <selectedTaxYear>6 April 2016 to 5 April 2017</selectedTaxYear>
+          <employmentDetails>true</employmentDetails>
+        </claimSection>
+        <benefitSection>
+          <anyBenefits>false</anyBenefits>
+        </benefitSection>
+        <companyBenefitsSection>
+          <anyCompanyBenefits>false</anyCompanyBenefits>
+        </companyBenefitsSection>
+        <taxableIncomeSection>
+          <anyTaxableIncome>false</anyTaxableIncome>
+        </taxableIncomeSection>
+          <paymentSection>
+          <whereToSendThePayment>myself</whereToSendThePayment>
+          <paymentAddressCorrect>true</paymentAddressCorrect>
+          <paymentAddress/>
+        </paymentSection>
+        <contactSection>
+          <anyTelephoneNumber>No</anyTelephoneNumber>
+        </contactSection>
+      </ctr>
+    )
 
   "robots Xml" must {
 

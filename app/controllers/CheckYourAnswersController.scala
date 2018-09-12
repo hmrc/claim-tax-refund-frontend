@@ -20,10 +20,8 @@ import com.google.inject.Inject
 import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions.{AuthAction, DataRequiredAction, DataRetrievalAction}
-import models.SubmissionSuccessful
-import models.templates.Metadata
 import models.templates.xml.robots
-import models._
+import models.{Metadata, SubmissionSuccessful, _}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
 import play.twirl.api.HtmlFormat
@@ -73,7 +71,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
       val futureSubmission: Future[Submission] = for {
         _ <- dataCacheConnector.save[String](request.externalId, key = "pdf", pdf.toString())
         _ <- dataCacheConnector.save[String](request.externalId, key = "xml", xml)
-        _ <- dataCacheConnector.save[String](request.externalId, key = "metadata", metadata.toString)
+        _ <- dataCacheConnector.save[String](request.externalId, key = "metadata", Metadata.toXml(metadata).toString)
       } yield new Submission(pdf.toString(), metadata.toString, xml)
 
       futureSubmission.recoverWith{

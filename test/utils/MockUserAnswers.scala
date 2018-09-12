@@ -18,8 +18,7 @@ package utils
 
 import models.SelectTaxYear.CYMinus2
 import models.WhereToSendPayment.{Myself, Nominee}
-import models._
-import models.templates.Metadata
+import models.{Metadata, _}
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
 import uk.gov.hmrc.auth.core.retrieve.ItmpName
