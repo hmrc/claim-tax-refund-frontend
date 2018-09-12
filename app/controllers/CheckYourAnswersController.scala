@@ -71,7 +71,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
       val futureSubmission: Future[Submission] = for {
         _ <- dataCacheConnector.save[String](request.externalId, key = "pdf", pdf.toString())
         _ <- dataCacheConnector.save[String](request.externalId, key = "xml", xml)
-        _ <- dataCacheConnector.save[String](request.externalId, key = "metadata", metadata.toString)
+        _ <- dataCacheConnector.save[String](request.externalId, key = "metadata", Metadata.toXml(metadata).toString)
       } yield new Submission(pdf.toString(), metadata.toString, xml)
 
       futureSubmission.recoverWith{
