@@ -36,8 +36,8 @@ class ConfirmationController @Inject()(appConfig: FrontendAppConfig,
                                                  implicit val templateRenderer: TemplateRenderer
                                       ) extends FrontendController with I18nSupport {
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode, submissionReference: String): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      Ok(confirmation(appConfig)).withNewSession
+      Ok(confirmation(appConfig, submissionReference)).withNewSession
   }
 }
