@@ -82,7 +82,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
       futureSubmission.flatMap {
         submission =>
           submissionService.ctrSubmission(submission) map {
-            case SubmissionSuccessful => Redirect(routes.ConfirmationController.onPageLoad())
+            case SubmissionSuccessful => Redirect(routes.ConfirmationController.onPageLoad(metadata.submissionReference))
             case _ => Redirect(routes.SessionExpiredController.onPageLoad())
           }
       }

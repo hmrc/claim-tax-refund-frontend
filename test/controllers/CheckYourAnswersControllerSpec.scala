@@ -30,8 +30,9 @@ import scala.concurrent.{ExecutionContext, Future}
 class CheckYourAnswersControllerSpec extends ControllerSpecBase with WireMockHelper{
   implicit val ec: ExecutionContext = mock[ExecutionContext]
   implicit val dataCacheConnector: DataCacheConnector = mock[DataCacheConnector]
-
   private val mockSubmissionService: SubmissionService = mock[SubmissionService]
+
+  private val submissionReference = "ABC-1234-DEF"
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap,
                  submissionService: SubmissionService = mockSubmissionService) =
@@ -64,7 +65,7 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with WireMockHel
       val result = controller(someData).onSubmit()(fakeRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.ConfirmationController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(routes.ConfirmationController.onPageLoad(submissionReference).url)
     }
 
     "Redirect to Failed to submit on a POST when submission fails" in {
