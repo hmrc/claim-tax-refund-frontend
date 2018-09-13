@@ -63,7 +63,10 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with WireMockHel
       val result: Future[Result] = controller().onSubmit()(fakeRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result).get contains "/claim-tax-refund/confirmation?submissionReference=" mustBe true
+      redirectLocation(result).map {
+        response =>
+          response contains "/claim-tax-refund/confirmation?submissionReference=" mustBe true
+      }
     }
 
     "Redirect to Failed to submit on a POST when submission fails" in {

@@ -29,11 +29,10 @@ class MetadataSpec extends WordSpec with MustMatchers with OptionValues with Pro
   private val localDT = LocalDateTime.now()
   private val testMetadata: Metadata = new Metadata("12345678", localDT, localDT)
   private val testXml: NodeSeq = Metadata.toXml(testMetadata)
-  private val testSubmissionReference = testMetadata.submissionReference
 
   "metadata xml" must {
     "contain correct header" in {
-      testXml \ "document" \ "header" \ "title" must contain(<title>{testSubmissionReference}</title>)
+      testXml \ "document" \ "header" \ "title" must contain(<title>{testMetadata.submissionReference}</title>)
       testXml \ "document" \ "header" \ "format" must contain(<format>pdf</format>)
       testXml \ "document" \ "header" \ "mime_type" must contain(<mime_type>application/pdf</mime_type>)
       testXml \ "document" \ "header" \ "store" must contain(<store>{true}</store>)
@@ -77,7 +76,7 @@ class MetadataSpec extends WordSpec with MustMatchers with OptionValues with Pro
             <attribute_name>submission_reference</attribute_name>
             <attribute_type>string</attribute_type>
             <attribute_values>
-              <attribute_value>{testSubmissionReference}</attribute_value>
+              <attribute_value>{testMetadata.submissionReference}</attribute_value>
             </attribute_values>
           </attribute>
         )
@@ -219,7 +218,7 @@ class MetadataSpec extends WordSpec with MustMatchers with OptionValues with Pro
         "customerId" -> testMetadata.customerId,
         "hmrcReceivedAt" -> testMetadata.hmrcReceivedAt.toString,
         "xmlCreatedAt" -> testMetadata.xmlCreatedAt.toString,
-        "submissionReference" -> testSubmissionReference,
+        "submissionReference" -> testMetadata.submissionReference,
         "reconciliationId" -> testMetadata.timeStamp,
         "fileFormat" -> testMetadata.fileFormat,
         "mimeType" -> testMetadata.mimeType,
@@ -260,7 +259,7 @@ class MetadataSpec extends WordSpec with MustMatchers with OptionValues with Pro
       "customerId" -> "12345678",
       "hmrcReceivedAt" -> localDT.toString,
       "xmlCreatedAt" -> localDT.toString,
-      "submissionReference" -> testSubmissionReference,
+      "submissionReference" -> testMetadata.submissionReference,
       "reconciliationId" -> localDT.toString("ssMMyyddmmHH"),
       "fileFormat" -> "pdf",
       "mimeType" -> "application/pdf",

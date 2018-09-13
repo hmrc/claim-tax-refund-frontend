@@ -66,30 +66,27 @@ object Metadata {
 			<documents>
 				<document>
 					<header>
-						<title>
-							{metadata.submissionReference}
-						</title>
-						<format>
-							{metadata.fileFormat}
-						</format>
-						<mime_type>
-							{metadata.mimeType}
-						</mime_type>
-						<store>
-							{metadata.store}
-						</store>
-						<source>
-							{metadata.source}
-						</source>
-						<target>
-							{metadata.target}
-						</target>
-						<reconciliation_id>
-							{metadata.reconciliationId}
-						</reconciliation_id>
+						<title>{metadata.submissionReference}</title>
+						<format>{metadata.fileFormat}</format>
+						<mime_type>{metadata.mimeType}</mime_type>
+						<store>{metadata.store}</store>
+						<source>{metadata.source}</source>
+						<target>{metadata.target}</target>
+						<reconciliation_id>{metadata.reconciliationId}</reconciliation_id>
 					</header>
 					<metadata>
-						{attributeXml("hmrc_time_of_receipt", "time", metadata.hmrcReceivedAt.toString("dd/MM/yyyy HH:mm:ss"))}{attributeXml("time_xml_created", "time", metadata.hmrcReceivedAt.toString("dd/MM/yyyy HH:mm:ss"))}{attributeXml("submission_reference", "string", metadata.submissionReference)}{attributeXml("form_id", "string", metadata.formId)}{attributeXml("number_pages", "integer", metadata.numberOfPages.toString)}{attributeXml("source", "string", metadata.source)}{attributeXml("customer_id", "string", metadata.customerId)}{attributeXml("submission_mark", "string", metadata.submissionMark)}{attributeXml("cas_key", "string", metadata.casKey)}{attributeXml("classification_type", "string", metadata.classificationType)}{attributeXml("business_area", "string", metadata.businessArea)}{attributeXml("attachment_count", "integer", metadata.attachmentCount.toString)}
+						{attributeXml("hmrc_time_of_receipt", "time", metadata.hmrcReceivedAt.toString("dd/MM/yyyy HH:mm:ss"))}
+						{attributeXml("time_xml_created", "time", metadata.hmrcReceivedAt.toString("dd/MM/yyyy HH:mm:ss"))}
+						{attributeXml("submission_reference", "string", metadata.submissionReference)}
+						{attributeXml("form_id", "string", metadata.formId)}
+						{attributeXml("number_pages", "integer", metadata.numberOfPages.toString)}
+						{attributeXml("source", "string", metadata.source)}
+						{attributeXml("customer_id", "string", metadata.customerId)}
+						{attributeXml("submission_mark", "string", metadata.submissionMark)}
+						{attributeXml("cas_key", "string", metadata.casKey)}
+						{attributeXml("classification_type", "string", metadata.classificationType)}
+						{attributeXml("business_area", "string", metadata.businessArea)}
+						{attributeXml("attachment_count", "integer", metadata.attachmentCount.toString)}
 					</metadata>
 				</document>
 			</documents>
@@ -100,16 +97,10 @@ object Metadata {
 
 	def attributeXml(attributeName: String, attributeType: String, attributeValue: String): NodeSeq = {
 		<attribute>
-			<attribute_name>
-				{attributeName}
-			</attribute_name>
-			<attribute_type>
-				{attributeType}
-			</attribute_type>
+			<attribute_name>{attributeName}</attribute_name>
+			<attribute_type>{attributeType}</attribute_type>
 			<attribute_values>
-				<attribute_value>
-					{attributeValue}
-				</attribute_value>
+				<attribute_value>{attributeValue}</attribute_value>
 			</attribute_values>
 		</attribute>
 	}
@@ -138,7 +129,6 @@ object Metadata {
 					"robotXml" -> metadata.robotXml
 				)
 		}
-
 	implicit def reads: Reads[Metadata] = (
 		(__ \ "customerId").read[String] and
 			(__ \ "hmrcReceivedAt").read[LocalDateTime](jodaDateReads) and
