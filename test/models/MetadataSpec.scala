@@ -29,7 +29,6 @@ class MetadataSpec extends WordSpec with MustMatchers with OptionValues with Pro
   private val localDT = LocalDateTime.now()
   private val testMetadata: Metadata = new Metadata("12345678", localDT, localDT)
   private val testXml: NodeSeq = Metadata.toXml(testMetadata)
-
   private val testSubmissionReference = testMetadata.submissionReference
 
   "metadata xml" must {

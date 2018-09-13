@@ -110,7 +110,7 @@ object Metadata {
 				<attribute_value>
 					{attributeValue}
 				</attribute_value>
-			Writes</attribute_values>
+			</attribute_values>
 		</attribute>
 	}
 

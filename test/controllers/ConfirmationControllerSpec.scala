@@ -31,7 +31,7 @@ class ConfirmationControllerSpec extends ControllerSpecBase {
 
   private val submissionReference = "ABC-1234-DEF"
 
-  def viewAsString = confirmation(frontendAppConfig, submissionReference)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+  def viewAsString: String = confirmation(frontendAppConfig, submissionReference)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "Confirmation Controller" must {
 
