@@ -89,7 +89,7 @@ object MockUserAnswers extends MockitoSugar {
 
   def minimalValidUserAnswers: UserAnswers = {
     val answers = nothingAnswered
-    val metadata = new Metadata(customerId = "test_case")
+    val metadata: Metadata = new Metadata(customerId = "test_case")
 
     when(answers.name) thenReturn Some(ItmpName(Some("TestName"), None, Some("TestLastName")))
     when(answers.nino) thenReturn Some("ZZ123456A")

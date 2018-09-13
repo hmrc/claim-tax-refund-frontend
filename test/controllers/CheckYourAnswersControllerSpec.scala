@@ -18,9 +18,10 @@ package controllers
 
 import connectors.{DataCacheConnector, FakeDataCacheConnector}
 import controllers.actions.{DataRequiredActionImpl, DataRetrievalAction, FakeAuthAction}
-import models.{SubmissionFailed, SubmissionSuccessful}
+import models.{Metadata, SubmissionFailed, SubmissionSuccessful}
 import org.mockito.Matchers._
 import org.mockito.Mockito._
+import play.api.mvc.Result
 import play.api.test.Helpers._
 import services.SubmissionService
 import utils.WireMockHelper
@@ -34,8 +35,7 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with WireMockHel
 
   private val submissionReference = "ABC-1234-DEF"
 
-  def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap,
-                 submissionService: SubmissionService = mockSubmissionService) =
+  def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap, submissionService: SubmissionService = mockSubmissionService) =
     new CheckYourAnswersController(
       frontendAppConfig, messagesApi,
       FakeDataCacheConnector, FakeAuthAction,
@@ -62,10 +62,11 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with WireMockHel
 
     "Redirect to Confirmation page on a POST when submission is successful" in {
       when(mockSubmissionService.ctrSubmission(any())(any())) thenReturn Future.successful(SubmissionSuccessful)
-      val result = controller(someData).onSubmit()(fakeRequest)
+      val result: Future[Result] = controller().onSubmit()(fakeRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.ConfirmationController.onPageLoad(submissionReference).url)
+      val redirect = redirectLocation(result)
+      redirectLocation(result).get contains "/claim-tax-refund/confirmation?submissionReference=" mustBe true
     }
 
     "Redirect to Failed to submit on a POST when submission fails" in {

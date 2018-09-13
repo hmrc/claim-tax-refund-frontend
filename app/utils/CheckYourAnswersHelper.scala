@@ -24,6 +24,8 @@ import play.api.libs.json.Format
 import uk.gov.hmrc.auth.core.retrieve.ItmpAddress
 import viewmodels.AnswerRow
 
+import scala.util.Random
+
 class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messages) {
   import ItmpAddressFormat.format
   //Claim details
@@ -440,5 +442,4 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
       ))
     case _ => None
   }
-
 }
