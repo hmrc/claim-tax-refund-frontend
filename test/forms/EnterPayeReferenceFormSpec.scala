@@ -26,7 +26,7 @@ class EnterPayeReferenceFormSpec extends FormBehaviours with MockitoSugar {
 
   private val enterPayeReferenceBlankKey = "enterPayeReference.blank"
   private val enterPayeReferenceInvalid = "enterPayeReference.invalid"
-  private val testRegex = """^[0-9]{3}\/[A-Z]{1,2}[0-9]{0,8}$"""
+  private val testRegex = """^[0-9]{3}\/[0-9A-Za-z]{1,13}$"""
 
   def appConfig: FrontendAppConfig = {
     val instance = mock[FrontendAppConfig]
