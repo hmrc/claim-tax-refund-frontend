@@ -53,9 +53,10 @@ class AuthActionImpl @Inject()(override val authConnector: AuthConnector, config
         Redirect(routes.UnauthorisedController.onPageLoad)
       case ex: InsufficientConfidenceLevel =>
         Redirect(s"${config.ivUpliftUrl}?origin=CTR&" +
-          s"completionURL=${config.loginCallBackUrl}&" +
-          s"failureURL=${config.notAuthorized}&" +
-          s"confidenceLevel=200")
+          s"confidenceLevel=200&" +
+          s"completionURL=${config.authorisedCallback}&" +
+          s"failureURL=${config.unauthorisedCallback}"
+          )
       case ex: UnsupportedAuthProvider =>
         Redirect(routes.UnauthorisedController.onPageLoad)
       case ex: UnsupportedAffinityGroup =>

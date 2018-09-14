@@ -59,8 +59,8 @@ class FrontendAppConfig @Inject()(override val runModeConfiguration: Configurati
   lazy val addressLookupContinueUrlCheckMode: String = loadConfig(key = "microservice.services.address-lookup-frontend.continueUrlCheckMode")
 
   lazy val ivUpliftUrl: String = loadConfig("microservice.services.identity-verification-uplift.host")
-  lazy val loginCallBackUrl: String = loadConfig("microservice.services.auth.login-callback.url")
-  lazy val notAuthorized: String = loadConfig("microservice.services.auth.not-authorized.url")
+  lazy val authorisedCallback: String = loadConfig("microservice.services.identity-verification-uplift.authorised-callback.url")
+  lazy val unauthorisedCallback: String = loadConfig("microservice.services.identity-verification-uplift.unauthorised-callback.url")
 
   lazy val taiUrl: String = baseUrl("tai")
 
