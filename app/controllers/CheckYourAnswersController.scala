@@ -20,6 +20,7 @@ import com.google.inject.Inject
 import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions.{AuthAction, DataRequiredAction, DataRetrievalAction}
+import models.SubmissionSuccessful
 import models.templates.xml.robots
 import models._
 import play.api.i18n.{I18nSupport, MessagesApi}

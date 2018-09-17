@@ -18,17 +18,18 @@ package controllers
 
 import connectors.{DataCacheConnector, FakeDataCacheConnector}
 import controllers.actions.{DataRequiredActionImpl, DataRetrievalAction, FakeAuthAction}
-import models.{Metadata, SubmissionFailed, SubmissionSuccessful}
+import models.{SubmissionFailed, SubmissionSuccessful}
 import org.mockito.Matchers._
 import org.mockito.Mockito._
 import play.api.mvc.Result
 import play.api.test.Helpers._
 import services.SubmissionService
 import utils.WireMockHelper
+import org.scalatest.concurrent.ScalaFutures
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class CheckYourAnswersControllerSpec extends ControllerSpecBase with WireMockHelper{
+class CheckYourAnswersControllerSpec extends ControllerSpecBase with WireMockHelper with ScalaFutures {
   implicit val ec: ExecutionContext = mock[ExecutionContext]
   implicit val dataCacheConnector: DataCacheConnector = mock[DataCacheConnector]
   private val mockSubmissionService: SubmissionService = mock[SubmissionService]
@@ -56,6 +57,16 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with WireMockHel
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+    }
+
+    "return RuntimeException" in {
+      when(dataCacheConnector.save(any(), any(), any())(any())) thenReturn Future.failed(new RuntimeException)
+      val result = controller(someData).onSubmit()(fakeRequest)
+
+      whenReady(result.failed) {
+        result =>
+          result mustBe a[RuntimeException]
+      }
     }
 
     "Redirect to Confirmation page on a POST when submission is successful" in {
