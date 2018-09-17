@@ -26,7 +26,7 @@ class EnterPayeReferenceForm @Inject()(appConfig: FrontendAppConfig) extends For
 
   private val enterPayeReferenceBlankKey = "enterPayeReference.blank"
   private val enterPayeReferenceInvalid = "enterPayeReference.invalid"
-  private val enterPayeReferenceRegex = """^[0-9]{3}\/[A-Z]{1,2}[0-9]{0,8}$"""
+  private val enterPayeReferenceRegex = """^[0-9]{3}\/[0-9A-Za-z]{1,13}$"""
 
 
   def apply(): Form[String] = Form(

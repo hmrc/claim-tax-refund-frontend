@@ -15,14 +15,12 @@
  *@
 
 @import config.FrontendAppConfig
-@import uk.gov.hmrc.play.views.html._
-@import controllers.routes._
-@import viewmodels.InputViewModel
 @import uk.gov.hmrc.renderer.TemplateRenderer
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
 
 @(
-    appConfig: FrontendAppConfig
+    appConfig: FrontendAppConfig,
+    submissionReference: String
 )(
     implicit
     request: Request[_],
@@ -38,7 +36,7 @@
 
     <div class="govuk-box-highlight">
         <h1 class="heading-xlarge">@messages("confirmation.heading")</h1>
-        <p id="reference">@messages("confirmation.reference") ABC-5678-DEF</p>
+        <p id="reference">@messages("confirmation.reference") @submissionReference</p>
     </div>
 
     <h2 class="heading-medium">@messages("confirmation.whatHappensNext.title")</h2>

@@ -20,7 +20,6 @@ import controllers.routes
 import models.SelectTaxYear.{CYMinus1, CYMinus2, CYMinus3, CYMinus4, CYMinus5}
 import models._
 import play.api.i18n.Messages
-import play.api.libs.json.Format
 import uk.gov.hmrc.auth.core.retrieve.ItmpAddress
 import viewmodels.AnswerRow
 
@@ -440,5 +439,4 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
       ))
     case _ => None
   }
-
 }

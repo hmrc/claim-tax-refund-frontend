@@ -22,7 +22,7 @@ import controllers.actions._
 import forms.BooleanForm
 import identifiers.IsPaymentAddressInTheUKId
 import javax.inject.Inject
-import models.Mode
+import models.{CheckMode, Mode, NormalMode}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
@@ -59,7 +59,11 @@ class IsPaymentAddressInTheUKController @Inject()(appConfig: FrontendAppConfig,
 
       request.userAnswers.selectTaxYear.map {
         taxYear =>
-          val continueUrl = routes.AddressLookupRoutingController.addressLookupCallback(None, mode).absoluteURL()
+          val continueUrl = mode match {
+            case NormalMode => appConfig.addressLookupContinueUrlNormalMode
+            case CheckMode => appConfig.addressLookupContinueUrlCheckMode
+          }
+
           val addressInit = for {
             result: Option[String] <- addressLookup.initialise(continueUrl = continueUrl)
           } yield {
@@ -72,7 +76,7 @@ class IsPaymentAddressInTheUKController @Inject()(appConfig: FrontendAppConfig,
             Ok(isPaymentAddressInTheUK(appConfig, preparedForm, mode, taxYear))
           ))
 
-      }.getOrElse{
+      }.getOrElse {
         Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
       }
   }
@@ -89,7 +93,7 @@ class IsPaymentAddressInTheUKController @Inject()(appConfig: FrontendAppConfig,
                 Redirect(navigator.nextPage(IsPaymentAddressInTheUKId, mode)(new UserAnswers(cacheMap)))
               )
           )
-      }.getOrElse{
+      }.getOrElse {
         Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
       }
   }

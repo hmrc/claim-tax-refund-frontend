@@ -21,21 +21,20 @@ import controllers.actions.{DataRequiredActionImpl, DataRetrievalAction, FakeAut
 import models.{SubmissionFailed, SubmissionSuccessful}
 import org.mockito.Matchers._
 import org.mockito.Mockito._
-import org.scalatest.concurrent.ScalaFutures
+import play.api.mvc.Result
 import play.api.test.Helpers._
 import services.SubmissionService
 import utils.WireMockHelper
+import org.scalatest.concurrent.ScalaFutures
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class CheckYourAnswersControllerSpec extends ControllerSpecBase with WireMockHelper with ScalaFutures{
+class CheckYourAnswersControllerSpec extends ControllerSpecBase with WireMockHelper with ScalaFutures {
   implicit val ec: ExecutionContext = mock[ExecutionContext]
   implicit val dataCacheConnector: DataCacheConnector = mock[DataCacheConnector]
-
   private val mockSubmissionService: SubmissionService = mock[SubmissionService]
 
-  def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap,
-                 submissionService: SubmissionService = mockSubmissionService) =
+  def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap, submissionService: SubmissionService = mockSubmissionService) =
     new CheckYourAnswersController(
       frontendAppConfig, messagesApi,
       FakeDataCacheConnector, FakeAuthAction,
@@ -72,10 +71,13 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with WireMockHel
 
     "Redirect to Confirmation page on a POST when submission is successful" in {
       when(mockSubmissionService.ctrSubmission(any())(any())) thenReturn Future.successful(SubmissionSuccessful)
-      val result = controller(someData).onSubmit()(fakeRequest)
+      val result: Future[Result] = controller().onSubmit()(fakeRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.ConfirmationController.onPageLoad().url)
+      redirectLocation(result).map {
+        response =>
+          response contains "/claim-tax-refund/confirmation?submissionReference=" mustBe true
+      }
     }
 
     "Redirect to Failed to submit on a POST when submission fails" in {
@@ -85,7 +87,5 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with WireMockHel
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
     }
-
-
   }
 }

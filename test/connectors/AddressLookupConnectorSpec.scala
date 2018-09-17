@@ -26,26 +26,44 @@ import org.scalatest.mockito.MockitoSugar
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.Application
 import play.api.inject.guice.GuiceApplicationBuilder
+import play.api.inject.bind
+import play.api.libs.json.Format
 import play.api.mvc.Request
 import uk.gov.hmrc.http.cache.client.CacheMap
 import utils.{UserAnswers, WireMockHelper}
 
 import scala.concurrent.duration._
-import scala.concurrent.{Await, ExecutionContext}
+import scala.concurrent.{Await, ExecutionContext, Future}
 
 class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with WireMockHelper with GuiceOneAppPerSuite with ScalaFutures {
+  lazy val dataCacheConnector: DataCacheConnector = new DataCacheConnector {
+    override def save[A](cacheId: String, key: String, value: A)(implicit fmt: Format[A]): Future[CacheMap] =
+      Future.successful(CacheMap(cacheId, Map(key -> fmt.writes(value))))
+
+    override def remove(cacheId: String, key: String): Future[Boolean] = ???
+
+    override def fetch(cacheId: String): Future[Option[CacheMap]] = ???
+
+    override def getEntry[A](cacheId: String, key: String)(implicit fmt: Format[A]): Future[Option[A]] = ???
+
+    override def addToCollection[A](cacheId: String, collectionKey: String, value: A)(implicit fmt: Format[A]): Future[CacheMap] = ???
+
+    override def removeFromCollection[A](cacheId: String, collectionKey: String, item: A)(implicit fmt: Format[A]): Future[CacheMap] = ???
+
+    override def replaceInCollection[A](cacheId: String, collectionKey: String, index: Int, item: A)(implicit fmt: Format[A]): Future[CacheMap] = ???
+  }
 
   override implicit lazy val app: Application =
     new GuiceApplicationBuilder()
       .configure(
         conf = "microservice.services.address-lookup-frontend.port" -> server.port
       )
+      .overrides(bind(classOf[DataCacheConnector]).toInstance(dataCacheConnector))
       .build()
 
   implicit val dataRequest: DataRequest[_] = mock[DataRequest[_]]
   implicit val ec: ExecutionContext = mock[ExecutionContext]
   implicit val request: Request[_] = mock[Request[_]]
-  implicit val dataCacheConnector: DataCacheConnector = mock[DataCacheConnector]
   implicit val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
   private lazy val connector: AddressLookupConnector = app.injector.instanceOf[AddressLookupConnector]
@@ -122,8 +140,6 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with WireMoc
     }
 
     "return cacheMap when called with ID" in {
-      val testAddress: String = testResponseAddress.toString
-
       server.stubFor(
         get(urlEqualTo("/api/confirmed?id=123456789"))
           .willReturn(
@@ -133,7 +149,7 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with WireMoc
           )
       )
 
-      val result: UserAnswers = Await.result(connector.getAddress(cacheId = "12345", saveKey = "saveKey", id = "123456789"), 2.second)
+      val result: UserAnswers = Await.result(connector.getAddress(cacheId = "12345", saveKey = "saveKey", id = "123456789"), 5.second)
       result.cacheMap mustBe CacheMap("12345", Map("saveKey" -> testResponseAddress))
     }
   }

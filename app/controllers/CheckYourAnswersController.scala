@@ -21,7 +21,6 @@ import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions.{AuthAction, DataRequiredAction, DataRetrievalAction}
 import models.SubmissionSuccessful
-import models.templates.Metadata
 import models.templates.xml.robots
 import models._
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -69,11 +68,12 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
       val pdf: HtmlFormat.Appendable = pdf_check_your_answers(appConfig, cyaSections.sections, request.nino, request.name)
       val xml: String = robots(request.userAnswers).toString.replaceAll("\t|\n", "")
       val metadata: Metadata = new Metadata()
+      val submissionReference = metadata.submissionReference
 
       val futureSubmission: Future[Submission] = for {
         _ <- dataCacheConnector.save[String](request.externalId, key = "pdf", pdf.toString())
         _ <- dataCacheConnector.save[String](request.externalId, key = "xml", xml)
-        _ <- dataCacheConnector.save[String](request.externalId, key = "metadata", metadata.toString)
+        _ <- dataCacheConnector.save[String](request.externalId, key = "metadata", Metadata.toXml(metadata).toString)
       } yield new Submission(pdf.toString(), metadata.toString, xml)
 
       futureSubmission.recoverWith{
@@ -84,7 +84,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
       futureSubmission.flatMap {
         submission =>
           submissionService.ctrSubmission(submission) map {
-            case SubmissionSuccessful => Redirect(routes.ConfirmationController.onPageLoad())
+            case SubmissionSuccessful => Redirect(routes.ConfirmationController.onPageLoad(submissionReference))
             case _ => Redirect(routes.SessionExpiredController.onPageLoad())
           }
       }
