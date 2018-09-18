@@ -19,6 +19,7 @@ package views
 import base.SpecBase
 import org.scalatest.mockito.MockitoSugar
 import play.api.i18n.Messages
+import play.twirl.api.Html
 import uk.gov.hmrc.auth.core.retrieve.ItmpName
 import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, MockUserAnswers}
 import views.behaviours.ViewBehaviours
@@ -34,17 +35,12 @@ class PdfCheckYourAnswersViewSpec extends SpecBase with ViewBehaviours with Mock
   private val nino = "AB123456A"
   private val itmpName: Option[ItmpName] = Some(ItmpName(Some("First"), Some("Middle"), Some("Last")))
 
-  def view = () => pdf_check_your_answers(frontendAppConfig, sections, nino, itmpName)(fakeRequest, messages: Messages)
+  def view: () => Html = () => pdf_check_your_answers(frontendAppConfig, sections, nino, itmpName)(fakeRequest, messages: Messages)
 
   "PDF Check your answers view" must {
-    "display the correct browser title" in {
-      val doc = asDocument(view())
-      assertEqualsMessage(doc, "title", s"checkYourAnswers.pdfHeader")
-    }
-
     "display the correct page title" in {
       val doc = asDocument(view())
-      assertPageTitleEqualsMessage(doc, s"checkYourAnswers.pdfHeader")
+      assertPageTitleEqualsMessage(doc, "checkYourAnswers.pdfHeader")
     }
 
     "display correct sections" in {
