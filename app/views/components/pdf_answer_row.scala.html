@@ -14,23 +14,22 @@
  * limitations under the License.
  *@
 
-@import config.FrontendAppConfig
+@import viewmodels.AnswerRow
 
-@(title: String,
-  appConfig: FrontendAppConfig,
-  contentHeader: Option[Html] = None,
-  bodyClasses: Option[String] = None,
-  mainClass: Option[String] = None
-)(mainContent: Html)(implicit request : Request[_], messages: Messages)
-
-@import uk.gov.hmrc.play.views.html.layouts
-
-@serviceInfoContent = {}
-
-@pdf_wrapper(appConfig = appConfig,
-               title = title,
-               mainClass = mainClass,
-               bodyClasses = bodyClasses,
-               contentHeader = contentHeader,
-               mainContent = layouts.article(mainContent)
+@(
+        row: AnswerRow
+)(
+        implicit messages: Messages
 )
+@if(row.isHeadingRow) {
+<li>
+    <h3>@row.label.print</h3>
+</li>
+}
+@if(!row.isDeleteLinkRow && !row.isHeadingRow) {
+<li>
+    <div>@row.label.print</div>
+    <div>@Html(row.answer.print)</div>
+</li>
+}
+

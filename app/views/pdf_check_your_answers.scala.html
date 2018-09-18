@@ -15,46 +15,42 @@
  *@
 
 @import config.FrontendAppConfig
-@import viewmodels.{Section, AnswerSection, RepeaterAnswerSection}
-
 @import uk.gov.hmrc.auth.core.retrieve.ItmpName
-@(appConfig: FrontendAppConfig, answerSections: Seq[Section], nino: String, name: Option[ItmpName])(implicit request: Request[_], messages: Messages)
+@import viewmodels.{AnswerSection, Section}
 
-    @pdf_main_template(
-        title = messages("checkYourAnswers.pdfHeader"),
-        appConfig = appConfig,
-        bodyClasses = None) {
+@(
+        appConfig: FrontendAppConfig,
+        answerSections: Seq[Section],
+        nino: String,
+        name: Option[ItmpName]
+)(
+    implicit
+        request: Request[_],
+        messages: Messages
+)
 
-        <h1 class="heading-xlarge">@messages("checkYourAnswers.pdfHeader")</h1>
+@()
+<h1>@messages("checkYourAnswers.pdfHeader")</h1>
 
-        <h2 id="cya-userInfo-heading">@messages("checkYourAnswers.userSection")</h2>
+<h2>@messages("checkYourAnswers.userSection")</h2>
 
-        <ul role="list" class="tabular-data tabular-data--list">
-            <li class="tabular-data__entry tabular-data__entry--grouped divider--bottom">
-                <div id="cya-nino-question" class="tabular-data__data tabular-data__data--6-12">
-                    @messages("userDetails.checkYourAnswersLabel.nino")
-                </div>
-                <div id="cya-nino-answer" class="tabular-data__data tabular-data__data--3-12">
-                    @nino
-                </div>
-            </li>
-            @if(name.isDefined) {
-                <li class="tabular-data__entry tabular-data__entry--grouped divider--bottom">
-                    <div id="cya-name-question" class="tabular-data__data tabular-data__data--6-12">
-                        @messages("userDetails.checkYourAnswersLabel.name")
-                    </div>
-                    <div id="cya-name-answer" class="tabular-data__data tabular-data__data--3-12">
-                        @name.get.givenName @name.get.middleName @name.get.familyName
-                    </div>
-                </li>
-            }
-        </ul>
+<ul>
+    <li>
+        @messages("userDetails.checkYourAnswersLabel.nino")<br>
+        @nino
+    </li>
+    @if(name.isDefined) {
+    <li>
+        @messages("userDetails.checkYourAnswersLabel.name")<br>
+        @name.get.givenName @name.get.middleName @name.get.familyName
+    </li>
+    }
+</ul>
 
-        @for((section, i) <- answerSections.zipWithIndex) {
-            @{
-                section match {
-                    case a: AnswerSection => components.answer_section(a, i.toString
-                    )}
-            }
+@for((section, i) <- answerSections.zipWithIndex) {
+    @{
+        section match {
+            case a: AnswerSection => components.pdf_answer_section(a)
         }
     }
+}

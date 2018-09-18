@@ -35,6 +35,7 @@ import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, UserAnswers}
 import views.html.{check_your_answers, pdf_check_your_answers}
 
 import scala.concurrent.Future
+import scala.xml.{Elem, Node}
 
 class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
                                            override val messagesApi: MessagesApi,
@@ -64,15 +65,17 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
     implicit request =>
       val cyaHelper: CheckYourAnswersHelper = new CheckYourAnswersHelper(request.userAnswers)
       val cyaSections: CheckYourAnswersSections = new CheckYourAnswersSections(cyaHelper, request.userAnswers)
-      val pdf: HtmlFormat.Appendable = pdf_check_your_answers(appConfig, cyaSections.sections, request.nino, request.name)
+      val pdfHtml: String = pdf_check_your_answers(appConfig, cyaSections.sections, request.nino, request.name).toString.replaceAll("\t|\n", "")
       val xml: String = robots(request.userAnswers).toString.replaceAll("\t|\n", "")
       val metadata: Metadata = new Metadata()
 
       val futureSubmission: Future[Submission] = for {
-        _ <- dataCacheConnector.save[String](request.externalId, key = "pdf", pdf.toString())
+        _ <- dataCacheConnector.save[String](request.externalId, key = "pdf", pdfHtml)
         _ <- dataCacheConnector.save[String](request.externalId, key = "xml", xml)
         _ <- dataCacheConnector.save[String](request.externalId, key = "metadata", Metadata.toXml(metadata).toString)
-      } yield new Submission(pdf.toString(), metadata.toString, xml)
+      } yield new Submission(pdfHtml, metadata.toString, xml)
+
+
 
       futureSubmission.recoverWith{
         case e: Exception =>
@@ -88,3 +91,4 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
       }
   }
 }
+
