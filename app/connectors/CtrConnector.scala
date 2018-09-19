@@ -35,9 +35,8 @@ class CtrConnector @Inject()(appConfig: FrontendAppConfig, http: HttpClient) {
 
     val submissionUrl = s"${appConfig.ctrUrl}/claim-tax-refund/submit"
 
-    http.POST(submissionUrl, submissionJson).map {
+    val postRequest: Future[Option[SubmissionResponse]] = http.POST(submissionUrl, submissionJson).map {
       response =>
-
         response.status match {
           case OK =>
             response.json.asOpt[SubmissionResponse]
@@ -46,10 +45,13 @@ class CtrConnector @Inject()(appConfig: FrontendAppConfig, http: HttpClient) {
             Logger.warn(s"[CtrConnector][ctrSubmission] - received HTTP status $other from $submissionUrl")
             None
         }
-    }.recover {
-      case _: Exception =>
-        Logger.warn(s"[CtrConnector][ctrSubmission] - submission to $submissionUrl failed")
-        None
     }
+
+    postRequest.onFailure {
+      case e =>
+        Logger.error(s"[CtrConnector][ctrSubmission] - submission to $submissionUrl failed", e)
+    }
+
+    postRequest
   }
 }

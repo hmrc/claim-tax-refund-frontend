@@ -22,9 +22,9 @@ import connectors.DataCacheConnector
 import controllers.actions.{AuthAction, DataRequiredAction, DataRetrievalAction}
 import models.templates.xml.robots
 import models.{Metadata, SubmissionSuccessful, _}
+import play.api.Logger
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
-import play.twirl.api.HtmlFormat
 import services.SubmissionService
 import uk.gov.hmrc.auth.core.retrieve.ItmpName
 import uk.gov.hmrc.http.cache.client.CacheMap
@@ -35,7 +35,6 @@ import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, UserAnswers}
 import views.html.{check_your_answers, pdf_check_your_answers}
 
 import scala.concurrent.Future
-import scala.xml.{Elem, Node}
 
 class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
                                            override val messagesApi: MessagesApi,
@@ -75,11 +74,9 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
         _ <- dataCacheConnector.save[String](request.externalId, key = "metadata", Metadata.toXml(metadata).toString)
       } yield new Submission(pdfHtml, metadata.toString, xml)
 
-
-
-      futureSubmission.recoverWith{
-        case e: Exception =>
-          Future.failed(new RuntimeException("[CheckYourAnswersController][onSubmit] failed", e))
+      futureSubmission.onFailure {
+        case e =>
+          Logger.error("[CheckYourAnswersController][onSubmit] failed", e)
       }
 
       futureSubmission.flatMap {

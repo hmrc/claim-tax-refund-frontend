@@ -25,7 +25,8 @@ import controllers.actions._
 import config.FrontendAppConfig
 import forms.BooleanForm
 import identifiers.EmploymentDetailsId
-import models.{CheckMode, Mode, NormalMode}
+import models._
+import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, UserAnswers}
@@ -52,7 +53,7 @@ class EmploymentDetailsController @Inject()(appConfig: FrontendAppConfig,
   val form: Form[Boolean] = formProvider(errorKey)
 
 
-  def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData).async {
+  def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
 
       val preparedForm = request.userAnswers.employmentDetails match {
@@ -62,8 +63,8 @@ class EmploymentDetailsController @Inject()(appConfig: FrontendAppConfig,
 
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
-          val taxYear = selectedTaxYear
-          val results = taiConnector.taiEmployments(request.nino, selectedTaxYear.year)
+          val taxYear: SelectTaxYear = selectedTaxYear
+          val results: Future[Seq[Employment]] = taiConnector.taiEmployments(request.nino, selectedTaxYear.year)
 
           results.map(
             employments =>
@@ -77,7 +78,7 @@ class EmploymentDetailsController @Inject()(appConfig: FrontendAppConfig,
       }
   }
 
-  def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
 
       request.userAnswers.selectTaxYear.map {
@@ -90,7 +91,7 @@ class EmploymentDetailsController @Inject()(appConfig: FrontendAppConfig,
               form.bindFromRequest().fold(
                 (formWithErrors: Form[_]) =>
                   Future.successful(BadRequest(employmentDetails(appConfig, formWithErrors, mode, employments, taxYear))),
-                (value) =>
+                value =>
                   dataCacheConnector.save[Boolean](request.externalId, EmploymentDetailsId.toString, value).map(cacheMap =>
                     Redirect(navigator.nextPage(EmploymentDetailsId, mode)(new UserAnswers(cacheMap))))
               )
