@@ -33,7 +33,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class AuthActionImpl @Inject()(override val authConnector: AuthConnector, config: FrontendAppConfig)(dataCacheConnector: DataCacheConnector)
                               (implicit ec: ExecutionContext) extends AuthAction with AuthorisedFunctions {
 
-  override def invokeBlock[A](request: Request[A], block: (AuthenticatedRequest[A]) => Future[Result]): Future[Result] = {
+  override def invokeBlock[A](request: Request[A], block: AuthenticatedRequest[A] => Future[Result]): Future[Result] = {
     implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromHeadersAndSession(request.headers, Some(request.session))
 
     authorised(ConfidenceLevel.L200 and AffinityGroup.Individual)
@@ -50,7 +50,7 @@ class AuthActionImpl @Inject()(override val authConnector: AuthConnector, config
       case ex: NoActiveSession =>
         Redirect(config.loginUrl, Map("continue" -> Seq(config.loginContinueUrl)))
       case ex: InsufficientEnrolments =>
-        Redirect(routes.UnauthorisedController.onPageLoad)
+        Redirect(routes.UnauthorisedController.onPageLoad())
       case ex: InsufficientConfidenceLevel =>
         Redirect(s"${config.ivUpliftUrl}?origin=CTR&" +
           s"confidenceLevel=200&" +
@@ -58,11 +58,11 @@ class AuthActionImpl @Inject()(override val authConnector: AuthConnector, config
           s"failureURL=${config.unauthorisedCallback}"
           )
       case ex: UnsupportedAuthProvider =>
-        Redirect(routes.UnauthorisedController.onPageLoad)
+        Redirect(routes.UnauthorisedController.onPageLoad())
       case ex: UnsupportedAffinityGroup =>
-        Redirect(routes.UnauthorisedController.onPageLoad)
+        Redirect(routes.UnauthorisedController.onPageLoad())
       case ex: UnsupportedCredentialRole =>
-        Redirect(routes.UnauthorisedController.onPageLoad)
+        Redirect(routes.UnauthorisedController.onPageLoad())
     }
   }
 }

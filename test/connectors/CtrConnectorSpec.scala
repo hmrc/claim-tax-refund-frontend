@@ -32,63 +32,46 @@ import scala.concurrent.Future
 
 class CtrConnectorSpec extends SpecBase with MockitoSugar with ScalaFutures {
 
+  override implicit val hc: HeaderCarrier = HeaderCarrier()
+  private val submission: Submission = Submission("","","")
+  private val mockHttpClient: HttpClient = mock[HttpClient]
+  private val connector: CtrConnector = new CtrConnector(frontendAppConfig, mockHttpClient)
+
   "submission" must {
 
     "return an Submission Response when the HTTP call succeeds" in {
-
-      implicit val hc: HeaderCarrier = HeaderCarrier()
-
-      val answers = MockUserAnswers.minimalValidUserAnswers
-
-      val submission = Submission("","","")
-
-      val httpMock = mock[HttpClient]
-      when(httpMock.POST[JsValue, HttpResponse](any(), any(), any())(any(), any(), any(), any()))
+      when(mockHttpClient.POST[JsValue, HttpResponse](any(), any(), any())(any(), any(), any(), any()))
         .thenReturn(Future.successful(HttpResponse(200, Some(Json.parse("""{"id":"id","filename":"filename"}""")))))
 
-      val connector = new CtrConnector(frontendAppConfig, httpMock)
       val futureResult = connector.ctrSubmission(Json.toJson(submission))
 
-      whenReady(futureResult) { result =>
-        result mustBe Some(SubmissionResponse("id", "filename"))
+      whenReady(futureResult) {
+        result =>
+          result mustBe Some(SubmissionResponse("id", "filename"))
       }
     }
 
     "return nothing when the HTTP call fails" in {
-      implicit val hc: HeaderCarrier = HeaderCarrier()
-
-      val answers = MockUserAnswers.minimalValidUserAnswers
-
-      val submission = Submission("","","")
-
-      val httpMock = mock[HttpClient]
-      when(httpMock.POST[JsValue, HttpResponse](any(), any(), any())(any(), any(), any(), any()))
+      when(mockHttpClient.POST[JsValue, HttpResponse](any(), any(), any())(any(), any(), any(), any()))
         .thenReturn(Future.successful(HttpResponse(500, None)))
 
-      val connector = new CtrConnector(frontendAppConfig, httpMock)
       val futureResult = connector.ctrSubmission(Json.toJson(submission))
 
-      whenReady(futureResult) { result =>
-        result mustBe None
+      whenReady(futureResult) {
+        result =>
+          result mustBe None
       }
     }
 
     "return nothing when the HTTP call exceptions" in {
-      implicit val hc: HeaderCarrier = HeaderCarrier()
-
-      val answers = MockUserAnswers.minimalValidUserAnswers
-
-      val submission = Submission("","","")
-
-      val httpMock = mock[HttpClient]
-      when(httpMock.POST[JsValue, HttpResponse](any(), any(), any())(any(), any(), any(), any()))
+      when(mockHttpClient.POST[JsValue, HttpResponse](any(), any(), any())(any(), any(), any(), any()))
         .thenReturn(Future.failed(new RuntimeException("call failed")))
 
-      val connector = new CtrConnector(frontendAppConfig, httpMock)
       val futureResult = connector.ctrSubmission(Json.toJson(submission))
 
-      whenReady(futureResult) { result =>
-        result mustBe None
+      whenReady(futureResult.failed) {
+        result =>
+          result mustBe a[Exception]
       }
     }
 

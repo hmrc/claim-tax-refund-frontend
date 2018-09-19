@@ -44,7 +44,7 @@ class AddressLookupConnector @Inject()(
 
     val addressConfig = Json.toJson(addressLookupConfig.config(continueUrl = s"$continueUrl"))
 
-    http.POST(addressLookupUrl, body = addressConfig).map {
+    val addressLookupPost: Future[Option[String]] = http.POST(addressLookupUrl, body = addressConfig).map {
       response =>
         response.status match {
           case 202 =>
@@ -54,11 +54,14 @@ class AddressLookupConnector @Inject()(
             Logger.warn(s"[AddressLookupConnector][initialise] - received HTTP status $other from $addressLookupUrl")
             None
         }
-    }.recover {
-      case _: Exception =>
-        Logger.warn(s"[AddressLookupConnector][initialise] - connection to $addressLookupUrl failed")
-        None
     }
+
+    addressLookupPost.onFailure {
+      case e =>
+        Logger.error(s"[AddressLookupConnector][initialise] - connection to $addressLookupUrl failed", e)
+    }
+
+    addressLookupPost
   }
 
   def getAddress(cacheId: String, saveKey: String, id: String)(implicit hc: HeaderCarrier, request: DataRequest[_]): Future[UserAnswers] = {

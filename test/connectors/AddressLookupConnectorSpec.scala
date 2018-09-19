@@ -121,8 +121,11 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with WireMoc
           )
       )
 
-      val result: Option[String] = Await.result(connector.initialise(""), 500.millisecond)
-      result mustBe None
+      val result: Future[Option[String]] = connector.initialise("")
+      whenReady(result.failed) {
+        res =>
+          res mustBe a[Exception]
+      }
 
     }
 
@@ -135,8 +138,11 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with WireMoc
           )
       )
 
-      val result: Option[String] = Await.result(connector.initialise(""), 500.millisecond)
-      result mustBe None
+      val result: Future[Option[String]] = connector.initialise("")
+      whenReady(result.failed) {
+        res =>
+          res mustBe a[Exception]
+      }
     }
 
     "return cacheMap when called with ID" in {

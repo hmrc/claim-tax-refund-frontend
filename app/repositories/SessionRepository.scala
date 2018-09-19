@@ -70,18 +70,16 @@ class ReactiveMongoRepository(config: Configuration, mongo: () => DefaultDB)
     val cmDocument = Json.toJson(DatedCacheMap(cm))
     val modifier = BSONDocument("$set" -> cmDocument)
 
-    collection.update(selector, modifier, upsert = true).map { lastError =>
-      lastError.ok
+    collection.update(selector, modifier, upsert = true).map {
+      lastError =>
+        lastError.ok
     }
   }
 
   def get(id: String): Future[Option[CacheMap]] = {
-    collection.find(Json.obj("id" -> id)).cursor[CacheMap]().collect[Seq]().map { (cmSeq: Seq[CacheMap]) =>
-      if (cmSeq.length != 1) {
-        None
-      } else {
-        Some(cmSeq.head)
-      }
+    collection.find(Json.obj("id" -> id)).cursor[CacheMap]().collect[Seq]().map {
+      cmSeq: Seq[CacheMap] =>
+        if (cmSeq.length != 1) None else Some(cmSeq.head)
     }
   }
 }
