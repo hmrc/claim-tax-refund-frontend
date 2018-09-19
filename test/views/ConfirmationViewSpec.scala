@@ -16,18 +16,16 @@
 
 package views
 
-import config.FrontendAppConfig
 import org.scalatest.mockito.MockitoSugar
 import views.behaviours.ViewBehaviours
 import views.html.confirmation
 
 class ConfirmationViewSpec extends ViewBehaviours with MockitoSugar {
 
-  val messageKeyPrefix = "confirmation"
+  private val messageKeyPrefix = "confirmation"
+  private val submissionReference = " ABC-1234-DEF"
 
-  val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
-
-  def createView = () => confirmation(frontendAppConfig)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createView = () => confirmation(frontendAppConfig, submissionReference)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "Confirmation view" must {
     behave like normalPage(createView, messageKeyPrefix, None)
@@ -41,7 +39,7 @@ class ConfirmationViewSpec extends ViewBehaviours with MockitoSugar {
     "have a reference number in a highlight box" in {
       val doc = asDocument(createView())
       val referenceText = doc.getElementById("reference")
-      referenceText.text mustBe messages("confirmation.reference") + " ABC-5678-DEF"
+      referenceText.text mustBe messages("confirmation.reference") + submissionReference
       referenceText.parent.hasClass("govuk-box-highlight") mustBe true
     }
 

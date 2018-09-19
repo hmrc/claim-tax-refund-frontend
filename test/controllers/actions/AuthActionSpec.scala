@@ -36,6 +36,12 @@ class AuthActionSpec extends SpecBase {
     def onPageLoad() = authAction { request => Ok }
   }
 
+  val ivUrl: String = s"${frontendAppConfig.ivUpliftUrl}?origin=CTR&" +
+    s"confidenceLevel=200&" +
+    s"completionURL=${frontendAppConfig.authorisedCallback}&" +
+    s"failureURL=${frontendAppConfig.unauthorisedCallback}"
+
+
   "Auth Action" when {
     "the user hasn't logged in" must {
       "redirect the user to log in " in {
@@ -73,7 +79,7 @@ class AuthActionSpec extends SpecBase {
         val controller = new Harness(authAction)
         val result = controller.onPageLoad()(fakeRequest)
         status(result) mustBe SEE_OTHER
-        redirectLocation(result) mustBe Some(routes.UnauthorisedController.onPageLoad().url)
+        redirectLocation(result) mustBe Some(ivUrl)
       }
     }
 

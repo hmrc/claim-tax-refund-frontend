@@ -20,9 +20,11 @@ import com.google.inject.Inject
 import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions.{AuthAction, DataRequiredAction, DataRetrievalAction}
+import models.SubmissionSuccessful
 import models.templates.xml.robots
 import models.{Metadata, SubmissionSuccessful, _}
 import play.api.Logger
+import models._
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
 import services.SubmissionService
@@ -35,6 +37,7 @@ import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, UserAnswers}
 import views.html.{check_your_answers, pdf_check_your_answers}
 
 import scala.concurrent.Future
+import scala.xml.{Elem, Node}
 
 class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
                                            override val messagesApi: MessagesApi,
@@ -67,12 +70,15 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
       val pdfHtml: String = pdf_check_your_answers(appConfig, cyaSections.sections, request.nino, request.name).toString.replaceAll("\t|\n", "")
       val xml: String = robots(request.userAnswers).toString.replaceAll("\t|\n", "")
       val metadata: Metadata = new Metadata()
+      val submissionReference = metadata.submissionReference
 
       val futureSubmission: Future[Submission] = for {
         _ <- dataCacheConnector.save[String](request.externalId, key = "pdf", pdfHtml)
         _ <- dataCacheConnector.save[String](request.externalId, key = "xml", xml)
         _ <- dataCacheConnector.save[String](request.externalId, key = "metadata", Metadata.toXml(metadata).toString)
       } yield new Submission(pdfHtml, metadata.toString, xml)
+
+
 
       futureSubmission.onFailure {
         case e =>
@@ -82,7 +88,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
       futureSubmission.flatMap {
         submission =>
           submissionService.ctrSubmission(submission) map {
-            case SubmissionSuccessful => Redirect(routes.ConfirmationController.onPageLoad())
+            case SubmissionSuccessful => Redirect(routes.ConfirmationController.onPageLoad(submissionReference))
             case _ => Redirect(routes.SessionExpiredController.onPageLoad())
           }
       }

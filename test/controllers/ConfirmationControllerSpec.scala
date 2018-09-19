@@ -29,19 +29,21 @@ class ConfirmationControllerSpec extends ControllerSpecBase {
     new ConfirmationController(frontendAppConfig, messagesApi, FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, formPartialRetriever, templateRenderer)
 
-  def viewAsString = confirmation(frontendAppConfig)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+  private val submissionReference = "ABC-1234-DEF"
+
+  def viewAsString: String = confirmation(frontendAppConfig, submissionReference)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "Confirmation Controller" must {
 
     "return OK and the correct view for a GET" in {
-      val result = controller().onPageLoad(NormalMode)(fakeRequest)
+      val result = controller().onPageLoad(NormalMode, submissionReference)(fakeRequest)
 
       status(result) mustBe OK
       contentAsString(result) mustBe viewAsString
     }
 
     "redirect to Session Expired for a GET if no existing data is found" in {
-      val result = controller(dontGetAnyData).onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(dontGetAnyData).onPageLoad(NormalMode, submissionReference)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
