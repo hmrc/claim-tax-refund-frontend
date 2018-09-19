@@ -20,11 +20,9 @@ import com.google.inject.Inject
 import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions.{AuthAction, DataRequiredAction, DataRetrievalAction}
-import models.SubmissionSuccessful
 import models.templates.xml.robots
 import models.{Metadata, SubmissionSuccessful, _}
 import play.api.Logger
-import models._
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
 import services.SubmissionService
@@ -37,7 +35,6 @@ import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, UserAnswers}
 import views.html.{check_your_answers, pdf_check_your_answers}
 
 import scala.concurrent.Future
-import scala.xml.{Elem, Node}
 
 class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
                                            override val messagesApi: MessagesApi,
