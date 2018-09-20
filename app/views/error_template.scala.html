@@ -37,7 +37,7 @@
     title = messages(pageTitle),
     appConfig = appConfig
 ) {
-    @components.heading(heading)
+    @components.heading(messages(heading))
     @for(errorMessage <- errorMessages){
         <p>@messages(errorMessage)</p>
     }
