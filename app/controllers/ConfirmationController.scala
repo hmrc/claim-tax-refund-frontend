@@ -38,6 +38,6 @@ class ConfirmationController @Inject()(appConfig: FrontendAppConfig,
 
   def onPageLoad(mode: Mode, submissionReference: String): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      Ok(confirmation(appConfig, submissionReference)).withNewSession
+      Ok(confirmation(appConfig, submissionReference))//.withNewSession
   }
 }

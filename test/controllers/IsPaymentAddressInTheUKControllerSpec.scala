@@ -30,7 +30,7 @@ import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.isPaymentAddressInTheUK
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class IsPaymentAddressInTheUKControllerSpec extends ControllerSpecBase with MockitoSugar {
 
@@ -41,6 +41,8 @@ class IsPaymentAddressInTheUKControllerSpec extends ControllerSpecBase with Mock
   private val mockAddressLookup = mock[AddressLookupConnector]
   private val taxYear = CYMinus2
   private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers
+  implicit val ec = mock[ExecutionContext]
+
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new IsPaymentAddressInTheUKController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,

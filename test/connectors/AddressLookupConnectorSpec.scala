@@ -117,14 +117,14 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with WireMoc
       server.stubFor(
         post(urlEqualTo("/api/init"))
           .willReturn(
-            aResponse().withFault(Fault.EMPTY_RESPONSE)
+            aResponse()
           )
       )
 
       val result: Future[Option[String]] = connector.initialise("")
-      whenReady(result.failed) {
+      whenReady(result) {
         res =>
-          res mustBe a[Exception]
+          res mustBe None
       }
 
     }
@@ -139,9 +139,9 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with WireMoc
       )
 
       val result: Future[Option[String]] = connector.initialise("")
-      whenReady(result.failed) {
+      whenReady(result) {
         res =>
-          res mustBe a[Exception]
+          res mustBe None
       }
     }
 
