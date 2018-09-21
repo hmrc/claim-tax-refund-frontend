@@ -49,11 +49,11 @@ global.postcode = Postcode
 global.postcode.blank = Enter a postcode
 global.postcode.invalid = Enter a valid postcode
 
-global.current-year-minus-1 = {0} to {1}
-global.current-year-minus-2 = {0} to {1}
-global.current-year-minus-3 = {0} to {1}
-global.current-year-minus-4 = {0} to {1}
-global.current-year-minus-5 = {0} to {1}
+global.current-year-minus-1 = 6 April {0} to 5 April {1}
+global.current-year-minus-2 = 6 April {0} to 5 April {1}
+global.current-year-minus-3 = 6 April {0} to 5 April {1}
+global.current-year-minus-4 = 6 April {0} to 5 April {1}
+global.current-year-minus-5 = 6 April {0} to 5 April {1}
 
 global.otherListHeading = You have told us about:
 
@@ -137,11 +137,11 @@ userDetails.checkYourAnswersLabel.address = Address
 
 selectTaxYear.title = Which tax year do you want to claim for?
 selectTaxYear.heading = Which tax year do you want to claim for?
-selectTaxYear.current-year-minus-1 = {0} to {1}
-selectTaxYear.current-year-minus-2 = {0} to {1}
-selectTaxYear.current-year-minus-3 = {0} to {1}
-selectTaxYear.current-year-minus-4 = {0} to {1}
-selectTaxYear.current-year-minus-5 = {0} to {1}
+selectTaxYear.current-year-minus-1 = 6 April {0} to 5 April {1}
+selectTaxYear.current-year-minus-2 = 6 April {0} to 5 April {1}
+selectTaxYear.current-year-minus-3 = 6 April {0} to 5 April {1}
+selectTaxYear.current-year-minus-4 = 6 April {0} to 5 April {1}
+selectTaxYear.current-year-minus-5 = 6 April {0} to 5 April {1}
 selectTaxYear.checkYourAnswersLabel = The tax year your claim is for
 selectTaxYear.blank = Select a tax year
 
@@ -406,7 +406,6 @@ anyTaxableBankInterest.invalid = Enter a valid amount of income tax you paid on 
 anyTaxableBankInterest.notSelected = Select yes if you paid income tax on bank or building society interest
 anyTaxableBankInterest.blank = Enter the amount of income tax you paid on bank or building society interest
 anyTaxableBankInterest.anyTaxPaidAmountField = How much income tax did you pay on bank or building society interest?
-
 
 anyTaxableInvestments.title = Did you pay income tax on investment or dividend income?
 anyTaxableInvestments.heading = Did you pay income tax on investment or dividend income?

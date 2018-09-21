@@ -69,7 +69,13 @@
             "sidebar" -> sidebar,
             "linkElems" -> linkElem,
             "scriptElems" -> scriptElem,
-            "mainClass" -> mainClass
+            "mainClass" -> mainClass,
+            "isWelsh" -> {messages.lang.code == "cy"},
+            "showPropositionLinks" -> true,
+            "langSelector" -> {
+                Map("enUrl" -> appConfig.routeToSwitchLanguage("english"),
+                    "cyUrl" -> appConfig.routeToSwitchLanguage("cymraeg"))
+            }
         )
     )
 }
