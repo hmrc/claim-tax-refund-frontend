@@ -23,6 +23,8 @@ import models.{NormalMode, OtherBenefit}
 import org.jsoup.nodes.{Document, Element}
 import play.api.data.Form
 import play.twirl.api.Html
+import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, MockUserAnswers}
+import viewmodels.AnswerSection
 import views.behaviours.YesNoViewBehaviours
 import views.html.anyOtherBenefits
 
@@ -30,15 +32,17 @@ class AnyOtherBenefitsViewSpec extends YesNoViewBehaviours {
 
   private val messageKeyPrefix = "anyOtherBenefits"
   private val taxYear = CYMinus2
-  private val otherBenefitNames: Seq[String] = Seq("qwerty")
+
+	private val cya: CheckYourAnswersHelper = new CheckYourAnswersHelper(MockUserAnswers.fullValidUserAnswers)(messages)
+	private val otherBenefits: AnswerSection = new CheckYourAnswersSections(cya, MockUserAnswers.fullValidUserAnswers).otherBenefitsSection
 
   override val form = new BooleanForm()()
 
   def createView: () => Html = () =>
-    anyOtherBenefits(frontendAppConfig, form, NormalMode, taxYear, otherBenefitNames)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+    anyOtherBenefits(frontendAppConfig, form, NormalMode, taxYear, otherBenefits)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   def createViewUsingForm: Form[_] => Html = (form: Form[_]) =>
-    anyOtherBenefits(frontendAppConfig, form, NormalMode, taxYear, otherBenefitNames)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+    anyOtherBenefits(frontendAppConfig, form, NormalMode, taxYear, otherBenefits)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "AnyOtherBenefits view" must {
 
@@ -55,10 +59,19 @@ class AnyOtherBenefitsViewSpec extends YesNoViewBehaviours {
       expectedHintTextKey = None
     )
 
-    "display 'You have told us about:' section" in {
+		"any benefits list" must {
       val doc: Document = asDocument(createView())
+      "display list of created benefits" in {
+        doc.getElementById("component-answer-list").text.contains("qwerty") mustBe true
+      }
 
-      doc.getElementById("bullet-qwerty").text() mustBe "qwerty"
-    }
+      "list item must have change buttons" in {
+        doc.getElementById("component-answer-list").text.contains("Change qwerty") mustBe true
+      }
+
+			"list item must have a delete button" in {
+				doc.getElementById("component-answer-list").text.contains("Remove qwerty") mustBe true
+			}
+		}
   }
 }

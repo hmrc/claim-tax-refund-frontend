@@ -22,14 +22,15 @@ import controllers.actions._
 import forms.BooleanForm
 import identifiers.AnyOtherBenefitsId
 import javax.inject.Inject
-import models.{Mode, OtherBenefit, SelectTaxYear}
+import models.{Mode, SelectTaxYear}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, Result}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import uk.gov.hmrc.renderer.TemplateRenderer
-import utils.{Navigator, UserAnswers}
+import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, Navigator, UserAnswers}
+import viewmodels.AnswerSection
 import views.html.anyOtherBenefits
 
 import scala.concurrent.Future
@@ -52,9 +53,11 @@ class AnyOtherBenefitsController @Inject()(appConfig: FrontendAppConfig,
     implicit request =>
       val result: Option[Result] = for {
         taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
-        otherBenefitNames: Seq[String] <- request.userAnswers.otherBenefit.map(_.map(_.name))
+        cyaHelper: CheckYourAnswersHelper = new CheckYourAnswersHelper(request.userAnswers)
+        otherBenefitsAnswers: AnswerSection = new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherBenefitsSection
+
       } yield {
-        Ok(anyOtherBenefits(appConfig, form, mode, taxYear, otherBenefitNames))
+        Ok(anyOtherBenefits(appConfig, form, mode, taxYear, otherBenefitsAnswers))
       }
 
       result.getOrElse {
@@ -66,11 +69,12 @@ class AnyOtherBenefitsController @Inject()(appConfig: FrontendAppConfig,
     implicit request =>
       val result: Option[Future[Result]] = for {
         taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
-        otherBenefitNames: Seq[String] <- request.userAnswers.otherBenefit.map(_.map(_.name))
+        cyaHelper: CheckYourAnswersHelper = new CheckYourAnswersHelper(request.userAnswers)
+        otherBenefitsAnswers: AnswerSection = new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherBenefitsSection
       } yield {
         form.bindFromRequest().fold(
           (formWithErrors: Form[_]) =>
-            Future.successful(BadRequest(anyOtherBenefits(appConfig, formWithErrors, mode, taxYear, otherBenefitNames))),
+            Future.successful(BadRequest(anyOtherBenefits(appConfig, formWithErrors, mode, taxYear, otherBenefitsAnswers))),
           value =>
             dataCacheConnector.save[Boolean](request.externalId, AnyOtherBenefitsId.toString, value).map(cacheMap =>
               Redirect(navigator.nextPage(AnyOtherBenefitsId, mode)(new UserAnswers(cacheMap))))

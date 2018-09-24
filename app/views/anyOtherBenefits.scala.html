@@ -18,16 +18,17 @@
 @import controllers.routes._
 @import models.Mode
 @import uk.gov.hmrc.play.views.html._
-@import viewmodels.InputViewModel
+@import viewmodels._
 @import uk.gov.hmrc.renderer.TemplateRenderer
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
+
 
 @(
     appConfig: FrontendAppConfig,
     form: Form[_],
     mode: Mode,
     taxYear: SelectTaxYear,
-    otherBenefitNames: Seq[String]
+    otherBenefits: AnswerSection
 )(
     implicit
         request: Request[_],
@@ -52,9 +53,12 @@
 
         <p class="lede">@messages("global.otherListHeading")</p>
 
-        @components.list(
-            bulletList = otherBenefitNames
+
+        @components.other_summary(
+            answers = otherBenefits.rows
         )
+
+        <p>@messages("anyOtherBenefits.addAnotherBenefit")</p>
 
         @components.input_yes_no(
             InputViewModel("value", form),

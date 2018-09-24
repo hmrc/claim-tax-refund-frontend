@@ -17,13 +17,25 @@
 @import viewmodels.AnswerRow
 
 @(
-        row: AnswerRow,
-        idPath: String,
-        changeLink: Boolean = true
+row: AnswerRow,
+idPath: String,
+changeLink: Boolean = true
 )(
-        implicit messages: Messages
+implicit messages: Messages
 )
 
+@answerWidth = @{
+if(row.deleteUrl.isDefined) 3 else 5
+}
+
+@if(row.isDeleteLinkRow) {
+<li class="tabular-data__entry tabular-data__entry--grouped">
+    <div class="tabular-data__data tabular-data__data--2-12">
+        <a href=@row.deleteUrl.get>@messages("site.delete.item", row.label.print)</a>
+        <span class="visually-hidden">@messages("site.hidden-delete", row.label.print)</span>
+    </div>
+</li>
+}
 @if(row.isHeadingRow) {
 <li class="tabular-data__entry tabular-data__entry--grouped">
     <div id="cya-@idPath-question" class="tabular-data__data tabular-data__data--5-12">
@@ -31,10 +43,10 @@
     </div>
 </li>
 }
-@if(!row.isHeadingRow) {
+@if(!row.isDeleteLinkRow && !row.isHeadingRow) {
 <li class="tabular-data__entry tabular-data__entry--grouped divider--bottom">
     <div id="cya-@idPath-question" class="tabular-data__data tabular-data__data--5-12">@row.label.print</div>
-    <div id="cya-@idPath-answer" class="tabular-data__data tabular-data__data--5-12">@Html(row.answer.print)</div>
+    <div id="cya-@idPath-answer" class="tabular-data__data tabular-data__data--@answerWidth-12">@Html(row.answer.print)</div>
 
     @if(changeLink) {
     <div class="tabular-data__data tabular-data__data--2-12 u-align--tablet-right">
@@ -44,6 +56,14 @@
         </a>
     </div>
     }
+
+    @if(row.deleteUrl.isDefined) {
+    <div class="tabular-data__data tabular-data__data--2-12 u-align--tablet-right">
+        <a id="cya-@idPath" href='@row.deleteUrl.get'>
+            <span aria-hidden="true">@messages("site.delete")</span>
+            <span class="visually-hidden">@messages("site.hidden-delete", row.label.print)</span>
+        </a>
+    </div>
+    }
 </li>
 }
-
