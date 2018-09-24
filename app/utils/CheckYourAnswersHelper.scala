@@ -122,8 +122,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
               benefits.name,
               s"£${benefits.amount}",
               answerIsMessageKey = false,
-              routes.OtherBenefitController.onPageLoad(CheckMode, Index(index)).url,
-              Some(routes.DeleteOtherController.onPageLoad(Index(index), benefits.name, OtherBenefit.collectionId).url)
+              routes.OtherBenefitController.onPageLoad(CheckMode, Index(index)).url
             )
            )
           )
@@ -178,9 +177,8 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
               companyBenefits.name,
               s"£${companyBenefits.amount}",
               answerIsMessageKey = false,
-              routes.OtherCompanyBenefitController.onPageLoad(CheckMode, Index(index)).url,
-              Some(routes.DeleteOtherController.onPageLoad(Index(index), companyBenefits.name, OtherCompanyBenefit.collectionId).url)
-            )
+              routes.OtherCompanyBenefitController.onPageLoad(CheckMode, Index(index)).url
+              )
             )
           )
       }
@@ -285,15 +283,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
               label = messages("anyTaxableOtherIncome.checkYourAnswersLabel", taxableIncome._1.name),
               answer = Some(taxableIncome._2),
               route = routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode, Index(index)).url
-            ),
-            Some(AnswerRow(
-              label = taxableIncome._1.name,
-              answer = s"£${taxableIncome._1.amount}",
-              answerIsMessageKey = false,
-              url = routes.OtherTaxableIncomeController.onPageLoad(CheckMode, Index(index)).url,
-              deleteUrl = Some(routes.DeleteOtherController.onPageLoad(Index(index), taxableIncome._1.name, "otherTaxableIncome").url),
-              isDeleteLinkRow = true
-            ))
+            )
           )
       }
 

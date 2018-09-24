@@ -466,9 +466,6 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
       helper.otherTaxableIncome(3).get.label.key mustBe messages("anyTaxableOtherIncome.checkYourAnswersLabel", "qwerty")
       helper.otherTaxableIncome(3).get.answer.key mustBe "£123"
       helper.otherTaxableIncome(3).get.url mustBe routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode, 0).url
-      helper.otherTaxableIncome(4).get.label.key mustBe "qwerty"
-      helper.otherTaxableIncome(4).get.deleteUrl.get mustBe
-        routes.DeleteOtherController.onPageLoad(index = 0, itemName = "qwerty", collectionId = "otherTaxableIncome").url
     }
   }
 

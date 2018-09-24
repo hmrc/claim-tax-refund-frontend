@@ -33,17 +33,15 @@ object Message {
 }
 
 
-case class AnswerRow(label: Message, answer: Message, url: String, deleteUrl: Option[String], itemName: Option[String], isHeadingRow: Boolean, isDeleteLinkRow: Boolean)
+case class AnswerRow(label: Message, answer: Message, url: String, itemName: Option[String], isHeadingRow: Boolean)
 
 object AnswerRow {
   def apply(label: String,
             answer: String,
             answerIsMessageKey: Boolean,
             url: String,
-            deleteUrl: Option[String] = None,
             itemName: Option[String] = None,
-            isHeadingRow: Boolean = false,
-            isDeleteLinkRow: Boolean = false
+            isHeadingRow: Boolean = false
            ): AnswerRow =
-    AnswerRow(Message(label), Message(answer), url, deleteUrl, itemName, isHeadingRow, isDeleteLinkRow)
+    AnswerRow(Message(label), Message(answer), url, itemName, isHeadingRow)
 }
