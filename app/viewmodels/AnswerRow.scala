@@ -33,13 +33,13 @@ object Message {
 }
 
 
-case class AnswerRow(label: Message, answer: Message, url: String, itemName: Option[String], isHeadingRow: Boolean)
+case class AnswerRow(label: Message, answer: Message, url: Option[String], itemName: Option[String], isHeadingRow: Boolean)
 
 object AnswerRow {
   def apply(label: String,
             answer: String,
             answerIsMessageKey: Boolean,
-            url: String,
+            url: Option[String],
             itemName: Option[String] = None,
             isHeadingRow: Boolean = false
            ): AnswerRow =

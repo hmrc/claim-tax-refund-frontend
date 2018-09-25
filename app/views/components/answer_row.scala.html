@@ -36,7 +36,7 @@
     <div id="cya-@idPath-question" class="tabular-data__data tabular-data__data--5-12">@row.label.print</div>
     <div id="cya-@idPath-answer" class="tabular-data__data tabular-data__data--5-12">@Html(row.answer.print)</div>
 
-    @if(changeLink) {
+    @if(changeLink && row.url.isDefined) {
     <div class="tabular-data__data tabular-data__data--2-12 u-align--tablet-right">
         <a id="cya-@idPath" href='@row.url'>
             <span aria-hidden="true">@messages("site.edit")</span>
