@@ -29,9 +29,31 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
 
   "BenefitsNavigator" when {
     "in normal mode" when {
+
+      "go to summary page if there is a previous otherBenefit" in {
+        val answers = MockUserAnswers.nothingAnswered
+        when(answers.anyBenefits) thenReturn Some(true)
+        when(answers.selectBenefits) thenReturn Some(Seq(Benefits.OTHER_TAXABLE_BENEFIT))
+        when(answers.otherBenefit) thenReturn Some(Seq(OtherBenefit("benefit1", "123")))
+
+        navigator.nextPage(SelectBenefitsId, NormalMode)(answers) mustBe routes.AnyOtherBenefitsController.onPageLoad(NormalMode)
+      }
+
+      "go to otherBenefit if there is no previous otherBenefit" in {
+        val answers = MockUserAnswers.benefitsUserAnswers
+        navigator.nextPage(OtherBenefitId, NormalMode)(answers) mustBe routes.AnyOtherBenefitsController.onPageLoad(NormalMode)
+      }
+
+      "go to AnyCompanyBenefits from BenefitsSummary" in {
+        val answers = MockUserAnswers.nothingAnswered
+        when(answers.anyOtherBenefits) thenReturn Some(false)
+        navigator.nextPage(AnyOtherBenefitsId, NormalMode)(answers) mustBe routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
+      }
+
       "go to SelectBenefits page from AnyBenefits when answer is yes" in {
         val answers = MockUserAnswers.nothingAnswered
         when(answers.anyBenefits) thenReturn Some(true)
+
         navigator.nextPage(AnyBenefitsId, NormalMode)(answers) mustBe routes.SelectBenefitsController.onPageLoad(NormalMode)
       }
 
@@ -155,11 +177,6 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
           )
 
           navigator.nextPage(SelectBenefitsId, NormalMode)(answers) mustBe routes.OtherBenefitController.onPageLoad(NormalMode, index = 0)
-        }
-
-        "go to AnyCompanyBenefits when all benefits checked and amounts provided" in {
-          val answers = MockUserAnswers.benefitsUserAnswers
-          navigator.nextPage(SelectBenefitsId, NormalMode)(answers) mustBe routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
         }
       }
 

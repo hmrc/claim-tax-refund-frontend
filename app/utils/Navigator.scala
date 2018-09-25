@@ -230,6 +230,8 @@ class Navigator @Inject()() {
         routes.HowMuchStatePensionController.onPageLoad(mode)
       } else if (benefits.contains(Benefits.OTHER_TAXABLE_BENEFIT) && userAnswers.otherBenefit.isEmpty) {
         routes.OtherBenefitController.onPageLoad(mode, Index(0))
+      } else if (benefits.contains(Benefits.OTHER_TAXABLE_BENEFIT) && userAnswers.otherBenefit.isDefined) {
+        routes.AnyOtherBenefitsController.onPageLoad(mode)
       } else {
         if (mode == NormalMode) routes.AnyCompanyBenefitsController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
       }
