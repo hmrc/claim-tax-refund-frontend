@@ -228,7 +228,7 @@ class Navigator @Inject()() {
         routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(mode)
       } else if (benefits.contains(Benefits.STATE_PENSION) && userAnswers.howMuchStatePension.isEmpty) {
         routes.HowMuchStatePensionController.onPageLoad(mode)
-      } else if (benefits.contains(Benefits.OTHER_TAXABLE_BENEFIT) && userAnswers.otherBenefit.isEmpty) {
+      } else if (benefits.contains(Benefits.OTHER_TAXABLE_BENEFIT) && (userAnswers.otherBenefit.isEmpty || userAnswers.otherBenefit.get.isEmpty)) {
         routes.OtherBenefitController.onPageLoad(mode, Index(0))
       } else if (benefits.contains(Benefits.OTHER_TAXABLE_BENEFIT) && userAnswers.otherBenefit.isDefined) {
         routes.AnyOtherBenefitsController.onPageLoad(mode)

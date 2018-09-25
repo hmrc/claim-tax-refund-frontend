@@ -96,7 +96,10 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
     } yield {
       val updatedOtherBenefit: Seq[OtherBenefit] = otherBenefit.patch(index, Seq.empty, 1)
       dataCacheConnector.save[Seq[OtherBenefit]](request.externalId, OtherBenefitId.toString, updatedOtherBenefit).map(cacheMap =>
-        Redirect(navigator.nextPage(DeleteOtherBenefitId, mode)(new UserAnswers(cacheMap)))
+        mode match {
+          case CheckMode => Redirect(routes.CheckYourAnswersController.onPageLoad())
+          case NormalMode => Redirect (routes.AnyOtherBenefitsController.onPageLoad(NormalMode) )
+        }
       )
     }
 

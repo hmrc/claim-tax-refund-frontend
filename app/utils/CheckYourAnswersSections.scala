@@ -58,8 +58,21 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
     if (userAnswers.otherBenefit.isDefined) {
       AnswerSection(
         headingKey = Some("otherBenefit.checkYourAnswersLabel"),
-        rows = cyaHelper.otherBenefits.flatten,
-        addLinkText = Some("otherBenefit.add"),
+        rows = cyaHelper.otherBenefitsCheckMode.flatten,
+        addLinkText = Some("otherBenefit.change"),
+        addLinkUrl = Some(routes.AnyOtherBenefitsController.onPageLoad(CheckMode).url)
+      )
+    } else {
+      AnswerSection(None, Seq.empty)
+    }
+  }
+
+  def otherBenefitsSectionSummary: AnswerSection = {
+    if (userAnswers.otherBenefit.isDefined) {
+      AnswerSection(
+        headingKey = Some("otherBenefit.checkYourAnswersLabel"),
+        rows = cyaHelper.otherBenefitsNormalMode.flatten,
+        addLinkText = Some("otherBenefit.change"),
         addLinkUrl = Some(routes.OtherBenefitController.onPageLoad(CheckMode, Index(userAnswers.otherBenefit.get.size)).url)
       )
     } else {

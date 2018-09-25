@@ -202,8 +202,8 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
       val otherBenefit = Seq(OtherBenefit("qwerty", "1234"))
       when(answers.otherBenefit) thenReturn Some(otherBenefit)
 
-      helper.otherBenefits.head.get.label.key mustBe "qwerty"
-      helper.otherBenefits.head.get.answer.key mustBe s"£$amount"
+      helper.otherBenefitsCheckMode.head.get.label.key mustBe "qwerty"
+      helper.otherBenefitsCheckMode.head.get.answer.key mustBe s"£$amount"
     }
    }
 
@@ -211,7 +211,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"return a empty Seq when empty" in {
       when(answers.otherBenefit) thenReturn None
 
-      helper.otherBenefits mustBe Seq()
+      helper.otherBenefitsCheckMode mustBe Seq()
     }
   }
 

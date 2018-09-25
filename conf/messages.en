@@ -337,7 +337,7 @@ otherBenefit.name.blank = Enter the name of the other taxable benefit you got
 otherBenefit.amount.blank = Enter the amount of the other taxable benefit you got
 otherBenefit.amount.invalid = Enter a valid amount of the other taxable benefit you got
 otherBenefit.duplicate = You have already entered this other taxable benefit name
-otherBenefit.add = Add another taxable benefit
+otherBenefit.change = Change taxable benefits
 
 howMuchForeignIncome.title = How much foreign income did you get?
 howMuchForeignIncome.heading = How much foreign income did you get?

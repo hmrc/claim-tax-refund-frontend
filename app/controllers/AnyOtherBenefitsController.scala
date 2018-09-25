@@ -54,7 +54,7 @@ class AnyOtherBenefitsController @Inject()(appConfig: FrontendAppConfig,
       val result: Option[Result] = for {
         taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
         cyaHelper: CheckYourAnswersHelper = new CheckYourAnswersHelper(request.userAnswers)
-        otherBenefitsAnswers: AnswerSection = new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherBenefitsSection
+        otherBenefitsAnswers: AnswerSection = new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherBenefitsSectionSummary
 
       } yield {
         Ok(anyOtherBenefits(appConfig, form, mode, taxYear, otherBenefitsAnswers))
@@ -70,7 +70,7 @@ class AnyOtherBenefitsController @Inject()(appConfig: FrontendAppConfig,
       val result: Option[Future[Result]] = for {
         taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
         cyaHelper: CheckYourAnswersHelper = new CheckYourAnswersHelper(request.userAnswers)
-        otherBenefitsAnswers: AnswerSection = new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherBenefitsSection
+        otherBenefitsAnswers: AnswerSection = new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherBenefitsSectionSummary
       } yield {
         form.bindFromRequest().fold(
           (formWithErrors: Form[_]) =>

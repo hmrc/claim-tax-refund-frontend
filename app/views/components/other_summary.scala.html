@@ -18,19 +18,23 @@
 
 
 @(
-addCssClass: Option[String] = None,
-answers: Seq[AnswerRow]
+    addCssClass: Option[String] = None,
+    answers: Seq[AnswerRow]
 )(implicit messages: Messages)
 
 @cssClass = @{
-if(addCssClass.isDefined) s"form-group ${addCssClass.get}" else "form-group"
+    if(addCssClass.isDefined) s"form-group ${addCssClass.get}" else "form-group"
 }
 
 <div class="@cssClass" id="component-answer-list">
-    @for(answer <- answers){
-        @components.answer_row(
-            row = answer,
-            idPath = s"other_summary_$answer.label"
-        )
-    }
+    <ul role="list" class="tabular-data tabular-data--list">
+        @for((answer, i) <- answers.zipWithIndex) {
+                @components.answer_row(
+                    row = answer,
+                    idPath = s"other_summary_$i"
+                    )
+        }
+
+
+    </ul>
 </div>

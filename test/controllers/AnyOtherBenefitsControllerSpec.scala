@@ -19,7 +19,7 @@ package controllers
 import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.BooleanForm
-import models.{NormalMode, OtherBenefit, SelectTaxYear}
+import models.{CheckMode, NormalMode, SelectTaxYear}
 import models.SelectTaxYear.CYMinus2
 import org.mockito.Mockito.when
 import play.api.data.Form
@@ -36,7 +36,7 @@ class AnyOtherBenefitsControllerSpec extends ControllerSpecBase {
   val formProvider = new BooleanForm()
   val form = formProvider()
   private val taxYear: SelectTaxYear = CYMinus2
-  private val mockUserAnswers: UserAnswers = MockUserAnswers.fullValidUserAnswers
+  private val mockUserAnswers: UserAnswers = MockUserAnswers.claimDetailsUserAnswers
 
   private val cya: CheckYourAnswersHelper = new CheckYourAnswersHelper(mockUserAnswers)(messages)
   private val otherBenefitsSection: AnswerSection = new CheckYourAnswersSections(cya, mockUserAnswers).otherBenefitsSection

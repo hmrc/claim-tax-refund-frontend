@@ -18,7 +18,7 @@ package utils
 
 import base.SpecBase
 import controllers.routes
-import models.{CheckMode, Index}
+import models.{CheckMode, Index, NormalMode}
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.mockito.MockitoSugar
 import play.api.i18n.Messages
@@ -91,8 +91,8 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
 
       otherBenefitSection.rows.size mustBe 3
       otherBenefitSection.headingKey.get mustBe "otherBenefit.checkYourAnswersLabel"
-      otherBenefitSection.addLinkText.get mustBe "otherBenefit.add"
-      otherBenefitSection.addLinkUrl.get mustBe routes.OtherBenefitController.onPageLoad(CheckMode, Index(answers.otherBenefit.get.size)).url
+      otherBenefitSection.addLinkText.get mustBe "otherBenefit.change"
+      otherBenefitSection.addLinkUrl.get mustBe routes.AnyOtherBenefitsController.onPageLoad(CheckMode).url
     }
 
     "Company benefits section" in {
