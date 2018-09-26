@@ -233,9 +233,9 @@ class Navigator @Inject()() {
         routes.OtherBenefitController.onPageLoad(mode, Index(0))
       } else if (benefits.contains(Benefits.OTHER_TAXABLE_BENEFIT) && userAnswers.otherBenefit.isDefined) {
         routes.AnyOtherBenefitsController.onPageLoad(mode)
-      } else {
-        if (mode == NormalMode) routes.AnyCompanyBenefitsController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
-      }
+      } else if (mode == NormalMode) {
+        routes.AnyCompanyBenefitsController.onPageLoad(mode)
+      } else routes.CheckYourAnswersController.onPageLoad()
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
@@ -278,9 +278,9 @@ class Navigator @Inject()() {
         routes.HowMuchMedicalBenefitsController.onPageLoad(mode)
       } else if (benefits.contains(CompanyBenefits.OTHER_COMPANY_BENEFIT) && userAnswers.otherCompanyBenefit.isEmpty) {
         routes.OtherCompanyBenefitController.onPageLoad(mode, Index(0))
-      } else {
-        if (mode == NormalMode) routes.AnyTaxableIncomeController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
-      }
+      } else if (mode == NormalMode) {
+        routes.AnyTaxableIncomeController.onPageLoad(mode)
+      } else routes.CheckYourAnswersController.onPageLoad()
     case None =>
       routes.SessionExpiredController.onPageLoad()
   }
