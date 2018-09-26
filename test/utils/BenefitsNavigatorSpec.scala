@@ -29,9 +29,31 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
 
   "BenefitsNavigator" when {
     "in normal mode" when {
+
+      "go to summary page if there is a previous otherBenefit" in {
+        val answers = MockUserAnswers.nothingAnswered
+        when(answers.anyBenefits) thenReturn Some(true)
+        when(answers.selectBenefits) thenReturn Some(Seq(Benefits.OTHER_TAXABLE_BENEFIT))
+        when(answers.otherBenefit) thenReturn Some(Seq(OtherBenefit("benefit1", "123")))
+
+        navigator.nextPage(SelectBenefitsId, NormalMode)(answers) mustBe routes.AnyOtherBenefitsController.onPageLoad(NormalMode)
+      }
+
+      "go to otherBenefit if there is no previous otherBenefit" in {
+        val answers = MockUserAnswers.benefitsUserAnswers
+        navigator.nextPage(OtherBenefitId, NormalMode)(answers) mustBe routes.AnyOtherBenefitsController.onPageLoad(NormalMode)
+      }
+
+      "go to AnyCompanyBenefits from BenefitsSummary" in {
+        val answers = MockUserAnswers.nothingAnswered
+        when(answers.anyOtherBenefits) thenReturn Some(false)
+        navigator.nextPage(AnyOtherBenefitsId, NormalMode)(answers) mustBe routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
+      }
+
       "go to SelectBenefits page from AnyBenefits when answer is yes" in {
         val answers = MockUserAnswers.nothingAnswered
         when(answers.anyBenefits) thenReturn Some(true)
+
         navigator.nextPage(AnyBenefitsId, NormalMode)(answers) mustBe routes.SelectBenefitsController.onPageLoad(NormalMode)
       }
 
@@ -155,11 +177,6 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
           )
 
           navigator.nextPage(SelectBenefitsId, NormalMode)(answers) mustBe routes.OtherBenefitController.onPageLoad(NormalMode, index = 0)
-        }
-
-        "go to AnyCompanyBenefits when all benefits checked and amounts provided" in {
-          val answers = MockUserAnswers.benefitsUserAnswers
-          navigator.nextPage(SelectBenefitsId, NormalMode)(answers) mustBe routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
         }
       }
 
@@ -329,23 +346,30 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
       }
 
       "Navigating from OtherBenefitsName" must {
-        "go to CheckYourAnswersController when name and amount stored" in {
+        "go to AnyOtherBenefitsController when name and amount stored" in {
           val answers = MockUserAnswers.benefitsUserAnswers
-          navigator.nextPage(OtherBenefitId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+          navigator.nextPage(OtherBenefitId, CheckMode)(answers) mustBe routes.AnyOtherBenefitsController.onPageLoad(CheckMode)
         }
 
-        "go to CheckYourAnswersController when no amount stored" in {
+        "go to AnyOtherBenefitsController when no amount stored" in {
           val answers = MockUserAnswers.benefitsUserAnswers
           when(answers.anyOtherBenefits) thenReturn None
 
-          navigator.nextPage(OtherBenefitId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+          navigator.nextPage(OtherBenefitId, CheckMode)(answers) mustBe routes.AnyOtherBenefitsController.onPageLoad(CheckMode)
         }
       }
 
       "Navigating from AnyOtherBenefit" must {
-        "go to CheckYourAnswersController when amount stored" in {
+        "in CheckMode go to CheckYourAnswersController when amount stored and add another benefit is false" in {
           val answers = MockUserAnswers.benefitsUserAnswers
+          when(answers.anyOtherBenefits) thenReturn Some(false)
           navigator.nextPage(AnyOtherBenefitsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+        }
+
+        "in CheckMode go to OtherBenefits when add another benefit is true" in {
+          val answers = MockUserAnswers.benefitsUserAnswers
+          when(answers.anyOtherBenefits) thenReturn Some(true)
+          navigator.nextPage(AnyOtherBenefitsId, CheckMode)(answers) mustBe routes.OtherBenefitController.onPageLoad(CheckMode, 3)
         }
       }
     }

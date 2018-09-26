@@ -17,155 +17,181 @@
 package utils
 
 import controllers.routes
-import models.{CheckMode, Index}
+import models.{CheckMode, Index, NormalMode}
 import viewmodels.AnswerSection
 
 class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: UserAnswers) {
 
-  def sections: Seq[AnswerSection] = {
-    Seq(
-      claimSection,
-      benefitSection,
-      otherBenefitsSection,
-      companyBenefitSection,
-      otherCompanyBenefitSection,
-      taxableIncomeSection,
-      otherTaxableIncomeSection,
-      paymentSection,
-      contactSection
-    )
-  }
+	def sections: Seq[AnswerSection] = {
+		Seq(
+			claimSection,
+			benefitSection,
+			otherBenefitsSection,
+			companyBenefitSection,
+			otherCompanyBenefitSection,
+			taxableIncomeSection,
+			otherTaxableIncomeSection,
+			paymentSection,
+			contactSection
+		)
+	}
 
-  def claimSection = AnswerSection(Some("checkYourAnswers.claimSection"), Seq(
-    cyaHelper.selectTaxYear,
-    cyaHelper.employmentDetails,
-    cyaHelper.enterPayeReference,
-    cyaHelper.detailsOfEmploymentOrPension
-  ).flatten)
+	def claimSection = AnswerSection(Some("checkYourAnswers.claimSection"), Seq(
+		cyaHelper.selectTaxYear,
+		cyaHelper.employmentDetails,
+		cyaHelper.enterPayeReference,
+		cyaHelper.detailsOfEmploymentOrPension
+	).flatten)
 
-  def benefitSection = AnswerSection(Some("checkYourAnswers.benefitSection"), Seq(
-    cyaHelper.anyBenefits,
-    cyaHelper.selectBenefits,
-    cyaHelper.howMuchBereavementAllowance,
-    cyaHelper.howMuchCarersAllowance,
-    cyaHelper.howMuchJobseekersAllowance,
-    cyaHelper.howMuchEmploymentAndSupportAllowance,
-    cyaHelper.howMuchIncapacityBenefit,
-    cyaHelper.howMuchStatePension
-  ).flatten)
+	def benefitSection = AnswerSection(Some("checkYourAnswers.benefitSection"), Seq(
+		cyaHelper.anyBenefits,
+		cyaHelper.selectBenefits,
+		cyaHelper.howMuchBereavementAllowance,
+		cyaHelper.howMuchCarersAllowance,
+		cyaHelper.howMuchJobseekersAllowance,
+		cyaHelper.howMuchEmploymentAndSupportAllowance,
+		cyaHelper.howMuchIncapacityBenefit,
+		cyaHelper.howMuchStatePension
+	).flatten)
 
-  def otherBenefitsSection: AnswerSection = {
-    if (userAnswers.otherBenefit.isDefined) {
-      AnswerSection(
-        headingKey = Some("otherBenefit.checkYourAnswersLabel"),
-        rows = cyaHelper.otherBenefits.flatten,
-        addLinkText = Some("otherBenefit.add"),
-        addLinkUrl = Some(routes.OtherBenefitController.onPageLoad(CheckMode, Index(userAnswers.otherBenefit.get.size)).url)
-      )
-    } else {
-      AnswerSection(None, Seq.empty)
-    }
-  }
+	def otherBenefitsSection: AnswerSection = {
+		if (userAnswers.otherBenefit.isDefined) {
+			AnswerSection(
+				headingKey = Some("otherBenefit.checkYourAnswersLabel"),
+				rows = cyaHelper.otherBenefitsCheckMode.flatten,
+				addLinkText = Some("otherBenefit.change"),
+				addLinkUrl = Some(routes.AnyOtherBenefitsController.onPageLoad(CheckMode).url)
+			)
+		} else {
+			AnswerSection(None, Seq.empty)
+		}
+	}
 
-  def otherCompanyBenefitSection: AnswerSection = {
-    if (userAnswers.otherCompanyBenefit.isDefined) {
-      AnswerSection(
-        headingKey = Some("otherCompanyBenefit.checkYourAnswersLabel"),
-        rows = cyaHelper.otherCompanyBenefit.flatten,
-        addLinkText = Some("otherCompanyBenefit.add"),
-        addLinkUrl = Some(routes.OtherCompanyBenefitController.onPageLoad(CheckMode, Index(userAnswers.otherCompanyBenefit.get.size)).url)
-      )
-    } else {
-      AnswerSection(None, Seq.empty)
-    }
-  }
+	def otherBenefitsAddToListNormalMode: AnswerSection = {
+		if (userAnswers.otherBenefit.isDefined) {
+			AnswerSection(
+				headingKey = Some("otherBenefit.checkYourAnswersLabel"),
+				rows = cyaHelper.otherBenefitsNormalMode.flatten,
+				addLinkText = Some("otherBenefit.change"),
+				addLinkUrl = Some(routes.OtherBenefitController.onPageLoad(NormalMode, Index(userAnswers.otherBenefit.get.size)).url)
+			)
+		} else {
+			AnswerSection(None, Seq.empty)
+		}
+	}
 
-  def companyBenefitSection = AnswerSection(Some("checkYourAnswers.companyBenefitSection"), Seq(
-    cyaHelper.anyCompanyBenefits,
-    cyaHelper.selectCompanyBenefits,
-    cyaHelper.howMuchCarBenefits,
-    cyaHelper.howMuchFuelBenefit,
-    cyaHelper.howMuchMedicalBenefits
-  ).flatten)
+	def otherBenefitsAddToListCheckMode: AnswerSection = {
+		if (userAnswers.otherBenefit.isDefined) {
+			AnswerSection(
+				headingKey = Some("otherBenefit.checkYourAnswersLabel"),
+				rows = cyaHelper.otherBenefitsCheckMode.flatten,
+				addLinkText = Some("otherBenefit.change"),
+				addLinkUrl = Some(routes.OtherBenefitController.onPageLoad(CheckMode, Index(userAnswers.otherBenefit.get.size)).url)
+			)
+		} else {
+			AnswerSection(None, Seq.empty)
+		}
+	}
+
+	def otherCompanyBenefitSection: AnswerSection = {
+		if (userAnswers.otherCompanyBenefit.isDefined) {
+			AnswerSection(
+				headingKey = Some("otherCompanyBenefit.checkYourAnswersLabel"),
+				rows = cyaHelper.otherCompanyBenefit.flatten,
+				addLinkText = Some("otherCompanyBenefit.add"),
+				addLinkUrl = Some(routes.OtherCompanyBenefitController.onPageLoad(CheckMode, Index(userAnswers.otherCompanyBenefit.get.size)).url)
+			)
+		} else {
+			AnswerSection(None, Seq.empty)
+		}
+	}
+
+	def companyBenefitSection = AnswerSection(Some("checkYourAnswers.companyBenefitSection"), Seq(
+		cyaHelper.anyCompanyBenefits,
+		cyaHelper.selectCompanyBenefits,
+		cyaHelper.howMuchCarBenefits,
+		cyaHelper.howMuchFuelBenefit,
+		cyaHelper.howMuchMedicalBenefits
+	).flatten)
 
 
-  def taxableIncomeSection = AnswerSection(Some("checkYourAnswers.taxableIncomeSection"), Seq(
-    cyaHelper.anyTaxableIncome,
-    cyaHelper.selectTaxableIncome,
-    cyaHelper.howMuchRentalIncome,
-    cyaHelper.anyTaxPaid(
-      "anyTaxableRentalIncomeOption.checkYourAnswersLabel",
-      userAnswers.anyTaxableRentalIncome,
-      routes.AnyTaxableRentalIncomeController.onPageLoad(CheckMode).url
-    ),
-    cyaHelper.taxPaid(
-      "anyTaxableRentalIncome.checkYourAnswersLabel",
-      userAnswers.anyTaxableRentalIncome,
-      routes.AnyTaxableRentalIncomeController.onPageLoad(CheckMode).url
-    ),
-    cyaHelper.howMuchBankInterest,
-    cyaHelper.anyTaxPaid(
-      "anyTaxableBankInterestOption.checkYourAnswersLabel",
-      userAnswers.anyTaxableBankInterest,
-      routes.AnyTaxableBankInterestController.onPageLoad(CheckMode).url
-    ),
-    cyaHelper.taxPaid(
-      "anyTaxableBankInterest.checkYourAnswersLabel",
-      userAnswers.anyTaxableBankInterest,
-      routes.AnyTaxableBankInterestController.onPageLoad(CheckMode).url
-    ),
-    cyaHelper.howMuchInvestmentOrDividend,
-    cyaHelper.anyTaxPaid(
-      "anyTaxableInvestmentsOption.checkYourAnswersLabel",
-      userAnswers.anyTaxableInvestments,
-      routes.AnyTaxableInvestmentsController.onPageLoad(CheckMode).url
-    ),
-    cyaHelper.taxPaid(
-      "anyTaxableInvestments.checkYourAnswersLabel",
-      userAnswers.anyTaxableInvestments,
-      routes.AnyTaxableInvestmentsController.onPageLoad(CheckMode).url
-    ),
-    cyaHelper.howMuchForeignIncome,
-    cyaHelper.anyTaxPaid(
-      "anyTaxableForeignIncomeOption.checkYourAnswersLabel",
-      userAnswers.anyTaxableForeignIncome,
-      routes.AnyTaxableForeignIncomeController.onPageLoad(CheckMode).url
-    ),
-    cyaHelper.taxPaid(
-      "anyTaxableForeignIncome.checkYourAnswersLabel",
-      userAnswers.anyTaxableForeignIncome,
-      routes.AnyTaxableForeignIncomeController.onPageLoad(CheckMode).url
-    )
-  ).flatten)
+	def taxableIncomeSection = AnswerSection(Some("checkYourAnswers.taxableIncomeSection"), Seq(
+		cyaHelper.anyTaxableIncome,
+		cyaHelper.selectTaxableIncome,
+		cyaHelper.howMuchRentalIncome,
+		cyaHelper.anyTaxPaid(
+			"anyTaxableRentalIncomeOption.checkYourAnswersLabel",
+			userAnswers.anyTaxableRentalIncome,
+			routes.AnyTaxableRentalIncomeController.onPageLoad(CheckMode).url
+		),
+		cyaHelper.taxPaid(
+			"anyTaxableRentalIncome.checkYourAnswersLabel",
+			userAnswers.anyTaxableRentalIncome,
+			routes.AnyTaxableRentalIncomeController.onPageLoad(CheckMode).url
+		),
+		cyaHelper.howMuchBankInterest,
+		cyaHelper.anyTaxPaid(
+			"anyTaxableBankInterestOption.checkYourAnswersLabel",
+			userAnswers.anyTaxableBankInterest,
+			routes.AnyTaxableBankInterestController.onPageLoad(CheckMode).url
+		),
+		cyaHelper.taxPaid(
+			"anyTaxableBankInterest.checkYourAnswersLabel",
+			userAnswers.anyTaxableBankInterest,
+			routes.AnyTaxableBankInterestController.onPageLoad(CheckMode).url
+		),
+		cyaHelper.howMuchInvestmentOrDividend,
+		cyaHelper.anyTaxPaid(
+			"anyTaxableInvestmentsOption.checkYourAnswersLabel",
+			userAnswers.anyTaxableInvestments,
+			routes.AnyTaxableInvestmentsController.onPageLoad(CheckMode).url
+		),
+		cyaHelper.taxPaid(
+			"anyTaxableInvestments.checkYourAnswersLabel",
+			userAnswers.anyTaxableInvestments,
+			routes.AnyTaxableInvestmentsController.onPageLoad(CheckMode).url
+		),
+		cyaHelper.howMuchForeignIncome,
+		cyaHelper.anyTaxPaid(
+			"anyTaxableForeignIncomeOption.checkYourAnswersLabel",
+			userAnswers.anyTaxableForeignIncome,
+			routes.AnyTaxableForeignIncomeController.onPageLoad(CheckMode).url
+		),
+		cyaHelper.taxPaid(
+			"anyTaxableForeignIncome.checkYourAnswersLabel",
+			userAnswers.anyTaxableForeignIncome,
+			routes.AnyTaxableForeignIncomeController.onPageLoad(CheckMode).url
+		)
+	).flatten)
 
-  def otherTaxableIncomeSection: AnswerSection = {
-    if (userAnswers.otherTaxableIncome.isDefined) {
-      AnswerSection(
-        headingKey = Some("otherTaxableIncome.checkYourAnswersLabel"),
-        rows = cyaHelper.otherTaxableIncome.flatten,
-        addLinkText = Some("otherTaxableIncome.add"),
-        addLinkUrl = Some(routes.OtherTaxableIncomeController.onPageLoad(CheckMode, Index(userAnswers.otherTaxableIncome.get.size)).url)
-      )
-    } else {
-      AnswerSection(None, Seq.empty)
-    }
-  }
+	def otherTaxableIncomeSection: AnswerSection = {
+		if (userAnswers.otherTaxableIncome.isDefined) {
+			AnswerSection(
+				headingKey = Some("otherTaxableIncome.checkYourAnswersLabel"),
+				rows = cyaHelper.otherTaxableIncome.flatten,
+				addLinkText = Some("otherTaxableIncome.add"),
+				addLinkUrl = Some(routes.OtherTaxableIncomeController.onPageLoad(CheckMode, Index(userAnswers.otherTaxableIncome.get.size)).url)
+			)
+		} else {
+			AnswerSection(None, Seq.empty)
+		}
+	}
 
-  def paymentSection = AnswerSection(Some("checkYourAnswers.paymentSection"), Seq(
-    cyaHelper.whereToSendPayment,
-    cyaHelper.itmpAddress,
-    cyaHelper.paymentAddressCorrect,
-    cyaHelper.nomineeFullName,
-    cyaHelper.anyAgentRef,
-    cyaHelper.agentReferenceNumber,
-    cyaHelper.isPaymentAddressInTheUK,
-    cyaHelper.paymentUKAddress,
-    cyaHelper.paymentInternationalAddress,
-    cyaHelper.paymentLookupAddress
-  ).flatten)
+	def paymentSection = AnswerSection(Some("checkYourAnswers.paymentSection"), Seq(
+		cyaHelper.whereToSendPayment,
+		cyaHelper.itmpAddress,
+		cyaHelper.paymentAddressCorrect,
+		cyaHelper.nomineeFullName,
+		cyaHelper.anyAgentRef,
+		cyaHelper.agentReferenceNumber,
+		cyaHelper.isPaymentAddressInTheUK,
+		cyaHelper.paymentUKAddress,
+		cyaHelper.paymentInternationalAddress,
+		cyaHelper.paymentLookupAddress
+	).flatten)
 
-  def contactSection = AnswerSection(Some("checkYourAnswers.contactSection"), Seq(
-    cyaHelper.anyTelephoneNumber,
-    cyaHelper.telephoneNumber
-  ).flatten)
+	def contactSection = AnswerSection(Some("checkYourAnswers.contactSection"), Seq(
+		cyaHelper.anyTelephoneNumber,
+		cyaHelper.telephoneNumber
+	).flatten)
 }

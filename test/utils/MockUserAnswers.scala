@@ -134,9 +134,9 @@ object MockUserAnswers extends MockitoSugar {
         Benefits.INCAPACITY_BENEFIT,
         Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE,
         Benefits.JOBSEEKERS_ALLOWANCE,
-        Benefits.OTHER_TAXABLE_BENEFIT,
-        Benefits.STATE_PENSION
-      )
+        Benefits.STATE_PENSION,
+        Benefits.OTHER_TAXABLE_BENEFIT
+    )
     )
     when(answers.howMuchBereavementAllowance) thenReturn Some("1234")
     when(answers.howMuchCarersAllowance) thenReturn Some("1234")

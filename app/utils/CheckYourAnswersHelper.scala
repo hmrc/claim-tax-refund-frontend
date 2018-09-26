@@ -111,7 +111,15 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
     x => AnswerRow("howMuchStatePension.checkYourAnswersLabel", s"£$x", false, routes.HowMuchStatePensionController.onPageLoad(CheckMode).url)
   }
 
-  def otherBenefits: Seq[Option[AnswerRow]] = {
+  def otherBenefitsNormalMode: Seq[Option[AnswerRow]] = {
+    otherBenefits(NormalMode)
+  }
+
+  def otherBenefitsCheckMode: Seq[Option[AnswerRow]] = {
+    otherBenefits(CheckMode)
+  }
+
+  def otherBenefits(mode: Mode): Seq[Option[AnswerRow]] = {
     for {
       otherBenefits <- userAnswers.otherBenefit
     } yield {
@@ -122,8 +130,8 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
               benefits.name,
               s"£${benefits.amount}",
               answerIsMessageKey = false,
-              routes.OtherBenefitController.onPageLoad(CheckMode, Index(index)).url,
-              Some(routes.DeleteOtherController.onPageLoad(Index(index), benefits.name, OtherBenefit.collectionId).url)
+              routes.OtherBenefitController.onPageLoad(mode, Index(index)).url,
+              Some(routes.DeleteOtherController.onPageLoad(mode, Index(index), benefits.name, OtherBenefit.collectionId).url)
             )
            )
           )
@@ -179,7 +187,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
               s"£${companyBenefits.amount}",
               answerIsMessageKey = false,
               routes.OtherCompanyBenefitController.onPageLoad(CheckMode, Index(index)).url,
-              Some(routes.DeleteOtherController.onPageLoad(Index(index), companyBenefits.name, OtherCompanyBenefit.collectionId).url)
+              Some(routes.DeleteOtherController.onPageLoad(CheckMode, Index(index), companyBenefits.name, OtherCompanyBenefit.collectionId).url)
             )
             )
           )
