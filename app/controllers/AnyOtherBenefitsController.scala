@@ -22,7 +22,7 @@ import controllers.actions._
 import forms.BooleanForm
 import identifiers.AnyOtherBenefitsId
 import javax.inject.Inject
-import models.{Mode, SelectTaxYear}
+import models.{CheckMode, Mode, NormalMode, SelectTaxYear}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, Result}
@@ -54,8 +54,10 @@ class AnyOtherBenefitsController @Inject()(appConfig: FrontendAppConfig,
       val result: Option[Result] = for {
         taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
         cyaHelper: CheckYourAnswersHelper = new CheckYourAnswersHelper(request.userAnswers)
-        otherBenefitsAnswers: AnswerSection = new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherBenefitsSectionSummary
-
+        otherBenefitsAnswers: AnswerSection = mode match {
+            case NormalMode => new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherBenefitsSectionSummaryNomalMode
+            case CheckMode => new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherBenefitsSectionSummaryCheckMode
+        }
       } yield {
         Ok(anyOtherBenefits(appConfig, form, mode, taxYear, otherBenefitsAnswers))
       }
@@ -70,7 +72,10 @@ class AnyOtherBenefitsController @Inject()(appConfig: FrontendAppConfig,
       val result: Option[Future[Result]] = for {
         taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
         cyaHelper: CheckYourAnswersHelper = new CheckYourAnswersHelper(request.userAnswers)
-        otherBenefitsAnswers: AnswerSection = new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherBenefitsSectionSummary
+        otherBenefitsAnswers: AnswerSection = mode match {
+          case NormalMode => new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherBenefitsSectionSummaryNomalMode
+          case CheckMode => new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherBenefitsSectionSummaryCheckMode
+        }
       } yield {
         form.bindFromRequest().fold(
           (formWithErrors: Form[_]) =>

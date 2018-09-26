@@ -50,7 +50,7 @@ class Navigator @Inject()() {
     HowMuchIncapacityBenefitId -> selectedBenefitsCheck(NormalMode),
     HowMuchEmploymentAndSupportAllowanceId -> selectedBenefitsCheck(NormalMode),
     HowMuchStatePensionId -> selectedBenefitsCheck(NormalMode),
-    OtherBenefitId -> otherBenefits(NormalMode),
+    OtherBenefitId -> (_ => routes.AnyOtherBenefitsController.onPageLoad(NormalMode)),
     AnyOtherBenefitsId -> anyOtherBenefits,
     //Company benefits
     AnyCompanyBenefitsId -> anyCompanyBenefits(NormalMode),
@@ -102,7 +102,7 @@ class Navigator @Inject()() {
     HowMuchIncapacityBenefitId -> selectedBenefitsCheck(CheckMode),
     HowMuchEmploymentAndSupportAllowanceId -> selectedBenefitsCheck(CheckMode),
     HowMuchStatePensionId -> selectedBenefitsCheck(CheckMode),
-    OtherBenefitId -> otherBenefits(CheckMode),
+    OtherBenefitId -> (_ => routes.AnyOtherBenefitsController.onPageLoad(CheckMode)),
     //Company Benefits
     AnyCompanyBenefitsId -> anyCompanyBenefits(CheckMode),
     SelectCompanyBenefitsId -> selectedCompanyBenefitsCheck(CheckMode),
@@ -244,8 +244,6 @@ class Navigator @Inject()() {
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
-  def otherBenefits(mode: Mode)(userAnswers: UserAnswers): Call =
-    if (mode == NormalMode) routes.AnyOtherBenefitsController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
 
   //Company benefits--------------------------
 

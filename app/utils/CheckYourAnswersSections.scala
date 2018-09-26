@@ -67,7 +67,7 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
     }
   }
 
-  def otherBenefitsSectionSummary: AnswerSection = {
+  def otherBenefitsSectionSummaryNomalMode: AnswerSection = {
     if (userAnswers.otherBenefit.isDefined) {
       AnswerSection(
         headingKey = Some("otherBenefit.checkYourAnswersLabel"),
@@ -79,6 +79,19 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
       AnswerSection(None, Seq.empty)
     }
   }
+
+	def otherBenefitsSectionSummaryCheckMode: AnswerSection = {
+		if (userAnswers.otherBenefit.isDefined) {
+			AnswerSection(
+				headingKey = Some("otherBenefit.checkYourAnswersLabel"),
+				rows = cyaHelper.otherBenefitsCheckMode.flatten,
+				addLinkText = Some("otherBenefit.change"),
+				addLinkUrl = Some(routes.OtherBenefitController.onPageLoad(CheckMode, Index(userAnswers.otherBenefit.get.size)).url)
+			)
+		} else {
+			AnswerSection(None, Seq.empty)
+		}
+	}
 
   def otherCompanyBenefitSection: AnswerSection = {
     if (userAnswers.otherCompanyBenefit.isDefined) {
