@@ -58,7 +58,7 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
 		if (userAnswers.otherBenefit.isDefined) {
 			AnswerSection(
 				headingKey = Some("otherBenefit.checkYourAnswersLabel"),
-				rows = cyaHelper.otherBenefitsCheckMode.flatten,
+				rows = cyaHelper.otherBenefitsCheckYourAnswers.flatten,
 				addLinkText = Some("otherBenefit.change"),
 				addLinkUrl = Some(routes.AnyOtherBenefitsController.onPageLoad(CheckMode).url)
 			)
