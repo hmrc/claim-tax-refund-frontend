@@ -43,22 +43,22 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
           case CYMinus5 =>
             CYMinus5.asString
         },
-        false, routes.SelectTaxYearController.onPageLoad(CheckMode).url)
+        false, Some(routes.SelectTaxYearController.onPageLoad(CheckMode).url))
   }
 
   def employmentDetails: Option[AnswerRow] = userAnswers.employmentDetails map {
     x => AnswerRow("employmentDetails.checkYourAnswersLabel",
       if(x) "site.yes" else "site.no",
-      true, routes.EmploymentDetailsController.onPageLoad(CheckMode).url)
+      true, Some(routes.EmploymentDetailsController.onPageLoad(CheckMode).url))
   }
 
   def enterPayeReference: Option[AnswerRow] = userAnswers.enterPayeReference map {
     x => AnswerRow("enterPayeReference.checkYourAnswersLabel",
-      s"$x", false, routes.EnterPayeReferenceController.onPageLoad(CheckMode).url)
+      s"$x", false, Some(routes.EnterPayeReferenceController.onPageLoad(CheckMode).url))
   }
 
   def detailsOfEmploymentOrPension: Option[AnswerRow] = userAnswers.detailsOfEmploymentOrPension map {
-    x => AnswerRow("detailsOfEmploymentOrPension.checkYourAnswersLabel", s"$x", false, routes.DetailsOfEmploymentOrPensionController.onPageLoad(CheckMode).url)
+    x => AnswerRow("detailsOfEmploymentOrPension.checkYourAnswersLabel", s"$x", false, Some(routes.DetailsOfEmploymentOrPensionController.onPageLoad(CheckMode).url))
   }
 
   //Benefits
@@ -68,7 +68,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
     x =>
       AnswerRow("anyBenefits.checkYourAnswersLabel",
         if (x) "site.yes" else "site.no",
-        true, routes.AnyBenefitsController.onPageLoad(CheckMode).url)
+        true, Some(routes.AnyBenefitsController.onPageLoad(CheckMode).url))
   }
 
   def selectBenefits: Option[AnswerRow] = userAnswers.selectBenefits map {
@@ -83,70 +83,89 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
       case Benefits.OTHER_TAXABLE_BENEFIT => messages(keyPrefix + "other-taxable-benefit").capitalize
     }.mkString("<br>"),
       false,
-      routes.SelectBenefitsController.onPageLoad(CheckMode).url
-    )
+      Some(routes.SelectBenefitsController.onPageLoad(CheckMode).url
+    ))
   }
 
   def howMuchBereavementAllowance: Option[AnswerRow] = userAnswers.howMuchBereavementAllowance map {
-    x => AnswerRow("howMuchBereavementAllowance.checkYourAnswersLabel", s"£$x", false, routes.HowMuchBereavementAllowanceController.onPageLoad(CheckMode).url)
+    x => AnswerRow("howMuchBereavementAllowance.checkYourAnswersLabel", s"£$x", false, Some(routes.HowMuchBereavementAllowanceController.onPageLoad(CheckMode).url))
   }
 
   def howMuchCarersAllowance: Option[AnswerRow] = userAnswers.howMuchCarersAllowance map {
-    x => AnswerRow("howMuchCarersAllowance.checkYourAnswersLabel", s"£$x", false, routes.HowMuchCarersAllowanceController.onPageLoad(CheckMode).url)
+    x => AnswerRow("howMuchCarersAllowance.checkYourAnswersLabel", s"£$x", false, Some(routes.HowMuchCarersAllowanceController.onPageLoad(CheckMode).url))
   }
 
   def howMuchJobseekersAllowance: Option[AnswerRow] = userAnswers.howMuchJobseekersAllowance map {
-    x => AnswerRow("howMuchJobseekersAllowance.checkYourAnswersLabel", s"£$x", false, routes.HowMuchJobseekersAllowanceController.onPageLoad(CheckMode).url)
+    x => AnswerRow("howMuchJobseekersAllowance.checkYourAnswersLabel", s"£$x", false, Some(routes.HowMuchJobseekersAllowanceController.onPageLoad(CheckMode).url))
   }
 
   def howMuchIncapacityBenefit: Option[AnswerRow] = userAnswers.howMuchIncapacityBenefit map {
-    x => AnswerRow("howMuchIncapacityBenefit.checkYourAnswersLabel", s"£$x", false, routes.HowMuchIncapacityBenefitController.onPageLoad(CheckMode).url)
+    x => AnswerRow("howMuchIncapacityBenefit.checkYourAnswersLabel", s"£$x", false, Some(routes.HowMuchIncapacityBenefitController.onPageLoad(CheckMode).url))
   }
 
   def howMuchEmploymentAndSupportAllowance: Option[AnswerRow] = userAnswers.howMuchEmploymentAndSupportAllowance map {
-    x => AnswerRow("howMuchEmploymentAndSupportAllowance.checkYourAnswersLabel", s"£$x", false, routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(CheckMode).url)
+    x => AnswerRow("howMuchEmploymentAndSupportAllowance.checkYourAnswersLabel", s"£$x", false, Some(routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(CheckMode).url))
   }
 
   def howMuchStatePension: Option[AnswerRow] = userAnswers.howMuchStatePension map {
-    x => AnswerRow("howMuchStatePension.checkYourAnswersLabel", s"£$x", false, routes.HowMuchStatePensionController.onPageLoad(CheckMode).url)
+    x => AnswerRow("howMuchStatePension.checkYourAnswersLabel", s"£$x", false, Some(routes.HowMuchStatePensionController.onPageLoad(CheckMode).url))
   }
 
-  def otherBenefitsNormalMode: Seq[Option[AnswerRow]] = {
-    otherBenefits(NormalMode)
-  }
+	def otherBenefitsNormalMode: Seq[Option[AnswerRow]] = {
+		otherBenefits(NormalMode)
+	}
 
-  def otherBenefitsCheckMode: Seq[Option[AnswerRow]] = {
-    otherBenefits(CheckMode)
-  }
+	def otherBenefitsCheckMode: Seq[Option[AnswerRow]] = {
+		otherBenefits(CheckMode)
+	}
 
-  def otherBenefits(mode: Mode): Seq[Option[AnswerRow]] = {
-    for {
-      otherBenefits <- userAnswers.otherBenefit
-    } yield {
-      otherBenefits.zipWithIndex.flatMap {
-        case (benefits, index) =>
-          Seq(
-            Some(AnswerRow(
-              benefits.name,
-              s"£${benefits.amount}",
-              answerIsMessageKey = false,
-              routes.OtherBenefitController.onPageLoad(mode, Index(index)).url,
-              Some(routes.DeleteOtherController.onPageLoad(mode, Index(index), benefits.name, OtherBenefit.collectionId).url)
-            )
-           )
-          )
-      }
-    }
-  }.getOrElse(Seq.empty)
+	def otherBenefits(mode: Mode): Seq[Option[AnswerRow]] = {
+		for {
+			otherBenefits <- userAnswers.otherBenefit
+		} yield {
+			otherBenefits.zipWithIndex.flatMap {
+				case (benefits, index) =>
+					Seq(
+						Some(AnswerRow(
+							benefits.name,
+							s"£${benefits.amount}",
+							answerIsMessageKey = false,
+							Some(routes.OtherBenefitController.onPageLoad(mode, Index(index)).url),
+							Some(routes.DeleteOtherController.onPageLoad(mode, Index(index), benefits.name, OtherBenefit.collectionId).url)
+						)
+						)
+					)
+			}
+		}
+	}.getOrElse(Seq.empty)
 
-  //Company benefits
+	def otherBenefitsCheckYourAnswers: Seq[Option[AnswerRow]] = {
+		for {
+			otherBenefits <- userAnswers.otherBenefit
+		} yield {
+			otherBenefits.zipWithIndex.flatMap {
+				case (benefits, index) =>
+					Seq(
+						Some(AnswerRow(
+							benefits.name,
+							s"£${benefits.amount}",
+							answerIsMessageKey = false
+						)
+						)
+					)
+			}
+		}
+	}.getOrElse(Seq.empty)
+
+
+	//Company benefits
   //------------------------------------------------------------------
 
   def anyCompanyBenefits: Option[AnswerRow] = userAnswers.anyCompanyBenefits map {
     x =>
       AnswerRow("anyCompanyBenefits.checkYourAnswersLabel",
         if(x) "site.yes" else "site.no",
-        true, routes.AnyCompanyBenefitsController.onPageLoad(CheckMode).url)
+        true, Some(routes.AnyCompanyBenefitsController.onPageLoad(CheckMode).url))
   }
 
   def selectCompanyBenefits: Option[AnswerRow] = userAnswers.selectCompanyBenefits map {
@@ -156,23 +175,23 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
       case CompanyBenefits.FUEL_BENEFIT => messages(keyPrefix + "fuel-benefit").capitalize
       case CompanyBenefits.MEDICAL_BENEFIT => messages(keyPrefix + "medical-benefit").capitalize
       case CompanyBenefits.OTHER_COMPANY_BENEFIT => messages(keyPrefix + "other-company-benefit").capitalize
-    }.mkString("<br>"), false, routes.SelectCompanyBenefitsController.onPageLoad(CheckMode).url)
+    }.mkString("<br>"), false, Some(routes.SelectCompanyBenefitsController.onPageLoad(CheckMode).url))
   }
 
   def howMuchCarBenefits: Option[AnswerRow] = userAnswers.howMuchCarBenefits map {
     x =>
       AnswerRow("howMuchCarBenefits.checkYourAnswersLabel",
-        s"£$x", false, routes.HowMuchCarBenefitsController.onPageLoad(CheckMode).url)
+        s"£$x", false, Some(routes.HowMuchCarBenefitsController.onPageLoad(CheckMode).url))
   }
 
   def howMuchFuelBenefit: Option[AnswerRow] = userAnswers.howMuchFuelBenefit map {
-    x => AnswerRow("howMuchFuelBenefit.checkYourAnswersLabel", s"£$x", false, routes.HowMuchFuelBenefitController.onPageLoad(CheckMode).url)
+    x => AnswerRow("howMuchFuelBenefit.checkYourAnswersLabel", s"£$x", false, Some(routes.HowMuchFuelBenefitController.onPageLoad(CheckMode).url))
   }
 
   def howMuchMedicalBenefits: Option[AnswerRow] = userAnswers.howMuchMedicalBenefits map {
     x =>
       AnswerRow("howMuchMedicalBenefits.checkYourAnswersLabel",
-        s"£$x", false, routes.HowMuchMedicalBenefitsController.onPageLoad(CheckMode).url)
+        s"£$x", false, Some(routes.HowMuchMedicalBenefitsController.onPageLoad(CheckMode).url))
   }
 
   def otherCompanyBenefit: Seq[Option[AnswerRow]] = {
@@ -186,17 +205,16 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
               companyBenefits.name,
               s"£${companyBenefits.amount}",
               answerIsMessageKey = false,
-              routes.OtherCompanyBenefitController.onPageLoad(CheckMode, Index(index)).url,
-              Some(routes.DeleteOtherController.onPageLoad(CheckMode, Index(index), companyBenefits.name, OtherCompanyBenefit.collectionId).url)
-            )
-            )
+              Some(routes.OtherCompanyBenefitController.onPageLoad(CheckMode, Index(index)).url)
+						)
+          )
           )
       }
     }
   }.getOrElse(Seq.empty)
 
   def anyOtherCompanyBenefits: Option[AnswerRow] = userAnswers.anyOtherCompanyBenefits map {
-    x => AnswerRow("anyOtherCompanyBenefits.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.AnyOtherCompanyBenefitsController.onPageLoad(CheckMode).url)
+    x => AnswerRow("anyOtherCompanyBenefits.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, Some(routes.AnyOtherCompanyBenefitsController.onPageLoad(CheckMode).url))
   }
 
 
@@ -212,7 +230,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
           case AnyTaxPaid.No => "site.no"
         },
         false,
-        route
+        Some(route)
       )
   }
 
@@ -222,7 +240,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
         label,
         s"£$amount",
         false,
-        route
+        Some(route)
       ))
     case _ => None
   }
@@ -231,7 +249,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
     x =>
       AnswerRow("anyTaxableIncome.checkYourAnswersLabel",
         if (x) "site.yes" else "site.no",
-        true, routes.AnyTaxableIncomeController.onPageLoad(CheckMode).url)
+        true, Some(routes.AnyTaxableIncomeController.onPageLoad(CheckMode).url))
   }
 
   def selectTaxableIncome: Option[AnswerRow] = userAnswers.selectTaxableIncome map {
@@ -242,25 +260,25 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
       case TaxableIncome.INVESTMENT_OR_DIVIDENDS => messages(keyPrefix + "investment-or-dividends").capitalize
       case TaxableIncome.FOREIGN_INCOME => messages(keyPrefix + "foreign-income").capitalize
       case TaxableIncome.OTHER_TAXABLE_INCOME => messages(keyPrefix + "other-taxable-income").capitalize
-    }.mkString("<br>"), false, routes.SelectTaxableIncomeController.onPageLoad(CheckMode).url)
+    }.mkString("<br>"), false, Some(routes.SelectTaxableIncomeController.onPageLoad(CheckMode).url))
   }
 
   def howMuchRentalIncome: Option[AnswerRow] = userAnswers.howMuchRentalIncome map {
     x =>
       AnswerRow("howMuchRentalIncome.checkYourAnswersLabel",
-        s"£$x", false, routes.HowMuchRentalIncomeController.onPageLoad(CheckMode).url)
+        s"£$x", false, Some(routes.HowMuchRentalIncomeController.onPageLoad(CheckMode).url))
   }
 
   def howMuchBankInterest: Option[AnswerRow] = userAnswers.howMuchBankInterest map {
-    x => AnswerRow("howMuchBankInterest.checkYourAnswersLabel", s"£$x", false, routes.HowMuchBankInterestController.onPageLoad(CheckMode).url)
+    x => AnswerRow("howMuchBankInterest.checkYourAnswersLabel", s"£$x", false, Some(routes.HowMuchBankInterestController.onPageLoad(CheckMode).url))
   }
 
   def howMuchInvestmentOrDividend: Option[AnswerRow] = userAnswers.howMuchInvestmentOrDividend map {
-    x => AnswerRow("howMuchInvestmentOrDividend.checkYourAnswersLabel", s"£$x", false, routes.HowMuchInvestmentOrDividendController.onPageLoad(CheckMode).url)
+    x => AnswerRow("howMuchInvestmentOrDividend.checkYourAnswersLabel", s"£$x", false, Some(routes.HowMuchInvestmentOrDividendController.onPageLoad(CheckMode).url))
   }
 
   def howMuchForeignIncome: Option[AnswerRow] = userAnswers.howMuchForeignIncome map {
-    x => AnswerRow("howMuchForeignIncome.checkYourAnswersLabel", s"£$x", false, routes.HowMuchForeignIncomeController.onPageLoad(CheckMode).url)
+    x => AnswerRow("howMuchForeignIncome.checkYourAnswersLabel", s"£$x", false, Some(routes.HowMuchForeignIncomeController.onPageLoad(CheckMode).url))
   }
 
   def otherTaxableIncome: Seq[Option[AnswerRow]] = {
@@ -275,14 +293,14 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
               label = taxableIncome._1.name,
               answer = s"£${taxableIncome._1.amount}",
               answerIsMessageKey = false,
-              url = routes.OtherTaxableIncomeController.onPageLoad(CheckMode, Index(index)).url,
+              url = Some(routes.OtherTaxableIncomeController.onPageLoad(CheckMode, Index(index)).url),
               isHeadingRow = true
             )),
             Some(AnswerRow(
               label = messages("checkYourAnswers.otherTaxableIncome.label", taxableIncome._1.name),
               answer = s"£${taxableIncome._1.amount}",
               answerIsMessageKey = false,
-              url = routes.OtherTaxableIncomeController.onPageLoad(CheckMode, Index(index)).url
+              url = Some(routes.OtherTaxableIncomeController.onPageLoad(CheckMode, Index(index)).url)
             )),
             anyTaxPaid(
               label = messages("anyTaxableOtherIncomeOption.checkYourAnswersLabel", taxableIncome._1.name),
@@ -304,7 +322,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
     x =>
       AnswerRow("anyOtherTaxableIncome.checkYourAnswersLabel",
         if (x) "site.yes" else "site.no",
-        true, routes.AnyOtherTaxableIncomeController.onPageLoad(CheckMode).url)
+        true, Some(routes.AnyOtherTaxableIncomeController.onPageLoad(CheckMode).url))
   }
 
 
@@ -314,11 +332,11 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
   def whereToSendPayment: Option[AnswerRow] = userAnswers.whereToSendPayment map {
     x =>
       AnswerRow("whereToSendPayment.checkYourAnswersLabel",
-        s"whereToSendPayment.$x", true, routes.WhereToSendPaymentController.onPageLoad(CheckMode).url)
+        s"whereToSendPayment.$x", true, Some(routes.WhereToSendPaymentController.onPageLoad(CheckMode).url))
   }
 
   def paymentAddressCorrect: Option[AnswerRow] = userAnswers.paymentAddressCorrect map {
-    x => AnswerRow("paymentAddressCorrect.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.PaymentAddressCorrectController.onPageLoad(CheckMode).url)
+    x => AnswerRow("paymentAddressCorrect.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, Some(routes.PaymentAddressCorrectController.onPageLoad(CheckMode).url))
   }
 
   def itmpAddress: Option[AnswerRow] = userAnswers.itmpAddress map {
@@ -337,14 +355,14 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
             x.countryCode
           )),
         true,
-        routes.PaymentAddressCorrectController.onPageLoad(CheckMode).url
+        Some(routes.PaymentAddressCorrectController.onPageLoad(CheckMode).url)
       )
   }
 
   def nomineeFullName: Option[AnswerRow] = userAnswers.nomineeFullName map {
     x =>
       AnswerRow("nomineeFullName.checkYourAnswersLabel",
-        s"$x", false, routes.NomineeFullNameController.onPageLoad(CheckMode).url)
+        s"$x", false, Some(routes.NomineeFullNameController.onPageLoad(CheckMode).url))
   }
 
   def anyAgentRef: Option[AnswerRow] = userAnswers.anyAgentRef map {
@@ -352,7 +370,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
       x match {
         case AnyAgentRef.Yes(agentRef) => "site.yes"
         case AnyAgentRef.No => "site.no"
-      }, true, routes.AnyAgentRefController.onPageLoad(CheckMode).url)
+      }, true, Some(routes.AnyAgentRefController.onPageLoad(CheckMode).url))
   }
 
   def agentReferenceNumber: Option[AnswerRow] = userAnswers.anyAgentRef match {
@@ -360,8 +378,8 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
       Some(AnswerRow("anyAgentRef.checkYourAnswersLabel",
         s"$number",
         false,
-        routes.AnyAgentRefController.onPageLoad(CheckMode).url
-      ))
+        Some(routes.AnyAgentRefController.onPageLoad(CheckMode).url
+      )))
     case _ => None
   }
 
@@ -369,7 +387,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
     x =>
       AnswerRow("isPaymentAddressInTheUK.checkYourAnswersLabel",
         if (x) "site.yes" else "site.no",
-        true, routes.IsPaymentAddressInTheUKController.onPageLoad(CheckMode).url)
+        true, Some(routes.IsPaymentAddressInTheUKController.onPageLoad(CheckMode).url))
   }
 
   def paymentUKAddress: Option[AnswerRow] = userAnswers.paymentUKAddress map {
@@ -383,7 +401,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
             x.addressLine4,
             x.addressLine5,
             x.postcode)),
-        false, routes.PaymentUKAddressController.onPageLoad(CheckMode).url)
+        false, Some(routes.PaymentUKAddressController.onPageLoad(CheckMode).url))
   }
 
   def paymentInternationalAddress: Option[AnswerRow] = userAnswers.paymentInternationalAddress map {
@@ -397,7 +415,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
             x.addressLine4,
             x.addressLine5,
             x.country)),
-        false, routes.PaymentInternationalAddressController.onPageLoad(CheckMode).url)
+        false, Some(routes.PaymentInternationalAddressController.onPageLoad(CheckMode).url))
   }
 
   def paymentLookupAddress: Option[AnswerRow] = userAnswers.paymentLookupAddress map {
@@ -410,8 +428,8 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
             x.auditRef)
         ),
         false,
-        routes.IsPaymentAddressInTheUKController.onPageLoad(CheckMode).url
-      )
+        Some(routes.IsPaymentAddressInTheUKController.onPageLoad(CheckMode).url
+      ))
   }
 
   //Contact details
@@ -426,8 +444,8 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
           case TelephoneOption.No => "site.no"
         },
         false,
-        routes.TelephoneNumberController.onPageLoad(CheckMode).url
-      )
+        Some(routes.TelephoneNumberController.onPageLoad(CheckMode).url
+      ))
   }
 
   def telephoneNumber: Option[AnswerRow] = userAnswers.anyTelephoneNumber match {
@@ -435,8 +453,8 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
       Some(AnswerRow("telephoneNumber.checkYourAnswersLabel",
         s"$number",
         false,
-        routes.TelephoneNumberController.onPageLoad(CheckMode).url
-      ))
+        Some(routes.TelephoneNumberController.onPageLoad(CheckMode).url
+      )))
     case _ => None
   }
 }

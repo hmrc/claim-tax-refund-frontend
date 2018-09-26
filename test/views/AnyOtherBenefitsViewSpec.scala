@@ -34,7 +34,7 @@ class AnyOtherBenefitsViewSpec extends YesNoViewBehaviours {
   private val taxYear = CYMinus2
 
 	private val cya: CheckYourAnswersHelper = new CheckYourAnswersHelper(MockUserAnswers.fullValidUserAnswers)(messages)
-	private val otherBenefits: AnswerSection = new CheckYourAnswersSections(cya, MockUserAnswers.fullValidUserAnswers).otherBenefitsSection
+	private val otherBenefits: AnswerSection = new CheckYourAnswersSections(cya, MockUserAnswers.fullValidUserAnswers).otherBenefitsAddToListNormalMode
 
   override val form = new BooleanForm()()
 
@@ -66,11 +66,11 @@ class AnyOtherBenefitsViewSpec extends YesNoViewBehaviours {
       }
 
       "list item must have change buttons" in {
-        doc.getElementById("component-answer-list").text.contains("Change qwerty") mustBe true
+        doc.getElementById("component-answer-list").text.contains("Change") mustBe true
       }
 
 			"list item must have a delete button" in {
-				doc.getElementById("component-answer-list").text.contains("Remove qwerty") mustBe true
+				doc.getElementById("component-answer-list").text.contains("Remove") mustBe true
 			}
 		}
   }
