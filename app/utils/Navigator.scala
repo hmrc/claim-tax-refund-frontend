@@ -83,7 +83,7 @@ class Navigator @Inject()() {
     PaymentInternationalAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
     PaymentLookupAddressId -> addressLookup(NormalMode),
     TelephoneNumberId -> (_ => routes.CheckYourAnswersController.onPageLoad()),
-    DeleteOtherBenefitId -> deleteOtherBenefit,
+    DeleteOtherBenefitId -> (_ => routes.AnyOtherBenefitsController.onPageLoad(NormalMode)),
     DeleteOtherCompanyBenefitId -> deleteOtherCompanyBenefit,
     DeleteOtherTaxableIncomeId -> deleteOtherTaxableIncome
 
@@ -103,6 +103,7 @@ class Navigator @Inject()() {
     HowMuchEmploymentAndSupportAllowanceId -> selectedBenefitsCheck(CheckMode),
     HowMuchStatePensionId -> selectedBenefitsCheck(CheckMode),
     OtherBenefitId -> (_ => routes.AnyOtherBenefitsController.onPageLoad(CheckMode)),
+    DeleteOtherBenefitId -> deleteOtherBenefit,
 		AnyOtherBenefitsId -> anyOtherBenefits(CheckMode),
     //Company Benefits
     AnyCompanyBenefitsId -> anyCompanyBenefits(CheckMode),

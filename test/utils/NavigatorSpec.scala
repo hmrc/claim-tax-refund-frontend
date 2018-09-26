@@ -144,21 +144,21 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         when(answers.otherBenefit) thenReturn Some(Seq.empty)
         when(answers.selectBenefits) thenReturn Some(Seq(Benefits.OTHER_TAXABLE_BENEFIT))
 
-        navigator.nextPage(DeleteOtherBenefitId, NormalMode)(answers) mustBe routes.AnyBenefitsController.onPageLoad(CheckMode)
+        navigator.nextPage(DeleteOtherBenefitId, NormalMode)(answers) mustBe routes.AnyOtherBenefitsController.onPageLoad(NormalMode)
       }
 
       "go to SelectBenefits from DeleteOther when benefits are selected and all otherBenefits have been removed" in {
         when(answers.otherBenefit) thenReturn Some(Seq.empty)
         when(answers.selectBenefits) thenReturn Some(Seq(Benefits.OTHER_TAXABLE_BENEFIT, Benefits.STATE_PENSION, Benefits.OTHER_TAXABLE_BENEFIT))
 
-        navigator.nextPage(DeleteOtherBenefitId, NormalMode)(answers) mustBe routes.SelectBenefitsController.onPageLoad(CheckMode)
+        navigator.nextPage(DeleteOtherBenefitId, NormalMode)(answers) mustBe routes.AnyOtherBenefitsController.onPageLoad(NormalMode)
       }
 
-      "go to CYA from DeleteOther when benefits are selected and more than one otherBenefits remains" in {
+      "go to Summary from DeleteOther when benefits are selected and more than one otherBenefits remains" in {
         when(answers.otherBenefit) thenReturn Some(Seq(OtherBenefit("qwerty", "123")))
         when(answers.selectBenefits) thenReturn Some(Seq(Benefits.OTHER_TAXABLE_BENEFIT, Benefits.STATE_PENSION, Benefits.OTHER_TAXABLE_BENEFIT))
 
-        navigator.nextPage(DeleteOtherBenefitId, NormalMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+        navigator.nextPage(DeleteOtherBenefitId, NormalMode)(answers) mustBe routes.AnyOtherBenefitsController.onPageLoad(NormalMode)
       }
 
       "go to AnyCompanyBenefits from DeleteOther when no companyBenefits are selected and all otherCompanyBenefits have been removed" in {

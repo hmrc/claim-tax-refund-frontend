@@ -39,7 +39,7 @@ object AnswerRow {
 	def apply(label: String,
 						answer: String,
 						answerIsMessageKey: Boolean,
-						url: Option[String],
+						url: Option[String] = None,
 						deleteUrl: Option[String] = None,
 						itemName: Option[String] = None,
 						isHeadingRow: Boolean = false,

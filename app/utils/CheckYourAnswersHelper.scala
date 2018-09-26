@@ -116,14 +116,14 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
 	}
 
 	def otherBenefitsNormalMode: Seq[Option[AnswerRow]] = {
-		otherBenefits(NormalMode)
+		otherBenefitsAddToList(NormalMode)
 	}
 
 	def otherBenefitsCheckMode: Seq[Option[AnswerRow]] = {
-		otherBenefits(CheckMode)
+		otherBenefitsAddToList(CheckMode)
 	}
 
-	def otherBenefits(mode: Mode): Seq[Option[AnswerRow]] = {
+	def otherBenefitsAddToList(mode: Mode): Seq[Option[AnswerRow]] = {
 		for {
 			otherBenefits <- userAnswers.otherBenefit
 		} yield {
@@ -142,6 +142,25 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
 			}
 		}
 	}.getOrElse(Seq.empty)
+
+	def otherBenefitsCheckYourAnswers: Seq[Option[AnswerRow]] = {
+		for {
+			otherBenefits <- userAnswers.otherBenefit
+		} yield {
+			otherBenefits.zipWithIndex.flatMap {
+				case (benefits, index) =>
+					Seq(
+						Some(AnswerRow(
+							benefits.name,
+							s"£${benefits.amount}",
+							answerIsMessageKey = false
+						)
+						)
+					)
+			}
+		}
+	}.getOrElse(Seq.empty)
+
 
 	//Company benefits
 	//------------------------------------------------------------------
