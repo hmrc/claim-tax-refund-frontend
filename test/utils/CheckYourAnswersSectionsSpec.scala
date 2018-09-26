@@ -199,5 +199,16 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       rows.head.label.key mustBe "telephoneNumberOption.checkYourAnswersLabel"
       rows(1).label.key mustBe "telephoneNumber.checkYourAnswersLabel"
     }
+
+    "Other Benefits section normal mode" in {
+      val answers = MockUserAnswers.fullValidUserAnswers
+      val helper = new CheckYourAnswersHelper(answers)(messages: Messages)
+      val sections = new CheckYourAnswersSections(helper, answers)
+      val normalModeRows = sections.otherBenefitsAddToListNormalMode.rows
+      val checkModeRows = sections.otherBenefitsAddToListCheckMode.rows
+
+      normalModeRows.size mustBe 3
+      checkModeRows.size mustBe 3
+    }
   }
 }

@@ -55,8 +55,8 @@ class AnyOtherBenefitsController @Inject()(appConfig: FrontendAppConfig,
         taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
         cyaHelper: CheckYourAnswersHelper = new CheckYourAnswersHelper(request.userAnswers)
         otherBenefitsAnswers: AnswerSection = mode match {
-            case NormalMode => new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherBenefitsSectionSummaryNormalMode
-            case CheckMode => new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherBenefitsSectionSummaryCheckMode
+            case NormalMode => new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherBenefitsAddToListNormalMode
+            case CheckMode => new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherBenefitsAddToListCheckMode
         }
       } yield {
         Ok(anyOtherBenefits(appConfig, form, mode, taxYear, otherBenefitsAnswers))
@@ -73,8 +73,8 @@ class AnyOtherBenefitsController @Inject()(appConfig: FrontendAppConfig,
         taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
         cyaHelper: CheckYourAnswersHelper = new CheckYourAnswersHelper(request.userAnswers)
         otherBenefitsAnswers: AnswerSection = mode match {
-          case NormalMode => new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherBenefitsSectionSummaryNormalMode
-          case CheckMode => new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherBenefitsSectionSummaryCheckMode
+          case NormalMode => new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherBenefitsAddToListNormalMode
+          case CheckMode => new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherBenefitsAddToListCheckMode
         }
       } yield {
         form.bindFromRequest().fold(
