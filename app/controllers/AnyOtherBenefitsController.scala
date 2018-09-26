@@ -55,7 +55,7 @@ class AnyOtherBenefitsController @Inject()(appConfig: FrontendAppConfig,
         taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
         cyaHelper: CheckYourAnswersHelper = new CheckYourAnswersHelper(request.userAnswers)
         otherBenefitsAnswers: AnswerSection = mode match {
-            case NormalMode => new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherBenefitsSectionSummaryNomalMode
+            case NormalMode => new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherBenefitsSectionSummaryNormalMode
             case CheckMode => new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherBenefitsSectionSummaryCheckMode
         }
       } yield {
@@ -73,7 +73,7 @@ class AnyOtherBenefitsController @Inject()(appConfig: FrontendAppConfig,
         taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
         cyaHelper: CheckYourAnswersHelper = new CheckYourAnswersHelper(request.userAnswers)
         otherBenefitsAnswers: AnswerSection = mode match {
-          case NormalMode => new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherBenefitsSectionSummaryNomalMode
+          case NormalMode => new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherBenefitsSectionSummaryNormalMode
           case CheckMode => new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherBenefitsSectionSummaryCheckMode
         }
       } yield {

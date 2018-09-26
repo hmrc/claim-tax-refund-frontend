@@ -67,7 +67,7 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
     }
   }
 
-  def otherBenefitsSectionSummaryNomalMode: AnswerSection = {
+  def otherBenefitsSectionSummaryNormalMode: AnswerSection = {
     if (userAnswers.otherBenefit.isDefined) {
       AnswerSection(
         headingKey = Some("otherBenefit.checkYourAnswersLabel"),
