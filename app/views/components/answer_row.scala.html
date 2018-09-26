@@ -24,6 +24,10 @@
         implicit messages: Messages
 )
 
+@answerWidth = @{
+    if(row.url.isDefined) 5 else 7
+}
+
 @if(row.isHeadingRow) {
 <li class="tabular-data__entry tabular-data__entry--grouped">
     <div id="cya-@idPath-question" class="tabular-data__data tabular-data__data--5-12">
@@ -34,7 +38,7 @@
 @if(!row.isHeadingRow) {
 <li class="tabular-data__entry tabular-data__entry--grouped divider--bottom">
     <div id="cya-@idPath-question" class="tabular-data__data tabular-data__data--5-12">@row.label.print</div>
-    <div id="cya-@idPath-answer" class="tabular-data__data tabular-data__data--5-12">@Html(row.answer.print)</div>
+    <div id="cya-@idPath-answer" class="tabular-data__data tabular-data__data--@answerWidth-12">@Html(row.answer.print)</div>
 
     @if(changeLink && row.url.isDefined) {
     <div class="tabular-data__data tabular-data__data--2-12 u-align--tablet-right">
