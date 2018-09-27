@@ -84,14 +84,15 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
                 } else {
                   collectionId match {
                     case OtherBenefit.collectionId =>
-                      Future.successful (Redirect (routes.AnyOtherBenefitsController.onPageLoad(mode)))
+                      Future.successful(Redirect(routes.AnyOtherBenefitsController.onPageLoad(mode)))
                     case OtherCompanyBenefit.collectionId =>
-                      Future.successful (Redirect (routes.AnyOtherCompanyBenefitsController.onPageLoad(mode)))
+                      Future.successful(Redirect(routes.AnyOtherCompanyBenefitsController.onPageLoad(mode)))
                     case OtherTaxableIncome.collectionId =>
-                      Future.successful (Redirect (routes.AnyOtherTaxableIncomeController.onPageLoad(mode)))
+                      Future.successful(Redirect(routes.AnyOtherTaxableIncomeController.onPageLoad(mode)))
                     case _ =>
                       Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
-                  }                }
+                  }
+                }
             )
         }.getOrElse {
           Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
