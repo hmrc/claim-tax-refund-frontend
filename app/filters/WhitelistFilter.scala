@@ -28,19 +28,18 @@ class WhitelistFilter @Inject() (
                                 ) extends AkamaiWhitelistFilter {
 
   override val whitelist: Seq[String] = {
-//    config.underlying.getString("filters.whitelist.ips").split(",").map(_.trim)
-    Seq("127.0.0.1")
+    config.underlying.getString("filters.whitelist.ips").split(",").map(_.trim)
   }
 
   override val destination: Call = {
-    val path = config.underlying.getString("filters.whitelist.destination")
-    Call("GET", path)
+    val path: String = config.underlying.getString("filters.whitelist.destination")
+    Call(method = "GET", url = path)
   }
 
   override val excludedPaths: Seq[Call] = {
     config.underlying.getString("filters.whitelist.excluded").split(",").map {
       path =>
-        Call("GET", path.trim)
+        Call(method = "GET", url = path.trim)
     }
   }
 }
