@@ -130,11 +130,11 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
         case (benefits, index) =>
           Seq(
             Some(AnswerRow(
-              benefits.name,
-              s"£${benefits.amount}",
+              label = benefits.name,
+              answer = s"£${benefits.amount}",
               answerIsMessageKey = false,
-              if(!cya) Some(routes.OtherBenefitController.onPageLoad(mode, Index(index)).url) else None,
-              if(!cya) Some(routes.DeleteOtherController.onPageLoad(mode, Index(index), benefits.name, OtherBenefit.collectionId).url) else None
+              url = if(cya) None else Some(routes.OtherBenefitController.onPageLoad(mode, Index(index)).url),
+              deleteUrl = if(cya) None else Some(routes.DeleteOtherController.onPageLoad(mode, Index(index), benefits.name, OtherBenefit.collectionId).url)
             )
            )
           )
@@ -198,11 +198,11 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
         case (companyBenefits, index) =>
           Seq(
             Some(AnswerRow(
-              companyBenefits.name,
-              s"£${companyBenefits.amount}",
+              label = companyBenefits.name,
+              answer = s"£${companyBenefits.amount}",
               answerIsMessageKey = false,
-              if(!cya) Some(routes.OtherCompanyBenefitController.onPageLoad(mode, Index(index)).url) else None,
-              if(!cya) Some(routes.DeleteOtherController.onPageLoad(mode, Index(index), companyBenefits.name, OtherCompanyBenefit.collectionId).url) else None
+              url = if(cya) None else Some(routes.OtherCompanyBenefitController.onPageLoad(mode, Index(index)).url),
+              deleteUrl = if(cya) None else Some(routes.DeleteOtherController.onPageLoad(mode, Index(index), companyBenefits.name, OtherCompanyBenefit.collectionId).url)
             )
             )
           )
