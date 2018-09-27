@@ -59,7 +59,8 @@ def test(scope: String = "test"): Seq[ModuleID] = Seq(
   "org.pegdown" % "pegdown" % pegdownVersion % scope,
   "org.jsoup" % "jsoup" % "1.10.3" % scope,
   "com.typesafe.play" %% "play-test" % PlayVersion.current % scope,
-  "org.mockito" % "mockito-all" % mockitoAllVersion % scope
+  "org.mockito" % "mockito-all" % mockitoAllVersion % scope,
+  "uk.gov.hmrc" %% "play-whitelist-filter"  % "2.0.0"
 )
 
 def oneForkedJvmPerTest(tests: Seq[TestDefinition]): Seq[Group] =
