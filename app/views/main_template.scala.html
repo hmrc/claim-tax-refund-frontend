@@ -54,15 +54,16 @@
 
 @scriptElem = @{
     Seq(
-        Map("url" -> controllers.routes.Assets.versioned("javascripts/claimtaxrefundfrontend.js"))
+        Map("url" -> controllers.routes.Assets.versioned("javascripts/claimtaxrefundfrontend.js")),
+        Map("url" -> controllers.routes.Assets.versioned("javascripts/google-tag-manager-script.js"))
     )
 }
 
 @{
     templateRenderer.renderDefaultTemplate(
-        appConfig.frontendTemplatePath,
-        layouts.article(mainContent, includeGridWrapper, articleClasses),
-        Map[String, Any](
+        path = appConfig.frontendTemplatePath,
+        content = layouts.article(mainContent, includeGridWrapper, articleClasses),
+        extraArgs = Map[String, Any](
             "pageTitle" -> title,
             "navTitle" -> messages("site.service_name"),
             "assetsPath" -> appConfig.assetsPrefix,
@@ -70,7 +71,9 @@
             "linkElems" -> linkElem,
             "scriptElems" -> scriptElem,
             "mainClass" -> mainClass,
-            "isWelsh" -> {messages.lang.code == "cy"},
+            "isWelsh" -> {
+                messages.lang.code == "cy"
+            },
             "showPropositionLinks" -> true,
             "langSelector" -> {
                 Map("enUrl" -> appConfig.routeToSwitchLanguage("english"),
