@@ -192,20 +192,19 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
         s"£$x", false, Some(routes.HowMuchMedicalBenefitsController.onPageLoad(CheckMode).url))
   }
 
-  def otherCompanyBenefitNormalMode: Seq[Option[AnswerRow]] = {
-    otherCompanyBenefit(NormalMode)
+  def otherCompanyBenefitsNormalMode: Seq[Option[AnswerRow]] = {
+    otherCompanyBenefitsAddToList(NormalMode)
   }
 
-  def otherCompanyBenefitCheckMode: Seq[Option[AnswerRow]] = {
-    otherCompanyBenefit(CheckMode)
+  def otherCompanyBenefitsCheckMode: Seq[Option[AnswerRow]] = {
+    otherCompanyBenefitsAddToList(CheckMode)
   }
 
-
-  def otherCompanyBenefit(mode: Mode): Seq[Option[AnswerRow]] = {
+  def otherCompanyBenefitsAddToList(mode: Mode): Seq[Option[AnswerRow]] = {
     for {
-      otherCompanyBenefit <- userAnswers.otherCompanyBenefit
+      otherCompanyBenefits <- userAnswers.otherCompanyBenefit
     } yield {
-      otherCompanyBenefit.zipWithIndex.flatMap {
+      otherCompanyBenefits.zipWithIndex.flatMap {
         case (companyBenefits, index) =>
           Seq(
             Some(AnswerRow(
@@ -221,12 +220,12 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
     }
   }.getOrElse(Seq.empty)
 
-  def otherCompanyBenefitCheckYourAnswers: Seq[Option[AnswerRow]] = {
+  def otherCompanyBenefitsCheckYourAnswers: Seq[Option[AnswerRow]] = {
     for {
-      otherCompanyBenefit <- userAnswers.otherCompanyBenefit
+      otherCompanyBenefits <- userAnswers.otherCompanyBenefit
     } yield {
-      otherCompanyBenefit.zipWithIndex.flatMap {
-        case (companyBenefits, index) =>
+      otherCompanyBenefits.zipWithIndex.flatMap {
+        case (companyBenefits, _) =>
           Seq(
             Some(AnswerRow(
               companyBenefits.name,
@@ -238,11 +237,6 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
       }
     }
   }.getOrElse(Seq.empty)
-
-  def anyOtherCompanyBenefits: Option[AnswerRow] = userAnswers.anyOtherCompanyBenefits map {
-    x => AnswerRow("anyOtherCompanyBenefits.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, Some(routes.AnyOtherCompanyBenefitsController.onPageLoad(CheckMode).url))
-  }
-
 
   //Taxable Income
   //------------------------------------------------------------------
