@@ -40,7 +40,8 @@
     appConfig = appConfig,
     bodyClasses = None
 ) {
-    @*components.ga_noscript()*@
+    @components.ga_noscript()
+
     @helpers.form(action = SelectTaxYearController.onSubmit(mode), 'autoComplete -> "off") {
 
         @components.back_link()
