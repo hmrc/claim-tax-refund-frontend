@@ -19,7 +19,7 @@ package controllers
 import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.BooleanForm
-import models.{CheckMode, NormalMode, SelectTaxYear}
+import models.{CheckMode, Mode, NormalMode, SelectTaxYear}
 import models.SelectTaxYear.CYMinus2
 import org.mockito.Mockito.when
 import play.api.data.Form
@@ -45,8 +45,8 @@ class AnyOtherBenefitsControllerSpec extends ControllerSpecBase {
     new AnyOtherBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, formProvider, formPartialRetriever, templateRenderer)
 
-  def viewAsString(form: Form[_] = form): String =
-    anyOtherBenefits(frontendAppConfig, form, NormalMode, taxYear, otherBenefitsSection)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+  def viewAsString(form: Form[_] = form, mode: Mode = NormalMode): String =
+    anyOtherBenefits(frontendAppConfig, form, mode, taxYear, otherBenefitsSection)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "AnyOtherBenefits Controller" must {
 
@@ -57,17 +57,25 @@ class AnyOtherBenefitsControllerSpec extends ControllerSpecBase {
       contentAsString(result) mustBe viewAsString()
     }
 
-    "not populate the view on a GET when the question has previously been answered as the user always needs to answer this question" in {
-      when(mockUserAnswers.anyOtherBenefits).thenReturn(Some(true))
+    "return OK and the correct view for a GET while in CheckMode" in {
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(CheckMode)(fakeRequest)
 
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
-
-      contentAsString(result) mustBe viewAsString(form)
+      status(result) mustBe OK
+      contentAsString(result) mustBe viewAsString(mode = CheckMode)
     }
+
 
     "redirect to the next page when valid data is submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(postRequest)
+
+      status(result) mustBe SEE_OTHER
+      redirectLocation(result) mustBe Some(onwardRoute.url)
+    }
+
+    "redirect to the next page when valid data is submitted while in CheckMode" in {
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(CheckMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(onwardRoute.url)

@@ -261,9 +261,9 @@ class CompanyBenefitNavigatorSpec extends SpecBase with MockitoSugar {
       }
 
       "Navigating from OtherCompanyBenefit" must {
-        "go to CheckYourAnswersController when name and amount stored" in {
+        "go to AnyOtherCompanyBenefits when name and amount stored" in {
           val answers = MockUserAnswers.companyBenefitsUserAnswers
-          navigator.nextPage(OtherCompanyBenefitId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+          navigator.nextPage(OtherCompanyBenefitId, CheckMode)(answers) mustBe routes.AnyOtherCompanyBenefitsController.onPageLoad(CheckMode)
         }
       }
     }

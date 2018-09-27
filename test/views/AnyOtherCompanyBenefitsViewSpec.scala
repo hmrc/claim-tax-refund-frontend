@@ -23,42 +23,56 @@ import models.{NormalMode, OtherCompanyBenefit}
 import org.jsoup.nodes.{Document, Element}
 import play.api.data.Form
 import play.twirl.api.Html
+import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, MockUserAnswers}
+import viewmodels.AnswerSection
 import views.behaviours.YesNoViewBehaviours
 import views.html.anyOtherCompanyBenefits
 
 class AnyOtherCompanyBenefitsViewSpec extends YesNoViewBehaviours {
 
-  private val messageKeyPrefix = "anyOtherCompanyBenefits"
-  private val taxYear = CYMinus2
-  private val otherCompanyBenefitNames: Seq[String] = Seq("qwerty")
+	private val messageKeyPrefix = "anyOtherCompanyBenefits"
+	private val taxYear = CYMinus2
 
-  override val form = new BooleanForm()()
+	private val cya: CheckYourAnswersHelper = new CheckYourAnswersHelper(MockUserAnswers.fullValidUserAnswers)(messages)
+	private val otherCompanyBenefits: AnswerSection = new CheckYourAnswersSections(cya, MockUserAnswers.fullValidUserAnswers).otherCompanyBenefitsAddToListNormalMode
 
-  def createView: () => Html = () =>
-    anyOtherCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear, otherCompanyBenefitNames)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+	override val form = new BooleanForm()()
 
-  def createViewUsingForm: Form[_] => Html = (form: Form[_]) =>
-    anyOtherCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear, otherCompanyBenefitNames)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+	def createView: () => Html = () =>
+		anyOtherCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear, otherCompanyBenefits)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
-  "AnyOtherCompanyBenefits view" must {
+	def createViewUsingForm: Form[_] => Html = (form: Form[_]) =>
+		anyOtherCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear, otherCompanyBenefits)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
-    behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))
+	"AnyOtherCompanyBenefits view" must {
 
-    behave like pageWithBackLink(createView)
+		behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))
 
-    behave like pageWithSecondaryHeader(createView, messages("site.service_name.with_tax_year", taxYear.asString(messages)))
+		behave like pageWithBackLink(createView)
 
-    behave like yesNoPage(
-      createView = createViewUsingForm,
-      messageKeyPrefix = messageKeyPrefix,
-      expectedFormAction = routes.AnyOtherCompanyBenefitsController.onSubmit(NormalMode).url,
-      expectedHintTextKey = None
-    )
+		behave like pageWithSecondaryHeader(createView, messages("site.service_name.with_tax_year", taxYear.asString(messages)))
 
-    "display 'You have told us about:' section" in {
-      val doc: Document = asDocument(createView())
+		behave like yesNoPage(
+			createView = createViewUsingForm,
+			messageKeyPrefix = messageKeyPrefix,
+			expectedFormAction = routes.AnyOtherCompanyBenefitsController.onSubmit(NormalMode).url,
+			expectedHintTextKey = None
+		)
+	}
 
-      doc.getElementById("bullet-qwerty").text() mustBe "qwerty"
-    }
-  }
+	"display 'You have told us about:' section" must {
+		val doc: Document = asDocument(createView())
+		"display list of created company benefits" in {
+			doc.getElementById("component-answer-list").text.contains("qwerty") mustBe true
+		}
+
+		"list item must have change buttons" in {
+			doc.getElementById("component-answer-list").text.contains("Change qwerty") mustBe true
+		}
+
+		"list item must have a delete button" in {
+			doc.getElementById("component-answer-list").text.contains("Remove qwerty") mustBe true
+		}
+	}
+
 }
