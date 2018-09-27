@@ -279,8 +279,10 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
       val otherCompanyBenefit = Seq(OtherCompanyBenefit("qwerty", "1234"))
       when(answers.otherCompanyBenefit) thenReturn Some(otherCompanyBenefit)
 
-      helper.otherCompanyBenefit.head.get.label.key mustBe "qwerty"
-      helper.otherCompanyBenefit.head.get.answer.key mustBe s"£$amount"
+      helper.otherCompanyBenefitNormalMode.head.get.label.key mustBe "qwerty"
+      helper.otherCompanyBenefitNormalMode.head.get.answer.key mustBe s"£$amount"
+      helper.otherCompanyBenefitCheckMode.head.get.label.key mustBe "qwerty"
+      helper.otherCompanyBenefitCheckMode.head.get.answer.key mustBe s"£$amount"
     }
   }
 
@@ -288,7 +290,8 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"return a empty Seq when empty" in {
       when(answers.otherCompanyBenefit) thenReturn None
 
-      helper.otherCompanyBenefit mustBe Seq()
+      helper.otherCompanyBenefitNormalMode mustBe Seq()
+			helper.otherCompanyBenefitCheckMode mustBe Seq()
     }
   }
 

@@ -192,7 +192,16 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
         s"£$x", false, Some(routes.HowMuchMedicalBenefitsController.onPageLoad(CheckMode).url))
   }
 
-  def otherCompanyBenefit: Seq[Option[AnswerRow]] = {
+  def otherCompanyBenefitNormalMode: Seq[Option[AnswerRow]] = {
+    otherCompanyBenefit(NormalMode)
+  }
+
+  def otherCompanyBenefitCheckMode: Seq[Option[AnswerRow]] = {
+    otherCompanyBenefit(CheckMode)
+  }
+
+
+  def otherCompanyBenefit(mode: Mode): Seq[Option[AnswerRow]] = {
     for {
       otherCompanyBenefit <- userAnswers.otherCompanyBenefit
     } yield {
@@ -203,8 +212,26 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
               companyBenefits.name,
               s"£${companyBenefits.amount}",
               answerIsMessageKey = false,
-              Some(routes.OtherCompanyBenefitController.onPageLoad(CheckMode, Index(index)).url),
-              Some(routes.DeleteOtherController.onPageLoad(CheckMode, Index(index), companyBenefits.name, OtherCompanyBenefit.collectionId).url)
+              Some(routes.OtherCompanyBenefitController.onPageLoad(mode, Index(index)).url),
+              Some(routes.DeleteOtherController.onPageLoad(mode, Index(index), companyBenefits.name, OtherCompanyBenefit.collectionId).url)
+            )
+            )
+          )
+      }
+    }
+  }.getOrElse(Seq.empty)
+
+  def otherCompanyBenefitCheckYourAnswers: Seq[Option[AnswerRow]] = {
+    for {
+      otherCompanyBenefit <- userAnswers.otherCompanyBenefit
+    } yield {
+      otherCompanyBenefit.zipWithIndex.flatMap {
+        case (companyBenefits, index) =>
+          Seq(
+            Some(AnswerRow(
+              companyBenefits.name,
+              s"£${companyBenefits.amount}",
+              answerIsMessageKey = false
             )
             )
           )

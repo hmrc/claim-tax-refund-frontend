@@ -34,7 +34,7 @@ class AnyOtherCompanyBenefitsViewSpec extends YesNoViewBehaviours {
 	private val taxYear = CYMinus2
 
 	private val cya: CheckYourAnswersHelper = new CheckYourAnswersHelper(MockUserAnswers.fullValidUserAnswers)(messages)
-	private val otherCompanyBenefits: AnswerSection = new CheckYourAnswersSections(cya, MockUserAnswers.fullValidUserAnswers).otherCompanyBenefitSection
+	private val otherCompanyBenefits: AnswerSection = new CheckYourAnswersSections(cya, MockUserAnswers.fullValidUserAnswers).otherCompanyBenefitsAddToListNormalMode
 
 	override val form = new BooleanForm()()
 

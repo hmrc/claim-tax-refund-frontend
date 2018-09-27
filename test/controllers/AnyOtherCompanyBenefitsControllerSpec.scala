@@ -38,7 +38,7 @@ class AnyOtherCompanyBenefitsControllerSpec extends ControllerSpecBase {
   private val taxYear = CYMinus2
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
   private val cya: CheckYourAnswersHelper = new CheckYourAnswersHelper(mockUserAnswers)(messages)
-  private val otherCompanyBenefits: AnswerSection = new CheckYourAnswersSections(cya, mockUserAnswers).otherCompanyBenefitSection
+  private val otherCompanyBenefits: AnswerSection = new CheckYourAnswersSections(cya, mockUserAnswers).otherBenefitsAddToListNormalMode
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyOtherCompanyBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
