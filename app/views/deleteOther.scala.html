@@ -44,7 +44,7 @@
     bodyClasses = None
 ) {
 
-    @helpers.form(action = DeleteOtherController.onSubmit(index, itemName, collectionId), 'autoComplete -> "off") {
+    @helpers.form(action = DeleteOtherController.onSubmit(mode, index, itemName, collectionId), 'autoComplete -> "off") {
 
         @components.back_link()
 

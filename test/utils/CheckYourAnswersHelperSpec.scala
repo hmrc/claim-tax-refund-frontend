@@ -202,8 +202,8 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
       val otherBenefit = Seq(OtherBenefit("qwerty", "1234"))
       when(answers.otherBenefit) thenReturn Some(otherBenefit)
 
-      helper.otherBenefits.head.get.label.key mustBe "qwerty"
-      helper.otherBenefits.head.get.answer.key mustBe s"£$amount"
+      helper.otherBenefitsCheckMode.head.get.label.key mustBe "qwerty"
+      helper.otherBenefitsCheckMode.head.get.answer.key mustBe s"£$amount"
     }
    }
 
@@ -211,7 +211,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"return a empty Seq when empty" in {
       when(answers.otherBenefit) thenReturn None
 
-      helper.otherBenefits mustBe Seq()
+      helper.otherBenefitsCheckMode mustBe Seq()
     }
   }
 
@@ -459,13 +459,13 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
       helper.otherTaxableIncome.head.get.label.key mustBe "qwerty"
       helper.otherTaxableIncome(1).get.label.key mustBe messages("checkYourAnswers.otherTaxableIncome.label", "qwerty")
       helper.otherTaxableIncome(1).get.answer.key mustBe s"£$amount"
-      helper.otherTaxableIncome(1).get.url mustBe routes.OtherTaxableIncomeController.onPageLoad(CheckMode, 0).url
+      helper.otherTaxableIncome(1).get.url mustBe Some(routes.OtherTaxableIncomeController.onPageLoad(CheckMode, 0).url)
       helper.otherTaxableIncome(2).get.label.key mustBe messages("anyTaxableOtherIncomeOption.checkYourAnswersLabel", "qwerty")
       helper.otherTaxableIncome(2).get.answer.key mustBe "site.yes"
-      helper.otherTaxableIncome(2).get.url mustBe routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode, 0).url
+      helper.otherTaxableIncome(2).get.url mustBe Some(routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode, 0).url)
       helper.otherTaxableIncome(3).get.label.key mustBe messages("anyTaxableOtherIncome.checkYourAnswersLabel", "qwerty")
       helper.otherTaxableIncome(3).get.answer.key mustBe "£123"
-      helper.otherTaxableIncome(3).get.url mustBe routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode, 0).url
+      helper.otherTaxableIncome(3).get.url mustBe Some(routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode, 0).url)
     }
   }
 

@@ -19,13 +19,14 @@ package controllers
 import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.BooleanForm
-import models.{NormalMode, OtherBenefit, SelectTaxYear}
+import models.{CheckMode, NormalMode, SelectTaxYear}
 import models.SelectTaxYear.CYMinus2
 import org.mockito.Mockito.when
 import play.api.data.Form
 import play.api.mvc.Call
 import play.api.test.Helpers._
-import utils.{FakeNavigator, MockUserAnswers, UserAnswers}
+import utils._
+import viewmodels.AnswerSection
 import views.html.anyOtherBenefits
 
 class AnyOtherBenefitsControllerSpec extends ControllerSpecBase {
@@ -36,21 +37,20 @@ class AnyOtherBenefitsControllerSpec extends ControllerSpecBase {
   val form = formProvider()
   private val taxYear: SelectTaxYear = CYMinus2
   private val mockUserAnswers: UserAnswers = MockUserAnswers.claimDetailsUserAnswers
-  private val otherBenefits: Seq[OtherBenefit] = Seq(OtherBenefit("qwerty", "123"))
-  def otherBenefitNames: Seq[String] = otherBenefits.map(_.name)
+
+  private val cya: CheckYourAnswersHelper = new CheckYourAnswersHelper(mockUserAnswers)(messages)
+  private val otherBenefitsSection: AnswerSection = new CheckYourAnswersSections(cya, mockUserAnswers).otherBenefitsSection
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyOtherBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, formProvider, formPartialRetriever, templateRenderer)
 
   def viewAsString(form: Form[_] = form): String =
-    anyOtherBenefits(frontendAppConfig, form, NormalMode, taxYear, otherBenefitNames)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+    anyOtherBenefits(frontendAppConfig, form, NormalMode, taxYear, otherBenefitsSection)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "AnyOtherBenefits Controller" must {
 
     "return OK and the correct view for a GET" in {
-      when(mockUserAnswers.otherBenefit).thenReturn(Some(otherBenefits))
-
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe OK

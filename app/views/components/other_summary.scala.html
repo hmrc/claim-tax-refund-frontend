@@ -1,4 +1,4 @@
-/*
+@*
  * Copyright 2018 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,15 +12,29 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *@
 
-package filters
+@import viewmodels.AnswerRow
 
-import com.google.inject.Inject
-import play.api.http.DefaultHttpFilters
-import uk.gov.hmrc.play.bootstrap.filters.FrontendFilters
 
-class Filters @Inject() (
-                           sessionIdFilter: SessionIdFilter,
-                           frontendFilters: FrontendFilters
-                         ) extends DefaultHttpFilters(frontendFilters.filters :+ sessionIdFilter: _*)
+@(
+    addCssClass: Option[String] = None,
+    answers: Seq[AnswerRow]
+)(implicit messages: Messages)
+
+@cssClass = @{
+    if(addCssClass.isDefined) s"form-group ${addCssClass.get}" else "form-group"
+}
+
+<div class="@cssClass" id="component-answer-list">
+    <ul role="list" class="tabular-data tabular-data--list">
+        @for((answer, i) <- answers.zipWithIndex) {
+                @components.answer_row(
+                    row = answer,
+                    idPath = s"other_summary_$i"
+                    )
+        }
+
+
+    </ul>
+</div>

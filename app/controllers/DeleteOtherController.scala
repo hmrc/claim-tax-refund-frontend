@@ -82,7 +82,16 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
                       Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
                   }
                 } else {
-                  Future.successful(Redirect(routes.CheckYourAnswersController.onPageLoad()))
+                  collectionId match {
+                    case OtherBenefit.collectionId =>
+                      Future.successful(Redirect(routes.AnyOtherBenefitsController.onPageLoad(mode)))
+                    case OtherCompanyBenefit.collectionId =>
+                      Future.successful(Redirect(routes.AnyOtherCompanyBenefitsController.onPageLoad(mode)))
+                    case OtherTaxableIncome.collectionId =>
+                      Future.successful(Redirect(routes.AnyOtherTaxableIncomeController.onPageLoad(mode)))
+                    case _ =>
+                      Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+                  }
                 }
             )
         }.getOrElse {
@@ -95,8 +104,9 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
       otherBenefit: Seq[OtherBenefit] <- request.userAnswers.otherBenefit
     } yield {
       val updatedOtherBenefit: Seq[OtherBenefit] = otherBenefit.patch(index, Seq.empty, 1)
-      dataCacheConnector.save[Seq[OtherBenefit]](request.externalId, OtherBenefitId.toString, updatedOtherBenefit).map(cacheMap =>
-        Redirect(navigator.nextPage(DeleteOtherBenefitId, mode)(new UserAnswers(cacheMap)))
+      dataCacheConnector.save[Seq[OtherBenefit]](request.externalId, OtherBenefitId.toString, updatedOtherBenefit).map(
+        _ =>
+          Redirect (routes.AnyOtherBenefitsController.onPageLoad(mode) )
       )
     }
 

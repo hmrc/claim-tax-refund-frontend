@@ -60,6 +60,6 @@ class DeleteOtherViewSpec extends YesNoViewBehaviours {
 
     behave like pageWithBackLink(createView)
 
-    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.DeleteOtherController.onSubmit(index, itemName, benefitCollectionId).url, None)
+    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.DeleteOtherController.onSubmit(NormalMode, index, itemName, benefitCollectionId).url, None)
   }
 }

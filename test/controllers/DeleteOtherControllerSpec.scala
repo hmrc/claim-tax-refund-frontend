@@ -20,7 +20,7 @@ import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.BooleanForm
 import models.SelectTaxYear.CYMinus2
-import models.{Index, NormalMode}
+import models.{CheckMode, Index, NormalMode}
 import play.api.data.Form
 import play.api.mvc.Call
 import play.api.test.Helpers._
@@ -64,14 +64,14 @@ class DeleteOtherControllerSpec extends ControllerSpecBase {
       contentAsString(result) mustBe viewAsString(form, index, itemName, benefitCollectionId)
     }
 
-    "redirect to CheckYourAnswers when value is true and valid benefit submitted" in {
+    "redirect to AnyOtherBenefit when value is true and valid benefit submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
 
       val result = controller(fakeDataRetrievalAction(mockUserAnswers.benefitsUserAnswers))
-        .onSubmit(NormalMode, index, itemName, benefitCollectionId)(postRequest)
+        .onSubmit(CheckMode, index, itemName, benefitCollectionId)(postRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(onwardRoute.url)
+      redirectLocation(result) mustBe Some(routes.AnyOtherBenefitsController.onPageLoad(CheckMode).url)
     }
 
     "redirect to CheckYourAnswers when value is true and valid companyBenefit submitted" in {
@@ -125,14 +125,14 @@ class DeleteOtherControllerSpec extends ControllerSpecBase {
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
     }
 
-    "redirect to CheckYourAnswers when valid data is submitted and value is false" in {
+    "redirect to AnyOtherBenefit when valid data is submitted and value is false" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "false"))
 
       val result = controller(fakeDataRetrievalAction())
         .onSubmit(NormalMode, index, itemName, benefitCollectionId)(postRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.CheckYourAnswersController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(routes.AnyOtherBenefitsController.onPageLoad(NormalMode).url)
     }
 
     "redirect to SessionExpired when invalid id provided" in {

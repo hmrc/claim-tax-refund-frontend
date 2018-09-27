@@ -50,8 +50,8 @@ class Navigator @Inject()() {
     HowMuchIncapacityBenefitId -> selectedBenefitsCheck(NormalMode),
     HowMuchEmploymentAndSupportAllowanceId -> selectedBenefitsCheck(NormalMode),
     HowMuchStatePensionId -> selectedBenefitsCheck(NormalMode),
-    OtherBenefitId -> otherBenefits(NormalMode),
-    AnyOtherBenefitsId -> anyOtherBenefits,
+    OtherBenefitId -> (_ => routes.AnyOtherBenefitsController.onPageLoad(NormalMode)),
+    AnyOtherBenefitsId -> anyOtherBenefits(NormalMode),
     //Company benefits
     AnyCompanyBenefitsId -> anyCompanyBenefits(NormalMode),
     SelectCompanyBenefitsId -> selectedCompanyBenefitsCheck(NormalMode),
@@ -102,7 +102,8 @@ class Navigator @Inject()() {
     HowMuchIncapacityBenefitId -> selectedBenefitsCheck(CheckMode),
     HowMuchEmploymentAndSupportAllowanceId -> selectedBenefitsCheck(CheckMode),
     HowMuchStatePensionId -> selectedBenefitsCheck(CheckMode),
-    OtherBenefitId -> otherBenefits(CheckMode),
+    OtherBenefitId -> (_ => routes.AnyOtherBenefitsController.onPageLoad(CheckMode)),
+		AnyOtherBenefitsId -> anyOtherBenefits(CheckMode),
     //Company Benefits
     AnyCompanyBenefitsId -> anyCompanyBenefits(CheckMode),
     SelectCompanyBenefitsId -> selectedCompanyBenefitsCheck(CheckMode),
@@ -228,22 +229,25 @@ class Navigator @Inject()() {
         routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(mode)
       } else if (benefits.contains(Benefits.STATE_PENSION) && userAnswers.howMuchStatePension.isEmpty) {
         routes.HowMuchStatePensionController.onPageLoad(mode)
-      } else if (benefits.contains(Benefits.OTHER_TAXABLE_BENEFIT) && userAnswers.otherBenefit.isEmpty) {
+      } else if (benefits.contains(Benefits.OTHER_TAXABLE_BENEFIT) && (userAnswers.otherBenefit.isEmpty || userAnswers.otherBenefit.get.isEmpty)) {
         routes.OtherBenefitController.onPageLoad(mode, Index(0))
-      } else {
-        if (mode == NormalMode) routes.AnyCompanyBenefitsController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
-      }
+      } else if (benefits.contains(Benefits.OTHER_TAXABLE_BENEFIT) && userAnswers.otherBenefit.isDefined) {
+        routes.AnyOtherBenefitsController.onPageLoad(mode)
+      } else if (mode == NormalMode) {
+        routes.AnyCompanyBenefitsController.onPageLoad(mode)
+      } else routes.CheckYourAnswersController.onPageLoad()
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
-  private def anyOtherBenefits(userAnswers: UserAnswers): Call = userAnswers.anyOtherBenefits match {
-    case Some(true) => routes.OtherBenefitController.onPageLoad(NormalMode, Index(userAnswers.otherBenefit.get.length))
-    case Some(false) => routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
+  private def anyOtherBenefits(mode: Mode)(userAnswers: UserAnswers): Call = userAnswers.anyOtherBenefits match {
+    case Some(true) => routes.OtherBenefitController.onPageLoad(mode, Index(userAnswers.otherBenefit.get.length))
+    case Some(false) => mode match {
+			case NormalMode => routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
+			case CheckMode => routes.CheckYourAnswersController.onPageLoad()
+		}
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
-  def otherBenefits(mode: Mode)(userAnswers: UserAnswers): Call =
-    if (mode == NormalMode) routes.AnyOtherBenefitsController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
 
   //Company benefits--------------------------
 
@@ -274,9 +278,9 @@ class Navigator @Inject()() {
         routes.HowMuchMedicalBenefitsController.onPageLoad(mode)
       } else if (benefits.contains(CompanyBenefits.OTHER_COMPANY_BENEFIT) && userAnswers.otherCompanyBenefit.isEmpty) {
         routes.OtherCompanyBenefitController.onPageLoad(mode, Index(0))
-      } else {
-        if (mode == NormalMode) routes.AnyTaxableIncomeController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
-      }
+      } else if (mode == NormalMode) {
+        routes.AnyTaxableIncomeController.onPageLoad(mode)
+      } else routes.CheckYourAnswersController.onPageLoad()
     case None =>
       routes.SessionExpiredController.onPageLoad()
   }
@@ -321,9 +325,9 @@ class Navigator @Inject()() {
         routes.HowMuchForeignIncomeController.onPageLoad(mode)
       } else if (taxableIncome.contains(TaxableIncome.OTHER_TAXABLE_INCOME) && (userAnswers.otherTaxableIncome.isEmpty || userAnswers.otherTaxableIncome.get.isEmpty)) {
         routes.OtherTaxableIncomeController.onPageLoad(mode, Index(0))
-      } else {
-        if (mode == NormalMode) routes.WhereToSendPaymentController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
-      }
+      } else if (mode == NormalMode) {
+        routes.WhereToSendPaymentController.onPageLoad(mode)
+      } else routes.CheckYourAnswersController.onPageLoad()
     case None =>
       routes.SessionExpiredController.onPageLoad()
   }

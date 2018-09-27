@@ -22,26 +22,28 @@ import scala.language.implicitConversions
 
 case class Message(key: String, args: Any*) {
 
-  def print(implicit messages: Messages): String =
-    messages(key, args: _*)
+	def print(implicit messages: Messages): String =
+		messages(key, args: _*)
 }
 
 object Message {
 
-  implicit def fromString(str: String): Message =
-    Message(str)
+	implicit def fromString(str: String): Message =
+		Message(str)
 }
 
 
-case class AnswerRow(label: Message, answer: Message, url: String, itemName: Option[String], isHeadingRow: Boolean)
+case class AnswerRow(label: Message, answer: Message, url: Option[String], deleteUrl: Option[String], itemName: Option[String], isHeadingRow: Boolean, isDeleteLinkRow: Boolean)
 
 object AnswerRow {
-  def apply(label: String,
-            answer: String,
-            answerIsMessageKey: Boolean,
-            url: String,
-            itemName: Option[String] = None,
-            isHeadingRow: Boolean = false
-           ): AnswerRow =
-    AnswerRow(Message(label), Message(answer), url, itemName, isHeadingRow)
+	def apply(label: String,
+						answer: String,
+						answerIsMessageKey: Boolean,
+						url: Option[String] = None,
+						deleteUrl: Option[String] = None,
+						itemName: Option[String] = None,
+						isHeadingRow: Boolean = false,
+						isDeleteLinkRow: Boolean = false
+					 ): AnswerRow =
+		AnswerRow(Message(label), Message(answer), url, deleteUrl, itemName, isHeadingRow, isDeleteLinkRow)
 }

@@ -172,6 +172,7 @@ howMuchRentalIncome.invalid = Enter a valid amount of rental income
 anyOtherBenefits.title = Did you get any other taxable benefits?
 anyOtherBenefits.heading = Did you get any other taxable benefits?
 anyOtherBenefits.blank = Select yes if you got any other taxable benefits
+anyOtherBenefits.addAnotherBenefit = Do you need to add another taxable benefit?
 
 howMuchJobseekersAllowance.title = How much contribution-based Jobseeker’s Allowance did you get?
 howMuchJobseekersAllowance.heading = How much contribution-based Jobseeker’s Allowance did you get?
@@ -336,7 +337,7 @@ otherBenefit.name.blank = Enter the name of the other taxable benefit you got
 otherBenefit.amount.blank = Enter the amount of the other taxable benefit you got
 otherBenefit.amount.invalid = Enter a valid amount of the other taxable benefit you got
 otherBenefit.duplicate = You have already entered this other taxable benefit name
-otherBenefit.add = Add another taxable benefit
+otherBenefit.change = Change taxable benefits
 
 howMuchForeignIncome.title = How much foreign income did you get?
 howMuchForeignIncome.heading = How much foreign income did you get?
