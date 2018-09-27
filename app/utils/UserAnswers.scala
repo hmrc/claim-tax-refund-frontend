@@ -22,6 +22,8 @@ import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
 import uk.gov.hmrc.http.cache.client.CacheMap
 
 class UserAnswers(val cacheMap: CacheMap) {
+  def otherSectionUncheck: Option[Boolean] = cacheMap.getEntry[Boolean](OtherSectionUncheckId.toString)
+
 
   //Submission data
   //------------------------------------------------------------------------------
