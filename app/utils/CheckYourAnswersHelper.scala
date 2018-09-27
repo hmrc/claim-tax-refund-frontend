@@ -118,7 +118,11 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
     otherBenefitsAddToList(CheckMode)
   }
 
-  def otherBenefitsAddToList(mode: Mode): Seq[Option[AnswerRow]] = {
+  def otherBenefitsCheckYourAnswers: Seq[Option[AnswerRow]] = {
+    otherBenefitsAddToList(NormalMode, cya = true)
+  }
+
+  def otherBenefitsAddToList(mode: Mode, cya: Boolean = false): Seq[Option[AnswerRow]] = {
     for {
       otherBenefits <- userAnswers.otherBenefit
     } yield {
@@ -129,32 +133,14 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
               benefits.name,
               s"£${benefits.amount}",
               answerIsMessageKey = false,
-              Some(routes.OtherBenefitController.onPageLoad(mode, Index(index)).url),
-              Some(routes.DeleteOtherController.onPageLoad(mode, Index(index), benefits.name, OtherBenefit.collectionId).url)
+              if(!cya) Some(routes.OtherBenefitController.onPageLoad(mode, Index(index)).url) else None,
+              if(!cya) Some(routes.DeleteOtherController.onPageLoad(mode, Index(index), benefits.name, OtherBenefit.collectionId).url) else None
             )
            )
           )
       }
     }
   }.getOrElse(Seq.empty)
-
-	def otherBenefitsCheckYourAnswers: Seq[Option[AnswerRow]] = {
-		for {
-			otherBenefits <- userAnswers.otherBenefit
-		} yield {
-			otherBenefits.zipWithIndex.flatMap {
-				case (benefits, index) =>
-					Seq(
-						Some(AnswerRow(
-							benefits.name,
-							s"£${benefits.amount}",
-							answerIsMessageKey = false
-						)
-						)
-					)
-			}
-		}
-	}.getOrElse(Seq.empty)
 
   //Company benefits
   //------------------------------------------------------------------
@@ -200,7 +186,11 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
     otherCompanyBenefitsAddToList(CheckMode)
   }
 
-  def otherCompanyBenefitsAddToList(mode: Mode): Seq[Option[AnswerRow]] = {
+  def otherCompanyBenefitsCheckYourAnswers: Seq[Option[AnswerRow]] = {
+    otherCompanyBenefitsAddToList(NormalMode, cya = true)
+  }
+
+  def otherCompanyBenefitsAddToList(mode: Mode, cya: Boolean = false): Seq[Option[AnswerRow]] = {
     for {
       otherCompanyBenefits <- userAnswers.otherCompanyBenefit
     } yield {
@@ -211,8 +201,8 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
               companyBenefits.name,
               s"£${companyBenefits.amount}",
               answerIsMessageKey = false,
-              Some(routes.OtherCompanyBenefitController.onPageLoad(mode, Index(index)).url),
-              Some(routes.DeleteOtherController.onPageLoad(mode, Index(index), companyBenefits.name, OtherCompanyBenefit.collectionId).url)
+              if(!cya) Some(routes.OtherCompanyBenefitController.onPageLoad(mode, Index(index)).url) else None,
+              if(!cya) Some(routes.DeleteOtherController.onPageLoad(mode, Index(index), companyBenefits.name, OtherCompanyBenefit.collectionId).url) else None
             )
             )
           )
@@ -220,23 +210,6 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
     }
   }.getOrElse(Seq.empty)
 
-  def otherCompanyBenefitsCheckYourAnswers: Seq[Option[AnswerRow]] = {
-    for {
-      otherCompanyBenefits <- userAnswers.otherCompanyBenefit
-    } yield {
-      otherCompanyBenefits.zipWithIndex.flatMap {
-        case (companyBenefits, _) =>
-          Seq(
-            Some(AnswerRow(
-              companyBenefits.name,
-              s"£${companyBenefits.amount}",
-              answerIsMessageKey = false
-            )
-            )
-          )
-      }
-    }
-  }.getOrElse(Seq.empty)
 
   //Taxable Income
   //------------------------------------------------------------------

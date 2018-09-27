@@ -132,6 +132,7 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
 		}
 	}
 
+
 	def companyBenefitSection = AnswerSection(Some("checkYourAnswers.companyBenefitSection"), Seq(
 		cyaHelper.anyCompanyBenefits,
 		cyaHelper.selectCompanyBenefits,
