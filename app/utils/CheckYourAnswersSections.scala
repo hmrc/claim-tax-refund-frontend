@@ -97,7 +97,33 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
 		if (userAnswers.otherCompanyBenefit.isDefined) {
 			AnswerSection(
 				headingKey = Some("otherCompanyBenefit.checkYourAnswersLabel"),
-				rows = cyaHelper.otherCompanyBenefit.flatten,
+				rows = cyaHelper.otherCompanyBenefitsCheckYourAnswers.flatten,
+				addLinkText = Some("otherCompanyBenefit.add"),
+				addLinkUrl = Some(routes.AnyOtherCompanyBenefitsController.onPageLoad(CheckMode).url)
+			)
+		} else {
+			AnswerSection(None, Seq.empty)
+		}
+	}
+
+	def otherCompanyBenefitsAddToListNormalMode: AnswerSection = {
+		if (userAnswers.otherCompanyBenefit.isDefined) {
+			AnswerSection(
+				headingKey = Some("otherCompanyBenefit.checkYourAnswersLabel"),
+				rows = cyaHelper.otherCompanyBenefitsNormalMode.flatten,
+				addLinkText = Some("otherCompanyBenefit.add"),
+				addLinkUrl = Some(routes.OtherCompanyBenefitController.onPageLoad(NormalMode, Index(userAnswers.otherCompanyBenefit.get.size)).url)
+			)
+		} else {
+			AnswerSection(None, Seq.empty)
+		}
+	}
+
+	def otherCompanyBenefitsAddToListCheckMode: AnswerSection = {
+		if (userAnswers.otherCompanyBenefit.isDefined) {
+			AnswerSection(
+				headingKey = Some("otherCompanyBenefit.checkYourAnswersLabel"),
+				rows = cyaHelper.otherCompanyBenefitsCheckMode.flatten,
 				addLinkText = Some("otherCompanyBenefit.add"),
 				addLinkUrl = Some(routes.OtherCompanyBenefitController.onPageLoad(CheckMode, Index(userAnswers.otherCompanyBenefit.get.size)).url)
 			)
@@ -105,6 +131,7 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
 			AnswerSection(None, Seq.empty)
 		}
 	}
+
 
 	def companyBenefitSection = AnswerSection(Some("checkYourAnswers.companyBenefitSection"), Seq(
 		cyaHelper.anyCompanyBenefits,

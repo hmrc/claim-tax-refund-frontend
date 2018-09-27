@@ -19,7 +19,7 @@
 @import controllers.routes._
 @import models.Mode
 @import utils.FormHelpers
-@import viewmodels.InputViewModel
+@import viewmodels._
 @import uk.gov.hmrc.renderer.TemplateRenderer
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
 
@@ -28,7 +28,7 @@
     form: Form[_],
     mode: Mode,
     taxYear: SelectTaxYear,
-    otherCompanyBenefitNames: Seq[String]
+    otherCompanyBenefits: AnswerSection
 )(
     implicit
         request: Request[_],
@@ -52,8 +52,9 @@
         @components.heading(messages(s"anyOtherCompanyBenefits.heading"), taxYear = Some(taxYear.asString))
 
         <p class="lede">@messages("global.otherListHeading")</p>
-        @components.list(
-            bulletList = otherCompanyBenefitNames
+
+        @components.other_summary(
+            answers = otherCompanyBenefits.rows
         )
 
         @components.input_yes_no(

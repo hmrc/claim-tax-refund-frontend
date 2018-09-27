@@ -106,7 +106,7 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
       val updatedOtherBenefit: Seq[OtherBenefit] = otherBenefit.patch(index, Seq.empty, 1)
       dataCacheConnector.save[Seq[OtherBenefit]](request.externalId, OtherBenefitId.toString, updatedOtherBenefit).map(
         _ =>
-          Redirect (routes.AnyOtherBenefitsController.onPageLoad(mode) )
+          Redirect(routes.AnyOtherBenefitsController.onPageLoad(mode))
       )
     }
 
@@ -120,8 +120,9 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
       otherCompanyBenefit: Seq[OtherCompanyBenefit] <- request.userAnswers.otherCompanyBenefit
     } yield {
       val updatedOtherCompanyBenefit: Seq[OtherCompanyBenefit] = otherCompanyBenefit.patch(index, Seq.empty, 1)
-      dataCacheConnector.save[Seq[OtherCompanyBenefit]](request.externalId, OtherCompanyBenefitId.toString, updatedOtherCompanyBenefit).map(cacheMap =>
-        Redirect(navigator.nextPage(DeleteOtherCompanyBenefitId, mode)(new UserAnswers(cacheMap)))
+      dataCacheConnector.save[Seq[OtherCompanyBenefit]](request.externalId, OtherCompanyBenefitId.toString, updatedOtherCompanyBenefit).map(
+        _ =>
+          Redirect(routes.AnyOtherCompanyBenefitsController.onPageLoad(mode))
       )
     }
 

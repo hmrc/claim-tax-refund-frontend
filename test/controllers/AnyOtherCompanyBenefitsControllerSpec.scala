@@ -17,15 +17,16 @@
 package controllers
 
 import play.api.data.Form
-import utils.{FakeNavigator, MockUserAnswers}
+import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, FakeNavigator, MockUserAnswers}
 import connectors.FakeDataCacheConnector
 import controllers.actions._
 import play.api.test.Helpers._
 import forms.BooleanForm
-import models.{NormalMode, OtherCompanyBenefit}
+import models.{CheckMode, Mode, NormalMode, OtherCompanyBenefit}
 import models.SelectTaxYear.CYMinus2
 import org.mockito.Mockito.when
 import play.api.mvc.Call
+import viewmodels.AnswerSection
 import views.html.anyOtherCompanyBenefits
 
 class AnyOtherCompanyBenefitsControllerSpec extends ControllerSpecBase {
@@ -36,24 +37,30 @@ class AnyOtherCompanyBenefitsControllerSpec extends ControllerSpecBase {
   val form = formProvider()
   private val taxYear = CYMinus2
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
-  private val otherCompanyBenefits: Seq[OtherCompanyBenefit] = Seq(OtherCompanyBenefit("qwerty", "123"))
-  def otherCompanyBenefitNames: Seq[String] = otherCompanyBenefits.map(_.name)
+  private val cya: CheckYourAnswersHelper = new CheckYourAnswersHelper(mockUserAnswers)(messages)
+  private val otherCompanyBenefits: AnswerSection = new CheckYourAnswersSections(cya, mockUserAnswers).otherBenefitsAddToListNormalMode
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyOtherCompanyBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, formProvider, formPartialRetriever, templateRenderer)
 
-  def viewAsString(form: Form[_] = form): String = anyOtherCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear, otherCompanyBenefitNames)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+  def viewAsString(form: Form[_] = form, mode: Mode = NormalMode): String =
+    anyOtherCompanyBenefits(frontendAppConfig, form, mode, taxYear, otherCompanyBenefits)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "AnyOtherCompanyBenefits Controller" must {
 
     "return OK and the correct view for a GET" in {
-      when(mockUserAnswers.otherCompanyBenefit).thenReturn(Some(otherCompanyBenefits))
-
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe OK
       contentAsString(result) mustBe viewAsString()
+    }
+
+    "return OK and the correct view for a GET while in CheckMode" in {
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(CheckMode)(fakeRequest)
+
+      status(result) mustBe OK
+      contentAsString(result) mustBe viewAsString(mode = CheckMode)
     }
 
     "not populate the view on a GET when the question has previously been answered as the user always needs to answer this question" in {
@@ -66,12 +73,20 @@ class AnyOtherCompanyBenefitsControllerSpec extends ControllerSpecBase {
 
     "redirect to the next page when valid data is submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
-
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(onwardRoute.url)
     }
+
+    "redirect to the next page when valid data is submitted while in CheckMode" in {
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(CheckMode)(postRequest)
+
+      status(result) mustBe SEE_OTHER
+      redirectLocation(result) mustBe Some(onwardRoute.url)
+    }
+
 
     "return a Bad Request and errors when invalid data is submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))

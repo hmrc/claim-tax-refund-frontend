@@ -118,7 +118,11 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
     otherBenefitsAddToList(CheckMode)
   }
 
-  def otherBenefitsAddToList(mode: Mode): Seq[Option[AnswerRow]] = {
+  def otherBenefitsCheckYourAnswers: Seq[Option[AnswerRow]] = {
+    otherBenefitsAddToList(NormalMode, cya = true)
+  }
+
+  def otherBenefitsAddToList(mode: Mode, cya: Boolean = false): Seq[Option[AnswerRow]] = {
     for {
       otherBenefits <- userAnswers.otherBenefit
     } yield {
@@ -126,35 +130,17 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
         case (benefits, index) =>
           Seq(
             Some(AnswerRow(
-              benefits.name,
-              s"£${benefits.amount}",
+              label = benefits.name,
+              answer = s"£${benefits.amount}",
               answerIsMessageKey = false,
-              Some(routes.OtherBenefitController.onPageLoad(mode, Index(index)).url),
-              Some(routes.DeleteOtherController.onPageLoad(mode, Index(index), benefits.name, OtherBenefit.collectionId).url)
+              url = if(cya) None else Some(routes.OtherBenefitController.onPageLoad(mode, Index(index)).url),
+              deleteUrl = if(cya) None else Some(routes.DeleteOtherController.onPageLoad(mode, Index(index), benefits.name, OtherBenefit.collectionId).url)
             )
            )
           )
       }
     }
   }.getOrElse(Seq.empty)
-
-	def otherBenefitsCheckYourAnswers: Seq[Option[AnswerRow]] = {
-		for {
-			otherBenefits <- userAnswers.otherBenefit
-		} yield {
-			otherBenefits.zipWithIndex.flatMap {
-				case (benefits, index) =>
-					Seq(
-						Some(AnswerRow(
-							benefits.name,
-							s"£${benefits.amount}",
-							answerIsMessageKey = false
-						)
-						)
-					)
-			}
-		}
-	}.getOrElse(Seq.empty)
 
   //Company benefits
   //------------------------------------------------------------------
@@ -192,29 +178,37 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
         s"£$x", false, Some(routes.HowMuchMedicalBenefitsController.onPageLoad(CheckMode).url))
   }
 
-  def otherCompanyBenefit: Seq[Option[AnswerRow]] = {
+  def otherCompanyBenefitsNormalMode: Seq[Option[AnswerRow]] = {
+    otherCompanyBenefitsAddToList(NormalMode)
+  }
+
+  def otherCompanyBenefitsCheckMode: Seq[Option[AnswerRow]] = {
+    otherCompanyBenefitsAddToList(CheckMode)
+  }
+
+  def otherCompanyBenefitsCheckYourAnswers: Seq[Option[AnswerRow]] = {
+    otherCompanyBenefitsAddToList(NormalMode, cya = true)
+  }
+
+  def otherCompanyBenefitsAddToList(mode: Mode, cya: Boolean = false): Seq[Option[AnswerRow]] = {
     for {
-      otherCompanyBenefit <- userAnswers.otherCompanyBenefit
+      otherCompanyBenefits <- userAnswers.otherCompanyBenefit
     } yield {
-      otherCompanyBenefit.zipWithIndex.flatMap {
+      otherCompanyBenefits.zipWithIndex.flatMap {
         case (companyBenefits, index) =>
           Seq(
             Some(AnswerRow(
-              companyBenefits.name,
-              s"£${companyBenefits.amount}",
+              label = companyBenefits.name,
+              answer = s"£${companyBenefits.amount}",
               answerIsMessageKey = false,
-              Some(routes.OtherCompanyBenefitController.onPageLoad(CheckMode, Index(index)).url),
-              Some(routes.DeleteOtherController.onPageLoad(CheckMode, Index(index), companyBenefits.name, OtherCompanyBenefit.collectionId).url)
+              url = if(cya) None else Some(routes.OtherCompanyBenefitController.onPageLoad(mode, Index(index)).url),
+              deleteUrl = if(cya) None else Some(routes.DeleteOtherController.onPageLoad(mode, Index(index), companyBenefits.name, OtherCompanyBenefit.collectionId).url)
             )
             )
           )
       }
     }
   }.getOrElse(Seq.empty)
-
-  def anyOtherCompanyBenefits: Option[AnswerRow] = userAnswers.anyOtherCompanyBenefits map {
-    x => AnswerRow("anyOtherCompanyBenefits.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, Some(routes.AnyOtherCompanyBenefitsController.onPageLoad(CheckMode).url))
-  }
 
 
   //Taxable Income

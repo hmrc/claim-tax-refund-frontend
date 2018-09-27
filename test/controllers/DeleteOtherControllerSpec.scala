@@ -74,14 +74,14 @@ class DeleteOtherControllerSpec extends ControllerSpecBase {
       redirectLocation(result) mustBe Some(routes.AnyOtherBenefitsController.onPageLoad(CheckMode).url)
     }
 
-    "redirect to CheckYourAnswers when value is true and valid companyBenefit submitted" in {
+    "redirect to AnyOtherCompanyBenefits when value is true and valid companyBenefit submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
 
       val result = controller(fakeDataRetrievalAction(mockUserAnswers.companyBenefitsUserAnswers))
         .onSubmit(NormalMode, index, itemName, companyBenefitCollectionId)(postRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(onwardRoute.url)
+      redirectLocation(result) mustBe Some(routes.AnyOtherCompanyBenefitsController.onPageLoad(NormalMode).url)
     }
 
     "redirect to CheckYourAnswers when value is true and valid otherTaxableIncome submitted" in {

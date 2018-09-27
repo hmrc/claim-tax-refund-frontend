@@ -25,11 +25,12 @@ import controllers.actions._
 import config.FrontendAppConfig
 import forms.BooleanForm
 import identifiers.AnyOtherCompanyBenefitsId
-import models.{Mode, OtherCompanyBenefit, SelectTaxYear}
+import models._
 import play.api.mvc.{Action, AnyContent, Result}
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import uk.gov.hmrc.renderer.TemplateRenderer
-import utils.{Navigator, UserAnswers}
+import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, Navigator, UserAnswers}
+import viewmodels.AnswerSection
 import views.html.anyOtherCompanyBenefits
 
 import scala.concurrent.Future
@@ -52,9 +53,13 @@ class AnyOtherCompanyBenefitsController @Inject()(appConfig: FrontendAppConfig,
     implicit request =>
       val result: Option[Result] = for {
         taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
-        otherCompanyBenefitNames: Seq[String] <- request.userAnswers.otherCompanyBenefit.map(_.map(_.name))
+        cyaHelper: CheckYourAnswersHelper = new CheckYourAnswersHelper(request.userAnswers)
+        otherCompanyBenefits: AnswerSection = mode match {
+          case NormalMode => new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherCompanyBenefitsAddToListNormalMode
+          case CheckMode => new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherCompanyBenefitsAddToListCheckMode
+        }
       } yield {
-        Ok(anyOtherCompanyBenefits(appConfig, form, mode, taxYear, otherCompanyBenefitNames))
+        Ok(anyOtherCompanyBenefits(appConfig, form, mode, taxYear, otherCompanyBenefits))
       }
 
       result.getOrElse {
@@ -66,11 +71,15 @@ class AnyOtherCompanyBenefitsController @Inject()(appConfig: FrontendAppConfig,
     implicit request =>
       val result: Option[Future[Result]] = for {
         taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
-        otherCompanyBenefitNames: Seq[String] <- request.userAnswers.otherCompanyBenefit.map(_.map(_.name))
+        cyaHelper: CheckYourAnswersHelper = new CheckYourAnswersHelper(request.userAnswers)
+        otherCompanyBenefits: AnswerSection = mode match {
+          case NormalMode => new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherCompanyBenefitsAddToListNormalMode
+          case CheckMode => new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherCompanyBenefitsAddToListCheckMode
+        }
       } yield {
         form.bindFromRequest().fold(
           (formWithErrors: Form[_]) =>
-            Future.successful(BadRequest(anyOtherCompanyBenefits(appConfig, formWithErrors, mode, taxYear, otherCompanyBenefitNames))),
+            Future.successful(BadRequest(anyOtherCompanyBenefits(appConfig, formWithErrors, mode, taxYear, otherCompanyBenefits))),
           value =>
             dataCacheConnector.save[Boolean](request.externalId, AnyOtherCompanyBenefitsId.toString, value).map(cacheMap =>
               Redirect(navigator.nextPage(AnyOtherCompanyBenefitsId, mode)(new UserAnswers(cacheMap))))
