@@ -117,6 +117,9 @@ class UserAnswers(val cacheMap: CacheMap) {
 
   def anyOtherTaxableIncome: Option[Boolean] = cacheMap.getEntry[Boolean](AnyOtherTaxableIncomeId.toString)
 
+
+  def fullOtherTaxableIncome: Option[Seq[FullOtherTaxableIncome]] = cacheMap.getEntry[Seq[FullOtherTaxableIncome]](OtherTaxableIncomeId.toString)
+
   //Payment details
   //------------------------------------------------------------------------------
 
