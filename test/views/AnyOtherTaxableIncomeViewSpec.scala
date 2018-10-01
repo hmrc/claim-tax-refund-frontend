@@ -23,6 +23,8 @@ import models.SelectTaxYear.CYMinus2
 import org.jsoup.nodes.Document
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
+import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, MockUserAnswers}
+import viewmodels.AnswerSection
 import views.behaviours.YesNoViewBehaviours
 import views.html.anyOtherTaxableIncome
 
@@ -30,15 +32,25 @@ class AnyOtherTaxableIncomeViewSpec extends YesNoViewBehaviours {
 
   private val messageKeyPrefix = "anyOtherTaxableIncome"
   private val taxYear = CYMinus2
-  private val otherTaxableIncomeNames: Seq[String] = Seq("qwerty")
+
+  private val cya: CheckYourAnswersHelper = new CheckYourAnswersHelper(MockUserAnswers.fullValidUserAnswers)(messages)
+  private val otherTaxableIncomeBenefits: AnswerSection = new CheckYourAnswersSections(cya, MockUserAnswers.fullValidUserAnswers).otherTaxableIncomeSection
 
   override val form = new BooleanForm()()
 
   def createView: () => HtmlFormat.Appendable = () =>
-    anyOtherTaxableIncome(frontendAppConfig, form, NormalMode, taxYear, otherTaxableIncomeNames)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+    anyOtherTaxableIncome(frontendAppConfig,
+			form,
+			NormalMode,
+			taxYear,
+			otherTaxableIncomeBenefits)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   def createViewUsingForm: Form[_] => HtmlFormat.Appendable = (form: Form[_]) =>
-    anyOtherTaxableIncome(frontendAppConfig, form, NormalMode, taxYear, otherTaxableIncomeNames)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+    anyOtherTaxableIncome(frontendAppConfig,
+			form,
+			NormalMode,
+			taxYear,
+			otherTaxableIncomeBenefits)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "AnyOtherTaxableIncome view" must {
 
@@ -54,11 +66,20 @@ class AnyOtherTaxableIncomeViewSpec extends YesNoViewBehaviours {
       expectedFormAction = routes.AnyOtherTaxableIncomeController.onSubmit(NormalMode).url,
       expectedHintTextKey = None
     )
+  }
 
-    "display 'You have told us about:' section" in {
-      val doc: Document = asDocument(createView())
+  "display 'You have told us about:' section" must {
+    val doc: Document = asDocument(createView())
+    "display list of created taxable benefits" in {
+      doc.getElementById("component-answer-list").text.contains("qwerty") mustBe true
+    }
 
-      doc.getElementById("bullet-qwerty").text() mustBe "qwerty"
+    "list item must have change buttons" in {
+      doc.getElementById("component-answer-list").text.contains("Change") mustBe true
+    }
+
+    "list item must have a delete button" in {
+      doc.getElementById("component-answer-list").text.contains("Remove") mustBe true
     }
   }
 }

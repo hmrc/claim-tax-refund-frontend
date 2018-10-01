@@ -21,7 +21,7 @@ import controllers.actions._
 import forms.AnyTaxPaidForm
 import identifiers.{AnyTaxPaidId, TaxPaidAmountId}
 import models.SelectTaxYear.CYMinus2
-import models.{AnyTaxPaid, NormalMode, OtherTaxableIncome}
+import models.{AnyTaxPaid, FullOtherTaxableIncome, NormalMode, OtherTaxableIncome}
 import org.mockito.Mockito.when
 import play.api.data.Form
 import play.api.libs.json.{JsBoolean, JsString, Json}
@@ -80,7 +80,7 @@ class AnyTaxableOtherIncomeControllerSpec extends ControllerSpecBase {
     }
 
     "redirect to the next page when valid YES data is submitted" in {
-      when(mockUserAnswers.otherTaxableIncome).thenReturn(Some(Seq(OtherTaxableIncome(incomeName, "123"))))
+      when(mockUserAnswers.fullOtherTaxableIncome).thenReturn(Some(Seq(FullOtherTaxableIncome(incomeName, testAnswer, Some(AnyTaxPaid.Yes(testAnswer))))))
       val postRequest = fakeRequest.withFormUrlEncodedBody(("anyTaxPaid", "true"),("taxPaidAmount", testAnswer))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode, 0)(postRequest)
 

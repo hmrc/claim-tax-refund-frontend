@@ -440,8 +440,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
 
   "otherTaxableIncome" must {
     s"have correct label and answer" in {
-      when(answers.otherTaxableIncome) thenReturn Some(Seq(OtherTaxableIncome("qwerty", "1234")))
-      when(answers.anyTaxableOtherIncome) thenReturn Some(Seq(AnyTaxPaid.Yes("123")))
+      when(answers.fullOtherTaxableIncome) thenReturn Some(Seq(FullOtherTaxableIncome("qwerty", "1234", Some(AnyTaxPaid.Yes("123")))))
 
       helper.otherTaxableIncome.head.get.label.key mustBe "qwerty"
       helper.otherTaxableIncome(1).get.label.key mustBe messages("checkYourAnswers.otherTaxableIncome.label", "qwerty")

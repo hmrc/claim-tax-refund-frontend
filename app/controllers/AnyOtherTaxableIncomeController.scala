@@ -29,7 +29,7 @@ import play.api.mvc.{Action, AnyContent, Result}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import uk.gov.hmrc.renderer.TemplateRenderer
-import utils.{Navigator, UserAnswers}
+import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, Navigator, UserAnswers}
 import views.html.anyOtherTaxableIncome
 
 import scala.concurrent.Future
@@ -52,9 +52,10 @@ class AnyOtherTaxableIncomeController @Inject()(appConfig: FrontendAppConfig,
     implicit request =>
       val result: Option[Result] = for {
         taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
-        otherTaxableIncomeNames: Seq[String] <- request.userAnswers.otherTaxableIncome.map(_.map(_.name))
+        cyaHelper: CheckYourAnswersHelper = new CheckYourAnswersHelper(request.userAnswers)
+        otherTaxableIncomeBenefits = new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherTaxableIncomeSection
       } yield {
-        Ok(anyOtherTaxableIncome(appConfig, form, mode, taxYear, otherTaxableIncomeNames))
+        Ok(anyOtherTaxableIncome(appConfig, form, mode, taxYear, otherTaxableIncomeBenefits))
       }
 
       result.getOrElse {
@@ -66,11 +67,12 @@ class AnyOtherTaxableIncomeController @Inject()(appConfig: FrontendAppConfig,
     implicit request =>
       val result: Option[Future[Result]] = for {
         taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
-        otherTaxableIncomeNames: Seq[String] <- request.userAnswers.otherTaxableIncome.map(_.map(_.name))
+        cyaHelper: CheckYourAnswersHelper = new CheckYourAnswersHelper(request.userAnswers)
+        otherTaxableIncomeBenefits = new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherTaxableIncomeSection
       } yield {
         form.bindFromRequest().fold(
           (formWithErrors: Form[_]) =>
-            Future.successful(BadRequest(anyOtherTaxableIncome(appConfig, formWithErrors, mode, taxYear, otherTaxableIncomeNames))),
+            Future.successful(BadRequest(anyOtherTaxableIncome(appConfig, formWithErrors, mode, taxYear, otherTaxableIncomeBenefits))),
           value =>
             dataCacheConnector.save[Boolean](request.externalId, AnyOtherTaxableIncomeId.toString, value).map(cacheMap =>
               Redirect(navigator.nextPage(AnyOtherTaxableIncomeId, mode)(new UserAnswers(cacheMap))))

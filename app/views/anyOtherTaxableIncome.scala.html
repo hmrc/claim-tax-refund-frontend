@@ -18,7 +18,7 @@
 @import controllers.routes._
 @import models.Mode
 @import uk.gov.hmrc.play.views.html._
-@import viewmodels.InputViewModel
+@import viewmodels._
 @import uk.gov.hmrc.renderer.TemplateRenderer
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
 
@@ -27,7 +27,7 @@
     form: Form[_],
     mode: Mode,
     taxYear: SelectTaxYear,
-    otherTaxableIncomeNames: Seq[String]
+    fullOtherTaxableBenefits: AnswerSection
 )(
     implicit
         request: Request[_],
@@ -51,8 +51,8 @@
         @components.heading(messages("anyOtherTaxableIncome.heading"), taxYear = Some(taxYear.asString))
 
         <p class="lede">@messages("global.otherListHeading")</p>
-        @components.list(
-            bulletList = otherTaxableIncomeNames
+        @components.other_summary(
+            answers = fullOtherTaxableBenefits.rows
         )
 
         @components.input_yes_no(

@@ -25,7 +25,8 @@ import org.mockito.Mockito.when
 import play.api.data.Form
 import play.api.mvc.Call
 import play.api.test.Helpers._
-import utils.{FakeNavigator, MockUserAnswers}
+import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, FakeNavigator, MockUserAnswers}
+import viewmodels.AnswerSection
 import views.html.anyOtherTaxableIncome
 
 class AnyOtherTaxableIncomeControllerSpec extends ControllerSpecBase {
@@ -36,21 +37,24 @@ class AnyOtherTaxableIncomeControllerSpec extends ControllerSpecBase {
   private val form = formProvider()
   private val taxYear = CYMinus2
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
-  private val otherTaxableIncome: Seq[OtherTaxableIncome] = Seq(OtherTaxableIncome("qwerty", "123"))
-  def otherTaxableIncomeNames: Seq[String] = otherTaxableIncome.map(_.name)
+
+  private val cya: CheckYourAnswersHelper = new CheckYourAnswersHelper(mockUserAnswers)(messages)
+  private val otherTaxableIncomeBenefits: AnswerSection = new CheckYourAnswersSections(cya, mockUserAnswers).otherTaxableIncomeSection
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyOtherTaxableIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, formProvider, formPartialRetriever, templateRenderer)
 
   def viewAsString(form: Form[_] = form): String =
-    anyOtherTaxableIncome(frontendAppConfig, form, NormalMode, taxYear, otherTaxableIncomeNames)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+    anyOtherTaxableIncome(frontendAppConfig,
+                          form,
+                          NormalMode,
+													taxYear,
+													otherTaxableIncomeBenefits)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "AnyOtherTaxableIncome Controller" must {
 
     "return OK and the correct view for a GET" in {
-      when(mockUserAnswers.otherTaxableIncome).thenReturn(Some(otherTaxableIncome))
-
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe OK
