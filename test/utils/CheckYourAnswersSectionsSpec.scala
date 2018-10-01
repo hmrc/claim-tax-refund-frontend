@@ -18,7 +18,7 @@ package utils
 
 import base.SpecBase
 import controllers.routes
-import models.{CheckMode, Index, NormalMode}
+import models.{CheckMode, Index}
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.mockito.MockitoSugar
 import play.api.i18n.Messages
@@ -111,7 +111,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
 
       otherCompanyBenefitSection.rows.size mustBe 3
       otherCompanyBenefitSection.headingKey.get mustBe "otherCompanyBenefit.checkYourAnswersLabel"
-      otherCompanyBenefitSection.addLinkText.get mustBe "otherCompanyBenefit.add"
+      otherCompanyBenefitSection.addLinkText.get mustBe "otherCompanyBenefit.change"
       otherCompanyBenefitSection.addLinkUrl.get mustBe routes.AnyOtherCompanyBenefitsController.onPageLoad(CheckMode).url
     }
 
@@ -157,7 +157,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       otherTaxableIncomeSection.rows(6).label.key mustBe messages("anyTaxableOtherIncomeOption.checkYourAnswersLabel", "qwerty1")
       otherTaxableIncomeSection.rows(6).answer.key mustBe "site.no"
 
-      otherTaxableIncomeSection.addLinkText.get mustBe "otherTaxableIncome.add"
+      otherTaxableIncomeSection.addLinkText.get mustBe "otherTaxableIncome.change"
       otherTaxableIncomeSection.addLinkUrl.get mustBe routes.OtherTaxableIncomeController.onPageLoad(CheckMode, Index(answers.otherTaxableIncome.get.size)).url
     }
 

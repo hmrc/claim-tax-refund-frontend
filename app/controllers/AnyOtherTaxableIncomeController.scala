@@ -22,7 +22,7 @@ import controllers.actions._
 import forms.BooleanForm
 import identifiers.AnyOtherTaxableIncomeId
 import javax.inject.Inject
-import models.{Mode, OtherCompanyBenefit, OtherTaxableIncome, SelectTaxYear}
+import models._
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, Result}
@@ -30,6 +30,7 @@ import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, Navigator, UserAnswers}
+import viewmodels.AnswerSection
 import views.html.anyOtherTaxableIncome
 
 import scala.concurrent.Future
@@ -53,7 +54,10 @@ class AnyOtherTaxableIncomeController @Inject()(appConfig: FrontendAppConfig,
       val result: Option[Result] = for {
         taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
         cyaHelper: CheckYourAnswersHelper = new CheckYourAnswersHelper(request.userAnswers)
-        otherTaxableIncomeBenefits = new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherTaxableIncomeSection
+        otherTaxableIncomeBenefits: AnswerSection = mode match {
+          case NormalMode => new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherTaxableIncomeAddToListNormalMode
+          case CheckMode => new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherTaxableIncomeAddToListCheckMode
+        }
       } yield {
         Ok(anyOtherTaxableIncome(appConfig, form, mode, taxYear, otherTaxableIncomeBenefits))
       }
@@ -68,7 +72,10 @@ class AnyOtherTaxableIncomeController @Inject()(appConfig: FrontendAppConfig,
       val result: Option[Future[Result]] = for {
         taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
         cyaHelper: CheckYourAnswersHelper = new CheckYourAnswersHelper(request.userAnswers)
-        otherTaxableIncomeBenefits = new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherTaxableIncomeSection
+        otherTaxableIncomeBenefits: AnswerSection = mode match {
+          case NormalMode => new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherTaxableIncomeAddToListNormalMode
+          case CheckMode => new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherTaxableIncomeAddToListCheckMode
+        }
       } yield {
         form.bindFromRequest().fold(
           (formWithErrors: Form[_]) =>
