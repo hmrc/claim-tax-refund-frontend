@@ -315,7 +315,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
               answer = Some(taxableIncome.anyTaxPaid.get),
               route = if(cya) None else Some(routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode, Index(index)).url)
             ),
-            if(!cya) {
+            if(cya) None else {
               Some(AnswerRow(
                 label = s"${taxableIncome.name}",
                 answer = s"${taxableIncome.name}",
@@ -323,7 +323,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
                 isDeleteLinkRow = true,
                 deleteUrl = Some(routes.DeleteOtherController.onPageLoad(mode, Index(index), taxableIncome.name, OtherTaxableIncome.collectionId).url)
               ))
-            } else None
+            }
           )
       }
 

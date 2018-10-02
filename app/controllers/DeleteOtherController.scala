@@ -69,7 +69,7 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
             form.bindFromRequest().fold(
               (formWithErrors: Form[_]) =>
                 Future.successful(BadRequest(deleteOther(appConfig, formWithErrors, mode, index, itemName, collectionId, taxYear))),
-              success = value =>
+              success = (value: Boolean) =>
                 if (value) {
                   collectionId match {
                     case OtherBenefit.collectionId =>

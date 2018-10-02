@@ -50,7 +50,6 @@
 
         @components.heading(messages("anyOtherTaxableIncome.heading"), taxYear = Some(taxYear.asString))
 
-        <p class="lede">@messages("global.otherListHeading")</p>
         @components.other_summary(
             answers = fullOtherTaxableBenefits.rows
         )
