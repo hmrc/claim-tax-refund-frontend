@@ -27,7 +27,8 @@
     form: Form[_],
     mode: Mode,
     taxYear: SelectTaxYear,
-    otherTaxableBenefits: AnswerSection
+    complete: Seq[(OtherTaxableIncome, Int)],
+    incomplete: Seq[(OtherTaxableIncome, Int)]
 )(
     implicit
         request: Request[_],
@@ -36,13 +37,21 @@
         templateRenderer: TemplateRenderer
 )
 
+@formAction = @{
+    if (incomplete.isEmpty) AnyOtherTaxableIncomeController.onSubmit(mode) else OtherTaxableIncomeController.onPageLoad(mode, incomplete.head._2)
+}
+
+@callToAction = @{
+    if (incomplete.isEmpty) messages("site.continue") else "Complete other taxable income"
+}
+
 @main_template(
     title = messages("anyOtherTaxableIncome.title"),
     appConfig = appConfig,
     bodyClasses = None
 ) {
 
-    @helpers.form(action = AnyOtherTaxableIncomeController.onSubmit(mode), 'autoComplete -> "off") {
+    @helpers.form(action = formAction, 'autoComplete -> "off") {
 
         @components.back_link()
 
@@ -50,16 +59,20 @@
 
         @components.heading(messages("anyOtherTaxableIncome.heading"), taxYear = Some(taxYear.asString))
 
-        @components.other_summary(
-            answers = otherTaxableBenefits.rows
+        @components.add_list_summary(
+            complete, incomplete
         )
 
-        @components.input_yes_no(
-            InputViewModel("value", form),
-            label = messages("anyOtherTaxableIncome.heading"),
-            labelClass = Some("visually-hidden")
-        )
+        @if(incomplete.isEmpty) {
+            @components.input_yes_no(
+                InputViewModel("value", form),
+                label = messages("anyOtherTaxableIncome.heading"),
+                labelClass = Some("visually-hidden")
+            )
+        } else {
+            <p>You have incomplete other taxable income</p>
+        }
 
-        @components.submit_button()
+        @components.submit_button(callToAction)
     }
 }

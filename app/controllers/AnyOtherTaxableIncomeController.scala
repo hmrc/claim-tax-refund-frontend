@@ -51,15 +51,16 @@ class AnyOtherTaxableIncomeController @Inject()(appConfig: FrontendAppConfig,
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
+      val taxYear: Option[SelectTaxYear] = request.userAnswers.selectTaxYear
+      val otherTaxableIncome: Option[Seq[OtherTaxableIncome]] = request.userAnswers.otherTaxableIncome
       val result: Option[Result] = for {
-        taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
-        cyaHelper: CheckYourAnswersHelper = new CheckYourAnswersHelper(request.userAnswers)
-        otherTaxableIncomeBenefits: AnswerSection = mode match {
-          case NormalMode => new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherTaxableIncomeAddToListNormalMode
-          case CheckMode => new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherTaxableIncomeAddToListCheckMode
-        }
+        taxYear <- taxYear
+        otherTaxableIncome <- otherTaxableIncome
       } yield {
-        Ok(anyOtherTaxableIncome(appConfig, form, mode, taxYear, otherTaxableIncomeBenefits))
+        val otherTaxableIncomeWithIndex = otherTaxableIncome.zipWithIndex
+        val complete: Seq[(OtherTaxableIncome, Int)] = otherTaxableIncomeWithIndex.filter(_._1.anyTaxPaid.isDefined)
+        val incomplete: Seq[(OtherTaxableIncome, Int)] = otherTaxableIncomeWithIndex.filter(_._1.anyTaxPaid.isEmpty)
+        Ok(anyOtherTaxableIncome(appConfig, form, mode, taxYear, complete, incomplete))
       }
 
       result.getOrElse {
@@ -71,15 +72,14 @@ class AnyOtherTaxableIncomeController @Inject()(appConfig: FrontendAppConfig,
     implicit request =>
       val result: Option[Future[Result]] = for {
         taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
-        cyaHelper: CheckYourAnswersHelper = new CheckYourAnswersHelper(request.userAnswers)
-        otherTaxableIncomeBenefits: AnswerSection = mode match {
-          case NormalMode => new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherTaxableIncomeAddToListNormalMode
-          case CheckMode => new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherTaxableIncomeAddToListCheckMode
-        }
+        otherTaxableIncome: Seq[OtherTaxableIncome] <- request.userAnswers.otherTaxableIncome
       } yield {
+        val otherTaxableIncomeWithIndex = otherTaxableIncome.zipWithIndex
+        val complete: Seq[(OtherTaxableIncome, Int)] = otherTaxableIncomeWithIndex.filter(_._1.anyTaxPaid.isDefined)
+        val incomplete: Seq[(OtherTaxableIncome, Int)] = otherTaxableIncomeWithIndex.filter(_._1.anyTaxPaid.isEmpty)
         form.bindFromRequest().fold(
           (formWithErrors: Form[_]) =>
-            Future.successful(BadRequest(anyOtherTaxableIncome(appConfig, formWithErrors, mode, taxYear, otherTaxableIncomeBenefits))),
+            Future.successful(BadRequest(anyOtherTaxableIncome(appConfig, formWithErrors, mode, taxYear, complete, incomplete))),
           value =>
             dataCacheConnector.save[Boolean](request.externalId, AnyOtherTaxableIncomeId.toString, value).map(cacheMap =>
               Redirect(navigator.nextPage(AnyOtherTaxableIncomeId, mode)(new UserAnswers(cacheMap))))
