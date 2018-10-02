@@ -20,11 +20,11 @@
 )(implicit messages: Messages)
 
 @if(complete.nonEmpty && incomplete.nonEmpty) {
-    <h2>Complete</h2>
+    <h2 id="add-to-list-complete-h2">@messages("global.addToList.complete")</h2>
 }
 
 @if(complete.nonEmpty) {
-    <div class="form-group" id="component-answer-list">
+    <div class="form-group" id="complete-component-answer-list">
         <ul role="list" class="tabular-data tabular-data--list">
             @complete
         </ul>
@@ -32,9 +32,9 @@
 }
 
 @if(incomplete.nonEmpty) {
-    <h2>Incomplete</h2>
+    <h2 id="add-to-list-incomplete-h2">@messages("global.addToList.incomplete")</h2>
 
-    <div class="form-group" id="component-answer-list">
+    <div class="form-group" id="incomplete-component-answer-list">
         <ul role="list" class="tabular-data tabular-data--list">
             @incomplete
         </ul>

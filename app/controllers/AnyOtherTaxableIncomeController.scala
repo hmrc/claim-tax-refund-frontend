@@ -29,8 +29,7 @@ import play.api.mvc.{Action, AnyContent, Result}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import uk.gov.hmrc.renderer.TemplateRenderer
-import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, Navigator, UserAnswers}
-import viewmodels.AnswerSection
+import utils.{Navigator, UserAnswers}
 import views.html.anyOtherTaxableIncome
 
 import scala.concurrent.Future

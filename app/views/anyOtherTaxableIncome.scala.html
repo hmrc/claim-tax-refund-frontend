@@ -42,7 +42,7 @@
 }
 
 @callToAction = @{
-    if (incomplete.isEmpty) messages("site.continue") else "Complete other taxable income"
+    if (incomplete.isEmpty) messages("site.continue") else messages("anyOtherTaxableIncome.incompleteSubmit")
 }
 
 @main_template(
@@ -70,7 +70,7 @@
                 labelClass = Some("visually-hidden")
             )
         } else {
-            <p>You have incomplete other taxable income</p>
+            <p>messages("anyOtherTaxableIncome.incompleteMessage")</p>
         }
 
         @components.submit_button(callToAction)

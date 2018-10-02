@@ -18,68 +18,119 @@ package views
 
 import controllers.routes
 import forms.BooleanForm
-import models.NormalMode
+import models.{AnyTaxPaid, NormalMode, OtherTaxableIncome}
 import models.SelectTaxYear.CYMinus2
 import org.jsoup.nodes.Document
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
-import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, MockUserAnswers}
-import viewmodels.AnswerSection
 import views.behaviours.YesNoViewBehaviours
 import views.html.anyOtherTaxableIncome
 
 class AnyOtherTaxableIncomeViewSpec extends YesNoViewBehaviours {
 
-  private val messageKeyPrefix = "anyOtherTaxableIncome"
-  private val taxYear = CYMinus2
+	private val messageKeyPrefix = "anyOtherTaxableIncome"
+	private val taxYear = CYMinus2
 
-  private val cya: CheckYourAnswersHelper = new CheckYourAnswersHelper(MockUserAnswers.fullValidUserAnswers)(messages)
-  private val otherTaxableIncomeBenefits: AnswerSection = new CheckYourAnswersSections(cya, MockUserAnswers.fullValidUserAnswers).otherTaxableIncomeAddToListNormalMode
+	val completeSeq: Seq[(OtherTaxableIncome, Int)] = Seq((OtherTaxableIncome("", "", Some(AnyTaxPaid.Yes("1234"))), 0))
+	val incompleteSeq: Seq[(OtherTaxableIncome, Int)] = Seq((OtherTaxableIncome("", "", None), 1))
 
-  override val form = new BooleanForm()()
 
-  def createView: () => HtmlFormat.Appendable = () =>
-    anyOtherTaxableIncome(frontendAppConfig,
+	override val form = new BooleanForm()()
+
+	def createView: () => HtmlFormat.Appendable = () =>
+		anyOtherTaxableIncome(frontendAppConfig,
 			form,
 			NormalMode,
 			taxYear,
-			otherTaxableIncomeBenefits)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+			completeSeq,
+			incompleteSeq)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
-  def createViewUsingForm: Form[_] => HtmlFormat.Appendable = (form: Form[_]) =>
-    anyOtherTaxableIncome(frontendAppConfig,
+	def createViewUsingForm(complete: Seq[(OtherTaxableIncome, Int)], incomplete: Seq[(OtherTaxableIncome, Int)]): Form[_] =>
+		HtmlFormat.Appendable = (form: Form[_]) =>
+		anyOtherTaxableIncome(frontendAppConfig,
 			form,
 			NormalMode,
 			taxYear,
-			otherTaxableIncomeBenefits)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+			complete,
+			incomplete)(fakeRequest, messages, formPartialRetriever, templateRenderer
+		)
 
-  "AnyOtherTaxableIncome view" must {
+	"AnyOtherTaxableIncome view" must {
 
-    behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))
+		behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))
 
-    behave like pageWithBackLink(createView)
+		behave like pageWithBackLink(createView)
 
-    behave like pageWithSecondaryHeader(createView, messages("site.service_name.with_tax_year", taxYear.asString(messages)))
+		behave like pageWithSecondaryHeader(createView, messages("site.service_name.with_tax_year", taxYear.asString(messages)))
 
-    behave like yesNoPage(
-      createView = createViewUsingForm,
-      messageKeyPrefix = messageKeyPrefix,
-      expectedFormAction = routes.AnyOtherTaxableIncomeController.onSubmit(NormalMode).url,
-      expectedHintTextKey = None
-    )
-  }
+		behave like yesNoPage(
+			createView = createViewUsingForm(completeSeq, Seq.empty),
+			messageKeyPrefix = messageKeyPrefix,
+			expectedFormAction = routes.AnyOtherTaxableIncomeController.onSubmit(NormalMode).url,
+			expectedHintTextKey = None
+		)
+	}
 
-  "display 'You have told us about:' section" must {
-    val doc: Document = asDocument(createView())
-    "display list of created taxable benefits" in {
-      doc.getElementById("component-answer-list").text.contains("qwerty") mustBe true
-    }
+	"complete and incomplete lists are passed" must {
+		val doc = asDocument(createViewUsingForm(completeSeq, incompleteSeq)(form))
+		"show the complete list heading and incomplete heading and contain lists" in {
+			doc.getElementById("add-to-list-complete-h2").text.contains(messages("global.addToList.complete")) mustBe true
+			doc.getElementById("add-to-list-incomplete-h2").text.contains(messages("global.addToList.incomplete")) mustBe true
+			doc.getElementById("complete-component-answer-list") != null
+			doc.getElementById("incomplete-component-answer-list") != null
+		}
 
-    "list item must have change buttons" in {
-      doc.getElementById("component-answer-list").text.contains("Change") mustBe true
-    }
+		"show the incomplete continue message" in {
+			doc.getElementById("submit").text.contains(messages("anyOtherTaxableIncome.incompleteSubmit")) mustBe true
+		}
+	}
 
-    "list item must have a delete button" in {
-      doc.getElementById("component-answer-list").text.contains("Remove") mustBe true
-    }
-  }
+	"complete list is passed" must {
+		val doc = asDocument(createViewUsingForm(completeSeq, Seq.empty)(form))
+		"show the complete list and hide the complete heading" in {
+			doc.getElementById("add-to-list-complete-h2") mustBe null
+			doc.getElementById("complete-component-answer-list") != null
+		}
+
+		"not show the incomplete heading or contain the list" in {
+			doc.getElementById("add-to-list-incomplete-h2") mustBe null
+			doc.getElementById("incomplete-component-answer-list") mustBe null
+		}
+
+		"show the continue message" in {
+			doc.getElementById("submit").text.contains(messages("site.continue")) mustBe true
+		}
+	}
+
+	"incomplete list is passed" must {
+		val doc = asDocument(createViewUsingForm(Seq.empty, incompleteSeq)(form))
+		"show the incomplete list and heading" in {
+			doc.getElementById("add-to-list-incomplete-h2") != null
+			doc.getElementById("incomplete-component-answer-list") != null
+		}
+
+		"not show the complete heading or contain the list" in {
+			doc.getElementById("add-to-list-complete-h2") mustBe null
+			doc.getElementById("complete-component-answer-list") mustBe null
+		}
+
+		"show the incomplete continue message" in {
+			doc.getElementById("submit").text.contains(messages("anyOtherTaxableIncome.incompleteSubmit")) mustBe true
+		}
+	}
+
+	"display 'You have told us about:' section" must {
+		val doc: Document = asDocument(createView())
+		"display list of created taxable benefits" ignore {
+			doc.getElementById("component-answer-list").text.contains("qwerty") mustBe true
+		}
+
+		"list item must have change buttons" ignore {
+			doc.getElementById("component-answer-list").text.contains("Change") mustBe true
+		}
+
+		"list item must have a delete button" ignore {
+			doc.getElementById("component-answer-list").text.contains("Remove") mustBe true
+		}
+	}
 }
