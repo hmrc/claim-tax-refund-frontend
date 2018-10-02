@@ -288,7 +288,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
 
   def otherTaxableIncomeAddToList(mode: Mode, cya: Boolean = false): Seq[Option[AnswerRow]] = {
     for {
-      otherTaxableIncome <- userAnswers.fullOtherTaxableIncome
+      otherTaxableIncome <- userAnswers.otherTaxableIncome
     } yield {
       otherTaxableIncome.zipWithIndex.flatMap {
         case (taxableIncome, index) =>

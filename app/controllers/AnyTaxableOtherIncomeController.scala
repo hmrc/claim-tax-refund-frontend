@@ -19,7 +19,7 @@ package controllers
 import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
-import forms.AnyTaxPaidForm
+import forms.{AnyTaxPaidForm, OtherTaxableIncomeForm}
 import identifiers._
 import javax.inject.Inject
 import models._
@@ -41,8 +41,9 @@ class AnyTaxableOtherIncomeController @Inject()(appConfig: FrontendAppConfig,
                                                 authenticate: AuthAction,
                                                 getData: DataRetrievalAction,
                                                 requireData: DataRequiredAction,
-                                                sequenceUtil: SequenceUtil[FullOtherTaxableIncome],
-                                                formProvider: AnyTaxPaidForm,
+                                                sequenceUtil: SequenceUtil[OtherTaxableIncome],
+                                                formProvider: OtherTaxableIncomeForm,
+                                                taxPaidformProvider: AnyTaxPaidForm,
                                                 implicit val formPartialRetriever: FormPartialRetriever,
                                                 implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
 
@@ -50,11 +51,11 @@ class AnyTaxableOtherIncomeController @Inject()(appConfig: FrontendAppConfig,
   private val blankKey = "anyTaxableOtherIncome.blank"
   private val invalidKey = "anyTaxableOtherIncome.invalid"
 
-  private val form: Form[AnyTaxPaid] = formProvider(notSelectedKey, blankKey, invalidKey)
-
   def onPageLoad(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val preparedForm = request.userAnswers.anyTaxableOtherIncome match {
+      val form: Form[OtherTaxableIncome] = formProvider(request.userAnswers.otherTaxableIncome.getOrElse(Seq.empty), index)
+
+      val preparedForm = request.userAnswers.otherTaxableIncome match {
         case Some(value) =>
           if (index >= value.length) form else form.fill(value(index))
         case None => form
@@ -73,18 +74,20 @@ class AnyTaxableOtherIncomeController @Inject()(appConfig: FrontendAppConfig,
 
   def onSubmit(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
+      val form: Form[AnyTaxPaid] = taxPaidformProvider(notSelectedKey, blankKey, invalidKey)
+
       val details: Option[Future[Result]] = for {
         selectedTaxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
-        otherTaxableIncome: Seq[FullOtherTaxableIncome] <- request.userAnswers.fullOtherTaxableIncome
+        otherTaxableIncome: Seq[OtherTaxableIncome] <- request.userAnswers.otherTaxableIncome
       } yield {
         form.bindFromRequest().fold(
           (formWithErrors: Form[AnyTaxPaid]) =>
             Future.successful(BadRequest(anyTaxableOtherIncome(appConfig, formWithErrors, mode, index, selectedTaxYear, otherTaxableIncome(index).name))),
           value => {
 
-            val otherIncomeDetails = FullOtherTaxableIncome(otherTaxableIncome(index).name, otherTaxableIncome(index).amount, Some(value))
+            val otherIncomeDetails = OtherTaxableIncome(otherTaxableIncome(index).name, otherTaxableIncome(index).amount, Some(value))
 
-            dataCacheConnector.save[Seq[FullOtherTaxableIncome]](
+            dataCacheConnector.save[Seq[OtherTaxableIncome]](
               request.externalId, OtherTaxableIncomeId.toString, sequenceUtil.updateSeq(otherTaxableIncome, index, otherIncomeDetails)
             ).map(cacheMap =>
               Redirect(navigator.nextPage(AnyTaxableOtherIncomeId, mode)(new UserAnswers(cacheMap))))

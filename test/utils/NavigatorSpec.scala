@@ -198,7 +198,7 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
       }
 
       "go to CYA from DeleteOther when taxableIncome are selected and more than one otherTaxableIncome remains" in {
-        when(answers.otherTaxableIncome) thenReturn Some(Seq(OtherTaxableIncome("qwerty", "123")))
+        when(answers.otherTaxableIncome) thenReturn Some(Seq(OtherTaxableIncome("qwerty", "123", Some(AnyTaxPaid.Yes("123")))))
         when(answers.selectTaxableIncome) thenReturn Some(Seq(TaxableIncome.OTHER_TAXABLE_INCOME, TaxableIncome.FOREIGN_INCOME))
 
         navigator.nextPage(DeleteOtherTaxableIncomeId, NormalMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()

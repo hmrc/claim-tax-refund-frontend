@@ -440,7 +440,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
 
   "otherTaxableIncome" must {
     s"have correct label and answer" in {
-      when(answers.fullOtherTaxableIncome) thenReturn Some(Seq(FullOtherTaxableIncome("qwerty", "1234", Some(AnyTaxPaid.Yes("123")))))
+      when(answers.otherTaxableIncome) thenReturn Some(Seq(OtherTaxableIncome("qwerty", "1234", Some(AnyTaxPaid.Yes("123")))))
 
       helper.otherTaxableIncomeCheckYourAnswers.head.get.label.key mustBe "qwerty"
       helper.otherTaxableIncomeCheckYourAnswers(1).get.label.key mustBe messages("checkYourAnswers.otherTaxableIncome.label", "qwerty")
@@ -456,18 +456,18 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     val route = routes.AnyOtherTaxableIncomeController.onPageLoad(CheckMode).url
 
     s"have correct label and answer (yes)" in {
-      when(answers.anyTaxableOtherIncome) thenReturn Some(Seq(AnyTaxPaid.Yes(amount)))
-      val answer: Option[Seq[AnyTaxPaid]] = answers.anyTaxableOtherIncome
+      when(answers.otherTaxableIncome) thenReturn Some(Seq(OtherTaxableIncome("qwerty", "123", Some(AnyTaxPaid.Yes(amount)))))
+      val answer: Option[Seq[OtherTaxableIncome]] = answers.otherTaxableIncome
 
-      helper.anyTaxPaid("", Some(answer.get.head), Some(route)).get.answer.key mustBe yes
-      helper.taxPaid("", Some(answer.get.head), Some(route)).get.answer.key mustBe s"£$amount"
+      helper.anyTaxPaid("", Some(answer.get.head.anyTaxPaid.get), Some(route)).get.answer.key mustBe yes
+      helper.taxPaid("", Some(answer.get.head.anyTaxPaid.get), Some(route)).get.answer.key mustBe s"£$amount"
     }
 
     s"have correct label and answer (no)" in {
-      when(answers.anyTaxableOtherIncome) thenReturn Some(Seq(AnyTaxPaid.No))
-      val answer: Option[Seq[AnyTaxPaid]] = answers.anyTaxableOtherIncome
+      when(answers.otherTaxableIncome) thenReturn Some(Seq(OtherTaxableIncome("qwerty", "123", Some(AnyTaxPaid.No))))
+      val answer: Option[Seq[OtherTaxableIncome]] = answers.otherTaxableIncome
 
-      helper.anyTaxPaid("", Some(answer.get.head), Some(route)).get.answer.key mustBe no
+      helper.anyTaxPaid("", Some(answer.get.head.anyTaxPaid.get), Some(route)).get.answer.key mustBe no
     }
   }
 

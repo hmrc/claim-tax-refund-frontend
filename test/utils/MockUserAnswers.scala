@@ -67,9 +67,7 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.howMuchForeignIncome) thenReturn None
     when(answers.anyTaxableForeignIncome) thenReturn None
     when(answers.otherTaxableIncome) thenReturn None
-    when(answers.anyTaxableOtherIncome) thenReturn None
     when(answers.anyOtherTaxableIncome) thenReturn None
-    when(answers.fullOtherTaxableIncome) thenReturn None
 
     //payment details
     when(answers.whereToSendPayment) thenReturn None
@@ -197,17 +195,9 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.howMuchForeignIncome) thenReturn Some("1234")
     when(answers.anyTaxableForeignIncome) thenReturn Some(AnyTaxPaid.Yes("1234"))
     when(answers.otherTaxableIncome) thenReturn Some(Seq(
-      OtherTaxableIncome("qwerty", "12"),
-      OtherTaxableIncome("qwerty1", "34")
+      OtherTaxableIncome("qwerty", "12", Some(AnyTaxPaid.Yes("1234"))),
+      OtherTaxableIncome("qwerty1", "34", Some(AnyTaxPaid.No))
     ))
-    when(answers.anyTaxableOtherIncome) thenReturn Some(Seq(
-      AnyTaxPaid.Yes("1234"),
-      AnyTaxPaid.No
-    ))
-		when(answers.fullOtherTaxableIncome) thenReturn Some(Seq(
-			FullOtherTaxableIncome("qwerty", "12", Some(AnyTaxPaid.Yes("1234"))),
-			FullOtherTaxableIncome("qwerty1", "34", Some(AnyTaxPaid.No))
-		))
     when(answers.anyOtherTaxableIncome) thenReturn Some(false)
     answers
   }
@@ -312,16 +302,10 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.howMuchForeignIncome) thenReturn Some("1234")
     when(answers.anyTaxableForeignIncome) thenReturn Some(AnyTaxPaid.Yes("123"))
     when(answers.otherTaxableIncome) thenReturn Some(Seq(
-			OtherTaxableIncome("qwerty", "12"),
-			OtherTaxableIncome("qwerty1", "34"),
-			OtherTaxableIncome("qwerty2", "56"))
-		)
-    when(answers.anyTaxableOtherIncome) thenReturn Some(Seq(AnyTaxPaid.Yes("123"), AnyTaxPaid.No, AnyTaxPaid.Yes("123")))
-    when(answers.fullOtherTaxableIncome) thenReturn Some(Seq(
-      FullOtherTaxableIncome("qwerty", "12", Some(AnyTaxPaid.Yes("123"))),
-      FullOtherTaxableIncome("qwerty1", "34", Some(AnyTaxPaid.No)),
-      FullOtherTaxableIncome("qwerty2", "56", Some(AnyTaxPaid.Yes("123")))
-    ))
+			OtherTaxableIncome("qwerty", "12", Some(AnyTaxPaid.Yes("1234"))),
+			OtherTaxableIncome("qwerty1", "34", Some(AnyTaxPaid.Yes("1234"))),
+			OtherTaxableIncome("qwerty2", "56", Some(AnyTaxPaid.Yes("1234")))
+		))
     when(answers.anyOtherTaxableIncome) thenReturn Some(false)
 
     when(answers.whereToSendPayment) thenReturn Some(Nominee)

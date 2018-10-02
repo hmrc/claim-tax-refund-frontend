@@ -26,7 +26,7 @@ import config.FrontendAppConfig
 import forms.OtherTaxableIncomeForm
 import identifiers.OtherTaxableIncomeId
 import models.AnyTaxPaid.Yes
-import models.{FullOtherTaxableIncome, Index, Mode, OtherTaxableIncome}
+import models.{OtherTaxableIncome, Index, Mode}
 import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import uk.gov.hmrc.renderer.TemplateRenderer
@@ -43,7 +43,7 @@ class OtherTaxableIncomeController @Inject()(
                                               authenticate: AuthAction,
                                               getData: DataRetrievalAction,
                                               requireData: DataRequiredAction,
-                                              sequenceUtil: SequenceUtil[FullOtherTaxableIncome],
+                                              sequenceUtil: SequenceUtil[OtherTaxableIncome],
                                               formBuilder: OtherTaxableIncomeForm,
                                               implicit val formPartialRetriever: FormPartialRetriever,
                                               implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
@@ -78,11 +78,11 @@ class OtherTaxableIncomeController @Inject()(
             (formWithErrors: Form[OtherTaxableIncome]) =>
               Future.successful(BadRequest(otherTaxableIncome(appConfig, formWithErrors, mode, index, taxYear))),
             value => {
-              val fullOtherTaxableIncome: FullOtherTaxableIncome = FullOtherTaxableIncome(value.name, value.amount, None)
-              val otherTaxableIncome: Seq[FullOtherTaxableIncome] = request.userAnswers.fullOtherTaxableIncome.getOrElse(Seq(fullOtherTaxableIncome))
+              val otherTaxableIncome: OtherTaxableIncome = OtherTaxableIncome(value.name, value.amount, None)
+              val otherTaxableIncomeList: Seq[OtherTaxableIncome] = request.userAnswers.otherTaxableIncome.getOrElse(Seq(otherTaxableIncome))
 
-              dataCacheConnector.save[Seq[FullOtherTaxableIncome]](request.externalId, OtherTaxableIncomeId.toString,
-                sequenceUtil.updateSeq(otherTaxableIncome, index, fullOtherTaxableIncome)
+              dataCacheConnector.save[Seq[OtherTaxableIncome]](request.externalId, OtherTaxableIncomeId.toString,
+                sequenceUtil.updateSeq(otherTaxableIncomeList, index, otherTaxableIncome)
               ).map(cacheMap =>
                 Redirect(navigator.nextPageWithIndex(OtherTaxableIncomeId(index), mode)(new UserAnswers(cacheMap))))
             }

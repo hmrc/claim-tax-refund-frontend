@@ -18,24 +18,28 @@ package forms
 
 import com.google.inject.Inject
 import config.FrontendAppConfig
-import forms.mappings.{Constraints, Mappings}
+import forms.mappings.{AnyTaxPaidMapping, Constraints, Mappings}
 import models.{Index, OtherTaxableIncome}
 import play.api.data.Form
 import play.api.data.Forms._
 
-class OtherTaxableIncomeForm @Inject()(appConfig: FrontendAppConfig) extends FormErrorHelper with Mappings with Constraints {
+class OtherTaxableIncomeForm @Inject()(appConfig: FrontendAppConfig) extends FormErrorHelper with Mappings with Constraints with AnyTaxPaidMapping {
 
   private val currencyRegex = appConfig.currencyRegex
   private val nameBlankKey = "otherTaxableIncome.name.blank"
   private val amountBlankKey = "otherTaxableIncome.amount.blank"
   private val amountInvalidKey = "otherTaxableIncome.amount.invalid"
   private val duplicateBenefitKey = "otherTaxableIncome.duplicate"
+  private val notSelectedKey = "anyTaxableOtherIncome.notSelected"
+  private val blankKey = "anyTaxableOtherIncome.blank"
+  private val invalidKey = "anyTaxableOtherIncome.invalid"
 
   def apply(otherBenefit: Seq[OtherTaxableIncome], index: Index): Form[OtherTaxableIncome] = {
     Form(
       mapping(
         "name" -> text(nameBlankKey).verifying(duplicateBenefitKey, a => filter(otherBenefit, index, a).forall(p => p.name != a)),
-        "amount" -> text(amountBlankKey).verifying(amountInvalidKey, a => a.matches(currencyRegex))
+        "amount" -> text(amountBlankKey).verifying(amountInvalidKey, a => a.matches(currencyRegex)),
+        "anyTaxPaid" -> optional(anyTaxPaidMapping(notSelectedKey, blankKey, invalidKey))
       )(OtherTaxableIncome.apply)(OtherTaxableIncome.unapply)
     )
   }

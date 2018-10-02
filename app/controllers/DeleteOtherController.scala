@@ -134,13 +134,11 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
   def deleteOtherTaxableIncome(request: DataRequest[AnyContent], mode: Mode, index: Index): Future[Result] = {
     val result: Option[Future[Result]] = for {
       otherTaxableIncome: Seq[OtherTaxableIncome] <- request.userAnswers.otherTaxableIncome
-      anyTaxableOtherIncome: Seq[AnyTaxPaid] <- request.userAnswers.anyTaxableOtherIncome
     } yield {
       val updatedOtherTaxableIncome: Seq[OtherTaxableIncome] = otherTaxableIncome.patch(index, Seq.empty, 1)
-      val updatedAnyTaxableOtherIncome: Seq[AnyTaxPaid] = anyTaxableOtherIncome.patch(index, Seq.empty, 1)
       for {
         _ <- dataCacheConnector.save[Seq[OtherTaxableIncome]](request.externalId, OtherTaxableIncomeId.toString, updatedOtherTaxableIncome)
-        updatedCacheMap: CacheMap <- dataCacheConnector.save[Seq[AnyTaxPaid]](request.externalId, AnyTaxableOtherIncomeId.toString, updatedAnyTaxableOtherIncome)
+        updatedCacheMap: CacheMap <- dataCacheConnector.save[Seq[OtherTaxableIncome]](request.externalId, AnyTaxableOtherIncomeId.toString, updatedOtherTaxableIncome)
       } yield
         Redirect(navigator.nextPage(DeleteOtherTaxableIncomeId, mode)(new UserAnswers(updatedCacheMap)))
     }
