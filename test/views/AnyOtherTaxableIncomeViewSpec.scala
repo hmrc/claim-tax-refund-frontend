@@ -34,7 +34,7 @@ class AnyOtherTaxableIncomeViewSpec extends YesNoViewBehaviours {
   private val taxYear = CYMinus2
 
   private val cya: CheckYourAnswersHelper = new CheckYourAnswersHelper(MockUserAnswers.fullValidUserAnswers)(messages)
-  private val otherTaxableIncomeBenefits: AnswerSection = new CheckYourAnswersSections(cya, MockUserAnswers.fullValidUserAnswers).otherTaxableIncomeSection
+  private val otherTaxableIncomeBenefits: AnswerSection = new CheckYourAnswersSections(cya, MockUserAnswers.fullValidUserAnswers).otherTaxableIncomeAddToListNormalMode
 
   override val form = new BooleanForm()()
 
