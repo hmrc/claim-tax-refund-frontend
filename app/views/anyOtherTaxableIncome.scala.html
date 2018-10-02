@@ -27,7 +27,7 @@
     form: Form[_],
     mode: Mode,
     taxYear: SelectTaxYear,
-    fullOtherTaxableBenefits: AnswerSection
+    otherTaxableBenefits: AnswerSection
 )(
     implicit
         request: Request[_],
@@ -51,7 +51,7 @@
         @components.heading(messages("anyOtherTaxableIncome.heading"), taxYear = Some(taxYear.asString))
 
         @components.other_summary(
-            answers = fullOtherTaxableBenefits.rows
+            answers = otherTaxableBenefits.rows
         )
 
         @components.input_yes_no(
