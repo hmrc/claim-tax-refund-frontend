@@ -60,7 +60,7 @@
         @components.heading(messages("anyOtherTaxableIncome.heading"), taxYear = Some(taxYear.asString))
 
         @components.add_list_summary(
-            complete, incomplete
+            complete, incomplete, mode
         )
 
         @if(incomplete.isEmpty) {

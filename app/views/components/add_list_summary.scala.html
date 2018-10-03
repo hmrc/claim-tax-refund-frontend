@@ -15,8 +15,9 @@
  *@
 
 @(
-    complete: Seq[(OtherTaxableIncome, Int)],
-    incomplete: Seq[(OtherTaxableIncome, Int)]
+        complete: Seq[(OtherTaxableIncome, Int)],
+        incomplete: Seq[(OtherTaxableIncome, Int)],
+        mode: Mode
 )(implicit messages: Messages)
 
 @if(complete.nonEmpty && incomplete.nonEmpty) {
@@ -24,9 +25,11 @@
 }
 
 @if(complete.nonEmpty) {
-    <div class="form-group" id="complete-component-answer-list">
+    <div class="form-group" id="component-answer-list">
         <ul role="list" class="tabular-data tabular-data--list">
-            @complete
+        @for((otherTaxableIncome, index) <- complete) {
+            @components.add_list_row(otherTaxableIncome.name, index, mode)
+        }
         </ul>
     </div>
 }
@@ -36,7 +39,9 @@
 
     <div class="form-group" id="incomplete-component-answer-list">
         <ul role="list" class="tabular-data tabular-data--list">
-            @incomplete
+        @for((otherTaxableIncome, index) <- incomplete) {
+            @components.add_list_row(otherTaxableIncome.name, index, mode)
+        }
         </ul>
     </div>
 }
