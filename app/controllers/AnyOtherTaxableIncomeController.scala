@@ -50,11 +50,9 @@ class AnyOtherTaxableIncomeController @Inject()(appConfig: FrontendAppConfig,
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val taxYear: Option[SelectTaxYear] = request.userAnswers.selectTaxYear
-      val otherTaxableIncome: Option[Seq[OtherTaxableIncome]] = request.userAnswers.otherTaxableIncome
       val result: Option[Result] = for {
-        taxYear <- taxYear
-        otherTaxableIncome <- otherTaxableIncome
+        taxYear <- request.userAnswers.selectTaxYear
+        otherTaxableIncome <- request.userAnswers.otherTaxableIncome
       } yield {
         val otherTaxableIncomeWithIndex = otherTaxableIncome.zipWithIndex
         val complete: Seq[(OtherTaxableIncome, Int)] = otherTaxableIncomeWithIndex.filter(_._1.anyTaxPaid.isDefined)

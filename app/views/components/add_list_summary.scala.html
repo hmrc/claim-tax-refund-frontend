@@ -36,7 +36,6 @@
 
 @if(incomplete.nonEmpty) {
     <h2 id="add-to-list-incomplete-h2">@messages("global.addToList.incomplete")</h2>
-
     <div class="form-group" id="incomplete-component-answer-list">
         <ul role="list" class="tabular-data tabular-data--list">
         @for((otherTaxableIncome, index) <- incomplete) {
