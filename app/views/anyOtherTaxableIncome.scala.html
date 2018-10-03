@@ -64,13 +64,14 @@
         )
 
         @if(incomplete.isEmpty) {
+            <h2>@messages("anyOtherTaxableIncome.add")</h2>
             @components.input_yes_no(
                 InputViewModel("value", form),
                 label = messages("anyOtherTaxableIncome.heading"),
                 labelClass = Some("visually-hidden")
             )
         } else {
-            <p>messages("anyOtherTaxableIncome.incompleteMessage")</p>
+            <p>@messages("anyOtherTaxableIncome.incompleteMessage")</p>
         }
 
         @components.submit_button(callToAction)

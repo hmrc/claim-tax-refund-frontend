@@ -16,14 +16,14 @@
 
 package models
 
-import play.api.libs.json.{Json, OFormat}
+import play.api.libs.json.{Format, Json}
 
 import scala.xml.Elem
 
-case class OtherTaxableIncome(name: String, amount: String, anyTaxPaid: Option[AnyTaxPaid])
+case class OtherTaxableIncome(name: String, amount: String, anyTaxPaid: Option[AnyTaxPaid] = None)
 
 object OtherTaxableIncome {
-  implicit val format: OFormat[OtherTaxableIncome] = Json.format[OtherTaxableIncome]
+  implicit val format: Format[OtherTaxableIncome] = Json.format[OtherTaxableIncome]
   implicit val collectionId = "otherTaxableIncome"
 
 

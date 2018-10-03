@@ -209,6 +209,7 @@ howMuchMedicalBenefits.invalid = Enter a valid amount of medical benefit
 anyOtherTaxableIncome.title = Other taxable income
 anyOtherTaxableIncome.heading = Other taxable income
 anyOtherTaxableIncome.checkYourAnswersLabel = Other taxable income
+anyOtherTaxableIncome.add = Did you get any other taxable income?
 anyOtherTaxableIncome.blank = Select yes if you got any other taxable income
 anyOtherTaxableIncome.incompleteMessage = You have incomplete other taxable income
 anyOtherTaxableIncome.incompleteSubmit = Complete other taxable income

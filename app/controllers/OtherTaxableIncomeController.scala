@@ -25,8 +25,7 @@ import controllers.actions._
 import config.FrontendAppConfig
 import forms.OtherTaxableIncomeForm
 import identifiers.OtherTaxableIncomeId
-import models.AnyTaxPaid.Yes
-import models.{OtherTaxableIncome, Index, Mode}
+import models.{Index, Mode, OtherTaxableIncome}
 import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import uk.gov.hmrc.renderer.TemplateRenderer
@@ -78,7 +77,18 @@ class OtherTaxableIncomeController @Inject()(
             (formWithErrors: Form[OtherTaxableIncome]) =>
               Future.successful(BadRequest(otherTaxableIncome(appConfig, formWithErrors, mode, index, taxYear))),
             value => {
-              val otherTaxableIncome: OtherTaxableIncome = OtherTaxableIncome(value.name, value.amount, None)
+              val otherTaxableIncome: OtherTaxableIncome = request.userAnswers.otherTaxableIncome match {
+                case Some(otherTaxableIncomes) =>
+                  if (index >= otherTaxableIncomes.length) {
+                    OtherTaxableIncome(value.name, value.amount, None)
+                  } else {
+                    val anyTaxPaid = request.userAnswers.otherTaxableIncome.flatMap(value => value(index).anyTaxPaid)
+                    OtherTaxableIncome(value.name, value.amount, anyTaxPaid)
+                  }
+                case None =>
+                  OtherTaxableIncome(value.name, value.amount, None)
+              }
+
               val otherTaxableIncomeList: Seq[OtherTaxableIncome] = request.userAnswers.otherTaxableIncome.getOrElse(Seq(otherTaxableIncome))
 
               dataCacheConnector.save[Seq[OtherTaxableIncome]](request.externalId, OtherTaxableIncomeId.toString,

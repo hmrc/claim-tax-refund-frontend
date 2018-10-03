@@ -53,11 +53,11 @@ class AnyTaxableOtherIncomeController @Inject()(appConfig: FrontendAppConfig,
 
   def onPageLoad(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val form: Form[OtherTaxableIncome] = formProvider(request.userAnswers.otherTaxableIncome.getOrElse(Seq.empty), index)
+      val form: Form[AnyTaxPaid] = taxPaidformProvider(notSelectedKey, blankKey, invalidKey)
 
       val preparedForm = request.userAnswers.otherTaxableIncome match {
         case Some(value) =>
-          if (index >= value.length) form else form.fill(value(index))
+          if (index >= value.length || value(index).anyTaxPaid.isEmpty) form else form.fill(value(index).anyTaxPaid.get)
         case None => form
       }
 
