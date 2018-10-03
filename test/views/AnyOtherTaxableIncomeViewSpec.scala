@@ -31,8 +31,8 @@ class AnyOtherTaxableIncomeViewSpec extends YesNoViewBehaviours {
 	private val messageKeyPrefix = "anyOtherTaxableIncome"
 	private val taxYear = CYMinus2
 
-	val completeSeq: Seq[(OtherTaxableIncome, Int)] = Seq((OtherTaxableIncome("", "", Some(AnyTaxPaid.Yes("1234"))), 0))
-	val incompleteSeq: Seq[(OtherTaxableIncome, Int)] = Seq((OtherTaxableIncome("", "", None), 1))
+	val completeSeq: Seq[(OtherTaxableIncome, Int)] = Seq((OtherTaxableIncome("qwerty1", "1234", Some(AnyTaxPaid.Yes("1234"))), 0))
+	val incompleteSeq: Seq[(OtherTaxableIncome, Int)] = Seq((OtherTaxableIncome("qwerty2", "1234", None), 1))
 
 
 	override val form = new BooleanForm()()
@@ -121,16 +121,16 @@ class AnyOtherTaxableIncomeViewSpec extends YesNoViewBehaviours {
 
 	"display 'You have told us about:' section" must {
 		val doc: Document = asDocument(createView())
-		"display list of created taxable benefits" ignore {
-			doc.getElementById("component-answer-list").text.contains("qwerty") mustBe true
+		"display list of created taxable benefits" in {
+			doc.getElementById("add-list-0-answer").text.contains("qwerty") mustBe true
 		}
 
-		"list item must have change buttons" ignore {
-			doc.getElementById("component-answer-list").text.contains("Change") mustBe true
+		"list item must have change buttons" in {
+			doc.getElementById("add-list-0-change").text.contains("Change") mustBe true
 		}
 
-		"list item must have a delete button" ignore {
-			doc.getElementById("component-answer-list").text.contains("Remove") mustBe true
+		"list item must have a delete button" in {
+			doc.getElementById("add-list-0-remove").text.contains("Remove") mustBe true
 		}
 	}
 }

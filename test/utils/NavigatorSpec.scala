@@ -187,21 +187,21 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         when(answers.otherTaxableIncome) thenReturn Some(Seq.empty)
         when(answers.selectTaxableIncome) thenReturn Some(Seq(TaxableIncome.OTHER_TAXABLE_INCOME))
 
-        navigator.nextPage(DeleteOtherTaxableIncomeId, NormalMode)(answers) mustBe routes.AnyTaxableIncomeController.onPageLoad(CheckMode)
+        navigator.nextPage(DeleteOtherTaxableIncomeId, NormalMode)(answers) mustBe routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)
       }
 
       "go to SelectTaxableIncome from DeleteOther when taxableIncome are selected and all otherTaxableIncome have been removed" in {
         when(answers.otherTaxableIncome) thenReturn Some(Seq.empty)
         when(answers.selectTaxableIncome) thenReturn Some(Seq(TaxableIncome.OTHER_TAXABLE_INCOME, TaxableIncome.FOREIGN_INCOME))
 
-        navigator.nextPage(DeleteOtherTaxableIncomeId, NormalMode)(answers) mustBe routes.SelectTaxableIncomeController.onPageLoad(CheckMode)
+        navigator.nextPage(DeleteOtherTaxableIncomeId, NormalMode)(answers) mustBe routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)
       }
 
-      "go to CYA from DeleteOther when taxableIncome are selected and more than one otherTaxableIncome remains" in {
+      "go to AnyOtherTaxableIncome from DeleteOther when taxableIncome are selected and more than one otherTaxableIncome remains" in {
         when(answers.otherTaxableIncome) thenReturn Some(Seq(OtherTaxableIncome("qwerty", "123", Some(AnyTaxPaid.Yes("123")))))
         when(answers.selectTaxableIncome) thenReturn Some(Seq(TaxableIncome.OTHER_TAXABLE_INCOME, TaxableIncome.FOREIGN_INCOME))
 
-        navigator.nextPage(DeleteOtherTaxableIncomeId, NormalMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+        navigator.nextPage(DeleteOtherTaxableIncomeId, NormalMode)(answers) mustBe routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)
       }
     }
 

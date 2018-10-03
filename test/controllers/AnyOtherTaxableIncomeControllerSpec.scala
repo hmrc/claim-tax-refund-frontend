@@ -73,7 +73,7 @@ class AnyOtherTaxableIncomeControllerSpec extends ControllerSpecBase {
     }
 
 
-    "not populate the view on a GET when the question has previously been answered as the user always needs to answer this question" ignore {
+    "not populate the view on a GET when the question has previously been answered as the user always needs to answer this question" in {
       when(mockUserAnswers.anyOtherTaxableIncome).thenReturn(Some(true))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 

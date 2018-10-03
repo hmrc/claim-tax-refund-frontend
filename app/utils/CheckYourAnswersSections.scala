@@ -197,7 +197,7 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
 				headingKey = Some("otherTaxableIncome.checkYourAnswersLabel"),
 				rows = cyaHelper.otherTaxableIncomeNormalMode.flatten,
 				addLinkText = Some("otherTaxableIncome.add"),
-				addLinkUrl = Some(routes.OtherTaxableIncomeController.onPageLoad(NormalMode, Index(userAnswers.otherTaxableIncome.get.size)).url)
+				addLinkUrl = Some(routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode).url)
 			)
 		} else {
 			AnswerSection(None, Seq.empty)
@@ -210,7 +210,7 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
 				headingKey = Some("otherTaxableIncome.checkYourAnswersLabel"),
 				rows = cyaHelper.otherTaxableIncomeCheckMode.flatten,
 				addLinkText = Some("otherTaxableIncome.add"),
-				addLinkUrl = Some(routes.OtherTaxableIncomeController.onPageLoad(CheckMode, Index(userAnswers.otherTaxableIncome.get.size)).url)
+				addLinkUrl = Some(routes.AnyOtherTaxableIncomeController.onPageLoad(CheckMode).url)
 			)
 		} else {
 			AnswerSection(None, Seq.empty)
@@ -223,7 +223,7 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
 				headingKey = Some("otherTaxableIncome.checkYourAnswersLabel"),
 				rows = cyaHelper.otherTaxableIncomeCheckYourAnswers.flatten,
 				addLinkText = Some("otherTaxableIncome.change"),
-				addLinkUrl = Some(routes.OtherTaxableIncomeController.onPageLoad(CheckMode, Index(userAnswers.otherTaxableIncome.get.size)).url)
+				addLinkUrl = Some(routes.AnyOtherTaxableIncomeController.onPageLoad(CheckMode).url)
 			)
 		} else {
 			AnswerSection(None, Seq.empty)

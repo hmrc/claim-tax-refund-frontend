@@ -494,23 +494,55 @@ class TaxableIncomeNavigatorSpec extends SpecBase with MockitoSugar {
 
       "Navigating OtherIncome" when {
         "OtherTaxableIncome" must {
-          "go to CheckYourAnswersController when all selected taxable incomes have associated values" in {
+          //normalMode
+          "go to anyOtherTaxableIncome from otherTaxableIncome in NormalMode" in {
             val answers = MockUserAnswers.taxableIncomeUserAnswers
-            navigator.nextPageWithIndex(OtherTaxableIncomeId(0), CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+            when(answers.anyOtherTaxableIncome) thenReturn Some(true)
+
+            navigator.nextPageWithIndex(OtherTaxableIncomeId(2), NormalMode)(answers) mustBe routes.AnyTaxableOtherIncomeController.onPageLoad(NormalMode, index = 2)
           }
 
-          "go to AnyTaxableOtherIncome when corresponding any taxable other income not answered" in {
+          "go to whereToSendPayment from anyOtherTaxableIncome in NormalMode" in {
             val answers = MockUserAnswers.taxableIncomeUserAnswers
-            when(answers.otherTaxableIncome) thenReturn None
+            when(answers.anyOtherTaxableIncome) thenReturn Some(false)
 
-            navigator.nextPageWithIndex(OtherTaxableIncomeId(0), CheckMode)(answers) mustBe routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode, index = 0)
+            navigator.nextPage(AnyOtherTaxableIncomeId, NormalMode)(answers) mustBe routes.WhereToSendPaymentController.onPageLoad(NormalMode)
           }
+
+          "when removing a income return to anyOtherTaxable income in NormalMode" in {
+            val answers = MockUserAnswers.taxableIncomeUserAnswers
+
+            navigator.nextPage(DeleteOtherTaxableIncomeId, NormalMode)(answers) mustBe routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)
+          }
+
+          //checkMode
+
+          "go to anyOtherTaxableIncome from otherTaxableIncome in CheckMode" in {
+            val answers = MockUserAnswers.taxableIncomeUserAnswers
+            when(answers.anyOtherTaxableIncome) thenReturn Some(true)
+
+            navigator.nextPageWithIndex(OtherTaxableIncomeId(2), CheckMode)(answers) mustBe routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode, index = 2)
+          }
+
+          "go to CheckYourAnswers from anyOtherTaxableIncome in CheckMode" in {
+            val answers = MockUserAnswers.taxableIncomeUserAnswers
+            when(answers.anyOtherTaxableIncome) thenReturn Some(false)
+
+            navigator.nextPage(AnyOtherTaxableIncomeId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+          }
+
+          "when removing a income return to CYA income in CheckMode" in {
+            val answers = MockUserAnswers.taxableIncomeUserAnswers
+
+            navigator.nextPage(DeleteOtherTaxableIncomeId, CheckMode)(answers) mustBe routes.AnyOtherTaxableIncomeController.onPageLoad(CheckMode)
+          }
+
         }
 
         "AnyTaxableOtherIncome" must {
-          "go to CheckYourAnswersController when all selected taxable incomes have associated values" in {
+          "go to AnyOtherTaxableIncomeController when all selected taxable incomes have associated values" in {
             val answers = MockUserAnswers.taxableIncomeUserAnswers
-            navigator.nextPage(AnyTaxableOtherIncomeId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+            navigator.nextPage(AnyTaxableOtherIncomeId, CheckMode)(answers) mustBe routes.AnyOtherTaxableIncomeController.onPageLoad(CheckMode)
           }
         }
       }

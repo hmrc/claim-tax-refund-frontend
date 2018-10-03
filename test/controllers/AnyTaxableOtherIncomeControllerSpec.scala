@@ -19,12 +19,10 @@ package controllers
 import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.{AnyTaxPaidForm, OtherTaxableIncomeForm}
-import identifiers.{AnyTaxPaidId, TaxPaidAmountId}
 import models.SelectTaxYear.CYMinus2
 import models.{AnyTaxPaid, NormalMode, OtherTaxableIncome}
 import org.mockito.Mockito.when
 import play.api.data.Form
-import play.api.libs.json.{JsBoolean, JsString, Json}
 import play.api.mvc.Call
 import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
@@ -38,16 +36,13 @@ class AnyTaxableOtherIncomeControllerSpec extends ControllerSpecBase {
   private val blankKey = "anyTaxableOtherIncome.blank"
   private val invalidKey = "anyTaxableOtherIncome.invalid"
 
-  val testAnswer = "9,999.00"
-  val validYesData = Map(AnyTaxPaidId.toString -> Json.obj(AnyTaxPaidId.toString -> JsBoolean(true), TaxPaidAmountId.toString -> JsString(testAnswer)))
-  val validNoData = Map(AnyTaxPaidId.toString -> Json.obj(AnyTaxPaidId.toString -> JsBoolean(false)))
+  private val testAnswer = "9,999.00"
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
   private val taxYear = CYMinus2
   private val incomeName = "test income"
 
-  val formProvider = new OtherTaxableIncomeForm(frontendAppConfig)
-  val taxPaidFormProvider = new AnyTaxPaidForm()
-  private val form = formProvider(Seq(OtherTaxableIncome(incomeName, "123", Some(AnyTaxPaid.Yes(testAnswer)))), 0)
+  private val formProvider = new OtherTaxableIncomeForm(frontendAppConfig)
+  private val taxPaidFormProvider = new AnyTaxPaidForm
   private val taxPaidForm = taxPaidFormProvider(notSelectedKey, blankKey, invalidKey)
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
@@ -57,6 +52,7 @@ class AnyTaxableOtherIncomeControllerSpec extends ControllerSpecBase {
   def viewAsString(form: Form[_] = taxPaidForm): String =
     anyTaxableOtherIncome(frontendAppConfig, form, NormalMode, 0, taxYear, incomeName)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
+
   "AnyTaxableOtherIncome Controller" must {
 
     "return OK and the correct view for a GET" in {
@@ -64,21 +60,21 @@ class AnyTaxableOtherIncomeControllerSpec extends ControllerSpecBase {
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, 0)(fakeRequest)
 
       status(result) mustBe OK
-      contentAsString(result) mustBe viewAsString()
+      contentAsString(result) mustBe viewAsString(taxPaidForm)
     }
 
     "populate the view correctly on a GET when YES has previously been answered" in {
       when(mockUserAnswers.otherTaxableIncome).thenReturn(Some(Seq(OtherTaxableIncome(incomeName, "123", Some(AnyTaxPaid.Yes(testAnswer))))))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, 0)(fakeRequest)
 
-      contentAsString(result) mustBe viewAsString(form.fill(OtherTaxableIncome(incomeName, "123", Some(AnyTaxPaid.Yes(testAnswer)))))
+      contentAsString(result) mustBe viewAsString(taxPaidForm.fill(AnyTaxPaid.Yes(testAnswer)))
     }
 
     "populate the view correctly on a GET when NO has previously been answered" in {
       when(mockUserAnswers.otherTaxableIncome).thenReturn(Some(Seq(OtherTaxableIncome(incomeName, "123", Some(AnyTaxPaid.No)))))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, 0)(fakeRequest)
 
-      contentAsString(result) mustBe viewAsString(form.fill(OtherTaxableIncome(incomeName, "123", Some(AnyTaxPaid.No))))
+      contentAsString(result) mustBe viewAsString(taxPaidForm.fill(AnyTaxPaid.No))
     }
 
     "redirect to the next page when valid YES data is submitted" in {

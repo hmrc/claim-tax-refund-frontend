@@ -158,7 +158,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       otherTaxableIncomeSection.rows(6).answer.key mustBe "site.no"
 
       otherTaxableIncomeSection.addLinkText.get mustBe "otherTaxableIncome.change"
-      otherTaxableIncomeSection.addLinkUrl.get mustBe routes.OtherTaxableIncomeController.onPageLoad(CheckMode, Index(answers.otherTaxableIncome.get.size)).url
+      otherTaxableIncomeSection.addLinkUrl.get mustBe routes.AnyOtherTaxableIncomeController.onPageLoad(CheckMode).url
     }
 
     "Payment details section (Self)" in {
