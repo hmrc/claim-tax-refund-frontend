@@ -339,9 +339,9 @@ howMuchForeignIncome.checkYourAnswersLabel=Incwm tramor
 howMuchForeignIncome.blank=Nodwch swm yr incwm tramor a gawsoch
 
 howMuchBankInterest.heading=Faint o incwm o log banc neu gymdeithas adeiladu a gawsoch?
-howMuchBankInterest.blank=Nodwch swm y llog banc neu gymdeithas adeiladu a gawsoch
-howMuchBankInterest.checkYourAnswersLabel=Llog banc neu gymdeithas adeiladu
-howMuchBankInterest.invalid=Nodwch swm dilys ar gyfer llog banc neu gymdeithas adeiladu
+howMuchBankInterest.blank=Nodwch swm y Llog Banc a Gymdeithas Adeiladu a gawsoch
+howMuchBankInterest.checkYourAnswersLabel=Llog Banc a Gymdeithas Adeiladu
+howMuchBankInterest.invalid=Nodwch swm dilys ar gyfer Llog Banc a Gymdeithas Adeiladu
 howMuchBankInterest.title=Faint o incwm o log banc neu gymdeithas adeiladu a gawsoch?
 
 detailsOfEmploymentOrPension.hintText=Rhowch i ni enw’ch cyflogwr neu ddarparwr pensiwn a’r dyddiadau dechrau a dyddiadau dod i ben
@@ -357,7 +357,7 @@ selectTaxableIncome.foreign-income=incwm tramor
 selectTaxableIncome.heading=Pa incwm trethadwy a gawsoch?
 selectTaxableIncome.checkYourAnswersLabel=Incwm trethadwy arall a gawsoch
 selectTaxableIncome.title=Pa incwm trethadwy a gawsoch?
-selectTaxableIncome.bank-or-building-society-interest=Llog Banc neu Gymdeithas Adeiladu
+selectTaxableIncome.bank-or-building-society-interest=Llog Banc a Gymdeithas Adeiladu
 selectTaxableIncome.other-taxable-income=incwm trethadwy arall
 selectTaxableIncome.rental-income=incwm o osod eiddo
 
