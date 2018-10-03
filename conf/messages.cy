@@ -279,9 +279,9 @@ otherCompanyBenefit.checkYourAnswersLabel=Buddiant cwmni arall
 otherCompanyBenefit.name = Enw’r buddiant cwmni arall
 otherCompanyBenefit.amount = Swm y buddiant cwmni arall
 otherCompanyBenefit.name.blank=Nodwch enw’r buddiant cwmni arall a gawsoch
-otherCompanyBenefit.heading=Beth yw enw’r buddiant cwmni arall a gawsoch?
+otherCompanyBenefit.heading=Rhowch wybod i ni am y buddiant cwmni arall a gawsoch?
 otherCompanyBenefit.amount.invalid=Nodwch swm dilys ar gyfer y buddiant cwmni a gawsoch
-otherCompanyBenefit.title=Beth yw enw’r buddiant cwmni arall a gawsoch?
+otherCompanyBenefit.title=Rhowch wybod i ni am y buddiant cwmni arall a gawsoch?
 otherCompanyBenefit.add=Ychwanegu buddiant cwmni
 otherCompanyBenefit.amount.blank=Nodwch swm y buddiant cwmni arall a gawsoch
 
@@ -357,7 +357,7 @@ selectTaxableIncome.foreign-income=incwm tramor
 selectTaxableIncome.heading=Pa incwm trethadwy a gawsoch?
 selectTaxableIncome.checkYourAnswersLabel=Incwm trethadwy arall a gawsoch
 selectTaxableIncome.title=Pa incwm trethadwy a gawsoch?
-selectTaxableIncome.bank-or-building-society-interest=llog banc neu gymdeithas adeiladu
+selectTaxableIncome.bank-or-building-society-interest=Llog Banc neu Gymdeithas Adeiladu
 selectTaxableIncome.other-taxable-income=incwm trethadwy arall
 selectTaxableIncome.rental-income=incwm o osod eiddo
 
