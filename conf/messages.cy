@@ -338,11 +338,11 @@ howMuchForeignIncome.invalid=Nodwch swm dilys ar gyfer incwm tramor
 howMuchForeignIncome.checkYourAnswersLabel=Incwm tramor
 howMuchForeignIncome.blank=Nodwch swm yr incwm tramor a gawsoch
 
-howMuchBankInterest.heading=Faint o incwm o log banc neu gymdeithas adeiladu a gawsoch?
+howMuchBankInterest.heading=Faint o incwm o Llog Banc a Gymdeithas Adeiladu a gawsoch?
 howMuchBankInterest.blank=Nodwch swm y Llog Banc a Gymdeithas Adeiladu a gawsoch
 howMuchBankInterest.checkYourAnswersLabel=Llog Banc a Gymdeithas Adeiladu
 howMuchBankInterest.invalid=Nodwch swm dilys ar gyfer Llog Banc a Gymdeithas Adeiladu
-howMuchBankInterest.title=Faint o incwm o log banc neu gymdeithas adeiladu a gawsoch?
+howMuchBankInterest.title=Faint o incwm o Llog Banc a Gymdeithas Adeiladu a gawsoch?
 
 detailsOfEmploymentOrPension.hintText=Rhowch i ni enw’ch cyflogwr neu ddarparwr pensiwn a’r dyddiadau dechrau a dyddiadau dod i ben
 detailsOfEmploymentOrPension.blank=Nodwch fanylion eich cyflogaeth neu’ch pensiwn
@@ -393,15 +393,15 @@ anyTaxableRentalIncome.invalid=Nodwch swm dilys ar gyfer y Dreth Incwm y gwnaeth
 anyTaxableRentalIncome.heading=A wnaethoch dalu Treth Incwm ar incwm o osod eiddo?
 anyTaxableRentalIncomeOption.checkYourAnswersLabel=A wnaethoch dalu Treth Incwm ar incwm o osod eiddo?
 
-anyTaxableBankInterest.heading=A wnaethoch dalu unrhyw Dreth Incwm ar log banc neu gymdeithas adeiladu?
-anyTaxableBankInterest.invalid=Nodwch swm dilys ar gyfer Treth Incwm y gwnaethoch ei thalu ar log banc neu gymdeithas adeiladu
+anyTaxableBankInterest.heading=A wnaethoch dalu unrhyw Dreth Incwm ar Llog Banc a Gymdeithas Adeiladu?
+anyTaxableBankInterest.invalid=Nodwch swm dilys ar gyfer Treth Incwm y gwnaethoch ei thalu ar Llog Banc a Gymdeithas Adeiladu
 anyTaxableBankInterest.hint=Mae’n bosibl y dangosir hyn ar eich datganiad blynyddol gan eich banc neu gymdeithas adeiladu.
-anyTaxableBankInterest.anyTaxPaidAmountField=Faint o Dreth Incwm a wnaethoch ei thalu ar log banc neu gymdeithas adeiladu?
-anyTaxableBankInterest.blank=Nodwch swm y Dreth Incwm y gwnaethoch dalu ar log banc neu gymdeithas adeiladu
-anyTaxableBankInterest.notSelected=Dewiswch ‘Iawn’ os gwnaethoch dalu Treth Incwm ar log banc neu gymdeithas adeiladu
-anyTaxableBankInterest.title=A wnaethoch dalu unrhyw Dreth Incwm ar log banc neu gymdeithas adeiladu?
-anyTaxableBankInterest.checkYourAnswersLabel=Treth Incwm y gwnaethoch ei thalu ar log banc neu gymdeithas adeiladu
-anyTaxableBankInterestOption.checkYourAnswersLabel=A wnaethoch dalu unrhyw Dreth Incwm ar log banc neu gymdeithas adeiladu?
+anyTaxableBankInterest.anyTaxPaidAmountField=Faint o Dreth Incwm a wnaethoch ei thalu ar Llog Banc a Gymdeithas Adeiladu?
+anyTaxableBankInterest.blank=Nodwch swm y Dreth Incwm y gwnaethoch dalu ar Llog Banc a Gymdeithas Adeiladu
+anyTaxableBankInterest.notSelected=Dewiswch ‘Iawn’ os gwnaethoch dalu Treth Incwm ar Llog Banc a Gymdeithas Adeiladu
+anyTaxableBankInterest.title=A wnaethoch dalu unrhyw Dreth Incwm ar Llog Banc a Gymdeithas Adeiladu?
+anyTaxableBankInterest.checkYourAnswersLabel=Treth Incwm y gwnaethoch ei thalu ar Llog Banc a Gymdeithas Adeiladu
+anyTaxableBankInterestOption.checkYourAnswersLabel=A wnaethoch dalu unrhyw Dreth Incwm ar Llog Banc a Gymdeithas Adeiladu?
 
 anyTaxableInvestments.checkYourAnswersLabel=Treth Incwm y gwnaethoch ei thalu ar incwm o fuddsoddiad neu ddifidend
 anyTaxableInvestments.notSelected=Dewiswch ‘Iawn’ os gwnaethoch dalu Treth Incwm ar incwm o fuddsoddiadau neu ddifidendau
