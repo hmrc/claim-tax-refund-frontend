@@ -26,7 +26,9 @@ import viewmodels.AnswerRow
 class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messages) {
 
   def otherSectionUncheck: Option[AnswerRow] = userAnswers.otherSectionUncheck map {
-    x => AnswerRow("otherSectionUncheck.checkYourAnswersLabel", if(x) "site.yes" else "site.no", true, routes.OtherSectionUncheckController.onPageLoad(CheckMode).url)
+    x => AnswerRow("otherSectionUncheck.checkYourAnswersLabel",
+      if(x) "site.yes" else "site.no",
+      true, Some(routes.OtherSectionUncheckController.onPageLoad(CheckMode).url))
   }
 
   //Claim details
@@ -62,7 +64,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
   }
 
   def detailsOfEmploymentOrPension: Option[AnswerRow] = userAnswers.detailsOfEmploymentOrPension map {
-    x => AnswerRow("detailsOfEmploymentOrPension.checkYourAnswersLabel", s"$x", false, Some(routes.DetailsOfEmploymentOrPensionController.onPageLoad(CheckMode).url))
+    x => AnswerRow("detailsOfEmploymentOrPension.checkYourAnswersLabel",s"$x", false, Some(routes.DetailsOfEmploymentOrPensionController.onPageLoad(CheckMode).url))
   }
 
   //Benefits

@@ -106,7 +106,11 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
       val updatedOtherBenefit: Seq[OtherBenefit] = otherBenefit.patch(index, Seq.empty, 1)
       dataCacheConnector.save[Seq[OtherBenefit]](request.externalId, OtherBenefitId.toString, updatedOtherBenefit).map(
         _ =>
-          Redirect(routes.AnyOtherBenefitsController.onPageLoad(mode))
+          if (updatedOtherBenefit.isEmpty) {
+            Redirect(routes.OtherSectionUncheckController.onPageLoad(mode))
+          } else {
+            Redirect(routes.AnyOtherBenefitsController.onPageLoad(mode))
+          }
       )
     }
 
@@ -122,7 +126,11 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
       val updatedOtherCompanyBenefit: Seq[OtherCompanyBenefit] = otherCompanyBenefit.patch(index, Seq.empty, 1)
       dataCacheConnector.save[Seq[OtherCompanyBenefit]](request.externalId, OtherCompanyBenefitId.toString, updatedOtherCompanyBenefit).map(
         _ =>
-          Redirect(routes.AnyOtherCompanyBenefitsController.onPageLoad(mode))
+          if (updatedOtherCompanyBenefit.isEmpty) {
+            Redirect(routes.OtherSectionUncheckController.onPageLoad(mode))
+          } else {
+            Redirect(routes.AnyOtherCompanyBenefitsController.onPageLoad(mode))
+          }
       )
     }
 
@@ -139,8 +147,13 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
       for {
         _ <- dataCacheConnector.save[Seq[OtherTaxableIncome]](request.externalId, OtherTaxableIncomeId.toString, updatedOtherTaxableIncome)
         updatedCacheMap: CacheMap <- dataCacheConnector.save[Seq[OtherTaxableIncome]](request.externalId, AnyTaxableOtherIncomeId.toString, updatedOtherTaxableIncome)
-      } yield
-        Redirect(navigator.nextPage(DeleteOtherTaxableIncomeId, mode)(new UserAnswers(updatedCacheMap)))
+      } yield {
+        if (updatedOtherTaxableIncome.isEmpty) {
+          Redirect(routes.OtherSectionUncheckController.onPageLoad(mode))
+        } else {
+          Redirect(navigator.nextPage(DeleteOtherTaxableIncomeId, mode)(new UserAnswers(updatedCacheMap)))
+        }
+      }
     }
 
     result.getOrElse {
