@@ -48,14 +48,14 @@ class OtherTaxableIncomeFormSpec extends FormBehaviours with MockitoSugar {
     "bind successfully with valid name and amount" in {
       val result: Form[OtherTaxableIncome] = otherTaxableIncomeForm(Seq.empty, 0).bind(validData)
       result.errors.size shouldBe 0
-      result.get shouldBe OtherTaxableIncome("qwerty", "123")
+      result.get shouldBe OtherTaxableIncome("qwerty", "123", None)
     }
 
     "bind successfully with valid name and amount with filter" in {
       val result: Form[OtherTaxableIncome] =
-        otherTaxableIncomeForm(Seq(OtherTaxableIncome("qwerty", "123")), 0).bind(validData)
+        otherTaxableIncomeForm(Seq(OtherTaxableIncome("qwerty", "123", None)), 0).bind(validData)
       result.errors.size shouldBe 0
-      result.get shouldBe OtherTaxableIncome("qwerty", "123")
+      result.get shouldBe OtherTaxableIncome("qwerty", "123", None)
     }
 
     "fail to bind with missing name" in {
@@ -66,7 +66,7 @@ class OtherTaxableIncomeFormSpec extends FormBehaviours with MockitoSugar {
 
     "fail to bind if name is duplicate" in {
       val result: Form[OtherTaxableIncome] =
-        otherTaxableIncomeForm(Seq(OtherTaxableIncome("qwerty", "123")), 1).bind(validData)
+        otherTaxableIncomeForm(Seq(OtherTaxableIncome("qwerty", "123", None)), 1).bind(validData)
 
       result.errors.size shouldBe 1
       result.errors shouldBe Seq(FormError("name", duplicateBenefitKey))

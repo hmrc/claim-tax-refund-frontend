@@ -18,7 +18,7 @@
 @import controllers.routes._
 @import models.Mode
 @import uk.gov.hmrc.play.views.html._
-@import viewmodels.InputViewModel
+@import viewmodels._
 @import uk.gov.hmrc.renderer.TemplateRenderer
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
 
@@ -27,7 +27,8 @@
     form: Form[_],
     mode: Mode,
     taxYear: SelectTaxYear,
-    otherTaxableIncomeNames: Seq[String]
+    complete: Seq[(OtherTaxableIncome, Int)],
+    incomplete: Seq[(OtherTaxableIncome, Int)]
 )(
     implicit
         request: Request[_],
@@ -36,13 +37,21 @@
         templateRenderer: TemplateRenderer
 )
 
+@formAction = @{
+    if (incomplete.isEmpty) AnyOtherTaxableIncomeController.onSubmit(mode) else OtherTaxableIncomeController.onPageLoad(mode, incomplete.head._2)
+}
+
+@callToAction = @{
+    if (incomplete.isEmpty) messages("site.continue") else messages("anyOtherTaxableIncome.incompleteSubmit")
+}
+
 @main_template(
     title = messages("anyOtherTaxableIncome.title"),
     appConfig = appConfig,
     bodyClasses = None
 ) {
 
-    @helpers.form(action = AnyOtherTaxableIncomeController.onSubmit(mode), 'autoComplete -> "off") {
+    @helpers.form(action = formAction, 'autoComplete -> "off") {
 
         @components.back_link()
 
@@ -50,17 +59,21 @@
 
         @components.heading(messages("anyOtherTaxableIncome.heading"), taxYear = Some(taxYear.asString))
 
-        <p class="lede">@messages("global.otherListHeading")</p>
-        @components.list(
-            bulletList = otherTaxableIncomeNames
+        @components.add_list_summary(
+            complete, incomplete, mode
         )
 
-        @components.input_yes_no(
-            InputViewModel("value", form),
-            label = messages("anyOtherTaxableIncome.heading"),
-            labelClass = Some("visually-hidden")
-        )
+        @if(incomplete.isEmpty) {
+            <h2>@messages("anyOtherTaxableIncome.add")</h2>
+            @components.input_yes_no(
+                InputViewModel("value", form),
+                label = messages("anyOtherTaxableIncome.heading"),
+                labelClass = Some("visually-hidden")
+            )
+        } else {
+            <p>@messages("anyOtherTaxableIncome.incompleteMessage")</p>
+        }
 
-        @components.submit_button()
+        @components.submit_button(callToAction)
     }
 }

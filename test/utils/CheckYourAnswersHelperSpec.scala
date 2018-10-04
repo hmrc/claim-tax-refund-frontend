@@ -346,15 +346,15 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
       when(answers.anyTaxableRentalIncome) thenReturn Some(AnyTaxPaid.Yes(amount))
       val answer = answers.anyTaxableRentalIncome
 
-      helper.anyTaxPaid("", answer, route).get.answer.key mustBe yes
-      helper.taxPaid("", answer, route).get.answer.key mustBe s"£$amount"
+      helper.anyTaxPaid("", answer, Some(route)).get.answer.key mustBe yes
+      helper.taxPaid("", answer, Some(route)).get.answer.key mustBe s"£$amount"
     }
 
     s"have correct label and answer (no)" in {
       when(answers.anyTaxableRentalIncome) thenReturn Some(AnyTaxPaid.No)
       val answer = answers.anyTaxableRentalIncome
 
-      helper.anyTaxPaid("", answer, route).get.answer.key mustBe no
+      helper.anyTaxPaid("", answer, Some(route)).get.answer.key mustBe no
     }
   }
 
@@ -373,15 +373,15 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
       when(answers.anyTaxableBankInterest) thenReturn Some(AnyTaxPaid.Yes(amount))
       val answer = answers.anyTaxableBankInterest
 
-      helper.anyTaxPaid("", answer, route).get.answer.key mustBe yes
-      helper.taxPaid("", answer, route).get.answer.key mustBe s"£$amount"
+      helper.anyTaxPaid("", answer, Some(route)).get.answer.key mustBe yes
+      helper.taxPaid("", answer, Some(route)).get.answer.key mustBe s"£$amount"
     }
 
     s"have correct label and answer (no)" in {
       when(answers.anyTaxableBankInterest) thenReturn Some(AnyTaxPaid.No)
       val answer = answers.anyTaxableBankInterest
 
-      helper.anyTaxPaid("", answer, route).get.answer.key mustBe no
+      helper.anyTaxPaid("", answer, Some(route)).get.answer.key mustBe no
     }
   }
 
@@ -400,14 +400,14 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
       when(answers.anyTaxableInvestments) thenReturn Some(AnyTaxPaid.Yes(amount))
       val answer = answers.anyTaxableInvestments
 
-      helper.anyTaxPaid("", answer, route).get.answer.key mustBe yes
-      helper.taxPaid("", answer, route).get.answer.key mustBe s"£$amount"
+      helper.anyTaxPaid("", answer, Some(route)).get.answer.key mustBe yes
+      helper.taxPaid("", answer, Some(route)).get.answer.key mustBe s"£$amount"
     }
 
     s"have correct label and answer (no)" in {
       when(answers.anyTaxableBankInterest) thenReturn Some(AnyTaxPaid.No)
       val answer = answers.anyTaxableBankInterest
-      helper.anyTaxPaid("", answer, route).get.answer.key mustBe no
+      helper.anyTaxPaid("", answer, Some(route)).get.answer.key mustBe no
     }
   }
 
@@ -426,33 +426,29 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
       when(answers.anyTaxableForeignIncome) thenReturn Some(AnyTaxPaid.Yes(amount))
       val answer = answers.anyTaxableForeignIncome
 
-      helper.anyTaxPaid("", answer, route).get.answer.key mustBe yes
-      helper.taxPaid("", answer, route).get.answer.key mustBe s"£$amount"
+      helper.anyTaxPaid("", answer, Some(route)).get.answer.key mustBe yes
+      helper.taxPaid("", answer, Some(route)).get.answer.key mustBe s"£$amount"
     }
 
     s"have correct label and answer (no)" in {
       when(answers.anyTaxableForeignIncome) thenReturn Some(AnyTaxPaid.No)
       val answer = answers.anyTaxableForeignIncome
 
-      helper.anyTaxPaid("", answer, route).get.answer.key mustBe no
+      helper.anyTaxPaid("", answer, Some(route)).get.answer.key mustBe no
     }
   }
 
   "otherTaxableIncome" must {
     s"have correct label and answer" in {
-      when(answers.otherTaxableIncome) thenReturn Some(Seq(OtherTaxableIncome("qwerty", "1234")))
-      when(answers.anyTaxableOtherIncome) thenReturn Some(Seq(AnyTaxPaid.Yes("123")))
+      when(answers.otherTaxableIncome) thenReturn Some(Seq(OtherTaxableIncome("qwerty", "1234", Some(AnyTaxPaid.Yes("123")))))
 
-      helper.otherTaxableIncome.head.get.label.key mustBe "qwerty"
-      helper.otherTaxableIncome(1).get.label.key mustBe messages("checkYourAnswers.otherTaxableIncome.label", "qwerty")
-      helper.otherTaxableIncome(1).get.answer.key mustBe s"£$amount"
-      helper.otherTaxableIncome(1).get.url mustBe Some(routes.OtherTaxableIncomeController.onPageLoad(CheckMode, 0).url)
-      helper.otherTaxableIncome(2).get.label.key mustBe messages("anyTaxableOtherIncomeOption.checkYourAnswersLabel", "qwerty")
-      helper.otherTaxableIncome(2).get.answer.key mustBe "site.yes"
-      helper.otherTaxableIncome(2).get.url mustBe Some(routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode, 0).url)
-      helper.otherTaxableIncome(3).get.label.key mustBe messages("anyTaxableOtherIncome.checkYourAnswersLabel", "qwerty")
-      helper.otherTaxableIncome(3).get.answer.key mustBe "£123"
-      helper.otherTaxableIncome(3).get.url mustBe Some(routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode, 0).url)
+      helper.otherTaxableIncomeCheckYourAnswers.head.get.label.key mustBe "qwerty"
+      helper.otherTaxableIncomeCheckYourAnswers(1).get.label.key mustBe messages("checkYourAnswers.otherTaxableIncome.label", "qwerty")
+      helper.otherTaxableIncomeCheckYourAnswers(1).get.answer.key mustBe s"£$amount"
+      helper.otherTaxableIncomeCheckYourAnswers(2).get.label.key mustBe messages("anyTaxableOtherIncomeOption.checkYourAnswersLabel", "qwerty")
+      helper.otherTaxableIncomeCheckYourAnswers(2).get.answer.key mustBe "site.yes"
+      helper.otherTaxableIncomeCheckYourAnswers(3).get.label.key mustBe messages("anyTaxableOtherIncome.checkYourAnswersLabel", "qwerty")
+      helper.otherTaxableIncomeCheckYourAnswers(3).get.answer.key mustBe "£123"
     }
   }
 
@@ -460,18 +456,18 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     val route = routes.AnyOtherTaxableIncomeController.onPageLoad(CheckMode).url
 
     s"have correct label and answer (yes)" in {
-      when(answers.anyTaxableOtherIncome) thenReturn Some(Seq(AnyTaxPaid.Yes(amount)))
-      val answer: Option[Seq[AnyTaxPaid]] = answers.anyTaxableOtherIncome
+      when(answers.otherTaxableIncome) thenReturn Some(Seq(OtherTaxableIncome("qwerty", "123", Some(AnyTaxPaid.Yes(amount)))))
+      val answer: Option[Seq[OtherTaxableIncome]] = answers.otherTaxableIncome
 
-      helper.anyTaxPaid("", Some(answer.get.head), route).get.answer.key mustBe yes
-      helper.taxPaid("", Some(answer.get.head), route).get.answer.key mustBe s"£$amount"
+      helper.anyTaxPaid("", Some(answer.get.head.anyTaxPaid.get), Some(route)).get.answer.key mustBe yes
+      helper.taxPaid("", Some(answer.get.head.anyTaxPaid.get), Some(route)).get.answer.key mustBe s"£$amount"
     }
 
     s"have correct label and answer (no)" in {
-      when(answers.anyTaxableOtherIncome) thenReturn Some(Seq(AnyTaxPaid.No))
-      val answer: Option[Seq[AnyTaxPaid]] = answers.anyTaxableOtherIncome
+      when(answers.otherTaxableIncome) thenReturn Some(Seq(OtherTaxableIncome("qwerty", "123", Some(AnyTaxPaid.No))))
+      val answer: Option[Seq[OtherTaxableIncome]] = answers.otherTaxableIncome
 
-      helper.anyTaxPaid("", Some(answer.get.head), route).get.answer.key mustBe no
+      helper.anyTaxPaid("", Some(answer.get.head.anyTaxPaid.get), Some(route)).get.answer.key mustBe no
     }
   }
 

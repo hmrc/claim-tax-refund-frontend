@@ -22,7 +22,7 @@ import connectors.FakeDataCacheConnector
 import controllers.actions._
 import play.api.test.Helpers._
 import forms.OtherTaxableIncomeForm
-import models.{Index, NormalMode, OtherTaxableIncome}
+import models.{AnyTaxPaid, Index, NormalMode, OtherTaxableIncome}
 import models.SelectTaxYear.CYMinus2
 import org.mockito.Mockito.when
 import play.api.mvc.Call
@@ -32,7 +32,7 @@ class OtherTaxableIncomeControllerSpec extends ControllerSpecBase {
 
   def onwardRoute: Call = routes.AnyTaxableOtherIncomeController.onPageLoad(NormalMode, 0)
 
-  val testAnswer = OtherTaxableIncome("answer", "123")
+  val testAnswer = OtherTaxableIncome("answer", "123", Some(AnyTaxPaid.Yes("123")))
   val form = new OtherTaxableIncomeForm(frontendAppConfig)(Seq.empty, 0)
   private val taxYear = CYMinus2
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers

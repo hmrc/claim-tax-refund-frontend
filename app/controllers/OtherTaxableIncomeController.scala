@@ -77,9 +77,22 @@ class OtherTaxableIncomeController @Inject()(
             (formWithErrors: Form[OtherTaxableIncome]) =>
               Future.successful(BadRequest(otherTaxableIncome(appConfig, formWithErrors, mode, index, taxYear))),
             value => {
-              val otherTaxableIncome: Seq[OtherTaxableIncome] = request.userAnswers.otherTaxableIncome.getOrElse(Seq(value))
+              val otherTaxableIncome: OtherTaxableIncome = request.userAnswers.otherTaxableIncome match {
+                case Some(otherTaxableIncomes) =>
+                  if (index >= otherTaxableIncomes.length) {
+                    OtherTaxableIncome(value.name, value.amount, None)
+                  } else {
+                    val anyTaxPaid = request.userAnswers.otherTaxableIncome.flatMap(value => value(index).anyTaxPaid)
+                    OtherTaxableIncome(value.name, value.amount, anyTaxPaid)
+                  }
+                case None =>
+                  OtherTaxableIncome(value.name, value.amount, None)
+              }
+
+              val otherTaxableIncomeList: Seq[OtherTaxableIncome] = request.userAnswers.otherTaxableIncome.getOrElse(Seq(otherTaxableIncome))
+
               dataCacheConnector.save[Seq[OtherTaxableIncome]](request.externalId, OtherTaxableIncomeId.toString,
-                sequenceUtil.updateSeq(otherTaxableIncome, index, value)
+                sequenceUtil.updateSeq(otherTaxableIncomeList, index, otherTaxableIncome)
               ).map(cacheMap =>
                 Redirect(navigator.nextPageWithIndex(OtherTaxableIncomeId(index), mode)(new UserAnswers(cacheMap))))
             }

@@ -56,6 +56,8 @@ global.current-year-minus-4 = 6 April {0} to 5 April {1}
 global.current-year-minus-5 = 6 April {0} to 5 April {1}
 
 global.otherListHeading = You have told us about:
+global.addToList.complete = Complete
+global.addToList.incomplete = Incomplete
 
 index.title = Claim a tax refund
 index.heading = Claim a tax refund
@@ -204,10 +206,13 @@ howMuchMedicalBenefits.checkYourAnswersLabel = Medical benefit
 howMuchMedicalBenefits.blank = Enter the amount of medical benefit you got
 howMuchMedicalBenefits.invalid = Enter a valid amount of medical benefit
 
-anyOtherTaxableIncome.title = Did you get any other taxable income?
-anyOtherTaxableIncome.heading = Did you get any other taxable income?
-anyOtherTaxableIncome.checkYourAnswersLabel = Did you get any other taxable income?
+anyOtherTaxableIncome.title = Other taxable income
+anyOtherTaxableIncome.heading = Other taxable income
+anyOtherTaxableIncome.checkYourAnswersLabel = Other taxable income
+anyOtherTaxableIncome.add = Did you get any other taxable income?
 anyOtherTaxableIncome.blank = Select yes if you got any other taxable income
+anyOtherTaxableIncome.incompleteMessage = You have incomplete other taxable income
+anyOtherTaxableIncome.incompleteSubmit = Complete other taxable income
 
 nomineeFullName.title = What is the full name of the person you want us to send any payment to?
 nomineeFullName.heading = What is the full name of the person you want us to send any payment to?
@@ -295,6 +300,7 @@ otherCompanyBenefit.amount.blank = Enter the amount of the other company benefit
 otherCompanyBenefit.amount.invalid = Enter a valid amount of the company benefit benefit you got
 otherCompanyBenefit.duplicate = You have already entered this other taxable company benefit name
 otherCompanyBenefit.add = Add another company benefit
+otherCompanyBenefit.change = Change other company benefits
 
 selectBenefits.title = Which taxable benefits did you get?
 selectBenefits.heading = Which taxable benefits did you get?
@@ -341,7 +347,8 @@ otherBenefit.name.blank = Enter the name of the other taxable benefit you got
 otherBenefit.amount.blank = Enter the amount of the other taxable benefit you got
 otherBenefit.amount.invalid = Enter a valid amount of the other taxable benefit you got
 otherBenefit.duplicate = You have already entered this other taxable benefit name
-otherBenefit.change = Change taxable benefits
+otherBenefit.change = Change other taxable benefits
+otherBenefit.add = Add another taxable benefit
 
 howMuchForeignIncome.title = How much foreign income did you get?
 howMuchForeignIncome.heading = How much foreign income did you get?
@@ -394,6 +401,7 @@ otherTaxableIncome.amount.blank = Enter the amount of the other taxable income y
 otherTaxableIncome.amount.invalid = Enter a valid amount of the other taxable income you got
 otherTaxableIncome.duplicate = You have already entered this other taxable income name
 otherTaxableIncome.add = Add another taxable income
+otherTaxableIncome.change = Change other taxable incomes
 
 anyTaxableRentalIncome.title = Did you pay Income Tax on property rental income?
 anyTaxableRentalIncome.heading = Did you pay Income Tax on property rental income?

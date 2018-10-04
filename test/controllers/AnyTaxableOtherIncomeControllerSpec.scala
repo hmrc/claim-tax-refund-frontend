@@ -18,69 +18,67 @@ package controllers
 
 import connectors.FakeDataCacheConnector
 import controllers.actions._
-import forms.AnyTaxPaidForm
-import identifiers.{AnyTaxPaidId, TaxPaidAmountId}
+import forms.{AnyTaxPaidForm, OtherTaxableIncomeForm}
 import models.SelectTaxYear.CYMinus2
 import models.{AnyTaxPaid, NormalMode, OtherTaxableIncome}
 import org.mockito.Mockito.when
 import play.api.data.Form
-import play.api.libs.json.{JsBoolean, JsString, Json}
+import play.api.mvc.Call
 import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.anyTaxableOtherIncome
 
 class AnyTaxableOtherIncomeControllerSpec extends ControllerSpecBase {
 
-  def onwardRoute = routes.IndexController.onPageLoad()
+  def onwardRoute: Call = routes.IndexController.onPageLoad()
 
   private val notSelectedKey = "anyTaxableOtherIncome.notSelected"
   private val blankKey = "anyTaxableOtherIncome.blank"
   private val invalidKey = "anyTaxableOtherIncome.invalid"
 
-  val testAnswer = "9,999.00"
-  val validYesData = Map(AnyTaxPaidId.toString -> Json.obj(AnyTaxPaidId.toString -> JsBoolean(true), TaxPaidAmountId.toString -> JsString(testAnswer)))
-  val validNoData = Map(AnyTaxPaidId.toString -> Json.obj(AnyTaxPaidId.toString -> JsBoolean(false)))
+  private val testAnswer = "9,999.00"
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
   private val taxYear = CYMinus2
   private val incomeName = "test income"
 
-  val formProvider = new AnyTaxPaidForm
-  private val form = formProvider(notSelectedKey, blankKey, invalidKey)
+  private val formProvider = new OtherTaxableIncomeForm(frontendAppConfig)
+  private val taxPaidFormProvider = new AnyTaxPaidForm
+  private val taxPaidForm = taxPaidFormProvider(notSelectedKey, blankKey, invalidKey)
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyTaxableOtherIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, sequenceUtil, formProvider, formPartialRetriever, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl, sequenceUtil, formProvider, taxPaidFormProvider, formPartialRetriever, templateRenderer)
 
-  def viewAsString(form: Form[_] = form) = anyTaxableOtherIncome(frontendAppConfig, form, NormalMode, 0, taxYear, incomeName)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+  def viewAsString(form: Form[_] = taxPaidForm): String =
+    anyTaxableOtherIncome(frontendAppConfig, form, NormalMode, 0, taxYear, incomeName)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+
 
   "AnyTaxableOtherIncome Controller" must {
 
     "return OK and the correct view for a GET" in {
-      when(mockUserAnswers.otherTaxableIncome).thenReturn(Some(Seq(OtherTaxableIncome(incomeName, "123"))))
+      when(mockUserAnswers.otherTaxableIncome).thenReturn(Some(Seq(OtherTaxableIncome(incomeName, "123", None))))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, 0)(fakeRequest)
 
       status(result) mustBe OK
-      contentAsString(result) mustBe viewAsString()
+      contentAsString(result) mustBe viewAsString(taxPaidForm)
     }
 
     "populate the view correctly on a GET when YES has previously been answered" in {
-      when(mockUserAnswers.otherTaxableIncome).thenReturn(Some(Seq(OtherTaxableIncome(incomeName, "123"))))
-      when(mockUserAnswers.anyTaxableOtherIncome).thenReturn(Some(Seq(AnyTaxPaid.Yes(testAnswer))))
+      when(mockUserAnswers.otherTaxableIncome).thenReturn(Some(Seq(OtherTaxableIncome(incomeName, "123", Some(AnyTaxPaid.Yes(testAnswer))))))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, 0)(fakeRequest)
 
-      contentAsString(result) mustBe viewAsString(form.fill(AnyTaxPaid.Yes(testAnswer)))
+      contentAsString(result) mustBe viewAsString(taxPaidForm.fill(AnyTaxPaid.Yes(testAnswer)))
     }
 
     "populate the view correctly on a GET when NO has previously been answered" in {
-      when(mockUserAnswers.otherTaxableIncome).thenReturn(Some(Seq(OtherTaxableIncome(incomeName, "123"))))
-      when(mockUserAnswers.anyTaxableOtherIncome).thenReturn(Some(Seq(AnyTaxPaid.No)))
+      when(mockUserAnswers.otherTaxableIncome).thenReturn(Some(Seq(OtherTaxableIncome(incomeName, "123", Some(AnyTaxPaid.No)))))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, 0)(fakeRequest)
 
-      contentAsString(result) mustBe viewAsString(form.fill(AnyTaxPaid.No))
+      contentAsString(result) mustBe viewAsString(taxPaidForm.fill(AnyTaxPaid.No))
     }
 
     "redirect to the next page when valid YES data is submitted" in {
-      when(mockUserAnswers.otherTaxableIncome).thenReturn(Some(Seq(OtherTaxableIncome(incomeName, "123"))))
+      when(mockUserAnswers.otherTaxableIncome).thenReturn(Some(Seq(OtherTaxableIncome(incomeName, testAnswer, Some(AnyTaxPaid.Yes(testAnswer))))))
       val postRequest = fakeRequest.withFormUrlEncodedBody(("anyTaxPaid", "true"),("taxPaidAmount", testAnswer))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode, 0)(postRequest)
 
@@ -89,7 +87,7 @@ class AnyTaxableOtherIncomeControllerSpec extends ControllerSpecBase {
     }
 
     "redirect to the next page when valid NO data is submitted" in {
-      when(mockUserAnswers.otherTaxableIncome).thenReturn(Some(Seq(OtherTaxableIncome(incomeName, "123"))))
+      when(mockUserAnswers.otherTaxableIncome).thenReturn(Some(Seq(OtherTaxableIncome(incomeName, "123", Some(AnyTaxPaid.No)))))
       val postRequest = fakeRequest.withFormUrlEncodedBody(("anyTaxPaid", "false"))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode, 0)(postRequest)
 
@@ -99,7 +97,7 @@ class AnyTaxableOtherIncomeControllerSpec extends ControllerSpecBase {
 
     "return a Bad Request and errors when invalid data is submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
-      val boundForm = form.bind(Map("value" -> "invalid value"))
+      val boundForm = taxPaidForm.bind(Map("value" -> "invalid value"))
 
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode, 0)(postRequest)
 

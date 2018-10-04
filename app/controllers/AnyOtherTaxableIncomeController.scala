@@ -22,7 +22,7 @@ import controllers.actions._
 import forms.BooleanForm
 import identifiers.AnyOtherTaxableIncomeId
 import javax.inject.Inject
-import models.{Mode, OtherCompanyBenefit, OtherTaxableIncome, SelectTaxYear}
+import models._
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, Result}
@@ -51,10 +51,13 @@ class AnyOtherTaxableIncomeController @Inject()(appConfig: FrontendAppConfig,
   def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val result: Option[Result] = for {
-        taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
-        otherTaxableIncomeNames: Seq[String] <- request.userAnswers.otherTaxableIncome.map(_.map(_.name))
+        taxYear <- request.userAnswers.selectTaxYear
+        otherTaxableIncome <- request.userAnswers.otherTaxableIncome
       } yield {
-        Ok(anyOtherTaxableIncome(appConfig, form, mode, taxYear, otherTaxableIncomeNames))
+        val otherTaxableIncomeWithIndex = otherTaxableIncome.zipWithIndex
+        val complete: Seq[(OtherTaxableIncome, Int)] = otherTaxableIncomeWithIndex.filter(_._1.anyTaxPaid.isDefined)
+        val incomplete: Seq[(OtherTaxableIncome, Int)] = otherTaxableIncomeWithIndex.filter(_._1.anyTaxPaid.isEmpty)
+        Ok(anyOtherTaxableIncome(appConfig, form, mode, taxYear, complete, incomplete))
       }
 
       result.getOrElse {
@@ -66,11 +69,14 @@ class AnyOtherTaxableIncomeController @Inject()(appConfig: FrontendAppConfig,
     implicit request =>
       val result: Option[Future[Result]] = for {
         taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
-        otherTaxableIncomeNames: Seq[String] <- request.userAnswers.otherTaxableIncome.map(_.map(_.name))
+        otherTaxableIncome: Seq[OtherTaxableIncome] <- request.userAnswers.otherTaxableIncome
       } yield {
+        val otherTaxableIncomeWithIndex = otherTaxableIncome.zipWithIndex
+        val complete: Seq[(OtherTaxableIncome, Int)] = otherTaxableIncomeWithIndex.filter(_._1.anyTaxPaid.isDefined)
+        val incomplete: Seq[(OtherTaxableIncome, Int)] = otherTaxableIncomeWithIndex.filter(_._1.anyTaxPaid.isEmpty)
         form.bindFromRequest().fold(
           (formWithErrors: Form[_]) =>
-            Future.successful(BadRequest(anyOtherTaxableIncome(appConfig, formWithErrors, mode, taxYear, otherTaxableIncomeNames))),
+            Future.successful(BadRequest(anyOtherTaxableIncome(appConfig, formWithErrors, mode, taxYear, complete, incomplete))),
           value =>
             dataCacheConnector.save[Boolean](request.externalId, AnyOtherTaxableIncomeId.toString, value).map(cacheMap =>
               Redirect(navigator.nextPage(AnyOtherTaxableIncomeId, mode)(new UserAnswers(cacheMap))))
