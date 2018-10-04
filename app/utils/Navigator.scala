@@ -21,7 +21,6 @@ import identifiers.{AnyAgentRefId, _}
 import javax.inject.{Inject, Singleton}
 import models.WhereToSendPayment.{Myself, Nominee}
 import models.{Benefits, CompanyBenefits, TaxableIncome, _}
-import models.{Benefits, _}
 import play.api.mvc.Call
 
 @Singleton
@@ -33,6 +32,26 @@ class Navigator @Inject()() {
 
   private val editRouteMapWithIndex: PartialFunction[Identifier, UserAnswers => Call] = {
     case OtherTaxableIncomeId(index) => otherTaxableIncome(CheckMode, index)
+  }
+
+  private val routeMapWithCollectionId: PartialFunction[String, UserAnswers => Call] = {
+    case OtherBenefit.collectionId =>  otherSectionUncheckBenefits(NormalMode)
+  }
+
+  private val editRouteMapWithCollectionId: PartialFunction[String, UserAnswers => Call] = {
+    case OtherBenefit.collectionId =>  otherSectionUncheckBenefits(CheckMode)
+  }
+
+  private def otherSectionUncheckBenefits(mode: Mode)(userAnswers: UserAnswers) = {
+      userAnswers.otherSectionUncheck match {
+        case Some(true) => routes.OtherBenefitController.onPageLoad(mode, 0)
+        case _ =>
+          if(mode == NormalMode) {
+            routes.AnyCompanyBenefitsController.onPageLoad(mode)
+          } else {
+            routes.CheckYourAnswersController.onPageLoad()
+          }
+      }
   }
 
   private val routeMap: Map[Identifier, UserAnswers => Call] = Map(
@@ -457,5 +476,12 @@ class Navigator @Inject()() {
       routeMapWithIndex.lift(id).getOrElse(_ => routes.IndexController.onPageLoad())
     case CheckMode =>
       editRouteMapWithIndex.lift(id).getOrElse(_ => routes.CheckYourAnswersController.onPageLoad())
+  }
+
+  def nextPageWithCollectionId(collectionId: String, mode: Mode): UserAnswers => Call = mode match {
+    case NormalMode =>
+      routeMapWithCollectionId.lift(collectionId).getOrElse(_ => routes.IndexController.onPageLoad())
+    case CheckMode =>
+      editRouteMapWithCollectionId.lift(collectionId).getOrElse(_ => routes.CheckYourAnswersController.onPageLoad())
   }
 }

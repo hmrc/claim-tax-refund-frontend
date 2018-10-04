@@ -73,7 +73,7 @@ class OtherSectionUncheckController @Inject()(appConfig: FrontendAppConfig,
               Future.successful(BadRequest(otherSectionUncheck(appConfig, formWithErrors, mode, taxYear, collectionId))),
             value =>
               dataCacheConnector.save[Boolean](request.externalId, OtherSectionUncheckId.toString, value).map(cacheMap =>
-                Redirect(navigator.nextPage(OtherSectionUncheckId, mode)(new UserAnswers(cacheMap))))
+                Redirect(navigator.nextPageWithCollectionId(collectionId, mode)(new UserAnswers(cacheMap))))
           )
       }.getOrElse{
         Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))

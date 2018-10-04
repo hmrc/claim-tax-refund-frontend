@@ -69,8 +69,27 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
       }
 
       "go to OtherBenefit from OtherSectionUncheck when yes is selected" in {
+        when(answers.otherBenefit) thenReturn Some(Seq.empty)
         when(answers.otherSectionUncheck) thenReturn Some(true)
-        navigator.nextPage(OtherSectionUncheckId, NormalMode)(answers) mustBe routes.OtherBenefitController.onSubmit(NormalMode, 0)
+        navigator.nextPageWithCollectionId(OtherBenefit.collectionId, NormalMode)(answers) mustBe routes.OtherBenefitController.onPageLoad(NormalMode, 0)
+      }
+
+      "go to AnyCompanyBenefits from OtherSectionUncheck when no is selected" in {
+        when(answers.otherBenefit) thenReturn Some(Seq.empty)
+        when(answers.otherSectionUncheck) thenReturn Some(false)
+        navigator.nextPageWithCollectionId(OtherBenefit.collectionId, NormalMode)(answers) mustBe routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
+      }
+
+      "go to OtherBenefit from OtherSectionUncheck when yes is selected and in CheckMode" in {
+        when(answers.otherBenefit) thenReturn Some(Seq.empty)
+        when(answers.otherSectionUncheck) thenReturn Some(true)
+        navigator.nextPageWithCollectionId(OtherBenefit.collectionId, CheckMode)(answers) mustBe routes.OtherBenefitController.onPageLoad(CheckMode, 0)
+      }
+
+      "go to CheckYourAnswers from OtherSectionUncheck when no is selected and in CheckMode" in {
+        when(answers.otherBenefit) thenReturn Some(Seq.empty)
+        when(answers.otherSectionUncheck) thenReturn Some(false)
+        navigator.nextPageWithCollectionId(OtherBenefit.collectionId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
       }
 
       //3 benefit selectors
