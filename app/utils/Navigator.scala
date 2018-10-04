@@ -35,23 +35,39 @@ class Navigator @Inject()() {
   }
 
   private val routeMapWithCollectionId: PartialFunction[String, UserAnswers => Call] = {
-    case OtherBenefit.collectionId =>  otherSectionUncheckBenefits(NormalMode)
+    case OtherBenefit.collectionId => otherSectionUncheckBenefits(NormalMode)
+    case OtherCompanyBenefit.collectionId => otherSectionUncheckCompanyBenefits(NormalMode)
   }
 
   private val editRouteMapWithCollectionId: PartialFunction[String, UserAnswers => Call] = {
-    case OtherBenefit.collectionId =>  otherSectionUncheckBenefits(CheckMode)
+    case OtherBenefit.collectionId => otherSectionUncheckBenefits(CheckMode)
+    case OtherCompanyBenefit.collectionId => otherSectionUncheckCompanyBenefits(CheckMode)
   }
 
-  private def otherSectionUncheckBenefits(mode: Mode)(userAnswers: UserAnswers) = {
+  private def otherSectionUncheckBenefits(mode: Mode)(userAnswers: UserAnswers): Call = {
       userAnswers.otherSectionUncheck match {
         case Some(true) => routes.OtherBenefitController.onPageLoad(mode, 0)
-        case _ =>
+        case Some(false) =>
           if(mode == NormalMode) {
             routes.AnyCompanyBenefitsController.onPageLoad(mode)
           } else {
             routes.CheckYourAnswersController.onPageLoad()
           }
+        case _ => routes.SessionExpiredController.onPageLoad()
       }
+  }
+
+  private def otherSectionUncheckCompanyBenefits(mode: Mode)(userAnswers: UserAnswers): Call = {
+    userAnswers.otherSectionUncheck match {
+      case Some(true) => routes.OtherCompanyBenefitController.onPageLoad(mode, 0)
+      case Some(false) =>
+        if(mode == NormalMode) {
+          routes.AnyTaxableIncomeController.onPageLoad(mode)
+        } else {
+          routes.CheckYourAnswersController.onPageLoad()
+        }
+      case _ => routes.SessionExpiredController.onPageLoad()
+    }
   }
 
   private val routeMap: Map[Identifier, UserAnswers => Call] = Map(
