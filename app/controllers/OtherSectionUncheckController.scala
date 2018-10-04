@@ -48,7 +48,7 @@ class OtherSectionUncheckController @Inject()(appConfig: FrontendAppConfig,
   private val errorKey = "otherSectionUncheck.blank"
   val form: Form[Boolean] = formProvider(errorKey)
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode, collectionId: String): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.otherSectionUncheck match {
         case None => form
@@ -57,20 +57,20 @@ class OtherSectionUncheckController @Inject()(appConfig: FrontendAppConfig,
 
       request.userAnswers.selectTaxYear.map{
         selectedTaxYear =>
-          Ok(otherSectionUncheck(appConfig, preparedForm, mode, selectedTaxYear))
+          Ok(otherSectionUncheck(appConfig, preparedForm, mode, selectedTaxYear, collectionId))
       }.getOrElse{
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode, collectionId: String): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
       request.userAnswers.selectTaxYear.map{
         selectedTaxYear =>
           val taxYear = selectedTaxYear
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(otherSectionUncheck(appConfig, formWithErrors, mode, taxYear))),
+              Future.successful(BadRequest(otherSectionUncheck(appConfig, formWithErrors, mode, taxYear, collectionId))),
             value =>
               dataCacheConnector.save[Boolean](request.externalId, OtherSectionUncheckId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(OtherSectionUncheckId, mode)(new UserAnswers(cacheMap))))

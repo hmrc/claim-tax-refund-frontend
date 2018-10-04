@@ -25,12 +25,6 @@ import viewmodels.AnswerRow
 
 class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messages) {
 
-  def otherSectionUncheck: Option[AnswerRow] = userAnswers.otherSectionUncheck map {
-    x => AnswerRow("otherSectionUncheck.checkYourAnswersLabel",
-      if(x) "site.yes" else "site.no",
-      true, Some(routes.OtherSectionUncheckController.onPageLoad(CheckMode).url))
-  }
-
   //Claim details
   //------------------------------------------------------------------
 

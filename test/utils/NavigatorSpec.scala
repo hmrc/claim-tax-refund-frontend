@@ -68,6 +68,11 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(EmploymentDetailsId, NormalMode)(answers) mustBe routes.AnyBenefitsController.onPageLoad(NormalMode)
       }
 
+      "go to OtherBenefit from OtherSectionUncheck when yes is selected" in {
+        when(answers.otherSectionUncheck) thenReturn Some(true)
+        navigator.nextPage(OtherSectionUncheckId, NormalMode)(answers) mustBe routes.OtherBenefitController.onSubmit(NormalMode, 0)
+      }
+
       //3 benefit selectors
 
       "go to AnyCompanyBenefits from AnyBenefits when No is selected" in {

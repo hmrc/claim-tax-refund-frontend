@@ -20,7 +20,7 @@ import play.api.data.Form
 import controllers.routes
 import forms.BooleanForm
 import views.behaviours.YesNoViewBehaviours
-import models.NormalMode
+import models.{NormalMode, OtherBenefit}
 import models.SelectTaxYear.CYMinus2
 import play.twirl.api.Html
 import views.html.otherSectionUncheck
@@ -29,15 +29,15 @@ class OtherSectionUncheckViewSpec extends YesNoViewBehaviours {
 
   private val messageKeyPrefix = "otherSectionUncheck"
   private val taxYear = CYMinus2
-
+  private val collectionId = OtherBenefit.collectionId
 
   override val form = new BooleanForm()()
 
   def createView: () => Html = () =>
-    otherSectionUncheck(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+    otherSectionUncheck(frontendAppConfig, form, NormalMode, taxYear, collectionId)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   def createViewUsingForm: Form[_] => Html = (form: Form[_]) =>
-    otherSectionUncheck(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+    otherSectionUncheck(frontendAppConfig, form, NormalMode, taxYear, collectionId)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "OtherSectionUncheck view" must {
 
@@ -45,6 +45,6 @@ class OtherSectionUncheckViewSpec extends YesNoViewBehaviours {
 
     behave like pageWithBackLink(createView)
 
-    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.OtherSectionUncheckController.onSubmit(NormalMode).url, None)
+    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.OtherSectionUncheckController.onSubmit(NormalMode, collectionId).url, None)
   }
 }

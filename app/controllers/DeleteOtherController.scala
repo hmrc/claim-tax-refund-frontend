@@ -73,11 +73,11 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
                 if (value) {
                   collectionId match {
                     case OtherBenefit.collectionId =>
-                      deleteOtherBenefit(request, mode, index)
+                      deleteOtherBenefit(request, mode, index, collectionId)
                     case OtherCompanyBenefit.collectionId =>
-                      deleteOtherCompanyBenefit(request, mode, index)
+                      deleteOtherCompanyBenefit(request, mode, index, collectionId)
                     case OtherTaxableIncome.collectionId =>
-                      deleteOtherTaxableIncome(request, mode, index)
+                      deleteOtherTaxableIncome(request, mode, index, collectionId)
                     case _ =>
                       Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
                   }
@@ -99,7 +99,7 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
         }
     }
 
-  def deleteOtherBenefit(request: DataRequest[AnyContent], mode: Mode, index: Index): Future[Result] = {
+  def deleteOtherBenefit(request: DataRequest[AnyContent], mode: Mode, index: Index, collectionId: String): Future[Result] = {
     val result: Option[Future[Result]] = for {
       otherBenefit: Seq[OtherBenefit] <- request.userAnswers.otherBenefit
     } yield {
@@ -107,7 +107,7 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
       dataCacheConnector.save[Seq[OtherBenefit]](request.externalId, OtherBenefitId.toString, updatedOtherBenefit).map(
         _ =>
           if (updatedOtherBenefit.isEmpty) {
-            Redirect(routes.OtherSectionUncheckController.onPageLoad(mode))
+            Redirect(routes.OtherSectionUncheckController.onPageLoad(mode, collectionId))
           } else {
             Redirect(routes.AnyOtherBenefitsController.onPageLoad(mode))
           }
@@ -119,7 +119,7 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
     }
   }
 
-  def deleteOtherCompanyBenefit(request: DataRequest[AnyContent], mode: Mode, index: Index): Future[Result] = {
+  def deleteOtherCompanyBenefit(request: DataRequest[AnyContent], mode: Mode, index: Index, collectionId: String): Future[Result] = {
     val result: Option[Future[Result]] = for {
       otherCompanyBenefit: Seq[OtherCompanyBenefit] <- request.userAnswers.otherCompanyBenefit
     } yield {
@@ -127,7 +127,7 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
       dataCacheConnector.save[Seq[OtherCompanyBenefit]](request.externalId, OtherCompanyBenefitId.toString, updatedOtherCompanyBenefit).map(
         _ =>
           if (updatedOtherCompanyBenefit.isEmpty) {
-            Redirect(routes.OtherSectionUncheckController.onPageLoad(mode))
+            Redirect(routes.OtherSectionUncheckController.onPageLoad(mode, collectionId))
           } else {
             Redirect(routes.AnyOtherCompanyBenefitsController.onPageLoad(mode))
           }
@@ -139,7 +139,7 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
     }
   }
 
-  def deleteOtherTaxableIncome(request: DataRequest[AnyContent], mode: Mode, index: Index): Future[Result] = {
+  def deleteOtherTaxableIncome(request: DataRequest[AnyContent], mode: Mode, index: Index, collectionId: String): Future[Result] = {
     val result: Option[Future[Result]] = for {
       otherTaxableIncome: Seq[OtherTaxableIncome] <- request.userAnswers.otherTaxableIncome
     } yield {
@@ -149,7 +149,7 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
         updatedCacheMap: CacheMap <- dataCacheConnector.save[Seq[OtherTaxableIncome]](request.externalId, AnyTaxableOtherIncomeId.toString, updatedOtherTaxableIncome)
       } yield {
         if (updatedOtherTaxableIncome.isEmpty) {
-          Redirect(routes.OtherSectionUncheckController.onPageLoad(mode))
+          Redirect(routes.OtherSectionUncheckController.onPageLoad(mode, collectionId))
         } else {
           Redirect(navigator.nextPage(DeleteOtherTaxableIncomeId, mode)(new UserAnswers(updatedCacheMap)))
         }

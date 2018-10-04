@@ -19,7 +19,7 @@ package controllers
 import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.BooleanForm
-import models.NormalMode
+import models.{NormalMode, OtherBenefit}
 import models.SelectTaxYear.CYMinus2
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
@@ -38,18 +38,19 @@ class OtherSectionUncheckControllerSpec extends ControllerSpecBase with MockitoS
 
   private val taxYear = CYMinus2
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
+  private val collectionId = OtherBenefit.collectionId
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new OtherSectionUncheckController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, formProvider, formPartialRetriever, templateRenderer)
 
   def viewAsString(form: Form[_] = form): String =
-    otherSectionUncheck(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+    otherSectionUncheck(frontendAppConfig, form, NormalMode, taxYear, collectionId)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "OtherSectionUncheck Controller" must {
 
     "return OK and the correct view for a GET" in {
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, collectionId)(fakeRequest)
 
       status(result) mustBe OK
       contentAsString(result) mustBe viewAsString()
@@ -57,7 +58,7 @@ class OtherSectionUncheckControllerSpec extends ControllerSpecBase with MockitoS
 
     "populate the view correctly on a GET when the question has previously been answered" in {
       when(mockUserAnswers.otherSectionUncheck) thenReturn Some(true)
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, collectionId)(fakeRequest)
 
       contentAsString(result) mustBe viewAsString(form.fill(true))
     }
@@ -65,7 +66,7 @@ class OtherSectionUncheckControllerSpec extends ControllerSpecBase with MockitoS
     "redirect to the next page when valid data is submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
 
-      val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode)(postRequest)
+      val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode, collectionId)(postRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(onwardRoute.url)
@@ -75,14 +76,14 @@ class OtherSectionUncheckControllerSpec extends ControllerSpecBase with MockitoS
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
       val boundForm = form.bind(Map("value" -> "invalid value"))
 
-      val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode)(postRequest)
+      val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode, collectionId)(postRequest)
 
       status(result) mustBe BAD_REQUEST
       contentAsString(result) mustBe viewAsString(boundForm)
     }
 
     "redirect to Session Expired for a GET if no existing data is found" in {
-      val result = controller(dontGetAnyData).onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(dontGetAnyData).onPageLoad(NormalMode, collectionId)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
@@ -90,7 +91,7 @@ class OtherSectionUncheckControllerSpec extends ControllerSpecBase with MockitoS
 
     "redirect to Session Expired for a POST if no existing data is found" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
-      val result = controller(dontGetAnyData).onSubmit(NormalMode)(postRequest)
+      val result = controller(dontGetAnyData).onSubmit(NormalMode, collectionId)(postRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)

@@ -20,13 +20,13 @@ import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.BooleanForm
 import models.SelectTaxYear.CYMinus2
-import models.{CheckMode, Index, NormalMode}
+import models._
+import org.mockito.Mockito._
 import play.api.data.Form
 import play.api.mvc.Call
 import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.deleteOther
-import org.mockito.Mockito._
 
 class DeleteOtherControllerSpec extends ControllerSpecBase {
 
@@ -85,7 +85,7 @@ class DeleteOtherControllerSpec extends ControllerSpecBase {
         .onSubmit(NormalMode, index, itemName, benefitCollectionId)(postRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.OtherSectionUncheckController.onPageLoad(NormalMode).url)
+      redirectLocation(result) mustBe Some(routes.OtherSectionUncheckController.onPageLoad(NormalMode, OtherBenefit.collectionId).url)
     }
 
 
@@ -109,7 +109,7 @@ class DeleteOtherControllerSpec extends ControllerSpecBase {
         .onSubmit(NormalMode, index, itemName, companyBenefitCollectionId)(postRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.OtherSectionUncheckController.onPageLoad(NormalMode).url)
+      redirectLocation(result) mustBe Some(routes.OtherSectionUncheckController.onPageLoad(NormalMode, OtherCompanyBenefit.collectionId).url)
     }
 
 
@@ -133,7 +133,7 @@ class DeleteOtherControllerSpec extends ControllerSpecBase {
         .onSubmit(NormalMode, index, itemName, taxableIncomeCollectionId)(postRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.OtherSectionUncheckController.onPageLoad(NormalMode).url)
+      redirectLocation(result) mustBe Some(routes.OtherSectionUncheckController.onPageLoad(NormalMode, OtherTaxableIncome.collectionId).url)
     }
 
 
