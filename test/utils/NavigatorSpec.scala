@@ -159,6 +159,45 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPageWithCollectionId(OtherCompanyBenefit.collectionId, CheckMode)(answers) mustBe routes.SessionExpiredController.onPageLoad()
       }
 
+      //OtherTaxableIncome
+
+      "go to OtherTaxableIncome from OtherSectionUncheck when yes is selected with OtherTaxableIncome collection" in {
+        when(answers.otherTaxableIncome) thenReturn Some(Seq.empty)
+        when(answers.otherSectionUncheck) thenReturn Some(true)
+        navigator.nextPageWithCollectionId(OtherTaxableIncome.collectionId, NormalMode)(answers) mustBe routes.OtherTaxableIncomeController.onPageLoad(NormalMode, 0)
+      }
+
+      "go to WhereToSendPayment from OtherSectionUncheck when no is selected with OtherTaxableIncome collection" in {
+        when(answers.otherTaxableIncome) thenReturn Some(Seq.empty)
+        when(answers.otherSectionUncheck) thenReturn Some(false)
+        navigator.nextPageWithCollectionId(OtherTaxableIncome.collectionId, NormalMode)(answers) mustBe routes.WhereToSendPaymentController.onPageLoad(NormalMode)
+      }
+
+      "go to SessionExpired from OtherSectionUncheck when no value is available with OtherTaxableIncome collection" in {
+        when(answers.otherTaxableIncome) thenReturn Some(Seq.empty)
+        when(answers.otherSectionUncheck) thenReturn None
+        navigator.nextPageWithCollectionId(OtherTaxableIncome.collectionId, NormalMode)(answers) mustBe routes.SessionExpiredController.onPageLoad()
+      }
+
+      "go to OtherCompanyBenefits from OtherSectionUncheck when yes is selected and in CheckMode with OtherTaxableIncome collection" in {
+        when(answers.otherTaxableIncome) thenReturn Some(Seq.empty)
+        when(answers.otherSectionUncheck) thenReturn Some(true)
+        navigator.nextPageWithCollectionId(OtherTaxableIncome.collectionId, CheckMode)(answers) mustBe routes.OtherTaxableIncomeController.onPageLoad(CheckMode, 0)
+      }
+
+      "go to CheckYourAnswers from OtherSectionUncheck when no is selected and in CheckMode with OtherTaxableIncome collection" in {
+        when(answers.otherTaxableIncome) thenReturn Some(Seq.empty)
+        when(answers.otherSectionUncheck) thenReturn Some(false)
+        navigator.nextPageWithCollectionId(OtherTaxableIncome.collectionId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+      }
+
+      "go to SessionExpired from OtherSectionUncheck when no value is available with OtherTaxableIncome collection in CheckMode" in {
+        when(answers.otherTaxableIncome) thenReturn Some(Seq.empty)
+        when(answers.otherSectionUncheck) thenReturn None
+        navigator.nextPageWithCollectionId(OtherTaxableIncome.collectionId, CheckMode)(answers) mustBe routes.SessionExpiredController.onPageLoad()
+      }
+
+
       //Payment details section
 
       "go to NomineeFullName from WhereToSendPayment when Nominee is selected" in {

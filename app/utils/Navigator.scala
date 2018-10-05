@@ -35,38 +35,44 @@ class Navigator @Inject()() {
   }
 
   private val routeMapWithCollectionId: PartialFunction[String, UserAnswers => Call] = {
-    case OtherBenefit.collectionId => otherSectionUncheckBenefits(NormalMode)
-    case OtherCompanyBenefit.collectionId => otherSectionUncheckCompanyBenefits(NormalMode)
+    case OtherBenefit.collectionId => otherSectionUncheck(NormalMode, OtherBenefit.collectionId)
+    case OtherCompanyBenefit.collectionId => otherSectionUncheck(NormalMode, OtherCompanyBenefit.collectionId)
+    case OtherTaxableIncome.collectionId => otherSectionUncheck(NormalMode, OtherTaxableIncome.collectionId)
   }
 
   private val editRouteMapWithCollectionId: PartialFunction[String, UserAnswers => Call] = {
-    case OtherBenefit.collectionId => otherSectionUncheckBenefits(CheckMode)
-    case OtherCompanyBenefit.collectionId => otherSectionUncheckCompanyBenefits(CheckMode)
+    case OtherBenefit.collectionId => otherSectionUncheck(CheckMode, OtherBenefit.collectionId)
+    case OtherCompanyBenefit.collectionId => otherSectionUncheck(CheckMode, OtherCompanyBenefit.collectionId)
+    case OtherTaxableIncome.collectionId => otherSectionUncheck(CheckMode, OtherTaxableIncome.collectionId)
   }
 
-  private def otherSectionUncheckBenefits(mode: Mode)(userAnswers: UserAnswers): Call = {
-      userAnswers.otherSectionUncheck match {
-        case Some(true) => routes.OtherBenefitController.onPageLoad(mode, 0)
-        case Some(false) =>
-          if(mode == NormalMode) {
-            routes.AnyCompanyBenefitsController.onPageLoad(mode)
-          } else {
-            routes.CheckYourAnswersController.onPageLoad()
-          }
+  private def otherSectionUncheck(mode: Mode, collectionId: String)(userAnswers: UserAnswers): Call = {
+    userAnswers.otherSectionUncheck match {
+      case Some(true) => otherSectionYes(mode, collectionId)
+      case Some(false) => otherSectionNo(mode, collectionId)
+      case _ => routes.SessionExpiredController.onPageLoad()
+    }
+  }
+
+  private def otherSectionYes(mode: Mode, collectionId: String): Call = {
+    collectionId match {
+      case OtherBenefit.collectionId => routes.OtherBenefitController.onPageLoad(mode, 0)
+      case OtherCompanyBenefit.collectionId => routes.OtherCompanyBenefitController.onPageLoad(mode, 0)
+      case OtherTaxableIncome.collectionId => routes.OtherTaxableIncomeController.onPageLoad(mode, 0)
+      case _ => routes.SessionExpiredController.onPageLoad()
+    }
+  }
+
+  private def otherSectionNo(mode: Mode, collectionId: String): Call = {
+    if (mode == NormalMode) {
+      collectionId match {
+        case OtherBenefit.collectionId => routes.AnyCompanyBenefitsController.onPageLoad(mode)
+        case OtherCompanyBenefit.collectionId => routes.AnyTaxableIncomeController.onPageLoad(mode)
+        case OtherTaxableIncome.collectionId => routes.WhereToSendPaymentController.onPageLoad(mode)
         case _ => routes.SessionExpiredController.onPageLoad()
       }
-  }
-
-  private def otherSectionUncheckCompanyBenefits(mode: Mode)(userAnswers: UserAnswers): Call = {
-    userAnswers.otherSectionUncheck match {
-      case Some(true) => routes.OtherCompanyBenefitController.onPageLoad(mode, 0)
-      case Some(false) =>
-        if(mode == NormalMode) {
-          routes.AnyTaxableIncomeController.onPageLoad(mode)
-        } else {
-          routes.CheckYourAnswersController.onPageLoad()
-        }
-      case _ => routes.SessionExpiredController.onPageLoad()
+    } else {
+      routes.CheckYourAnswersController.onPageLoad()
     }
   }
 
