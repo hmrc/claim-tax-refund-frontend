@@ -23,28 +23,28 @@ import views.behaviours.YesNoViewBehaviours
 import models.{NormalMode, OtherBenefit}
 import models.SelectTaxYear.CYMinus2
 import play.twirl.api.Html
-import views.html.otherSectionUncheck
+import views.html.removeOtherSelectedOption
 
-class OtherSectionUncheckViewSpec extends YesNoViewBehaviours {
+class RemoveOtherSelectedOptionViewSpec extends YesNoViewBehaviours {
 
-  private val messageKeyPrefix = "otherSectionUncheck"
+  private val messageKeyPrefix = "RemoveOtherSelectedOption"
   private val taxYear = CYMinus2
   private val collectionId = OtherBenefit.collectionId
 
   override val form = new BooleanForm()()
 
   def createView: () => Html = () =>
-    otherSectionUncheck(frontendAppConfig, form, NormalMode, taxYear, collectionId)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+    removeOtherSelectedOption(frontendAppConfig, form, NormalMode, taxYear, collectionId)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   def createViewUsingForm: Form[_] => Html = (form: Form[_]) =>
-    otherSectionUncheck(frontendAppConfig, form, NormalMode, taxYear, collectionId)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+    removeOtherSelectedOption(frontendAppConfig, form, NormalMode, taxYear, collectionId)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
-  "OtherSectionUncheck view" must {
+  "RemoveOtherSelectedOption view" must {
 
-    behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))
+    behave like normalPage(createView, messageKeyPrefix, None)
 
     behave like pageWithBackLink(createView)
 
-    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.OtherSectionUncheckController.onSubmit(NormalMode, collectionId).url, None)
+    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.RemoveOtherSelectedOptionController.onSubmit(NormalMode, collectionId).url, None)
   }
 }

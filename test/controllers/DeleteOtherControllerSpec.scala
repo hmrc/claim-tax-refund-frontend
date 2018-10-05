@@ -75,7 +75,7 @@ class DeleteOtherControllerSpec extends ControllerSpecBase {
       redirectLocation(result) mustBe Some(routes.AnyOtherBenefitsController.onPageLoad(CheckMode).url)
     }
 
-    "redirect to otherSectionUncheck when value is true and no other benefits are available" in {
+    "redirect to RemoveOtherSelectedOption when value is true and no other benefits are available" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
       val answers = mockUserAnswers.benefitsUserAnswers
 
@@ -85,7 +85,7 @@ class DeleteOtherControllerSpec extends ControllerSpecBase {
         .onSubmit(NormalMode, index, itemName, benefitCollectionId)(postRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.OtherSectionUncheckController.onPageLoad(NormalMode, OtherBenefit.collectionId).url)
+      redirectLocation(result) mustBe Some(routes.RemoveOtherSelectedOptionController.onPageLoad(NormalMode, OtherBenefit.collectionId).url)
     }
 
 
@@ -99,7 +99,7 @@ class DeleteOtherControllerSpec extends ControllerSpecBase {
       redirectLocation(result) mustBe Some(routes.AnyOtherCompanyBenefitsController.onPageLoad(NormalMode).url)
     }
 
-    "redirect to otherSectionUncheck when value is true and no other companyBenefits are available" in {
+    "redirect to RemoveOtherSelectedOption when value is true and no other companyBenefits are available" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
       val answers = mockUserAnswers.companyBenefitsUserAnswers
 
@@ -109,7 +109,7 @@ class DeleteOtherControllerSpec extends ControllerSpecBase {
         .onSubmit(NormalMode, index, itemName, companyBenefitCollectionId)(postRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.OtherSectionUncheckController.onPageLoad(NormalMode, OtherCompanyBenefit.collectionId).url)
+      redirectLocation(result) mustBe Some(routes.RemoveOtherSelectedOptionController.onPageLoad(NormalMode, OtherCompanyBenefit.collectionId).url)
     }
 
 
@@ -123,7 +123,7 @@ class DeleteOtherControllerSpec extends ControllerSpecBase {
       redirectLocation(result) mustBe Some(onwardRoute.url)
     }
 
-    "redirect to otherSectionUncheck when value is true and no other otherTaxableIncome are available" in {
+    "redirect to RemoveOtherSelectedOption when value is true and no other otherTaxableIncome are available" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
       val answers = mockUserAnswers.taxableIncomeUserAnswers
 
@@ -133,7 +133,7 @@ class DeleteOtherControllerSpec extends ControllerSpecBase {
         .onSubmit(NormalMode, index, itemName, taxableIncomeCollectionId)(postRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.OtherSectionUncheckController.onPageLoad(NormalMode, OtherTaxableIncome.collectionId).url)
+      redirectLocation(result) mustBe Some(routes.RemoveOtherSelectedOptionController.onPageLoad(NormalMode, OtherTaxableIncome.collectionId).url)
     }
 
 

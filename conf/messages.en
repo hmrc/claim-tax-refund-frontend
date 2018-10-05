@@ -468,7 +468,7 @@ confirmation.survey.time = (takes 30 seconds)
 
 itmpAddress.checkYourAnswersLabel = Payment address
 
-otherSectionUncheck.title = Do you want to add any other {0}?
-otherSectionUncheck.heading = Do you want to add any other {0}?
-otherSectionUncheck.checkYourAnswersLabel = Do you want to add any other {0}?
-otherSectionUncheck.blank = otherSectionUncheck
+RemoveOtherSelectedOption.title = Do you want to add any other {0}?
+RemoveOtherSelectedOption.heading = Do you want to add any other {0}?
+RemoveOtherSelectedOption.checkYourAnswersLabel = Do you want to add any other {0}?
+RemoveOtherSelectedOption.blank = RemoveOtherSelectedOption

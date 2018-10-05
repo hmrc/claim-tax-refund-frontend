@@ -18,7 +18,7 @@ package utils
 
 import base.SpecBase
 import identifiers._
-import models.Benefits
+import models.{Benefits, OtherTaxableIncome}
 import org.scalacheck.{Gen, Shrink}
 import play.api.libs.json._
 import uk.gov.hmrc.http.cache.client.CacheMap
@@ -327,6 +327,26 @@ class BenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
         HowMuchEmploymentAndSupportAllowanceId.toString -> JsString("1234"),
         HowMuchStatePensionId.toString -> JsString("1234")
       )
+    }
+
+    "Remove all other benefits" must {
+      "when answering 'Yes' remove 'Other taxable benefit' from the selection list" in {
+				val originalCacheMap = new CacheMap(id = "test", Map(
+					SelectBenefitsId.toString -> Json.toJson(Seq(
+						Benefits.BEREAVEMENT_ALLOWANCE,
+						Benefits.INCAPACITY_BENEFIT,
+						Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE,
+						Benefits.STATE_PENSION,
+						Benefits.OTHER_TAXABLE_BENEFIT)
+					),
+					OtherTaxableIncomeId.toString -> Json.toJson(Seq(OtherTaxableIncome("qwerty","1234"))),
+					EmploymentDetailsId.toString -> Json.toJson(false),
+					EnterPayeReferenceId.toString -> Json.toJson("123/AB1234"),
+					DetailsOfEmploymentOrPensionId.toString -> Json.toJson("some details")
+				))
+
+      }
+
     }
   }
 }

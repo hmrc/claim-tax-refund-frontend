@@ -233,7 +233,7 @@ POST       /change-delete-other-:index                                      cont
 
 GET        /confirmation                                                    controllers.ConfirmationController.onPageLoad(mode: Mode = NormalMode, submissionReference: String)
 
-GET        /other-section-uncheck                                           controllers.OtherSectionUncheckController.onPageLoad(mode: Mode = NormalMode, collectionId: String)
-POST       /other-section-uncheck                                           controllers.OtherSectionUncheckController.onSubmit(mode: Mode = NormalMode, collectionId: String)
-GET        /change-other-section-uncheck                                    controllers.OtherSectionUncheckController.onPageLoad(mode: Mode = CheckMode, collectionId: String)
-POST       /change-other-section-uncheck                                    controllers.OtherSectionUncheckController.onSubmit(mode: Mode = CheckMode, collectionId: String)
+GET        /other-section-uncheck                                           controllers.RemoveOtherSelectedOptionController.onPageLoad(mode: Mode = NormalMode, collectionId: String)
+POST       /other-section-uncheck                                           controllers.RemoveOtherSelectedOptionController.onSubmit(mode: Mode = NormalMode, collectionId: String)
+GET        /change-other-section-uncheck                                    controllers.RemoveOtherSelectedOptionController.onPageLoad(mode: Mode = CheckMode, collectionId: String)
+POST       /change-other-section-uncheck                                    controllers.RemoveOtherSelectedOptionController.onSubmit(mode: Mode = CheckMode, collectionId: String)

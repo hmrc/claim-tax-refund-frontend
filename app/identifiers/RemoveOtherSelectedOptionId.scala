@@ -16,6 +16,6 @@
 
 package identifiers
 
-case object OtherSectionUncheckId extends Identifier {
-  override def toString: String = "otherSectionUncheck"
+case object RemoveOtherSelectedOptionId extends Identifier {
+  override def toString: String = "removeOtherSelectedOption"
 }

@@ -107,7 +107,7 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
       dataCacheConnector.save[Seq[OtherBenefit]](request.externalId, OtherBenefitId.toString, updatedOtherBenefit).map(
         _ =>
           if (updatedOtherBenefit.isEmpty) {
-            Redirect(routes.OtherSectionUncheckController.onPageLoad(mode, collectionId))
+            Redirect(routes.RemoveOtherSelectedOptionController.onPageLoad(mode, collectionId))
           } else {
             Redirect(routes.AnyOtherBenefitsController.onPageLoad(mode))
           }
@@ -127,7 +127,7 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
       dataCacheConnector.save[Seq[OtherCompanyBenefit]](request.externalId, OtherCompanyBenefitId.toString, updatedOtherCompanyBenefit).map(
         _ =>
           if (updatedOtherCompanyBenefit.isEmpty) {
-            Redirect(routes.OtherSectionUncheckController.onPageLoad(mode, collectionId))
+            Redirect(routes.RemoveOtherSelectedOptionController.onPageLoad(mode, collectionId))
           } else {
             Redirect(routes.AnyOtherCompanyBenefitsController.onPageLoad(mode))
           }
@@ -149,7 +149,7 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
         updatedCacheMap: CacheMap <- dataCacheConnector.save[Seq[OtherTaxableIncome]](request.externalId, AnyTaxableOtherIncomeId.toString, updatedOtherTaxableIncome)
       } yield {
         if (updatedOtherTaxableIncome.isEmpty) {
-          Redirect(routes.OtherSectionUncheckController.onPageLoad(mode, collectionId))
+          Redirect(routes.RemoveOtherSelectedOptionController.onPageLoad(mode, collectionId))
         } else {
           Redirect(navigator.nextPage(DeleteOtherTaxableIncomeId, mode)(new UserAnswers(updatedCacheMap)))
         }

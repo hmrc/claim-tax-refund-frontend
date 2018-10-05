@@ -38,21 +38,21 @@
 )
 
     @main_template(
-        title = messages("otherSectionUncheck.title"),
+        title = messages("RemoveOtherSelectedOption.title"),
         appConfig = appConfig,
         bodyClasses = None) {
 
-        @helpers.form(action = OtherSectionUncheckController.onSubmit(mode, collectionId), 'autoComplete -> "off") {
+        @helpers.form(action = RemoveOtherSelectedOptionController.onSubmit(mode, collectionId), 'autoComplete -> "off") {
 
             @components.back_link()
 
             @components.error_summary(form.errors)
 
-            @components.heading(messages("otherSectionUncheck.heading"), taxYear = Some(taxYear.asString))
+            @components.heading(messages("RemoveOtherSelectedOption.heading"), taxYear = Some(taxYear.asString))
 
             @components.input_yes_no(
                 InputViewModel("value", form),
-                label = messages("otherSectionUncheck.heading", taxYear.asString),
+                label = messages("RemoveOtherSelectedOption.heading", taxYear.asString),
                 labelClass = Some("visually-hidden")
             )
 

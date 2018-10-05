@@ -55,7 +55,7 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
 	).flatten)
 
 	def otherBenefitsSection: AnswerSection = {
-		if (userAnswers.otherBenefit.isDefined) {
+		if (userAnswers.otherBenefit.isDefined && userAnswers.otherBenefit.get.size > 0) {
 			AnswerSection(
 				headingKey = Some("otherBenefit.checkYourAnswersLabel"),
 				rows = cyaHelper.otherBenefitsCheckYourAnswers.flatten,

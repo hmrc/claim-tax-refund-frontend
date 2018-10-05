@@ -35,19 +35,19 @@ class Navigator @Inject()() {
   }
 
   private val routeMapWithCollectionId: PartialFunction[String, UserAnswers => Call] = {
-    case OtherBenefit.collectionId => otherSectionUncheck(NormalMode, OtherBenefit.collectionId)
-    case OtherCompanyBenefit.collectionId => otherSectionUncheck(NormalMode, OtherCompanyBenefit.collectionId)
-    case OtherTaxableIncome.collectionId => otherSectionUncheck(NormalMode, OtherTaxableIncome.collectionId)
+    case OtherBenefit.collectionId => removeOtherSelectedOptionNavigation(NormalMode, OtherBenefit.collectionId)
+    case OtherCompanyBenefit.collectionId => removeOtherSelectedOptionNavigation(NormalMode, OtherCompanyBenefit.collectionId)
+    case OtherTaxableIncome.collectionId => removeOtherSelectedOptionNavigation(NormalMode, OtherTaxableIncome.collectionId)
   }
 
   private val editRouteMapWithCollectionId: PartialFunction[String, UserAnswers => Call] = {
-    case OtherBenefit.collectionId => otherSectionUncheck(CheckMode, OtherBenefit.collectionId)
-    case OtherCompanyBenefit.collectionId => otherSectionUncheck(CheckMode, OtherCompanyBenefit.collectionId)
-    case OtherTaxableIncome.collectionId => otherSectionUncheck(CheckMode, OtherTaxableIncome.collectionId)
+    case OtherBenefit.collectionId => removeOtherSelectedOptionNavigation(CheckMode, OtherBenefit.collectionId)
+    case OtherCompanyBenefit.collectionId => removeOtherSelectedOptionNavigation(CheckMode, OtherCompanyBenefit.collectionId)
+    case OtherTaxableIncome.collectionId => removeOtherSelectedOptionNavigation(CheckMode, OtherTaxableIncome.collectionId)
   }
 
-  private def otherSectionUncheck(mode: Mode, collectionId: String)(userAnswers: UserAnswers): Call = {
-    userAnswers.otherSectionUncheck match {
+  private def removeOtherSelectedOptionNavigation(mode: Mode, collectionId: String)(userAnswers: UserAnswers): Call = {
+    userAnswers.removeOtherSelectedOption match {
       case Some(true) => otherSectionYes(mode, collectionId)
       case Some(false) => otherSectionNo(mode, collectionId)
       case _ => routes.SessionExpiredController.onPageLoad()
