@@ -16,18 +16,17 @@
 
 package controllers
 
-import javax.inject.Inject
-import play.api.data.Form
-import play.api.i18n.{I18nSupport, MessagesApi}
-import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
-import config.FrontendAppConfig
 import forms.BooleanForm
 import identifiers._
+import javax.inject.Inject
 import models._
-import play.api.libs.json.JsArray
+import play.api.data.Form
+import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
+import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, UserAnswers}
@@ -51,20 +50,9 @@ class RemoveOtherSelectedOptionController @Inject()(appConfig: FrontendAppConfig
 
 	def onPageLoad(mode: Mode, collectionId: String): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
 		implicit request =>
-			val preparedForm = request.userAnswers.removeOtherSelectedOption match {
-				case None => form
-				case Some(value) => form.fill(value)
-			}
-
-			val taxName = collectionId match {
-				case OtherBenefit.collectionId  => "tax 1"
-				case OtherCompanyBenefit.collectionId => "tax 2"
-				case OtherTaxableIncome.collectionId => "tax 3"
-			}
-
 			request.userAnswers.selectTaxYear.map {
 				selectedTaxYear =>
-					Ok(removeOtherSelectedOption(appConfig, preparedForm, mode, selectedTaxYear, collectionId, taxName))
+					Ok(removeOtherSelectedOption(appConfig, form, mode, selectedTaxYear, collectionId))
 			}.getOrElse {
 				Redirect(routes.SessionExpiredController.onPageLoad())
 			}
@@ -74,28 +62,11 @@ class RemoveOtherSelectedOptionController @Inject()(appConfig: FrontendAppConfig
 		implicit request =>
 			request.userAnswers.selectTaxYear.map {
 				selectedTaxYear =>
-					val taxName = collectionId match {
-						case OtherBenefit.collectionId  => "tax 1"
-						case OtherCompanyBenefit.collectionId => "tax 2"
-						case OtherTaxableIncome.collectionId => "tax 3"
-					}
 					val taxYear = selectedTaxYear
 					form.bindFromRequest().fold(
 						(formWithErrors: Form[_]) =>
-							Future.successful(BadRequest(removeOtherSelectedOption(appConfig, formWithErrors, mode, taxYear, collectionId, taxName))),
+							Future.successful(BadRequest(removeOtherSelectedOption(appConfig, formWithErrors, mode, taxYear, collectionId))),
 						(value: Boolean) => {
-
-							if(!value) {
-								collectionId match {
-									case OtherBenefit.collectionId  =>
-										dataCacheConnector.save(request.externalId, RemoveOtherBenefitId.toString, value)
-									case OtherCompanyBenefit.collectionId =>
-										dataCacheConnector.removeFromCollection(request.externalId, SelectCompanyBenefitsId.toString, CompanyBenefits.OTHER_COMPANY_BENEFIT)
-									case OtherTaxableIncome.collectionId =>
-										dataCacheConnector.removeFromCollection(request.externalId, SelectTaxableIncomeId.toString, TaxableIncome.OTHER_TAXABLE_INCOME)
-								}
-							}
-
 							dataCacheConnector.save[Boolean](request.externalId, RemoveOtherSelectedOptionId.toString, value).map(cacheMap =>
 								Redirect(navigator.nextPageWithCollectionId(collectionId, mode)(new UserAnswers(cacheMap))))
 						}

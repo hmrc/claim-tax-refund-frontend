@@ -290,6 +290,7 @@ howMuchFuelBenefit.checkYourAnswersLabel = Fuel benefit
 howMuchFuelBenefit.blank = Enter the amount of fuel benefit you got
 howMuchFuelBenefit.invalid = Enter a valid amount of fuel benefit
 
+otherCompanyBenefits = company benefit
 otherCompanyBenefit.title = Tell us about the other company benefit you got
 otherCompanyBenefit.heading = Tell us about the other company benefit you got
 otherCompanyBenefit.checkYourAnswersLabel = Other company benefit details
@@ -338,6 +339,7 @@ howMuchCarersAllowance.checkYourAnswersLabel = Carer’s Allowance
 howMuchCarersAllowance.blank = Enter the amount of Carer’s Allowance you got
 howMuchCarersAllowance.invalid = Enter a valid amount of Carer’s Allowance
 
+otherBenefits = taxable benefit
 otherBenefit.title = Tell us about the other taxable benefit you got
 otherBenefit.heading = Tell us about the other taxable benefit you got
 otherBenefit.checkYourAnswersLabel = Other taxable benefit details
@@ -391,6 +393,7 @@ howMuchOtherTaxableIncome.checkYourAnswersLabel =  How much other taxable income
 howMuchOtherTaxableIncome.blank = Enter the amount of other taxable income you got
 howMuchOtherTaxableIncome.invalid = Enter a valid amount of other taxable income
 
+otherTaxableIncome = taxable income
 otherTaxableIncome.title = Tell us about the other taxable income you got
 otherTaxableIncome.heading = Tell us about the other taxable income you got
 otherTaxableIncome.checkYourAnswersLabel = Other taxable income details
@@ -468,7 +471,7 @@ confirmation.survey.time = (takes 30 seconds)
 
 itmpAddress.checkYourAnswersLabel = Payment address
 
-RemoveOtherSelectedOption.title = Do you want to add any other
-RemoveOtherSelectedOption.heading = Do you want to add any other
+RemoveOtherSelectedOption.title = Do you want to add any other {0}?
+RemoveOtherSelectedOption.heading = Do you want to add any other {0}?
 RemoveOtherSelectedOption.checkYourAnswersLabel = Do you want to add any other {0}?
 RemoveOtherSelectedOption.blank = RemoveOtherSelectedOption

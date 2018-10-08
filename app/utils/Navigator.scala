@@ -49,7 +49,7 @@ class Navigator @Inject()() {
   private def removeOtherSelectedOptionNavigation(mode: Mode, collectionId: String)(userAnswers: UserAnswers): Call = {
     userAnswers.removeOtherSelectedOption match {
       case Some(true) => otherSectionYes(mode, collectionId)
-      case Some(false) => otherSectionNo(mode, collectionId)
+      case Some(false) => otherSectionNo(mode, collectionId)(userAnswers)
       case _ => routes.SessionExpiredController.onPageLoad()
     }
   }
@@ -63,7 +63,7 @@ class Navigator @Inject()() {
     }
   }
 
-  private def otherSectionNo(mode: Mode, collectionId: String): Call = {
+  private def otherSectionNo(mode: Mode, collectionId: String)(userAnswers: UserAnswers): Call = {
     if (mode == NormalMode) {
       collectionId match {
         case OtherBenefit.collectionId => routes.AnyCompanyBenefitsController.onPageLoad(mode)
@@ -72,7 +72,13 @@ class Navigator @Inject()() {
         case _ => routes.SessionExpiredController.onPageLoad()
       }
     } else {
-      routes.CheckYourAnswersController.onPageLoad()
+      collectionId match {
+        case OtherBenefit.collectionId =>
+          if(userAnswers.selectBenefits.isEmpty){routes.AnyBenefitsController.onPageLoad(mode)} else routes.CheckYourAnswersController.onPageLoad()
+        case OtherCompanyBenefit.collectionId => routes.AnyTaxableIncomeController.onPageLoad(mode)
+        case OtherTaxableIncome.collectionId => routes.WhereToSendPaymentController.onPageLoad(mode)
+        case _ => routes.SessionExpiredController.onPageLoad()
+      }
     }
   }
 
