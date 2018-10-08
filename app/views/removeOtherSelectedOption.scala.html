@@ -28,7 +28,8 @@
         form: Form[_],
         mode: Mode,
         taxYear: SelectTaxYear,
-        collectionId: String
+        collectionId: String,
+        taxName: String
 )(
         implicit
         request: Request[_],
@@ -38,7 +39,7 @@
 )
 
     @main_template(
-        title = messages("RemoveOtherSelectedOption.title"),
+        title = messages("RemoveOtherSelectedOption.title" + " " + taxName + "?"),
         appConfig = appConfig,
         bodyClasses = None) {
 
@@ -48,7 +49,7 @@
 
             @components.error_summary(form.errors)
 
-            @components.heading(messages("RemoveOtherSelectedOption.heading"), taxYear = Some(taxYear.asString))
+            @components.heading(messages("RemoveOtherSelectedOption.heading") + " " + taxName + "?", taxYear = Some(taxYear.asString))
 
             @components.input_yes_no(
                 InputViewModel("value", form),

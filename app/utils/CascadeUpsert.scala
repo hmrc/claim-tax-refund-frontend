@@ -36,7 +36,8 @@ class CascadeUpsert {
       EmploymentDetailsId.toString -> claimDetails,
       WhereToSendPaymentId.toString -> whereToSendPayment,
       PaymentAddressCorrectId.toString -> paymentAddressCorrect,
-      IsPaymentAddressInTheUKId.toString -> isPaymentAddressInTheUK
+      IsPaymentAddressInTheUKId.toString -> isPaymentAddressInTheUK,
+      RemoveOtherBenefitId.toString -> removeOtherBenefit
     )
 
   def apply[A](key: String, value: A, originalCacheMap: CacheMap)(implicit fmt: Format[A]): CacheMap =
@@ -215,6 +216,34 @@ class CascadeUpsert {
       case _ => cacheMap
     }
     store(IsPaymentAddressInTheUKId.toString, value, mapToStore)
+  }
+
+  private def RemoveOtherBenefit(value: JsValue, cacheMap: CacheMap): CacheMap ={
+		val mapToStore = value match {
+			case JsBoolean(true) => cacheMap
+			case JsBoolean(false) => {
+
+			}
+
+		}
+
+	store("", value, mapToStore)
+/*
+    val mapToStore = cacheMap.data.get(SelectBenefitsId.toString).map {
+      _.as[JsArray].value.foldLeft(cacheMap) {
+        (cm, benefit) =>
+          if (!selectedBenefits.as[JsArray].value.contains(benefit) && benefit != JsString(Benefits.OTHER_TAXABLE_BENEFIT.toString)) {
+            cm copy (data = cm.data - Benefits.getIdString(benefit.as[String]))
+          } else if (!selectedBenefits.as[JsArray].value.contains(JsString(Benefits.OTHER_TAXABLE_BENEFIT.toString))) {
+            cm copy (data = cm.data - (OtherBenefitId.toString, AnyOtherBenefitsId.toString))
+          } else {
+            cm
+          }
+      }
+    }.getOrElse(cacheMap)
+
+    store(SelectBenefitsId.toString, selectedBenefits, mapToStore)
+    */
   }
 
 }

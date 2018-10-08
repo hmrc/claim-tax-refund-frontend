@@ -95,6 +95,12 @@ class RemoveOtherSelectedOptionControllerSpec extends ControllerSpecBase with Mo
 			redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
 		}
 	}
+
+	"when deleting from the controller" must {
+		"wedfrtghyjukl" in {
+			when ()
+		}
+	}
 }
 
 

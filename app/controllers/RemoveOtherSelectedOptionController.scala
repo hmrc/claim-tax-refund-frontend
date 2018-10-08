@@ -56,9 +56,15 @@ class RemoveOtherSelectedOptionController @Inject()(appConfig: FrontendAppConfig
 				case Some(value) => form.fill(value)
 			}
 
+			val taxName = collectionId match {
+				case OtherBenefit.collectionId  => "tax 1"
+				case OtherCompanyBenefit.collectionId => "tax 2"
+				case OtherTaxableIncome.collectionId => "tax 3"
+			}
+
 			request.userAnswers.selectTaxYear.map {
 				selectedTaxYear =>
-					Ok(removeOtherSelectedOption(appConfig, preparedForm, mode, selectedTaxYear, collectionId))
+					Ok(removeOtherSelectedOption(appConfig, preparedForm, mode, selectedTaxYear, collectionId, taxName))
 			}.getOrElse {
 				Redirect(routes.SessionExpiredController.onPageLoad())
 			}
@@ -68,10 +74,15 @@ class RemoveOtherSelectedOptionController @Inject()(appConfig: FrontendAppConfig
 		implicit request =>
 			request.userAnswers.selectTaxYear.map {
 				selectedTaxYear =>
+					val taxName = collectionId match {
+						case OtherBenefit.collectionId  => "tax 1"
+						case OtherCompanyBenefit.collectionId => "tax 2"
+						case OtherTaxableIncome.collectionId => "tax 3"
+					}
 					val taxYear = selectedTaxYear
 					form.bindFromRequest().fold(
 						(formWithErrors: Form[_]) =>
-							Future.successful(BadRequest(removeOtherSelectedOption(appConfig, formWithErrors, mode, taxYear, collectionId))),
+							Future.successful(BadRequest(removeOtherSelectedOption(appConfig, formWithErrors, mode, taxYear, collectionId, taxName))),
 						(value: Boolean) => {
 
 							if(!value) {
