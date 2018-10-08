@@ -31,7 +31,7 @@ import views.html.removeOtherSelectedOption
 
 class RemoveOtherSelectedOptionControllerSpec extends ControllerSpecBase with MockitoSugar {
 
-	def onwardRoute: Call = routes.IndexController.onPageLoad()
+  def onwardRoute: Call = routes.IndexController.onPageLoad()
 
   val formProvider = new BooleanForm()
   val form = formProvider()
@@ -40,69 +40,59 @@ class RemoveOtherSelectedOptionControllerSpec extends ControllerSpecBase with Mo
   private val mockUserAnswers = MockUserAnswers.benefitsUserAnswers
   private val collectionId = OtherBenefit.collectionId
 
-	def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-		new RemoveOtherSelectedOptionController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-			dataRetrievalAction, new DataRequiredActionImpl, formProvider, formPartialRetriever, templateRenderer)
+  def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
+    new RemoveOtherSelectedOptionController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+      dataRetrievalAction, new DataRequiredActionImpl, formProvider, formPartialRetriever, templateRenderer)
 
   def viewAsString(form: Form[_] = form): String =
     removeOtherSelectedOption(frontendAppConfig, form, NormalMode, taxYear, collectionId)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "RemoveOtherSelectedOption Controller" must {
 
-		"return OK and the correct view for a GET" in {
-			val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, collectionId)(fakeRequest)
+    "return OK and the correct view for a GET" in {
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, collectionId)(fakeRequest)
 
-			status(result) mustBe OK
-			contentAsString(result) mustBe viewAsString()
-		}
+      status(result) mustBe OK
+      contentAsString(result) mustBe viewAsString()
+    }
 
-		"populate the view correctly on a GET when the question has previously been answered" in {
-			when(mockUserAnswers.removeOtherSelectedOption) thenReturn Some(true)
-			val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, collectionId)(fakeRequest)
+    "populate the view correctly on a GET when the question has previously been answered" in {
+      when(mockUserAnswers.removeOtherSelectedOption) thenReturn Some(true)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, collectionId)(fakeRequest)
 
-			contentAsString(result) mustBe viewAsString(form.fill(true))
-		}
+      contentAsString(result) mustBe viewAsString(form)
+    }
 
-		"redirect to the next page when valid data is submitted" in {
-			val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
-			val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode, collectionId)(postRequest)
+    "redirect to the next page when valid data is submitted" in {
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode, collectionId)(postRequest)
 
-			status(result) mustBe SEE_OTHER
-		}
+      status(result) mustBe SEE_OTHER
+    }
 
-		"return a Bad Request and errors when invalid data is submitted" in {
-			val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
-			val boundForm = form.bind(Map("value" -> "invalid value"))
+    "return a Bad Request and errors when invalid data is submitted" in {
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
+      val boundForm = form.bind(Map("value" -> "invalid value"))
 
-			val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode, collectionId)(postRequest)
+      val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode, collectionId)(postRequest)
 
-			status(result) mustBe BAD_REQUEST
-			contentAsString(result) mustBe viewAsString(boundForm)
-		}
+      status(result) mustBe BAD_REQUEST
+      contentAsString(result) mustBe viewAsString(boundForm)
+    }
 
-		"redirect to Session Expired for a GET if no existing data is found" in {
-			val result = controller(dontGetAnyData).onPageLoad(NormalMode, collectionId)(fakeRequest)
+    "redirect to Session Expired for a GET if no existing data is found" in {
+      val result = controller(dontGetAnyData).onPageLoad(NormalMode, collectionId)(fakeRequest)
 
-			status(result) mustBe SEE_OTHER
-			redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
-		}
+      status(result) mustBe SEE_OTHER
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+    }
 
-		"redirect to Session Expired for a POST if no existing data is found" in {
-			val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
-			val result = controller(dontGetAnyData).onSubmit(NormalMode, collectionId)(postRequest)
+    "redirect to Session Expired for a POST if no existing data is found" in {
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+      val result = controller(dontGetAnyData).onSubmit(NormalMode, collectionId)(postRequest)
 
-			status(result) mustBe SEE_OTHER
-			redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
-		}
-	}
-
-	"when deleting from the controller" must {
-		"wedfrtghyjukl" in {
-			when ()
-		}
-	}
+      status(result) mustBe SEE_OTHER
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+    }
+  }
 }
-
-
-
-

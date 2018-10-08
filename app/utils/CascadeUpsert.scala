@@ -18,7 +18,7 @@ package utils
 
 import identifiers._
 import javax.inject.Singleton
-import models.{Benefits, CompanyBenefits, TaxableIncome}
+import models._
 import play.api.libs.json._
 import uk.gov.hmrc.http.cache.client.CacheMap
 
@@ -37,7 +37,9 @@ class CascadeUpsert {
       WhereToSendPaymentId.toString -> whereToSendPayment,
       PaymentAddressCorrectId.toString -> paymentAddressCorrect,
       IsPaymentAddressInTheUKId.toString -> isPaymentAddressInTheUK,
-      RemoveOtherSelectedOptionId.toString -> removeOtherBenefit
+      OtherBenefit.collectionId -> removeOtherBenefit,
+      OtherCompanyBenefit.collectionId -> removeOtherCompanyBenefit,
+      OtherTaxableIncome.collectionId -> removeOtherTaxableIncome
     )
 
   def apply[A](key: String, value: A, originalCacheMap: CacheMap)(implicit fmt: Format[A]): CacheMap =
@@ -226,6 +228,34 @@ class CascadeUpsert {
           cacheMap copy (data = cacheMap.data - (SelectBenefitsId.toString, OtherBenefitId.toString))
         } else {
           store(SelectBenefitsId.toString, cm, cacheMap)
+        }
+      case _ => cacheMap
+    }
+    store(RemoveOtherSelectedOptionId.toString, value, mapToStore)
+  }
+
+  private def removeOtherCompanyBenefit(value: JsValue, cacheMap: CacheMap): CacheMap = {
+    val mapToStore = value match {
+      case JsBoolean(false) =>
+        val cm = cacheMap.data(SelectCompanyBenefitsId.toString).as[Seq[JsValue]].dropRight(1)
+        if(cm.isEmpty){
+          cacheMap copy (data = cacheMap.data - (SelectCompanyBenefitsId.toString, OtherCompanyBenefitId.toString))
+        } else {
+          store(SelectCompanyBenefitsId.toString, cm, cacheMap)
+        }
+      case _ => cacheMap
+    }
+    store(RemoveOtherSelectedOptionId.toString, value, mapToStore)
+  }
+
+  private def removeOtherTaxableIncome(value: JsValue, cacheMap: CacheMap): CacheMap = {
+    val mapToStore = value match {
+      case JsBoolean(false) =>
+        val cm = cacheMap.data(SelectTaxableIncomeId.toString).as[Seq[JsValue]].dropRight(1)
+        if(cm.isEmpty){
+          cacheMap copy (data = cacheMap.data - (SelectTaxableIncomeId.toString, OtherTaxableIncomeId.toString))
+        } else {
+          store(SelectTaxableIncomeId.toString, cm, cacheMap)
         }
       case _ => cacheMap
     }

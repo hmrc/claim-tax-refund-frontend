@@ -21,5 +21,5 @@ import models.Index
 case class OtherTaxableIncomeId(index: Index) extends Identifier
 
 object OtherTaxableIncomeId {
-  override def toString: String = "otherTaxableIncome"
+  override def toString: String = "otherTaxableIncomeId"
 }

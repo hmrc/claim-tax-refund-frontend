@@ -55,7 +55,7 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
 	).flatten)
 
 	def otherBenefitsSection: AnswerSection = {
-		if (userAnswers.otherBenefit.isDefined && userAnswers.otherBenefit.get.size > 0) {
+		if (userAnswers.otherBenefit.isDefined && userAnswers.otherBenefit.get.nonEmpty) {
 			AnswerSection(
 				headingKey = Some("otherBenefit.checkYourAnswersLabel"),
 				rows = cyaHelper.otherBenefitsCheckYourAnswers.flatten,
@@ -94,7 +94,7 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
 	}
 
 	def otherCompanyBenefitSection: AnswerSection = {
-		if (userAnswers.otherCompanyBenefit.isDefined) {
+		if (userAnswers.otherCompanyBenefit.isDefined && userAnswers.otherCompanyBenefit.get.nonEmpty) {
 			AnswerSection(
 				headingKey = Some("otherCompanyBenefit.checkYourAnswersLabel"),
 				rows = cyaHelper.otherCompanyBenefitsCheckYourAnswers.flatten,
@@ -218,7 +218,7 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
 	}
 
 	def otherTaxableIncomeSection: AnswerSection = {
-		if (userAnswers.otherTaxableIncome.isDefined) {
+		if (userAnswers.otherTaxableIncome.isDefined && userAnswers.otherTaxableIncome.get.nonEmpty) {
 			AnswerSection(
 				headingKey = Some("otherTaxableIncome.checkYourAnswersLabel"),
 				rows = cyaHelper.otherTaxableIncomeCheckYourAnswers.flatten,

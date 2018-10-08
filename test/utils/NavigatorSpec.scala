@@ -90,7 +90,8 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPageWithCollectionId(OtherBenefit.collectionId, NormalMode)(answers) mustBe routes.OtherBenefitController.onPageLoad(NormalMode, 0)
       }
 
-      "go to AnyCompanyBenefits from RemoveOtherSelectedOption when no is selected with OtherBenefit collection" in {
+      "go to AnyCompanyBenefits from RemoveOtherSelectedOption when no is selected with another benefit still in the OtherBenefit collection" in {
+        when(answers.selectBenefits) thenReturn Some(Seq(Benefits.STATE_PENSION))
         when(answers.otherBenefit) thenReturn Some(Seq.empty)
         when(answers.removeOtherSelectedOption) thenReturn Some(false)
         navigator.nextPageWithCollectionId(OtherBenefit.collectionId, NormalMode)(answers) mustBe routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
@@ -108,7 +109,15 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPageWithCollectionId(OtherBenefit.collectionId, CheckMode)(answers) mustBe routes.OtherBenefitController.onPageLoad(CheckMode, 0)
       }
 
-      "go to CheckYourAnswers from RemoveOtherSelectedOption when no is selected and in CheckMode with OtherBenefit collection" in {
+      "go to AnyBenefits from RemoveOtherSelectedOption when no is selected and in CheckMode for OtherBenefit with no benefits selected" in {
+        when(answers.selectBenefits) thenReturn None
+        when(answers.otherBenefit) thenReturn Some(Seq.empty)
+        when(answers.removeOtherSelectedOption) thenReturn Some(false)
+        navigator.nextPageWithCollectionId(OtherBenefit.collectionId, CheckMode)(answers) mustBe routes.AnyBenefitsController.onPageLoad(CheckMode)
+      }
+
+      "go to CheckYourAnswers from RemoveOtherSelectedOption when no is selected and in CheckMode for OtherBenefit with benefits still selected" in {
+        when(answers.selectBenefits) thenReturn Some(Seq(Benefits.STATE_PENSION))
         when(answers.otherBenefit) thenReturn Some(Seq.empty)
         when(answers.removeOtherSelectedOption) thenReturn Some(false)
         navigator.nextPageWithCollectionId(OtherBenefit.collectionId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
@@ -129,7 +138,8 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPageWithCollectionId(OtherCompanyBenefit.collectionId, NormalMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(NormalMode, 0)
       }
 
-      "go to AnyTaxabeIncome from RemoveOtherSelectedOption when no is selected with OtherCompanyBenefit collection" in {
+      "go to AnyTaxableIncome from RemoveOtherSelectedOption when no is selected with another company benefit still in the OtherCompanyBenefit collection" in {
+        when(answers.selectCompanyBenefits) thenReturn Some(Seq(CompanyBenefits.FUEL_BENEFIT))
         when(answers.otherCompanyBenefit) thenReturn Some(Seq.empty)
         when(answers.removeOtherSelectedOption) thenReturn Some(false)
         navigator.nextPageWithCollectionId(OtherCompanyBenefit.collectionId, NormalMode)(answers) mustBe routes.AnyTaxableIncomeController.onPageLoad(NormalMode)
@@ -147,7 +157,15 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPageWithCollectionId(OtherCompanyBenefit.collectionId, CheckMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(CheckMode, 0)
       }
 
-      "go to CheckYourAnswers from RemoveOtherSelectedOption when no is selected and in CheckMode with OtherCompanyBenefit collection" in {
+      "go to AnyCompanyBenefits from RemoveOtherSelectedOption when no is selected and in CheckMode for OtherCompanyBenefit with no other company benefits in the collection" in {
+        when(answers.selectCompanyBenefits) thenReturn None
+        when(answers.otherCompanyBenefit) thenReturn Some(Seq.empty)
+        when(answers.removeOtherSelectedOption) thenReturn Some(false)
+        navigator.nextPageWithCollectionId(OtherCompanyBenefit.collectionId, CheckMode)(answers) mustBe routes.AnyCompanyBenefitsController.onPageLoad(CheckMode)
+      }
+
+      "go to CheckYourAnswers from RemoveOtherSelectedOption when no is selected and in CheckMode for OtherCompanyBenefit with company benefits in the collection" in {
+        when(answers.selectCompanyBenefits) thenReturn Some(Seq(CompanyBenefits.FUEL_BENEFIT))
         when(answers.otherCompanyBenefit) thenReturn Some(Seq.empty)
         when(answers.removeOtherSelectedOption) thenReturn Some(false)
         navigator.nextPageWithCollectionId(OtherCompanyBenefit.collectionId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
@@ -167,7 +185,8 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPageWithCollectionId(OtherTaxableIncome.collectionId, NormalMode)(answers) mustBe routes.OtherTaxableIncomeController.onPageLoad(NormalMode, 0)
       }
 
-      "go to WhereToSendPayment from RemoveOtherSelectedOption when no is selected with OtherTaxableIncome collection" in {
+      "go to WhereToSendPayment from RemoveOtherSelectedOption when no is selected with another taxable income still in the OtherTaxableIncome collection" in {
+        when(answers.selectTaxableIncome) thenReturn Some(Seq(TaxableIncome.FOREIGN_INCOME))
         when(answers.otherTaxableIncome) thenReturn Some(Seq.empty)
         when(answers.removeOtherSelectedOption) thenReturn Some(false)
         navigator.nextPageWithCollectionId(OtherTaxableIncome.collectionId, NormalMode)(answers) mustBe routes.WhereToSendPaymentController.onPageLoad(NormalMode)
@@ -185,7 +204,15 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPageWithCollectionId(OtherTaxableIncome.collectionId, CheckMode)(answers) mustBe routes.OtherTaxableIncomeController.onPageLoad(CheckMode, 0)
       }
 
-      "go to CheckYourAnswers from RemoveOtherSelectedOption when no is selected and in CheckMode with OtherTaxableIncome collection" in {
+      "go to AnyTaxableIncome from RemoveOtherSelectedOption when no is selected and in CheckMode for OtherTaxableIncome with no other taxable income in the collection" in {
+        when(answers.selectTaxableIncome) thenReturn None
+        when(answers.otherTaxableIncome) thenReturn Some(Seq.empty)
+        when(answers.removeOtherSelectedOption) thenReturn Some(false)
+        navigator.nextPageWithCollectionId(OtherTaxableIncome.collectionId, CheckMode)(answers) mustBe routes.AnyTaxableIncomeController.onPageLoad(CheckMode)
+      }
+
+      "go to CheckYourAnswers from RemoveOtherSelectedOption when no is selected and in CheckMode for OtherTaxableIncome with taxable incomes in the collection" in {
+        when(answers.selectTaxableIncome) thenReturn Some(Seq(TaxableIncome.FOREIGN_INCOME))
         when(answers.otherTaxableIncome) thenReturn Some(Seq.empty)
         when(answers.removeOtherSelectedOption) thenReturn Some(false)
         navigator.nextPageWithCollectionId(OtherTaxableIncome.collectionId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()

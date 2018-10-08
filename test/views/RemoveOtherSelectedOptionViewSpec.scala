@@ -41,10 +41,16 @@ class RemoveOtherSelectedOptionViewSpec extends YesNoViewBehaviours {
 
   "RemoveOtherSelectedOption view" must {
 
-    behave like normalPage(createView, messageKeyPrefix, None)
+    behave like normalPage(createView, messageKeyPrefix, None, messages(collectionId))
 
     behave like pageWithBackLink(createView)
 
-    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.RemoveOtherSelectedOptionController.onSubmit(NormalMode, collectionId).url, None)
+    behave like yesNoPage(
+      createViewUsingForm,
+      messageKeyPrefix,
+      routes.RemoveOtherSelectedOptionController.onSubmit(NormalMode, collectionId).url,
+      None,
+      messages(collectionId)
+    )
   }
 }

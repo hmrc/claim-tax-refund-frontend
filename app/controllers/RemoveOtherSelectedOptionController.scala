@@ -20,7 +20,6 @@ import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.BooleanForm
-import identifiers._
 import javax.inject.Inject
 import models._
 import play.api.data.Form
@@ -67,7 +66,7 @@ class RemoveOtherSelectedOptionController @Inject()(appConfig: FrontendAppConfig
 						(formWithErrors: Form[_]) =>
 							Future.successful(BadRequest(removeOtherSelectedOption(appConfig, formWithErrors, mode, taxYear, collectionId))),
 						(value: Boolean) => {
-							dataCacheConnector.save[Boolean](request.externalId, RemoveOtherSelectedOptionId.toString, value).map(cacheMap =>
+							dataCacheConnector.save[Boolean](request.externalId, collectionId.toString, value).map(cacheMap =>
 								Redirect(navigator.nextPageWithCollectionId(collectionId, mode)(new UserAnswers(cacheMap))))
 						}
 					)
