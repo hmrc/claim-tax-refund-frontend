@@ -16,73 +16,72 @@
 
 package controllers
 
-
-import connectors.{FakeDataCacheConnector, TaiConnector}
+import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.BooleanForm
-import models.NormalMode
 import models.SelectTaxYear.CYMinus2
+import models.{NormalMode, OtherBenefit}
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
+import play.api.mvc.Call
 import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
-import views.html.anyBenefits
+import views.html.removeOtherSelectedOption
 
-class AnyBenefitsControllerSpec extends ControllerSpecBase with MockitoSugar {
+class RemoveOtherSelectedOptionControllerSpec extends ControllerSpecBase with MockitoSugar {
 
-  def onwardRoute = routes.IndexController.onPageLoad()
+  def onwardRoute: Call = routes.IndexController.onPageLoad()
 
   val formProvider = new BooleanForm()
   val form = formProvider()
-  val mockTai: TaiConnector = mock[TaiConnector]
+
   private val taxYear = CYMinus2
-  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
+  private val mockUserAnswers = MockUserAnswers.benefitsUserAnswers
+  private val collectionId = OtherBenefit.collectionId
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new AnyBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, mockTai, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+    new RemoveOtherSelectedOptionController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, formProvider, formPartialRetriever, templateRenderer)
 
-  def viewAsString(form: Form[_] = form) = anyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+  def viewAsString(form: Form[_] = form): String =
+    removeOtherSelectedOption(frontendAppConfig, form, NormalMode, taxYear, collectionId)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
-  "AnyBenefits Controller" must {
+  "RemoveOtherSelectedOption Controller" must {
 
     "return OK and the correct view for a GET" in {
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, collectionId)(fakeRequest)
 
       status(result) mustBe OK
       contentAsString(result) mustBe viewAsString()
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      when(mockUserAnswers.anyBenefits).thenReturn(Some(true))
+      when(mockUserAnswers.removeOtherSelectedOption) thenReturn Some(true)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, collectionId)(fakeRequest)
 
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
-
-      contentAsString(result) mustBe viewAsString(form.fill(true))
+      contentAsString(result) mustBe viewAsString(form)
     }
 
     "redirect to the next page when valid data is submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
-
-      val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode)(postRequest)
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode, collectionId)(postRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(onwardRoute.url)
     }
 
     "return a Bad Request and errors when invalid data is submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
       val boundForm = form.bind(Map("value" -> "invalid value"))
 
-      val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode)(postRequest)
+      val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode, collectionId)(postRequest)
 
       status(result) mustBe BAD_REQUEST
       contentAsString(result) mustBe viewAsString(boundForm)
     }
 
     "redirect to Session Expired for a GET if no existing data is found" in {
-      val result = controller(dontGetAnyData).onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(dontGetAnyData).onPageLoad(NormalMode, collectionId)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
@@ -90,25 +89,7 @@ class AnyBenefitsControllerSpec extends ControllerSpecBase with MockitoSugar {
 
     "redirect to Session Expired for a POST if no existing data is found" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
-      val result = controller(dontGetAnyData).onSubmit(NormalMode)(postRequest)
-
-      status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
-    }
-
-    "redirect to Session Expired if no taxYears have been selected" in {
-      when(mockUserAnswers.selectTaxYear).thenReturn(None)
-
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
-
-      status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
-    }
-
-    "redirect to Session Expired if no taxYears have been selected on submit" in {
-      when(mockUserAnswers.selectTaxYear).thenReturn(None)
-
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(fakeRequest)
+      val result = controller(dontGetAnyData).onSubmit(NormalMode, collectionId)(postRequest)
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)

@@ -36,6 +36,7 @@ class UserAnswers(val cacheMap: CacheMap) {
 
   def metadata: Option[Metadata] = cacheMap.getEntry[Metadata]("metadata")
 
+	def removeOtherSelectedOption: Option[Boolean] = cacheMap.getEntry[Boolean](RemoveOtherSelectedOptionId.toString)
 
   //Claim details
   //------------------------------------------------------------------------------

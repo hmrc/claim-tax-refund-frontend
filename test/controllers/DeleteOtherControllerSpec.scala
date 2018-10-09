@@ -20,13 +20,13 @@ import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.BooleanForm
 import models.SelectTaxYear.CYMinus2
-import models.{CheckMode, Index, NormalMode}
+import models._
+import org.mockito.Mockito._
 import play.api.data.Form
 import play.api.mvc.Call
 import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.deleteOther
-import org.mockito.Mockito._
 
 class DeleteOtherControllerSpec extends ControllerSpecBase {
 
@@ -75,6 +75,20 @@ class DeleteOtherControllerSpec extends ControllerSpecBase {
       redirectLocation(result) mustBe Some(routes.AnyOtherBenefitsController.onPageLoad(CheckMode).url)
     }
 
+    "redirect to RemoveOtherSelectedOption when value is true and no other benefits are available" in {
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+      val answers = mockUserAnswers.benefitsUserAnswers
+
+      when(answers.otherBenefit) thenReturn Some(Seq.empty)
+
+      val result = controller(fakeDataRetrievalAction(answers))
+        .onSubmit(NormalMode, index, itemName, benefitCollectionId)(postRequest)
+
+      status(result) mustBe SEE_OTHER
+      redirectLocation(result) mustBe Some(routes.RemoveOtherSelectedOptionController.onPageLoad(NormalMode, OtherBenefit.collectionId).url)
+    }
+
+
     "redirect to AnyOtherCompanyBenefits when value is true and valid companyBenefit submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
 
@@ -85,6 +99,20 @@ class DeleteOtherControllerSpec extends ControllerSpecBase {
       redirectLocation(result) mustBe Some(routes.AnyOtherCompanyBenefitsController.onPageLoad(NormalMode).url)
     }
 
+    "redirect to RemoveOtherSelectedOption when value is true and no other companyBenefits are available" in {
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+      val answers = mockUserAnswers.companyBenefitsUserAnswers
+
+      when(answers.otherCompanyBenefit) thenReturn Some(Seq.empty)
+
+      val result = controller(fakeDataRetrievalAction(answers))
+        .onSubmit(NormalMode, index, itemName, companyBenefitCollectionId)(postRequest)
+
+      status(result) mustBe SEE_OTHER
+      redirectLocation(result) mustBe Some(routes.RemoveOtherSelectedOptionController.onPageLoad(NormalMode, OtherCompanyBenefit.collectionId).url)
+    }
+
+
     "redirect to CheckYourAnswers when value is true and valid otherTaxableIncome submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
 
@@ -94,6 +122,20 @@ class DeleteOtherControllerSpec extends ControllerSpecBase {
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(onwardRoute.url)
     }
+
+    "redirect to RemoveOtherSelectedOption when value is true and no other otherTaxableIncome are available" in {
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+      val answers = mockUserAnswers.taxableIncomeUserAnswers
+
+      when(answers.otherTaxableIncome) thenReturn Some(Seq.empty)
+
+      val result = controller(fakeDataRetrievalAction(answers))
+        .onSubmit(NormalMode, index, itemName, taxableIncomeCollectionId)(postRequest)
+
+      status(result) mustBe SEE_OTHER
+      redirectLocation(result) mustBe Some(routes.RemoveOtherSelectedOptionController.onPageLoad(NormalMode, OtherTaxableIncome.collectionId).url)
+    }
+
 
     "redirect to SessionExpired when value is true and no otherBenefit userAnswer is found" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))

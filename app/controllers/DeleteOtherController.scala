@@ -73,11 +73,11 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
                 if (value) {
                   collectionId match {
                     case OtherBenefit.collectionId =>
-                      deleteOtherBenefit(request, mode, index)
+                      deleteOtherBenefit(request, mode, index, collectionId)
                     case OtherCompanyBenefit.collectionId =>
-                      deleteOtherCompanyBenefit(request, mode, index)
+                      deleteOtherCompanyBenefit(request, mode, index, collectionId)
                     case OtherTaxableIncome.collectionId =>
-                      deleteOtherTaxableIncome(request, mode, index)
+                      deleteOtherTaxableIncome(request, mode, index, collectionId)
                     case _ =>
                       Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
                   }
@@ -99,14 +99,18 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
         }
     }
 
-  def deleteOtherBenefit(request: DataRequest[AnyContent], mode: Mode, index: Index): Future[Result] = {
+  def deleteOtherBenefit(request: DataRequest[AnyContent], mode: Mode, index: Index, collectionId: String): Future[Result] = {
     val result: Option[Future[Result]] = for {
       otherBenefit: Seq[OtherBenefit] <- request.userAnswers.otherBenefit
     } yield {
       val updatedOtherBenefit: Seq[OtherBenefit] = otherBenefit.patch(index, Seq.empty, 1)
       dataCacheConnector.save[Seq[OtherBenefit]](request.externalId, OtherBenefitId.toString, updatedOtherBenefit).map(
         _ =>
-          Redirect(routes.AnyOtherBenefitsController.onPageLoad(mode))
+          if (updatedOtherBenefit.isEmpty) {
+            Redirect(routes.RemoveOtherSelectedOptionController.onPageLoad(mode, collectionId))
+          } else {
+            Redirect(routes.AnyOtherBenefitsController.onPageLoad(mode))
+          }
       )
     }
 
@@ -115,14 +119,18 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
     }
   }
 
-  def deleteOtherCompanyBenefit(request: DataRequest[AnyContent], mode: Mode, index: Index): Future[Result] = {
+  def deleteOtherCompanyBenefit(request: DataRequest[AnyContent], mode: Mode, index: Index, collectionId: String): Future[Result] = {
     val result: Option[Future[Result]] = for {
       otherCompanyBenefit: Seq[OtherCompanyBenefit] <- request.userAnswers.otherCompanyBenefit
     } yield {
       val updatedOtherCompanyBenefit: Seq[OtherCompanyBenefit] = otherCompanyBenefit.patch(index, Seq.empty, 1)
       dataCacheConnector.save[Seq[OtherCompanyBenefit]](request.externalId, OtherCompanyBenefitId.toString, updatedOtherCompanyBenefit).map(
         _ =>
-          Redirect(routes.AnyOtherCompanyBenefitsController.onPageLoad(mode))
+          if (updatedOtherCompanyBenefit.isEmpty) {
+            Redirect(routes.RemoveOtherSelectedOptionController.onPageLoad(mode, collectionId))
+          } else {
+            Redirect(routes.AnyOtherCompanyBenefitsController.onPageLoad(mode))
+          }
       )
     }
 
@@ -131,7 +139,7 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
     }
   }
 
-  def deleteOtherTaxableIncome(request: DataRequest[AnyContent], mode: Mode, index: Index): Future[Result] = {
+  def deleteOtherTaxableIncome(request: DataRequest[AnyContent], mode: Mode, index: Index, collectionId: String): Future[Result] = {
     val result: Option[Future[Result]] = for {
       otherTaxableIncome: Seq[OtherTaxableIncome] <- request.userAnswers.otherTaxableIncome
     } yield {
@@ -139,8 +147,13 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
       for {
         _ <- dataCacheConnector.save[Seq[OtherTaxableIncome]](request.externalId, OtherTaxableIncomeId.toString, updatedOtherTaxableIncome)
         updatedCacheMap: CacheMap <- dataCacheConnector.save[Seq[OtherTaxableIncome]](request.externalId, AnyTaxableOtherIncomeId.toString, updatedOtherTaxableIncome)
-      } yield
-        Redirect(navigator.nextPage(DeleteOtherTaxableIncomeId, mode)(new UserAnswers(updatedCacheMap)))
+      } yield {
+        if (updatedOtherTaxableIncome.isEmpty) {
+          Redirect(routes.RemoveOtherSelectedOptionController.onPageLoad(mode, collectionId))
+        } else {
+          Redirect(navigator.nextPage(DeleteOtherTaxableIncomeId, mode)(new UserAnswers(updatedCacheMap)))
+        }
+      }
     }
 
     result.getOrElse {

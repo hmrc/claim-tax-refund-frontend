@@ -57,6 +57,8 @@
             answers = otherCompanyBenefits.rows
         )
 
+        <h2>@messages("anyOtherCompanyBenefits.addAnotherCompanyBenefit")</h2>
+
         @components.input_yes_no(
             InputViewModel("value", form),
             label = messages("anyOtherCompanyBenefits.heading", taxYear.asString),

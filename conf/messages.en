@@ -171,8 +171,8 @@ howMuchRentalIncome.checkYourAnswersLabel = Rental income
 howMuchRentalIncome.blank = Enter the amount of rental income you got
 howMuchRentalIncome.invalid = Enter a valid amount of rental income
 
-anyOtherBenefits.title = Did you get any other taxable benefits?
-anyOtherBenefits.heading = Did you get any other taxable benefits?
+anyOtherBenefits.title = Other taxable benefits
+anyOtherBenefits.heading = Other taxable benefits
 anyOtherBenefits.blank = Select yes if you got any other taxable benefits
 anyOtherBenefits.addAnotherBenefit = Do you need to add another taxable benefit?
 
@@ -290,6 +290,7 @@ howMuchFuelBenefit.checkYourAnswersLabel = Fuel benefit
 howMuchFuelBenefit.blank = Enter the amount of fuel benefit you got
 howMuchFuelBenefit.invalid = Enter a valid amount of fuel benefit
 
+otherCompanyBenefits = company benefit
 otherCompanyBenefit.title = Tell us about the other company benefit you got
 otherCompanyBenefit.heading = Tell us about the other company benefit you got
 otherCompanyBenefit.checkYourAnswersLabel = Other company benefit details
@@ -321,10 +322,10 @@ enterPayeReference.hint = For example 123/AB456. You can find this on your paysl
 enterPayeReference.blank = Enter your employer or pension provider’s PAYE reference
 enterPayeReference.invalid = Enter a valid PAYE reference
 
-anyOtherCompanyBenefits.title = Did you get any other company benefits?
-anyOtherCompanyBenefits.heading = Did you get any other company benefits?
-anyOtherCompanyBenefits.checkYourAnswersLabel = Did you get any other company benefits?
+anyOtherCompanyBenefits.title = Other company benefits
+anyOtherCompanyBenefits.heading = Other company benefits
 anyOtherCompanyBenefits.blank = Select yes if you got any other company benefits
+anyOtherCompanyBenefits.addAnotherCompanyBenefit = Do you need to add another company benefit?
 
 howMuchBereavementAllowance.title = How much Bereavement Allowance did you get?
 howMuchBereavementAllowance.heading = How much Bereavement Allowance did you get?
@@ -338,6 +339,7 @@ howMuchCarersAllowance.checkYourAnswersLabel = Carer’s Allowance
 howMuchCarersAllowance.blank = Enter the amount of Carer’s Allowance you got
 howMuchCarersAllowance.invalid = Enter a valid amount of Carer’s Allowance
 
+otherBenefits = taxable benefit
 otherBenefit.title = Tell us about the other taxable benefit you got
 otherBenefit.heading = Tell us about the other taxable benefit you got
 otherBenefit.checkYourAnswersLabel = Other taxable benefit details
@@ -391,6 +393,7 @@ howMuchOtherTaxableIncome.checkYourAnswersLabel =  How much other taxable income
 howMuchOtherTaxableIncome.blank = Enter the amount of other taxable income you got
 howMuchOtherTaxableIncome.invalid = Enter a valid amount of other taxable income
 
+otherTaxableIncome = taxable income
 otherTaxableIncome.title = Tell us about the other taxable income you got
 otherTaxableIncome.heading = Tell us about the other taxable income you got
 otherTaxableIncome.checkYourAnswersLabel = Other taxable income details
@@ -467,3 +470,8 @@ confirmation.survey.linkText = What did you think of this service?
 confirmation.survey.time = (takes 30 seconds)
 
 itmpAddress.checkYourAnswersLabel = Payment address
+
+RemoveOtherSelectedOption.title = Do you want to add any other {0}?
+RemoveOtherSelectedOption.heading = Do you want to add any other {0}?
+RemoveOtherSelectedOption.checkYourAnswersLabel = Do you want to add any other {0}?
+RemoveOtherSelectedOption.blank = RemoveOtherSelectedOption

@@ -21,7 +21,6 @@ import identifiers.{AnyAgentRefId, _}
 import javax.inject.{Inject, Singleton}
 import models.WhereToSendPayment.{Myself, Nominee}
 import models.{Benefits, CompanyBenefits, TaxableIncome, _}
-import models.{Benefits, _}
 import play.api.mvc.Call
 
 @Singleton
@@ -33,6 +32,48 @@ class Navigator @Inject()() {
 
   private val editRouteMapWithIndex: PartialFunction[Identifier, UserAnswers => Call] = {
     case OtherTaxableIncomeId(index) => otherTaxableIncome(CheckMode, index)
+  }
+
+  private val routeMapWithCollectionId: PartialFunction[String, UserAnswers => Call] = {
+    case OtherBenefit.collectionId => removeOtherSelectedOptionNavigation(NormalMode, OtherBenefit.collectionId)
+    case OtherCompanyBenefit.collectionId => removeOtherSelectedOptionNavigation(NormalMode, OtherCompanyBenefit.collectionId)
+    case OtherTaxableIncome.collectionId => removeOtherSelectedOptionNavigation(NormalMode, OtherTaxableIncome.collectionId)
+  }
+
+  private val editRouteMapWithCollectionId: PartialFunction[String, UserAnswers => Call] = {
+    case OtherBenefit.collectionId => removeOtherSelectedOptionNavigation(CheckMode, OtherBenefit.collectionId)
+    case OtherCompanyBenefit.collectionId => removeOtherSelectedOptionNavigation(CheckMode, OtherCompanyBenefit.collectionId)
+    case OtherTaxableIncome.collectionId => removeOtherSelectedOptionNavigation(CheckMode, OtherTaxableIncome.collectionId)
+  }
+
+  private def removeOtherSelectedOptionNavigation(mode: Mode, collectionId: String)(userAnswers: UserAnswers): Call = {
+    userAnswers.removeOtherSelectedOption match {
+      case Some(true) => otherSectionYes(mode, collectionId)
+      case Some(false) => otherSectionNo(mode, collectionId)(userAnswers)
+      case _ => routes.SessionExpiredController.onPageLoad()
+    }
+  }
+
+  private def otherSectionYes(mode: Mode, collectionId: String): Call = {
+    collectionId match {
+      case OtherBenefit.collectionId => routes.OtherBenefitController.onPageLoad(mode, 0)
+      case OtherCompanyBenefit.collectionId => routes.OtherCompanyBenefitController.onPageLoad(mode, 0)
+      case OtherTaxableIncome.collectionId => routes.OtherTaxableIncomeController.onPageLoad(mode, 0)
+      case _ => routes.SessionExpiredController.onPageLoad()
+    }
+  }
+
+  private def otherSectionNo(mode: Mode, collectionId: String)(userAnswers: UserAnswers): Call = {
+    if (mode == NormalMode) {
+      collectionId match {
+        case OtherBenefit.collectionId => routes.AnyCompanyBenefitsController.onPageLoad(mode)
+        case OtherCompanyBenefit.collectionId => routes.AnyTaxableIncomeController.onPageLoad(mode)
+        case OtherTaxableIncome.collectionId => routes.WhereToSendPaymentController.onPageLoad(mode)
+        case _ => routes.SessionExpiredController.onPageLoad()
+      }
+    } else {
+      routes.CheckYourAnswersController.onPageLoad()
+    }
   }
 
   private val routeMap: Map[Identifier, UserAnswers => Call] = Map(
@@ -457,5 +498,12 @@ class Navigator @Inject()() {
       routeMapWithIndex.lift(id).getOrElse(_ => routes.IndexController.onPageLoad())
     case CheckMode =>
       editRouteMapWithIndex.lift(id).getOrElse(_ => routes.CheckYourAnswersController.onPageLoad())
+  }
+
+  def nextPageWithCollectionId(collectionId: String, mode: Mode): UserAnswers => Call = mode match {
+    case NormalMode =>
+      routeMapWithCollectionId.lift(collectionId).getOrElse(_ => routes.IndexController.onPageLoad())
+    case CheckMode =>
+      editRouteMapWithCollectionId.lift(collectionId).getOrElse(_ => routes.CheckYourAnswersController.onPageLoad())
   }
 }

@@ -274,6 +274,7 @@ howMuchFuelBenefit.title=Faint o fuddiant tanwydd a gawsoch?
 howMuchFuelBenefit.invalid=Nodwch swm dilys ar gyfer buddiant tanwydd
 howMuchFuelBenefit.checkYourAnswersLabel=Buddiant tanwydd
 
+otherCompanyBenefits=buddiant cwmni
 otherCompanyBenefit.duplicate=Rydych eisoes wedi nodi’r enw buddiant cwmni trethadwy arall hwn
 otherCompanyBenefit.checkYourAnswersLabel=Buddiant cwmni arall
 otherCompanyBenefit.name = Enw’r buddiant cwmni arall
@@ -321,6 +322,7 @@ howMuchCarersAllowance.heading=Faint o Lwfans Gofalwr a gawsoch?
 howMuchCarersAllowance.title=Faint o Lwfans Gofalwr a gawsoch?
 howMuchCarersAllowance.checkYourAnswersLabel=Lwfans Gofalwr
 
+otherBenefits=buddiant trethadwy
 otherBenefit.title=Rhowch wybod i ni am y buddiant trethadwy arall a gawsoch
 otherBenefit.name = Enw'r buddiant trethadwy arall
 otherBenefit.amount = Swm y buddion trethadwy eraill
@@ -373,6 +375,7 @@ howMuchOtherTaxableIncome.title=Faint o {0} a gawsoch rhwng {1}?
 howMuchOtherTaxableIncome.blank=Nodwch swm yr incwm trethadwy arall a gawsoch
 howMuchOtherTaxableIncome.invalid=Nodwch swm dilys ar gyfer incwm trethadwy arall
 
+otherTaxableIncome=incwm trethadwy
 otherTaxableIncome.heading=Rhowch wybod i ni am incwm trethadwy arall a gawsoch
 otherTaxableIncome.name = Enw’r incwm trethadwy arall
 otherTaxableIncome.amount = Swm yr incwm trethadwy arall

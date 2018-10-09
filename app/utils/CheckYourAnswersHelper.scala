@@ -24,6 +24,7 @@ import uk.gov.hmrc.auth.core.retrieve.ItmpAddress
 import viewmodels.AnswerRow
 
 class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messages) {
+
   //Claim details
   //------------------------------------------------------------------
 
@@ -57,7 +58,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
   }
 
   def detailsOfEmploymentOrPension: Option[AnswerRow] = userAnswers.detailsOfEmploymentOrPension map {
-    x => AnswerRow("detailsOfEmploymentOrPension.checkYourAnswersLabel", s"$x", false, Some(routes.DetailsOfEmploymentOrPensionController.onPageLoad(CheckMode).url))
+    x => AnswerRow("detailsOfEmploymentOrPension.checkYourAnswersLabel",s"$x", false, Some(routes.DetailsOfEmploymentOrPensionController.onPageLoad(CheckMode).url))
   }
 
   //Benefits

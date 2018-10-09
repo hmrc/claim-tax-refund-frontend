@@ -68,7 +68,7 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
         navigator.nextPage(EmploymentDetailsId, NormalMode)(answers) mustBe routes.AnyBenefitsController.onPageLoad(NormalMode)
       }
 
-      //3 benefit selectors
+      //Benefits
 
       "go to AnyCompanyBenefits from AnyBenefits when No is selected" in {
         when(answers.anyBenefits) thenReturn Some(false)
@@ -83,6 +83,168 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
       "go to AnyBenefits from DetailsOfEmploymentOrPension" in {
         navigator.nextPage(DetailsOfEmploymentOrPensionId, NormalMode)(answers) mustBe routes.AnyBenefitsController.onPageLoad(NormalMode)
       }
+
+      "go to OtherBenefit from RemoveOtherSelectedOption when yes is with OtherBenefit collection" in {
+        when(answers.otherBenefit) thenReturn Some(Seq.empty)
+        when(answers.removeOtherSelectedOption) thenReturn Some(true)
+        navigator.nextPageWithCollectionId(OtherBenefit.collectionId, NormalMode)(answers) mustBe routes.OtherBenefitController.onPageLoad(NormalMode, 0)
+      }
+
+      "go to AnyCompanyBenefits from RemoveOtherSelectedOption when no is selected with another benefit still in the OtherBenefit collection" in {
+        when(answers.selectBenefits) thenReturn Some(Seq(Benefits.STATE_PENSION))
+        when(answers.otherBenefit) thenReturn Some(Seq.empty)
+        when(answers.removeOtherSelectedOption) thenReturn Some(false)
+        navigator.nextPageWithCollectionId(OtherBenefit.collectionId, NormalMode)(answers) mustBe routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
+      }
+
+      "go to AnyCompanyBenefits from RemoveOtherSelectedOption when no is selected with no benefits in the OtherBenefit collection" in {
+        when(answers.selectBenefits) thenReturn None
+        when(answers.otherBenefit) thenReturn Some(Seq.empty)
+        when(answers.removeOtherSelectedOption) thenReturn Some(false)
+        navigator.nextPageWithCollectionId(OtherBenefit.collectionId, NormalMode)(answers) mustBe routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
+      }
+
+      "go to SessionExpired from RemoveOtherSelectedOption when no value is available with OtherBenefit collection" in {
+        when(answers.otherCompanyBenefit) thenReturn Some(Seq.empty)
+        when(answers.removeOtherSelectedOption) thenReturn None
+        navigator.nextPageWithCollectionId(OtherBenefit.collectionId, NormalMode)(answers) mustBe routes.SessionExpiredController.onPageLoad()
+      }
+
+      "go to OtherBenefit from RemoveOtherSelectedOption when yes is selected and in CheckMode with OtherBenefit collection" in {
+        when(answers.otherBenefit) thenReturn Some(Seq.empty)
+        when(answers.removeOtherSelectedOption) thenReturn Some(true)
+        navigator.nextPageWithCollectionId(OtherBenefit.collectionId, CheckMode)(answers) mustBe routes.OtherBenefitController.onPageLoad(CheckMode, 0)
+      }
+
+      "go to CheckYourAnswers from RemoveOtherSelectedOption when no is selected and in CheckMode for OtherBenefit with no benefits selected" in {
+        when(answers.selectBenefits) thenReturn None
+        when(answers.otherBenefit) thenReturn Some(Seq.empty)
+        when(answers.removeOtherSelectedOption) thenReturn Some(false)
+        navigator.nextPageWithCollectionId(OtherBenefit.collectionId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+      }
+
+      "go to CheckYourAnswers from RemoveOtherSelectedOption when no is selected and in CheckMode for OtherBenefit with benefits still selected" in {
+        when(answers.selectBenefits) thenReturn Some(Seq(Benefits.STATE_PENSION))
+        when(answers.otherBenefit) thenReturn Some(Seq.empty)
+        when(answers.removeOtherSelectedOption) thenReturn Some(false)
+        navigator.nextPageWithCollectionId(OtherBenefit.collectionId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+      }
+
+
+      "go to SessionExpired from RemoveOtherSelectedOption when no value is available with OtherBenefit collection in CheckMode" in {
+        when(answers.otherCompanyBenefit) thenReturn Some(Seq.empty)
+        when(answers.removeOtherSelectedOption) thenReturn None
+        navigator.nextPageWithCollectionId(OtherBenefit.collectionId, CheckMode)(answers) mustBe routes.SessionExpiredController.onPageLoad()
+      }
+
+      //CompanyBenefits
+
+      "go to OtherCompanyBenefits from RemoveOtherSelectedOption when yes is selected with OtherCompanyBenefit collection" in {
+        when(answers.otherCompanyBenefit) thenReturn Some(Seq.empty)
+        when(answers.removeOtherSelectedOption) thenReturn Some(true)
+        navigator.nextPageWithCollectionId(OtherCompanyBenefit.collectionId, NormalMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(NormalMode, 0)
+      }
+
+      "go to AnyTaxableIncome from RemoveOtherSelectedOption when no is selected with another company benefit still in the OtherCompanyBenefit collection" in {
+        when(answers.selectCompanyBenefits) thenReturn Some(Seq(CompanyBenefits.FUEL_BENEFIT))
+        when(answers.otherCompanyBenefit) thenReturn Some(Seq.empty)
+        when(answers.removeOtherSelectedOption) thenReturn Some(false)
+        navigator.nextPageWithCollectionId(OtherCompanyBenefit.collectionId, NormalMode)(answers) mustBe routes.AnyTaxableIncomeController.onPageLoad(NormalMode)
+      }
+
+      "go to AnyTaxableIncome from RemoveOtherSelectedOption when no is selected with no other company benefits in the collection" in {
+        when(answers.selectCompanyBenefits) thenReturn None
+        when(answers.otherCompanyBenefit) thenReturn Some(Seq.empty)
+        when(answers.removeOtherSelectedOption) thenReturn Some(false)
+        navigator.nextPageWithCollectionId(OtherCompanyBenefit.collectionId, NormalMode)(answers) mustBe routes.AnyTaxableIncomeController.onPageLoad(NormalMode)
+      }
+
+      "go to SessionExpired from RemoveOtherSelectedOption when no value is available with OtherCompanyBenefit collection" in {
+        when(answers.otherCompanyBenefit) thenReturn Some(Seq.empty)
+        when(answers.removeOtherSelectedOption) thenReturn None
+        navigator.nextPageWithCollectionId(OtherCompanyBenefit.collectionId, NormalMode)(answers) mustBe routes.SessionExpiredController.onPageLoad()
+      }
+
+      "go to OtherCompanyBenefits from RemoveOtherSelectedOption when yes is selected and in CheckMode with OtherCompanyBenefit collection" in {
+        when(answers.otherCompanyBenefit) thenReturn Some(Seq.empty)
+        when(answers.removeOtherSelectedOption) thenReturn Some(true)
+        navigator.nextPageWithCollectionId(OtherCompanyBenefit.collectionId, CheckMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(CheckMode, 0)
+      }
+
+      "go to CheckYourAnswers from RemoveOtherSelectedOption when no is selected and in CheckMode for OtherCompanyBenefit with no other company benefits in the collection" in {
+        when(answers.selectCompanyBenefits) thenReturn None
+        when(answers.otherCompanyBenefit) thenReturn Some(Seq.empty)
+        when(answers.removeOtherSelectedOption) thenReturn Some(false)
+        navigator.nextPageWithCollectionId(OtherCompanyBenefit.collectionId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+      }
+
+      "go to CheckYourAnswers from RemoveOtherSelectedOption when no is selected and in CheckMode for OtherCompanyBenefit with company benefits in the collection" in {
+        when(answers.selectCompanyBenefits) thenReturn Some(Seq(CompanyBenefits.FUEL_BENEFIT))
+        when(answers.otherCompanyBenefit) thenReturn Some(Seq.empty)
+        when(answers.removeOtherSelectedOption) thenReturn Some(false)
+        navigator.nextPageWithCollectionId(OtherCompanyBenefit.collectionId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+      }
+
+      "go to SessionExpired from RemoveOtherSelectedOption when no value is available with OtherCompanyBenefit collection in CheckMode" in {
+        when(answers.otherCompanyBenefit) thenReturn Some(Seq.empty)
+        when(answers.removeOtherSelectedOption) thenReturn None
+        navigator.nextPageWithCollectionId(OtherCompanyBenefit.collectionId, CheckMode)(answers) mustBe routes.SessionExpiredController.onPageLoad()
+      }
+
+      //OtherTaxableIncome
+
+      "go to OtherTaxableIncome from RemoveOtherSelectedOption when yes is selected with OtherTaxableIncome collection" in {
+        when(answers.otherTaxableIncome) thenReturn Some(Seq.empty)
+        when(answers.removeOtherSelectedOption) thenReturn Some(true)
+        navigator.nextPageWithCollectionId(OtherTaxableIncome.collectionId, NormalMode)(answers) mustBe routes.OtherTaxableIncomeController.onPageLoad(NormalMode, 0)
+      }
+
+      "go to WhereToSendPayment from RemoveOtherSelectedOption when no is selected with another taxable income still in the OtherTaxableIncome collection" in {
+        when(answers.selectTaxableIncome) thenReturn Some(Seq(TaxableIncome.FOREIGN_INCOME))
+        when(answers.otherTaxableIncome) thenReturn Some(Seq.empty)
+        when(answers.removeOtherSelectedOption) thenReturn Some(false)
+        navigator.nextPageWithCollectionId(OtherTaxableIncome.collectionId, NormalMode)(answers) mustBe routes.WhereToSendPaymentController.onPageLoad(NormalMode)
+      }
+
+      "go to WhereToSendPayment from RemoveOtherSelectedOption when no is selected with no other taxable income in the OtherTaxableIncome collection" in {
+        when(answers.selectTaxableIncome) thenReturn None
+        when(answers.otherTaxableIncome) thenReturn Some(Seq.empty)
+        when(answers.removeOtherSelectedOption) thenReturn Some(false)
+        navigator.nextPageWithCollectionId(OtherTaxableIncome.collectionId, NormalMode)(answers) mustBe routes.WhereToSendPaymentController.onPageLoad(NormalMode)
+      }
+
+      "go to SessionExpired from RemoveOtherSelectedOption when no value is available with OtherTaxableIncome collection" in {
+        when(answers.otherTaxableIncome) thenReturn Some(Seq.empty)
+        when(answers.removeOtherSelectedOption) thenReturn None
+        navigator.nextPageWithCollectionId(OtherTaxableIncome.collectionId, NormalMode)(answers) mustBe routes.SessionExpiredController.onPageLoad()
+      }
+
+      "go to OtherCompanyBenefits from RemoveOtherSelectedOption when yes is selected and in CheckMode with OtherTaxableIncome collection" in {
+        when(answers.otherTaxableIncome) thenReturn Some(Seq.empty)
+        when(answers.removeOtherSelectedOption) thenReturn Some(true)
+        navigator.nextPageWithCollectionId(OtherTaxableIncome.collectionId, CheckMode)(answers) mustBe routes.OtherTaxableIncomeController.onPageLoad(CheckMode, 0)
+      }
+
+      "go to CheckYourAnswers from RemoveOtherSelectedOption when no is selected and in CheckMode for OtherTaxableIncome with no other taxable income in the collection" in {
+        when(answers.selectTaxableIncome) thenReturn None
+        when(answers.otherTaxableIncome) thenReturn Some(Seq.empty)
+        when(answers.removeOtherSelectedOption) thenReturn Some(false)
+        navigator.nextPageWithCollectionId(OtherTaxableIncome.collectionId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+      }
+
+      "go to CheckYourAnswers from RemoveOtherSelectedOption when no is selected and in CheckMode for OtherTaxableIncome with taxable incomes in the collection" in {
+        when(answers.selectTaxableIncome) thenReturn Some(Seq(TaxableIncome.FOREIGN_INCOME))
+        when(answers.otherTaxableIncome) thenReturn Some(Seq.empty)
+        when(answers.removeOtherSelectedOption) thenReturn Some(false)
+        navigator.nextPageWithCollectionId(OtherTaxableIncome.collectionId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+      }
+
+      "go to SessionExpired from RemoveOtherSelectedOption when no value is available with OtherTaxableIncome collection in CheckMode" in {
+        when(answers.otherTaxableIncome) thenReturn Some(Seq.empty)
+        when(answers.removeOtherSelectedOption) thenReturn None
+        navigator.nextPageWithCollectionId(OtherTaxableIncome.collectionId, CheckMode)(answers) mustBe routes.SessionExpiredController.onPageLoad()
+      }
+
 
       //Payment details section
 
