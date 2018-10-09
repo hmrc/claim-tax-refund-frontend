@@ -225,9 +225,11 @@ class CascadeUpsert {
       case JsBoolean(false) =>
         val cm = cacheMap.data(SelectBenefitsId.toString).as[Seq[JsValue]].dropRight(1)
         if(cm.isEmpty){
-          cacheMap copy (data = cacheMap.data - (SelectBenefitsId.toString, OtherBenefitId.toString))
+          val newCacheMap = cacheMap copy (data = cacheMap.data - (SelectBenefitsId.toString, OtherBenefitId.toString, AnyBenefitsId.toString))
+          store(AnyBenefitsId.toString, false, newCacheMap)
         } else {
-          store(SelectBenefitsId.toString, cm, cacheMap)
+          val newCacheMap = cacheMap copy (data = cacheMap.data - OtherBenefitId.toString)
+          store(SelectBenefitsId.toString, cm, newCacheMap)
         }
       case _ => cacheMap
     }
@@ -239,9 +241,11 @@ class CascadeUpsert {
       case JsBoolean(false) =>
         val cm = cacheMap.data(SelectCompanyBenefitsId.toString).as[Seq[JsValue]].dropRight(1)
         if(cm.isEmpty){
-          cacheMap copy (data = cacheMap.data - (SelectCompanyBenefitsId.toString, OtherCompanyBenefitId.toString))
+          val newCacheMap = cacheMap copy (data = cacheMap.data - (SelectCompanyBenefitsId.toString, OtherCompanyBenefitId.toString, AnyCompanyBenefitsId.toString))
+          store(AnyCompanyBenefitsId.toString, false, newCacheMap)
         } else {
-          store(SelectCompanyBenefitsId.toString, cm, cacheMap)
+          val newCacheMap = cacheMap copy (data = cacheMap.data - OtherCompanyBenefitId.toString)
+          store(SelectCompanyBenefitsId.toString, cm, newCacheMap)
         }
       case _ => cacheMap
     }
@@ -253,9 +257,11 @@ class CascadeUpsert {
       case JsBoolean(false) =>
         val cm = cacheMap.data(SelectTaxableIncomeId.toString).as[Seq[JsValue]].dropRight(1)
         if(cm.isEmpty){
-          cacheMap copy (data = cacheMap.data - (SelectTaxableIncomeId.toString, OtherTaxableIncomeId.toString))
+          val newCacheMap = cacheMap copy (data = cacheMap.data - (SelectTaxableIncomeId.toString, OtherTaxableIncomeId.toString, AnyTaxableIncomeId.toString))
+          store(AnyTaxableIncomeId.toString, false, newCacheMap)
         } else {
-          store(SelectTaxableIncomeId.toString, cm, cacheMap)
+          val newCacheMap = cacheMap copy (data = cacheMap.data - OtherTaxableIncomeId.toString)
+          store(SelectTaxableIncomeId.toString, cm, newCacheMap)
         }
       case _ => cacheMap
     }

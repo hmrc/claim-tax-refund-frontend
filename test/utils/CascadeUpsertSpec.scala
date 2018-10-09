@@ -64,8 +64,6 @@ class CascadeUpsertSpec extends SpecBase with PropertyChecks {
     }
   }
 
-  //Claim details section
-
   "Claim details section" must {
     "Answering 'Yes' on EmploymentDetailsController" must {
       "remove data from next 2 screens" in {
@@ -76,8 +74,179 @@ class CascadeUpsertSpec extends SpecBase with PropertyChecks {
         ))
         val cascadeUpsert = new CascadeUpsert
         val result = cascadeUpsert(EmploymentDetailsId.toString, JsBoolean(true), originalCacheMap)
-        result.data mustBe Map (
+        result.data mustBe Map(
           EmploymentDetailsId.toString -> Json.toJson(true)
+        )
+      }
+    }
+  }
+
+  "Other Benefits section" must {
+    "Answering 'No' on RemoveOtherSelectedOption" must {
+      "remove selectBenefits and OtherBenefitId from CacheMap and change AnyBenefits to false when OtherBenefit is empty" in {
+        val originalCacheMap = new CacheMap(id = "test", Map(
+          AnyBenefitsId.toString -> Json.toJson(true),
+          SelectBenefitsId.toString -> Json.toJson(Seq("other-taxable-benefit")),
+          OtherBenefitId.toString -> Json.toJson(Seq("value"))
+        ))
+
+        val cascadeUpsert = new CascadeUpsert
+        val result = cascadeUpsert("otherBenefits", JsBoolean(false), originalCacheMap)
+
+        result.data mustBe Map(
+          AnyBenefitsId.toString -> Json.toJson(false),
+          RemoveOtherSelectedOptionId.toString -> Json.toJson(false)
+        )
+      }
+
+      "remove other-taxable-benefit from SelectBenefits when OtherBenefit is not empty" in {
+        val originalCacheMap = new CacheMap(id = "test", Map(
+          AnyBenefitsId.toString -> Json.toJson(true),
+          SelectBenefitsId.toString -> Json.toJson(Seq("bereavement-allowance", "other-taxable-benefit")),
+          OtherBenefitId.toString -> Json.toJson(Seq("value"))
+        ))
+
+        val cascadeUpsert = new CascadeUpsert
+        val result = cascadeUpsert("otherBenefits", JsBoolean(false), originalCacheMap)
+
+        result.data mustBe Map(
+          AnyBenefitsId.toString -> Json.toJson(true),
+          SelectBenefitsId.toString -> Json.toJson(Seq("bereavement-allowance")),
+          RemoveOtherSelectedOptionId.toString -> Json.toJson(false)
+        )
+      }
+    }
+
+    "Answering 'Yes' on RemoveOtherSelectedOption" must {
+      "return original CacheMap" in {
+        val originalCacheMap = new CacheMap(id = "test", Map(
+          AnyBenefitsId.toString -> Json.toJson(true),
+          SelectBenefitsId.toString -> Json.toJson(Seq("bereavement-allowance", "other-taxable-benefit")),
+          OtherBenefitId.toString -> Json.toJson(Seq("value"))
+        ))
+
+        val cascadeUpsert = new CascadeUpsert
+        val result = cascadeUpsert("otherBenefits", JsBoolean(true), originalCacheMap)
+
+        result.data mustBe Map(
+          AnyBenefitsId.toString -> Json.toJson(true),
+          SelectBenefitsId.toString -> Json.toJson(Seq("bereavement-allowance", "other-taxable-benefit")),
+          OtherBenefitId.toString -> Json.toJson(Seq("value")),
+          RemoveOtherSelectedOptionId.toString -> Json.toJson(true)
+        )
+      }
+    }
+  }
+
+  "Other Company Benefits section" must {
+    "Answering 'No' on RemoveOtherSelectedOption" must {
+      "remove selectCompanyBenefits and OtherCompanyBenefits from CacheMap and change AnyCompanyBenefits to false when OtherCompanyBenefit is empty" in {
+        val originalCacheMap = new CacheMap(id = "test", Map(
+          AnyCompanyBenefitsId.toString -> Json.toJson(true),
+          SelectCompanyBenefitsId.toString -> Json.toJson(Seq("other-company-benefit")),
+          OtherCompanyBenefitId.toString -> Json.toJson(Seq("value"))
+        ))
+
+        val cascadeUpsert = new CascadeUpsert
+        val result = cascadeUpsert("otherCompanyBenefits", JsBoolean(false), originalCacheMap)
+
+        result.data mustBe Map(
+          AnyCompanyBenefitsId.toString -> Json.toJson(false),
+          RemoveOtherSelectedOptionId.toString -> Json.toJson(false)
+        )
+      }
+
+      "remove other-company-benefit from selectCompanyBenefits when OtherCompanyBenefit is not empty" in {
+        val originalCacheMap = new CacheMap(id = "test", Map(
+          AnyCompanyBenefitsId.toString -> Json.toJson(true),
+          SelectCompanyBenefitsId.toString -> Json.toJson(Seq("company-car-benefit", "other-company-benefit")),
+          OtherCompanyBenefitId.toString -> Json.toJson(Seq("value"))
+        ))
+
+        val cascadeUpsert = new CascadeUpsert
+        val result = cascadeUpsert("otherCompanyBenefits", JsBoolean(false), originalCacheMap)
+
+        result.data mustBe Map(
+          AnyCompanyBenefitsId.toString -> Json.toJson(true),
+          SelectCompanyBenefitsId.toString -> Json.toJson(Seq("company-car-benefit")),
+          RemoveOtherSelectedOptionId.toString -> Json.toJson(false)
+        )
+      }
+
+      "Answering 'Yes' on RemoveOtherSelectedOption" must {
+        "return original CacheMap" in {
+          val originalCacheMap = new CacheMap(id = "test", Map(
+            AnyCompanyBenefitsId.toString -> Json.toJson(true),
+            SelectCompanyBenefitsId.toString -> Json.toJson(Seq("company-car-benefit", "other-company-benefit")),
+            OtherCompanyBenefitId.toString -> Json.toJson(Seq("value"))
+          ))
+
+          val cascadeUpsert = new CascadeUpsert
+          val result = cascadeUpsert("otherCompanyBenefits", JsBoolean(true), originalCacheMap)
+
+          result.data mustBe Map(
+            AnyCompanyBenefitsId.toString -> Json.toJson(true),
+            SelectCompanyBenefitsId.toString -> Json.toJson(Seq("company-car-benefit", "other-company-benefit")),
+            OtherCompanyBenefitId.toString -> Json.toJson(Seq("value")),
+            RemoveOtherSelectedOptionId.toString -> Json.toJson(true)
+          )
+        }
+      }
+    }
+  }
+
+  "Other Taxable Income section" must {
+    "Answering 'No' on RemoveOtherSelectedOption" must {
+      "remove selectTaxableIncome and OtherTaxableIncome from CacheMap and change AnyTaxableIncome to false when OtherTaxableIncome is empty" in {
+        val originalCacheMap = new CacheMap(id = "test", Map(
+          AnyTaxableIncomeId.toString -> Json.toJson(true),
+          SelectTaxableIncomeId.toString -> Json.toJson(Seq("other-taxable-income")),
+          OtherTaxableIncomeId.toString -> Json.toJson(Seq("value"))
+        ))
+
+        val cascadeUpsert = new CascadeUpsert
+        val result = cascadeUpsert("otherTaxableIncome", JsBoolean(false), originalCacheMap)
+
+        result.data mustBe Map(
+          AnyTaxableIncomeId.toString -> Json.toJson(false),
+          RemoveOtherSelectedOptionId.toString -> Json.toJson(false)
+        )
+      }
+
+      "remove other-taxable-income from selectTaxableIncome when OtherTaxableIncome is not empty" in {
+        val originalCacheMap = new CacheMap(id = "test", Map(
+          AnyTaxableIncomeId.toString -> Json.toJson(true),
+          SelectTaxableIncomeId.toString -> Json.toJson(Seq("rental-income", "other-taxable-income")),
+          OtherTaxableIncomeId.toString -> Json.toJson(Seq("value"))
+        ))
+
+        val cascadeUpsert = new CascadeUpsert
+        val result = cascadeUpsert("otherTaxableIncome", JsBoolean(false), originalCacheMap)
+
+        result.data mustBe Map(
+          AnyTaxableIncomeId.toString -> Json.toJson(true),
+          SelectTaxableIncomeId.toString -> Json.toJson(Seq("rental-income")),
+          RemoveOtherSelectedOptionId.toString -> Json.toJson(false)
+        )
+      }
+    }
+
+    "Answering 'Yes' on RemoveOtherSelectedOption" must {
+      "return original CacheMap" in {
+        val originalCacheMap = new CacheMap(id = "test", Map(
+          AnyTaxableIncomeId.toString -> Json.toJson(true),
+          SelectTaxableIncomeId.toString -> Json.toJson(Seq("rental-income", "other-taxable-income")),
+          OtherTaxableIncomeId.toString -> Json.toJson(Seq("value"))
+        ))
+
+        val cascadeUpsert = new CascadeUpsert
+        val result = cascadeUpsert("otherTaxableIncome", JsBoolean(true), originalCacheMap)
+
+        result.data mustBe Map(
+          AnyTaxableIncomeId.toString -> Json.toJson(true),
+          SelectTaxableIncomeId.toString -> Json.toJson(Seq("rental-income", "other-taxable-income")),
+          OtherTaxableIncomeId.toString -> Json.toJson(Seq("value")),
+          RemoveOtherSelectedOptionId.toString -> Json.toJson(true)
         )
       }
     }
