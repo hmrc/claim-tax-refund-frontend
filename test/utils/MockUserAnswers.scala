@@ -21,7 +21,7 @@ import models.WhereToSendPayment.{Myself, Nominee}
 import models.{Metadata, _}
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
-import uk.gov.hmrc.auth.core.retrieve.ItmpName
+import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
 
 object MockUserAnswers extends MockitoSugar {
 
@@ -94,6 +94,17 @@ object MockUserAnswers extends MockitoSugar {
 
     when(answers.name) thenReturn Some(ItmpName(Some("TestName"), None, Some("TestLastName")))
     when(answers.nino) thenReturn Some("ZZ123456A")
+    when(answers.itmpAddress) thenReturn
+      Some(ItmpAddress(
+        Some("Address line 1"),
+        Some("Address line 2"),
+        Some("Address line 3"),
+        Some("Address line 4"),
+        Some("Address line 5"),
+        Some("ZZ11ZZ"),
+        Some("United Kingdom"),
+        Some("GB")
+      ))
 
     when(answers.selectTaxYear) thenReturn Some(CYMinus2)
     when(answers.employmentDetails) thenReturn Some(true)
@@ -101,7 +112,6 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.anyCompanyBenefits) thenReturn Some(false)
     when(answers.anyTaxableIncome) thenReturn Some(false)
     when(answers.whereToSendPayment) thenReturn Some(Myself)
-    when(answers.itmpAddress) thenReturn None
     when(answers.paymentAddressCorrect) thenReturn Some(true)
     when(answers.anyTelephoneNumber) thenReturn Some(TelephoneOption.No)
 
@@ -245,6 +255,17 @@ object MockUserAnswers extends MockitoSugar {
 
     when(answers.name) thenReturn Some(ItmpName(Some("TestName"), None, Some("TestLastName")))
     when(answers.nino) thenReturn Some("ZZ123456A")
+    when(answers.itmpAddress) thenReturn
+      Some(ItmpAddress(
+        Some("Address line 1"),
+        Some("Address line 2"),
+        Some("Address line 3"),
+        Some("Address line 4"),
+        Some("Address line 5"),
+        Some("ZZ11ZZ"),
+        Some("United Kingdom"),
+        Some("GB")
+      ))
 
     when(answers.selectTaxYear) thenReturn Some(CYMinus2)
     when(answers.employmentDetails) thenReturn Some(true)

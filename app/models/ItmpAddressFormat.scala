@@ -19,19 +19,23 @@ package models
 import play.api.libs.json.{Format, Json}
 import uk.gov.hmrc.auth.core.retrieve.ItmpAddress
 
+import scala.xml._
+
 object ItmpAddressFormat {
   implicit val format: Format[ItmpAddress] = Json.format[ItmpAddress]
 
   def answeredLines(a: ItmpAddress): Seq[String] = Seq(
-    a.line1,
-    a.line2,
-    a.line3,
-    a.line4,
-    a.line5,
-    a.postCode,
-    a.countryName,
-    a.countryCode
-  ).flatten
+      a.line1,
+      a.line2,
+      a.line3,
+      a.line4,
+      a.line5,
+      a.postCode,
+      a.countryName,
+      a.countryCode
+    ).flatten
+
+  def toXml(a: ItmpAddress): Elem = <itmpAddress>{answeredLines(a).mkString(", ")}</itmpAddress>
 
   def asString(a: ItmpAddress): String = answeredLines(a).mkString(", <br>")
 }

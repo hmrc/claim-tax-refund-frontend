@@ -12,17 +12,21 @@
 @import models.ItmpNameFormat._
 @import play.api.i18n.Messages
 
-@(userAnswers: UserAnswers)(implicit messages: Messages)
+@(userAnswers: UserAnswers, submissionReference: String, timeStamp: String)(implicit messages: Messages)
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <ctr>
-	<userDetails>
-		@userAnswers.name.map{ value =>
-		<name>@ItmpNameFormat.asString(value)</name>
-		}
-		@userAnswers.nino.map{ value =>
-		<nino>@value</nino>
-		}
-	</userDetails>
+    <submissionReference>@submissionReference</submissionReference>
+
+    <dateCreated>@timeStamp</dateCreated>
+
+    <userDetails>
+		@userAnswers.name.map{ value =><name>@ItmpNameFormat.asString(value)</name>}
+
+		@userAnswers.nino.map{ value =><nino>@value</nino>}
+
+        @userAnswers.itmpAddress.map{ value =>@ItmpAddressFormat.toXml(value)}
+
+    </userDetails>
 
 	<claimSection>
 		@userAnswers.selectTaxYear.map{ value =>
@@ -38,7 +42,6 @@
 		<detailsOfEmploymentOrPension>@userAnswers.detailsOfEmploymentOrPension</detailsOfEmploymentOrPension>
 		}
 	</claimSection>
-
 
 	<benefitSection>
 		@userAnswers.anyBenefits.map{ value =>
@@ -106,7 +109,7 @@
 		<rentalIncome>
 			<howMuch>@value</howMuch>
 			@userAnswers.anyTaxableRentalIncome.map{ value =>
-			@AnyTaxPaid.toXml(value)
+				@AnyTaxPaid.toXml(value)
 			}
 		</rentalIncome>
 		}
@@ -114,7 +117,7 @@
 		<bankInterest>
 			<howMuch>@value</howMuch>
 			@userAnswers.anyTaxableBankInterest.map{ value =>
-			@AnyTaxPaid.toXml(value)
+				@AnyTaxPaid.toXml(value)
 			}
 		</bankInterest>
 		}
@@ -122,7 +125,7 @@
 		<investmentOrDividend>
 			<howMuch>@value</howMuch>
 			@userAnswers.anyTaxableInvestments.map{ value =>
-			@AnyTaxPaid.toXml(value)
+				@AnyTaxPaid.toXml(value)
 			}
 		</investmentOrDividend>
 		}
@@ -130,7 +133,7 @@
 		<foreignIncome>
 			<howMuch>@value</howMuch>
 			@userAnswers.anyTaxableForeignIncome.map{ value =>
-			@AnyTaxPaid.toXml(value)
+				@AnyTaxPaid.toXml(value)
 			}
 		</foreignIncome>
 		}
@@ -152,27 +155,27 @@
 		<nomineeFullname>@value</nomineeFullname>
 		}
 		@userAnswers.anyAgentRef.map{ value =>
-		@AnyAgentRef.toXml(value)
+		    @AnyAgentRef.toXml(value)
 		}
 		@userAnswers.isPaymentAddressInTheUK.map{ value =>
 		<isPaymentAddressInTheUK>@value</isPaymentAddressInTheUK>
 		}
 		<paymentAddress>
 			@userAnswers.paymentUKAddress.map{ value =>
-			@UkAddress.toXml(value)
+				@UkAddress.toXml(value)
 			}
 			@userAnswers.paymentInternationalAddress.map{ value =>
-			@InternationalAddress.toXml(value)
+				@InternationalAddress.toXml(value)
 			}
 			@userAnswers.paymentLookupAddress.map{ value =>
-			@AddressLookup.toXml(value)
+				@AddressLookup.toXml(value)
 			}
 		</paymentAddress>
 	</paymentSection>
 
 	<contactSection>
 		@userAnswers.anyTelephoneNumber.map{ value =>
-		@TelephoneOption.toXml(value)
+			@TelephoneOption.toXml(value)
 		}
 	</contactSection>
 </ctr>

@@ -29,16 +29,16 @@ case class UkAddress(addressLine1: String,
 object UkAddress {
   implicit val format = Json.format[UkAddress]
 
-  def toXml(a: UkAddress): Elem = <ukAddress>{answeredLines(a).mkString(", ")}</ukAddress>
-
   def answeredLines(a: UkAddress): Seq[String] = Seq(
-    Some(a.addressLine1),
-    Some(a.addressLine2),
-    a.addressLine3,
-    a.addressLine4,
-    a.addressLine5,
-    Some(a.postcode)
-  ).flatten
+      Some(a.addressLine1),
+      Some(a.addressLine2),
+      a.addressLine3,
+      a.addressLine4,
+      a.addressLine5,
+      Some(a.postcode)
+    ).flatten
+
+  def toXml(a: UkAddress): Elem = <ukAddress>{answeredLines(a).mkString(", ")}</ukAddress>
 
   def asString(a: UkAddress): String = answeredLines(a).mkString(", <br>")
 }

@@ -26,7 +26,7 @@ import play.api.Logger
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
 import services.SubmissionService
-import uk.gov.hmrc.auth.core.retrieve.ItmpName
+import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.play.partials.FormPartialRetriever
@@ -35,7 +35,6 @@ import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, UserAnswers}
 import views.html.{check_your_answers, pdf_check_your_answers}
 
 import scala.concurrent.Future
-
 class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
                                            override val messagesApi: MessagesApi,
                                            dataCacheConnector: DataCacheConnector,
@@ -44,14 +43,27 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
                                            requireData: DataRequiredAction,
                                            submissionService: SubmissionService,
                                            implicit val formPartialRetriever: FormPartialRetriever,
-                                           implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
+                                           implicit val templateRenderer: TemplateRenderer
+                                          ) extends FrontendController with I18nSupport {
   import ItmpNameFormat.format
 
   def onPageLoad(): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
+      val itmpName: ItmpName = request.name.getOrElse(ItmpName(Some("No name returned from ITMP"), None, None))
+      val itmpAddress: ItmpAddress = request.address.getOrElse(ItmpAddress(Some("No address returned from ITMP"), None, None, None, None, None, None, None))
+      val nino: String = request.nino
+
+      val metadata: Metadata = new Metadata()
+      val submissionReference = metadata.submissionReference
+//      val x: XmlFormat.Appendable = robots(request.userAnswers, submissionReference, metadata.timeStamp)
+//      val y: Elem = loadString(robots(request.userAnswers, submissionReference, metadata.timeStamp).toString)
+      val xml: String = robots(request.userAnswers, submissionReference, metadata.timeStamp).toString.replaceAll("\t|\n", "")
+      println(s"###############\n\n\n$xml")
+
       for {
-        _ <- dataCacheConnector.save[ItmpName](request.externalId, key = "name", request.name.getOrElse(ItmpName(Some("No name returned from ITMP"), None, None)))
-        updatedCacheMap: CacheMap <- dataCacheConnector.save[String](request.externalId, key = "nino", request.nino)
+        _ <- dataCacheConnector.save[ItmpName](request.externalId, key = "name", itmpName)
+        _ <- dataCacheConnector.save[ItmpAddress](request.externalId, key = "itmpAddress", itmpAddress)(ItmpAddressFormat.format)
+        updatedCacheMap: CacheMap <- dataCacheConnector.save[String](request.externalId, key = "nino", nino)
       } yield {
         val updatedUserAnswers = new UserAnswers(updatedCacheMap)
         val cyaHelper = new CheckYourAnswersHelper(updatedUserAnswers)
@@ -65,17 +77,15 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
       val cyaHelper: CheckYourAnswersHelper = new CheckYourAnswersHelper(request.userAnswers)
       val cyaSections: CheckYourAnswersSections = new CheckYourAnswersSections(cyaHelper, request.userAnswers)
       val pdfHtml: String = pdf_check_your_answers(appConfig, cyaSections.sections, request.nino, request.name).toString.replaceAll("\t|\n", "")
-      val xml: String = robots(request.userAnswers).toString.replaceAll("\t|\n", "")
       val metadata: Metadata = new Metadata()
       val submissionReference = metadata.submissionReference
+      val xml: String = robots(request.userAnswers, submissionReference, metadata.timeStamp).toString.replaceAll("\t|\n", "")
 
       val futureSubmission: Future[Submission] = for {
         _ <- dataCacheConnector.save[String](request.externalId, key = "pdf", pdfHtml)
         _ <- dataCacheConnector.save[String](request.externalId, key = "xml", xml)
         _ <- dataCacheConnector.save[String](request.externalId, key = "metadata", Metadata.toXml(metadata).toString)
       } yield new Submission(pdfHtml, metadata.toString, xml)
-
-
 
       futureSubmission.onFailure {
         case e =>

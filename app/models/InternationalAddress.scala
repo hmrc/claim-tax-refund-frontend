@@ -28,17 +28,18 @@ case class InternationalAddress(addressLine1: String,
                                 country: String)
 
 object InternationalAddress {
-  implicit val format = Json.format[InternationalAddress]
-
-  def toXml(a: InternationalAddress): Elem = <internationalAddress>{answeredLines(a).mkString(", ")}</internationalAddress>
+  implicit val format: Format[InternationalAddress] = Json.format[InternationalAddress]
 
   def answeredLines(a: InternationalAddress): Seq[String] = Seq(
-    Some(a.addressLine1),
-    Some(a.addressLine2),
-    a.addressLine3,
-    a.addressLine4,
-    a.addressLine5,
-    Some(a.country)).flatten
+      Some(a.addressLine1),
+      Some(a.addressLine2),
+      a.addressLine3,
+      a.addressLine4,
+      a.addressLine5,
+      Some(a.country)
+    ).flatten
+
+  def toXml(a: InternationalAddress): Elem = <internationalAddress>{answeredLines(a).mkString(", ")}</internationalAddress>
 
   def asString(a: InternationalAddress): String = answeredLines(a).mkString(", <br>")
 }
