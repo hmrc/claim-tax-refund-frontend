@@ -87,7 +87,8 @@ class CascadeUpsertSpec extends SpecBase with PropertyChecks {
         val originalCacheMap = new CacheMap(id = "test", Map(
           AnyBenefitsId.toString -> Json.toJson(true),
           SelectBenefitsId.toString -> Json.toJson(Seq("other-taxable-benefit")),
-          OtherBenefitId.toString -> Json.toJson(Seq("value"))
+          OtherBenefitId.toString -> Json.toJson(Seq("value")),
+          AnyOtherBenefitsId.toString -> Json.toJson(false)
         ))
 
         val cascadeUpsert = new CascadeUpsert
@@ -103,7 +104,8 @@ class CascadeUpsertSpec extends SpecBase with PropertyChecks {
         val originalCacheMap = new CacheMap(id = "test", Map(
           AnyBenefitsId.toString -> Json.toJson(true),
           SelectBenefitsId.toString -> Json.toJson(Seq("bereavement-allowance", "other-taxable-benefit")),
-          OtherBenefitId.toString -> Json.toJson(Seq("value"))
+          OtherBenefitId.toString -> Json.toJson(Seq("value")),
+          AnyOtherBenefitsId.toString -> Json.toJson(false)
         ))
 
         val cascadeUpsert = new CascadeUpsert
@@ -122,7 +124,8 @@ class CascadeUpsertSpec extends SpecBase with PropertyChecks {
         val originalCacheMap = new CacheMap(id = "test", Map(
           AnyBenefitsId.toString -> Json.toJson(true),
           SelectBenefitsId.toString -> Json.toJson(Seq("bereavement-allowance", "other-taxable-benefit")),
-          OtherBenefitId.toString -> Json.toJson(Seq("value"))
+          OtherBenefitId.toString -> Json.toJson(Seq("value")),
+          AnyOtherBenefitsId.toString -> Json.toJson(false)
         ))
 
         val cascadeUpsert = new CascadeUpsert
@@ -132,6 +135,7 @@ class CascadeUpsertSpec extends SpecBase with PropertyChecks {
           AnyBenefitsId.toString -> Json.toJson(true),
           SelectBenefitsId.toString -> Json.toJson(Seq("bereavement-allowance", "other-taxable-benefit")),
           OtherBenefitId.toString -> Json.toJson(Seq("value")),
+          AnyOtherBenefitsId.toString -> Json.toJson(false),
           RemoveOtherSelectedOptionId.toString -> Json.toJson(true)
         )
       }
@@ -144,7 +148,8 @@ class CascadeUpsertSpec extends SpecBase with PropertyChecks {
         val originalCacheMap = new CacheMap(id = "test", Map(
           AnyCompanyBenefitsId.toString -> Json.toJson(true),
           SelectCompanyBenefitsId.toString -> Json.toJson(Seq("other-company-benefit")),
-          OtherCompanyBenefitId.toString -> Json.toJson(Seq("value"))
+          OtherCompanyBenefitId.toString -> Json.toJson(Seq("value")),
+          AnyOtherCompanyBenefitsId.toString -> Json.toJson(false)
         ))
 
         val cascadeUpsert = new CascadeUpsert
@@ -160,7 +165,8 @@ class CascadeUpsertSpec extends SpecBase with PropertyChecks {
         val originalCacheMap = new CacheMap(id = "test", Map(
           AnyCompanyBenefitsId.toString -> Json.toJson(true),
           SelectCompanyBenefitsId.toString -> Json.toJson(Seq("company-car-benefit", "other-company-benefit")),
-          OtherCompanyBenefitId.toString -> Json.toJson(Seq("value"))
+          OtherCompanyBenefitId.toString -> Json.toJson(Seq("value")),
+          AnyOtherCompanyBenefitsId.toString -> Json.toJson(false)
         ))
 
         val cascadeUpsert = new CascadeUpsert
@@ -178,7 +184,8 @@ class CascadeUpsertSpec extends SpecBase with PropertyChecks {
           val originalCacheMap = new CacheMap(id = "test", Map(
             AnyCompanyBenefitsId.toString -> Json.toJson(true),
             SelectCompanyBenefitsId.toString -> Json.toJson(Seq("company-car-benefit", "other-company-benefit")),
-            OtherCompanyBenefitId.toString -> Json.toJson(Seq("value"))
+            OtherCompanyBenefitId.toString -> Json.toJson(Seq("value")),
+            AnyOtherCompanyBenefitsId.toString -> Json.toJson(false)
           ))
 
           val cascadeUpsert = new CascadeUpsert
@@ -188,6 +195,7 @@ class CascadeUpsertSpec extends SpecBase with PropertyChecks {
             AnyCompanyBenefitsId.toString -> Json.toJson(true),
             SelectCompanyBenefitsId.toString -> Json.toJson(Seq("company-car-benefit", "other-company-benefit")),
             OtherCompanyBenefitId.toString -> Json.toJson(Seq("value")),
+            AnyOtherCompanyBenefitsId.toString -> Json.toJson(false),
             RemoveOtherSelectedOptionId.toString -> Json.toJson(true)
           )
         }
@@ -201,7 +209,8 @@ class CascadeUpsertSpec extends SpecBase with PropertyChecks {
         val originalCacheMap = new CacheMap(id = "test", Map(
           AnyTaxableIncomeId.toString -> Json.toJson(true),
           SelectTaxableIncomeId.toString -> Json.toJson(Seq("other-taxable-income")),
-          OtherTaxableIncomeId.toString -> Json.toJson(Seq("value"))
+          OtherTaxableIncomeId.toString -> Json.toJson(Seq("value")),
+          AnyOtherTaxableIncomeId.toString -> Json.toJson(false)
         ))
 
         val cascadeUpsert = new CascadeUpsert
@@ -217,7 +226,8 @@ class CascadeUpsertSpec extends SpecBase with PropertyChecks {
         val originalCacheMap = new CacheMap(id = "test", Map(
           AnyTaxableIncomeId.toString -> Json.toJson(true),
           SelectTaxableIncomeId.toString -> Json.toJson(Seq("rental-income", "other-taxable-income")),
-          OtherTaxableIncomeId.toString -> Json.toJson(Seq("value"))
+          OtherTaxableIncomeId.toString -> Json.toJson(Seq("value")),
+          AnyOtherTaxableIncomeId.toString -> Json.toJson(false)
         ))
 
         val cascadeUpsert = new CascadeUpsert
@@ -236,7 +246,8 @@ class CascadeUpsertSpec extends SpecBase with PropertyChecks {
         val originalCacheMap = new CacheMap(id = "test", Map(
           AnyTaxableIncomeId.toString -> Json.toJson(true),
           SelectTaxableIncomeId.toString -> Json.toJson(Seq("rental-income", "other-taxable-income")),
-          OtherTaxableIncomeId.toString -> Json.toJson(Seq("value"))
+          OtherTaxableIncomeId.toString -> Json.toJson(Seq("value")),
+          AnyOtherTaxableIncomeId.toString -> Json.toJson(false)
         ))
 
         val cascadeUpsert = new CascadeUpsert
@@ -246,6 +257,7 @@ class CascadeUpsertSpec extends SpecBase with PropertyChecks {
           AnyTaxableIncomeId.toString -> Json.toJson(true),
           SelectTaxableIncomeId.toString -> Json.toJson(Seq("rental-income", "other-taxable-income")),
           OtherTaxableIncomeId.toString -> Json.toJson(Seq("value")),
+          AnyOtherTaxableIncomeId.toString -> Json.toJson(false),
           RemoveOtherSelectedOptionId.toString -> Json.toJson(true)
         )
       }

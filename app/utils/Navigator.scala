@@ -66,24 +66,13 @@ class Navigator @Inject()() {
   private def otherSectionNo(mode: Mode, collectionId: String)(userAnswers: UserAnswers): Call = {
     if (mode == NormalMode) {
       collectionId match {
-        case OtherBenefit.collectionId =>
-          if(userAnswers.selectBenefits.isEmpty) routes.AnyBenefitsController.onPageLoad(mode) else routes.AnyCompanyBenefitsController.onPageLoad(mode)
-        case OtherCompanyBenefit.collectionId =>
-          if(userAnswers.selectCompanyBenefits.isEmpty) routes.AnyCompanyBenefitsController.onPageLoad(mode) else routes.AnyTaxableIncomeController.onPageLoad(mode)
-        case OtherTaxableIncome.collectionId =>
-          if(userAnswers.selectTaxableIncome.isEmpty) routes.AnyTaxableIncomeController.onPageLoad(mode) else routes.WhereToSendPaymentController.onPageLoad(mode)
+        case OtherBenefit.collectionId => routes.AnyCompanyBenefitsController.onPageLoad(mode)
+        case OtherCompanyBenefit.collectionId => routes.AnyTaxableIncomeController.onPageLoad(mode)
+        case OtherTaxableIncome.collectionId => routes.WhereToSendPaymentController.onPageLoad(mode)
         case _ => routes.SessionExpiredController.onPageLoad()
       }
     } else {
-      collectionId match {
-        case OtherBenefit.collectionId =>
-          if(userAnswers.selectBenefits.isEmpty) routes.AnyBenefitsController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
-        case OtherCompanyBenefit.collectionId =>
-          if(userAnswers.selectCompanyBenefits.isEmpty) routes.AnyCompanyBenefitsController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
-        case OtherTaxableIncome.collectionId =>
-          if(userAnswers.selectTaxableIncome.isEmpty) routes.AnyTaxableIncomeController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
-        case _ => routes.SessionExpiredController.onPageLoad()
-      }
+      routes.CheckYourAnswersController.onPageLoad()
     }
   }
 
