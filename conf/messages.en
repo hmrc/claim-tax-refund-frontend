@@ -171,8 +171,8 @@ howMuchRentalIncome.checkYourAnswersLabel = Rental income
 howMuchRentalIncome.blank = Enter the amount of rental income you got
 howMuchRentalIncome.invalid = Enter a valid amount of rental income
 
-anyOtherBenefits.title = Did you get any other taxable benefits?
-anyOtherBenefits.heading = Did you get any other taxable benefits?
+anyOtherBenefits.title = Other taxable benefits
+anyOtherBenefits.heading = Other taxable benefits
 anyOtherBenefits.blank = Select yes if you got any other taxable benefits
 anyOtherBenefits.addAnotherBenefit = Do you need to add another taxable benefit?
 
@@ -322,10 +322,10 @@ enterPayeReference.hint = For example 123/AB456. You can find this on your paysl
 enterPayeReference.blank = Enter your employer or pension provider’s PAYE reference
 enterPayeReference.invalid = Enter a valid PAYE reference
 
-anyOtherCompanyBenefits.title = Did you get any other company benefits?
-anyOtherCompanyBenefits.heading = Did you get any other company benefits?
-anyOtherCompanyBenefits.checkYourAnswersLabel = Did you get any other company benefits?
+anyOtherCompanyBenefits.title = Other company benefits
+anyOtherCompanyBenefits.heading = Other company benefits
 anyOtherCompanyBenefits.blank = Select yes if you got any other company benefits
+anyOtherCompanyBenefits.addAnotherCompanyBenefit = Do you need to add another company benefit?
 
 howMuchBereavementAllowance.title = How much Bereavement Allowance did you get?
 howMuchBereavementAllowance.heading = How much Bereavement Allowance did you get?
