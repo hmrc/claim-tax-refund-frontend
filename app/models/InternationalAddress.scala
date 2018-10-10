@@ -39,7 +39,7 @@ object InternationalAddress {
       Some(a.country)
     ).flatten
 
-  def toXml(a: InternationalAddress): Elem = <internationalAddress>{answeredLines(a).mkString(", ")}</internationalAddress>
+  def toXml(a: InternationalAddress): Elem = <paymentAddress><internationalAddress>{answeredLines(a).mkString(", ")}</internationalAddress></paymentAddress>
 
   def asString(a: InternationalAddress): String = answeredLines(a).mkString(", <br>")
 }

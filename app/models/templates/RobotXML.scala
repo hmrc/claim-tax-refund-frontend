@@ -39,7 +39,7 @@ class RobotXML {
               <nino>{value}</nino>
             } ++
             userAnswers.itmpAddress.toSeq.map { value =>
-              ItmpAddressFormat.toXml(value)
+              <itmpAddress>{ItmpAddressFormat.toXml(value)}</itmpAddress>
             }
           }
         </userDetails>
@@ -50,7 +50,7 @@ class RobotXML {
               <selectedTaxYear>{value.asString}</selectedTaxYear>
             } ++
             userAnswers.employmentDetails.toSeq.map { value =>
-              <employmentDetails>{value}</employmentDetails>
+              <employmentDetails>{value.toString}</employmentDetails>
             } ++
             userAnswers.enterPayeReference.toSeq.map { value =>
               <payeReference>{value}</payeReference>
@@ -64,7 +64,7 @@ class RobotXML {
         <benefitSection>
           {
             userAnswers.anyBenefits.toSeq.map { value =>
-              <anyBenefits>{value}</anyBenefits>
+              <anyBenefits>{value.toString}</anyBenefits>
             } ++
             userAnswers.selectBenefits.toSeq.map { value =>
               <selectBenefits>{value.mkString(", ")}</selectBenefits>
@@ -96,7 +96,7 @@ class RobotXML {
         <companyBenefitsSection>
           {
             userAnswers.anyCompanyBenefits.toSeq.map { value =>
-              <anyCompanyBenefits>{value}</anyCompanyBenefits>
+              <anyCompanyBenefits>{value.toString}</anyCompanyBenefits>
             } ++
             userAnswers.selectCompanyBenefits.toSeq.map { value =>
               <selectCompanyBenefits>{value.mkString(", ")}</selectCompanyBenefits>
@@ -119,7 +119,7 @@ class RobotXML {
         <taxableIncomeSection>
           {
             userAnswers.anyTaxableIncome.toSeq.map { value =>
-              <anyTaxableIncome>{value}</anyTaxableIncome>
+              <anyTaxableIncome>{value.toString}</anyTaxableIncome>
             } ++
             userAnswers.selectTaxableIncome.toSeq.map { value =>
               <selectTaxableIncome>{value.mkString(", ")}</selectTaxableIncome>
@@ -173,10 +173,10 @@ class RobotXML {
         <paymentSection>
           {
             userAnswers.whereToSendPayment.toSeq.map { value =>
-              <whereToSendThePayment>{value}</whereToSendThePayment>
+              <whereToSendThePayment>{value.toString}</whereToSendThePayment>
             } ++
             userAnswers.paymentAddressCorrect.toSeq.map { value =>
-              <paymentAddressCorrect>{value}</paymentAddressCorrect>
+              <paymentAddressCorrect>{value.toString}</paymentAddressCorrect>
             } ++
             userAnswers.nomineeFullName.toSeq.map { value =>
               <nomineeFullname>{value}</nomineeFullname>
@@ -185,21 +185,17 @@ class RobotXML {
               AnyAgentRef.toXml(value)
             } ++
             userAnswers.isPaymentAddressInTheUK.toSeq.map { value =>
-              <isPaymentAddressInTheUK>{value}</isPaymentAddressInTheUK>
+              <isPaymentAddressInTheUK>{value.toString}</isPaymentAddressInTheUK>
             } ++
-            <paymentAddress>
-              {
-                userAnswers.paymentUKAddress.toSeq.map { value =>
-                  UkAddress.toXml(value)
-                } ++
-                userAnswers.paymentInternationalAddress.toSeq.map { value =>
-                  InternationalAddress.toXml(value)
-                } ++
-                userAnswers.paymentLookupAddress.toSeq.map { value =>
-                  AddressLookup.toXml(value)
-                }
-              }
-            </paymentAddress>
+            userAnswers.paymentUKAddress.toSeq.map { value =>
+              UkAddress.toXml(value)
+            } ++
+            userAnswers.paymentInternationalAddress.toSeq.map { value =>
+              InternationalAddress.toXml(value)
+            } ++
+            userAnswers.paymentLookupAddress.toSeq.map { value =>
+              AddressLookup.toXml(value)
+            }
           }
         </paymentSection>
 

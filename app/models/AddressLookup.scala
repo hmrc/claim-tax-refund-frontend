@@ -39,7 +39,7 @@ final case class AddressLookup (address: Option[Address], auditRef: Option[Strin
 object AddressLookup {
   implicit val format: Format[AddressLookup] = Json.format[AddressLookup]
 
-  def toXml(a: AddressLookup): Elem = <lookupAddress>{completedAddress(a).mkString(", ")}</lookupAddress>
+  def toXml(a: AddressLookup): Elem = <paymentAddress><lookupAddress>{completedAddress(a).mkString(", ")}</lookupAddress></paymentAddress>
 
   def completedAddress(a: AddressLookup): Seq[String] = Seq(
       a.address.get.lines.get :+

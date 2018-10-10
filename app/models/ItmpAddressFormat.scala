@@ -35,7 +35,7 @@ object ItmpAddressFormat {
       a.countryCode
     ).flatten
 
-  def toXml(a: ItmpAddress): Elem = <itmpAddress>{answeredLines(a).mkString(", ")}</itmpAddress>
+  def toXml(a: ItmpAddress): String = answeredLines(a).mkString(", ")
 
   def asString(a: ItmpAddress): String = answeredLines(a).mkString(", <br>")
 }

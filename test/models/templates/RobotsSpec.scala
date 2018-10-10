@@ -61,10 +61,9 @@ class RobotsSpec extends SpecBase {
         <taxableIncomeSection>
           <anyTaxableIncome>false</anyTaxableIncome>
         </taxableIncomeSection>
-          <paymentSection>
+        <paymentSection>
           <whereToSendThePayment>myself</whereToSendThePayment>
           <paymentAddressCorrect>true</paymentAddressCorrect>
-          <paymentAddress/>
         </paymentSection>
         <contactSection>
           <anyTelephoneNumber>No</anyTelephoneNumber>
@@ -87,7 +86,6 @@ class RobotsSpec extends SpecBase {
     }
 
     "have correct sections in claimSection when employmentDetails are true" in {
-
       fullXml \ "claimSection" \ "selectedTaxYear" must contain(<selectedTaxYear>6 April 2016 to 5 April 2017</selectedTaxYear>)
       fullXml \ "claimSection" \ "employmentDetails" must contain(<employmentDetails>true</employmentDetails>)
     }

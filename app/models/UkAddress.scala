@@ -38,7 +38,7 @@ object UkAddress {
       Some(a.postcode)
     ).flatten
 
-  def toXml(a: UkAddress): Elem = <ukAddress>{answeredLines(a).mkString(", ")}</ukAddress>
+  def toXml(a: UkAddress): Elem = <paymentAddress><ukAddress>{answeredLines(a).mkString(", ")}</ukAddress></paymentAddress>
 
   def asString(a: UkAddress): String = answeredLines(a).mkString(", <br>")
 }
