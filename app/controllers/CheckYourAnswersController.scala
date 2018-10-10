@@ -20,7 +20,7 @@ import com.google.inject.Inject
 import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions.{AuthAction, DataRequiredAction, DataRetrievalAction}
-import models.templates.xml.robots
+import models.templates.RobotXML
 import models.{Metadata, SubmissionSuccessful, _}
 import play.api.Logger
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -53,13 +53,6 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
       val itmpAddress: ItmpAddress = request.address.getOrElse(ItmpAddress(Some("No address returned from ITMP"), None, None, None, None, None, None, None))
       val nino: String = request.nino
 
-      val metadata: Metadata = new Metadata()
-      val submissionReference = metadata.submissionReference
-//      val x: XmlFormat.Appendable = robots(request.userAnswers, submissionReference, metadata.timeStamp)
-//      val y: Elem = loadString(robots(request.userAnswers, submissionReference, metadata.timeStamp).toString)
-      val xml: String = robots(request.userAnswers, submissionReference, metadata.timeStamp).toString.replaceAll("\t|\n", "")
-      println(s"###############\n\n\n$xml")
-
       for {
         _ <- dataCacheConnector.save[ItmpName](request.externalId, key = "name", itmpName)
         _ <- dataCacheConnector.save[ItmpAddress](request.externalId, key = "itmpAddress", itmpAddress)(ItmpAddressFormat.format)
@@ -79,7 +72,8 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
       val pdfHtml: String = pdf_check_your_answers(appConfig, cyaSections.sections, request.nino, request.name).toString.replaceAll("\t|\n", "")
       val metadata: Metadata = new Metadata()
       val submissionReference = metadata.submissionReference
-      val xml: String = robots(request.userAnswers, submissionReference, metadata.timeStamp).toString.replaceAll("\t|\n", "")
+      val robotXml = new RobotXML
+      val xml: String = robotXml.generateXml(request.userAnswers, submissionReference, metadata.timeStamp).toString
 
       val futureSubmission: Future[Submission] = for {
         _ <- dataCacheConnector.save[String](request.externalId, key = "pdf", pdfHtml)

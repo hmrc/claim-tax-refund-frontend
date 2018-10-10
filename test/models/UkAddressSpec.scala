@@ -38,7 +38,7 @@ class UkAddressSpec extends SpecBase {
   "as Xml" must {
     "pass the correct xml back" in {
       val address = UkAddress("line1", "line2", None, Some("line4"), None, "postcode")
-      val expectedElem: Elem = <ukAddress>line1, line2, line4, postcode</ukAddress>
+      val expectedElem: Elem = <paymentAddress><ukAddress>line1, line2, line4, postcode</ukAddress></paymentAddress>
       UkAddress.toXml(address) mustBe expectedElem
     }
   }

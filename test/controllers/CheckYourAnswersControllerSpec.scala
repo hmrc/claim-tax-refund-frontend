@@ -24,7 +24,7 @@ import org.mockito.Mockito._
 import play.api.mvc.Result
 import play.api.test.Helpers._
 import services.SubmissionService
-import utils.WireMockHelper
+import utils.{MockUserAnswers, WireMockHelper}
 import org.scalatest.concurrent.ScalaFutures
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -45,10 +45,12 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with WireMockHel
       templateRenderer
     )
 
+  val userAnswers = MockUserAnswers.fullValidUserAnswers
+
   "Check Your Answers Controller" must {
 
     "return 200 and the correct view for a GET" in {
-      val result = controller(someData).onPageLoad()(fakeRequest)
+      val result = controller(fakeDataRetrievalAction(userAnswers)).onPageLoad()(fakeRequest)
       status(result) mustBe OK
     }
 
