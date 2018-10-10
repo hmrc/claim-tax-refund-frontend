@@ -16,7 +16,6 @@
 
 package models
 
-import play.api.i18n.Messages
 import play.api.libs.json._
 
 import scala.xml.NodeSeq
@@ -55,7 +54,7 @@ object TelephoneOption {
     case _ => <anyTelephoneNumber>No</anyTelephoneNumber>
   }
 
-  def toString(userAnswer: TelephoneOption, messages: Messages): String = userAnswer match {
+  def toString(userAnswer: TelephoneOption): String = userAnswer match {
     case TelephoneOption.Yes(telephoneNumber) => telephoneNumber
     case _ => "No"
   }
