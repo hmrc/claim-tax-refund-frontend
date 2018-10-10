@@ -39,7 +39,7 @@ class InternationalAddressSpec extends SpecBase {
   "as Xml" must {
     "pass the correct xml back" in {
       val address = InternationalAddress("line1", "line2", None, Some("line4"), None, "country")
-      val expectedElem: Elem = <internationalAddress>line1, line2, line4, country</internationalAddress>
+      val expectedElem: Elem = <paymentAddress><internationalAddress>line1, line2, line4, country</internationalAddress></paymentAddress>
       InternationalAddress.toXml(address) mustBe expectedElem
     }
   }

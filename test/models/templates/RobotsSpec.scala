@@ -17,27 +17,36 @@
 package models.templates
 
 import base.SpecBase
-import models.templates.xml.robots
-import models.{Address, AddressLookup, Country, UkAddress}
+import models._
 import org.mockito.Mockito.when
 import utils.{MockUserAnswers, UserAnswers}
 
-import scala.xml.XML._
-import scala.xml._
 import scala.xml.Utility._
+import scala.xml._
+
 class RobotsSpec extends SpecBase {
+  val robotXML = new RobotXML
 
   private val fullUserAnswers: UserAnswers = MockUserAnswers.fullValidUserAnswers
 
-  private val fullXml: Elem = loadString(robots(fullUserAnswers)(messages).toString.replaceAll("\t|\n", ""))
+  private val submissionReference: String = "1234"
+  private val timeStamp: String = "1234567890"
 
-  private def formatXml(userAnswers: UserAnswers): Elem = loadString(robots(userAnswers)(messages).toString.replaceAll("\t|\n", ""))
+  private val fullXml: Node =
+    robotXML.generateXml(fullUserAnswers, submissionReference, timeStamp)(messages)
+
+  private def formatXml(userAnswers: UserAnswers): Node =
+    robotXML.generateXml(userAnswers, submissionReference, timeStamp)(messages)
 
   private val validMinimalXml: Node =
     trim(
       <ctr>
+        <submissionReference>1234</submissionReference>
+        <dateCreated>1234567890</dateCreated>
         <userDetails>
-          <name>TestName TestLastName</name> <nino>ZZ123456A</nino>
+          <name>TestName TestLastName</name>
+          <nino>ZZ123456A</nino>
+          <itmpAddress>Address line 1, Address line 2, Address line 3, Address line 4, Address line 5, ZZ11ZZ, United Kingdom, GB</itmpAddress>
         </userDetails>
         <claimSection>
           <selectedTaxYear>6 April 2016 to 5 April 2017</selectedTaxYear>
@@ -52,10 +61,9 @@ class RobotsSpec extends SpecBase {
         <taxableIncomeSection>
           <anyTaxableIncome>false</anyTaxableIncome>
         </taxableIncomeSection>
-          <paymentSection>
+        <paymentSection>
           <whereToSendThePayment>myself</whereToSendThePayment>
           <paymentAddressCorrect>true</paymentAddressCorrect>
-          <paymentAddress/>
         </paymentSection>
         <contactSection>
           <anyTelephoneNumber>No</anyTelephoneNumber>
@@ -65,14 +73,19 @@ class RobotsSpec extends SpecBase {
 
   "robots Xml" must {
 
-    "have correct sections in userDetails" in {
+    "contain submission reference and time stamp" in {
 
+      fullXml \ "submissionReference" must contain(<submissionReference>1234</submissionReference>)
+      fullXml \ "dateCreated" must contain(<dateCreated>1234567890</dateCreated>)
+    }
+
+    "have correct sections in userDetails" in {
       fullXml \ "userDetails" \ "name" must contain(<name>TestName TestLastName</name>)
       fullXml \ "userDetails" \ "nino" must contain(<nino>ZZ123456A</nino>)
+      fullXml \ "userDetails" \ "itmpAddress" must contain(<itmpAddress>Address line 1, Address line 2, Address line 3, Address line 4, Address line 5, ZZ11ZZ, United Kingdom, GB</itmpAddress>)
     }
 
     "have correct sections in claimSection when employmentDetails are true" in {
-
       fullXml \ "claimSection" \ "selectedTaxYear" must contain(<selectedTaxYear>6 April 2016 to 5 April 2017</selectedTaxYear>)
       fullXml \ "claimSection" \ "employmentDetails" must contain(<employmentDetails>true</employmentDetails>)
     }
@@ -83,7 +96,7 @@ class RobotsSpec extends SpecBase {
       when(fullUserAnswers.enterPayeReference) thenReturn Some("123456789")
       when(fullUserAnswers.detailsOfEmploymentOrPension) thenReturn Some("Employment details")
 
-      val newXmlToNode: Elem = formatXml(fullUserAnswers)
+      val newXmlToNode = formatXml(fullUserAnswers)
 
       newXmlToNode \ "claimSection" \ "selectedTaxYear"  must contain(<selectedTaxYear>6 April 2016 to 5 April 2017</selectedTaxYear>)
       newXmlToNode \ "claimSection" \ "employmentDetails" must contain(<employmentDetails>false</employmentDetails>)
@@ -158,7 +171,7 @@ class RobotsSpec extends SpecBase {
       when(fullUserAnswers.anyCompanyBenefits) thenReturn Some(false)
       when(fullUserAnswers.anyTaxableIncome) thenReturn Some(false)
 
-      val newXmlToNode: Elem = formatXml(fullUserAnswers)
+      val newXmlToNode = formatXml(fullUserAnswers)
 
       newXmlToNode.contains(<anyBenefits></anyBenefits>) mustBe false
       newXmlToNode.contains(<anyCompanyBenefits></anyCompanyBenefits>) mustBe false
@@ -181,14 +194,14 @@ class RobotsSpec extends SpecBase {
       when(fullUserAnswers.paymentInternationalAddress) thenReturn None
       when(fullUserAnswers.paymentUKAddress) thenReturn Some(UkAddress("qwerty", "qwerty1", None, None, None, "AB1 0CD"))
 
-      val newXmlToNode: Elem = formatXml(fullUserAnswers)
+      val newXmlToNode = formatXml(fullUserAnswers)
 
       newXmlToNode \ "paymentSection" \ "whereToSendThePayment" must contain(<whereToSendThePayment>nominee</whereToSendThePayment>)
       newXmlToNode \ "paymentSection" \ "nomineeFullname" must contain(<nomineeFullname>Nominee</nomineeFullname>)
       newXmlToNode \ "paymentSection" \ "anyAgentRef" must contain(<anyAgentRef>Yes</anyAgentRef>)
       newXmlToNode \ "paymentSection" \ "agentReference" must contain(<agentReference>12341234</agentReference>)
       newXmlToNode \ "paymentSection" \ "isPaymentAddressInTheUK" must contain(<isPaymentAddressInTheUK>true</isPaymentAddressInTheUK>)
-      newXmlToNode \ "paymentSection" \ "paymentAddress" must contain(<paymentAddress><ukAddress>qwerty, qwerty1, AB1 0CD</ukAddress></paymentAddress>)
+      newXmlToNode \ "paymentSection" \ "paymentAddress" \ "ukAddress" must contain(<ukAddress>qwerty, qwerty1, AB1 0CD</ukAddress>)
     }
 
     "have correct sections in the paymentSection when payment address is a lookup" in {
@@ -205,9 +218,9 @@ class RobotsSpec extends SpecBase {
         auditRef = Some("e9e2fb3f-268f-4c4c-b928-3dc0b17259f2")
       ))
 
-      val newXmlToNode: Elem = formatXml(fullUserAnswers)
+      val newXmlToNode = formatXml(fullUserAnswers)
 
-      newXmlToNode \ "paymentSection" \ "paymentAddress" must contain(<paymentAddress><lookupAddress>Line1, Line2, Line3, Line4, NE1 1LX, United Kingdom, GB</lookupAddress></paymentAddress>)
+      newXmlToNode \ "paymentSection" \ "paymentAddress" \ "lookupAddress" must contain(<lookupAddress>Line1, Line2, Line3, Line4, NE1 1LX, United Kingdom, GB</lookupAddress>)
     }
 
     "have the correct parts in contact section" in {
@@ -217,7 +230,7 @@ class RobotsSpec extends SpecBase {
     }
 
     "minimal valid answers must form correctly" in {
-      val xml: Elem = formatXml(MockUserAnswers.minimalValidUserAnswers)
+      val xml: Node = formatXml(MockUserAnswers.minimalValidUserAnswers)
 
       xml mustBe validMinimalXml
     }

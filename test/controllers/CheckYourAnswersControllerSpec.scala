@@ -21,11 +21,11 @@ import controllers.actions.{DataRequiredActionImpl, DataRetrievalAction, FakeAut
 import models.{SubmissionFailed, SubmissionSuccessful}
 import org.mockito.Matchers._
 import org.mockito.Mockito._
+import org.scalatest.concurrent.ScalaFutures
 import play.api.mvc.Result
 import play.api.test.Helpers._
 import services.SubmissionService
 import utils.WireMockHelper
-import org.scalatest.concurrent.ScalaFutures
 
 import scala.concurrent.{ExecutionContext, Future}
 

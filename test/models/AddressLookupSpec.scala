@@ -37,7 +37,7 @@ class AddressLookupSpec extends SpecBase {
 
     "return correct xml when passed address" in {
       val address: AddressLookup = testAddress.as[AddressLookup]
-      val responseElem: Elem = <lookupAddress>Line1, Line2, Line3, Line4, NE1 1LX, United Kingdom, GB</lookupAddress>
+      val responseElem: Elem = <paymentAddress><lookupAddress>Line1, Line2, Line3, Line4, NE1 1LX, United Kingdom, GB</lookupAddress></paymentAddress>
       AddressLookup.toXml(address) mustBe responseElem
     }
 

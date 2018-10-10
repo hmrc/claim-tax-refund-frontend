@@ -23,7 +23,7 @@ import scala.xml.Elem
 case class Country (name: Option[String], code: Option[String])
 
 object Country {
-  implicit val format = Json.format[Country]
+  implicit val format: Format[Country] = Json.format[Country]
 }
 
 case class Address (lines: Option[Seq[String]],
@@ -31,22 +31,22 @@ case class Address (lines: Option[Seq[String]],
                     country: Option[Country])
 
 object Address {
-  implicit val format = Json.format[Address]
+  implicit val format: Format[Address] = Json.format[Address]
 }
 
 final case class AddressLookup (address: Option[Address], auditRef: Option[String])
 
 object AddressLookup {
-  implicit val format = Json.format[AddressLookup]
+  implicit val format: Format[AddressLookup] = Json.format[AddressLookup]
 
-  def toXml(a: AddressLookup): Elem = <lookupAddress>{completedAddress(a).mkString(", ")}</lookupAddress>
+  def toXml(a: AddressLookup): Elem = <paymentAddress><lookupAddress>{completedAddress(a).mkString(", ")}</lookupAddress></paymentAddress>
 
-  def completedAddress(a: AddressLookup): Seq[String] = Seq (
-     a.address.get.lines.get :+
-     a.address.get.postcode.get :+
-     a.address.get.country.get.name.get :+
-     a.address.get.country.get.code.get
-  ).flatten
+  def completedAddress(a: AddressLookup): Seq[String] = Seq(
+      a.address.get.lines.get :+
+        a.address.get.postcode.get :+
+        a.address.get.country.get.name.get :+
+        a.address.get.country.get.code.get
+    ).flatten
 
   def asString(a: AddressLookup): String = completedAddress(a).mkString("<br>")
 }
