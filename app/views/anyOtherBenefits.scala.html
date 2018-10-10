@@ -51,18 +51,14 @@
 
         @components.heading(messages("anyOtherBenefits.heading"), taxYear = Some(taxYear.asString))
 
-        <p class="lede">@messages("global.otherListHeading")</p>
-
         @components.other_summary(
             answers = otherBenefits.rows
         )
 
-        <h2>@messages("anyOtherBenefits.addAnotherBenefit")</h2>
-
         @components.input_yes_no(
             InputViewModel("value", form),
-            label = messages("anyOtherBenefits.heading", taxYear.asString),
-            labelClass = Some("visually-hidden")
+            label = messages("anyOtherBenefits.addAnotherBenefit"),
+            labelClass = Some("heading-medium")
         )
 
         @components.submit_button()
