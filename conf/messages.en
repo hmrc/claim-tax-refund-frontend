@@ -55,7 +55,6 @@ global.current-year-minus-3 = 6 April {0} to 5 April {1}
 global.current-year-minus-4 = 6 April {0} to 5 April {1}
 global.current-year-minus-5 = 6 April {0} to 5 April {1}
 
-global.otherListHeading = You have told us about:
 global.addToList.complete = Complete
 global.addToList.incomplete = Incomplete
 
@@ -212,7 +211,7 @@ anyOtherTaxableIncome.checkYourAnswersLabel = Other taxable income
 anyOtherTaxableIncome.add = Did you get any other taxable income?
 anyOtherTaxableIncome.blank = Select yes if you got any other taxable income
 anyOtherTaxableIncome.incompleteMessage = You have incomplete other taxable income
-anyOtherTaxableIncome.incompleteSubmit = Complete other taxable income
+anyOtherTaxableIncome.incompleteSubmit = Complete {0}
 
 nomineeFullName.title = What is the full name of the person you want us to send any payment to?
 nomineeFullName.heading = What is the full name of the person you want us to send any payment to?
@@ -471,7 +470,6 @@ confirmation.survey.time = (takes 30 seconds)
 
 itmpAddress.checkYourAnswersLabel = Payment address
 
-RemoveOtherSelectedOption.title = Do you want to add any other {0}?
-RemoveOtherSelectedOption.heading = Do you want to add any other {0}?
-RemoveOtherSelectedOption.checkYourAnswersLabel = Do you want to add any other {0}?
+RemoveOtherSelectedOption.title = Do you need to tell us about any other {0} you got?
+RemoveOtherSelectedOption.heading = Do you need to tell us about any other {0} you got?
 RemoveOtherSelectedOption.blank = RemoveOtherSelectedOption

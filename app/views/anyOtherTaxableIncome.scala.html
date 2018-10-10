@@ -42,7 +42,7 @@
 }
 
 @callToAction = @{
-    if (incomplete.isEmpty) messages("site.continue") else messages("anyOtherTaxableIncome.incompleteSubmit")
+    if (incomplete.isEmpty) messages("site.continue") else messages("anyOtherTaxableIncome.incompleteSubmit", incomplete.head._1.name)
 }
 
 @main_template(
@@ -64,14 +64,11 @@
         )
 
         @if(incomplete.isEmpty) {
-            <h2>@messages("anyOtherTaxableIncome.add")</h2>
             @components.input_yes_no(
                 InputViewModel("value", form),
-                label = messages("anyOtherTaxableIncome.heading"),
-                labelClass = Some("visually-hidden")
+                label = messages("anyOtherTaxableIncome.add"),
+                labelClass = Some("heading-medium")
             )
-        } else {
-            <p>@messages("anyOtherTaxableIncome.incompleteMessage")</p>
         }
 
         @components.submit_button(callToAction)
