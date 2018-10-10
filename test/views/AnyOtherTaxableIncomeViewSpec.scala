@@ -79,10 +79,6 @@ class AnyOtherTaxableIncomeViewSpec extends YesNoViewBehaviours {
 			doc.getElementById("complete-component-answer-list") != null
 			doc.getElementById("incomplete-component-answer-list") != null
 		}
-
-		"show the incomplete continue message" in {
-			doc.getElementById("submit").text.contains(messages("anyOtherTaxableIncome.incompleteSubmit")) mustBe true
-		}
 	}
 
 	"complete list is passed" must {
@@ -112,10 +108,6 @@ class AnyOtherTaxableIncomeViewSpec extends YesNoViewBehaviours {
 		"not show the complete heading or contain the list" in {
 			doc.getElementById("add-to-list-complete-h2") mustBe null
 			doc.getElementById("complete-component-answer-list") mustBe null
-		}
-
-		"show the incomplete continue message" in {
-			doc.getElementById("submit").text.contains(messages("anyOtherTaxableIncome.incompleteSubmit")) mustBe true
 		}
 	}
 
