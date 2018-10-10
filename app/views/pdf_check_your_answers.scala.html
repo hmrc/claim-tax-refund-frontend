@@ -15,14 +15,16 @@
  *@
 
 @import config.FrontendAppConfig
-@import uk.gov.hmrc.auth.core.retrieve.ItmpName
+@import uk.gov.hmrc.auth.core.retrieve._
 @import viewmodels.{AnswerSection, Section}
 
 @(
         appConfig: FrontendAppConfig,
         answerSections: Seq[Section],
         nino: String,
-        name: Option[ItmpName]
+        name: Option[ItmpName],
+        address: Option[ItmpAddress],
+        telephone: Option[TelephoneOption]
 )(
     implicit
         request: Request[_],
@@ -44,6 +46,20 @@
         @messages("userDetails.checkYourAnswersLabel.name")<br>
         @name.get.givenName @name.get.middleName @name.get.familyName
     </li>
+    }
+    @if(address.isDefined) {
+        <li>
+            @messages("userDetails.checkYourAnswersLabel.address")<br>
+            @ItmpAddressFormat.asString(address.get)
+        </li>
+    }
+    @if(telephone.isDefined) {
+        @if(telephone.get != TelephoneOption.No) {
+            <li>
+                @messages("userDetails.checkYourAnswersLabel.telephone")<br>
+                @telephone.get.toString
+            </li>
+        }
     }
 </ul>
 

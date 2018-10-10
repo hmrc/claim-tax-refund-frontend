@@ -69,7 +69,16 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
     implicit request =>
       val cyaHelper: CheckYourAnswersHelper = new CheckYourAnswersHelper(request.userAnswers)
       val cyaSections: CheckYourAnswersSections = new CheckYourAnswersSections(cyaHelper, request.userAnswers)
-      val pdfHtml: String = pdf_check_your_answers(appConfig, cyaSections.sections, request.nino, request.name).toString.replaceAll("\t|\n", "")
+
+      val pdfHtml: String = pdf_check_your_answers(
+        appConfig = appConfig,
+        answerSections = cyaSections.sections,
+        nino = request.nino,
+        name = request.name,
+        address = request.address,
+        telephone = request.userAnswers.anyTelephoneNumber
+      ).toString.replaceAll("\t|\n", "")
+
       val metadata: Metadata = new Metadata()
       val submissionReference = metadata.submissionReference
       val robotXml = new RobotXML

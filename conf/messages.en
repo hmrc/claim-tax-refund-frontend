@@ -135,6 +135,8 @@ userDetails.heading = Your details
 userDetails.checkYourAnswersLabel.name = Name
 userDetails.checkYourAnswersLabel.nino = National insurance number
 userDetails.checkYourAnswersLabel.address = Address
+userDetails.checkYourAnswersLabel.telephone = Telephone number
+userDetails.checkYourAnswersLabel.noTelephone = Not provided
 
 selectTaxYear.title = Which tax year do you want to claim for?
 selectTaxYear.heading = Which tax year do you want to claim for?
