@@ -22,8 +22,8 @@
         appConfig: FrontendAppConfig,
         answerSections: Seq[Section],
         nino: String,
-        name: Option[ItmpName],
-        address: Option[ItmpAddress],
+        name: ItmpName,
+        address: ItmpAddress,
         telephone: Option[TelephoneOption]
 )(
     implicit
@@ -41,18 +41,16 @@
         @messages("userDetails.checkYourAnswersLabel.nino")<br>
         @nino
     </li>
-    @if(name.isDefined) {
     <li>
         @messages("userDetails.checkYourAnswersLabel.name")<br>
-        @name.get.givenName @name.get.middleName @name.get.familyName
+        @name.givenName @name.middleName @name.familyName
     </li>
-    }
-    @if(address.isDefined) {
-        <li>
-            @messages("userDetails.checkYourAnswersLabel.address")<br>
-            @ItmpAddressFormat.asString(address.get)
-        </li>
-    }
+
+    <li>
+        @messages("userDetails.checkYourAnswersLabel.address")<br>
+        @Html(ItmpAddressFormat.asString(address))
+    </li>
+
     @if(telephone.isDefined) {
         @if(telephone.get != TelephoneOption.No) {
             <li>

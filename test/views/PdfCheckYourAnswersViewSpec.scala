@@ -34,7 +34,7 @@ class PdfCheckYourAnswersViewSpec extends SpecBase with ViewBehaviours with Mock
   private val cyaSection = new CheckYourAnswersSections(helper, answers)
   private val sections = cyaSection.sections
   private val nino = "AB123456A"
-  private val itmpName: Option[ItmpName] = Some(ItmpName(Some("First"), Some("Middle"), Some("Last")))
+  private val itmpName: ItmpName = ItmpName(Some("First"), Some("Middle"), Some("Last"))
   private val telephoneNumber: Option[TelephoneOption] = Some(TelephoneOption.Yes("01234567890"))
 
   def view: () => Html = () => pdf_check_your_answers(
@@ -42,7 +42,7 @@ class PdfCheckYourAnswersViewSpec extends SpecBase with ViewBehaviours with Mock
     answerSections = sections,
     nino = nino,
     name = itmpName,
-    address = Some(itmpAddress),
+    address = itmpAddress,
     telephone = telephoneNumber)(fakeRequest, messages: Messages)
 
   "PDF Check your answers view" must {
@@ -69,9 +69,9 @@ class PdfCheckYourAnswersViewSpec extends SpecBase with ViewBehaviours with Mock
 
     "display name when provided by auth" in {
       val doc = asDocument(view())
-      assertContainsText(doc, itmpName.get.givenName.get)
-      assertContainsText(doc, itmpName.get.middleName.get)
-      assertContainsText(doc, itmpName.get.familyName.get)
+      assertContainsText(doc, itmpName.givenName.get)
+      assertContainsText(doc, itmpName.middleName.get)
+      assertContainsText(doc, itmpName.familyName.get)
     }
 
     "display address when provided by auth" in {
@@ -90,13 +90,5 @@ class PdfCheckYourAnswersViewSpec extends SpecBase with ViewBehaviours with Mock
       val doc = asDocument(view())
       assertContainsText(doc, TelephoneOption.asString(telephoneNumber.get))
     }
-
-    "not display name when not provided by auth" in {
-      val doc = asDocument(pdf_check_your_answers(frontendAppConfig, sections, nino, None, None, None)(fakeRequest, messages: Messages))
-      assertNotRenderedById(doc, "cya-name-answer")
-      assertNotRenderedById(doc, "cya-address-answer")
-      assertNotRenderedById(doc, "cya-telephone-answer")
-    }
-
   }
 }
