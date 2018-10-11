@@ -36,15 +36,15 @@ object Benefits extends Enumeration {
 
   implicit def enumFormats: Format[Value] = EnumUtils.enumFormat(Benefits)
 
-  def getIdString(benefitValue: String): String = {
+  def getIdString(benefitValue: String): Identifier = {
     benefitValue match {
-      case "bereavement-allowance" => HowMuchBereavementAllowanceId.toString
-      case "carers-allowance" => HowMuchCarersAllowanceId.toString
-      case "jobseekers-allowance" => HowMuchJobseekersAllowanceId.toString
-      case "incapacity-benefit" => HowMuchIncapacityBenefitId.toString
-      case "employment-and-support-allowance" => HowMuchEmploymentAndSupportAllowanceId.toString
-      case "state-pension" => HowMuchStatePensionId.toString
-      case "other-taxable-benefit" => OtherBenefitId.toString
+      case "bereavement-allowance" => HowMuchBereavementAllowanceId
+      case "carers-allowance" => HowMuchCarersAllowanceId
+      case "jobseekers-allowance" => HowMuchJobseekersAllowanceId
+      case "incapacity-benefit" => HowMuchIncapacityBenefitId
+      case "employment-and-support-allowance" => HowMuchEmploymentAndSupportAllowanceId
+      case "state-pension" => HowMuchStatePensionId
+      case "other-taxable-benefit" => OtherBenefitId
     }
   }
 
