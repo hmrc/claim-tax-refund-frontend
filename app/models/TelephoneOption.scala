@@ -53,4 +53,10 @@ object TelephoneOption {
     case TelephoneOption.Yes(telephoneNumber) => <anyTelephoneNumber>Yes</anyTelephoneNumber><telephoneNumber>{telephoneNumber}</telephoneNumber>
     case _ => <anyTelephoneNumber>No</anyTelephoneNumber>
   }
+
+  def asString(userAnswer: TelephoneOption): String = userAnswer match {
+    case TelephoneOption.Yes(telephoneNumber) => telephoneNumber
+    case _ => "No"
+  }
+
 }

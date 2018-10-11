@@ -17,6 +17,7 @@
 package views
 
 import base.SpecBase
+import models.TelephoneOption
 import org.scalatest.mockito.MockitoSugar
 import play.api.i18n.Messages
 import play.twirl.api.Html
@@ -33,9 +34,16 @@ class PdfCheckYourAnswersViewSpec extends SpecBase with ViewBehaviours with Mock
   private val cyaSection = new CheckYourAnswersSections(helper, answers)
   private val sections = cyaSection.sections
   private val nino = "AB123456A"
-  private val itmpName: Option[ItmpName] = Some(ItmpName(Some("First"), Some("Middle"), Some("Last")))
+  private val itmpName: ItmpName = ItmpName(Some("First"), Some("Middle"), Some("Last"))
+  private val telephoneNumber: Option[TelephoneOption] = Some(TelephoneOption.Yes("01234567890"))
 
-  def view: () => Html = () => pdf_check_your_answers(frontendAppConfig, sections, nino, itmpName)(fakeRequest, messages: Messages)
+  def view: () => Html = () => pdf_check_your_answers(
+    appConfig = frontendAppConfig,
+    answerSections = sections,
+    nino = nino,
+    name = itmpName,
+    address = itmpAddress,
+    telephone = telephoneNumber)(fakeRequest, messages: Messages)
 
   "PDF Check your answers view" must {
     "display the correct page title" in {
@@ -61,36 +69,26 @@ class PdfCheckYourAnswersViewSpec extends SpecBase with ViewBehaviours with Mock
 
     "display name when provided by auth" in {
       val doc = asDocument(view())
-      assertContainsText(doc, itmpName.get.givenName.get)
-      assertContainsText(doc, itmpName.get.middleName.get)
-      assertContainsText(doc, itmpName.get.familyName.get)
+      assertContainsText(doc, itmpName.givenName.get)
+      assertContainsText(doc, itmpName.middleName.get)
+      assertContainsText(doc, itmpName.familyName.get)
     }
 
-    "display correct names when given name missing" in {
-      val noGivenName = Some(ItmpName(None, Some("middle"), Some("last")))
-      val doc = asDocument(pdf_check_your_answers(frontendAppConfig, sections, nino, noGivenName)(fakeRequest, messages: Messages))
-      assertContainsText(doc, noGivenName.get.middleName.get)
-      assertContainsText(doc, noGivenName.get.familyName.get)
+    "display address when provided by auth" in {
+      val doc = asDocument(view())
+      assertContainsText(doc, itmpAddress.line1.get)
+      assertContainsText(doc, itmpAddress.line2.get)
+      assertContainsText(doc, itmpAddress.line3.get)
+      assertContainsText(doc, itmpAddress.line4.get)
+      assertContainsText(doc, itmpAddress.line5.get)
+      assertContainsText(doc, itmpAddress.postCode.get)
+      assertContainsText(doc, itmpAddress.countryName.get)
+      assertContainsText(doc, itmpAddress.countryCode.get)
     }
 
-    "display correct names when middle name missing" in {
-      val noMiddleName = Some(ItmpName(Some("first"), None, Some("last")))
-      val doc = asDocument(pdf_check_your_answers(frontendAppConfig, sections, nino, noMiddleName)(fakeRequest, messages: Messages))
-      assertContainsText(doc, noMiddleName.get.givenName.get)
-      assertContainsText(doc, noMiddleName.get.familyName.get)
+    "display telephone number when provided by user" in {
+      val doc = asDocument(view())
+      assertContainsText(doc, TelephoneOption.asString(telephoneNumber.get))
     }
-
-    "display correct names when last name missing" in {
-      val noLastName = Some(ItmpName(Some("first"), Some("middle"), None))
-      val doc = asDocument(pdf_check_your_answers(frontendAppConfig, sections, nino, noLastName)(fakeRequest, messages: Messages))
-      assertContainsText(doc, noLastName.get.givenName.get)
-      assertContainsText(doc, noLastName.get.middleName.get)
-    }
-
-    "not display name when not provided by auth" in {
-      val doc = asDocument(pdf_check_your_answers(frontendAppConfig, sections, nino, None)(fakeRequest, messages: Messages))
-      assertNotRenderedById(doc, "cya-name-answer")
-    }
-
   }
 }
