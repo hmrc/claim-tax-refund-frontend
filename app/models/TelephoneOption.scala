@@ -54,7 +54,7 @@ object TelephoneOption {
     case _ => <anyTelephoneNumber>No</anyTelephoneNumber>
   }
 
-  def toString(userAnswer: TelephoneOption): String = userAnswer match {
+  def asString(userAnswer: TelephoneOption): String = userAnswer match {
     case TelephoneOption.Yes(telephoneNumber) => telephoneNumber
     case _ => "No"
   }

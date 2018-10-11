@@ -57,7 +57,7 @@
         @if(telephone.get != TelephoneOption.No) {
             <li>
                 @messages("userDetails.checkYourAnswersLabel.telephone")<br>
-                @telephone.get.toString
+                @TelephoneOption.asString(telephone.get)
             </li>
         }
     }

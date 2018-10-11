@@ -88,7 +88,7 @@ class PdfCheckYourAnswersViewSpec extends SpecBase with ViewBehaviours with Mock
 
     "display telephone number when provided by user" in {
       val doc = asDocument(view())
-      assertContainsText(doc, telephoneNumber.get.toString)
+      assertContainsText(doc, TelephoneOption.asString(telephoneNumber.get))
     }
 
     "not display name when not provided by auth" in {

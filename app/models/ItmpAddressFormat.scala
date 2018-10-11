@@ -19,8 +19,6 @@ package models
 import play.api.libs.json.{Format, Json}
 import uk.gov.hmrc.auth.core.retrieve.ItmpAddress
 
-import scala.xml._
-
 object ItmpAddressFormat {
   implicit val format: Format[ItmpAddress] = Json.format[ItmpAddress]
 
@@ -38,4 +36,5 @@ object ItmpAddressFormat {
   def toXml(a: ItmpAddress): String = answeredLines(a).mkString(", ")
 
   def asString(a: ItmpAddress): String = answeredLines(a).mkString(", <br>")
+
 }
