@@ -507,38 +507,34 @@ class Navigator @Inject()() {
   }
 
   def getNextBenefitId(id: Identifier, mode: Mode)(userAnswers: UserAnswers): Call = {
-
-    val listWithIndex: Seq[Identifier] = userAnswers.selectBenefits.get.map(
-      benefit =>
-        Benefits.getIdString(benefit.toString)
-    )
-
-    val nextPageId = id match {
-      case SelectBenefitsId =>
-        listWithIndex.head
-      case _ =>
-        if (listWithIndex.indexOf(id) < (listWithIndex.length - 1)) {
-          val nextPageIndex = listWithIndex.indexOf(id) + 1
-          listWithIndex(nextPageIndex)
-        } else {
-          SelectCompanyBenefitsId
+    userAnswers.selectBenefits match {
+      case Some(selectedBenefits) =>
+        val benefitIdentifiers: Seq[Identifier] = selectedBenefits.map {
+          benefit => Benefits.getIdString(benefit.toString)
         }
-    }
 
-    nextPageCall(nextPageId, mode)
+        if (id == SelectBenefitsId) {
+          nextPageCall(benefitIdentifiers.head, mode)
+        } else if (benefitIdentifiers.indexOf(id) < (benefitIdentifiers.length - 1)) {
+          nextPageCall(benefitIdentifiers(benefitIdentifiers.indexOf(id) + 1), mode)
+        } else {
+          routes.AnyCompanyBenefitsController.onPageLoad(mode)
+        }
+      case _ => routes.SessionExpiredController.onPageLoad()
+    }
   }
 
   def nextPageCall(id: Identifier, mode: Mode): Call = {
-      id match {
-        case HowMuchBereavementAllowanceId => routes.HowMuchBereavementAllowanceController.onPageLoad(mode)
-        case HowMuchCarersAllowanceId => routes.HowMuchCarersAllowanceController.onPageLoad(mode)
-        case HowMuchJobseekersAllowanceId => routes.HowMuchJobseekersAllowanceController.onPageLoad(mode)
-        case HowMuchIncapacityBenefitId => routes.HowMuchIncapacityBenefitController.onPageLoad(mode)
-        case HowMuchEmploymentAndSupportAllowanceId => routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(mode)
-        case HowMuchStatePensionId => routes.HowMuchStatePensionController.onPageLoad(mode)
-        case OtherBenefitId => routes.OtherBenefitController.onPageLoad(mode, 0)
-        case SelectCompanyBenefitsId => routes.SelectCompanyBenefitsController.onPageLoad(mode)
-      }
+    id match {
+      case HowMuchBereavementAllowanceId => routes.HowMuchBereavementAllowanceController.onPageLoad(mode)
+      case HowMuchCarersAllowanceId => routes.HowMuchCarersAllowanceController.onPageLoad(mode)
+      case HowMuchJobseekersAllowanceId => routes.HowMuchJobseekersAllowanceController.onPageLoad(mode)
+      case HowMuchIncapacityBenefitId => routes.HowMuchIncapacityBenefitController.onPageLoad(mode)
+      case HowMuchEmploymentAndSupportAllowanceId => routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(mode)
+      case HowMuchStatePensionId => routes.HowMuchStatePensionController.onPageLoad(mode)
+      case OtherBenefitId => routes.OtherBenefitController.onPageLoad(mode, 0)
+      case _ => routes.SessionExpiredController.onPageLoad()
+    }
   }
 
 }
