@@ -105,14 +105,14 @@ class Navigator @Inject()() {
     AnyTaxableIncomeId -> anyTaxableIncome(NormalMode),
     SelectTaxableIncomeId -> getNextTaxableIncomeId(SelectTaxableIncomeId, NormalMode),
     HowMuchRentalIncomeId -> (_ => routes.AnyTaxableRentalIncomeController.onPageLoad(NormalMode)),
-    AnyTaxableRentalIncomeId -> getNextTaxableIncomeId(AnyTaxableRentalIncomeId, NormalMode),
+    AnyTaxableRentalIncomeId -> getNextTaxableIncomeId(HowMuchRentalIncomeId, NormalMode),
     HowMuchBankInterestId -> (_ => routes.AnyTaxableBankInterestController.onPageLoad(NormalMode)),
-    AnyTaxableBankInterestId -> getNextTaxableIncomeId(AnyTaxableBankInterestId, NormalMode),
+    AnyTaxableBankInterestId -> getNextTaxableIncomeId(HowMuchBankInterestId, NormalMode),
     HowMuchInvestmentsId -> (_ => routes.AnyTaxableInvestmentsController.onPageLoad(NormalMode)),
-    AnyTaxableInvestmentsId -> getNextTaxableIncomeId(AnyTaxableInvestmentsId, NormalMode),
+    AnyTaxableInvestmentsId -> getNextTaxableIncomeId(HowMuchInvestmentsId, NormalMode),
     HowMuchForeignIncomeId -> (_ => routes.AnyTaxableForeignIncomeController.onPageLoad(NormalMode)),
-    AnyTaxableForeignIncomeId -> getNextTaxableIncomeId(AnyTaxableForeignIncomeId, NormalMode),
-    AnyTaxableOtherIncomeId -> getNextTaxableIncomeId(AnyTaxableOtherIncomeId, NormalMode),
+    AnyTaxableForeignIncomeId -> getNextTaxableIncomeId(HowMuchForeignIncomeId, NormalMode),
+    AnyTaxableOtherIncomeId -> (_ => routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)),
     AnyOtherTaxableIncomeId -> anyOtherTaxableIncome(NormalMode),
     //Payment
     WhereToSendPaymentId -> whereToSendPayment,
@@ -420,17 +420,17 @@ class Navigator @Inject()() {
   }
 
   def nextIncomePage(id: Identifier, mode: Mode): Call = {
-    id match {
-      case HowMuchRentalIncomeId => routes.HowMuchRentalIncomeController.onPageLoad(mode)
-      case AnyTaxableRentalIncomeId => routes.AnyTaxableRentalIncomeController.onPageLoad(mode)
-      case HowMuchBankInterestId => routes.HowMuchBankInterestController.onPageLoad(mode)
-      case AnyTaxableBankInterestId => routes.AnyTaxableBankInterestController.onPageLoad(mode)
-      case HowMuchInvestmentsId => routes.HowMuchInvestmentOrDividendController.onPageLoad(mode)
-      case AnyTaxableInvestmentsId => routes.AnyTaxableInvestmentsController.onPageLoad(mode)
-      case HowMuchForeignIncomeId => routes.HowMuchForeignIncomeController.onPageLoad(mode)
-      case AnyTaxableForeignIncomeId => routes.AnyTaxableForeignIncomeController.onPageLoad(mode)
-      case OtherTaxableIncomeId => routes.OtherTaxableIncomeController.onPageLoad(mode, 0)
-      case _ => routes.SessionExpiredController.onPageLoad()
+    if (id.toString.contains("OtherTaxableIncomeId")) {
+      routes.OtherTaxableIncomeController.onPageLoad(mode, 0)
+    } else {
+      id match {
+        case HowMuchRentalIncomeId => routes.HowMuchRentalIncomeController.onPageLoad(mode)
+        case HowMuchBankInterestId => routes.HowMuchBankInterestController.onPageLoad(mode)
+        case HowMuchInvestmentsId => routes.HowMuchInvestmentOrDividendController.onPageLoad(mode)
+        case HowMuchForeignIncomeId => routes.HowMuchForeignIncomeController.onPageLoad(mode)
+        case OtherTaxableIncomeId => routes.OtherTaxableIncomeController.onPageLoad(mode, 0)
+        case _ => routes.SessionExpiredController.onPageLoad()
+      }
     }
   }
 
