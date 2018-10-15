@@ -23,20 +23,21 @@ import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.mockito.Mockito.when
 import play.api.data.Form
+import play.api.mvc.Call
 import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.nomineeFullName
 
 class NomineeFullNameControllerSpec extends ControllerSpecBase {
 
-  def onwardRoute = routes.IndexController.onPageLoad()
+  def onwardRoute: Call = routes.IndexController.onPageLoad()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new NomineeFullNameController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, new NomineeFullNameForm(frontendAppConfig), formPartialRetriever, templateRenderer)
 
   private val testAnswer = "answer"
-  private val testTooLongAnswer = "AnswerAnswerAnswerAnswerAnswerAnswerAnswerAnswerAnswerAnswerAnswerAnswer"
+  private val testTooLongAnswer = "A" * (frontendAppConfig.nomineeFullNameMaxLength + 1)
   private val taxYear = CYMinus2
   private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers
   val form = new NomineeFullNameForm(frontendAppConfig)()

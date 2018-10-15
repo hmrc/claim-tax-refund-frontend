@@ -29,6 +29,6 @@ class NomineeFullNameForm @Inject()(appConfig: FrontendAppConfig) extends FormEr
   private val nomineeFullNameLength = appConfig.nomineeFullNameMaxLength
 
   def apply(): Form[String] = Form(
-    "value" -> text.verifying(firstError(nonEmpty(nomineeFullNameBlankKey), maxLength( nomineeFullNameLength, nomineeFullNameTooLong)))
+    "value" -> text.verifying(firstError(nonEmpty(nomineeFullNameBlankKey), maxLength(nomineeFullNameLength, nomineeFullNameTooLong)))
   )
 }
