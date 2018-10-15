@@ -132,11 +132,6 @@ class TaxableIncomeNavigatorSpec extends SpecBase with MockitoSugar {
           navigator.nextPage(AnyTaxableOtherIncomeId, NormalMode)(answers) mustBe routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)
         }
 
-        "go to WhereToSendPayment once all taxableIncome have been completed" in {
-          val answers = MockUserAnswers.taxableIncomeUserAnswers
-          navigator.nextPage(AnyTaxableForeignIncomeId, NormalMode)(answers) mustBe routes.WhereToSendPaymentController.onPageLoad(NormalMode)
-        }
-
         "go to SessionExpired if answers.selectTaxableIncome is None on SelectTaxableIncome page" in {
           when(answers.selectTaxableIncome) thenReturn None
           navigator.nextPage(SelectTaxableIncomeId, NormalMode)(answers) mustBe routes.SessionExpiredController.onPageLoad()
