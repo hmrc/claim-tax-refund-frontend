@@ -33,13 +33,13 @@ object TaxableIncome extends Enumeration {
 
   implicit def enumFormats: Format[Value] = EnumUtils.enumFormat(TaxableIncome)
 
-  def getIdString(taxableIncomeValue: String): (String, String) = {
+  def getId(taxableIncomeValue: String): (Identifier, Identifier) = {
     taxableIncomeValue match {
-      case "rental-income" => (HowMuchRentalIncomeId.toString, AnyTaxableRentalIncomeId.toString)
-      case "bank-or-building-society-interest" => (HowMuchBankInterestId.toString, AnyTaxableBankInterestId.toString)
-      case "investment-or-dividends" => (HowMuchInvestmentsId.toString, AnyTaxableInvestmentsId.toString)
-      case "foreign-income" => (HowMuchForeignIncomeId.toString, AnyTaxableForeignIncomeId.toString)
-      case "other-taxable-income" => (OtherTaxableIncomeId.toString, AnyTaxableOtherIncomeId.toString)
+      case "rental-income" => (HowMuchRentalIncomeId, AnyTaxableRentalIncomeId)
+      case "bank-or-building-society-interest" => (HowMuchBankInterestId, AnyTaxableBankInterestId)
+      case "investment-or-dividends" => (HowMuchInvestmentsId, AnyTaxableInvestmentsId)
+      case "foreign-income" => (HowMuchForeignIncomeId, AnyTaxableForeignIncomeId)
+      case "other-taxable-income" => (OtherTaxableIncomeId(0), AnyTaxableOtherIncomeId)
     }
   }
 

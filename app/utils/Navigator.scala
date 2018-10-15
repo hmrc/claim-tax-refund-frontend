@@ -103,15 +103,15 @@ class Navigator @Inject()() {
     AnyOtherCompanyBenefitsId -> anyOtherCompanyBenefits(NormalMode),
     //Taxable income
     AnyTaxableIncomeId -> anyTaxableIncome(NormalMode),
-    SelectTaxableIncomeId -> selectedTaxableIncomeCheck(NormalMode),
+    SelectTaxableIncomeId -> getNextTaxableIncomeId(SelectTaxableIncomeId, NormalMode),
     HowMuchRentalIncomeId -> (_ => routes.AnyTaxableRentalIncomeController.onPageLoad(NormalMode)),
-    AnyTaxableRentalIncomeId -> selectedTaxableIncomeCheck(NormalMode),
+    AnyTaxableRentalIncomeId -> getNextTaxableIncomeId(HowMuchRentalIncomeId, NormalMode),
     HowMuchBankInterestId -> (_ => routes.AnyTaxableBankInterestController.onPageLoad(NormalMode)),
-    AnyTaxableBankInterestId -> selectedTaxableIncomeCheck(NormalMode),
+    AnyTaxableBankInterestId -> getNextTaxableIncomeId(HowMuchBankInterestId, NormalMode),
     HowMuchInvestmentsId -> (_ => routes.AnyTaxableInvestmentsController.onPageLoad(NormalMode)),
-    AnyTaxableInvestmentsId -> selectedTaxableIncomeCheck(NormalMode),
+    AnyTaxableInvestmentsId -> getNextTaxableIncomeId(HowMuchInvestmentsId, NormalMode),
     HowMuchForeignIncomeId -> (_ => routes.AnyTaxableForeignIncomeController.onPageLoad(NormalMode)),
-    AnyTaxableForeignIncomeId -> selectedTaxableIncomeCheck(NormalMode),
+    AnyTaxableForeignIncomeId -> getNextTaxableIncomeId(HowMuchForeignIncomeId, NormalMode),
     AnyTaxableOtherIncomeId -> (_ => routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)),
     AnyOtherTaxableIncomeId -> anyOtherTaxableIncome(NormalMode),
     //Payment
@@ -222,7 +222,7 @@ class Navigator @Inject()() {
     userAnswers.selectBenefits match {
       case Some(selectedBenefits) =>
         val benefitIdentifiers: Seq[Identifier] = selectedBenefits.map {
-          benefit => Benefits.getIdString(benefit.toString)
+          benefit => Benefits.getId(benefit.toString)
         }
 
         if (id == SelectBenefitsId) {
@@ -319,7 +319,7 @@ class Navigator @Inject()() {
     userAnswers.selectCompanyBenefits match {
       case Some(selectedCompanyBenefits) =>
         val benefitIdentifiers: Seq[Identifier] = selectedCompanyBenefits.map {
-          companyBenefit => CompanyBenefits.getIdString(companyBenefit.toString)
+          companyBenefit => CompanyBenefits.getId(companyBenefit.toString)
         }
 
         if (id == SelectCompanyBenefitsId) {
@@ -399,6 +399,35 @@ class Navigator @Inject()() {
       if (mode == NormalMode) routes.WhereToSendPaymentController.onPageLoad(NormalMode) else routes.CheckYourAnswersController.onPageLoad()
     case None =>
       routes.SessionExpiredController.onPageLoad()
+  }
+
+  def getNextTaxableIncomeId(id: Identifier, mode: Mode)(userAnswers: UserAnswers): Call = {
+    userAnswers.selectTaxableIncome match {
+      case Some(selectedTaxableIncome) =>
+        val incomeIdentifiers: Seq[Identifier] = selectedTaxableIncome.map {
+          income => TaxableIncome.getId(income.toString)._1
+        }
+
+        if (id == SelectTaxableIncomeId) {
+          nextIncomePage(incomeIdentifiers.head, mode)
+        } else if (incomeIdentifiers.indexOf(id) < (incomeIdentifiers.length - 1)) {
+          nextIncomePage(incomeIdentifiers(incomeIdentifiers.indexOf(id) + 1), mode)
+        } else {
+          routes.WhereToSendPaymentController.onPageLoad(mode)
+        }
+      case _ => routes.SessionExpiredController.onPageLoad()
+    }
+  }
+
+  def nextIncomePage(id: Identifier, mode: Mode): Call = {
+    id match {
+      case HowMuchRentalIncomeId => routes.HowMuchRentalIncomeController.onPageLoad(mode)
+      case HowMuchBankInterestId => routes.HowMuchBankInterestController.onPageLoad(mode)
+      case HowMuchInvestmentsId => routes.HowMuchInvestmentOrDividendController.onPageLoad(mode)
+      case HowMuchForeignIncomeId => routes.HowMuchForeignIncomeController.onPageLoad(mode)
+      case OtherTaxableIncomeId(Index(0)) => routes.OtherTaxableIncomeController.onPageLoad(mode, 0)
+      case _ => routes.SessionExpiredController.onPageLoad()
+    }
   }
 
   private def selectedTaxableIncomeCheck(mode: Mode)(userAnswers: UserAnswers): Call = userAnswers.selectTaxableIncome match {
