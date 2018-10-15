@@ -259,6 +259,37 @@ class Navigator @Inject()() {
       routes.SessionExpiredController.onPageLoad()
   }
 
+  def getNextBenefitId(id: Identifier, mode: Mode)(userAnswers: UserAnswers): Call = {
+    userAnswers.selectBenefits match {
+      case Some(selectedBenefits) =>
+        val benefitIdentifiers: Seq[Identifier] = selectedBenefits.map {
+          benefit => Benefits.getIdString(benefit.toString)
+        }
+
+        if (id == SelectBenefitsId) {
+          nextBenefitPage(benefitIdentifiers.head, mode)
+        } else if (benefitIdentifiers.indexOf(id) < (benefitIdentifiers.length - 1)) {
+          nextBenefitPage(benefitIdentifiers(benefitIdentifiers.indexOf(id) + 1), mode)
+        } else {
+          routes.AnyCompanyBenefitsController.onPageLoad(mode)
+        }
+      case _ => routes.SessionExpiredController.onPageLoad()
+    }
+  }
+
+  def nextBenefitPage(id: Identifier, mode: Mode): Call = {
+    id match {
+      case HowMuchBereavementAllowanceId => routes.HowMuchBereavementAllowanceController.onPageLoad(mode)
+      case HowMuchCarersAllowanceId => routes.HowMuchCarersAllowanceController.onPageLoad(mode)
+      case HowMuchJobseekersAllowanceId => routes.HowMuchJobseekersAllowanceController.onPageLoad(mode)
+      case HowMuchIncapacityBenefitId => routes.HowMuchIncapacityBenefitController.onPageLoad(mode)
+      case HowMuchEmploymentAndSupportAllowanceId => routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(mode)
+      case HowMuchStatePensionId => routes.HowMuchStatePensionController.onPageLoad(mode)
+      case OtherBenefitId => routes.OtherBenefitController.onPageLoad(mode, 0)
+      case _ => routes.SessionExpiredController.onPageLoad()
+    }
+  }
+
   private def selectedBenefitsCheck(mode: Mode)(userAnswers: UserAnswers): Call = userAnswers.selectBenefits match {
     case Some(benefits) =>
       if (benefits.contains(Benefits.BEREAVEMENT_ALLOWANCE) && userAnswers.howMuchBereavementAllowance.isEmpty) {
@@ -504,37 +535,6 @@ class Navigator @Inject()() {
       routeMapWithCollectionId.lift(collectionId).getOrElse(_ => routes.IndexController.onPageLoad())
     case CheckMode =>
       editRouteMapWithCollectionId.lift(collectionId).getOrElse(_ => routes.CheckYourAnswersController.onPageLoad())
-  }
-
-  def getNextBenefitId(id: Identifier, mode: Mode)(userAnswers: UserAnswers): Call = {
-    userAnswers.selectBenefits match {
-      case Some(selectedBenefits) =>
-        val benefitIdentifiers: Seq[Identifier] = selectedBenefits.map {
-          benefit => Benefits.getIdString(benefit.toString)
-        }
-
-        if (id == SelectBenefitsId) {
-          nextPageCall(benefitIdentifiers.head, mode)
-        } else if (benefitIdentifiers.indexOf(id) < (benefitIdentifiers.length - 1)) {
-          nextPageCall(benefitIdentifiers(benefitIdentifiers.indexOf(id) + 1), mode)
-        } else {
-          routes.AnyCompanyBenefitsController.onPageLoad(mode)
-        }
-      case _ => routes.SessionExpiredController.onPageLoad()
-    }
-  }
-
-  def nextPageCall(id: Identifier, mode: Mode): Call = {
-    id match {
-      case HowMuchBereavementAllowanceId => routes.HowMuchBereavementAllowanceController.onPageLoad(mode)
-      case HowMuchCarersAllowanceId => routes.HowMuchCarersAllowanceController.onPageLoad(mode)
-      case HowMuchJobseekersAllowanceId => routes.HowMuchJobseekersAllowanceController.onPageLoad(mode)
-      case HowMuchIncapacityBenefitId => routes.HowMuchIncapacityBenefitController.onPageLoad(mode)
-      case HowMuchEmploymentAndSupportAllowanceId => routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(mode)
-      case HowMuchStatePensionId => routes.HowMuchStatePensionController.onPageLoad(mode)
-      case OtherBenefitId => routes.OtherBenefitController.onPageLoad(mode, 0)
-      case _ => routes.SessionExpiredController.onPageLoad()
-    }
   }
 
 }
