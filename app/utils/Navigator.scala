@@ -95,10 +95,10 @@ class Navigator @Inject()() {
     AnyOtherBenefitsId -> anyOtherBenefits(NormalMode),
     //Company benefits
     AnyCompanyBenefitsId -> anyCompanyBenefits(NormalMode),
-    SelectCompanyBenefitsId -> selectedCompanyBenefitsCheck(NormalMode),
-    HowMuchCarBenefitsId -> selectedCompanyBenefitsCheck(NormalMode),
-    HowMuchFuelBenefitId -> selectedCompanyBenefitsCheck(NormalMode),
-    HowMuchMedicalBenefitsId -> selectedCompanyBenefitsCheck(NormalMode),
+    SelectCompanyBenefitsId -> getNextCompanyBenefitId(SelectCompanyBenefitsId, NormalMode),
+    HowMuchCarBenefitsId -> getNextCompanyBenefitId(HowMuchCarBenefitsId, NormalMode),
+    HowMuchFuelBenefitId -> getNextCompanyBenefitId(HowMuchFuelBenefitId, NormalMode),
+    HowMuchMedicalBenefitsId -> getNextCompanyBenefitId(HowMuchMedicalBenefitsId, NormalMode),
     OtherCompanyBenefitId -> (_ => routes.AnyOtherCompanyBenefitsController.onPageLoad(NormalMode)),
     AnyOtherCompanyBenefitsId -> anyOtherCompanyBenefits(NormalMode),
     //Taxable income
@@ -175,47 +175,6 @@ class Navigator @Inject()() {
     IsPaymentAddressInTheUKId -> paymentAddressCheck,
     PaymentLookupAddressId -> addressLookup(CheckMode)
   )
-
-
-  private def deleteOtherBenefit(userAnswers: UserAnswers): Call = {
-    val otherBenefits: Seq[OtherBenefit] = userAnswers.otherBenefit.get
-    val selectBenefits: Seq[Benefits.Value] = userAnswers.selectBenefits.get
-
-    if (otherBenefits.isEmpty && selectBenefits.length == 1) {
-      routes.AnyBenefitsController.onPageLoad(CheckMode)
-    } else if (otherBenefits.isEmpty && selectBenefits.length > 1) {
-      routes.SelectBenefitsController.onPageLoad(CheckMode)
-    } else {
-      routes.CheckYourAnswersController.onPageLoad()
-    }
-  }
-
-  private def deleteOtherCompanyBenefit(userAnswers: UserAnswers): Call = {
-    val otherCompanyBenefits: Seq[OtherCompanyBenefit] = userAnswers.otherCompanyBenefit.get
-    val selectCompanyBenefits: Seq[CompanyBenefits.Value] = userAnswers.selectCompanyBenefits.get
-
-    if (otherCompanyBenefits.isEmpty && selectCompanyBenefits.length == 1) {
-      routes.AnyCompanyBenefitsController.onPageLoad(CheckMode)
-    } else if (otherCompanyBenefits.isEmpty && selectCompanyBenefits.length > 1) {
-      routes.SelectCompanyBenefitsController.onPageLoad(CheckMode)
-    } else {
-      routes.CheckYourAnswersController.onPageLoad()
-    }
-  }
-
-  private def deleteOtherTaxableIncome(userAnswers: UserAnswers): Call = {
-    val otherTaxableIncome: Seq[OtherTaxableIncome] = userAnswers.otherTaxableIncome.get
-    val selectTaxableIncome: Seq[TaxableIncome.Value] = userAnswers.selectTaxableIncome.get
-
-    if (otherTaxableIncome.isEmpty && selectTaxableIncome.size == 1) {
-      routes.AnyTaxableIncomeController.onPageLoad(CheckMode)
-    } else if (otherTaxableIncome.isEmpty && selectTaxableIncome.size > 1) {
-      routes.SelectTaxableIncomeController.onPageLoad(CheckMode)
-    } else {
-      routes.CheckYourAnswersController.onPageLoad()
-    }
-  }
-
 
   //Claim Details-----------------------------
 
@@ -323,6 +282,19 @@ class Navigator @Inject()() {
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
+  private def deleteOtherBenefit(userAnswers: UserAnswers): Call = {
+    val otherBenefits: Seq[OtherBenefit] = userAnswers.otherBenefit.get
+    val selectBenefits: Seq[Benefits.Value] = userAnswers.selectBenefits.get
+
+    if (otherBenefits.isEmpty && selectBenefits.length == 1) {
+      routes.AnyBenefitsController.onPageLoad(CheckMode)
+    } else if (otherBenefits.isEmpty && selectBenefits.length > 1) {
+      routes.SelectBenefitsController.onPageLoad(CheckMode)
+    } else {
+      routes.CheckYourAnswersController.onPageLoad()
+    }
+  }
+
 
   //Company benefits--------------------------
 
@@ -341,6 +313,34 @@ class Navigator @Inject()() {
       if (mode == NormalMode) routes.AnyTaxableIncomeController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
     case None =>
       routes.SessionExpiredController.onPageLoad()
+  }
+
+  def getNextCompanyBenefitId(id: Identifier, mode: Mode)(userAnswers: UserAnswers): Call = {
+    userAnswers.selectCompanyBenefits match {
+      case Some(selectedCompanyBenefits) =>
+        val benefitIdentifiers: Seq[Identifier] = selectedCompanyBenefits.map {
+          companyBenefit => CompanyBenefits.getIdString(companyBenefit.toString)
+        }
+
+        if (id == SelectCompanyBenefitsId) {
+          nextCompanyBenefitPage(benefitIdentifiers.head, mode)
+        } else if (benefitIdentifiers.indexOf(id) < (benefitIdentifiers.length - 1)) {
+          nextCompanyBenefitPage(benefitIdentifiers(benefitIdentifiers.indexOf(id) + 1), mode)
+        } else {
+          routes.AnyTaxableIncomeController.onPageLoad(mode)
+        }
+      case _ => routes.SessionExpiredController.onPageLoad()
+    }
+  }
+
+  def nextCompanyBenefitPage(id: Identifier, mode: Mode): Call = {
+    id match {
+      case HowMuchCarBenefitsId => routes.HowMuchCarBenefitsController.onPageLoad(mode)
+      case HowMuchFuelBenefitId => routes.HowMuchFuelBenefitController.onPageLoad(mode)
+      case HowMuchMedicalBenefitsId => routes.HowMuchMedicalBenefitsController.onPageLoad(mode)
+      case OtherCompanyBenefitId => routes.OtherCompanyBenefitController.onPageLoad(mode, 0)
+      case _ => routes.SessionExpiredController.onPageLoad()
+    }
   }
 
   private def selectedCompanyBenefitsCheck(mode: Mode)(userAnswers: UserAnswers): Call = userAnswers.selectCompanyBenefits match {
@@ -369,8 +369,18 @@ class Navigator @Inject()() {
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
-  def otherCompanyBenefit(mode: Mode)(userAnswers: UserAnswers): Call =
-    if (mode == NormalMode) routes.AnyOtherCompanyBenefitsController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
+  private def deleteOtherCompanyBenefit(userAnswers: UserAnswers): Call = {
+    val otherCompanyBenefits: Seq[OtherCompanyBenefit] = userAnswers.otherCompanyBenefit.get
+    val selectCompanyBenefits: Seq[CompanyBenefits.Value] = userAnswers.selectCompanyBenefits.get
+
+    if (otherCompanyBenefits.isEmpty && selectCompanyBenefits.length == 1) {
+      routes.AnyCompanyBenefitsController.onPageLoad(CheckMode)
+    } else if (otherCompanyBenefits.isEmpty && selectCompanyBenefits.length > 1) {
+      routes.SelectCompanyBenefitsController.onPageLoad(CheckMode)
+    } else {
+      routes.CheckYourAnswersController.onPageLoad()
+    }
+  }
 
   //Taxable income--------------------------
 
@@ -455,6 +465,19 @@ class Navigator @Inject()() {
     routes.AnyTaxableOtherIncomeController.onPageLoad(mode, index)
   }
 
+  private def deleteOtherTaxableIncome(userAnswers: UserAnswers): Call = {
+    val otherTaxableIncome: Seq[OtherTaxableIncome] = userAnswers.otherTaxableIncome.get
+    val selectTaxableIncome: Seq[TaxableIncome.Value] = userAnswers.selectTaxableIncome.get
+
+    if (otherTaxableIncome.isEmpty && selectTaxableIncome.size == 1) {
+      routes.AnyTaxableIncomeController.onPageLoad(CheckMode)
+    } else if (otherTaxableIncome.isEmpty && selectTaxableIncome.size > 1) {
+      routes.SelectTaxableIncomeController.onPageLoad(CheckMode)
+    } else {
+      routes.CheckYourAnswersController.onPageLoad()
+    }
+  }
+
   //Payment----------------------------
 
   private def whereToSendPayment(userAnswers: UserAnswers): Call = userAnswers.whereToSendPayment match {
@@ -515,6 +538,8 @@ class Navigator @Inject()() {
     case CheckMode => routes.CheckYourAnswersController.onPageLoad()
     case NormalMode => routes.TelephoneNumberController.onPageLoad(mode)
   }
+
+  //Utils------------
 
   def nextPage(id: Identifier, mode: Mode): UserAnswers => Call = mode match {
     case NormalMode =>

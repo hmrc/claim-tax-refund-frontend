@@ -98,11 +98,6 @@ class CompanyBenefitNavigatorSpec extends SpecBase with MockitoSugar {
 
           navigator.nextPage(SelectCompanyBenefitsId, NormalMode)(answers) mustBe routes.OtherCompanyBenefitController.onPageLoad(NormalMode, index = 0)
         }
-
-        "go to AnyTaxableIncome when all benefits checked and amounts provided" in {
-          val answers = MockUserAnswers.companyBenefitsUserAnswers
-          navigator.nextPage(SelectCompanyBenefitsId, NormalMode)(answers) mustBe routes.AnyTaxableIncomeController.onPageLoad(NormalMode)
-        }
       }
 
       "Navigating from HowMuchHowMuchCarBenefits" must {
