@@ -28,15 +28,15 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
   val navigator = new Navigator
 
   "BenefitsNavigator" when {
-    "in normal mode" when {
+    "in normal mode" must {
 
-      "go to summary page if there is a previous otherBenefit" in {
+      "go to first other benefit if there is a previous otherBenefit" in {
         val answers = MockUserAnswers.nothingAnswered
         when(answers.anyBenefits) thenReturn Some(true)
         when(answers.selectBenefits) thenReturn Some(Seq(Benefits.OTHER_TAXABLE_BENEFIT))
         when(answers.otherBenefit) thenReturn Some(Seq(OtherBenefit("benefit1", "123")))
 
-        navigator.nextPage(SelectBenefitsId, NormalMode)(answers) mustBe routes.AnyOtherBenefitsController.onPageLoad(NormalMode)
+        navigator.nextPage(SelectBenefitsId, NormalMode)(answers) mustBe routes.OtherBenefitController.onPageLoad(NormalMode, 0)
       }
 
       "go to otherBenefit if there is no previous otherBenefit" in {

@@ -84,13 +84,13 @@ class Navigator @Inject()() {
     DetailsOfEmploymentOrPensionId -> (_ => routes.AnyBenefitsController.onPageLoad(NormalMode)),
     //Benefits
     AnyBenefitsId -> anyBenefits(NormalMode),
-    SelectBenefitsId -> selectedBenefitsCheck(NormalMode),
-    HowMuchBereavementAllowanceId -> selectedBenefitsCheck(NormalMode),
-    HowMuchCarersAllowanceId -> selectedBenefitsCheck(NormalMode),
-    HowMuchJobseekersAllowanceId -> selectedBenefitsCheck(NormalMode),
-    HowMuchIncapacityBenefitId -> selectedBenefitsCheck(NormalMode),
-    HowMuchEmploymentAndSupportAllowanceId -> selectedBenefitsCheck(NormalMode),
-    HowMuchStatePensionId -> selectedBenefitsCheck(NormalMode),
+    SelectBenefitsId -> getNextBenefitId(SelectBenefitsId, NormalMode),
+    HowMuchBereavementAllowanceId -> getNextBenefitId(HowMuchBereavementAllowanceId, NormalMode),
+    HowMuchCarersAllowanceId -> getNextBenefitId(HowMuchCarersAllowanceId, NormalMode),
+    HowMuchJobseekersAllowanceId -> getNextBenefitId(HowMuchJobseekersAllowanceId, NormalMode),
+    HowMuchIncapacityBenefitId -> getNextBenefitId(HowMuchIncapacityBenefitId, NormalMode),
+    HowMuchEmploymentAndSupportAllowanceId -> getNextBenefitId(HowMuchEmploymentAndSupportAllowanceId, NormalMode),
+    HowMuchStatePensionId -> getNextBenefitId(HowMuchStatePensionId, NormalMode),
     OtherBenefitId -> (_ => routes.AnyOtherBenefitsController.onPageLoad(NormalMode)),
     AnyOtherBenefitsId -> anyOtherBenefits(NormalMode),
     //Company benefits
@@ -144,7 +144,7 @@ class Navigator @Inject()() {
     HowMuchEmploymentAndSupportAllowanceId -> selectedBenefitsCheck(CheckMode),
     HowMuchStatePensionId -> selectedBenefitsCheck(CheckMode),
     OtherBenefitId -> (_ => routes.AnyOtherBenefitsController.onPageLoad(CheckMode)),
-		AnyOtherBenefitsId -> anyOtherBenefits(CheckMode),
+    AnyOtherBenefitsId -> anyOtherBenefits(CheckMode),
     //Company Benefits
     AnyCompanyBenefitsId -> anyCompanyBenefits(CheckMode),
     SelectCompanyBenefitsId -> selectedCompanyBenefitsCheck(CheckMode),
@@ -183,7 +183,7 @@ class Navigator @Inject()() {
 
     if (otherBenefits.isEmpty && selectBenefits.length == 1) {
       routes.AnyBenefitsController.onPageLoad(CheckMode)
-    } else if (otherBenefits.isEmpty && selectBenefits.length > 1){
+    } else if (otherBenefits.isEmpty && selectBenefits.length > 1) {
       routes.SelectBenefitsController.onPageLoad(CheckMode)
     } else {
       routes.CheckYourAnswersController.onPageLoad()
@@ -196,7 +196,7 @@ class Navigator @Inject()() {
 
     if (otherCompanyBenefits.isEmpty && selectCompanyBenefits.length == 1) {
       routes.AnyCompanyBenefitsController.onPageLoad(CheckMode)
-    } else if (otherCompanyBenefits.isEmpty && selectCompanyBenefits.length > 1){
+    } else if (otherCompanyBenefits.isEmpty && selectCompanyBenefits.length > 1) {
       routes.SelectCompanyBenefitsController.onPageLoad(CheckMode)
     } else {
       routes.CheckYourAnswersController.onPageLoad()
@@ -209,13 +209,12 @@ class Navigator @Inject()() {
 
     if (otherTaxableIncome.isEmpty && selectTaxableIncome.size == 1) {
       routes.AnyTaxableIncomeController.onPageLoad(CheckMode)
-    } else if (otherTaxableIncome.isEmpty && selectTaxableIncome.size > 1){
+    } else if (otherTaxableIncome.isEmpty && selectTaxableIncome.size > 1) {
       routes.SelectTaxableIncomeController.onPageLoad(CheckMode)
     } else {
       routes.CheckYourAnswersController.onPageLoad()
     }
   }
-
 
 
   //Claim Details-----------------------------
@@ -244,7 +243,7 @@ class Navigator @Inject()() {
   //Benefits----------------------------------
 
   private def anyBenefits(mode: Mode)(userAnswers: UserAnswers): Call = userAnswers.anyBenefits match {
-    case Some(true)  =>
+    case Some(true) =>
       mode match {
         case NormalMode =>
           routes.SelectBenefitsController.onPageLoad(mode)
@@ -255,9 +254,40 @@ class Navigator @Inject()() {
           }
       }
     case Some(false) =>
-      if(mode == NormalMode) routes.AnyCompanyBenefitsController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
+      if (mode == NormalMode) routes.AnyCompanyBenefitsController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
     case None =>
       routes.SessionExpiredController.onPageLoad()
+  }
+
+  def getNextBenefitId(id: Identifier, mode: Mode)(userAnswers: UserAnswers): Call = {
+    userAnswers.selectBenefits match {
+      case Some(selectedBenefits) =>
+        val benefitIdentifiers: Seq[Identifier] = selectedBenefits.map {
+          benefit => Benefits.getIdString(benefit.toString)
+        }
+
+        if (id == SelectBenefitsId) {
+          nextBenefitPage(benefitIdentifiers.head, mode)
+        } else if (benefitIdentifiers.indexOf(id) < (benefitIdentifiers.length - 1)) {
+          nextBenefitPage(benefitIdentifiers(benefitIdentifiers.indexOf(id) + 1), mode)
+        } else {
+          routes.AnyCompanyBenefitsController.onPageLoad(mode)
+        }
+      case _ => routes.SessionExpiredController.onPageLoad()
+    }
+  }
+
+  def nextBenefitPage(id: Identifier, mode: Mode): Call = {
+    id match {
+      case HowMuchBereavementAllowanceId => routes.HowMuchBereavementAllowanceController.onPageLoad(mode)
+      case HowMuchCarersAllowanceId => routes.HowMuchCarersAllowanceController.onPageLoad(mode)
+      case HowMuchJobseekersAllowanceId => routes.HowMuchJobseekersAllowanceController.onPageLoad(mode)
+      case HowMuchIncapacityBenefitId => routes.HowMuchIncapacityBenefitController.onPageLoad(mode)
+      case HowMuchEmploymentAndSupportAllowanceId => routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(mode)
+      case HowMuchStatePensionId => routes.HowMuchStatePensionController.onPageLoad(mode)
+      case OtherBenefitId => routes.OtherBenefitController.onPageLoad(mode, 0)
+      case _ => routes.SessionExpiredController.onPageLoad()
+    }
   }
 
   private def selectedBenefitsCheck(mode: Mode)(userAnswers: UserAnswers): Call = userAnswers.selectBenefits match {
@@ -287,9 +317,9 @@ class Navigator @Inject()() {
   private def anyOtherBenefits(mode: Mode)(userAnswers: UserAnswers): Call = userAnswers.anyOtherBenefits match {
     case Some(true) => routes.OtherBenefitController.onPageLoad(mode, Index(userAnswers.otherBenefit.get.length))
     case Some(false) => mode match {
-			case NormalMode => routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
-			case CheckMode => routes.CheckYourAnswersController.onPageLoad()
-		}
+      case NormalMode => routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
+      case CheckMode => routes.CheckYourAnswersController.onPageLoad()
+    }
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
@@ -305,10 +335,10 @@ class Navigator @Inject()() {
           userAnswers.selectCompanyBenefits match {
             case None => routes.SelectCompanyBenefitsController.onPageLoad(mode)
             case _ => selectedCompanyBenefitsCheck(mode)(userAnswers)
-        }
+          }
       }
     case Some(false) =>
-      if(mode == NormalMode) routes.AnyTaxableIncomeController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
+      if (mode == NormalMode) routes.AnyTaxableIncomeController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
     case None =>
       routes.SessionExpiredController.onPageLoad()
   }
@@ -506,4 +536,5 @@ class Navigator @Inject()() {
     case CheckMode =>
       editRouteMapWithCollectionId.lift(collectionId).getOrElse(_ => routes.CheckYourAnswersController.onPageLoad())
   }
+
 }
