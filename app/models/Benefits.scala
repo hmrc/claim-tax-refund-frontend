@@ -36,7 +36,7 @@ object Benefits extends Enumeration {
 
   implicit def enumFormats: Format[Value] = EnumUtils.enumFormat(Benefits)
 
-  def getIdString(benefitValue: String): Identifier = {
+  def getId(benefitValue: String): Identifier = {
     benefitValue match {
       case "bereavement-allowance" => HowMuchBereavementAllowanceId
       case "carers-allowance" => HowMuchCarersAllowanceId

@@ -110,7 +110,7 @@ class CascadeUpsert {
       _.as[JsArray].value.foldLeft(cacheMap) {
         (cm, benefit) =>
           if (!selectedBenefits.as[JsArray].value.contains(benefit) && benefit != JsString(Benefits.OTHER_TAXABLE_BENEFIT.toString)) {
-            cm copy (data = cm.data - Benefits.getIdString(benefit.as[String]).toString)
+            cm copy (data = cm.data - Benefits.getId(benefit.as[String]).toString)
           } else if (!selectedBenefits.as[JsArray].value.contains(JsString(Benefits.OTHER_TAXABLE_BENEFIT.toString))) {
             cm copy (data = cm.data - (OtherBenefitId.toString, AnyOtherBenefitsId.toString))
           } else {
@@ -128,7 +128,7 @@ class CascadeUpsert {
       _.as[JsArray].value.foldLeft(cacheMap) {
         (cm, benefit) =>
           if (!selectedBenefits.as[JsArray].value.contains(benefit) && benefit != JsString(CompanyBenefits.OTHER_COMPANY_BENEFIT.toString)) {
-            cm copy (data = cm.data - CompanyBenefits.getIdString(benefit.as[String]).toString)
+            cm copy (data = cm.data - CompanyBenefits.getId(benefit.as[String]).toString)
           } else if (!selectedBenefits.as[JsArray].value.contains(JsString(CompanyBenefits.OTHER_COMPANY_BENEFIT.toString))) {
             cm copy (data = cm.data - (OtherCompanyBenefitId.toString, AnyOtherCompanyBenefitsId.toString))
           } else {

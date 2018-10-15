@@ -222,7 +222,7 @@ class Navigator @Inject()() {
     userAnswers.selectBenefits match {
       case Some(selectedBenefits) =>
         val benefitIdentifiers: Seq[Identifier] = selectedBenefits.map {
-          benefit => Benefits.getIdString(benefit.toString)
+          benefit => Benefits.getId(benefit.toString)
         }
 
         if (id == SelectBenefitsId) {
@@ -319,7 +319,7 @@ class Navigator @Inject()() {
     userAnswers.selectCompanyBenefits match {
       case Some(selectedCompanyBenefits) =>
         val benefitIdentifiers: Seq[Identifier] = selectedCompanyBenefits.map {
-          companyBenefit => CompanyBenefits.getIdString(companyBenefit.toString)
+          companyBenefit => CompanyBenefits.getId(companyBenefit.toString)
         }
 
         if (id == SelectCompanyBenefitsId) {
