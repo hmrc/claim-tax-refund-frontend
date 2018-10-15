@@ -103,16 +103,16 @@ class Navigator @Inject()() {
     AnyOtherCompanyBenefitsId -> anyOtherCompanyBenefits(NormalMode),
     //Taxable income
     AnyTaxableIncomeId -> anyTaxableIncome(NormalMode),
-    SelectTaxableIncomeId -> selectedTaxableIncomeCheck(NormalMode),
+    SelectTaxableIncomeId -> getNextTaxableIncomeId(SelectTaxableIncomeId, NormalMode),
     HowMuchRentalIncomeId -> (_ => routes.AnyTaxableRentalIncomeController.onPageLoad(NormalMode)),
-    AnyTaxableRentalIncomeId -> selectedTaxableIncomeCheck(NormalMode),
+    AnyTaxableRentalIncomeId -> getNextTaxableIncomeId(AnyTaxableRentalIncomeId, NormalMode),
     HowMuchBankInterestId -> (_ => routes.AnyTaxableBankInterestController.onPageLoad(NormalMode)),
-    AnyTaxableBankInterestId -> selectedTaxableIncomeCheck(NormalMode),
+    AnyTaxableBankInterestId -> getNextTaxableIncomeId(AnyTaxableBankInterestId, NormalMode),
     HowMuchInvestmentsId -> (_ => routes.AnyTaxableInvestmentsController.onPageLoad(NormalMode)),
-    AnyTaxableInvestmentsId -> selectedTaxableIncomeCheck(NormalMode),
+    AnyTaxableInvestmentsId -> getNextTaxableIncomeId(AnyTaxableInvestmentsId, NormalMode),
     HowMuchForeignIncomeId -> (_ => routes.AnyTaxableForeignIncomeController.onPageLoad(NormalMode)),
-    AnyTaxableForeignIncomeId -> selectedTaxableIncomeCheck(NormalMode),
-    AnyTaxableOtherIncomeId -> (_ => routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode)),
+    AnyTaxableForeignIncomeId -> getNextTaxableIncomeId(AnyTaxableForeignIncomeId, NormalMode),
+    AnyTaxableOtherIncomeId -> getNextTaxableIncomeId(AnyTaxableOtherIncomeId, NormalMode),
     AnyOtherTaxableIncomeId -> anyOtherTaxableIncome(NormalMode),
     //Payment
     WhereToSendPaymentId -> whereToSendPayment,
@@ -399,6 +399,39 @@ class Navigator @Inject()() {
       if (mode == NormalMode) routes.WhereToSendPaymentController.onPageLoad(NormalMode) else routes.CheckYourAnswersController.onPageLoad()
     case None =>
       routes.SessionExpiredController.onPageLoad()
+  }
+
+  def getNextTaxableIncomeId(id: Identifier, mode: Mode)(userAnswers: UserAnswers): Call = {
+    userAnswers.selectTaxableIncome match {
+      case Some(selectedTaxableIncome) =>
+        val incomeIdentifiers: Seq[Identifier] = selectedTaxableIncome.map {
+          income => TaxableIncome.getId(income.toString)._1
+        }
+
+        if (id == SelectTaxableIncomeId) {
+          nextIncomePage(incomeIdentifiers.head, mode)
+        } else if (incomeIdentifiers.indexOf(id) < (incomeIdentifiers.length - 1)) {
+          nextIncomePage(incomeIdentifiers(incomeIdentifiers.indexOf(id) + 1), mode)
+        } else {
+          routes.WhereToSendPaymentController.onPageLoad(mode)
+        }
+      case _ => routes.SessionExpiredController.onPageLoad()
+    }
+  }
+
+  def nextIncomePage(id: Identifier, mode: Mode): Call = {
+    id match {
+      case HowMuchRentalIncomeId => routes.HowMuchRentalIncomeController.onPageLoad(mode)
+      case AnyTaxableRentalIncomeId => routes.AnyTaxableRentalIncomeController.onPageLoad(mode)
+      case HowMuchBankInterestId => routes.HowMuchBankInterestController.onPageLoad(mode)
+      case AnyTaxableBankInterestId => routes.AnyTaxableBankInterestController.onPageLoad(mode)
+      case HowMuchInvestmentsId => routes.HowMuchInvestmentOrDividendController.onPageLoad(mode)
+      case AnyTaxableInvestmentsId => routes.AnyTaxableInvestmentsController.onPageLoad(mode)
+      case HowMuchForeignIncomeId => routes.HowMuchForeignIncomeController.onPageLoad(mode)
+      case AnyTaxableForeignIncomeId => routes.AnyTaxableForeignIncomeController.onPageLoad(mode)
+      case OtherTaxableIncomeId => routes.OtherTaxableIncomeController.onPageLoad(mode, 0)
+      case _ => routes.SessionExpiredController.onPageLoad()
+    }
   }
 
   private def selectedTaxableIncomeCheck(mode: Mode)(userAnswers: UserAnswers): Call = userAnswers.selectTaxableIncome match {
