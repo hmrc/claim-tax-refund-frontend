@@ -27,7 +27,7 @@ class NomineeFullNameFormSpec extends FormBehaviours with MockitoSugar {
 
   private val errorKeyBlank = "nomineeFullName.blank"
   private val errorKeyTooLong = "nomineeFullName.tooLong"
-  private val maxLength = 35
+  private val maxLength = frontendAppConfig.nomineeFullNameMaxLength
 
   def appConfig: FrontendAppConfig = {
     val instance = mock[FrontendAppConfig]
