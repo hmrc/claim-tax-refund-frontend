@@ -102,7 +102,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
         submission =>
           submissionService.ctrSubmission(submission) map {
             case SubmissionSuccessful => Redirect(routes.ConfirmationController.onPageLoad(submissionReference))
-            case _ => Redirect(routes.SessionExpiredController.onPageLoad())
+            case _ => throw new Exception("[Check your answers][Submission failed]")
           }
       }
   }
