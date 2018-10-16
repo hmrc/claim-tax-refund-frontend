@@ -18,6 +18,7 @@ package models.templates
 
 import models._
 import play.api.i18n.Messages
+import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
 import utils.UserAnswers
 
 import scala.xml._
@@ -25,23 +26,23 @@ import scala.xml.Utility.trim
 
 class RobotXML {
 
-  def generateXml(userAnswers: UserAnswers, submissionReference: String , dateCreated: String)(implicit messages: Messages): Node =
+  def generateXml(
+                   userAnswers: UserAnswers,
+                   submissionReference: String ,
+                   dateCreated: String,
+                   nino: String,
+                   itmpName: ItmpName,
+                   itmpAddress: ItmpAddress
+                 )(implicit messages: Messages): Node =
     trim(
       <ctr>
         <submissionReference>{submissionReference}</submissionReference>
         <dateCreated>{dateCreated}</dateCreated>
+
         <userDetails>
-          {
-            userAnswers.name.toSeq.map { value =>
-              <name>{ItmpNameFormat.asString(value)}</name>
-            } ++
-            userAnswers.nino.toSeq.map { value =>
-              <nino>{value}</nino>
-            } ++
-            userAnswers.itmpAddress.toSeq.map { value =>
-              <itmpAddress>{ItmpAddressFormat.toXml(value)}</itmpAddress>
-            }
-          }
+            <name>{ItmpNameFormat.asString(itmpName)}</name>
+            <nino>{nino}</nino>
+            <itmpAddress>{ItmpAddressFormat.toXml(itmpAddress)}</itmpAddress>
         </userDetails>
 
         <claimSection>

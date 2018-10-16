@@ -19,6 +19,7 @@ package models.templates
 import base.SpecBase
 import models._
 import org.mockito.Mockito.when
+import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
 import utils.{MockUserAnswers, UserAnswers}
 
 import scala.xml.Utility._
@@ -31,12 +32,24 @@ class RobotsSpec extends SpecBase {
 
   private val submissionReference: String = "1234"
   private val timeStamp: String = "1234567890"
+  private val name: ItmpName = ItmpName(Some("TestName"),None,Some("TestLastName"))
+  private val address: ItmpAddress = ItmpAddress(
+    Some("Address line 1"),
+    Some("Address line 2"),
+    Some("Address line 3"),
+    Some("Address line 4"),
+    Some("Address line 5"),
+    Some("ZZ11ZZ"),
+    Some("United Kingdom"),
+    Some("GB")
+  )
+  private val nino: String = "ZZ123456A"
 
   private val fullXml: Node =
-    robotXML.generateXml(fullUserAnswers, submissionReference, timeStamp)(messages)
+    robotXML.generateXml(fullUserAnswers, submissionReference, timeStamp, nino, name, address)(messages)
 
   private def formatXml(userAnswers: UserAnswers): Node =
-    robotXML.generateXml(userAnswers, submissionReference, timeStamp)(messages)
+    robotXML.generateXml(userAnswers, submissionReference, timeStamp, nino, name, address)(messages)
 
   private val validMinimalXml: Node =
     trim(

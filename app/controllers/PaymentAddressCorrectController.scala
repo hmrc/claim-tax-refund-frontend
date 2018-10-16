@@ -62,7 +62,7 @@ class PaymentAddressCorrectController @Inject()(appConfig: FrontendAppConfig,
         taxYear =>
           request.address match {
             case Some(address)
-              if address.line1.exists(_.trim.nonEmpty) && (address.postCode.exists(_.trim.nonEmpty) || address.countryName.exists(_.trim.nonEmpty)) =>
+              if address.line1.exists(_.trim.nonEmpty) && address.postCode.exists(_.trim.nonEmpty) =>
               Ok(paymentAddressCorrect(appConfig, preparedForm, mode, address, taxYear))
             case _ =>
               Redirect(routes.IsPaymentAddressInTheUKController.onPageLoad(mode))

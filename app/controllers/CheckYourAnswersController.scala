@@ -27,14 +27,14 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
 import services.SubmissionService
 import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
-import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import uk.gov.hmrc.renderer.TemplateRenderer
-import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, UserAnswers}
+import utils.{CheckYourAnswersHelper, CheckYourAnswersSections}
 import views.html.{check_your_answers, pdf_check_your_answers}
 
 import scala.concurrent.Future
+
 class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
                                            override val messagesApi: MessagesApi,
                                            dataCacheConnector: DataCacheConnector,
@@ -45,24 +45,12 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
                                            implicit val formPartialRetriever: FormPartialRetriever,
                                            implicit val templateRenderer: TemplateRenderer
                                           ) extends FrontendController with I18nSupport {
-  import ItmpNameFormat.format
 
-  def onPageLoad(): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
+  def onPageLoad(): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val itmpName: ItmpName = request.name.getOrElse(ItmpName(Some("No name returned from ITMP"), None, None))
-      val itmpAddress: ItmpAddress = request.address.getOrElse(ItmpAddress(Some("No address returned from ITMP"), None, None, None, None, None, None, None))
-      val nino: String = request.nino
-
-      for {
-        _ <- dataCacheConnector.save[ItmpName](request.externalId, key = "name", itmpName)
-        _ <- dataCacheConnector.save[ItmpAddress](request.externalId, key = "itmpAddress", itmpAddress)(ItmpAddressFormat.format)
-        updatedCacheMap: CacheMap <- dataCacheConnector.save[String](request.externalId, key = "nino", nino)
-      } yield {
-        val updatedUserAnswers = new UserAnswers(updatedCacheMap)
-        val cyaHelper = new CheckYourAnswersHelper(updatedUserAnswers)
-        val cyaSections = new CheckYourAnswersSections(cyaHelper, updatedUserAnswers)
-        Ok(check_your_answers(appConfig, cyaSections.sections))
-      }
+      val cyaHelper = new CheckYourAnswersHelper(request.userAnswers)
+      val cyaSections = new CheckYourAnswersSections(cyaHelper, request.userAnswers)
+      Ok(check_your_answers(appConfig, cyaSections.sections))
   }
 
   def onSubmit(): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
@@ -85,7 +73,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
       val metadata: Metadata = new Metadata()
       val submissionReference = metadata.submissionReference
       val robotXml = new RobotXML
-      val xml: String = robotXml.generateXml(request.userAnswers, submissionReference, metadata.timeStamp).toString
+      val xml: String = robotXml.generateXml(request.userAnswers, submissionReference, metadata.timeStamp, nino, itmpName, itmpAddress).toString
 
       val futureSubmission: Future[Submission] = for {
         _ <- dataCacheConnector.save[String](request.externalId, key = "pdf", pdfHtml)
