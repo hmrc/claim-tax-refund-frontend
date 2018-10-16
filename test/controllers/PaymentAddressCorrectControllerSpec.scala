@@ -166,25 +166,20 @@ class PaymentAddressCorrectControllerSpec extends ControllerSpecBase {
       redirectLocation(result) mustBe Some(routes.IsPaymentAddressInTheUKController.onPageLoad(NormalMode).url)
     }
 
-    "load paymentAddressCorrect if valid uk address on page load" in {
-      val result = controller(fakeDataRetrievalActionItmpAddress(Some(ukItmpAddress))).onPageLoad(NormalMode)(fakeRequest)
-      status(result) mustBe OK
+    "redirect to is address in UK if international ITMP address on page load" in {
+      val result = controller(fakeDataRetrievalActionItmpAddress(Some(internationalItmpAddress))).onPageLoad(NormalMode)(fakeRequest)
+      status(result) mustBe SEE_OTHER
+      redirectLocation(result) mustBe Some(routes.IsPaymentAddressInTheUKController.onPageLoad(NormalMode).url)
     }
 
-    "load paymentAddressCorrect if valid international address on page load" in {
-      val result = controller(fakeDataRetrievalActionItmpAddress(Some(internationalItmpAddress))).onPageLoad(NormalMode)(fakeRequest)
+    "load paymentAddressCorrect if valid uk address on page load" in {
+      val result = controller(fakeDataRetrievalActionItmpAddress(Some(ukItmpAddress))).onPageLoad(NormalMode)(fakeRequest)
       status(result) mustBe OK
     }
 
     "redirect to paymentAddressCorrect if valid uk address on submit" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
       val result = controller(fakeDataRetrievalActionItmpAddress(Some(ukItmpAddress))).onSubmit(NormalMode)(postRequest)
-      status(result) mustBe SEE_OTHER
-    }
-
-    "redirect to paymentAddressCorrect if valid international address on submit" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
-      val result = controller(fakeDataRetrievalActionItmpAddress(Some(internationalItmpAddress))).onSubmit(NormalMode)(postRequest)
       status(result) mustBe SEE_OTHER
     }
   }
