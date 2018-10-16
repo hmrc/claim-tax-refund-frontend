@@ -47,11 +47,10 @@ class CtrConnector @Inject()(appConfig: FrontendAppConfig, http: HttpClient) {
         }
     }
 
-    postRequest.onFailure {
+    postRequest.recover {
       case e =>
         Logger.error(s"[CtrConnector][ctrSubmission] - submission to $submissionUrl failed", e)
+        None
     }
-
-    postRequest
   }
 }
