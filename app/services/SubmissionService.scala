@@ -52,7 +52,7 @@ class SubmissionService @Inject()(appConfig: FrontendAppConfig,
 
         SubmissionSuccessful
 
-      case None =>
+      case _ =>
         SubmissionFailed
     }
   }

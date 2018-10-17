@@ -80,12 +80,14 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with WireMockHel
       }
     }
 
-    "Redirect to Failed to submit on a POST when submission fails" in {
+    "throw an exception when a submission fails" in {
       when(mockSubmissionService.ctrSubmission(any())(any())) thenReturn Future.successful(SubmissionFailed)
       val result = controller(someData).onSubmit()(fakeRequest)
 
-      status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+      whenReady(result.failed) {
+        result =>
+          result mustBe a[Exception]
+      }
     }
   }
 }

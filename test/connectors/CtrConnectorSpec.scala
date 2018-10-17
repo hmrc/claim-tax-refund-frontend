@@ -69,9 +69,9 @@ class CtrConnectorSpec extends SpecBase with MockitoSugar with ScalaFutures {
 
       val futureResult = connector.ctrSubmission(Json.toJson(submission))
 
-      whenReady(futureResult.failed) {
+      whenReady(futureResult) {
         result =>
-          result mustBe a[Exception]
+          result mustBe None
       }
     }
 

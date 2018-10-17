@@ -25,6 +25,8 @@ import play.api.http.Status.{BAD_REQUEST, FORBIDDEN}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.Results._
 import play.api.mvc.{Request, RequestHeader, Result, Results}
+import play.twirl.api.Html
+import uk.gov.hmrc.play.bootstrap.http.FrontendErrorHandler
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import uk.gov.hmrc.renderer.TemplateRenderer
 import views.html.error_template
@@ -38,7 +40,7 @@ class ErrorHandler @Inject()(
                               implicit val formPartialRetriever: FormPartialRetriever,
                               implicit val templateRenderer: TemplateRenderer,
                               authAction: AuthAction
-                            ) extends HttpErrorHandler with I18nSupport {
+                            ) extends FrontendErrorHandler {
 
   override def onClientError(request: RequestHeader, statusCode: Int, message: String): Future[Result] = {
     statusCode match {
@@ -53,18 +55,12 @@ class ErrorHandler @Inject()(
         })
       case FORBIDDEN =>
         Future.successful(Forbidden(views.html.defaultpages.unauthorized()))
-      case clientError if statusCode >= 400 && statusCode < 500 =>
-        Future.successful(Results.Status(clientError)(views.html.defaultpages.badRequest(request.method, request.uri, message)))
-      case nonClientError =>
-        throw new IllegalArgumentException(s"onClientError invoked with non client error status code $statusCode: $message")
+      case _ =>
+        Future.successful(BadRequest(views.html.defaultpages.badRequest(request.method, request.uri, message)))
     }
   }
 
-  override def onServerError(request: RequestHeader, exception: Throwable): Future[Result] = {
-    Future.successful {
-      Logger.warn("Exception in request", exception)
-      InternalServerError("Error: " + exception.getMessage)
-    }
-  }
+  override def standardErrorTemplate(pageTitle: String, heading: String, message: String)(implicit request: Request[_]): Html =
+    views.html.unauthorised_error_template(pageTitle, heading, message, appConfig)
 }
 
