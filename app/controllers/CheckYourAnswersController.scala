@@ -79,7 +79,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
         _ <- dataCacheConnector.save[String](request.externalId, key = "pdf", pdfHtml)
         _ <- dataCacheConnector.save[String](request.externalId, key = "xml", xml)
         _ <- dataCacheConnector.save[String](request.externalId, key = "metadata", Metadata.toXml(metadata).toString)
-      } yield new Submission(pdfHtml, metadata.toString, xml)
+      } yield new Submission(pdfHtml, Metadata.toXml(metadata).toString, xml)
 
       futureSubmission.onFailure {
         case e =>
