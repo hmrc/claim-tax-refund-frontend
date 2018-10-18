@@ -42,6 +42,8 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with WireMoc
 
     override def remove(cacheId: String, key: String): Future[Boolean] = ???
 
+    override def removeAll(cacheId: String): Future[Boolean] = ???
+
     override def fetch(cacheId: String): Future[Option[CacheMap]] = ???
 
     override def getEntry[A](cacheId: String, key: String)(implicit fmt: Format[A]): Future[Option[A]] = ???

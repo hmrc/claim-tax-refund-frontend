@@ -16,8 +16,8 @@
 
 package controllers
 import javax.inject.Inject
-
 import config.FrontendAppConfig
+import connectors.DataCacheConnector
 import controllers.actions._
 import models.Mode
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -32,12 +32,14 @@ class ConfirmationController @Inject()(appConfig: FrontendAppConfig,
                                                  authenticate: AuthAction,
                                                  getData: DataRetrievalAction,
                                                  requireData: DataRequiredAction,
+                                                 dataCacheConnector: DataCacheConnector,
                                                  implicit val formPartialRetriever: FormPartialRetriever,
                                                  implicit val templateRenderer: TemplateRenderer
                                       ) extends FrontendController with I18nSupport {
 
   def onPageLoad(mode: Mode, submissionReference: String): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      Ok(confirmation(appConfig, submissionReference)).withNewSession
+      dataCacheConnector.removeAll(request.userAnswers.cacheMap.id)
+      Ok(confirmation(appConfig, submissionReference))
   }
 }

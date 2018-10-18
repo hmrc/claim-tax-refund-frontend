@@ -16,6 +16,7 @@
 
 package controllers
 
+import connectors.FakeDataCacheConnector
 import controllers.actions._
 import models.NormalMode
 import play.api.test.Helpers._
@@ -27,7 +28,7 @@ class ConfirmationControllerSpec extends ControllerSpecBase {
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new ConfirmationController(frontendAppConfig, messagesApi, FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, formPartialRetriever, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl, FakeDataCacheConnector, formPartialRetriever, templateRenderer)
 
   private val submissionReference = "ABC-1234-DEF"
 

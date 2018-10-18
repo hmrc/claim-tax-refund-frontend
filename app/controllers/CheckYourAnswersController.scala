@@ -50,7 +50,13 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
     implicit request =>
       val cyaHelper = new CheckYourAnswersHelper(request.userAnswers)
       val cyaSections = new CheckYourAnswersSections(cyaHelper, request.userAnswers)
-      Ok(check_your_answers(appConfig, cyaSections.sections))
+
+      request.userAnswers.selectTaxYear.map {
+        _ =>
+          Ok(check_your_answers(appConfig, cyaSections.sections))
+      }.getOrElse {
+        Redirect(routes.SessionExpiredController.onPageLoad())
+      }
   }
 
   def onSubmit(): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
