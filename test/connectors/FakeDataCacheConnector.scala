@@ -27,7 +27,7 @@ object FakeDataCacheConnector extends DataCacheConnector {
 
   override def remove(cacheId: String, key: String): Future[Boolean] = ???
 
-  override def removeAll(cacheId: String): Future[Boolean] = Future.successful(true)
+  override def removeAll(cacheId: String): Future[Boolean] = ???
 
   override def fetch(cacheId: String): Future[Option[CacheMap]] = Future(Some(CacheMap(cacheId, Map())))
 

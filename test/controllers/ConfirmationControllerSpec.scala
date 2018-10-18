@@ -16,21 +16,27 @@
 
 package controllers
 
-import connectors.FakeDataCacheConnector
+import connectors.DataCacheConnector
 import controllers.actions._
 import models.NormalMode
+import org.scalatest.concurrent.ScalaFutures
 import play.api.test.Helpers._
 import views.html.confirmation
+import org.mockito.Mockito._
+import org.mockito.Matchers._
+import play.api.mvc.Call
 
-class ConfirmationControllerSpec extends ControllerSpecBase {
 
-  def onwardRoute = routes.IndexController.onPageLoad()
+class ConfirmationControllerSpec extends ControllerSpecBase with ScalaFutures{
+  val mockDataCacheConnector = mock[DataCacheConnector]
+  def onwardRoute: Call = routes.IndexController.onPageLoad()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new ConfirmationController(frontendAppConfig, messagesApi, FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, FakeDataCacheConnector, formPartialRetriever, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl, mockDataCacheConnector, formPartialRetriever, templateRenderer)
 
   private val submissionReference = "ABC-1234-DEF"
+
 
   def viewAsString: String = confirmation(frontendAppConfig, submissionReference)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
@@ -45,9 +51,13 @@ class ConfirmationControllerSpec extends ControllerSpecBase {
 
     "redirect to Session Expired for a GET if no existing data is found" in {
       val result = controller(dontGetAnyData).onPageLoad(NormalMode, submissionReference)(fakeRequest)
-
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+
+      whenReady(result) {
+        _ =>
+          verify(mockDataCacheConnector, times(1)).removeAll(any())
+      }
     }
   }
 }
