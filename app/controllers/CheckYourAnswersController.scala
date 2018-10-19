@@ -70,7 +70,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
         telephone = request.userAnswers.anyTelephoneNumber
       ).toString.replaceAll("\t|\n", "")
 
-      val metadata: Metadata = new Metadata()
+      val metadata: Metadata = new Metadata(nino)
       val submissionReference = metadata.submissionReference
       val robotXml = new RobotXML
       val xml: String = robotXml.generateXml(request.userAnswers, submissionReference, metadata.timeStamp, nino, itmpName, itmpAddress).toString
@@ -80,6 +80,8 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
         _ <- dataCacheConnector.save[String](request.externalId, key = "xml", xml)
         _ <- dataCacheConnector.save[String](request.externalId, key = "metadata", Metadata.toXml(metadata).toString)
       } yield new Submission(pdfHtml, Metadata.toXml(metadata).toString, xml)
+
+      println(s"\n\n\n\n\n\n ${Metadata.toXml(metadata)} \n\n\n\n")
 
       futureSubmission.onFailure {
         case e =>

@@ -24,7 +24,7 @@ import scala.util.Random
 import scala.xml._
 import scala.xml.Utility._
 
-case class Metadata(customerId: String = "", hmrcReceivedAt: LocalDateTime = LocalDateTime.now, xmlCreatedAt: LocalDateTime = LocalDateTime.now) {
+case class Metadata(customerId: String, hmrcReceivedAt: LocalDateTime = LocalDateTime.now, xmlCreatedAt: LocalDateTime = LocalDateTime.now) {
 
 	def generateSubmissionNumber: String = {
 		val charList = ('A' to 'Z') ++ ('0' to '9')
