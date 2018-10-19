@@ -41,6 +41,7 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with WireMockHel
       dataRetrievalAction,
       new DataRequiredActionImpl,
       submissionService,
+      referenceGenerator,
       formPartialRetriever,
       templateRenderer
     )

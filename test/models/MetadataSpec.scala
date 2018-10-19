@@ -24,15 +24,17 @@ import play.api.libs.json.{JsValue, Json}
 import scala.xml._
 import scala.xml.Utility._
 
-class MetadataSpec extends WordSpec with MustMatchers with OptionValues with PropertyChecks {
+class
+MetadataSpec extends WordSpec with MustMatchers with OptionValues with PropertyChecks {
 
   private val localDT = LocalDateTime.now()
-  private val testMetadata: Metadata = new Metadata("12345678", localDT, localDT)
+  private val submissionRef = "123"
+  private val testMetadata: Metadata = new Metadata("AB123456", "123", "123", localDT)
   private val testXml: NodeSeq = Metadata.toXml(testMetadata)
 
   "metadata xml" must {
     "contain correct header" in {
-      testXml \ "document" \ "header" \ "title" must contain(<title>{testMetadata.submissionReference}</title>)
+      testXml \ "document" \ "header" \ "title" must contain(<title>{testMetadata.submissionRef}</title>)
       testXml \ "document" \ "header" \ "format" must contain(<format>pdf</format>)
       testXml \ "document" \ "header" \ "mime_type" must contain(<mime_type>application/pdf</mime_type>)
       testXml \ "document" \ "header" \ "store" must contain(<store>{true}</store>)
@@ -48,7 +50,7 @@ class MetadataSpec extends WordSpec with MustMatchers with OptionValues with Pro
             <attribute_name>hmrc_time_of_receipt</attribute_name>
             <attribute_type>time</attribute_type>
             <attribute_values>
-              <attribute_value>{testMetadata.hmrcReceivedAt.toString("dd/MM/yyyy HH:mm:ss")}</attribute_value>
+              <attribute_value>{testMetadata.timeStamp.toString("dd/MM/yyyy HH:mm:ss")}</attribute_value>
             </attribute_values>
           </attribute>
         )
@@ -62,7 +64,7 @@ class MetadataSpec extends WordSpec with MustMatchers with OptionValues with Pro
             <attribute_name>time_xml_created</attribute_name>
             <attribute_type>time</attribute_type>
             <attribute_values>
-              <attribute_value>{testMetadata.xmlCreatedAt.toString("dd/MM/yyyy HH:mm:ss")}</attribute_value>
+              <attribute_value>{testMetadata.timeStamp.toString("dd/MM/yyyy HH:mm:ss")}</attribute_value>
             </attribute_values>
           </attribute>
         )
@@ -76,7 +78,7 @@ class MetadataSpec extends WordSpec with MustMatchers with OptionValues with Pro
             <attribute_name>submission_reference</attribute_name>
             <attribute_type>string</attribute_type>
             <attribute_values>
-              <attribute_value>{testMetadata.submissionReference}</attribute_value>
+              <attribute_value>{testMetadata.submissionRef}</attribute_value>
             </attribute_values>
           </attribute>
         )
@@ -216,10 +218,10 @@ class MetadataSpec extends WordSpec with MustMatchers with OptionValues with Pro
 
       json mustEqual Json.obj(
         "customerId" -> testMetadata.customerId,
-        "hmrcReceivedAt" -> testMetadata.hmrcReceivedAt.toString,
-        "xmlCreatedAt" -> testMetadata.xmlCreatedAt.toString,
-        "submissionReference" -> testMetadata.submissionReference,
-        "reconciliationId" -> testMetadata.timeStamp,
+        "hmrcReceivedAt" -> testMetadata.timeStamp.toString,
+        "xmlCreatedAt" -> testMetadata.timeStamp.toString,
+        "submissionReference" -> testMetadata.submissionRef,
+        "reconciliationId" -> testMetadata.formattedTimeStamp,
         "fileFormat" -> testMetadata.fileFormat,
         "mimeType" -> testMetadata.mimeType,
         "casKey" -> testMetadata.casKey,
@@ -245,26 +247,17 @@ class MetadataSpec extends WordSpec with MustMatchers with OptionValues with Pro
     }
   }
 
-  "generateSubmissionNumber" must {
-    "create reference in the correct format" in {
-      val submissonNumber = testMetadata.generateSubmissionNumber
-      val regex = """([A-Z0-9]{3})(-)([A-Z0-9]{4})(-)([A-Z0-9]{3})"""
-      val regexMatchResult = submissonNumber matches regex
-      regexMatchResult mustBe true
-    }
-  }
-
   def jsonOutput: JsValue =
     Json.obj(
-      "customerId" -> "12345678",
+      "customerId" -> "AB123456",
       "hmrcReceivedAt" -> localDT.toString,
       "xmlCreatedAt" -> localDT.toString,
-      "submissionReference" -> testMetadata.submissionReference,
+      "submissionReference" -> testMetadata.submissionRef,
       "reconciliationId" -> localDT.toString("ssMMyyddmmHH"),
       "fileFormat" -> "pdf",
       "mimeType" -> "application/pdf",
       "casKey" -> "",
-      "submissionMark" -> "",
+      "submissionMark" -> "123",
       "attachmentCount" -> 0,
       "numberOfPages" -> 2,
       "formId" -> "R39_EN",

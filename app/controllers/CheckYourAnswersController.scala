@@ -22,6 +22,7 @@ import connectors.DataCacheConnector
 import controllers.actions.{AuthAction, DataRequiredAction, DataRetrievalAction}
 import models.templates.RobotXML
 import models.{Metadata, SubmissionSuccessful, _}
+import org.joda.time.LocalDateTime
 import play.api.Logger
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
@@ -30,7 +31,7 @@ import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import uk.gov.hmrc.renderer.TemplateRenderer
-import utils.{CheckYourAnswersHelper, CheckYourAnswersSections}
+import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, ReferenceGenerator, SubmissionMark}
 import views.html.{check_your_answers, pdf_check_your_answers}
 
 import scala.concurrent.Future
@@ -42,6 +43,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
                                            getData: DataRetrievalAction,
                                            requireData: DataRequiredAction,
                                            submissionService: SubmissionService,
+                                           referenceGenerator: ReferenceGenerator,
                                            implicit val formPartialRetriever: FormPartialRetriever,
                                            implicit val templateRenderer: TemplateRenderer
                                           ) extends FrontendController with I18nSupport {
@@ -70,10 +72,14 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
         telephone = request.userAnswers.anyTelephoneNumber
       ).toString.replaceAll("\t|\n", "")
 
-      val metadata: Metadata = new Metadata(nino)
-      val submissionReference = metadata.submissionReference
+      val submissionReference = referenceGenerator.generateSubmissionNumber
+      val timeStamp = LocalDateTime.now
+
       val robotXml = new RobotXML
-      val xml: String = robotXml.generateXml(request.userAnswers, submissionReference, metadata.timeStamp, nino, itmpName, itmpAddress).toString
+      val xml: String = robotXml.generateXml(request.userAnswers, submissionReference, timeStamp.toString("ssMMyyddmmHH"), nino, itmpName, itmpAddress).toString
+
+      val submissionMark = SubmissionMark.getSfMark(xml)
+      val metadata: Metadata = new Metadata(nino, submissionReference, submissionMark, timeStamp)
 
       val futureSubmission: Future[Submission] = for {
         _ <- dataCacheConnector.save[String](request.externalId, key = "pdf", pdfHtml)
@@ -81,17 +87,17 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
         _ <- dataCacheConnector.save[String](request.externalId, key = "metadata", Metadata.toXml(metadata).toString)
       } yield new Submission(pdfHtml, Metadata.toXml(metadata).toString, xml)
 
-      println(s"\n\n\n\n\n\n ${Metadata.toXml(metadata)} \n\n\n\n")
-
       futureSubmission.onFailure {
         case e =>
           Logger.error("[CheckYourAnswersController][onSubmit] failed", e)
       }
 
+      println(s"\n\n\n\n\n\n ${Metadata.toXml(metadata)} \n\n\n\n")
+
       futureSubmission.flatMap {
         submission =>
           submissionService.ctrSubmission(submission) map {
-            case SubmissionSuccessful => Redirect(routes.ConfirmationController.onPageLoad(submissionReference))
+            case SubmissionSuccessful => Redirect(routes.ConfirmationController.onPageLoad(metadata.submissionRef))
             case _ => throw new Exception("[Check your answers][Submission failed]")
           }
       }
