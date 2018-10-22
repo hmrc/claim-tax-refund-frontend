@@ -341,7 +341,7 @@ howMuchCarersAllowance.blank = Enter how much Carer’s Allowance you got
 howMuchCarersAllowance.invalid = How much Carer’s Allowance you got must be an amount of money, like 199 or 234.56
 
 otherBenefits = taxable benefit
-otherBenefit.title = Tell us about the other taxable benefit you got
+otherBenefit.title = {0} other taxable benefit
 otherBenefit.heading = {0} other taxable benefit
 otherBenefit.checkYourAnswersLabel = Other taxable benefit details
 otherBenefit.name = Name of taxable benefit

@@ -71,7 +71,7 @@ class AnyOtherCompanyBenefitsViewSpec extends YesNoViewBehaviours {
 		}
 
 		"list item must have a delete button" in {
-			doc.getElementById("component-answer-list").text.contains("Remove") mustBe true
+			doc.getElementById("component-answer-list").text.contains("Delete") mustBe true
 		}
 	}
 

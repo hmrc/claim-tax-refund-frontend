@@ -70,7 +70,7 @@ class AnyOtherBenefitsViewSpec extends YesNoViewBehaviours {
       }
 
 			"list item must have a delete button" in {
-				doc.getElementById("component-answer-list").text.contains("Remove qwerty") mustBe true
+				doc.getElementById("component-answer-list").text.contains("Delete qwerty") mustBe true
 			}
 		}
   }

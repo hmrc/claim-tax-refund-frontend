@@ -16,9 +16,6 @@
 
 package controllers
 
-import java.util.Locale
-
-import com.ibm.icu.text.RuleBasedNumberFormat
 import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
@@ -61,8 +58,7 @@ class OtherBenefitController @Inject()(appConfig: FrontendAppConfig,
 
 			request.userAnswers.selectTaxYear.map {
 				selectedTaxYear =>
-					val ordinal: RuleBasedNumberFormat = new RuleBasedNumberFormat(Locale.UK, RuleBasedNumberFormat.SPELLOUT)
-					Ok(otherBenefit(appConfig, preparedForm, mode, index, selectedTaxYear, ordinal.format(index.toInt + 1, "%spellout-ordinal")))
+					Ok(otherBenefit(appConfig, preparedForm, mode, index, selectedTaxYear))
 			}.getOrElse {
 				Redirect(routes.SessionExpiredController.onPageLoad())
 			}
@@ -71,13 +67,12 @@ class OtherBenefitController @Inject()(appConfig: FrontendAppConfig,
 	def onSubmit(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
 		implicit request =>
 			val form = formBuilder(request.userAnswers.otherBenefit.getOrElse(Seq.empty), index)
- 			val ordinal: RuleBasedNumberFormat = new RuleBasedNumberFormat(Locale.UK, RuleBasedNumberFormat.SPELLOUT)
 			request.userAnswers.selectTaxYear.map {
 				selectedTaxYear =>
 					val taxYear = selectedTaxYear
 					form.bindFromRequest().fold(
 						(formWithErrors: Form[OtherBenefit]) =>
-							Future.successful(BadRequest(otherBenefit(appConfig, formWithErrors, mode, index, taxYear, ordinal.format(index.toInt + 1, "%spellout-ordinal")))),
+							Future.successful(BadRequest(otherBenefit(appConfig, formWithErrors, mode, index, taxYear))),
 						value => {
 							val otherBenefits: Seq[OtherBenefit] = request.userAnswers.otherBenefit.getOrElse(Seq(value))
 							dataCacheConnector.save[Seq[OtherBenefit]](
