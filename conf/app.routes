@@ -116,10 +116,10 @@ POST       /where-to-send-payment                                           cont
 GET        /change-where-to-send-payment                                    controllers.WhereToSendPaymentController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-where-to-send-payment                                    controllers.WhereToSendPaymentController.onSubmit(mode: Mode = CheckMode)
 
-GET        /employment-details                                              controllers.EmploymentDetailsController.onPageLoad(mode: Mode = NormalMode)
-POST       /employment-details                                              controllers.EmploymentDetailsController.onSubmit(mode: Mode = NormalMode)
-GET        /change-employment-details                                       controllers.EmploymentDetailsController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-employment-details                                       controllers.EmploymentDetailsController.onSubmit(mode: Mode = CheckMode)
+GET        /employments-pensions-details                                    controllers.EmploymentDetailsController.onPageLoad(mode: Mode = NormalMode)
+POST       /employments-pensions-details                                    controllers.EmploymentDetailsController.onSubmit(mode: Mode = NormalMode)
+GET        /change-employments-pensions-details                             controllers.EmploymentDetailsController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-employments-pensions-details                             controllers.EmploymentDetailsController.onSubmit(mode: Mode = CheckMode)
 
 GET        /select-company-benefits                                         controllers.SelectCompanyBenefitsController.onPageLoad(mode: Mode = NormalMode)
 POST       /select-company-benefits                                         controllers.SelectCompanyBenefitsController.onSubmit(mode: Mode = NormalMode)

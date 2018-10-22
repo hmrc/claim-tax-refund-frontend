@@ -261,14 +261,14 @@ telephoneNumber.telephoneNumberField = Phone number
 telephoneNumber.hintPara1 = We will only call you if we need more information about your claim. It is the quickest way to resolve any problems.
 telephoneNumber.hintPara2 = We will contact you by letter.
 
-employmentDetails.title = Your employments or pensions between {0}
-employmentDetails.heading = Your employments or pensions
+employmentDetails.title = Are these employment and pension details correct?
+employmentDetails.heading = Are these employment and pension details correct?
 employmentDetails.checkYourAnswersLabel = Employment details
-employmentDetails.blank = Select yes if these details are correct
+employmentDetails.blank = Select yes if these employment and pension details are correct
 employmentDetails.correctDetails = Are these details correct?
-employmentDetails.employer = Employer
-employmentDetails.staffNumber = Staff Number
-employmentDetails.hintText = Check with your employer or pension provider first if you do not recognise any of the names shown. Their trading name may be different to their ownership name.
+employmentDetails.employer = Name of employer or pension provider
+employmentDetails.staffNumber = Staff number
+employmentDetails.hintText = If you do not recognise these details, check with your employer or pension provider. Their registered name may be different to their trading name.
 
 selectCompanyBenefits.title = Which taxable company benefits did you get?
 selectCompanyBenefits.heading = Which taxable company benefits did you get?
