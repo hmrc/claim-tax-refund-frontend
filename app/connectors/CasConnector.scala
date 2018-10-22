@@ -19,6 +19,7 @@ package connectors
 import config.FrontendAppConfig
 import javax.inject.Inject
 import models.{SubmissionArchiveRequest, SubmissionArchiveResponse}
+import play.api.Logger
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.http.HttpClient
 
@@ -28,7 +29,9 @@ class CasConnector @Inject()(appConfig: FrontendAppConfig, http: HttpClient) {
 
   def archiveSubmission(submissionRef: String, data: SubmissionArchiveRequest)
                        (implicit hc: HeaderCarrier, ec:ExecutionContext): Future[SubmissionArchiveResponse] = {
-    http.POST[SubmissionArchiveRequest, SubmissionArchiveResponse]("", data)
-  }
+    Logger.debug(s"Sending submission $submissionRef to CAS via DMS API")
 
+    val url: String = s"${appConfig.dmsApiUrl}/digital-form/archive/$submissionRef"
+    http.POST[SubmissionArchiveRequest, SubmissionArchiveResponse](url, data)
+  }
 }

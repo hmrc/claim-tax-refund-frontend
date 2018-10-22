@@ -18,15 +18,14 @@ package connectors
 
 import base.SpecBase
 import com.github.tomakehurst.wiremock.client.WireMock._
-import com.github.tomakehurst.wiremock.http.Fault
 import config.FrontendAppConfig
 import models.requests.DataRequest
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.mockito.MockitoSugar
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.Application
-import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.inject.bind
+import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.Format
 import play.api.mvc.Request
 import uk.gov.hmrc.http.cache.client.CacheMap

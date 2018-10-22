@@ -89,11 +89,13 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
         submissionData = xml
       )
 
-      val submissionArchiveResponse: Future[SubmissionArchiveResponse] = casConnector.archiveSubmission(submissionReference, submissionArchiveRequest)
+      val futureMetadata: Future[Metadata] = casConnector.archiveSubmission(submissionReference, submissionArchiveRequest).map {
+        submissionResponse =>
+          new Metadata(nino, submissionReference, submissionMark, timeStamp, submissionResponse.casKey)
+      }
 
       val futureSubmission: Future[Submission] = for {
-        submissionArchiveResponse: SubmissionArchiveResponse <- submissionArchiveResponse
-        metadata: Metadata = Metadata(nino, submissionReference, submissionMark, timeStamp, submissionArchiveResponse.casKey)
+        metadata <- futureMetadata
         _ <- dataCacheConnector.save[String](request.externalId, key = "pdf", pdfHtml)
         _ <- dataCacheConnector.save[String](request.externalId, key = "xml", xml)
         _ <- dataCacheConnector.save[String](request.externalId, key = "metadata", Metadata.toXml(metadata).toString)

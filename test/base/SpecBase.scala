@@ -70,8 +70,6 @@ trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with MockitoSugar {
 
   implicit val templateRenderer: MockTemplateRenderer.type =
     MockTemplateRenderer
-
-  implicit val referenceGenerator: ReferenceGenerator = mock[ReferenceGenerator]
 }
 
 class MockCtrFormPartialRetriever(httpGet:HttpClient, sessionCookieCrypto: SessionCookieCrypto)
