@@ -58,8 +58,7 @@ class AnyBenefitsViewSpec extends YesNoViewBehaviours {
         "jobseekers-allowance",
         "incapacity-benefit",
         "employment-and-support-allowance",
-        "state-pension",
-        "other-taxable-benefit"
+        "state-pension"
       ), listMessageKeyPrefix)
 
     "contain a listHeader" in {
