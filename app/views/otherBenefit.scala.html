@@ -21,13 +21,15 @@
 @import viewmodels.InputViewModel
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
 @import uk.gov.hmrc.renderer.TemplateRenderer
+@import com.ibm.icu.text.RuleBasedNumberFormat
 
 @(
     appConfig: FrontendAppConfig,
     form: Form[_],
     mode: Mode,
     index: Index,
-    taxYear: SelectTaxYear
+    taxYear: SelectTaxYear,
+    ordinal: String
 )(
     implicit
     request: Request[_],
@@ -48,7 +50,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading(messages("otherBenefit.heading"), taxYear = Some(taxYear.asString))
+         @components.heading(messages("otherBenefit.heading", ordinal), taxYear = Some(taxYear.asString))
 
         @components.input_text(
             InputViewModel("name", form),

@@ -99,10 +99,10 @@ session_expired.heading = You will have to start again
 session_expired.guidance = For your security, we cleared your details because you did not do anything for 15 minutes. Start again to claim a tax refund.
 
 site.back = Back
-site.delete = Remove
-site.delete.item = Remove {0}
+site.delete = Delete
+site.delete.item = Delete {0}
 site.edit = Change
-site.hidden-delete = Remove {0}
+site.hidden-delete = Delete {0}
 site.hidden-edit = Change {0}
 site.no = No
 site.yes = Yes
@@ -174,7 +174,7 @@ howMuchRentalIncome.invalid = Enter a valid amount of rental income
 
 anyOtherBenefits.title = Other taxable benefits
 anyOtherBenefits.heading = Other taxable benefits
-anyOtherBenefits.blank = Select yes if you got any other taxable benefits
+anyOtherBenefits.blank = Select yes if you need to add another taxable benefit
 anyOtherBenefits.addAnotherBenefit = Do you need to add another taxable benefit?
 
 howMuchJobseekersAllowance.title = How much contribution-based Jobseeker’s Allowance did you get?
@@ -342,13 +342,14 @@ howMuchCarersAllowance.invalid = How much Carer’s Allowance you got must be an
 
 otherBenefits = taxable benefit
 otherBenefit.title = Tell us about the other taxable benefit you got
-otherBenefit.heading = Tell us about the other taxable benefit you got
+otherBenefit.heading = {0} other taxable benefit
 otherBenefit.checkYourAnswersLabel = Other taxable benefit details
-otherBenefit.name = Name of other taxable benefit
-otherBenefit.amount = Amount of other taxable benefit
-otherBenefit.name.blank = Enter the name of the other taxable benefit you got
-otherBenefit.amount.blank = Enter the amount of the other taxable benefit you got
-otherBenefit.amount.invalid = Enter a valid amount of the other taxable benefit you got
+otherBenefit.name = Name of taxable benefit
+otherBenefit.name.blank = Enter the name of the taxable benefit you got
+otherBenefit.amount = How much of this taxable benefit you got
+otherBenefit.amount.blank = Enter how much of this taxable benefit you got
+otherBenefit.amount.invalid = How much of this taxable benefit you got must be an amount of money, like 199 or 234.56
+
 otherBenefit.duplicate = You have already entered this other taxable benefit name
 otherBenefit.change = Change other taxable benefits
 otherBenefit.add = Add another taxable benefit
@@ -458,9 +459,9 @@ paymentAddressCorrect.heading = Do you want to send any payment to this address?
 paymentAddressCorrect.checkYourAnswersLabel = Do you want to send any payment to this address?
 paymentAddressCorrect.blank = Select yes if you want to send any payment to this address
 
-deleteOther.title = Are you sure you want to remove {0}?
-deleteOther.heading = Are you sure you want to remove {0}?
-deleteOther.blank = Select yes if you want to remove this item
+deleteOther.title = Are you sure you want to delete {0}?
+deleteOther.heading = Are you sure you want to delete {0}?
+deleteOther.blank = Select yes if you want to delete this item
 
 confirmation.title = Claim sent
 confirmation.heading = Claim sent
