@@ -16,10 +16,10 @@ GET        /address-callback-check-mode                                     cont
 
 GET        /unauthorised                                                    controllers.UnauthorisedController.onPageLoad
 
-GET        /select-claim-tax-year                                           controllers.SelectTaxYearController.onPageLoad(mode: Mode = NormalMode)
-POST       /select-claim-tax-year                                           controllers.SelectTaxYearController.onSubmit(mode: Mode = NormalMode)
-GET        /change-claim-tax-year                                           controllers.SelectTaxYearController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-claim-tax-year                                           controllers.SelectTaxYearController.onSubmit(mode: Mode = CheckMode)
+GET        /which-tax-year                                                  controllers.SelectTaxYearController.onPageLoad(mode: Mode = NormalMode)
+POST       /which-tax-year                                                  controllers.SelectTaxYearController.onSubmit(mode: Mode = NormalMode)
+GET        /change-which-tax-year                                           controllers.SelectTaxYearController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-which-tax-year                                           controllers.SelectTaxYearController.onSubmit(mode: Mode = CheckMode)
 
 GET        /enter-telephone-number                                          controllers.TelephoneNumberController.onPageLoad(mode: Mode = NormalMode)
 POST       /enter-telephone-number                                          controllers.TelephoneNumberController.onSubmit(mode: Mode = NormalMode)
