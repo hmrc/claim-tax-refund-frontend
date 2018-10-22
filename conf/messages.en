@@ -316,12 +316,12 @@ selectBenefits.other-taxable-benefit = other taxable benefit
 selectBenefits.bereavement-allowance = Bereavement Allowance
 selectBenefits.carers-allowance = Carer’s Allowance
 
-enterPayeReference.title = Enter your employer or pension provider’s PAYE reference
-enterPayeReference.heading = Enter your employer or pension provider’s PAYE reference
+enterPayeReference.title = What is your employer or pension provider’s employer PAYE reference?
+enterPayeReference.heading = What is your employer or pension provider’s employer PAYE reference?
 enterPayeReference.checkYourAnswersLabel = PAYE reference
-enterPayeReference.hint = For example 123/AB456. You can find this on your payslip or P60.
-enterPayeReference.blank = Enter your employer or pension provider’s PAYE reference
-enterPayeReference.invalid = Enter a valid PAYE reference
+enterPayeReference.hint = This is a 3 digit tax office number, a forward slash, and a tax office employer reference, like 123/AB456. It may be called ‘Employer PAYE reference’ or ‘PAYE reference’. It will be on your P60.
+enterPayeReference.blank = Enter your employer or pension provider’s employer PAYE reference
+enterPayeReference.invalid = Enter an employer PAYE reference in the correct format
 
 anyOtherCompanyBenefits.title = Other company benefits
 anyOtherCompanyBenefits.heading = Other company benefits
