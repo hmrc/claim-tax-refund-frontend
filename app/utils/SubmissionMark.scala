@@ -54,6 +54,7 @@ trait SubmissionMark {
     md.update(result.getBytes)
     md.digest
   }
+
   def getAlgorithm: String = "<?xml version='1.0'?>\n" +
     "<dsig:Transforms xmlns:dsig='http://www.w3.org/2000/09/xmldsig#' xmlns:xdp='http://ns.adobe.com/xdp/'>\n" +
     "<dsig:Transform Algorithm='http://www.w3.org/TR/1999/REC-xpath-19991116'>\n" +

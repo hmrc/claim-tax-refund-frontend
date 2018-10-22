@@ -16,7 +16,7 @@
 
 package controllers
 
-import connectors.{DataCacheConnector, FakeDataCacheConnector}
+import connectors.{CasConnector, DataCacheConnector, FakeDataCacheConnector}
 import controllers.actions.{DataRequiredActionImpl, DataRetrievalAction, FakeAuthAction}
 import models.{SubmissionFailed, SubmissionSuccessful}
 import org.mockito.Matchers._
@@ -32,12 +32,16 @@ import scala.concurrent.{ExecutionContext, Future}
 class CheckYourAnswersControllerSpec extends ControllerSpecBase with WireMockHelper with ScalaFutures {
   implicit val ec: ExecutionContext = mock[ExecutionContext]
   implicit val dataCacheConnector: DataCacheConnector = mock[DataCacheConnector]
+  implicit val casConnector: CasConnector = mock[CasConnector]
   private val mockSubmissionService: SubmissionService = mock[SubmissionService]
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap, submissionService: SubmissionService = mockSubmissionService) =
     new CheckYourAnswersController(
-      frontendAppConfig, messagesApi,
-      FakeDataCacheConnector, FakeAuthAction,
+      frontendAppConfig,
+      messagesApi,
+      FakeDataCacheConnector,
+      casConnector,
+      FakeAuthAction,
       dataRetrievalAction,
       new DataRequiredActionImpl,
       submissionService,

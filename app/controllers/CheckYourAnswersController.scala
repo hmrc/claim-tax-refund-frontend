@@ -18,10 +18,11 @@ package controllers
 
 import com.google.inject.Inject
 import config.FrontendAppConfig
-import connectors.DataCacheConnector
+import connectors.{CasConnector, DataCacheConnector}
 import controllers.actions.{AuthAction, DataRequiredAction, DataRetrievalAction}
 import models.templates.RobotXML
-import models.{Metadata, SubmissionSuccessful, _}
+import models.{Metadata, SubmissionArchiveResponse, SubmissionSuccessful, _}
+import org.apache.commons.codec.digest.DigestUtils
 import org.joda.time.LocalDateTime
 import play.api.Logger
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -39,6 +40,7 @@ import scala.concurrent.Future
 class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
                                            override val messagesApi: MessagesApi,
                                            dataCacheConnector: DataCacheConnector,
+                                           casConnector: CasConnector,
                                            authenticate: AuthAction,
                                            getData: DataRetrievalAction,
                                            requireData: DataRequiredAction,
@@ -70,7 +72,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
         name = itmpName,
         address = itmpAddress,
         telephone = request.userAnswers.anyTelephoneNumber
-      ).toString.replaceAll("\t|\n", "")
+      ).toString
 
       val submissionReference = referenceGenerator.generateSubmissionNumber
       val timeStamp = LocalDateTime.now
@@ -79,9 +81,19 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
       val xml: String = robotXml.generateXml(request.userAnswers, submissionReference, timeStamp.toString("ssMMyyddmmHH"), nino, itmpName, itmpAddress).toString
 
       val submissionMark = SubmissionMark.getSfMark(xml)
-      val metadata: Metadata = new Metadata(nino, submissionReference, submissionMark, timeStamp)
+
+      val submissionArchiveRequest = SubmissionArchiveRequest(
+        checksum = DigestUtils.sha1Hex(xml.getBytes("UTF-8")),
+        submissionRef = submissionReference,
+        submissionMark = submissionMark,
+        submissionData = xml
+      )
+
+      val submissionArchiveResponse: Future[SubmissionArchiveResponse] = casConnector.archiveSubmission(submissionReference, submissionArchiveRequest)
 
       val futureSubmission: Future[Submission] = for {
+        submissionArchiveResponse: SubmissionArchiveResponse <- submissionArchiveResponse
+        metadata: Metadata = Metadata(nino, submissionReference, submissionMark, timeStamp, submissionArchiveResponse.casKey)
         _ <- dataCacheConnector.save[String](request.externalId, key = "pdf", pdfHtml)
         _ <- dataCacheConnector.save[String](request.externalId, key = "xml", xml)
         _ <- dataCacheConnector.save[String](request.externalId, key = "metadata", Metadata.toXml(metadata).toString)
@@ -92,12 +104,10 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
           Logger.error("[CheckYourAnswersController][onSubmit] failed", e)
       }
 
-      println(s"\n\n\n\n\n\n ${Metadata.toXml(metadata)} \n\n\n\n")
-
       futureSubmission.flatMap {
         submission =>
           submissionService.ctrSubmission(submission) map {
-            case SubmissionSuccessful => Redirect(routes.ConfirmationController.onPageLoad(metadata.submissionRef))
+            case SubmissionSuccessful => Redirect(routes.ConfirmationController.onPageLoad(submissionReference))
             case _ => throw new Exception("[Check your answers][Submission failed]")
           }
       }

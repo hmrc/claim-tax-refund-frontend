@@ -26,13 +26,15 @@ import scala.xml.Utility._
 case class Metadata(customerId: String,
 										submissionRef: String,
 										submissionMark: String,
-										timeStamp: LocalDateTime) {
+										timeStamp: LocalDateTime,
+										casKey: String
+									 ) {
 
 	val formattedTimeStamp: String = timeStamp.toString("ssMMyyddmmHH")
 	val fileFormat: String = "pdf"
 	val mimeType: String = "application/pdf"
 
-	val casKey: String = ""
+	val cas: String = casKey
 	val reconciliationId: String = formattedTimeStamp
 	val attachmentCount: Int = 0
 	val numberOfPages: Int = 2
@@ -70,7 +72,7 @@ object Metadata {
 						{attributeXml("source", "string", metadata.source)}
 						{attributeXml("customer_id", "string", metadata.customerId)}
 						{attributeXml("submission_mark", "string", metadata.submissionMark)}
-						{attributeXml("cas_key", "string", metadata.casKey)}
+						{attributeXml("cas_key", "string", metadata.cas)}
 						{attributeXml("classification_type", "string", metadata.classificationType)}
 						{attributeXml("business_area", "string", metadata.businessArea)}
 						{attributeXml("attachment_count", "integer", metadata.attachmentCount.toString)}
@@ -120,7 +122,8 @@ object Metadata {
 		(__ \ "customerId").read[String] and
 			(__ \ "submissionMark").read[String] and
 			(__ \ "submissionReference").read[String] and
-			(__ \ "timeStamp").read[LocalDateTime](jodaDateReads)
+			(__ \ "timeStamp").read[LocalDateTime](jodaDateReads) and
+			(__ \ "casKey").read[String]
 		) (apply _)
 
 	val jodaDateReads: Reads[LocalDateTime] = Reads[LocalDateTime](js =>

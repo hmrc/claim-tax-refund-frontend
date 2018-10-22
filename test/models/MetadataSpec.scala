@@ -29,7 +29,7 @@ MetadataSpec extends WordSpec with MustMatchers with OptionValues with PropertyC
 
   private val localDT = LocalDateTime.now()
   private val submissionRef = "123"
-  private val testMetadata: Metadata = new Metadata("AB123456", "123", "123", localDT)
+  private val testMetadata: Metadata = new Metadata("AB123456", "123", "123", localDT, "")
   private val testXml: NodeSeq = Metadata.toXml(testMetadata)
 
   "metadata xml" must {
