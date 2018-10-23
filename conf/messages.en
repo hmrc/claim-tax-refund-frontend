@@ -243,12 +243,12 @@ paymentUKAddress.title = What is the address you us to send any payment to?
 paymentUKAddress.heading = What is the address you us to send any payment to?
 paymentUKAddress.checkYourAnswersLabel = Address of the person you want us to send any payment to
 
-whereToSendPayment.title = Who would you like us to make any payment to?
-whereToSendPayment.heading = Who would you like us to make any payment to?
+whereToSendPayment.title = Who would you like us to send any payment to?
+whereToSendPayment.heading = Who would you like us to send any payment to?
 whereToSendPayment.myself = You
 whereToSendPayment.nominee = Someone else
 whereToSendPayment.checkYourAnswersLabel = Who would you like us to make any payment to?
-whereToSendPayment.blank = Select who you would like us to make any payment to
+whereToSendPayment.blank = Select who you would like us to send any payment to
 
 telephoneNumber.title = Can we contact you by phone if we need more information?
 telephoneNumber.heading = Can we contact you by phone if we need more information?

@@ -111,10 +111,10 @@ POST       /enter-payment-uk-address                                        cont
 GET        /change-payment-uk-address                                       controllers.PaymentUKAddressController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-payment-uk-address                                       controllers.PaymentUKAddressController.onSubmit(mode: Mode = CheckMode)
     
-GET        /where-to-send-payment                                           controllers.WhereToSendPaymentController.onPageLoad(mode: Mode = NormalMode)
-POST       /where-to-send-payment                                           controllers.WhereToSendPaymentController.onSubmit(mode: Mode = NormalMode)
-GET        /change-where-to-send-payment                                    controllers.WhereToSendPaymentController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-where-to-send-payment                                    controllers.WhereToSendPaymentController.onSubmit(mode: Mode = CheckMode)
+GET        /who-send-payment-to                                             controllers.WhereToSendPaymentController.onPageLoad(mode: Mode = NormalMode)
+POST       /who-send-payment-to                                             controllers.WhereToSendPaymentController.onSubmit(mode: Mode = NormalMode)
+GET        /change-who-send-payment-to                                      controllers.WhereToSendPaymentController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-who-send-payment-to                                      controllers.WhereToSendPaymentController.onSubmit(mode: Mode = CheckMode)
 
 GET        /employment-details                                              controllers.EmploymentDetailsController.onPageLoad(mode: Mode = NormalMode)
 POST       /employment-details                                              controllers.EmploymentDetailsController.onSubmit(mode: Mode = NormalMode)
