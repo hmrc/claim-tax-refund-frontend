@@ -48,7 +48,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading(heading = messages("employmentDetails.heading"))
+        @components.heading(heading = messages("employmentDetails.heading"), taxYear = Some(taxYear.asString))
 
         <p>@messages("employmentDetails.hintText")</p>
 
