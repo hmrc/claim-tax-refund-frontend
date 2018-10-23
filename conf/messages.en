@@ -99,10 +99,10 @@ session_expired.heading = You will have to start again
 session_expired.guidance = For your security, we cleared your details because you did not do anything for 15 minutes. Start again to claim a tax refund.
 
 site.back = Back
-site.delete = Remove
-site.delete.item = Remove {0}
+site.delete = Delete
+site.delete.item = Delete {0}
 site.edit = Change
-site.hidden-delete = Remove {0}
+site.hidden-delete = Delete {0}
 site.hidden-edit = Change {0}
 site.no = No
 site.yes = Yes
@@ -323,10 +323,10 @@ enterPayeReference.hint = For example 123/AB456. You can find this on your paysl
 enterPayeReference.blank = Enter your employer or pension provider’s PAYE reference
 enterPayeReference.invalid = Enter a valid PAYE reference
 
-anyOtherCompanyBenefits.title = Other company benefits
-anyOtherCompanyBenefits.heading = Other company benefits
-anyOtherCompanyBenefits.blank = Select yes if you got any other company benefits
-anyOtherCompanyBenefits.addAnotherCompanyBenefit = Do you need to add another company benefit?
+anyOtherCompanyBenefits.title = Other taxable company benefits
+anyOtherCompanyBenefits.heading = Other taxable company benefits
+anyOtherCompanyBenefits.blank = Select yes if you need to add another taxable company benefit
+anyOtherCompanyBenefits.addAnotherCompanyBenefit = Do you need to add another taxable company benefit?
 
 howMuchBereavementAllowance.title = How much Bereavement Allowance did you get?
 howMuchBereavementAllowance.heading = How much Bereavement Allowance did you get?

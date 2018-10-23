@@ -146,10 +146,10 @@ POST       /other-taxable-company-benefit-:index                            cont
 GET        /change-other-taxable-company-benefit-:index                     controllers.OtherCompanyBenefitController.onPageLoad(mode: Mode = CheckMode, index: Index)
 POST       /change-other-taxable-company-benefit-:index                     controllers.OtherCompanyBenefitController.onSubmit(mode: Mode = CheckMode, index: Index)
 
-GET        /any-other-company-benefits                                      controllers.AnyOtherCompanyBenefitsController.onPageLoad(mode: Mode = NormalMode)
-POST       /any-other-company-benefits                                      controllers.AnyOtherCompanyBenefitsController.onSubmit(mode: Mode = NormalMode)
-GET        /change-any-other-company-benefits                               controllers.AnyOtherCompanyBenefitsController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-any-other-company-benefits                               controllers.AnyOtherCompanyBenefitsController.onSubmit(mode: Mode = CheckMode)
+GET        /other-taxable-company-benefits                                  controllers.AnyOtherCompanyBenefitsController.onPageLoad(mode: Mode = NormalMode)
+POST       /other-taxable-company-benefits                                  controllers.AnyOtherCompanyBenefitsController.onSubmit(mode: Mode = NormalMode)
+GET        /change-other-taxable-company-benefits                           controllers.AnyOtherCompanyBenefitsController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-other-taxable-company-benefits                           controllers.AnyOtherCompanyBenefitsController.onSubmit(mode: Mode = CheckMode)
 
 GET        /how-much-bereavement-allowance                                  controllers.HowMuchBereavementAllowanceController.onPageLoad(mode: Mode = NormalMode)
 POST       /how-much-bereavement-allowance                                  controllers.HowMuchBereavementAllowanceController.onSubmit(mode: Mode = NormalMode)
