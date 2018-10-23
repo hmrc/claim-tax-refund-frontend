@@ -30,7 +30,7 @@ import uk.gov.hmrc.auth.core.retrieve.ItmpAddress
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.filters.frontend.crypto.SessionCookieCrypto
 import uk.gov.hmrc.play.bootstrap.http.HttpClient
-import utils.{MockTemplateRenderer, SequenceUtil}
+import utils.{MockTemplateRenderer, ReferenceGenerator, SequenceUtil}
 
 trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with MockitoSugar {
 

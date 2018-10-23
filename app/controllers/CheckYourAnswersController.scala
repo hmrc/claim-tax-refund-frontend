@@ -18,10 +18,12 @@ package controllers
 
 import com.google.inject.Inject
 import config.FrontendAppConfig
-import connectors.DataCacheConnector
+import connectors.{CasConnector, DataCacheConnector}
 import controllers.actions.{AuthAction, DataRequiredAction, DataRetrievalAction}
 import models.templates.RobotXML
 import models.{Metadata, SubmissionSuccessful, _}
+import org.apache.commons.codec.digest.DigestUtils
+import org.joda.time.LocalDateTime
 import play.api.Logger
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
@@ -30,7 +32,7 @@ import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import uk.gov.hmrc.renderer.TemplateRenderer
-import utils.{CheckYourAnswersHelper, CheckYourAnswersSections}
+import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, ReferenceGenerator, SubmissionMark}
 import views.html.{check_your_answers, pdf_check_your_answers}
 
 import scala.concurrent.Future
@@ -38,10 +40,12 @@ import scala.concurrent.Future
 class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
                                            override val messagesApi: MessagesApi,
                                            dataCacheConnector: DataCacheConnector,
+                                           casConnector: CasConnector,
                                            authenticate: AuthAction,
                                            getData: DataRetrievalAction,
                                            requireData: DataRequiredAction,
                                            submissionService: SubmissionService,
+                                           referenceGenerator: ReferenceGenerator,
                                            implicit val formPartialRetriever: FormPartialRetriever,
                                            implicit val templateRenderer: TemplateRenderer
                                           ) extends FrontendController with I18nSupport {
@@ -74,14 +78,30 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
         name = itmpName,
         address = itmpAddress,
         telephone = request.userAnswers.anyTelephoneNumber
-      ).toString.replaceAll("\t|\n", "")
+      ).toString
 
-      val metadata: Metadata = new Metadata()
-      val submissionReference = metadata.submissionReference
+      val submissionReference = referenceGenerator.generateSubmissionNumber
+      val timeStamp = LocalDateTime.now
+
       val robotXml = new RobotXML
-      val xml: String = robotXml.generateXml(request.userAnswers, submissionReference, metadata.timeStamp, nino, itmpName, itmpAddress).toString
+      val xml: String = robotXml.generateXml(request.userAnswers, submissionReference, timeStamp.toString("ssMMyyddmmHH"), nino, itmpName, itmpAddress).toString
+
+      val submissionMark = SubmissionMark.getSfMark(xml)
+
+      val submissionArchiveRequest = SubmissionArchiveRequest(
+        checksum = DigestUtils.sha1Hex(xml.getBytes("UTF-8")),
+        submissionRef = submissionReference,
+        submissionMark = submissionMark,
+        submissionData = xml
+      )
+
+      val futureMetadata: Future[Metadata] = casConnector.archiveSubmission(submissionReference, submissionArchiveRequest).map {
+        submissionResponse =>
+          new Metadata(nino, submissionReference, submissionMark, timeStamp, submissionResponse.casKey)
+      }
 
       val futureSubmission: Future[Submission] = for {
+        metadata <- futureMetadata
         _ <- dataCacheConnector.save[String](request.externalId, key = "pdf", pdfHtml)
         _ <- dataCacheConnector.save[String](request.externalId, key = "xml", xml)
         _ <- dataCacheConnector.save[String](request.externalId, key = "metadata", Metadata.toXml(metadata).toString)

@@ -16,31 +16,37 @@
 
 package controllers
 
-import connectors.{DataCacheConnector, FakeDataCacheConnector}
+import connectors.{CasConnector, DataCacheConnector, FakeDataCacheConnector}
 import controllers.actions.{DataRequiredActionImpl, DataRetrievalAction, FakeAuthAction}
-import models.{SubmissionFailed, SubmissionSuccessful}
+import models.{SubmissionArchiveResponse, SubmissionFailed, SubmissionSuccessful}
 import org.mockito.Matchers._
 import org.mockito.Mockito._
 import org.scalatest.concurrent.ScalaFutures
 import play.api.mvc.Result
 import play.api.test.Helpers._
 import services.SubmissionService
-import utils.WireMockHelper
+import utils.ReferenceGenerator
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class CheckYourAnswersControllerSpec extends ControllerSpecBase with WireMockHelper with ScalaFutures {
+class CheckYourAnswersControllerSpec extends ControllerSpecBase with ScalaFutures {
   implicit val ec: ExecutionContext = mock[ExecutionContext]
   implicit val dataCacheConnector: DataCacheConnector = mock[DataCacheConnector]
+  implicit val casConnector: CasConnector = mock[CasConnector]
+  implicit val referenceGenerator: ReferenceGenerator = mock[ReferenceGenerator]
   private val mockSubmissionService: SubmissionService = mock[SubmissionService]
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap, submissionService: SubmissionService = mockSubmissionService) =
     new CheckYourAnswersController(
-      frontendAppConfig, messagesApi,
-      FakeDataCacheConnector, FakeAuthAction,
+      frontendAppConfig,
+      messagesApi,
+      FakeDataCacheConnector,
+      casConnector,
+      FakeAuthAction,
       dataRetrievalAction,
       new DataRequiredActionImpl,
       submissionService,
+      referenceGenerator,
       formPartialRetriever,
       templateRenderer
     )
@@ -70,6 +76,7 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with WireMockHel
     }
 
     "Redirect to Confirmation page on a POST when submission is successful" in {
+      when(casConnector.archiveSubmission(any(), any())(any(), any())) thenReturn Future.successful(SubmissionArchiveResponse("123"))
       when(mockSubmissionService.ctrSubmission(any())(any())) thenReturn Future.successful(SubmissionSuccessful)
       val result: Future[Result] = controller().onSubmit()(fakeRequest)
 
