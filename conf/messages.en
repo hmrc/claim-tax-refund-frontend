@@ -288,8 +288,8 @@ anyCompanyBenefits.listHeading = Taxable company benefits include:
 howMuchFuelBenefit.title = How much fuel benefit did you get?
 howMuchFuelBenefit.heading = How much fuel benefit did you get?
 howMuchFuelBenefit.checkYourAnswersLabel = Fuel benefit
-howMuchFuelBenefit.blank = Enter the amount of fuel benefit you got
-howMuchFuelBenefit.invalid = Enter a valid amount of fuel benefit
+howMuchFuelBenefit.blank = Enter how much fuel benefit you got
+howMuchFuelBenefit.invalid = How much fuel benefit you got must be an amount of money, like 199 or 234.56
 
 otherCompanyBenefits = company benefit
 otherCompanyBenefit.title = Tell us about the other company benefit you got
