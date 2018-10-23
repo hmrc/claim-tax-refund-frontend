@@ -158,7 +158,7 @@ anyTaxableIncome.title = Did you get any other taxable income?
 anyTaxableIncome.heading = Did you get any other taxable income?
 anyTaxableIncome.checkYourAnswersLabel = Did you get any other taxable income?
 anyTaxableIncome.blank = Select yes if you got any other taxable income
-anyTaxableIncome.listHeading = Taxable income can be something like:
+anyTaxableIncome.listHeading = Taxable income includes:
 
 howMuchCarBenefits.title = How much company car benefit did you get?
 howMuchCarBenefits.heading = How much company car benefit did you get?
@@ -169,8 +169,8 @@ howMuchCarBenefits.invalid = Enter a valid amount of company car benefit
 howMuchRentalIncome.title = How much property rental income did you get?
 howMuchRentalIncome.heading = How much property rental income did you get?
 howMuchRentalIncome.checkYourAnswersLabel = Rental income
-howMuchRentalIncome.blank = Enter the amount of rental income you got
-howMuchRentalIncome.invalid = Enter a valid amount of rental income
+howMuchRentalIncome.blank = Enter the property rental income you got
+howMuchRentalIncome.invalid = How much property rental income you got must be an amount of money, like 199 or 234.56
 
 anyOtherBenefits.title = Other taxable benefits
 anyOtherBenefits.heading = Other taxable benefits
@@ -360,11 +360,11 @@ howMuchForeignIncome.checkYourAnswersLabel = Foreign income
 howMuchForeignIncome.blank = Enter the amount of foreign income you got
 howMuchForeignIncome.invalid = Enter a valid amount of foreign income
 
-howMuchBankInterest.title = How much Bank and Building Society Interest income did you get?
-howMuchBankInterest.heading = How much Bank and Building Society Interest income did you get?
+howMuchBankInterest.title = How much bank and building society interest income did you get?
+howMuchBankInterest.heading = How much bank and building society interest income did you get?
 howMuchBankInterest.checkYourAnswersLabel = Bank and building society interest
-howMuchBankInterest.blank = Enter the amount of Bank and Building Society Interest you got
-howMuchBankInterest.invalid = Enter a valid amount of Bank and Building Society Interest
+howMuchBankInterest.blank = Enter the amount of bank and building society interest you got
+howMuchBankInterest.invalid = Enter a valid amount of bank and building society interest
 
 detailsOfEmploymentOrPension.title = What were the details of your employment or pension?
 detailsOfEmploymentOrPension.heading = What were the details of your employment or pension?
@@ -373,19 +373,19 @@ detailsOfEmploymentOrPension.checkYourAnswersLabel = Details of employment or pe
 detailsOfEmploymentOrPension.blank = Enter details of your employment or pension
 detailsOfEmploymentOrPension.tooLong = Details of employment or pension exceeds the maximum 500 characters
 
-selectTaxableIncome.title = Which taxable income did you get?
-selectTaxableIncome.heading = Which taxable income did you get?
+selectTaxableIncome.title = Which taxable incomes did you get?
+selectTaxableIncome.heading = Which taxable incomes did you get?
 selectTaxableIncome.checkYourAnswersLabel = Other taxable income you got
-selectTaxableIncome.blank = Select a taxable income
+selectTaxableIncome.blank = Select which taxable incomes you got
 selectTaxableIncome.rental-income = property rental income
-selectTaxableIncome.bank-or-building-society-interest = Bank and Building Society Interest
-selectTaxableIncome.investment-or-dividends = investments or dividends
+selectTaxableIncome.bank-or-building-society-interest = bank and building society interest
+selectTaxableIncome.investment-or-dividends = investments and dividends
 selectTaxableIncome.foreign-income = foreign income
 selectTaxableIncome.other-taxable-income = other taxable income
 
-howMuchInvestmentOrDividend.title = How much income did you get from investments or dividends?
-howMuchInvestmentOrDividend.heading = How much income did you get from investments or dividends?
-howMuchInvestmentOrDividend.checkYourAnswersLabel = Investments or dividends income
+howMuchInvestmentOrDividend.title = How much income did you get from investments and dividends?
+howMuchInvestmentOrDividend.heading = How much income did you get from investments and dividends?
+howMuchInvestmentOrDividend.checkYourAnswersLabel = Investments and dividends income
 howMuchInvestmentOrDividend.blank = Enter the amount of investment or dividend income you got
 howMuchInvestmentOrDividend.invalid = Enter a valid amount investment or dividend income
 
@@ -408,14 +408,14 @@ otherTaxableIncome.duplicate = You have already entered this other taxable incom
 otherTaxableIncome.add = Add another taxable income
 otherTaxableIncome.change = Change other taxable incomes
 
-anyTaxableRentalIncome.title = Did you pay Income Tax on property rental income?
-anyTaxableRentalIncome.heading = Did you pay Income Tax on property rental income?
-anyTaxableRentalIncomeOption.checkYourAnswersLabel = Did you pay Income Tax on property rental income?
+anyTaxableRentalIncome.title = Did you pay Income Tax on your property rental income?
+anyTaxableRentalIncome.heading = Did you pay Income Tax on your property rental income?
+anyTaxableRentalIncomeOption.checkYourAnswersLabel = Did you pay Income Tax on your your property rental income?
 anyTaxableRentalIncome.checkYourAnswersLabel = Income tax you paid on property rental income
-anyTaxableRentalIncome.invalid = Enter a valid amount of Income Tax paid on property rental income
-anyTaxableRentalIncome.notSelected = Select yes if you paid Income Tax on property rental income
-anyTaxableRentalIncome.blank = Enter the amount of Income Tax you paid on property rental income
-anyTaxableRentalIncome.anyTaxPaidAmountField = How much Income Tax did you pay on property rental income?
+anyTaxableRentalIncome.invalid = How much Income Tax you paid on your property rental income must be an amount of money, like 199 or 234.56
+anyTaxableRentalIncome.notSelected = Select yes if you paid Income Tax on your property rental income
+anyTaxableRentalIncome.blank = Enter the amount of Income Tax you paid on your property rental income
+anyTaxableRentalIncome.anyTaxPaidAmountField = How much Income Tax did you pay on your property rental income?
 
 anyTaxableBankInterest.title = Did you pay Income Tax on Bank and Building Society Interest?
 anyTaxableBankInterest.heading = Did you pay Income Tax on Bank and Building Society Interest?

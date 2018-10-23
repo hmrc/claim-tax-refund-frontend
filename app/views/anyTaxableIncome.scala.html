@@ -55,7 +55,7 @@
         @components.list(
             pageKey = Some("selectTaxableIncome"),
             addCssClass = None,
-            bulletList = TaxableIncome.sortedTaxableIncome.map(_.toString)
+            bulletList = TaxableIncome.sortedTaxableIncome.dropRight(1).map(_.toString)
         )
 
         @components.input_yes_no(
