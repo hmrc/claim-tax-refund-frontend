@@ -350,7 +350,7 @@ otherBenefit.amount = How much of this taxable benefit you got
 otherBenefit.amount.blank = Enter how much of this taxable benefit you got
 otherBenefit.amount.invalid = How much of this taxable benefit you got must be an amount of money, like 199 or 234.56
 
-otherBenefit.duplicate = You have already entered this other taxable benefit name
+otherBenefit.duplicate = Enter a different taxable benefit name – you already entered {0}
 otherBenefit.change = Change other taxable benefits
 otherBenefit.add = Add another taxable benefit
 

@@ -31,9 +31,11 @@ class OtherBenefitViewSpec extends QuestionViewBehaviours[OtherBenefit] with Moc
   private val messageKeyPrefix = "otherBenefit"
   private val taxYear = CYMinus2
 
-  override val form: Form[OtherBenefit] = new OtherBenefitForm(frontendAppConfig)(Seq.empty, 0)
+  override val form: Form[OtherBenefit] = new OtherBenefitForm(frontendAppConfig, messagesApi)(Seq.empty, 0)
 
-  def createView: () => HtmlFormat.Appendable = () => otherBenefit(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createView: () =>
+    HtmlFormat.Appendable = () =>
+    otherBenefit(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   def createViewUsingForm: Form[OtherBenefit] => HtmlFormat.Appendable = (form: Form[OtherBenefit]) =>
     otherBenefit(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
