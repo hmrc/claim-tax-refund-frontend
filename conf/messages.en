@@ -300,7 +300,7 @@ otherCompanyBenefit.amount = How much of this taxable company benefit you got
 otherCompanyBenefit.name.blank = Enter the name of the taxable company benefit you got
 otherCompanyBenefit.amount.blank = Enter how much of this taxable company benefit you got
 otherCompanyBenefit.amount.invalid = How much of this taxable company benefit you got must be an amount of money, like 199 or 234.56
-otherCompanyBenefit.duplicate = You have already entered this other taxable company benefit name
+otherCompanyBenefit.duplicate = Enter a different taxable company benefit name – you already entered {0}
 otherCompanyBenefit.add = Add another company benefit
 otherCompanyBenefit.change = Change other company benefits
 

@@ -22,8 +22,10 @@ import forms.mappings.{Constraints, Mappings}
 import models.{Index, OtherCompanyBenefit}
 import play.api.data.Form
 import play.api.data.Forms._
+import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
+import play.api.i18n.MessagesApi
 
-class OtherCompanyBenefitForm @Inject()(appConfig: FrontendAppConfig) extends FormErrorHelper with Mappings with Constraints {
+class OtherCompanyBenefitForm @Inject()(messages: MessagesApi, appConfig: FrontendAppConfig) extends FormErrorHelper with Mappings with Constraints {
 
   private val currencyRegex = appConfig.currencyRegex
   private val nameBlankKey = "otherCompanyBenefit.name.blank"
@@ -32,9 +34,19 @@ class OtherCompanyBenefitForm @Inject()(appConfig: FrontendAppConfig) extends Fo
   private val duplicateBenefitKey = "otherCompanyBenefit.duplicate"
 
   def apply(otherCompanyBenefit: Seq[OtherCompanyBenefit], index: Index): Form[OtherCompanyBenefit] = {
+
+    val duplicateNameConstraint = Constraint[String] {
+      companyBenefitName: String =>
+        if(filter(otherCompanyBenefit, index, companyBenefitName).forall(companyBenefit => companyBenefit.name != companyBenefitName)) {
+          Valid
+        } else {
+          Invalid(Seq(ValidationError(duplicateBenefitKey, companyBenefitName)))
+        }
+    }
+
     Form(
       mapping(
-        "name" -> text(nameBlankKey).verifying(duplicateBenefitKey, a => filter(otherCompanyBenefit, index, a).forall(p => p.name != a)),
+        "name" -> text(nameBlankKey).verifying(duplicateNameConstraint),
         "amount" -> text(amountBlankKey).verifying(amountInvalidKey, a => a.matches(currencyRegex))
       )(OtherCompanyBenefit.apply)(OtherCompanyBenefit.unapply)
     )
@@ -47,4 +59,5 @@ class OtherCompanyBenefitForm @Inject()(appConfig: FrontendAppConfig) extends Fo
       seq
     }
   }
+
 }
