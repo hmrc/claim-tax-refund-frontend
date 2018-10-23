@@ -51,10 +51,10 @@ POST       /how-much-rental-income                                          cont
 GET        /change-how-much-rental-income                                   controllers.HowMuchRentalIncomeController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-how-much-rental-income                                   controllers.HowMuchRentalIncomeController.onSubmit(mode: Mode = CheckMode)
 
-GET        /how-much-medical-benefit                                        controllers.HowMuchMedicalBenefitsController.onPageLoad(mode: Mode = NormalMode)
-POST       /how-much-medical-benefit                                        controllers.HowMuchMedicalBenefitsController.onSubmit(mode: Mode = NormalMode)
-GET        /change-how-much-medical-benefit                                 controllers.HowMuchMedicalBenefitsController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-how-much-medical-benefit                                 controllers.HowMuchMedicalBenefitsController.onSubmit(mode: Mode = CheckMode)
+GET        /medical-benefit                                                 controllers.HowMuchMedicalBenefitsController.onPageLoad(mode: Mode = NormalMode)
+POST       /medical-benefit                                                 controllers.HowMuchMedicalBenefitsController.onSubmit(mode: Mode = NormalMode)
+GET        /change-medical-benefit                                          controllers.HowMuchMedicalBenefitsController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-medical-benefit                                          controllers.HowMuchMedicalBenefitsController.onSubmit(mode: Mode = CheckMode)
 
 GET        /did-you-get-other-benefits                                      controllers.AnyOtherBenefitsController.onPageLoad(mode: Mode = NormalMode)
 POST       /did-you-get-other-benefits                                      controllers.AnyOtherBenefitsController.onSubmit(mode: Mode = NormalMode)

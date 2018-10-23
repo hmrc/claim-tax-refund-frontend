@@ -204,8 +204,8 @@ howMuchStatePension.invalid = Enter a valid amount of State Pension
 howMuchMedicalBenefits.title = How much medical benefit did you get?
 howMuchMedicalBenefits.heading = How much medical benefit did you get?
 howMuchMedicalBenefits.checkYourAnswersLabel = Medical benefit
-howMuchMedicalBenefits.blank = Enter the amount of medical benefit you got
-howMuchMedicalBenefits.invalid = Enter a valid amount of medical benefit
+howMuchMedicalBenefits.blank = Enter how much medical benefit you got
+howMuchMedicalBenefits.invalid = How much medical benefit you got must be an amount of money, like 199 or 234.56
 
 anyOtherTaxableIncome.title = Other taxable income
 anyOtherTaxableIncome.heading = Other taxable income
