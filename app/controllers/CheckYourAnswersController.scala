@@ -21,7 +21,7 @@ import config.FrontendAppConfig
 import connectors.{CasConnector, DataCacheConnector}
 import controllers.actions.{AuthAction, DataRequiredAction, DataRetrievalAction}
 import models.templates.RobotXML
-import models.{Metadata, SubmissionArchiveResponse, SubmissionSuccessful, _}
+import models.{Metadata, SubmissionSuccessful, _}
 import org.apache.commons.codec.digest.DigestUtils
 import org.joda.time.LocalDateTime
 import play.api.Logger

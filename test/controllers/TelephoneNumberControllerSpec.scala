@@ -32,7 +32,7 @@ import views.html.telephoneNumber
 
 import scala.concurrent._
 
-class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar with WireMockHelper with ScalaFutures {
+class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar with ScalaFutures {
 
   def onwardRoute: Call = routes.IndexController.onPageLoad()
 
