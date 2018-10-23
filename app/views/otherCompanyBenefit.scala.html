@@ -21,6 +21,7 @@
 @import viewmodels.InputViewModel
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
 @import uk.gov.hmrc.renderer.TemplateRenderer
+@import utils.Ordinal.getOrdinal
 
 @(
     appConfig: FrontendAppConfig,
@@ -37,7 +38,7 @@
 )
 
 @main_template(
-    title = messages("otherCompanyBenefit.title"),
+    title = messages("otherCompanyBenefit.title", getOrdinal(index).capitalize),
     appConfig = appConfig,
     bodyClasses = None
 ) {
@@ -48,7 +49,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading(messages("otherCompanyBenefit.heading"), taxYear = Some(taxYear.asString))
+        @components.heading(messages("otherCompanyBenefit.heading", getOrdinal(index).capitalize), taxYear = Some(taxYear.asString))
 
         @components.input_text(
             InputViewModel("name", form),
