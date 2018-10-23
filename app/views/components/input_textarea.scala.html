@@ -36,22 +36,15 @@ labelClass: Option[String] = None
         <span class="error-notification" id="error-message-@{viewModel.id}-input">@messages(viewModel.errorKey)</span>
         }
     </label>
-    <div class="textarea-char-counter" data-char-counter>
         <textarea
                 class="form-control form-control--full-width @inputClass"
                 id="@{viewModel.id}"
                 name="@{viewModel.id}"
                 value="@{viewModel.value}"
                 aria-describedby="error-message-@{viewModel.id}-input"
-                @if(charLimit.isDefined){maxLength="@{charLimit}"}
-                data-char-field
                 rows="5"
-        >@{viewModel.value}</textarea>
-        @if(charLimit.isDefined){
-        <noscript>
-            <p class="char-counter-text flush">@messages("site.textarea.char_limit", charLimit.get)</p>
-        </noscript>
-        }
-    </div>
+        >
+        @{viewModel.value}
+        </textarea>
 </div>
 
