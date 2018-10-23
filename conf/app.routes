@@ -31,10 +31,10 @@ POST       /did-you-get-any-benefits                                        cont
 GET        /change-if-you-got-benefits                                      controllers.AnyBenefitsController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-if-you-got-benefits                                      controllers.AnyBenefitsController.onSubmit(mode: Mode = CheckMode)
 
-GET        /did-you-get-any-company-benefits                                controllers.AnyCompanyBenefitsController.onPageLoad(mode: Mode = NormalMode)
-POST       /did-you-get-any-company-benefits                                controllers.AnyCompanyBenefitsController.onSubmit(mode: Mode = NormalMode)
-GET        /change-if-you-got-company-benefits                              controllers.AnyCompanyBenefitsController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-if-you-got-company-benefits                              controllers.AnyCompanyBenefitsController.onSubmit(mode: Mode = CheckMode)
+GET        /taxable-company-benefits                                        controllers.AnyCompanyBenefitsController.onPageLoad(mode: Mode = NormalMode)
+POST       /taxable-company-benefits                                        controllers.AnyCompanyBenefitsController.onSubmit(mode: Mode = NormalMode)
+GET        /change-taxable-company-benefits                                 controllers.AnyCompanyBenefitsController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-taxable-company-benefits                                 controllers.AnyCompanyBenefitsController.onSubmit(mode: Mode = CheckMode)
 
 GET        /did-you-get-any-taxable-income                                  controllers.AnyTaxableIncomeController.onPageLoad(mode: Mode = NormalMode)
 POST       /did-you-get-any-taxable-income                                  controllers.AnyTaxableIncomeController.onSubmit(mode: Mode = NormalMode)

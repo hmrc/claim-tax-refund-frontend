@@ -279,11 +279,11 @@ selectCompanyBenefits.fuel-benefit = fuel benefit
 selectCompanyBenefits.medical-benefit = medical benefit
 selectCompanyBenefits.other-company-benefit = other company benefits
 
-anyCompanyBenefits.title = Did you get any company benefits from your employer?
-anyCompanyBenefits.heading = Did you get any company benefits from your employer?
+anyCompanyBenefits.title = Did you get any taxable company benefits from your employer?
+anyCompanyBenefits.heading = Did you get any taxable company benefits from your employer?
 anyCompanyBenefits.checkYourAnswersLabel = Did you get any company benefits
-anyCompanyBenefits.blank =  Select yes if you claimed any company benefits
-anyCompanyBenefits.listHeading = A company benefit can be something like:
+anyCompanyBenefits.blank =  Select yes if you got any company benefits
+anyCompanyBenefits.listHeading = Taxable company benefits include:
 
 howMuchFuelBenefit.title = How much fuel benefit did you get?
 howMuchFuelBenefit.heading = How much fuel benefit did you get?
