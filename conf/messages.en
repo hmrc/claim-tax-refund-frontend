@@ -453,10 +453,10 @@ anyTaxableOtherIncome.notSelected = Select yes if you paid Income Tax on this in
 anyTaxableOtherIncome.blank = Enter the amount of Income Tax you paid on this income
 anyTaxableOtherIncome.anyTaxPaidAmountField = How much Income Tax did you pay on {0}?
 
-paymentAddressCorrect.title = Do you want to send any payment to this address?
-paymentAddressCorrect.heading = Do you want to send any payment to this address?
+paymentAddressCorrect.title = Is this the address you want us to send any payment to?
+paymentAddressCorrect.heading = Is this the address you want us to send any payment to?
 paymentAddressCorrect.checkYourAnswersLabel = Do you want to send any payment to this address?
-paymentAddressCorrect.blank = Select yes if you want to send any payment to this address
+paymentAddressCorrect.blank = Select yes if you want us to send any payment to this address
 
 deleteOther.title = Are you sure you want to remove {0}?
 deleteOther.heading = Are you sure you want to remove {0}?
