@@ -141,10 +141,10 @@ POST       /select-benefits                                                 cont
 GET        /change-select-benefits                                          controllers.SelectBenefitsController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-select-benefits                                          controllers.SelectBenefitsController.onSubmit(mode: Mode = CheckMode)
 
-GET        /other-company-benefit-:index                                     controllers.OtherCompanyBenefitController.onPageLoad(mode: Mode = NormalMode, index: Index)
-POST       /other-company-benefit-:index                                     controllers.OtherCompanyBenefitController.onSubmit(mode: Mode = NormalMode, index: Index)
-GET        /change-other-company-benefit-:index                              controllers.OtherCompanyBenefitController.onPageLoad(mode: Mode = CheckMode, index: Index)
-POST       /change-other-company-benefit-:index                              controllers.OtherCompanyBenefitController.onSubmit(mode: Mode = CheckMode, index: Index)
+GET        /other-taxable-company-benefit-:index                            controllers.OtherCompanyBenefitController.onPageLoad(mode: Mode = NormalMode, index: Index)
+POST       /other-taxable-company-benefit-:index                            controllers.OtherCompanyBenefitController.onSubmit(mode: Mode = NormalMode, index: Index)
+GET        /change-other-taxable-company-benefit-:index                     controllers.OtherCompanyBenefitController.onPageLoad(mode: Mode = CheckMode, index: Index)
+POST       /change-other-taxable-company-benefit-:index                     controllers.OtherCompanyBenefitController.onSubmit(mode: Mode = CheckMode, index: Index)
 
 GET        /any-other-company-benefits                                      controllers.AnyOtherCompanyBenefitsController.onPageLoad(mode: Mode = NormalMode)
 POST       /any-other-company-benefits                                      controllers.AnyOtherCompanyBenefitsController.onSubmit(mode: Mode = NormalMode)
