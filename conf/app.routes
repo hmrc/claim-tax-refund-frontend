@@ -41,10 +41,10 @@ POST       /did-you-get-any-taxable-income                                  cont
 GET        /change-if-you-got-any-taxable-income                            controllers.AnyTaxableIncomeController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-if-you-got-any-taxable-income                            controllers.AnyTaxableIncomeController.onSubmit(mode: Mode = CheckMode)
 
-GET        /how-much-car-benefit                                            controllers.HowMuchCarBenefitsController.onPageLoad(mode: Mode = NormalMode)
-POST       /how-much-car-benefit                                            controllers.HowMuchCarBenefitsController.onSubmit(mode: Mode = NormalMode)
-GET        /change-how-much-car-benefit                                     controllers.HowMuchCarBenefitsController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-how-much-car-benefit                                     controllers.HowMuchCarBenefitsController.onSubmit(mode: Mode = CheckMode)
+GET        /car-benefit                                                     controllers.HowMuchCarBenefitsController.onPageLoad(mode: Mode = NormalMode)
+POST       /car-benefit                                                     controllers.HowMuchCarBenefitsController.onSubmit(mode: Mode = NormalMode)
+GET        /change-car-benefit                                              controllers.HowMuchCarBenefitsController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-car-benefit                                              controllers.HowMuchCarBenefitsController.onSubmit(mode: Mode = CheckMode)
 
 GET        /how-much-rental-income                                          controllers.HowMuchRentalIncomeController.onPageLoad(mode: Mode = NormalMode)
 POST       /how-much-rental-income                                          controllers.HowMuchRentalIncomeController.onSubmit(mode: Mode = NormalMode)

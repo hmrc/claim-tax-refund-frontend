@@ -163,8 +163,8 @@ anyTaxableIncome.listHeading = Taxable income can be something like:
 howMuchCarBenefits.title = How much company car benefit did you get?
 howMuchCarBenefits.heading = How much company car benefit did you get?
 howMuchCarBenefits.checkYourAnswersLabel = Company car benefit
-howMuchCarBenefits.blank = Enter the amount of company car benefit you got
-howMuchCarBenefits.invalid = Enter a valid amount of company car benefit
+howMuchCarBenefits.blank = Enter how much company car benefit you got
+howMuchCarBenefits.invalid = How much company car benefit you got must be an amount of money, like 199 or 234.56
 
 howMuchRentalIncome.title = How much property rental income did you get?
 howMuchRentalIncome.heading = How much property rental income did you get?
