@@ -460,7 +460,7 @@ paymentAddressCorrect.blank = Select yes if you want to send any payment to this
 
 deleteOther.title = Are you sure you want to remove {0}?
 deleteOther.heading = Are you sure you want to remove {0}?
-deleteOther.blank = Select yes if you want to remove this item
+deleteOther.blank = Select yes if you want to remove {0}
 
 confirmation.title = Claim sent
 confirmation.heading = Claim sent

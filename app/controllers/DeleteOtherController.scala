@@ -49,10 +49,10 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
                                       implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
 
   private val errorKey = "deleteOther.blank"
-  val form: Form[Boolean] = formProvider(errorKey)
 
   def onPageLoad(mode: Mode, index: Index, itemName: String, collectionId: String): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
+      val form: Form[Boolean] = formProvider(errorKey, Some(itemName))
       request.userAnswers.selectTaxYear.map {
         taxYear =>
           Ok(deleteOther(appConfig, form, mode, index, itemName, collectionId, taxYear))
@@ -64,6 +64,7 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
   def onSubmit(mode: Mode, index: Index, itemName: String, collectionId: String): Action[AnyContent] =
     (authenticate andThen getData andThen requireData).async {
       implicit request =>
+        val form: Form[Boolean] = formProvider(errorKey, Some(itemName))
         request.userAnswers.selectTaxYear.map {
           taxYear =>
             form.bindFromRequest().fold(
