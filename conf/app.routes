@@ -86,10 +86,10 @@ POST       /did-you-get-any-other-income                                    cont
 GET        /change-if-you-got-any-other-income                              controllers.AnyOtherTaxableIncomeController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-if-you-got-any-other-income                              controllers.AnyOtherTaxableIncomeController.onSubmit(mode: Mode = CheckMode)
 
-GET        /enter-nominee-full-name                                         controllers.NomineeFullNameController.onPageLoad(mode: Mode = NormalMode)
-POST       /enter-nominee-full-name                                         controllers.NomineeFullNameController.onSubmit(mode: Mode = NormalMode)
-GET        /change-nominee-full-name                                        controllers.NomineeFullNameController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-nominee-full-name                                        controllers.NomineeFullNameController.onSubmit(mode: Mode = CheckMode)
+GET        /name-send-payment-to                                            controllers.NomineeFullNameController.onPageLoad(mode: Mode = NormalMode)
+POST       /name-send-payment-to                                            controllers.NomineeFullNameController.onSubmit(mode: Mode = NormalMode)
+GET        /change-name-send-payment-to                                     controllers.NomineeFullNameController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-name-send-payment-to                                     controllers.NomineeFullNameController.onSubmit(mode: Mode = CheckMode)
 
 GET        /has-agent-reference-number                                      controllers.AnyAgentRefController.onPageLoad(mode: Mode = NormalMode)
 POST       /has-agent-reference-number                                      controllers.AnyAgentRefController.onSubmit(mode: Mode = NormalMode)

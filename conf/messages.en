@@ -219,7 +219,7 @@ nomineeFullName.title = What is the full name of the person you want us to send 
 nomineeFullName.heading = What is the full name of the person you want us to send any payment to?
 nomineeFullName.checkYourAnswersLabel = Full name of the person you want us to send any payment to
 nomineeFullName.blank = Enter the full name of the person you want us to send any payment to
-nomineeFullName.tooLong = Full name of the person you want us to send any payment to can only be up to 100 characters
+nomineeFullName.tooLong = Full name of the person you want us to send any payment must be 100 characters or less
 
 anyAgentRef.title = Does {0} have an agent reference?
 anyAgentRef.heading = Does {0} have an agent reference?
