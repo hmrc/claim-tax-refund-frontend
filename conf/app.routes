@@ -121,10 +121,10 @@ POST       /employment-details                                              cont
 GET        /change-employment-details                                       controllers.EmploymentDetailsController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-employment-details                                       controllers.EmploymentDetailsController.onSubmit(mode: Mode = CheckMode)
 
-GET        /select-company-benefits                                         controllers.SelectCompanyBenefitsController.onPageLoad(mode: Mode = NormalMode)
-POST       /select-company-benefits                                         controllers.SelectCompanyBenefitsController.onSubmit(mode: Mode = NormalMode)
-GET        /change-select-company-benefits                                  controllers.SelectCompanyBenefitsController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-select-company-benefits                                  controllers.SelectCompanyBenefitsController.onSubmit(mode: Mode = CheckMode)
+GET        /which-taxable-company-benefits                                  controllers.SelectCompanyBenefitsController.onPageLoad(mode: Mode = NormalMode)
+POST       /which-taxable-company-benefits                                  controllers.SelectCompanyBenefitsController.onSubmit(mode: Mode = NormalMode)
+GET        /change-which-taxable-company-benefits                           controllers.SelectCompanyBenefitsController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-which-taxable-company-benefits                           controllers.SelectCompanyBenefitsController.onSubmit(mode: Mode = CheckMode)
 
 GET        /enter-paye-reference                                            controllers.EnterPayeReferenceController.onPageLoad(mode: Mode = NormalMode)
 POST       /enter-paye-reference                                            controllers.EnterPayeReferenceController.onSubmit(mode: Mode = NormalMode)
