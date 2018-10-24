@@ -221,13 +221,13 @@ nomineeFullName.checkYourAnswersLabel = Full name of the person you want us to s
 nomineeFullName.blank = Enter the full name of the person you want us to send any payment to
 nomineeFullName.tooLong = Full name of the person you want us to send any payment must be 100 characters or less
 
-anyAgentRef.title = Does {0} have an agent reference?
-anyAgentRef.heading = Does {0} have an agent reference?
+anyAgentRef.title = Is {0} an agent with an agent reference number?
+anyAgentRef.heading = Is {0} an agent with an agent reference number?
 anyAgentRefOption.checkYourAnswersLabel = Does the person you want us to send any payment to have an agent reference?
 anyAgentRef.checkYourAnswersLabel = Agent reference
-anyAgentRef.blank = Select yes if the person you want us to send any payment to has an agent reference
+anyAgentRef.blank = Select yes if {0} is an agent with an agent reference
 anyAgentRef.agentRefField = Agent reference
-anyAgentRef.blankAgentRef = Enter the agent reference of the person you want us to send any payment to
+anyAgentRef.blankAgentRef = Enter {0}’s agent reference
 anyAgentRef.maxLength = Agent reference can only be up to 160 characters
 
 isPaymentAddressInTheUK.title = Is the address you want us to send any payment to in the UK?

@@ -23,9 +23,9 @@ import play.api.data.Mapping
 
 trait AgentRefMapping extends Mappings {
 
-  def agentRefMapping(requiredKey: String,
-                    requiredAgentRefKey: String,
-                    agentRefLengthKey: String):
+  def agentRefMapping(requiredMessage: String,
+                      requiredAgentRefMessage: String,
+                      agentRefLengthKey: String):
   Mapping[AnyAgentRef] = {
     val agentRefMaxLength = 160
 
@@ -45,10 +45,10 @@ trait AgentRefMapping extends Mappings {
       }
     }
 
-    tuple("anyAgentRef" -> boolean(requiredKey),
+    tuple("anyAgentRef" -> boolean(requiredMessage),
       "agentRef" -> mandatoryIfTrue(
         "anyAgentRef",
-        text(requiredAgentRefKey).verifying(maxLength(agentRefMaxLength, agentRefLengthKey))
+        text(requiredAgentRefMessage).verifying(maxLength(agentRefMaxLength, agentRefLengthKey))
       )
     )
       .transform(toAgentRef, fromAgentRef)
