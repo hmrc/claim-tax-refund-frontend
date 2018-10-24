@@ -216,10 +216,10 @@ POST       /pay-income-tax-foreign-income                                   cont
 GET        /change-pay-income-tax-foreign-income                            controllers.AnyTaxableForeignIncomeController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-pay-income-tax-foreign-income                            controllers.AnyTaxableForeignIncomeController.onSubmit(mode: Mode = CheckMode)
 
-GET        /any-taxable-other-income-:index                                 controllers.AnyTaxableOtherIncomeController.onPageLoad(mode: Mode = NormalMode, index: Index)
-POST       /any-taxable-other-income-:index                                 controllers.AnyTaxableOtherIncomeController.onSubmit(mode: Mode = NormalMode, index: Index)
-GET        /change-any-taxable-other-income-:index                          controllers.AnyTaxableOtherIncomeController.onPageLoad(mode: Mode = CheckMode, index: Index)
-POST       /change-any-taxable-other-income-:index                          controllers.AnyTaxableOtherIncomeController.onSubmit(mode: Mode = CheckMode, index: Index)
+GET        /pay-income-tax-other-taxable-income-:index                      controllers.AnyTaxableOtherIncomeController.onPageLoad(mode: Mode = NormalMode, index: Index)
+POST       /pay-income-tax-other-taxable-income-:index                      controllers.AnyTaxableOtherIncomeController.onSubmit(mode: Mode = NormalMode, index: Index)
+GET        /change-pay-income-tax-other-taxable-income-:index               controllers.AnyTaxableOtherIncomeController.onPageLoad(mode: Mode = CheckMode, index: Index)
+POST       /change-pay-income-tax-other-taxable-income-:index               controllers.AnyTaxableOtherIncomeController.onSubmit(mode: Mode = CheckMode, index: Index)
 
 GET        /payment-address-correct                                         controllers.PaymentAddressCorrectController.onPageLoad(mode: Mode = NormalMode)
 POST       /payment-address-correct                                         controllers.PaymentAddressCorrectController.onSubmit(mode: Mode = NormalMode)

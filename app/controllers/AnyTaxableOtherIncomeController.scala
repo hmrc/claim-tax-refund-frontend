@@ -53,18 +53,22 @@ class AnyTaxableOtherIncomeController @Inject()(appConfig: FrontendAppConfig,
 
   def onPageLoad(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val form: Form[AnyTaxPaid] = taxPaidformProvider(notSelectedKey, blankKey, invalidKey)
-
-      val preparedForm = request.userAnswers.otherTaxableIncome match {
-        case Some(value) =>
-          if (index >= value.length || value(index).anyTaxPaid.isEmpty) form else form.fill(value(index).anyTaxPaid.get)
-        case None => form
-      }
-
       val details: Option[Result] = for {
         selectedTaxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
         otherTaxableIncome: Seq[OtherTaxableIncome] <- request.userAnswers.otherTaxableIncome
       } yield {
+        val form: Form[AnyTaxPaid] = taxPaidformProvider(
+          messagesApi(notSelectedKey, otherTaxableIncome(index).name),
+          messagesApi(blankKey, otherTaxableIncome(index).name),
+          messagesApi(invalidKey, otherTaxableIncome(index).name)
+        )
+
+        val preparedForm = request.userAnswers.otherTaxableIncome match {
+          case Some(value) =>
+            if (index >= value.length || value(index).anyTaxPaid.isEmpty) form else form.fill(value(index).anyTaxPaid.get)
+          case None => form
+        }
+
         Ok(anyTaxableOtherIncome(appConfig, preparedForm, mode, index, selectedTaxYear, otherTaxableIncome(index).name))
       }
       details.getOrElse {
@@ -74,12 +78,15 @@ class AnyTaxableOtherIncomeController @Inject()(appConfig: FrontendAppConfig,
 
   def onSubmit(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      val form: Form[AnyTaxPaid] = taxPaidformProvider(notSelectedKey, blankKey, invalidKey)
-
       val details: Option[Future[Result]] = for {
         selectedTaxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
         otherTaxableIncome: Seq[OtherTaxableIncome] <- request.userAnswers.otherTaxableIncome
       } yield {
+        val form: Form[AnyTaxPaid] = taxPaidformProvider(
+          messagesApi(notSelectedKey, otherTaxableIncome(index).name),
+          messagesApi(blankKey, otherTaxableIncome(index).name),
+          messagesApi(invalidKey, otherTaxableIncome(index).name)
+        )
         form.bindFromRequest().fold(
           (formWithErrors: Form[AnyTaxPaid]) =>
             Future.successful(BadRequest(anyTaxableOtherIncome(appConfig, formWithErrors, mode, index, selectedTaxYear, otherTaxableIncome(index).name))),
