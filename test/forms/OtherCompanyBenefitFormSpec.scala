@@ -18,7 +18,7 @@ package forms
 
 import config.FrontendAppConfig
 import forms.behaviours.FormBehaviours
-import models.{Index, MandatoryField, OtherCompanyBenefit}
+import models.{Index, OtherCompanyBenefit}
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.{Form, FormError}
@@ -42,10 +42,10 @@ class OtherCompanyBenefitFormSpec extends FormBehaviours with MockitoSugar {
     "amount" -> "123"
   )
 
-  override val form: Form[OtherCompanyBenefit] = new OtherCompanyBenefitForm(appConfig)(Seq.empty, 0)
+  override val form: Form[OtherCompanyBenefit] = new OtherCompanyBenefitForm(messagesApi, appConfig)(Seq.empty, 0)
 
   def otherCompanyBenefitForm(otherBenefits: Seq[OtherCompanyBenefit], index: Index): Form[OtherCompanyBenefit] =
-    new OtherCompanyBenefitForm(appConfig)(otherBenefits, index)
+    new OtherCompanyBenefitForm(messagesApi, appConfig)(otherBenefits, index)
 
   "OtherCompanyBenefitsName Form" must {
 
@@ -66,7 +66,7 @@ class OtherCompanyBenefitFormSpec extends FormBehaviours with MockitoSugar {
         otherCompanyBenefitForm(Seq(OtherCompanyBenefit("qwerty", "123")), 1).bind(validData)
 
       result.errors.size shouldBe 1
-      result.errors shouldBe Seq(FormError("name", duplicateBenefitKey))
+      result.errors shouldBe Seq(FormError("name", duplicateBenefitKey, Seq("qwerty")))
     }
 
     "fail to bind with missing amount" in {
