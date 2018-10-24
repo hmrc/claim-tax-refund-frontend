@@ -53,11 +53,6 @@ class DetailsOfEmploymentOrPensionViewSpec extends StringViewBehaviours with Moc
       expectedHintKeyLine1 = Some("detailsOfEmploymentOrPension.hintText"),
       expectedHintKeyLine2 = None
     )
-
-    "Display the correct message when the character counter can't be shown on the page" in {
-      val doc = asDocument(createView())
-      assertContainsText (doc, messages("site.textarea.char_limit", characterLimit))
-    }
   }
 
 }
