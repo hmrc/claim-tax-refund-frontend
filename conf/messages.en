@@ -117,7 +117,7 @@ checkYourAnswers.guidance = Guidance for check your answers
 checkYourAnswers.pdfHeader = Summary
 checkYourAnswers.userSection = User details
 checkYourAnswers.claimSection = Claim details
-checkYourAnswers.benefitSection = Benefit details
+checkYourAnswers.benefitSection = Taxable benefit details
 checkYourAnswers.companyBenefitSection = Company benefit details
 checkYourAnswers.taxableIncomeSection = Taxable income details
 checkYourAnswers.paymentSection = Payment details
@@ -306,7 +306,7 @@ otherCompanyBenefit.change = Change other company benefits
 
 selectBenefits.title = Which taxable benefits did you get?
 selectBenefits.heading = Which taxable benefits did you get?
-selectBenefits.checkYourAnswersLabel = Taxable benefits you got
+selectBenefits.checkYourAnswersLabel = Which taxable benefits did you get?
 selectBenefits.blank = Select the taxable benefits you got
 selectBenefits.jobseekers-allowance = contribution-based Jobseeker’s Allowance
 selectBenefits.incapacity-benefit = Incapacity Benefit

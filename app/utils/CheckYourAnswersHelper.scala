@@ -73,15 +73,15 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
 
   def selectBenefits: Option[AnswerRow] = userAnswers.selectBenefits map {
     val keyPrefix = "selectBenefits."
-    x => AnswerRow(keyPrefix + "checkYourAnswersLabel", x.map {
-      case Benefits.BEREAVEMENT_ALLOWANCE => messages(keyPrefix + "bereavement-allowance").capitalize
-      case Benefits.CARERS_ALLOWANCE => messages(keyPrefix + "carers-allowance").capitalize
-      case Benefits.JOBSEEKERS_ALLOWANCE => messages(keyPrefix + "jobseekers-allowance").capitalize
-      case Benefits.INCAPACITY_BENEFIT => messages(keyPrefix + "incapacity-benefit").capitalize
-      case Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE => messages(keyPrefix + "employment-and-support-allowance").capitalize
-      case Benefits.STATE_PENSION => messages(keyPrefix + "state-pension").capitalize
-      case Benefits.OTHER_TAXABLE_BENEFIT => messages(keyPrefix + "other-taxable-benefit").capitalize
-    }.mkString("<br>"),
+    x => AnswerRow(keyPrefix + "checkYourAnswersLabel", "<ul>" + x.map {
+      case Benefits.BEREAVEMENT_ALLOWANCE => "<li>" + messages(keyPrefix + "bereavement-allowance").capitalize
+      case Benefits.CARERS_ALLOWANCE => "<li>" + messages(keyPrefix + "carers-allowance").capitalize
+      case Benefits.JOBSEEKERS_ALLOWANCE => "<li>" + messages(keyPrefix + "jobseekers-allowance").capitalize
+      case Benefits.INCAPACITY_BENEFIT => "<li>" +messages(keyPrefix + "incapacity-benefit").capitalize
+      case Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE => "<li>" + messages(keyPrefix + "employment-and-support-allowance").capitalize
+      case Benefits.STATE_PENSION => "<li>" + messages(keyPrefix + "state-pension").capitalize
+      case Benefits.OTHER_TAXABLE_BENEFIT => "<li>" +messages(keyPrefix + "other-taxable-benefit").capitalize
+    }.mkString("</li>") + "</ul>",
       false,
       Some(routes.SelectBenefitsController.onPageLoad(CheckMode).url)
     )

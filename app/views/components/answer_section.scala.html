@@ -26,8 +26,14 @@
 )
 
 @if(answerSection.headingKey.isDefined){
-    <h2 id="cya-@idPath-heading">@messages(answerSection.headingKey.get)</h2>
+
+    @if(answerSection.addLinkUrl.isDefined) {
+        <h3 id="cya-@idPath-heading">@messages(answerSection.headingKey.get)</h3>
+    } else {
+        <h2 id="cya-@idPath-heading">@messages(answerSection.headingKey.get)</h2>
+    }
 }
+
 @if(answerSection.rows.nonEmpty) {
     <ul role="list" class="tabular-data tabular-data--list">
 
