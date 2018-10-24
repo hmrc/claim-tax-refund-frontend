@@ -248,13 +248,13 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
 
   def selectTaxableIncome: Option[AnswerRow] = userAnswers.selectTaxableIncome map {
     val keyPrefix = "selectTaxableIncome."
-    x => AnswerRow(keyPrefix + "checkYourAnswersLabel", x.map {
-      case TaxableIncome.RENTAL_INCOME => messages(keyPrefix + "rental-income").capitalize
-      case TaxableIncome.BANK_OR_BUILDING_SOCIETY_INTEREST => messages(keyPrefix + "bank-or-building-society-interest").capitalize
-      case TaxableIncome.INVESTMENT_OR_DIVIDENDS => messages(keyPrefix + "investment-or-dividends").capitalize
-      case TaxableIncome.FOREIGN_INCOME => messages(keyPrefix + "foreign-income").capitalize
-      case TaxableIncome.OTHER_TAXABLE_INCOME => messages(keyPrefix + "other-taxable-income").capitalize
-    }.mkString("<br>"), false, Some(routes.SelectTaxableIncomeController.onPageLoad(CheckMode).url))
+    x => AnswerRow(keyPrefix + "checkYourAnswersLabel", "<ul>" + x.map {
+      case TaxableIncome.RENTAL_INCOME => "<li>" + messages(keyPrefix + "rental-income").capitalize
+      case TaxableIncome.BANK_OR_BUILDING_SOCIETY_INTEREST => "<li>" + messages(keyPrefix + "bank-or-building-society-interest").capitalize
+      case TaxableIncome.INVESTMENT_OR_DIVIDENDS => "<li>" + messages(keyPrefix + "investment-or-dividends").capitalize
+      case TaxableIncome.FOREIGN_INCOME => "<li>" + messages(keyPrefix + "foreign-income").capitalize
+      case TaxableIncome.OTHER_TAXABLE_INCOME => "<li>" + messages(keyPrefix + "other-taxable-income").capitalize
+    }.mkString("</li>") + "</ul>", false, Some(routes.SelectTaxableIncomeController.onPageLoad(CheckMode).url))
   }
 
   def howMuchRentalIncome: Option[AnswerRow] = userAnswers.howMuchRentalIncome map {

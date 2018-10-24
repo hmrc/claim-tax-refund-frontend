@@ -162,13 +162,13 @@ anyTaxableIncome.listHeading = Taxable income can be something like:
 
 howMuchCarBenefits.title = How much company car benefit did you get?
 howMuchCarBenefits.heading = How much company car benefit did you get?
-howMuchCarBenefits.checkYourAnswersLabel = Company car benefit
+howMuchCarBenefits.checkYourAnswersLabel = How much company car benefit did you get?
 howMuchCarBenefits.blank = Enter the amount of company car benefit you got
 howMuchCarBenefits.invalid = Enter a valid amount of company car benefit
 
 howMuchRentalIncome.title = How much property rental income did you get?
 howMuchRentalIncome.heading = How much property rental income did you get?
-howMuchRentalIncome.checkYourAnswersLabel = Rental income
+howMuchRentalIncome.checkYourAnswersLabel = How much property rental income did you get?
 howMuchRentalIncome.blank = Enter the amount of rental income you got
 howMuchRentalIncome.invalid = Enter a valid amount of rental income
 
@@ -179,31 +179,31 @@ anyOtherBenefits.addAnotherBenefit = Do you need to add another taxable benefit?
 
 howMuchJobseekersAllowance.title = How much contribution-based Jobseeker’s Allowance did you get?
 howMuchJobseekersAllowance.heading = How much contribution-based Jobseeker’s Allowance did you get?
-howMuchJobseekersAllowance.checkYourAnswersLabel = Contribution-based Jobseeker’s Allowance
+howMuchJobseekersAllowance.checkYourAnswersLabel = How Much Contribution-based Jobseeker’s Allowance did you get?
 howMuchJobseekersAllowance.blank = Enter the amount of Jobseeker’s Allowance you got
 howMuchJobseekersAllowance.invalid = Enter a valid amount of Jobseeker’s Allowance
 
 howMuchIncapacityBenefit.title = How much Incapacity Benefit did you get?
 howMuchIncapacityBenefit.heading = How much Incapacity Benefit did you get?
-howMuchIncapacityBenefit.checkYourAnswersLabel = Incapacity Benefit
+howMuchIncapacityBenefit.checkYourAnswersLabel = How much Incapacity Benefit did you get?
 howMuchIncapacityBenefit.blank = Enter the amount of Incapacity Benefit you got
 howMuchIncapacityBenefit.invalid = Enter a valid amount of Incapacity Benefit
 
 howMuchEmploymentAndSupportAllowance.title = How much Employment and Support Allowance did you get?
 howMuchEmploymentAndSupportAllowance.heading = How much Employment and Support Allowance did you get?
-howMuchEmploymentAndSupportAllowance.checkYourAnswersLabel = Employment and Support Allowance
+howMuchEmploymentAndSupportAllowance.checkYourAnswersLabel =  How much Employment and Support Allowance did you get?
 howMuchEmploymentAndSupportAllowance.blank = Enter the amount of Employment and Support Allowance you got
 howMuchEmploymentAndSupportAllowance.invalid = Enter a valid amount of Employment and Support Allowance
 
 howMuchStatePension.title = How much State Pension did you get?
 howMuchStatePension.heading = How much State Pension did you get?
-howMuchStatePension.checkYourAnswersLabel = State Pension
+howMuchStatePension.checkYourAnswersLabel = How much State Pension did you get?
 howMuchStatePension.blank = Enter the amount of State Pension you got
 howMuchStatePension.invalid = Enter a valid amount of State Pension
 
 howMuchMedicalBenefits.title = How much medical benefit did you get?
 howMuchMedicalBenefits.heading = How much medical benefit did you get?
-howMuchMedicalBenefits.checkYourAnswersLabel = Medical benefit
+howMuchMedicalBenefits.checkYourAnswersLabel = How much medical benefit did you get?
 howMuchMedicalBenefits.blank = Enter the amount of medical benefit you got
 howMuchMedicalBenefits.invalid = Enter a valid amount of medical benefit
 
@@ -287,7 +287,7 @@ anyCompanyBenefits.listHeading = A company benefit can be something like:
 
 howMuchFuelBenefit.title = How much fuel benefit did you get?
 howMuchFuelBenefit.heading = How much fuel benefit did you get?
-howMuchFuelBenefit.checkYourAnswersLabel = Fuel benefit
+howMuchFuelBenefit.checkYourAnswersLabel = How much fuel benefit did you get?
 howMuchFuelBenefit.blank = Enter the amount of fuel benefit you got
 howMuchFuelBenefit.invalid = Enter a valid amount of fuel benefit
 
@@ -330,13 +330,13 @@ anyOtherCompanyBenefits.addAnotherCompanyBenefit = Do you need to add another co
 
 howMuchBereavementAllowance.title = How much Bereavement Allowance did you get?
 howMuchBereavementAllowance.heading = How much Bereavement Allowance did you get?
-howMuchBereavementAllowance.checkYourAnswersLabel = Bereavement Allowance
+howMuchBereavementAllowance.checkYourAnswersLabel = How much Bereavement Allowance did you get?
 howMuchBereavementAllowance.blank = Enter the amount of Bereavement Allowance you got
 howMuchBereavementAllowance.invalid = Enter a valid amount of Bereavement Allowance
 
 howMuchCarersAllowance.title = How much Carer’s Allowance did you get?
 howMuchCarersAllowance.heading = How much Carer’s Allowance did you get?
-howMuchCarersAllowance.checkYourAnswersLabel = Carer’s Allowance
+howMuchCarersAllowance.checkYourAnswersLabel = How much Carer’s Allowance did you get?
 howMuchCarersAllowance.blank = Enter the amount of Carer’s Allowance you got
 howMuchCarersAllowance.invalid = Enter a valid amount of Carer’s Allowance
 
@@ -355,13 +355,13 @@ otherBenefit.add = Add another taxable benefit
 
 howMuchForeignIncome.title = How much foreign income did you get?
 howMuchForeignIncome.heading = How much foreign income did you get?
-howMuchForeignIncome.checkYourAnswersLabel = Foreign income
+howMuchForeignIncome.checkYourAnswersLabel = How much foreign income did you get?
 howMuchForeignIncome.blank = Enter the amount of foreign income you got
 howMuchForeignIncome.invalid = Enter a valid amount of foreign income
 
 howMuchBankInterest.title = How much Bank and Building Society Interest income did you get?
 howMuchBankInterest.heading = How much Bank and Building Society Interest income did you get?
-howMuchBankInterest.checkYourAnswersLabel = Bank and building society interest
+howMuchBankInterest.checkYourAnswersLabel = How much Bank and Building Society Interest income did you get?
 howMuchBankInterest.blank = Enter the amount of Bank and Building Society Interest you got
 howMuchBankInterest.invalid = Enter a valid amount of Bank and Building Society Interest
 
@@ -374,7 +374,7 @@ detailsOfEmploymentOrPension.tooLong = Details of employment or pension exceeds 
 
 selectTaxableIncome.title = Which taxable income did you get?
 selectTaxableIncome.heading = Which taxable income did you get?
-selectTaxableIncome.checkYourAnswersLabel = Other taxable income you got
+selectTaxableIncome.checkYourAnswersLabel = Which taxable incomes did you get?
 selectTaxableIncome.blank = Select a taxable income
 selectTaxableIncome.rental-income = property rental income
 selectTaxableIncome.bank-or-building-society-interest = Bank and Building Society Interest
@@ -384,7 +384,7 @@ selectTaxableIncome.other-taxable-income = other taxable income
 
 howMuchInvestmentOrDividend.title = How much income did you get from investments or dividends?
 howMuchInvestmentOrDividend.heading = How much income did you get from investments or dividends?
-howMuchInvestmentOrDividend.checkYourAnswersLabel = Investments or dividends income
+howMuchInvestmentOrDividend.checkYourAnswersLabel = How much investments or dividends did you get?
 howMuchInvestmentOrDividend.blank = Enter the amount of investment or dividend income you got
 howMuchInvestmentOrDividend.invalid = Enter a valid amount investment or dividend income
 
