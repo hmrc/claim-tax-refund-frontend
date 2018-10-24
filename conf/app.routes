@@ -21,8 +21,8 @@ POST       /select-claim-tax-year                                           cont
 GET        /change-claim-tax-year                                           controllers.SelectTaxYearController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-claim-tax-year                                           controllers.SelectTaxYearController.onSubmit(mode: Mode = CheckMode)
 
-GET        /enter-telephone-number                                          controllers.TelephoneNumberController.onPageLoad(mode: Mode = NormalMode)
-POST       /enter-telephone-number                                          controllers.TelephoneNumberController.onSubmit(mode: Mode = NormalMode)
+GET        /telephone-number                                                controllers.TelephoneNumberController.onPageLoad(mode: Mode = NormalMode)
+POST       /telephone-number                                                controllers.TelephoneNumberController.onSubmit(mode: Mode = NormalMode)
 GET        /change-telephone-number                                         controllers.TelephoneNumberController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-telephone-number                                         controllers.TelephoneNumberController.onSubmit(mode: Mode = CheckMode)
 
