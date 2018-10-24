@@ -118,7 +118,7 @@ checkYourAnswers.pdfHeader = Summary
 checkYourAnswers.userSection = User details
 checkYourAnswers.claimSection = Claim details
 checkYourAnswers.benefitSection = Taxable benefit details
-checkYourAnswers.companyBenefitSection = Company benefit details
+checkYourAnswers.companyBenefitSection = Taxable company benefits details
 checkYourAnswers.taxableIncomeSection = Taxable income details
 checkYourAnswers.paymentSection = Payment details
 checkYourAnswers.contactSection = Contact details
@@ -272,7 +272,7 @@ employmentDetails.hintText = Check with your employer or pension provider first 
 
 selectCompanyBenefits.title = Which taxable company benefits did you get?
 selectCompanyBenefits.heading = Which taxable company benefits did you get?
-selectCompanyBenefits.checkYourAnswersLabel = Company benefits you got
+selectCompanyBenefits.checkYourAnswersLabel = Which taxable company benefits did you get?
 selectCompanyBenefits.blank = Select the company benefits you got
 selectCompanyBenefits.company-car-benefit = company car benefit
 selectCompanyBenefits.fuel-benefit = fuel benefit

@@ -155,12 +155,12 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
 
   def selectCompanyBenefits: Option[AnswerRow] = userAnswers.selectCompanyBenefits map {
     val keyPrefix = "selectCompanyBenefits."
-    x => AnswerRow(keyPrefix + "checkYourAnswersLabel", x.map {
-      case CompanyBenefits.COMPANY_CAR_BENEFIT => messages(keyPrefix + "company-car-benefit").capitalize
-      case CompanyBenefits.FUEL_BENEFIT => messages(keyPrefix + "fuel-benefit").capitalize
-      case CompanyBenefits.MEDICAL_BENEFIT => messages(keyPrefix + "medical-benefit").capitalize
-      case CompanyBenefits.OTHER_COMPANY_BENEFIT => messages(keyPrefix + "other-company-benefit").capitalize
-    }.mkString("<br>"), false, Some(routes.SelectCompanyBenefitsController.onPageLoad(CheckMode).url))
+    x => AnswerRow(keyPrefix + "checkYourAnswersLabel", "<ul>" + x.map {
+      case CompanyBenefits.COMPANY_CAR_BENEFIT => "<li>" + messages(keyPrefix + "company-car-benefit").capitalize
+      case CompanyBenefits.FUEL_BENEFIT => "<li>" + messages(keyPrefix + "fuel-benefit").capitalize
+      case CompanyBenefits.MEDICAL_BENEFIT => "<li>" + messages(keyPrefix + "medical-benefit").capitalize
+      case CompanyBenefits.OTHER_COMPANY_BENEFIT => "<li>" + messages(keyPrefix + "other-company-benefit").capitalize
+    }.mkString("</li>") + "</ul>", false, Some(routes.SelectCompanyBenefitsController.onPageLoad(CheckMode).url))
   }
 
   def howMuchCarBenefits: Option[AnswerRow] = userAnswers.howMuchCarBenefits map {
