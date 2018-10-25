@@ -366,7 +366,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
             x.countryName,
             x.countryCode
           )),
-        answer = if(userAnswers.paymentAddressCorrect.get) "site.yes" else "site.no",
+        answer = if(userAnswers.paymentAddressCorrect.get) "site.yes" else "site.no ",
         answerIsMessageKey = true,
         url = Some(routes.PaymentAddressCorrectController.onPageLoad(CheckMode).url)
       )
