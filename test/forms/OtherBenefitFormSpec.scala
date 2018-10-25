@@ -42,9 +42,9 @@ class OtherBenefitFormSpec extends FormBehaviours with MockitoSugar {
   "amount" -> "123"
   )
 
-  override val form: Form[OtherBenefit] = new OtherBenefitForm(appConfig, messagesApi)(Seq.empty, 0)
+  override val form: Form[OtherBenefit] = new OtherBenefitForm(appConfig)(Seq.empty, 0)
 
-  def otherBenefitsForm(otherBenefits: Seq[OtherBenefit], index: Index): Form[OtherBenefit] = new OtherBenefitForm(appConfig, messagesApi)(otherBenefits, index)
+  def otherBenefitsForm(otherBenefits: Seq[OtherBenefit], index: Index): Form[OtherBenefit] = new OtherBenefitForm(appConfig)(otherBenefits, index)
 
   "OtherBenefitsForm" must {
 
