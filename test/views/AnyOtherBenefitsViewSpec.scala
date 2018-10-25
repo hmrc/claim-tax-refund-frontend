@@ -18,9 +18,9 @@ package views
 
 import controllers.routes
 import forms.BooleanForm
+import models.NormalMode
 import models.SelectTaxYear.CYMinus2
-import models.{NormalMode, OtherBenefit}
-import org.jsoup.nodes.{Document, Element}
+import org.jsoup.nodes.Document
 import play.api.data.Form
 import play.twirl.api.Html
 import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, MockUserAnswers}
@@ -70,7 +70,7 @@ class AnyOtherBenefitsViewSpec extends YesNoViewBehaviours {
       }
 
 			"list item must have a delete button" in {
-				doc.getElementById("component-answer-list").text.contains("Remove qwerty") mustBe true
+				doc.getElementById("component-answer-list").text.contains("Delete qwerty") mustBe true
 			}
 		}
   }

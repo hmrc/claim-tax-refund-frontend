@@ -47,7 +47,7 @@ class AnyCompanyBenefitsController @Inject()(
                                             ) extends FrontendController with I18nSupport {
 
   private val errorKey = "anyCompanyBenefits.blank"
-  val form: Form[Boolean] = formProvider(errorKey)
+  val form: Form[Boolean] = formProvider(messagesApi(errorKey))
 
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
