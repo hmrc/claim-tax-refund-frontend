@@ -123,8 +123,8 @@ checkYourAnswers.taxableIncomeSection = Taxable income details
 checkYourAnswers.paymentSection = Payment details
 checkYourAnswers.contactSection = Contact details
 checkYourAnswers.otherTaxableIncome.label = Amount of {0} income
-checkYourAnswers.nowSendYourApplication = Now send your application
-checkYourAnswers.declaration = By submitting this claim you are confirming that, to the best of your knowledge, the details you are providing are correct.
+checkYourAnswers.nowSendYourApplication = Send your application
+checkYourAnswers.declaration = By sending this claim, you confirm that, to the best of your knowledge, the details you provided are correct.
 checkYourAnswers.acceptAndSend = Accept and send claim
 
 unauthorised.title = You can’t access this service with this account
@@ -470,7 +470,7 @@ confirmation.whatHappensNext.line1 = We will process your claim within 15 days a
 confirmation.survey.linkText = What did you think of this service?
 confirmation.survey.time = (takes 30 seconds)
 
-itmpAddress.checkYourAnswersLabel = Payment address
+itmpAddress.checkYourAnswersLabel = Do you want to send any payment to this address?
 
 RemoveOtherSelectedOption.title = Do you need to tell us about any other {0} you got?
 RemoveOtherSelectedOption.heading = Do you need to tell us about any other {0} you got?

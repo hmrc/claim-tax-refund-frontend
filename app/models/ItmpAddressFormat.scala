@@ -35,6 +35,6 @@ object ItmpAddressFormat {
 
   def toXml(a: ItmpAddress): String = answeredLines(a).mkString(", ")
 
-  def asString(a: ItmpAddress): String = answeredLines(a).mkString(", <br>")
+  def asString(a: ItmpAddress): String = answeredLines(a).mkString("<br>")
 
 }

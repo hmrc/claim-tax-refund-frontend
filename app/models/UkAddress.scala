@@ -40,5 +40,5 @@ object UkAddress {
 
   def toXml(a: UkAddress): Elem = <paymentAddress><ukAddress>{answeredLines(a).mkString(", ")}</ukAddress></paymentAddress>
 
-  def asString(a: UkAddress): String = answeredLines(a).mkString(", <br>")
+  def asString(a: UkAddress): String = answeredLines(a).mkString("<br>")
 }

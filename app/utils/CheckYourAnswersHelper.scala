@@ -355,8 +355,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
   def itmpAddress: Option[AnswerRow] = userAnswers.itmpAddress map {
     x =>
       AnswerRow(
-        "itmpAddress.checkYourAnswersLabel",
-        ItmpAddressFormat.asString(
+        label = messages("itmpAddress.checkYourAnswersLabel") + "<br><br>" + ItmpAddressFormat.asString(
           ItmpAddress(
             x.line1,
             x.line2,
@@ -367,8 +366,9 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
             x.countryName,
             x.countryCode
           )),
-        true,
-        Some(routes.PaymentAddressCorrectController.onPageLoad(CheckMode).url)
+        answer = if(userAnswers.paymentAddressCorrect.get) "site.yes" else "site.no",
+        answerIsMessageKey = true,
+        url = Some(routes.PaymentAddressCorrectController.onPageLoad(CheckMode).url)
       )
   }
 
