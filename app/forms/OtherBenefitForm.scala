@@ -34,18 +34,18 @@ class OtherBenefitForm @Inject()(appConfig: FrontendAppConfig, messages: Message
   private val duplicateBenefitKey = "otherBenefit.duplicate"
 
   def apply(otherBenefit: Seq[OtherBenefit], index: Index): Form[OtherBenefit] = {
-    val x: Constraint[String] = validation.Constraint[String] {
-      a: String =>
-        if (filter(otherBenefit, index, a).forall(p => p.name != a)) {
+    val otherBenefitConstraint: Constraint[String] = validation.Constraint[String] {
+      benefitName: String =>
+        if (filter(otherBenefit, index, benefitName).forall(benefit => benefit.name != benefitName)) {
           Valid
         } else {
-          Invalid(Seq(ValidationError(duplicateBenefitKey, a)))
+          Invalid(Seq(ValidationError(duplicateBenefitKey, benefitName)))
         }
     }
 
     Form(
       mapping(
-        "name" -> text(nameBlankKey).verifying(x),
+        "name" -> text(nameBlankKey).verifying(otherBenefitConstraint),
         "amount" -> text(amountBlankKey).verifying(amountInvalidKey, a => a.matches(currencyRegex))
       )(OtherBenefit.apply)(OtherBenefit.unapply)
     )
