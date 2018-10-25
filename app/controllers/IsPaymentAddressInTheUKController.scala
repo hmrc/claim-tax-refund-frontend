@@ -48,7 +48,7 @@ class IsPaymentAddressInTheUKController @Inject()(appConfig: FrontendAppConfig,
 
   private val errorKey = "isPaymentAddressInTheUK.blank"
 
-  val form: Form[Boolean] = formProvider(errorKey)
+  val form: Form[Boolean] = formProvider(messagesApi(errorKey))
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>

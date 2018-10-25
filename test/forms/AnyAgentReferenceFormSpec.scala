@@ -26,7 +26,7 @@ import play.api.data.FormError
 class AnyAgentReferenceFormSpec extends FormSpec with AgentRefMapping with PropertyChecks with Generators {
 
   "AnyAgentRef form" must {
-    val form = new AnyAgentReferenceForm()()
+    val form = new AnyAgentReferenceForm()("","anyAgentRef.blankAgentRef")
     val anyAgentRef = "anyAgentRef"
     val agentRef = "agentRef"
     val testAgentRef = "AB1234"

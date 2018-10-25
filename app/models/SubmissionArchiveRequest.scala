@@ -16,21 +16,10 @@
 
 package models
 
-import base.SpecBase
+import play.api.libs.json._
 
-class OrdinalSpec extends SpecBase {
-	"Oridinal model" must {
-		"return 'first' when index is 0" in {
-			Ordinal.getOrdinal(Index(0)) mustBe "first"
-		}
+case class SubmissionArchiveRequest(checksum: String, submissionRef: String, submissionMark: String, submissionData: String)
 
-		"return 'third' when index is 2" in {
-			Ordinal.getOrdinal(Index(2)) mustBe "third"
-		}
-
-		"return 'first' when index is 0 and capaitalize is used" in {
-			Ordinal.getOrdinal(Index(0)).capitalize mustBe "First"
-		}
-
-	}
+object SubmissionArchiveRequest {
+  implicit val submissionArchiveRequestFormat: Format[SubmissionArchiveRequest] = Json.format[SubmissionArchiveRequest]
 }

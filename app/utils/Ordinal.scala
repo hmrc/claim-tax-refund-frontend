@@ -14,23 +14,16 @@
  * limitations under the License.
  */
 
-package models
+package utils
 
-import base.SpecBase
+import java.util.Locale
 
-class OrdinalSpec extends SpecBase {
-	"Oridinal model" must {
-		"return 'first' when index is 0" in {
-			Ordinal.getOrdinal(Index(0)) mustBe "first"
-		}
+import com.ibm.icu.text.RuleBasedNumberFormat
+import models.Index
 
-		"return 'third' when index is 2" in {
-			Ordinal.getOrdinal(Index(2)) mustBe "third"
-		}
-
-		"return 'first' when index is 0 and capaitalize is used" in {
-			Ordinal.getOrdinal(Index(0)).capitalize mustBe "First"
-		}
-
-	}
+object Ordinal {
+  def getOrdinal(index: Index): String = {
+    val ordinalFormat: RuleBasedNumberFormat = new RuleBasedNumberFormat(Locale.UK, RuleBasedNumberFormat.SPELLOUT)
+    ordinalFormat.format(index.toInt + 1, "%spellout-ordinal")
+  }
 }

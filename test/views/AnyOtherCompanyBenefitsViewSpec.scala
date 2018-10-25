@@ -18,9 +18,9 @@ package views
 
 import controllers.routes
 import forms.BooleanForm
+import models.NormalMode
 import models.SelectTaxYear.CYMinus2
-import models.{NormalMode, OtherCompanyBenefit}
-import org.jsoup.nodes.{Document, Element}
+import org.jsoup.nodes.Document
 import play.api.data.Form
 import play.twirl.api.Html
 import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, MockUserAnswers}

@@ -17,13 +17,12 @@
 package forms
 
 import forms.mappings.Mappings
-import javax.inject.Inject
 import play.api.data.Form
 
-class BooleanForm @Inject() extends FormErrorHelper with Mappings {
+class BooleanForm extends FormErrorHelper with Mappings {
 
-  def apply(errorKey: String = "error.boolean"): Form[Boolean] =
+  def apply(errorMessage: String = "error.boolean"): Form[Boolean] =
     Form(
-      "value" -> boolean(errorKey)
+      "value" -> boolean(errorMessage)
     )
 }

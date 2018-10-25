@@ -48,8 +48,14 @@ class EmploymentDetailsViewSpec extends YesNoViewBehaviours {
       createView = createViewUsingForm,
       messageKeyPrefix = messageKeyPrefix,
       expectedFormAction = routes.EmploymentDetailsController.onSubmit(NormalMode).url,
-      expectedHintTextKey = Some("employmentDetails.hintText")
+      expectedHintTextKey = None
     )
+
+    "contain correct hint text" in {
+      val doc = asDocument(createViewUsingForm(form))
+      val hintText = doc.getElementById("hint-text")
+      hintText.text() mustBe messages("employmentDetails.hintText")
+    }
 
     "contain a table" in {
       val doc = asDocument(createViewUsingForm(form))

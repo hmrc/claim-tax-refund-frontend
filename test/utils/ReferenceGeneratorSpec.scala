@@ -14,23 +14,21 @@
  * limitations under the License.
  */
 
-package models
+package utils
 
-import base.SpecBase
+import org.scalatest.{MustMatchers, WordSpec}
+import org.scalatest.mockito.MockitoSugar
 
-class OrdinalSpec extends SpecBase {
-	"Oridinal model" must {
-		"return 'first' when index is 0" in {
-			Ordinal.getOrdinal(Index(0)) mustBe "first"
-		}
+class ReferenceGeneratorSpec extends WordSpec with MustMatchers with MockitoSugar {
 
-		"return 'third' when index is 2" in {
-			Ordinal.getOrdinal(Index(2)) mustBe "third"
-		}
+  val referenceGenerator = new ReferenceGenerator
 
-		"return 'first' when index is 0 and capaitalize is used" in {
-			Ordinal.getOrdinal(Index(0)).capitalize mustBe "First"
-		}
-
-	}
+  "generateSubmissionNumber" must {
+    "create reference in the correct format" in {
+      val submissonNumber = referenceGenerator.generateSubmissionNumber
+      val regex = """([A-Z0-9]{3})(-)([A-Z0-9]{4})(-)([A-Z0-9]{3})"""
+      val regexMatchResult = submissonNumber matches regex
+      regexMatchResult mustBe true
+    }
+  }
 }

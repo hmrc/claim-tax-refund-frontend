@@ -45,7 +45,7 @@ class RemoveOtherSelectedOptionController @Inject()(appConfig: FrontendAppConfig
 																										implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
 
 	private val errorKey = "RemoveOtherSelectedOption.blank"
-	val form: Form[Boolean] = formProvider(errorKey)
+	val form: Form[Boolean] = formProvider(messagesApi(errorKey))
 
 	def onPageLoad(mode: Mode, collectionId: String): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
 		implicit request =>

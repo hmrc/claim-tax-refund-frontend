@@ -14,23 +14,22 @@
  * limitations under the License.
  */
 
-package models
+package utils
 
-import base.SpecBase
+import scala.util.Random
 
-class OrdinalSpec extends SpecBase {
-	"Oridinal model" must {
-		"return 'first' when index is 0" in {
-			Ordinal.getOrdinal(Index(0)) mustBe "first"
-		}
+class ReferenceGenerator {
 
-		"return 'third' when index is 2" in {
-			Ordinal.getOrdinal(Index(2)) mustBe "third"
-		}
-
-		"return 'first' when index is 0 and capaitalize is used" in {
-			Ordinal.getOrdinal(Index(0)).capitalize mustBe "First"
-		}
-
-	}
+  def generateSubmissionNumber: String = {
+    val charList = ('A' to 'Z') ++ ('0' to '9')
+    val randomGen = new Random
+    val dmsSubmission = new StringBuilder
+    for (count <- 1 to 10) {
+      if (count == 4 || count == 8) {
+        dmsSubmission.append("-")
+      }
+      dmsSubmission.append(charList(randomGen.nextInt(charList.length)))
+    }
+    dmsSubmission.toString
+  }
 }

@@ -55,7 +55,7 @@
         @components.list(
             pageKey = Some("selectCompanyBenefits"),
             addCssClass = None,
-            bulletList = CompanyBenefits.sortedCompanyBenefits.map(_.toString)
+            bulletList = CompanyBenefits.sortedCompanyBenefits.dropRight(1).map(_.toString)
         )
 
         @components.input_yes_no(

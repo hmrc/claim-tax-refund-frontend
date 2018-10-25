@@ -20,33 +20,22 @@ import org.joda.time.LocalDateTime
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
 
-import scala.util.Random
 import scala.xml._
 import scala.xml.Utility._
 
-case class Metadata(customerId: String = "", hmrcReceivedAt: LocalDateTime = LocalDateTime.now, xmlCreatedAt: LocalDateTime = LocalDateTime.now) {
+case class Metadata(customerId: String,
+										submissionRef: String,
+										submissionMark: String,
+										timeStamp: LocalDateTime,
+										casKey: String
+									 ) {
 
-	def generateSubmissionNumber: String = {
-		val charList = ('A' to 'Z') ++ ('0' to '9')
-		val randomGen = new Random
-		val dmsSubmission = new StringBuilder
-		for (count <- 1 to 10) {
-			if (count == 4 || count == 8) {
-				dmsSubmission.append("-")
-			}
-			dmsSubmission.append(charList(randomGen.nextInt(charList.length)))
-		}
-		dmsSubmission
-	}
-
-	val timeStamp: String = xmlCreatedAt.toString("ssMMyyddmmHH")
+	val formattedTimeStamp: String = timeStamp.toString("ssMMyyddmmHH")
 	val fileFormat: String = "pdf"
 	val mimeType: String = "application/pdf"
 
-	val casKey: String = ""
-	val submissionMark: String = ""
-	val submissionReference: String = generateSubmissionNumber
-	val reconciliationId: String = timeStamp
+	val cas: String = casKey
+	val reconciliationId: String = formattedTimeStamp
 	val attachmentCount: Int = 0
 	val numberOfPages: Int = 2
 
@@ -66,7 +55,7 @@ object Metadata {
 			<documents>
 				<document>
 					<header>
-						<title>{metadata.submissionReference}</title>
+						<title>{metadata.submissionRef}</title>
 						<format>{metadata.fileFormat}</format>
 						<mime_type>{metadata.mimeType}</mime_type>
 						<store>{metadata.store}</store>
@@ -75,15 +64,15 @@ object Metadata {
 						<reconciliation_id>{metadata.reconciliationId}</reconciliation_id>
 					</header>
 					<metadata>
-						{attributeXml("hmrc_time_of_receipt", "time", metadata.hmrcReceivedAt.toString("dd/MM/yyyy HH:mm:ss"))}
-						{attributeXml("time_xml_created", "time", metadata.hmrcReceivedAt.toString("dd/MM/yyyy HH:mm:ss"))}
-						{attributeXml("submission_reference", "string", metadata.submissionReference)}
+						{attributeXml("hmrc_time_of_receipt", "time", metadata.timeStamp.toString("dd/MM/yyyy HH:mm:ss"))}
+						{attributeXml("time_xml_created", "time", metadata.timeStamp.toString("dd/MM/yyyy HH:mm:ss"))}
+						{attributeXml("submission_reference", "string", metadata.submissionRef)}
 						{attributeXml("form_id", "string", metadata.formId)}
 						{attributeXml("number_pages", "integer", metadata.numberOfPages.toString)}
 						{attributeXml("source", "string", metadata.source)}
 						{attributeXml("customer_id", "string", metadata.customerId)}
 						{attributeXml("submission_mark", "string", metadata.submissionMark)}
-						{attributeXml("cas_key", "string", metadata.casKey)}
+						{attributeXml("cas_key", "string", metadata.cas)}
 						{attributeXml("classification_type", "string", metadata.classificationType)}
 						{attributeXml("business_area", "string", metadata.businessArea)}
 						{attributeXml("attachment_count", "integer", metadata.attachmentCount.toString)}
@@ -110,9 +99,9 @@ object Metadata {
 			metadata =>
 				Json.obj(
 					"customerId" -> metadata.customerId,
-					"hmrcReceivedAt" -> metadata.hmrcReceivedAt.toString,
-					"xmlCreatedAt" -> metadata.xmlCreatedAt.toString,
-					"submissionReference" -> metadata.submissionReference,
+					"hmrcReceivedAt" -> metadata.timeStamp.toString,
+					"xmlCreatedAt" -> metadata.timeStamp.toString,
+					"submissionReference" -> metadata.submissionRef,
 					"reconciliationId" -> metadata.reconciliationId,
 					"fileFormat" -> metadata.fileFormat,
 					"mimeType" -> metadata.mimeType,
@@ -131,8 +120,10 @@ object Metadata {
 		}
 	implicit def reads: Reads[Metadata] = (
 		(__ \ "customerId").read[String] and
-			(__ \ "hmrcReceivedAt").read[LocalDateTime](jodaDateReads) and
-			(__ \ "xmlCreatedAt").read[LocalDateTime](jodaDateReads)
+			(__ \ "submissionMark").read[String] and
+			(__ \ "submissionReference").read[String] and
+			(__ \ "timeStamp").read[LocalDateTime](jodaDateReads) and
+			(__ \ "casKey").read[String]
 		) (apply _)
 
 	val jodaDateReads: Reads[LocalDateTime] = Reads[LocalDateTime](js =>
