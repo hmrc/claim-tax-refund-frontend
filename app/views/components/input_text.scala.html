@@ -37,7 +37,7 @@
         <span id="hint-line-2" class="form-hint">@hintLine2</span>
         }
         @if(viewModel.errorKey.nonEmpty){
-        <span class="error-notification" id="error-message-@{viewModel.id}-input">@messages(viewModel.errorKey, viewModel.value.get)</span>
+        <span class="error-notification" id="error-message-@{viewModel.id}-input">@messages(viewModel.errorKey, viewModel.value.getOrElse(""))</span>
         }
     </label>
     <div class="form-control-wrapper">
