@@ -152,7 +152,7 @@ anyBenefits.title = Did you get any taxable benefits?
 anyBenefits.heading = Did you get any taxable benefits?
 anyBenefits.checkYourAnswersLabel = Did you get any taxable benefits?
 anyBenefits.blank = Select yes if you got any taxable benefits
-anyBenefits.listHeading = A benefit can be something like:
+anyBenefits.listHeading = Taxable benefits include:
 
 anyTaxableIncome.title = Did you get any other taxable income?
 anyTaxableIncome.heading = Did you get any other taxable income?
@@ -174,32 +174,32 @@ howMuchRentalIncome.invalid = Enter a valid amount of rental income
 
 anyOtherBenefits.title = Other taxable benefits
 anyOtherBenefits.heading = Other taxable benefits
-anyOtherBenefits.blank = Select yes if you got any other taxable benefits
+anyOtherBenefits.blank = Select yes if you need to add another taxable benefit
 anyOtherBenefits.addAnotherBenefit = Do you need to add another taxable benefit?
 
 howMuchJobseekersAllowance.title = How much contribution-based Jobseeker’s Allowance did you get?
 howMuchJobseekersAllowance.heading = How much contribution-based Jobseeker’s Allowance did you get?
 howMuchJobseekersAllowance.checkYourAnswersLabel = Contribution-based Jobseeker’s Allowance
-howMuchJobseekersAllowance.blank = Enter the amount of Jobseeker’s Allowance you got
-howMuchJobseekersAllowance.invalid = Enter a valid amount of Jobseeker’s Allowance
+howMuchJobseekersAllowance.blank = Enter how much Jobseeker’s Allowance you got
+howMuchJobseekersAllowance.invalid = How much Jobseeker’s Allowance you got must be an amount of money, like 199 or 234.56
 
 howMuchIncapacityBenefit.title = How much Incapacity Benefit did you get?
 howMuchIncapacityBenefit.heading = How much Incapacity Benefit did you get?
 howMuchIncapacityBenefit.checkYourAnswersLabel = Incapacity Benefit
-howMuchIncapacityBenefit.blank = Enter the amount of Incapacity Benefit you got
-howMuchIncapacityBenefit.invalid = Enter a valid amount of Incapacity Benefit
+howMuchIncapacityBenefit.blank = Enter how much Incapacity Benefit you got
+howMuchIncapacityBenefit.invalid = How much Incapacity Benefit you got must be an amount of money, like 199 or 234.56
 
 howMuchEmploymentAndSupportAllowance.title = How much Employment and Support Allowance did you get?
 howMuchEmploymentAndSupportAllowance.heading = How much Employment and Support Allowance did you get?
 howMuchEmploymentAndSupportAllowance.checkYourAnswersLabel = Employment and Support Allowance
-howMuchEmploymentAndSupportAllowance.blank = Enter the amount of Employment and Support Allowance you got
-howMuchEmploymentAndSupportAllowance.invalid = Enter a valid amount of Employment and Support Allowance
+howMuchEmploymentAndSupportAllowance.blank = Enter how much Employment and Support Allowance you got
+howMuchEmploymentAndSupportAllowance.invalid = How much Employment and Support Allowance you got must be an amount of money, like 199 or 234.56
 
 howMuchStatePension.title = How much State Pension did you get?
 howMuchStatePension.heading = How much State Pension did you get?
 howMuchStatePension.checkYourAnswersLabel = State Pension
-howMuchStatePension.blank = Enter the amount of State Pension you got
-howMuchStatePension.invalid = Enter a valid amount of State Pension
+howMuchStatePension.blank = Enter how much State Pension you got
+howMuchStatePension.invalid = How much State Pension you got must be an amount of money, like 199 or 234.56
 
 howMuchMedicalBenefits.title = How much medical benefit did you get?
 howMuchMedicalBenefits.heading = How much medical benefit did you get?
@@ -330,25 +330,26 @@ anyOtherCompanyBenefits.addAnotherCompanyBenefit = Do you need to add another ta
 howMuchBereavementAllowance.title = How much Bereavement Allowance did you get?
 howMuchBereavementAllowance.heading = How much Bereavement Allowance did you get?
 howMuchBereavementAllowance.checkYourAnswersLabel = Bereavement Allowance
-howMuchBereavementAllowance.blank = Enter the amount of Bereavement Allowance you got
-howMuchBereavementAllowance.invalid = Enter a valid amount of Bereavement Allowance
+howMuchBereavementAllowance.blank = Enter how much Bereavement Allowance you got
+howMuchBereavementAllowance.invalid = How much Bereavement Allowance you got must be an amount of money, like 199 or 234.56
 
 howMuchCarersAllowance.title = How much Carer’s Allowance did you get?
 howMuchCarersAllowance.heading = How much Carer’s Allowance did you get?
 howMuchCarersAllowance.checkYourAnswersLabel = Carer’s Allowance
-howMuchCarersAllowance.blank = Enter the amount of Carer’s Allowance you got
-howMuchCarersAllowance.invalid = Enter a valid amount of Carer’s Allowance
+howMuchCarersAllowance.blank = Enter how much Carer’s Allowance you got
+howMuchCarersAllowance.invalid = How much Carer’s Allowance you got must be an amount of money, like 199 or 234.56
 
 otherBenefits = taxable benefit
-otherBenefit.title = Tell us about the other taxable benefit you got
-otherBenefit.heading = Tell us about the other taxable benefit you got
+otherBenefit.title = {0} other taxable benefit
+otherBenefit.heading = {0} other taxable benefit
 otherBenefit.checkYourAnswersLabel = Other taxable benefit details
-otherBenefit.name = Name of other taxable benefit
-otherBenefit.amount = Amount of other taxable benefit
-otherBenefit.name.blank = Enter the name of the other taxable benefit you got
-otherBenefit.amount.blank = Enter the amount of the other taxable benefit you got
-otherBenefit.amount.invalid = Enter a valid amount of the other taxable benefit you got
-otherBenefit.duplicate = You have already entered this other taxable benefit name
+otherBenefit.name = Name of taxable benefit
+otherBenefit.name.blank = Enter the name of the taxable benefit you got
+otherBenefit.amount = How much of this taxable benefit you got
+otherBenefit.amount.blank = Enter how much of this taxable benefit you got
+otherBenefit.amount.invalid = How much of this taxable benefit you got must be an amount of money, like 199 or 234.56
+
+otherBenefit.duplicate = Enter a different taxable benefit name – you already entered {0}
 otherBenefit.change = Change other taxable benefits
 otherBenefit.add = Add another taxable benefit
 

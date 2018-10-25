@@ -33,14 +33,14 @@ class OtherBenefitControllerSpec extends ControllerSpecBase {
   def onwardRoute: Call = routes.AnyOtherBenefitsController.onPageLoad(NormalMode)
 
   val testAnswer = OtherBenefit("qwerty", "123")
-  val form = new OtherBenefitForm(frontendAppConfig)(Seq.empty, 0)
-  val formFilled = new OtherBenefitForm(frontendAppConfig)(Seq.empty, 1)
+  val form = new OtherBenefitForm(frontendAppConfig, messagesApi)(Seq.empty, 0)
+  val formFilled = new OtherBenefitForm(frontendAppConfig, messagesApi)(Seq.empty, 1)
   private val taxYear = CYMinus2
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new OtherBenefitController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, sequenceUtil, new OtherBenefitForm(frontendAppConfig), formPartialRetriever, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl, sequenceUtil, new OtherBenefitForm(frontendAppConfig, messagesApi), formPartialRetriever, templateRenderer)
 
   def viewAsString(form: Form[OtherBenefit], index: Index): String =
     otherBenefit(frontendAppConfig, form, NormalMode, index, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
