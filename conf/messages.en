@@ -146,7 +146,7 @@ selectTaxYear.current-year-minus-3 = 6 April {0} to 5 April {1}
 selectTaxYear.current-year-minus-4 = 6 April {0} to 5 April {1}
 selectTaxYear.current-year-minus-5 = 6 April {0} to 5 April {1}
 selectTaxYear.checkYourAnswersLabel = The tax year your claim is for
-selectTaxYear.blank = Select a tax year
+selectTaxYear.blank = Select which tax year you want to claim for
 
 anyBenefits.title = Did you get any taxable benefits?
 anyBenefits.heading = Did you get any taxable benefits?
@@ -261,14 +261,14 @@ telephoneNumber.telephoneNumberField = Phone number
 telephoneNumber.hintPara1 = We will only call you if we need more information about your claim. It is the quickest way to resolve any problems.
 telephoneNumber.hintPara2 = We will contact you by letter.
 
-employmentDetails.title = Your employments or pensions between {0}
-employmentDetails.heading = Your employments or pensions
+employmentDetails.title = Are these employment and pension details correct?
+employmentDetails.heading = Are these employment and pension details correct?
 employmentDetails.checkYourAnswersLabel = Employment details
-employmentDetails.blank = Select yes if these details are correct
+employmentDetails.blank = Select yes if these employment and pension details are correct
 employmentDetails.correctDetails = Are these details correct?
-employmentDetails.employer = Employer
-employmentDetails.staffNumber = Staff Number
-employmentDetails.hintText = Check with your employer or pension provider first if you do not recognise any of the names shown. Their trading name may be different to their ownership name.
+employmentDetails.employer = Name of employer or pension provider
+employmentDetails.staffNumber = Staff number
+employmentDetails.hintText = If you do not recognise these details, check with your employer or pension provider. Their registered name may be different to their trading name.
 
 selectCompanyBenefits.title = Which taxable company benefits did you get?
 selectCompanyBenefits.heading = Which taxable company benefits did you get?
@@ -316,12 +316,12 @@ selectBenefits.other-taxable-benefit = other taxable benefit
 selectBenefits.bereavement-allowance = Bereavement Allowance
 selectBenefits.carers-allowance = Carer’s Allowance
 
-enterPayeReference.title = Enter your employer or pension provider’s PAYE reference
-enterPayeReference.heading = Enter your employer or pension provider’s PAYE reference
+enterPayeReference.title = What is your employer or pension provider’s employer PAYE reference?
+enterPayeReference.heading = What is your employer or pension provider’s employer PAYE reference?
 enterPayeReference.checkYourAnswersLabel = PAYE reference
-enterPayeReference.hint = For example 123/AB456. You can find this on your payslip or P60.
-enterPayeReference.blank = Enter your employer or pension provider’s PAYE reference
-enterPayeReference.invalid = Enter a valid PAYE reference
+enterPayeReference.hint = This is a 3 digit tax office number, a forward slash, and a tax office employer reference, like 123/AB456. It may be called ‘Employer PAYE reference’ or ‘PAYE reference’. It will be on your P60.
+enterPayeReference.blank = Enter your employer or pension provider’s employer PAYE reference
+enterPayeReference.invalid = Enter an employer PAYE reference in the correct format
 
 anyOtherCompanyBenefits.title = Other company benefits
 anyOtherCompanyBenefits.heading = Other company benefits
@@ -365,12 +365,12 @@ howMuchBankInterest.checkYourAnswersLabel = Bank and building society interest
 howMuchBankInterest.blank = Enter the amount of Bank and Building Society Interest you got
 howMuchBankInterest.invalid = Enter a valid amount of Bank and Building Society Interest
 
-detailsOfEmploymentOrPension.title = What were the details of your employment or pension?
-detailsOfEmploymentOrPension.heading = What were the details of your employment or pension?
-detailsOfEmploymentOrPension.hintText = Tell us the name of your employer or pension provider and the start and end dates
+detailsOfEmploymentOrPension.title = What are the details of your employment or pension?
+detailsOfEmploymentOrPension.heading = What are the details of your employment or pension?
+detailsOfEmploymentOrPension.hintText = Include the name of your employer or pension provider and start and end dates.
 detailsOfEmploymentOrPension.checkYourAnswersLabel = Details of employment or pension
 detailsOfEmploymentOrPension.blank = Enter details of your employment or pension
-detailsOfEmploymentOrPension.tooLong = Details of employment or pension exceeds the maximum 500 characters
+detailsOfEmploymentOrPension.tooLong = The details of your employment or pension must be 500 characters or less
 
 selectTaxableIncome.title = Which taxable income did you get?
 selectTaxableIncome.heading = Which taxable income did you get?

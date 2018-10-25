@@ -16,10 +16,10 @@ GET        /address-callback-check-mode                                     cont
 
 GET        /unauthorised                                                    controllers.UnauthorisedController.onPageLoad
 
-GET        /select-claim-tax-year                                           controllers.SelectTaxYearController.onPageLoad(mode: Mode = NormalMode)
-POST       /select-claim-tax-year                                           controllers.SelectTaxYearController.onSubmit(mode: Mode = NormalMode)
-GET        /change-claim-tax-year                                           controllers.SelectTaxYearController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-claim-tax-year                                           controllers.SelectTaxYearController.onSubmit(mode: Mode = CheckMode)
+GET        /which-tax-year                                                  controllers.SelectTaxYearController.onPageLoad(mode: Mode = NormalMode)
+POST       /which-tax-year                                                  controllers.SelectTaxYearController.onSubmit(mode: Mode = NormalMode)
+GET        /change-which-tax-year                                           controllers.SelectTaxYearController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-which-tax-year                                           controllers.SelectTaxYearController.onSubmit(mode: Mode = CheckMode)
 
 GET        /enter-telephone-number                                          controllers.TelephoneNumberController.onPageLoad(mode: Mode = NormalMode)
 POST       /enter-telephone-number                                          controllers.TelephoneNumberController.onSubmit(mode: Mode = NormalMode)
@@ -116,20 +116,20 @@ POST       /where-to-send-payment                                           cont
 GET        /change-where-to-send-payment                                    controllers.WhereToSendPaymentController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-where-to-send-payment                                    controllers.WhereToSendPaymentController.onSubmit(mode: Mode = CheckMode)
 
-GET        /employment-details                                              controllers.EmploymentDetailsController.onPageLoad(mode: Mode = NormalMode)
-POST       /employment-details                                              controllers.EmploymentDetailsController.onSubmit(mode: Mode = NormalMode)
-GET        /change-employment-details                                       controllers.EmploymentDetailsController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-employment-details                                       controllers.EmploymentDetailsController.onSubmit(mode: Mode = CheckMode)
+GET        /employments-pensions-details                                    controllers.EmploymentDetailsController.onPageLoad(mode: Mode = NormalMode)
+POST       /employments-pensions-details                                    controllers.EmploymentDetailsController.onSubmit(mode: Mode = NormalMode)
+GET        /change-employments-pensions-details                             controllers.EmploymentDetailsController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-employments-pensions-details                             controllers.EmploymentDetailsController.onSubmit(mode: Mode = CheckMode)
 
 GET        /select-company-benefits                                         controllers.SelectCompanyBenefitsController.onPageLoad(mode: Mode = NormalMode)
 POST       /select-company-benefits                                         controllers.SelectCompanyBenefitsController.onSubmit(mode: Mode = NormalMode)
 GET        /change-select-company-benefits                                  controllers.SelectCompanyBenefitsController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-select-company-benefits                                  controllers.SelectCompanyBenefitsController.onSubmit(mode: Mode = CheckMode)
 
-GET        /enter-paye-reference                                            controllers.EnterPayeReferenceController.onPageLoad(mode: Mode = NormalMode)
-POST       /enter-paye-reference                                            controllers.EnterPayeReferenceController.onSubmit(mode: Mode = NormalMode)
-GET        /change-enter-paye-reference                                     controllers.EnterPayeReferenceController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-enter-paye-reference                                     controllers.EnterPayeReferenceController.onSubmit(mode: Mode = CheckMode)
+GET        /employer-paye-reference                                         controllers.EnterPayeReferenceController.onPageLoad(mode: Mode = NormalMode)
+POST       /employer-paye-reference                                         controllers.EnterPayeReferenceController.onSubmit(mode: Mode = NormalMode)
+GET        /change-employer-paye-reference                                  controllers.EnterPayeReferenceController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-employer-paye-reference                                  controllers.EnterPayeReferenceController.onSubmit(mode: Mode = CheckMode)
 
 GET        /how-much-fuel-benefit                                           controllers.HowMuchFuelBenefitController.onPageLoad(mode: Mode = NormalMode)
 POST       /how-much-fuel-benefit                                           controllers.HowMuchFuelBenefitController.onSubmit(mode: Mode = NormalMode)
@@ -176,10 +176,10 @@ POST       /how-much-bank-interest                                          cont
 GET        /change-how-much-bank-interest                                   controllers.HowMuchBankInterestController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-how-much-bank-interest                                   controllers.HowMuchBankInterestController.onSubmit(mode: Mode = CheckMode)
 
-GET        /what-were-the-details-of-your-employment-or-pension             controllers.DetailsOfEmploymentOrPensionController.onPageLoad(mode: Mode = NormalMode)
-POST       /what-were-the-details-of-your-employment-or-pension             controllers.DetailsOfEmploymentOrPensionController.onSubmit(mode: Mode = NormalMode)
-GET        /change-what-were-the-details-of-your-employment-or-pension      controllers.DetailsOfEmploymentOrPensionController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-what-were-the-details-of-your-employment-or-pension      controllers.DetailsOfEmploymentOrPensionController.onSubmit(mode: Mode = CheckMode)
+GET        /employment-pension-details                                      controllers.DetailsOfEmploymentOrPensionController.onPageLoad(mode: Mode = NormalMode)
+POST       /employment-pension-details                                      controllers.DetailsOfEmploymentOrPensionController.onSubmit(mode: Mode = NormalMode)
+GET        /change-employment-pension-details                               controllers.DetailsOfEmploymentOrPensionController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-employment-pension-details                               controllers.DetailsOfEmploymentOrPensionController.onSubmit(mode: Mode = CheckMode)
 
 GET        /how-much-investment-or-dividend                                 controllers.HowMuchInvestmentOrDividendController.onPageLoad(mode: Mode = NormalMode)
 POST       /how-much-investment-or-dividend                                 controllers.HowMuchInvestmentOrDividendController.onSubmit(mode: Mode = NormalMode)
