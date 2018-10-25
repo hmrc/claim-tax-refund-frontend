@@ -219,15 +219,15 @@ nomineeFullName.title = What is the full name of the person you want us to send 
 nomineeFullName.heading = What is the full name of the person you want us to send any payment to?
 nomineeFullName.checkYourAnswersLabel = Full name of the person you want us to send any payment to
 nomineeFullName.blank = Enter the full name of the person you want us to send any payment to
-nomineeFullName.tooLong = Full name of the person you want us to send any payment to can only be up to 100 characters
+nomineeFullName.tooLong = Full name of the person you want us to send any payment must be 100 characters or less
 
-anyAgentRef.title = Does {0} have an agent reference?
-anyAgentRef.heading = Does {0} have an agent reference?
+anyAgentRef.title = Is {0} an agent with an agent reference number?
+anyAgentRef.heading = Is {0} an agent with an agent reference number?
 anyAgentRefOption.checkYourAnswersLabel = Does the person you want us to send any payment to have an agent reference?
 anyAgentRef.checkYourAnswersLabel = Agent reference
-anyAgentRef.blank = Select yes if the person you want us to send any payment to has an agent reference
+anyAgentRef.blank = Select yes if {0} is an agent with an agent reference
 anyAgentRef.agentRefField = Agent reference
-anyAgentRef.blankAgentRef = Enter the agent reference of the person you want us to send any payment to
+anyAgentRef.blankAgentRef = Enter {0}’s agent reference
 anyAgentRef.maxLength = Agent reference can only be up to 160 characters
 
 isPaymentAddressInTheUK.title = Is the address you want us to send any payment to in the UK?
@@ -243,23 +243,22 @@ paymentUKAddress.title = What is the address you us to send any payment to?
 paymentUKAddress.heading = What is the address you us to send any payment to?
 paymentUKAddress.checkYourAnswersLabel = Address of the person you want us to send any payment to
 
-whereToSendPayment.title = Who would you like us to make any payment to?
-whereToSendPayment.heading = Who would you like us to make any payment to?
+whereToSendPayment.title = Who would you like us to send any payment to?
+whereToSendPayment.heading = Who would you like us to send any payment to?
 whereToSendPayment.myself = You
 whereToSendPayment.nominee = Someone else
 whereToSendPayment.checkYourAnswersLabel = Who would you like us to make any payment to?
-whereToSendPayment.blank = Select who you would like us to make any payment to
+whereToSendPayment.blank = Select who you would like us to send any payment to
 
-telephoneNumber.title = Can we contact you by phone if we need more information?
-telephoneNumber.heading = Can we contact you by phone if we need more information?
+telephoneNumber.title = Can we contact you by telephone if we need more information about your claim?
+telephoneNumber.heading = Can we contact you by telephone if we need more information about your claim?
 telephoneNumberOption.checkYourAnswersLabel = Can we contact you by phone?
 telephoneNumber.checkYourAnswersLabel = Phone number
-telephoneNumber.invalid = Enter a valid phone number
-telephoneNumber.notSelected = Select yes if we can call you if we need more information
-telephoneNumber.blank = Enter the phone number we can contact you on
-telephoneNumber.telephoneNumberField = Phone number
-telephoneNumber.hintPara1 = We will only call you if we need more information about your claim. It is the quickest way to resolve any problems.
-telephoneNumber.hintPara2 = We will contact you by letter.
+telephoneNumber.invalid = Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192
+telephoneNumber.notSelected = Select yes if we can contact you by telephone if we need more information about your claim
+telephoneNumber.blank = Enter a telephone number we can contact you on
+telephoneNumber.telephoneNumberField = Telephone number
+telephoneNumber.hintPara1 = This is the quickest way to get more information and process your claim. If you do not want us to contact you by telephone, we will contact you by letter.
 
 employmentDetails.title = Are these employment and pension details correct?
 employmentDetails.heading = Are these employment and pension details correct?
@@ -453,10 +452,10 @@ anyTaxableOtherIncome.notSelected = Select yes if you paid Income Tax on this in
 anyTaxableOtherIncome.blank = Enter the amount of Income Tax you paid on this income
 anyTaxableOtherIncome.anyTaxPaidAmountField = How much Income Tax did you pay on {0}?
 
-paymentAddressCorrect.title = Do you want to send any payment to this address?
-paymentAddressCorrect.heading = Do you want to send any payment to this address?
+paymentAddressCorrect.title = Is this the address you want us to send any payment to?
+paymentAddressCorrect.heading = Is this the address you want us to send any payment to?
 paymentAddressCorrect.checkYourAnswersLabel = Do you want to send any payment to this address?
-paymentAddressCorrect.blank = Select yes if you want to send any payment to this address
+paymentAddressCorrect.blank = Select yes if you want us to send any payment to this address
 
 deleteOther.title = Are you sure you want to remove {0}?
 deleteOther.heading = Are you sure you want to remove {0}?
