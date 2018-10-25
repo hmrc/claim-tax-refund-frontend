@@ -27,13 +27,15 @@ import views.html.anyAgentRef
 
 class AnyAgentRefViewSpec extends QuestionViewBehaviours[AnyAgentRef]{
 
+  private val requiredKey = "anyAgentRef.blank"
+  private val requiredAgentRefKey = "anyAgentRef.blankAgentRef"
   private val messageKeyPrefix = "anyAgentRef"
   private val nomineeName = "Test Nominee"
   private val testAgentRef = "123456"
   private val taxYear = CYMinus1
 
   val formProvider = new AnyAgentReferenceForm()
-  val form = formProvider()
+  val form = formProvider(messagesApi(requiredKey, nomineeName), messagesApi(requiredAgentRefKey, nomineeName))
 
   def createView = () => anyAgentRef(frontendAppConfig, form, NormalMode, nomineeName, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 

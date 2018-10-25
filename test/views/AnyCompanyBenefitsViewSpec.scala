@@ -55,8 +55,7 @@ class AnyCompanyBenefitsViewSpec extends YesNoViewBehaviours {
       Seq(
         "company-car-benefit",
         "fuel-benefit",
-        "medical-benefit",
-        "other-company-benefit"
+        "medical-benefit"
       ), listMessageKeyPrefix)
   }
 

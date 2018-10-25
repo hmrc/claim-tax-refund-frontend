@@ -19,6 +19,7 @@ package utils
 import models.SelectTaxYear.CYMinus2
 import models.WhereToSendPayment.{Myself, Nominee}
 import models.{Metadata, _}
+import org.joda.time.LocalDateTime
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
 import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
@@ -90,7 +91,7 @@ object MockUserAnswers extends MockitoSugar {
 
   def minimalValidUserAnswers: UserAnswers = {
     val answers = nothingAnswered
-    val metadata: Metadata = new Metadata(customerId = "test_case")
+    val metadata: Metadata = new Metadata(customerId = "ZZ123456A", "123", "123", LocalDateTime.now(), "")
 
     when(answers.name) thenReturn Some(ItmpName(Some("TestName"), None, Some("TestLastName")))
     when(answers.nino) thenReturn Some("ZZ123456A")
@@ -251,7 +252,7 @@ object MockUserAnswers extends MockitoSugar {
   def fullValidUserAnswers: UserAnswers = {
     val answers = nothingAnswered
 
-    val metadata = new Metadata(customerId = "test_case")
+    val metadata = new Metadata(customerId = "ZZ123456A", "123", "123", LocalDateTime.now(), "")
 
     when(answers.name) thenReturn Some(ItmpName(Some("TestName"), None, Some("TestLastName")))
     when(answers.nino) thenReturn Some("ZZ123456A")

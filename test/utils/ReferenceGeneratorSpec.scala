@@ -14,15 +14,21 @@
  * limitations under the License.
  */
 
-package forms
+package utils
 
-import forms.mappings.Mappings
-import play.api.data.Form
+import org.scalatest.{MustMatchers, WordSpec}
+import org.scalatest.mockito.MockitoSugar
 
-class BooleanForm extends FormErrorHelper with Mappings {
+class ReferenceGeneratorSpec extends WordSpec with MustMatchers with MockitoSugar {
 
-  def apply(errorMessage: String = "error.boolean"): Form[Boolean] =
-    Form(
-      "value" -> boolean(errorMessage)
-    )
+  val referenceGenerator = new ReferenceGenerator
+
+  "generateSubmissionNumber" must {
+    "create reference in the correct format" in {
+      val submissonNumber = referenceGenerator.generateSubmissionNumber
+      val regex = """([A-Z0-9]{3})(-)([A-Z0-9]{4})(-)([A-Z0-9]{3})"""
+      val regexMatchResult = submissonNumber matches regex
+      regexMatchResult mustBe true
+    }
+  }
 }

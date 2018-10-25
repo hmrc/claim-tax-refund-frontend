@@ -14,15 +14,12 @@
  * limitations under the License.
  */
 
-package forms
+package models
 
-import forms.mappings.Mappings
-import play.api.data.Form
+import play.api.libs.json._
 
-class BooleanForm extends FormErrorHelper with Mappings {
+case class SubmissionArchiveResponse(casKey: String)
 
-  def apply(errorMessage: String = "error.boolean"): Form[Boolean] =
-    Form(
-      "value" -> boolean(errorMessage)
-    )
+object SubmissionArchiveResponse {
+  implicit val submissionArchiveResponseFormat: Format[SubmissionArchiveResponse] = Json.format[SubmissionArchiveResponse]
 }

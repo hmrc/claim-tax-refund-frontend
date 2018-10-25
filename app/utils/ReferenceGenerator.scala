@@ -14,15 +14,22 @@
  * limitations under the License.
  */
 
-package forms
+package utils
 
-import forms.mappings.Mappings
-import play.api.data.Form
+import scala.util.Random
 
-class BooleanForm extends FormErrorHelper with Mappings {
+class ReferenceGenerator {
 
-  def apply(errorMessage: String = "error.boolean"): Form[Boolean] =
-    Form(
-      "value" -> boolean(errorMessage)
-    )
+  def generateSubmissionNumber: String = {
+    val charList = ('A' to 'Z') ++ ('0' to '9')
+    val randomGen = new Random
+    val dmsSubmission = new StringBuilder
+    for (count <- 1 to 10) {
+      if (count == 4 || count == 8) {
+        dmsSubmission.append("-")
+      }
+      dmsSubmission.append(charList(randomGen.nextInt(charList.length)))
+    }
+    dmsSubmission.toString
+  }
 }

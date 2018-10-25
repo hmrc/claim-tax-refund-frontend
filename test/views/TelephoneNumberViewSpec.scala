@@ -90,17 +90,11 @@ class TelephoneNumberViewSpec extends QuestionViewBehaviours[TelephoneOption]{
             assertContainsText(doc, messages(s"$messageKeyPrefix.hintPara1"))
           }
 
-          "display hint para 2" in {
-            val doc = asDocument(createView(form))
-            assertContainsText(doc, messages(s"$messageKeyPrefix.hintPara2"))
-          }
-
           "contain an input for the value" in {
             val doc = asDocument(createView(form))
             assertRenderedById(doc, "anyTelephoneNumber-yes")
             assertRenderedById(doc, "anyTelephoneNumber-no")
             assertRenderedById(doc, "yesTelephoneNumber")
-            assertRenderedById(doc, "noTelephoneNumber")
           }
 
           "have no values checked when rendered with no form" in {

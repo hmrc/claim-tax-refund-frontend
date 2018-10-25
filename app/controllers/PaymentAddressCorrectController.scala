@@ -47,7 +47,7 @@ class PaymentAddressCorrectController @Inject()(appConfig: FrontendAppConfig,
                                                 implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
 
   private val errorKey = "paymentAddressCorrect.blank"
-  val form: Form[Boolean] = formProvider(errorKey)
+  val form: Form[Boolean] = formProvider(messagesApi(errorKey))
 
   import ItmpAddressFormat.format
 
