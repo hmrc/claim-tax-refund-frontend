@@ -25,7 +25,7 @@ import views.html.confirmation
 import org.mockito.Mockito._
 import org.mockito.Matchers._
 import play.api.mvc.Call
-
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class ConfirmationControllerSpec extends ControllerSpecBase with ScalaFutures{
   val mockDataCacheConnector = mock[DataCacheConnector]

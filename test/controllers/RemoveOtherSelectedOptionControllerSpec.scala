@@ -28,6 +28,7 @@ import play.api.mvc.Call
 import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.removeOtherSelectedOption
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class RemoveOtherSelectedOptionControllerSpec extends ControllerSpecBase with MockitoSugar {
 

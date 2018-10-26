@@ -24,7 +24,7 @@ class $className$Controller @Inject()(
                                         navigator: Navigator,
                                         authenticate: AuthAction,
                                         getData: DataRetrievalAction,
-                                        requireData: DataRequiredAction) extends FrontendController with I18nSupport {
+                                        requireData: DataRequiredAction)(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>

@@ -32,7 +32,7 @@ import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, SequenceUtil, UserAnswers}
 import views.html.anyTaxableOtherIncome
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class AnyTaxableOtherIncomeController @Inject()(appConfig: FrontendAppConfig,
                                                 override val messagesApi: MessagesApi,
@@ -43,9 +43,10 @@ class AnyTaxableOtherIncomeController @Inject()(appConfig: FrontendAppConfig,
                                                 requireData: DataRequiredAction,
                                                 sequenceUtil: SequenceUtil[OtherTaxableIncome],
                                                 formProvider: OtherTaxableIncomeForm,
-                                                taxPaidformProvider: AnyTaxPaidForm,
+                                                taxPaidFormProvider: AnyTaxPaidForm,
                                                 implicit val formPartialRetriever: FormPartialRetriever,
-                                                implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
+                                                implicit val templateRenderer: TemplateRenderer
+                                               )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val notSelectedKey = "anyTaxableOtherIncome.notSelected"
   private val blankKey = "anyTaxableOtherIncome.blank"
@@ -53,11 +54,19 @@ class AnyTaxableOtherIncomeController @Inject()(appConfig: FrontendAppConfig,
 
   def onPageLoad(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
+      val form: Form[AnyTaxPaid] = taxPaidFormProvider(notSelectedKey, blankKey, invalidKey)
+
+      val preparedForm = request.userAnswers.otherTaxableIncome match {
+        case Some(value) =>
+          if (index >= value.length || value(index).anyTaxPaid.isEmpty) form else form.fill(value(index).anyTaxPaid.get)
+        case None => form
+      }
+
       val details: Option[Result] = for {
         selectedTaxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
         otherTaxableIncome: Seq[OtherTaxableIncome] <- request.userAnswers.otherTaxableIncome
       } yield {
-        val form: Form[AnyTaxPaid] = taxPaidformProvider(
+        val form: Form[AnyTaxPaid] = taxPaidFormProvider(
           messagesApi(notSelectedKey, otherTaxableIncome(index).name),
           messagesApi(blankKey, otherTaxableIncome(index).name),
           messagesApi(invalidKey, otherTaxableIncome(index).name)
@@ -78,11 +87,13 @@ class AnyTaxableOtherIncomeController @Inject()(appConfig: FrontendAppConfig,
 
   def onSubmit(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
+      val form: Form[AnyTaxPaid] = taxPaidFormProvider(notSelectedKey, blankKey, invalidKey)
+
       val details: Option[Future[Result]] = for {
         selectedTaxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
         otherTaxableIncome: Seq[OtherTaxableIncome] <- request.userAnswers.otherTaxableIncome
       } yield {
-        val form: Form[AnyTaxPaid] = taxPaidformProvider(
+        val form: Form[AnyTaxPaid] = taxPaidFormProvider(
           messagesApi(notSelectedKey, otherTaxableIncome(index).name),
           messagesApi(blankKey, otherTaxableIncome(index).name),
           messagesApi(invalidKey, otherTaxableIncome(index).name)

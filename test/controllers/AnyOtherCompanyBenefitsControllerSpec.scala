@@ -28,6 +28,7 @@ import org.mockito.Mockito.when
 import play.api.mvc.Call
 import viewmodels.AnswerSection
 import views.html.anyOtherCompanyBenefits
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class AnyOtherCompanyBenefitsControllerSpec extends ControllerSpecBase {
 

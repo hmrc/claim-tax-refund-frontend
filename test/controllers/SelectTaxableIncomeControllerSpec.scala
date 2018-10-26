@@ -26,7 +26,7 @@ import models.{NormalMode, TaxableIncome}
 import models.SelectTaxYear.CYMinus2
 import org.mockito.Mockito.when
 import views.html.selectTaxableIncome
-
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class SelectTaxableIncomeControllerSpec extends ControllerSpecBase {
 

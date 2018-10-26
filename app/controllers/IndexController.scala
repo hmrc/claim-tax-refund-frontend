@@ -17,16 +17,18 @@
 package controllers
 
 import javax.inject.{Inject, Singleton}
-
 import config.FrontendAppConfig
 import models.NormalMode
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 
+import scala.concurrent.ExecutionContext
+
 @Singleton
 class IndexController @Inject()(val appConfig: FrontendAppConfig,
-                                val messagesApi: MessagesApi) extends FrontendController with I18nSupport {
+                                val messagesApi: MessagesApi
+                               )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = Action { implicit request =>
     TemporaryRedirect(routes.SelectTaxYearController.onPageLoad(NormalMode).url)

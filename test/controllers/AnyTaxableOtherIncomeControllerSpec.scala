@@ -27,6 +27,7 @@ import play.api.mvc.Call
 import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.anyTaxableOtherIncome
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class AnyTaxableOtherIncomeControllerSpec extends ControllerSpecBase {
 

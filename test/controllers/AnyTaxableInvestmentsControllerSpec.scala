@@ -28,6 +28,7 @@ import play.api.libs.json.{JsBoolean, JsString, Json}
 import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.anyTaxableInvestments
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class AnyTaxableInvestmentsControllerSpec extends ControllerSpecBase {
 

@@ -27,6 +27,7 @@ import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
 import org.mockito.Mockito.when
 import views.html.otherCompanyBenefit
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class OtherCompanyBenefitControllerSpec extends ControllerSpecBase with MockitoSugar {
 

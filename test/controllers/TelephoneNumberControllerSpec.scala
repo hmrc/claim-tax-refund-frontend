@@ -29,8 +29,8 @@ import play.api.mvc._
 import play.api.test.Helpers.{status, _}
 import utils._
 import views.html.telephoneNumber
-
 import scala.concurrent._
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar with ScalaFutures {
 

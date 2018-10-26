@@ -27,6 +27,7 @@ import utils.{FakeNavigator, MockUserAnswers}
 import views.html.selectCompanyBenefits
 import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito.when
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class SelectCompanyBenefitsControllerSpec extends ControllerSpecBase with MockitoSugar {
 

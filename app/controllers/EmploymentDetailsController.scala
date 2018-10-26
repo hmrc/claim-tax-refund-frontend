@@ -33,7 +33,7 @@ import utils.{Navigator, UserAnswers}
 import views.html.employmentDetails
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
 
 
@@ -47,7 +47,8 @@ class EmploymentDetailsController @Inject()(appConfig: FrontendAppConfig,
                                             formProvider: BooleanForm,
                                             taiConnector: TaiConnector,
                                             implicit val formPartialRetriever: FormPartialRetriever,
-                                            implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
+                                            implicit val templateRenderer: TemplateRenderer
+                                           )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val errorKey = "employmentDetails.blank"
   val form: Form[Boolean] = formProvider(messagesApi(errorKey))

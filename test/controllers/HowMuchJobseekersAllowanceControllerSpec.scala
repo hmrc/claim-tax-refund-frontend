@@ -19,16 +19,15 @@ package controllers
 import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.HowMuchJobseekersAllowanceForm
-import identifiers.HowMuchJobseekersAllowanceId
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.mockito.Mockito.when
 import play.api.data.Form
-import play.api.libs.json.JsString
 import play.api.test.Helpers._
-import uk.gov.hmrc.http.cache.client.CacheMap
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.howMuchJobseekersAllowance
+
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class HowMuchJobseekersAllowanceControllerSpec extends ControllerSpecBase {
 

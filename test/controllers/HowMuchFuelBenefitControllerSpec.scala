@@ -27,6 +27,7 @@ import play.api.data.Form
 import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.howMuchFuelBenefit
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class HowMuchFuelBenefitControllerSpec extends ControllerSpecBase with MockitoSugar {
 
