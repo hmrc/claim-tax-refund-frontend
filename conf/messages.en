@@ -403,7 +403,7 @@ otherTaxableIncome.amount = How much of this taxable income you got
 otherTaxableIncome.name.blank = Enter the name of the taxable income you got
 otherTaxableIncome.amount.blank = Enter how much of this taxable income you got
 otherTaxableIncome.amount.invalid = How much of this taxable income you got must be an amount of money, like 199 or 234.56
-otherTaxableIncome.duplicate = You have already entered this other taxable income name
+otherTaxableIncome.duplicate = You have already entered this other taxable income name {0}
 otherTaxableIncome.add = Add another taxable income
 otherTaxableIncome.change = Change other taxable incomes
 

@@ -52,7 +52,7 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
 
   def onPageLoad(mode: Mode, index: Index, itemName: String, collectionId: String): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val form: Form[Boolean] = formProvider(messagesApi(errorKey, Some(itemName)))
+      val form: Form[Boolean] = formProvider(messagesApi(errorKey, itemName))
       request.userAnswers.selectTaxYear.map {
         taxYear =>
           Ok(deleteOther(appConfig, form, mode, index, itemName, collectionId, taxYear))
@@ -64,7 +64,7 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
   def onSubmit(mode: Mode, index: Index, itemName: String, collectionId: String): Action[AnyContent] =
     (authenticate andThen getData andThen requireData).async {
       implicit request =>
-        val form: Form[Boolean] = formProvider(messagesApi(errorKey, Some(itemName)))
+        val form: Form[Boolean] = formProvider(messagesApi(errorKey, itemName))
         request.userAnswers.selectTaxYear.map {
           taxYear =>
             form.bindFromRequest().fold(
