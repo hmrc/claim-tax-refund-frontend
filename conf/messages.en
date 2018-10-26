@@ -182,24 +182,28 @@ howMuchJobseekersAllowance.heading = How much contribution-based Jobseeker’s A
 howMuchJobseekersAllowance.checkYourAnswersLabel = How much contribution-based Jobseeker’s Allowance did you get?
 howMuchJobseekersAllowance.blank = Enter the amount of Jobseeker’s Allowance you got
 howMuchJobseekersAllowance.invalid = Enter a valid amount of Jobseeker’s Allowance
+howMuchJobseekersAllowance.changeLabel = Change how much Jobseeker’s Allowance you got
 
 howMuchIncapacityBenefit.title = How much Incapacity Benefit did you get?
 howMuchIncapacityBenefit.heading = How much Incapacity Benefit did you get?
 howMuchIncapacityBenefit.checkYourAnswersLabel = How much Incapacity Benefit did you get?
 howMuchIncapacityBenefit.blank = Enter the amount of Incapacity Benefit you got
 howMuchIncapacityBenefit.invalid = Enter a valid amount of Incapacity Benefit
+howMuchIncapacityBenefit.changeLabel = Change how much Incapacity Benefit you got
 
 howMuchEmploymentAndSupportAllowance.title = How much Employment and Support Allowance did you get?
 howMuchEmploymentAndSupportAllowance.heading = How much Employment and Support Allowance did you get?
 howMuchEmploymentAndSupportAllowance.checkYourAnswersLabel =  How much Employment and Support Allowance did you get?
 howMuchEmploymentAndSupportAllowance.blank = Enter the amount of Employment and Support Allowance you got
 howMuchEmploymentAndSupportAllowance.invalid = Enter a valid amount of Employment and Support Allowance
+howMuchEmploymentAndSupportAllowance.changeLabel = Change how much Employment and Support Allowance you got
 
 howMuchStatePension.title = How much State Pension did you get?
 howMuchStatePension.heading = How much State Pension did you get?
 howMuchStatePension.checkYourAnswersLabel = How much State Pension did you get?
 howMuchStatePension.blank = Enter the amount of State Pension you got
 howMuchStatePension.invalid = Enter a valid amount of State Pension
+howMuchStatePension.changeLabel = Change how much State Pension you got
 
 howMuchMedicalBenefits.title = How much medical benefit did you get?
 howMuchMedicalBenefits.heading = How much medical benefit did you get?
@@ -333,12 +337,14 @@ howMuchBereavementAllowance.heading = How much Bereavement Allowance did you get
 howMuchBereavementAllowance.checkYourAnswersLabel = How much Bereavement Allowance did you get?
 howMuchBereavementAllowance.blank = Enter the amount of Bereavement Allowance you got
 howMuchBereavementAllowance.invalid = Enter a valid amount of Bereavement Allowance
+howMuchBereavementAllowance.changeLabel = Change how much Bereavement Allowance you got
 
 howMuchCarersAllowance.title = How much Carer’s Allowance did you get?
 howMuchCarersAllowance.heading = How much Carer’s Allowance did you get?
 howMuchCarersAllowance.checkYourAnswersLabel = How much Carer’s Allowance did you get?
 howMuchCarersAllowance.blank = Enter the amount of Carer’s Allowance you got
 howMuchCarersAllowance.invalid = Enter a valid amount of Carer’s Allowance
+howMuchCarersAllowance.changeLabel = Change how much Carer’s Allowance you got
 
 otherBenefits = taxable benefit
 otherBenefit.title = Tell us about the other taxable benefit you got
