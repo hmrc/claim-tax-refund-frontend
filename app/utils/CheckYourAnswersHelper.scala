@@ -415,7 +415,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
   def itmpAddress: Option[AnswerRow] = userAnswers.itmpAddress map {
     x =>
       AnswerRow(
-        label = messages("itmpAddress.checkYourAnswersLabel") + "<br><br>" + ItmpAddressFormat.asString(
+        label = "<p>" + messages("itmpAddress.checkYourAnswersLabel") + "</p>" + ItmpAddressFormat.asString(
           ItmpAddress(
             x.line1,
             x.line2,
