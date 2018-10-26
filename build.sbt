@@ -1,13 +1,13 @@
-import uk.gov.hmrc.SbtAutoBuildPlugin
-import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin
-import uk.gov.hmrc.versioning.SbtGitVersioning
-import play.sbt.PlayImport._
 import play.core.PlayVersion
+import play.sbt.PlayImport._
 import play.sbt.routes.RoutesKeys
 import sbt.Tests.{Group, SubProcess}
 import scoverage.ScoverageKeys
-import uk.gov.hmrc.DefaultBuildSettings.{addTestReportOption, defaultSettings, scalaSettings}
+import uk.gov.hmrc.DefaultBuildSettings.{defaultSettings, scalaSettings}
+import uk.gov.hmrc.SbtAutoBuildPlugin
+import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin
 import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin.publishingSettings
+import uk.gov.hmrc.versioning.SbtGitVersioning
 
 
 val appName = "claim-tax-refund-frontend"
@@ -32,8 +32,8 @@ val compile = Seq(
 )
 
 def test(scope: String = "test"): Seq[ModuleID] = Seq(
-  "com.github.tomakehurst" % "wiremock" % "2.15.0" % "test,it",
-  "uk.gov.hmrc" %% "hmrctest" % "2.3.0" % scope,
+  "com.github.tomakehurst" % "wiremock" % "2.15.0" % scope,
+  "uk.gov.hmrc" %% "hmrctest" % "3.2.0" % scope,
   "org.scalatest" %% "scalatest" % "3.0.1" % scope,
   "org.scalatestplus.play" %% "scalatestplus-play" % "2.0.1" % scope,
   "org.scalacheck" %% "scalacheck" % "1.14.0" % scope,
@@ -72,16 +72,9 @@ lazy val microservice = Project(appName, file("."))
     evictionWarningOptions in update := EvictionWarningOptions.default.withWarnScalaVersionEviction(false),
     PlayKeys.devSettings += "play.server.http.port" -> "9969"
   )
-  .configs(IntegrationTest)
-  .settings(inConfig(IntegrationTest)(Defaults.itSettings): _*)
   .settings(
     Keys.fork in Test := true,
-    Keys.fork in IntegrationTest := false,
-    javaOptions in Test += "-Dconfig.file=conf/test.application.conf",
-    unmanagedSourceDirectories in IntegrationTest <<= (baseDirectory in IntegrationTest) (base => Seq(base / "it")),
-    addTestReportOption(IntegrationTest, "int-test-reports"),
-    testGrouping in IntegrationTest := oneForkedJvmPerTest((definedTests in IntegrationTest).value),
-    parallelExecution in IntegrationTest := false)
+    javaOptions in Test += "-Dconfig.file=conf/test.application.conf")
   .settings(resolvers ++= Seq(
     Resolver.bintrayRepo("hmrc", "releases"),
     Resolver.jcenterRepo,
