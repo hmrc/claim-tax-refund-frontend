@@ -110,6 +110,7 @@ site.continue = Continue
 site.service_name = Claim a tax refund
 site.service_name.with_tax_year = Claim a tax refund: {0}
 site.textarea.char_limit = (Limit is {0} characters)
+site.title.error = Error: {0}
 
 checkYourAnswers.title = Check your answers
 checkYourAnswers.heading = Check your answers

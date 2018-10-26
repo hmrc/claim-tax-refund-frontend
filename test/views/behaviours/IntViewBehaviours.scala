@@ -39,6 +39,11 @@ trait IntViewBehaviours extends QuestionViewBehaviours[Int] {
           val doc = asDocument(createView(form))
           assertRenderedById(doc, "value")
         }
+
+        "show error in the title" in {
+          val doc = asDocument(createView(form.withError(error)))
+          doc.title.contains("Error: ") mustBe true
+        }
       }
 
       "rendered with a valid form" must {
