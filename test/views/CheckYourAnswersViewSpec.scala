@@ -26,7 +26,7 @@ import views.html.check_your_answers
 class CheckYourAnswersViewSpec extends SpecBase with ViewBehaviours with MockitoSugar {
 
   private val messageKeyPrefix = "checkYourAnswers"
-  private val answers = MockUserAnswers.minimalValidUserAnswers
+  private val answers = MockUserAnswers.fullValidUserAnswers
   private val helper = new CheckYourAnswersHelper(answers)(messages: Messages)
   private val cyaSection = new CheckYourAnswersSections(helper, answers)
   private val sections = cyaSection.sections
@@ -45,5 +45,30 @@ class CheckYourAnswersViewSpec extends SpecBase with ViewBehaviours with Mockito
     assertContainsText(doc, messagesApi("checkYourAnswers.taxableIncomeSection"))
     assertContainsText(doc, messagesApi("checkYourAnswers.paymentSection"))
     assertContainsText(doc, messagesApi("checkYourAnswers.contactSection"))
+  }
+
+  "Page should have correct hidden messages for change links in Taxable benefit details section" in {
+    val doc = asDocument(view())
+    assertContainsText(doc, messagesApi("howMuchBereavementAllowance.changeLabel"))
+    assertContainsText(doc, messagesApi("howMuchCarersAllowance.changeLabel"))
+    assertContainsText(doc, messagesApi("howMuchJobseekersAllowance.changeLabel"))
+    assertContainsText(doc, messagesApi("howMuchEmploymentAndSupportAllowance.changeLabel"))
+    assertContainsText(doc, messagesApi("howMuchIncapacityBenefit.changeLabel"))
+    assertContainsText(doc, messagesApi("howMuchStatePension.changeLabel"))
+  }
+
+  "Page should have correct hidden messages for change links in Taxable company benefit details section" in {
+    val doc = asDocument(view())
+    assertContainsText(doc, messagesApi("howMuchCarBenefits.changeLabel"))
+    assertContainsText(doc, messagesApi("howMuchFuelBenefit.changeLabel"))
+    assertContainsText(doc, messagesApi("howMuchMedicalBenefits.changeLabel"))
+  }
+
+  "Page should have correct hidden messages for change links in Taxable income details section" in {
+    val doc = asDocument(view())
+    assertContainsText(doc, messagesApi("howMuchBankInterest.changeLabel"))
+    assertContainsText(doc, messagesApi("howMuchForeignIncome.changeLabel"))
+    assertContainsText(doc, messagesApi("howMuchInvestmentOrDividend.changeLabel"))
+    assertContainsText(doc, messagesApi("howMuchRentalIncome.changeLabel"))
   }
 }
