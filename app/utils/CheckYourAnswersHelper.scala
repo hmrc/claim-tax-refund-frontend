@@ -73,42 +73,72 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
 
   def selectBenefits: Option[AnswerRow] = userAnswers.selectBenefits map {
     val keyPrefix = "selectBenefits."
-    x => AnswerRow(keyPrefix + "checkYourAnswersLabel", x.map {
-      case Benefits.BEREAVEMENT_ALLOWANCE => messages(keyPrefix + "bereavement-allowance").capitalize
-      case Benefits.CARERS_ALLOWANCE => messages(keyPrefix + "carers-allowance").capitalize
-      case Benefits.JOBSEEKERS_ALLOWANCE => messages(keyPrefix + "jobseekers-allowance").capitalize
-      case Benefits.INCAPACITY_BENEFIT => messages(keyPrefix + "incapacity-benefit").capitalize
-      case Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE => messages(keyPrefix + "employment-and-support-allowance").capitalize
-      case Benefits.STATE_PENSION => messages(keyPrefix + "state-pension").capitalize
-      case Benefits.OTHER_TAXABLE_BENEFIT => messages(keyPrefix + "other-taxable-benefit").capitalize
-    }.mkString("<br>"),
+    x => AnswerRow(keyPrefix + "checkYourAnswersLabel", "<ul>" + x.map {
+      case Benefits.BEREAVEMENT_ALLOWANCE => "<li>" + messages(keyPrefix + "bereavement-allowance").capitalize + "</li>"
+      case Benefits.CARERS_ALLOWANCE => "<li>" + messages(keyPrefix + "carers-allowance").capitalize + "</li>"
+      case Benefits.JOBSEEKERS_ALLOWANCE => "<li>" + messages(keyPrefix + "jobseekers-allowance").capitalize + "</li>"
+      case Benefits.INCAPACITY_BENEFIT => "<li>" +messages(keyPrefix + "incapacity-benefit").capitalize + "</li>"
+      case Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE => "<li>" + messages(keyPrefix + "employment-and-support-allowance").capitalize + "</li>"
+      case Benefits.STATE_PENSION => "<li>" + messages(keyPrefix + "state-pension").capitalize + "</li>"
+      case Benefits.OTHER_TAXABLE_BENEFIT => "<li>" +messages(keyPrefix + "other-taxable-benefit").capitalize + "</li>"
+    }.mkString + "</ul>",
       false,
       Some(routes.SelectBenefitsController.onPageLoad(CheckMode).url)
     )
   }
 
   def howMuchBereavementAllowance: Option[AnswerRow] = userAnswers.howMuchBereavementAllowance map {
-    x => AnswerRow("howMuchBereavementAllowance.checkYourAnswersLabel", s"£$x", false, Some(routes.HowMuchBereavementAllowanceController.onPageLoad(CheckMode).url))
+    x =>
+      AnswerRow(label = "howMuchBereavementAllowance.checkYourAnswersLabel",
+                answer = s"£$x",
+                answerIsMessageKey = false,
+                url = Some(routes.HowMuchBereavementAllowanceController.onPageLoad(CheckMode).url),
+                changeLabel = Some("howMuchBereavementAllowance.changeLabel"))
   }
 
   def howMuchCarersAllowance: Option[AnswerRow] = userAnswers.howMuchCarersAllowance map {
-    x => AnswerRow("howMuchCarersAllowance.checkYourAnswersLabel", s"£$x", false, Some(routes.HowMuchCarersAllowanceController.onPageLoad(CheckMode).url))
+    x =>
+      AnswerRow(label = "howMuchCarersAllowance.checkYourAnswersLabel",
+                answer = s"£$x",
+                answerIsMessageKey = false,
+                url = Some(routes.HowMuchCarersAllowanceController.onPageLoad(CheckMode).url),
+                changeLabel = Some("howMuchCarersAllowance.changeLabel"))
   }
 
   def howMuchJobseekersAllowance: Option[AnswerRow] = userAnswers.howMuchJobseekersAllowance map {
-    x => AnswerRow("howMuchJobseekersAllowance.checkYourAnswersLabel", s"£$x", false, Some(routes.HowMuchJobseekersAllowanceController.onPageLoad(CheckMode).url))
+    x =>
+      AnswerRow(label = "howMuchJobseekersAllowance.checkYourAnswersLabel",
+                answer = s"£$x",
+                answerIsMessageKey = false,
+                url = Some(routes.HowMuchJobseekersAllowanceController.onPageLoad(CheckMode).url),
+                changeLabel = Some("howMuchJobseekersAllowance.changeLabel"))
   }
 
   def howMuchIncapacityBenefit: Option[AnswerRow] = userAnswers.howMuchIncapacityBenefit map {
-    x => AnswerRow("howMuchIncapacityBenefit.checkYourAnswersLabel", s"£$x", false, Some(routes.HowMuchIncapacityBenefitController.onPageLoad(CheckMode).url))
+    x =>
+      AnswerRow(label = "howMuchIncapacityBenefit.checkYourAnswersLabel",
+                answer = s"£$x",
+                answerIsMessageKey = false,
+                url = Some(routes.HowMuchIncapacityBenefitController.onPageLoad(CheckMode).url),
+                changeLabel = Some("howMuchIncapacityBenefit.changeLabel"))
   }
 
   def howMuchEmploymentAndSupportAllowance: Option[AnswerRow] = userAnswers.howMuchEmploymentAndSupportAllowance map {
-    x => AnswerRow("howMuchEmploymentAndSupportAllowance.checkYourAnswersLabel", s"£$x", false, Some(routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(CheckMode).url))
+    x =>
+      AnswerRow(label = "howMuchEmploymentAndSupportAllowance.checkYourAnswersLabel",
+                answer = s"£$x",
+                answerIsMessageKey = false,
+                url = Some(routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(CheckMode).url),
+                changeLabel = Some("howMuchEmploymentAndSupportAllowance.changeLabel"))
   }
 
   def howMuchStatePension: Option[AnswerRow] = userAnswers.howMuchStatePension map {
-    x => AnswerRow("howMuchStatePension.checkYourAnswersLabel", s"£$x", false, Some(routes.HowMuchStatePensionController.onPageLoad(CheckMode).url))
+    x =>
+      AnswerRow(label = "howMuchStatePension.checkYourAnswersLabel",
+                answer = s"£$x",
+                answerIsMessageKey = false,
+                url = Some(routes.HowMuchStatePensionController.onPageLoad(CheckMode).url),
+                changeLabel = Some("howMuchStatePension.changeLabel"))
   }
 
   def otherBenefitsNormalMode: Seq[Option[AnswerRow]] = {
@@ -155,28 +185,39 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
 
   def selectCompanyBenefits: Option[AnswerRow] = userAnswers.selectCompanyBenefits map {
     val keyPrefix = "selectCompanyBenefits."
-    x => AnswerRow(keyPrefix + "checkYourAnswersLabel", x.map {
-      case CompanyBenefits.COMPANY_CAR_BENEFIT => messages(keyPrefix + "company-car-benefit").capitalize
-      case CompanyBenefits.FUEL_BENEFIT => messages(keyPrefix + "fuel-benefit").capitalize
-      case CompanyBenefits.MEDICAL_BENEFIT => messages(keyPrefix + "medical-benefit").capitalize
-      case CompanyBenefits.OTHER_COMPANY_BENEFIT => messages(keyPrefix + "other-company-benefit").capitalize
-    }.mkString("<br>"), false, Some(routes.SelectCompanyBenefitsController.onPageLoad(CheckMode).url))
+    x => AnswerRow(keyPrefix + "checkYourAnswersLabel", "<ul>" + x.map {
+      case CompanyBenefits.COMPANY_CAR_BENEFIT => "<li>" + messages(keyPrefix + "company-car-benefit").capitalize + "</li>"
+      case CompanyBenefits.FUEL_BENEFIT => "<li>" + messages(keyPrefix + "fuel-benefit").capitalize + "</li>"
+      case CompanyBenefits.MEDICAL_BENEFIT => "<li>" + messages(keyPrefix + "medical-benefit").capitalize + "</li>"
+      case CompanyBenefits.OTHER_COMPANY_BENEFIT => "<li>" + messages(keyPrefix + "other-company-benefit").capitalize + "</li>"
+    }.mkString + "</ul>", false, Some(routes.SelectCompanyBenefitsController.onPageLoad(CheckMode).url))
   }
 
   def howMuchCarBenefits: Option[AnswerRow] = userAnswers.howMuchCarBenefits map {
     x =>
-      AnswerRow("howMuchCarBenefits.checkYourAnswersLabel",
-        s"£$x", false, Some(routes.HowMuchCarBenefitsController.onPageLoad(CheckMode).url))
+      AnswerRow(label = "howMuchCarBenefits.checkYourAnswersLabel",
+                answer = s"£$x",
+                answerIsMessageKey = false,
+                url = Some(routes.HowMuchCarBenefitsController.onPageLoad(CheckMode).url),
+                changeLabel = Some("howMuchCarBenefits.changeLabel"))
   }
 
   def howMuchFuelBenefit: Option[AnswerRow] = userAnswers.howMuchFuelBenefit map {
-    x => AnswerRow("howMuchFuelBenefit.checkYourAnswersLabel", s"£$x", false, Some(routes.HowMuchFuelBenefitController.onPageLoad(CheckMode).url))
+    x =>
+      AnswerRow(label = "howMuchFuelBenefit.checkYourAnswersLabel",
+                answer = s"£$x",
+                answerIsMessageKey = false,
+                url = Some(routes.HowMuchFuelBenefitController.onPageLoad(CheckMode).url),
+                changeLabel = Some("howMuchFuelBenefit.changeLabel"))
   }
 
   def howMuchMedicalBenefits: Option[AnswerRow] = userAnswers.howMuchMedicalBenefits map {
     x =>
-      AnswerRow("howMuchMedicalBenefits.checkYourAnswersLabel",
-        s"£$x", false, Some(routes.HowMuchMedicalBenefitsController.onPageLoad(CheckMode).url))
+      AnswerRow(label = "howMuchMedicalBenefits.checkYourAnswersLabel",
+                answer = s"£$x",
+                answerIsMessageKey = false,
+                url = Some(routes.HowMuchMedicalBenefitsController.onPageLoad(CheckMode).url),
+                changeLabel = Some("howMuchMedicalBenefits.changeLabel"))
   }
 
   def otherCompanyBenefitsNormalMode: Seq[Option[AnswerRow]] = {
@@ -248,31 +289,50 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
 
   def selectTaxableIncome: Option[AnswerRow] = userAnswers.selectTaxableIncome map {
     val keyPrefix = "selectTaxableIncome."
-    x => AnswerRow(keyPrefix + "checkYourAnswersLabel", x.map {
-      case TaxableIncome.RENTAL_INCOME => messages(keyPrefix + "rental-income").capitalize
-      case TaxableIncome.BANK_OR_BUILDING_SOCIETY_INTEREST => messages(keyPrefix + "bank-or-building-society-interest").capitalize
-      case TaxableIncome.INVESTMENT_OR_DIVIDENDS => messages(keyPrefix + "investment-or-dividends").capitalize
-      case TaxableIncome.FOREIGN_INCOME => messages(keyPrefix + "foreign-income").capitalize
-      case TaxableIncome.OTHER_TAXABLE_INCOME => messages(keyPrefix + "other-taxable-income").capitalize
-    }.mkString("<br>"), false, Some(routes.SelectTaxableIncomeController.onPageLoad(CheckMode).url))
+    x => AnswerRow(keyPrefix + "checkYourAnswersLabel", "<ul>" + x.map {
+      case TaxableIncome.RENTAL_INCOME => "<li>" + messages(keyPrefix + "rental-income").capitalize + "</li>"
+      case TaxableIncome.BANK_OR_BUILDING_SOCIETY_INTEREST => "<li>" + messages(keyPrefix + "bank-or-building-society-interest").capitalize + "</li>"
+      case TaxableIncome.INVESTMENT_OR_DIVIDENDS => "<li>" + messages(keyPrefix + "investment-or-dividends").capitalize + "</li>"
+      case TaxableIncome.FOREIGN_INCOME => "<li>" + messages(keyPrefix + "foreign-income").capitalize + "</li>"
+      case TaxableIncome.OTHER_TAXABLE_INCOME => "<li>" + messages(keyPrefix + "other-taxable-income").capitalize + "</li>"
+    }.mkString + "</ul>", false, Some(routes.SelectTaxableIncomeController.onPageLoad(CheckMode).url))
   }
+
 
   def howMuchRentalIncome: Option[AnswerRow] = userAnswers.howMuchRentalIncome map {
     x =>
-      AnswerRow("howMuchRentalIncome.checkYourAnswersLabel",
-        s"£$x", false, Some(routes.HowMuchRentalIncomeController.onPageLoad(CheckMode).url))
+      AnswerRow(label = "howMuchRentalIncome.checkYourAnswersLabel",
+                answer = s"£$x",
+                answerIsMessageKey = false,
+                url = Some(routes.HowMuchRentalIncomeController.onPageLoad(CheckMode).url),
+                changeLabel = Some("howMuchRentalIncome.changeLabel"))
   }
 
   def howMuchBankInterest: Option[AnswerRow] = userAnswers.howMuchBankInterest map {
-    x => AnswerRow("howMuchBankInterest.checkYourAnswersLabel", s"£$x", false, Some(routes.HowMuchBankInterestController.onPageLoad(CheckMode).url))
+    x =>
+      AnswerRow(label = "howMuchBankInterest.checkYourAnswersLabel",
+                answer = s"£$x",
+                answerIsMessageKey = false,
+                url = Some(routes.HowMuchBankInterestController.onPageLoad(CheckMode).url),
+                changeLabel = Some("howMuchBankInterest.changeLabel"))
   }
 
   def howMuchInvestmentOrDividend: Option[AnswerRow] = userAnswers.howMuchInvestmentOrDividend map {
-    x => AnswerRow("howMuchInvestmentOrDividend.checkYourAnswersLabel", s"£$x", false, Some(routes.HowMuchInvestmentOrDividendController.onPageLoad(CheckMode).url))
+    x =>
+      AnswerRow(label = "howMuchInvestmentOrDividend.checkYourAnswersLabel",
+                answer = s"£$x",
+                answerIsMessageKey = false,
+                url = Some(routes.HowMuchInvestmentOrDividendController.onPageLoad(CheckMode).url),
+                changeLabel = Some("howMuchInvestmentOrDividend.changeLabel"))
   }
 
   def howMuchForeignIncome: Option[AnswerRow] = userAnswers.howMuchForeignIncome map {
-    x => AnswerRow("howMuchForeignIncome.checkYourAnswersLabel", s"£$x", false, Some(routes.HowMuchForeignIncomeController.onPageLoad(CheckMode).url))
+    x =>
+      AnswerRow(label = "howMuchForeignIncome.checkYourAnswersLabel",
+                answer = s"£$x",
+                answerIsMessageKey = false,
+                url = Some(routes.HowMuchForeignIncomeController.onPageLoad(CheckMode).url),
+                changeLabel = Some("howMuchForeignIncome.changeLabel"))
   }
 
   def otherTaxableIncomeNormalMode: Seq[Option[AnswerRow]] = {
@@ -355,8 +415,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
   def itmpAddress: Option[AnswerRow] = userAnswers.itmpAddress map {
     x =>
       AnswerRow(
-        "itmpAddress.checkYourAnswersLabel",
-        ItmpAddressFormat.asString(
+        label = "<p>" + messages("itmpAddress.checkYourAnswersLabel") + "</p>" + ItmpAddressFormat.asString(
           ItmpAddress(
             x.line1,
             x.line2,
@@ -367,8 +426,9 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
             x.countryName,
             x.countryCode
           )),
-        true,
-        Some(routes.PaymentAddressCorrectController.onPageLoad(CheckMode).url)
+        answer = if(userAnswers.paymentAddressCorrect.getOrElse(true)) "site.yes" else "site.no",
+        answerIsMessageKey = true,
+        url = Some(routes.PaymentAddressCorrectController.onPageLoad(CheckMode).url)
       )
   }
 
