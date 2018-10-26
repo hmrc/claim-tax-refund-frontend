@@ -165,6 +165,7 @@ howMuchCarBenefits.heading = How much company car benefit did you get?
 howMuchCarBenefits.checkYourAnswersLabel = How much company car benefit did you get?
 howMuchCarBenefits.blank = Enter the amount of company car benefit you got
 howMuchCarBenefits.invalid = Enter a valid amount of company car benefit
+howMuchCarBenefits.changeLabel = Change how much company car benefit you got
 
 howMuchRentalIncome.title = How much property rental income did you get?
 howMuchRentalIncome.heading = How much property rental income did you get?
@@ -210,6 +211,7 @@ howMuchMedicalBenefits.heading = How much medical benefit did you get?
 howMuchMedicalBenefits.checkYourAnswersLabel = How much medical benefit did you get?
 howMuchMedicalBenefits.blank = Enter the amount of medical benefit you got
 howMuchMedicalBenefits.invalid = Enter a valid amount of medical benefit
+howMuchMedicalBenefits.changeLabel = Change how much medical benefit you got
 
 anyOtherTaxableIncome.title = Other taxable income
 anyOtherTaxableIncome.heading = Other taxable income
@@ -294,6 +296,7 @@ howMuchFuelBenefit.heading = How much fuel benefit did you get?
 howMuchFuelBenefit.checkYourAnswersLabel = How much fuel benefit did you get?
 howMuchFuelBenefit.blank = Enter the amount of fuel benefit you got
 howMuchFuelBenefit.invalid = Enter a valid amount of fuel benefit
+howMuchFuelBenefit.changeLabel = Change how much fuel benefit you got
 
 otherCompanyBenefits = company benefit
 otherCompanyBenefit.title = Tell us about the other company benefit you got

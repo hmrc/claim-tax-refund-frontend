@@ -88,51 +88,57 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
   }
 
   def howMuchBereavementAllowance: Option[AnswerRow] = userAnswers.howMuchBereavementAllowance map {
-     x => AnswerRow(label = "howMuchBereavementAllowance.checkYourAnswersLabel",
-                    answer = s"£$x",
-                    answerIsMessageKey = false,
-                    url = Some(routes.HowMuchBereavementAllowanceController.onPageLoad(CheckMode).url),
-                    changeLabel = Some("howMuchBereavementAllowance.changeLabel"))
+    x =>
+      AnswerRow(label = "howMuchBereavementAllowance.checkYourAnswersLabel",
+                answer = s"£$x",
+                answerIsMessageKey = false,
+                url = Some(routes.HowMuchBereavementAllowanceController.onPageLoad(CheckMode).url),
+                changeLabel = Some("howMuchBereavementAllowance.changeLabel"))
   }
 
   def howMuchCarersAllowance: Option[AnswerRow] = userAnswers.howMuchCarersAllowance map {
-     x => AnswerRow(label = "howMuchCarersAllowance.checkYourAnswersLabel",
-                    answer = s"£$x",
-                    answerIsMessageKey = false,
-                    url = Some(routes.HowMuchCarersAllowanceController.onPageLoad(CheckMode).url),
-                    changeLabel = Some("howMuchCarersAllowance.changeLabel"))
+    x =>
+      AnswerRow(label = "howMuchCarersAllowance.checkYourAnswersLabel",
+                answer = s"£$x",
+                answerIsMessageKey = false,
+                url = Some(routes.HowMuchCarersAllowanceController.onPageLoad(CheckMode).url),
+                changeLabel = Some("howMuchCarersAllowance.changeLabel"))
   }
 
   def howMuchJobseekersAllowance: Option[AnswerRow] = userAnswers.howMuchJobseekersAllowance map {
-     x => AnswerRow(label = "howMuchJobseekersAllowance.checkYourAnswersLabel",
-                    answer = s"£$x",
-                    answerIsMessageKey = false,
-                    url = Some(routes.HowMuchJobseekersAllowanceController.onPageLoad(CheckMode).url),
-                    changeLabel = Some("howMuchJobseekersAllowance.changeLabel"))
+    x =>
+      AnswerRow(label = "howMuchJobseekersAllowance.checkYourAnswersLabel",
+                answer = s"£$x",
+                answerIsMessageKey = false,
+                url = Some(routes.HowMuchJobseekersAllowanceController.onPageLoad(CheckMode).url),
+                changeLabel = Some("howMuchJobseekersAllowance.changeLabel"))
   }
 
   def howMuchIncapacityBenefit: Option[AnswerRow] = userAnswers.howMuchIncapacityBenefit map {
-     x => AnswerRow(label = "howMuchIncapacityBenefit.checkYourAnswersLabel",
-                    answer = s"£$x",
-                    answerIsMessageKey = false,
-                    url = Some(routes.HowMuchIncapacityBenefitController.onPageLoad(CheckMode).url),
-                    changeLabel = Some("howMuchIncapacityBenefit.changeLabel"))
+    x =>
+      AnswerRow(label = "howMuchIncapacityBenefit.checkYourAnswersLabel",
+                answer = s"£$x",
+                answerIsMessageKey = false,
+                url = Some(routes.HowMuchIncapacityBenefitController.onPageLoad(CheckMode).url),
+                changeLabel = Some("howMuchIncapacityBenefit.changeLabel"))
   }
 
   def howMuchEmploymentAndSupportAllowance: Option[AnswerRow] = userAnswers.howMuchEmploymentAndSupportAllowance map {
-     x => AnswerRow(label = "howMuchEmploymentAndSupportAllowance.checkYourAnswersLabel",
-                    answer = s"£$x",
-                    answerIsMessageKey = false,
-                    url = Some(routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(CheckMode).url),
-                    changeLabel = Some("howMuchEmploymentAndSupportAllowance.changeLabel"))
+    x =>
+      AnswerRow(label = "howMuchEmploymentAndSupportAllowance.checkYourAnswersLabel",
+                answer = s"£$x",
+                answerIsMessageKey = false,
+                url = Some(routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(CheckMode).url),
+                changeLabel = Some("howMuchEmploymentAndSupportAllowance.changeLabel"))
   }
 
   def howMuchStatePension: Option[AnswerRow] = userAnswers.howMuchStatePension map {
-     x => AnswerRow(label = "howMuchStatePension.checkYourAnswersLabel",
-                    answer = s"£$x",
-                    answerIsMessageKey = false,
-                    url = Some(routes.HowMuchStatePensionController.onPageLoad(CheckMode).url),
-                    changeLabel = Some("howMuchStatePension.changeLabel"))
+    x =>
+      AnswerRow(label = "howMuchStatePension.checkYourAnswersLabel",
+                answer = s"£$x",
+                answerIsMessageKey = false,
+                url = Some(routes.HowMuchStatePensionController.onPageLoad(CheckMode).url),
+                changeLabel = Some("howMuchStatePension.changeLabel"))
   }
 
   def otherBenefitsNormalMode: Seq[Option[AnswerRow]] = {
@@ -189,18 +195,29 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
 
   def howMuchCarBenefits: Option[AnswerRow] = userAnswers.howMuchCarBenefits map {
     x =>
-      AnswerRow("howMuchCarBenefits.checkYourAnswersLabel",
-        s"£$x", false, Some(routes.HowMuchCarBenefitsController.onPageLoad(CheckMode).url))
+      AnswerRow(label = "howMuchCarBenefits.checkYourAnswersLabel",
+                answer = s"£$x",
+                answerIsMessageKey = false,
+                url = Some(routes.HowMuchCarBenefitsController.onPageLoad(CheckMode).url),
+                changeLabel = Some("howMuchCarBenefits.changeLabel"))
   }
 
   def howMuchFuelBenefit: Option[AnswerRow] = userAnswers.howMuchFuelBenefit map {
-    x => AnswerRow("howMuchFuelBenefit.checkYourAnswersLabel", s"£$x", false, Some(routes.HowMuchFuelBenefitController.onPageLoad(CheckMode).url))
+    x =>
+      AnswerRow(label = "howMuchFuelBenefit.checkYourAnswersLabel",
+                answer = s"£$x",
+                answerIsMessageKey = false,
+                url = Some(routes.HowMuchFuelBenefitController.onPageLoad(CheckMode).url),
+                changeLabel = Some("howMuchFuelBenefit.changeLabel"))
   }
 
   def howMuchMedicalBenefits: Option[AnswerRow] = userAnswers.howMuchMedicalBenefits map {
     x =>
-      AnswerRow("howMuchMedicalBenefits.checkYourAnswersLabel",
-        s"£$x", false, Some(routes.HowMuchMedicalBenefitsController.onPageLoad(CheckMode).url))
+      AnswerRow(label = "howMuchMedicalBenefits.checkYourAnswersLabel",
+                answer = s"£$x",
+                answerIsMessageKey = false,
+                url = Some(routes.HowMuchMedicalBenefitsController.onPageLoad(CheckMode).url),
+                changeLabel = Some("howMuchMedicalBenefits.changeLabel"))
   }
 
   def otherCompanyBenefitsNormalMode: Seq[Option[AnswerRow]] = {
