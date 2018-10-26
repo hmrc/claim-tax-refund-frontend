@@ -172,6 +172,7 @@ howMuchRentalIncome.heading = How much property rental income did you get?
 howMuchRentalIncome.checkYourAnswersLabel = How much property rental income did you get?
 howMuchRentalIncome.blank = Enter the amount of rental income you got
 howMuchRentalIncome.invalid = Enter a valid amount of rental income
+howMuchRentalIncome.changeLabel = Change how much property rental income you got
 
 anyOtherBenefits.title = Other taxable benefits
 anyOtherBenefits.heading = Other taxable benefits
@@ -367,12 +368,14 @@ howMuchForeignIncome.heading = How much foreign income did you get?
 howMuchForeignIncome.checkYourAnswersLabel = How much foreign income did you get?
 howMuchForeignIncome.blank = Enter the amount of foreign income you got
 howMuchForeignIncome.invalid = Enter a valid amount of foreign income
+howMuchForeignIncome.changeLabel = Change how much foreign income you got
 
 howMuchBankInterest.title = How much Bank and Building Society Interest income did you get?
 howMuchBankInterest.heading = How much Bank and Building Society Interest income did you get?
 howMuchBankInterest.checkYourAnswersLabel = How much Bank and Building Society Interest income did you get?
 howMuchBankInterest.blank = Enter the amount of Bank and Building Society Interest you got
 howMuchBankInterest.invalid = Enter a valid amount of Bank and Building Society Interest
+howMuchBankInterest.changeLabel = Change how much Bank and Building Society Interest income you got
 
 detailsOfEmploymentOrPension.title = What were the details of your employment or pension?
 detailsOfEmploymentOrPension.heading = What were the details of your employment or pension?
@@ -396,6 +399,7 @@ howMuchInvestmentOrDividend.heading = How much income did you get from investmen
 howMuchInvestmentOrDividend.checkYourAnswersLabel = How much investments or dividends did you get?
 howMuchInvestmentOrDividend.blank = Enter the amount of investment or dividend income you got
 howMuchInvestmentOrDividend.invalid = Enter a valid amount investment or dividend income
+howMuchInvestmentOrDividend.changeLabel = Change how much investment or dividend income you got
 
 howMuchOtherTaxableIncome.title = How much {0} did you get between {1}?
 howMuchOtherTaxableIncome.heading = How much {0} did you get between {1}?

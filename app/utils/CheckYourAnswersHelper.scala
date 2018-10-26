@@ -301,20 +301,38 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
 
   def howMuchRentalIncome: Option[AnswerRow] = userAnswers.howMuchRentalIncome map {
     x =>
-      AnswerRow("howMuchRentalIncome.checkYourAnswersLabel",
-        s"£$x", false, Some(routes.HowMuchRentalIncomeController.onPageLoad(CheckMode).url))
+      AnswerRow(label = "howMuchRentalIncome.checkYourAnswersLabel",
+                answer = s"£$x",
+                answerIsMessageKey = false,
+                url = Some(routes.HowMuchRentalIncomeController.onPageLoad(CheckMode).url),
+                changeLabel = Some("howMuchRentalIncome.changeLabel"))
   }
 
   def howMuchBankInterest: Option[AnswerRow] = userAnswers.howMuchBankInterest map {
-    x => AnswerRow("howMuchBankInterest.checkYourAnswersLabel", s"£$x", false, Some(routes.HowMuchBankInterestController.onPageLoad(CheckMode).url))
+    x =>
+      AnswerRow(label = "howMuchBankInterest.checkYourAnswersLabel",
+                answer = s"£$x",
+                answerIsMessageKey = false,
+                url = Some(routes.HowMuchBankInterestController.onPageLoad(CheckMode).url),
+                changeLabel = Some("howMuchBankInterest.changeLabel"))
   }
 
   def howMuchInvestmentOrDividend: Option[AnswerRow] = userAnswers.howMuchInvestmentOrDividend map {
-    x => AnswerRow("howMuchInvestmentOrDividend.checkYourAnswersLabel", s"£$x", false, Some(routes.HowMuchInvestmentOrDividendController.onPageLoad(CheckMode).url))
+    x =>
+      AnswerRow(label = "howMuchInvestmentOrDividend.checkYourAnswersLabel",
+                answer = s"£$x",
+                answerIsMessageKey = false,
+                url = Some(routes.HowMuchInvestmentOrDividendController.onPageLoad(CheckMode).url),
+                changeLabel = Some("howMuchInvestmentOrDividend.changeLabel"))
   }
 
   def howMuchForeignIncome: Option[AnswerRow] = userAnswers.howMuchForeignIncome map {
-    x => AnswerRow("howMuchForeignIncome.checkYourAnswersLabel", s"£$x", false, Some(routes.HowMuchForeignIncomeController.onPageLoad(CheckMode).url))
+    x =>
+      AnswerRow(label = "howMuchForeignIncome.checkYourAnswersLabel",
+                answer = s"£$x",
+                answerIsMessageKey = false,
+                url = Some(routes.HowMuchForeignIncomeController.onPageLoad(CheckMode).url),
+                changeLabel = Some("howMuchForeignIncome.changeLabel"))
   }
 
   def otherTaxableIncomeNormalMode: Seq[Option[AnswerRow]] = {
