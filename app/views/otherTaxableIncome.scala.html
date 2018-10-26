@@ -37,7 +37,7 @@
 )
 
 @main_template(
-    title = messages("otherTaxableIncome.title"),
+    title = messages("otherTaxableIncome.title", Ordinal.getOrdinal(index).capitalize),
     appConfig = appConfig,
     bodyClasses = None
 ) {
@@ -48,11 +48,12 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading(messages("otherTaxableIncome.heading"), taxYear = Some(taxYear.asString))
+        @components.heading(messages("otherTaxableIncome.heading", Ordinal.getOrdinal(index).capitalize), taxYear = Some(taxYear.asString))
 
         @components.input_text(
             InputViewModel("name", form),
-            label = messages("otherTaxableIncome.name")
+            label = messages("otherTaxableIncome.name"),
+            valueError = true
         )
 
         @components.input_text(

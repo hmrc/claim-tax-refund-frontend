@@ -21,6 +21,7 @@ import forms.BooleanForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import play.api.data.Form
+import play.twirl.api.HtmlFormat
 import views.behaviours.YesNoViewBehaviours
 import views.html.anyBenefits
 
@@ -32,9 +33,12 @@ class AnyBenefitsViewSpec extends YesNoViewBehaviours {
 
   override val form = new BooleanForm()()
 
-  def createView = () => anyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createView: () => HtmlFormat.Appendable = () =>
+    anyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
-  def createViewUsingForm = (form: Form[_]) => anyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createViewUsingForm: Form[_] =>
+		HtmlFormat.Appendable = (form: Form[_]) =>
+			anyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "AnyBenefits view" must {
 
@@ -58,8 +62,7 @@ class AnyBenefitsViewSpec extends YesNoViewBehaviours {
         "jobseekers-allowance",
         "incapacity-benefit",
         "employment-and-support-allowance",
-        "state-pension",
-        "other-taxable-benefit"
+        "state-pension"
       ), listMessageKeyPrefix)
 
     "contain a listHeader" in {

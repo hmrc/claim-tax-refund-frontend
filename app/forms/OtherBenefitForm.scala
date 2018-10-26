@@ -20,8 +20,10 @@ import com.google.inject.Inject
 import config.FrontendAppConfig
 import forms.mappings.{Constraints, Mappings}
 import models.{Index, OtherBenefit}
-import play.api.data.Form
+import play.api.data.{Form, validation}
 import play.api.data.Forms._
+import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
+import play.api.i18n.MessagesApi
 
 class OtherBenefitForm @Inject()(appConfig: FrontendAppConfig) extends FormErrorHelper with Mappings with Constraints {
 
@@ -32,9 +34,18 @@ class OtherBenefitForm @Inject()(appConfig: FrontendAppConfig) extends FormError
   private val duplicateBenefitKey = "otherBenefit.duplicate"
 
   def apply(otherBenefit: Seq[OtherBenefit], index: Index): Form[OtherBenefit] = {
+    val duplicateBenefitConstraint: Constraint[String] = validation.Constraint[String] {
+      name: String =>
+        if (filter(otherBenefit, index, name).forall(otherBenefits => otherBenefits.name != name)) {
+          Valid
+        } else {
+          Invalid(Seq(ValidationError(duplicateBenefitKey, name)))
+        }
+    }
+
     Form(
       mapping(
-        "name" -> text(nameBlankKey).verifying(duplicateBenefitKey, a => filter(otherBenefit, index, a).forall(p => p.name != a)),
+        "name" -> text(nameBlankKey).verifying(duplicateBenefitConstraint),
         "amount" -> text(amountBlankKey).verifying(amountInvalidKey, a => a.matches(currencyRegex))
       )(OtherBenefit.apply)(OtherBenefit.unapply)
     )

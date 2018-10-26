@@ -46,7 +46,7 @@ class OtherBenefitFormSpec extends FormBehaviours with MockitoSugar {
 
   def otherBenefitsForm(otherBenefits: Seq[OtherBenefit], index: Index): Form[OtherBenefit] = new OtherBenefitForm(appConfig)(otherBenefits, index)
 
-  "OtherBenefitsName Form" must {
+  "OtherBenefitsForm" must {
 
     "bind successfully with valid name and amount" in {
       val result: Form[OtherBenefit] = otherBenefitsForm(Seq(OtherBenefit("qwerty", "123")), 0).bind(validData)
@@ -61,11 +61,9 @@ class OtherBenefitFormSpec extends FormBehaviours with MockitoSugar {
     }
 
     "fail to bind if name is duplicate" in {
-      val result: Form[OtherBenefit] =
-        otherBenefitsForm(Seq(OtherBenefit("qwerty", "123")), 1).bind(validData)
-
+      val result: Form[OtherBenefit] = otherBenefitsForm(Seq(OtherBenefit("qwerty", "123")), 1).bind(validData)
       result.errors.size shouldBe 1
-      result.errors shouldBe Seq(FormError("name", duplicateBenefitKey))
+      result.errors shouldBe Seq(FormError("name", duplicateBenefitKey, Seq("qwerty")))
     }
 
     "fail to bind with missing amount" in {

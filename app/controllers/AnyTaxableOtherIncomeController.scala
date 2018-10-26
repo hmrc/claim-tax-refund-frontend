@@ -66,6 +66,18 @@ class AnyTaxableOtherIncomeController @Inject()(appConfig: FrontendAppConfig,
         selectedTaxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
         otherTaxableIncome: Seq[OtherTaxableIncome] <- request.userAnswers.otherTaxableIncome
       } yield {
+        val form: Form[AnyTaxPaid] = taxPaidFormProvider(
+          messagesApi(notSelectedKey, otherTaxableIncome(index).name),
+          messagesApi(blankKey, otherTaxableIncome(index).name),
+          messagesApi(invalidKey, otherTaxableIncome(index).name)
+        )
+
+        val preparedForm = request.userAnswers.otherTaxableIncome match {
+          case Some(value) =>
+            if (index >= value.length || value(index).anyTaxPaid.isEmpty) form else form.fill(value(index).anyTaxPaid.get)
+          case None => form
+        }
+
         Ok(anyTaxableOtherIncome(appConfig, preparedForm, mode, index, selectedTaxYear, otherTaxableIncome(index).name))
       }
       details.getOrElse {
@@ -81,6 +93,11 @@ class AnyTaxableOtherIncomeController @Inject()(appConfig: FrontendAppConfig,
         selectedTaxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
         otherTaxableIncome: Seq[OtherTaxableIncome] <- request.userAnswers.otherTaxableIncome
       } yield {
+        val form: Form[AnyTaxPaid] = taxPaidFormProvider(
+          messagesApi(notSelectedKey, otherTaxableIncome(index).name),
+          messagesApi(blankKey, otherTaxableIncome(index).name),
+          messagesApi(invalidKey, otherTaxableIncome(index).name)
+        )
         form.bindFromRequest().fold(
           (formWithErrors: Form[AnyTaxPaid]) =>
             Future.successful(BadRequest(anyTaxableOtherIncome(appConfig, formWithErrors, mode, index, selectedTaxYear, otherTaxableIncome(index).name))),

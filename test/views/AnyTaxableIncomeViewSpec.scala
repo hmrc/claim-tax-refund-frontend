@@ -21,6 +21,7 @@ import forms.BooleanForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import play.api.data.Form
+import play.twirl.api.HtmlFormat
 import views.behaviours.YesNoViewBehaviours
 import views.html.anyTaxableIncome
 
@@ -32,9 +33,13 @@ class AnyTaxableIncomeViewSpec extends YesNoViewBehaviours {
 
   override val form = new BooleanForm()()
 
-  def createView = () => anyTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createView: () =>
+    HtmlFormat.Appendable = () =>
+      anyTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
-  def createViewUsingForm = (form: Form[_]) => anyTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createViewUsingForm: Form[_] =>
+    HtmlFormat.Appendable = (form: Form[_]) =>
+      anyTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "AnyTaxableIncome view" must {
 
@@ -53,11 +58,10 @@ class AnyTaxableIncomeViewSpec extends YesNoViewBehaviours {
 
     behave like pageWithList(createView, messageKeyPrefix,
       Seq(
-        "rental-income",
         "bank-or-building-society-interest",
-        "investment-or-dividends",
         "foreign-income",
-        "other-taxable-income"
+        "investment-or-dividends",
+        "rental-income"
       ), listMessageKeyPrefix)
 
     "contain a listHeader" in {

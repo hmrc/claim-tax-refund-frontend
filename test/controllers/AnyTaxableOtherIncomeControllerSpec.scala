@@ -44,7 +44,11 @@ class AnyTaxableOtherIncomeControllerSpec extends ControllerSpecBase {
 
   private val formProvider = new OtherTaxableIncomeForm(frontendAppConfig)
   private val taxPaidFormProvider = new AnyTaxPaidForm
-  private val taxPaidForm = taxPaidFormProvider(notSelectedKey, blankKey, invalidKey)
+  private val taxPaidForm = taxPaidFormProvider(
+    messages(notSelectedKey, incomeName),
+    messages(blankKey, incomeName),
+    messages(invalidKey, incomeName)
+  )
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyTaxableOtherIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
