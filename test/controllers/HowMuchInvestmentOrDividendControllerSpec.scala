@@ -26,6 +26,7 @@ import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import org.mockito.Mockito.when
 import views.html.howMuchInvestmentOrDividend
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class HowMuchInvestmentOrDividendControllerSpec extends ControllerSpecBase {
 

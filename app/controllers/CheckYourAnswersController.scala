@@ -35,7 +35,7 @@ import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, ReferenceGenerator, SubmissionMark}
 import views.html.{check_your_answers, pdf_check_your_answers}
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
                                            override val messagesApi: MessagesApi,
@@ -48,7 +48,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
                                            referenceGenerator: ReferenceGenerator,
                                            implicit val formPartialRetriever: FormPartialRetriever,
                                            implicit val templateRenderer: TemplateRenderer
-                                          ) extends FrontendController with I18nSupport {
+                                          )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   def onPageLoad(): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>

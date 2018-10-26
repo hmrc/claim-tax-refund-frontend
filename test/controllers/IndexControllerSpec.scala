@@ -21,6 +21,7 @@ import models.NormalMode
 import play.api.data.Form
 import play.api.test.Helpers._
 import views.html.selectTaxYear
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class IndexControllerSpec extends ControllerSpecBase {
 

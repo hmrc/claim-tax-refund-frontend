@@ -26,14 +26,15 @@ import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import utils.Navigator
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class AddressLookupRoutingController @Inject()(appConfig: FrontendAppConfig,
                                                navigator: Navigator,
                                                addressLookupConnector: AddressLookupConnector,
                                                authenticate: AuthAction,
                                                getData: DataRetrievalAction,
-                                               requireData: DataRequiredAction) extends FrontendController {
+                                               requireData: DataRequiredAction
+                                              )(implicit ec: ExecutionContext) extends FrontendController {
 
 
   def addressLookupCallback(addressId: Option[String], mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {

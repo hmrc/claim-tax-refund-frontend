@@ -32,7 +32,7 @@ import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, SequenceUtil, UserAnswers}
 import views.html.otherCompanyBenefit
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class OtherCompanyBenefitController @Inject()(appConfig: FrontendAppConfig,
                                               override val messagesApi: MessagesApi,
@@ -44,7 +44,8 @@ class OtherCompanyBenefitController @Inject()(appConfig: FrontendAppConfig,
                                               sequenceUtil: SequenceUtil[OtherCompanyBenefit],
                                               formBuilder: OtherCompanyBenefitForm,
                                               implicit val formPartialRetriever: FormPartialRetriever,
-                                              implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
+                                              implicit val templateRenderer: TemplateRenderer
+                                             )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
 
   def onPageLoad(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData) {

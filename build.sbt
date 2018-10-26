@@ -16,50 +16,31 @@ lazy val appDependencies: Seq[ModuleID] = compile ++ test()
 lazy val plugins: Seq[Plugins] = Seq.empty
 lazy val playSettings: Seq[Setting[_]] = Seq.empty
 
-
-val playHealthVersion = "2.1.0"
-val logbackJsonLoggerVersion = "3.1.0"
-val govukTemplateVersion = "5.3.0"
-val playUiVersion = "7.4.0"
-val hmrcTestVersion = "2.3.0"
-val scalaTestVersion = "3.0.1"
-val scalaTestPlusPlayVersion = "2.0.1"
-val pegdownVersion = "1.6.0"
-val mockitoAllVersion = "1.10.19"
-val httpCachingClientVersion = "7.0.0"
-val playReactivemongoVersion = "5.2.0"
-val playConditionalFormMappingVersion = "0.2.0"
-val playLanguageVersion = "3.4.0"
-val wireMockVersion = "2.15.0"
-val bootstrapVersion = "1.7.0"
-val localTemplateRendererVersion = "2.0.0"
-val playPartialsVersion = "6.1.0"
-
 val compile = Seq(
   ws,
-  "uk.gov.hmrc" %% "play-reactivemongo" % playReactivemongoVersion,
-  "uk.gov.hmrc" %% "logback-json-logger" % logbackJsonLoggerVersion,
-  "uk.gov.hmrc" %% "govuk-template" % govukTemplateVersion,
-  "uk.gov.hmrc" %% "play-health" % playHealthVersion,
-  "uk.gov.hmrc" %% "play-ui" % playUiVersion,
-  "uk.gov.hmrc" %% "http-caching-client" % httpCachingClientVersion,
-  "uk.gov.hmrc" %% "play-conditional-form-mapping" % playConditionalFormMappingVersion,
-  "uk.gov.hmrc" %% "bootstrap-play-25" % bootstrapVersion,
-  "uk.gov.hmrc" %% "local-template-renderer" % localTemplateRendererVersion,
-  "uk.gov.hmrc" %% "play-partials" % playPartialsVersion,
-  "uk.gov.hmrc" %% "play-language" % playLanguageVersion
+  "uk.gov.hmrc" %% "simple-reactivemongo" % "7.1.0-play-25",
+  "uk.gov.hmrc" %% "logback-json-logger" % "4.1.0",
+  "uk.gov.hmrc" %% "govuk-template" % "5.23.0",
+  "uk.gov.hmrc" %% "play-health" % "3.7.0-play-25",
+  "uk.gov.hmrc" %% "play-ui" % "7.25.0-play-25",
+  "uk.gov.hmrc" %% "http-caching-client" % "7.2.0",
+  "uk.gov.hmrc" %% "play-conditional-form-mapping" % "0.2.0",
+  "uk.gov.hmrc" %% "bootstrap-play-25" % "3.13.0",
+  "uk.gov.hmrc" %% "local-template-renderer" % "2.0.0",
+  "uk.gov.hmrc" %% "play-partials" % "6.1.0",
+  "uk.gov.hmrc" %% "play-language" % "3.4.0"
 )
 
 def test(scope: String = "test"): Seq[ModuleID] = Seq(
-  "com.github.tomakehurst" % "wiremock" % wireMockVersion % "test,it",
-  "uk.gov.hmrc" %% "hmrctest" % hmrcTestVersion % scope,
-  "org.scalatest" %% "scalatest" % scalaTestVersion % scope,
-  "org.scalatestplus.play" %% "scalatestplus-play" % scalaTestPlusPlayVersion % scope,
+  "com.github.tomakehurst" % "wiremock" % "2.15.0" % "test,it",
+  "uk.gov.hmrc" %% "hmrctest" % "2.3.0" % scope,
+  "org.scalatest" %% "scalatest" % "3.0.1" % scope,
+  "org.scalatestplus.play" %% "scalatestplus-play" % "2.0.1" % scope,
   "org.scalacheck" %% "scalacheck" % "1.14.0" % scope,
-  "org.pegdown" % "pegdown" % pegdownVersion % scope,
+  "org.pegdown" % "pegdown" % "1.6.0" % scope,
   "org.jsoup" % "jsoup" % "1.10.3" % scope,
   "com.typesafe.play" %% "play-test" % PlayVersion.current % scope,
-  "org.mockito" % "mockito-all" % mockitoAllVersion % scope,
+  "org.mockito" % "mockito-all" % "1.10.19" % scope,
   "uk.gov.hmrc" %% "play-whitelist-filter"  % "2.0.0"
 )
 

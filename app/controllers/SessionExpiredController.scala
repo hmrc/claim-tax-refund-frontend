@@ -25,11 +25,14 @@ import uk.gov.hmrc.play.partials.FormPartialRetriever
 import uk.gov.hmrc.renderer.TemplateRenderer
 import views.html.session_expired
 
+import scala.concurrent.ExecutionContext
+
 @Singleton
 class SessionExpiredController @Inject()(val appConfig: FrontendAppConfig,
                                          val messagesApi: MessagesApi,
                                          implicit val formPartialRetriever: FormPartialRetriever,
-                                         implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
+                                         implicit val templateRenderer: TemplateRenderer
+                                        )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = Action { implicit request =>
     Ok(session_expired(appConfig))

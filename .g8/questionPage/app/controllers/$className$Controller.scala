@@ -23,7 +23,7 @@ class $className$Controller @Inject()(appConfig: FrontendAppConfig,
                                                   authenticate: AuthAction,
                                                   getData: DataRetrievalAction,
                                                   requireData: DataRequiredAction,
-                                                  formBuilder: $className$Form) extends FrontendController with I18nSupport {
+                                                  formBuilder: $className$Form)(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val form: Form[$className$] = formBuilder()
 

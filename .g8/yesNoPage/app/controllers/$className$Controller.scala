@@ -23,7 +23,7 @@ class $className;format="cap"$Controller @Inject()(appConfig: FrontendAppConfig,
                                          authenticate: AuthAction,
                                          getData: DataRetrievalAction,
                                          requireData: DataRequiredAction,
-                                         formProvider: BooleanForm) extends FrontendController with I18nSupport {
+                                         formProvider: BooleanForm)(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val errorKey = "$className;format="decap"$.blank"
   val form: Form[Boolean] = formProvider(messagesApi(errorKey))

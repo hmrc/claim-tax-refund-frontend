@@ -26,6 +26,7 @@ import play.api.data.Form
 import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.howMuchRentalIncome
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class HowMuchRentalIncomeControllerSpec extends ControllerSpecBase {
 

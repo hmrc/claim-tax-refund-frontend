@@ -32,7 +32,7 @@ import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, SequenceUtil, UserAnswers}
 import views.html.otherTaxableIncome
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class OtherTaxableIncomeController @Inject()(
                                               appConfig: FrontendAppConfig,
@@ -45,7 +45,8 @@ class OtherTaxableIncomeController @Inject()(
                                               sequenceUtil: SequenceUtil[OtherTaxableIncome],
                                               formBuilder: OtherTaxableIncomeForm,
                                               implicit val formPartialRetriever: FormPartialRetriever,
-                                              implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
+                                              implicit val templateRenderer: TemplateRenderer
+                                            )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   def onPageLoad(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>

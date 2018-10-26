@@ -29,7 +29,7 @@ import models.NormalMode
 import models.SelectTaxYear.CYMinus2
 import views.html.howMuchCarersAllowance
 import org.mockito.Mockito.when
-
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class HowMuchCarersAllowanceControllerSpec extends ControllerSpecBase {
 

@@ -26,13 +26,14 @@ import models.{CheckMode, Mode, NormalMode}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
+import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, UserAnswers}
 import views.html.isPaymentAddressInTheUK
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class IsPaymentAddressInTheUKController @Inject()(appConfig: FrontendAppConfig,
                                                   override val messagesApi: MessagesApi,
@@ -44,7 +45,8 @@ class IsPaymentAddressInTheUKController @Inject()(appConfig: FrontendAppConfig,
                                                   formProvider: BooleanForm,
                                                   addressLookup: AddressLookupConnector,
                                                   implicit val formPartialRetriever: FormPartialRetriever,
-                                                  implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
+                                                  implicit val templateRenderer: TemplateRenderer
+                                                 )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val errorKey = "isPaymentAddressInTheUK.blank"
 
@@ -65,7 +67,7 @@ class IsPaymentAddressInTheUKController @Inject()(appConfig: FrontendAppConfig,
           }
 
           val addressInit = for {
-            result: Option[String] <- addressLookup.initialise(continueUrl = continueUrl)
+            result: Option[String] <- addressLookup.initialise(continueUrl = continueUrl)(hc: HeaderCarrier)
           } yield {
             result map (
               url => Redirect(url)
