@@ -31,19 +31,20 @@ import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, UserAnswers}
 import views.html.enterPayeReference
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class EnterPayeReferenceController @Inject()(
-                                        appConfig: FrontendAppConfig,
-                                        override val messagesApi: MessagesApi,
-                                        dataCacheConnector: DataCacheConnector,
-                                        navigator: Navigator,
-                                        authenticate: AuthAction,
-                                        getData: DataRetrievalAction,
-                                        requireData: DataRequiredAction,
-                                        formBuilder: EnterPayeReferenceForm,
-                                        implicit val formPartialRetriever: FormPartialRetriever,
-                                        implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
+                                              appConfig: FrontendAppConfig,
+                                              override val messagesApi: MessagesApi,
+                                              dataCacheConnector: DataCacheConnector,
+                                              navigator: Navigator,
+                                              authenticate: AuthAction,
+                                              getData: DataRetrievalAction,
+                                              requireData: DataRequiredAction,
+                                              formBuilder: EnterPayeReferenceForm,
+                                              implicit val formPartialRetriever: FormPartialRetriever,
+                                              implicit val templateRenderer: TemplateRenderer
+                                            )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val form: Form[String] = formBuilder()
 

@@ -27,11 +27,10 @@ class BenefitsSpec extends WordSpec with MustMatchers with MockitoSugar {
         Benefits.sortedBenefits.head mustBe Benefits.BEREAVEMENT_ALLOWANCE
         Benefits.sortedBenefits(1) mustBe Benefits.CARERS_ALLOWANCE
         Benefits.sortedBenefits(2) mustBe Benefits.JOBSEEKERS_ALLOWANCE
-        Benefits.sortedBenefits(3) mustBe Benefits.INCAPACITY_BENEFIT
-        Benefits.sortedBenefits(4) mustBe Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE
+        Benefits.sortedBenefits(3) mustBe Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE
+        Benefits.sortedBenefits(4) mustBe Benefits.INCAPACITY_BENEFIT
         Benefits.sortedBenefits(5) mustBe Benefits.STATE_PENSION
         Benefits.sortedBenefits(6) mustBe Benefits.OTHER_TAXABLE_BENEFIT
-
       }
     }
 }

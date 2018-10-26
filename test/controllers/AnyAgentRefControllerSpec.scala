@@ -28,17 +28,19 @@ import play.api.libs.json._
 import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.anyAgentRef
-
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class AnyAgentRefControllerSpec extends ControllerSpecBase {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
+  val requiredKey = "anyAgentRef.blank"
+  val requiredAgentRefKey = "anyAgentRef.blankAgentRef"
+  val nomineeName = "Test Nominee"
   val formProvider = new AnyAgentReferenceForm()
-  val form = formProvider()
+  val form: Form[AnyAgentRef] = formProvider(messagesApi(requiredKey, nomineeName), messagesApi(requiredAgentRefKey, nomineeName))
   val validYesData = Map(AnyAgentRefId.toString -> Json.obj(AnyAgentRefId.toString -> JsBoolean(true), AgentRefId.toString -> JsString("AB1234")))
   val validNoData = Map(AnyAgentRefId.toString -> Json.obj(AnyAgentRefId.toString -> JsBoolean(false)))
-  val nomineeName = "Test Nominee"
   private val taxYear = CYMinus2
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
 

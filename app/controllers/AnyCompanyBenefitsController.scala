@@ -31,7 +31,7 @@ import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, UserAnswers}
 import views.html.anyCompanyBenefits
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class AnyCompanyBenefitsController @Inject()(
                                               appConfig: FrontendAppConfig,
@@ -44,10 +44,10 @@ class AnyCompanyBenefitsController @Inject()(
                                               formProvider: BooleanForm,
                                               implicit val formPartialRetriever: FormPartialRetriever,
                                               implicit val templateRenderer: TemplateRenderer
-                                            ) extends FrontendController with I18nSupport {
+                                            )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val errorKey = "anyCompanyBenefits.blank"
-  val form: Form[Boolean] = formProvider(errorKey)
+  val form: Form[Boolean] = formProvider(messagesApi(errorKey))
 
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {

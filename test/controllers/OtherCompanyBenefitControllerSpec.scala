@@ -27,20 +27,21 @@ import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
 import org.mockito.Mockito.when
 import views.html.otherCompanyBenefit
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class OtherCompanyBenefitControllerSpec extends ControllerSpecBase with MockitoSugar {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
   val testAnswer = OtherCompanyBenefit("qwerty", "123")
-  val form = new OtherCompanyBenefitForm(frontendAppConfig)(Seq.empty, 0)
-  val formFilled = new OtherCompanyBenefitForm(frontendAppConfig)(Seq.empty, 1)
+  val form = new OtherCompanyBenefitForm(messagesApi, frontendAppConfig)(Seq.empty, 0)
+  val formFilled = new OtherCompanyBenefitForm(messagesApi, frontendAppConfig)(Seq.empty, 1)
   private val taxYear = CYMinus2
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new OtherCompanyBenefitController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, sequenceUtil, new OtherCompanyBenefitForm(frontendAppConfig), formPartialRetriever, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl, sequenceUtil, new OtherCompanyBenefitForm(messagesApi, frontendAppConfig), formPartialRetriever, templateRenderer)
 
   def viewAsString(form: Form[OtherCompanyBenefit], index: Index): String =
     otherCompanyBenefit(frontendAppConfig, form, NormalMode, index, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString

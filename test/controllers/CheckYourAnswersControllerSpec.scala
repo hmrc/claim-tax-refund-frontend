@@ -21,16 +21,16 @@ import controllers.actions.{DataRequiredActionImpl, DataRetrievalAction, FakeAut
 import models.{SubmissionArchiveResponse, SubmissionFailed, SubmissionSuccessful}
 import org.mockito.Matchers._
 import org.mockito.Mockito._
-import org.scalatest.concurrent.ScalaFutures
+import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import play.api.mvc.Result
 import play.api.test.Helpers._
 import services.SubmissionService
 import utils.ReferenceGenerator
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
-class CheckYourAnswersControllerSpec extends ControllerSpecBase with ScalaFutures {
-  implicit val ec: ExecutionContext = mock[ExecutionContext]
+class CheckYourAnswersControllerSpec extends ControllerSpecBase with ScalaFutures with IntegrationPatience {
   implicit val dataCacheConnector: DataCacheConnector = mock[DataCacheConnector]
   implicit val casConnector: CasConnector = mock[CasConnector]
   implicit val referenceGenerator: ReferenceGenerator = mock[ReferenceGenerator]

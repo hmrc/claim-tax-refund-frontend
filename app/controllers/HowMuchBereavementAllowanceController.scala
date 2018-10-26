@@ -32,19 +32,19 @@ import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, UserAnswers}
 import views.html.howMuchBereavementAllowance
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
-class HowMuchBereavementAllowanceController @Inject()(
-                                        appConfig: FrontendAppConfig,
-                                        override val messagesApi: MessagesApi,
-                                        dataCacheConnector: DataCacheConnector,
-                                        navigator: Navigator,
-                                        authenticate: AuthAction,
-                                        getData: DataRetrievalAction,
-                                        requireData: DataRequiredAction,
-                                        formBuilder: HowMuchBereavementAllowanceForm,
-                                        implicit val formPartialRetriever: FormPartialRetriever,
-                                        implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
+class HowMuchBereavementAllowanceController @Inject()(appConfig: FrontendAppConfig,
+                                                      override val messagesApi: MessagesApi,
+                                                      dataCacheConnector: DataCacheConnector,
+                                                      navigator: Navigator,
+                                                      authenticate: AuthAction,
+                                                      getData: DataRetrievalAction,
+                                                      requireData: DataRequiredAction,
+                                                      formBuilder: HowMuchBereavementAllowanceForm,
+                                                      implicit val formPartialRetriever: FormPartialRetriever,
+                                                      implicit val templateRenderer: TemplateRenderer
+                                                     )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val form: Form[String] = formBuilder()
 

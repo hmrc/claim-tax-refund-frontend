@@ -34,7 +34,7 @@ import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, UserAnswers}
 import views.html.deleteOther
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.ExecutionContext.Implicits.global
 
 class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
@@ -46,13 +46,14 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
                                       requireData: DataRequiredAction,
                                       formProvider: BooleanForm,
                                       implicit val formPartialRetriever: FormPartialRetriever,
-                                      implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
+                                      implicit val templateRenderer: TemplateRenderer
+                                     )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val errorKey = "deleteOther.blank"
-  val form: Form[Boolean] = formProvider(errorKey)
 
   def onPageLoad(mode: Mode, index: Index, itemName: String, collectionId: String): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
+      val form: Form[Boolean] = formProvider(messagesApi(errorKey, itemName))
       request.userAnswers.selectTaxYear.map {
         taxYear =>
           Ok(deleteOther(appConfig, form, mode, index, itemName, collectionId, taxYear))
@@ -64,6 +65,7 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
   def onSubmit(mode: Mode, index: Index, itemName: String, collectionId: String): Action[AnyContent] =
     (authenticate andThen getData andThen requireData).async {
       implicit request =>
+        val form: Form[Boolean] = formProvider(messagesApi(errorKey, itemName))
         request.userAnswers.selectTaxYear.map {
           taxYear =>
             form.bindFromRequest().fold(

@@ -32,7 +32,7 @@ import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, UserAnswers}
 import views.html.anyAgentRef
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class AnyAgentRefController @Inject()(appConfig: FrontendAppConfig,
                                       override val messagesApi: MessagesApi,
@@ -43,21 +43,23 @@ class AnyAgentRefController @Inject()(appConfig: FrontendAppConfig,
                                       requireData: DataRequiredAction,
                                       formProvider: AnyAgentReferenceForm,
                                       implicit val formPartialRetriever: FormPartialRetriever,
-                                      implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
+                                      implicit val templateRenderer: TemplateRenderer
+                                     )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
-  val form: Form[AnyAgentRef] = formProvider()
+  val requiredKey = "anyAgentRef.blank"
+  val requiredAgentRefKey = "anyAgentRef.blankAgentRef"
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val preparedForm = request.userAnswers.anyAgentRef match {
-        case None => form
-        case Some(value) => form.fill(value)
-      }
-
       val result: Option[Result] = for {
         taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
         nomineeName: String <- request.userAnswers.nomineeFullName
       } yield {
+        val form: Form[AnyAgentRef] = formProvider(messagesApi(requiredKey, nomineeName), messagesApi(requiredAgentRefKey, nomineeName))
+        val preparedForm = request.userAnswers.anyAgentRef match {
+          case None => form
+          case Some(value) => form.fill(value)
+        }
         Ok(anyAgentRef(appConfig, preparedForm, mode, nomineeName, taxYear))
       }
 
@@ -72,6 +74,7 @@ class AnyAgentRefController @Inject()(appConfig: FrontendAppConfig,
         taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
         nomineeName: String <- request.userAnswers.nomineeFullName
       } yield {
+        val form: Form[AnyAgentRef] = formProvider(messagesApi(requiredKey, nomineeName), messagesApi(requiredAgentRefKey, nomineeName))
         form.bindFromRequest().fold(
           (formWithErrors: Form[_]) =>
             Future.successful(BadRequest(anyAgentRef(appConfig, formWithErrors, mode, nomineeName, taxYear))),

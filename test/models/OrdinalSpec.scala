@@ -14,15 +14,23 @@
  * limitations under the License.
  */
 
-package forms
+package models
 
-import forms.mappings.Mappings
-import play.api.data.Form
+import base.SpecBase
 
-class BooleanForm extends FormErrorHelper with Mappings {
+class OrdinalSpec extends SpecBase {
+	"Oridinal model" must {
+		"return 'first' when index is 0" in {
+			Ordinal.getOrdinal(Index(0)) mustBe "first"
+		}
 
-  def apply(errorMessage: String = "error.boolean"): Form[Boolean] =
-    Form(
-      "value" -> boolean(errorMessage)
-    )
+		"return 'third' when index is 2" in {
+			Ordinal.getOrdinal(Index(2)) mustBe "third"
+		}
+
+		"return 'first' when index is 0 and capaitalize is used" in {
+			Ordinal.getOrdinal(Index(0)).capitalize mustBe "First"
+		}
+
+	}
 }

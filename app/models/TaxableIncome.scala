@@ -45,10 +45,10 @@ object TaxableIncome extends Enumeration {
 
   val sortedTaxableIncome =
     Seq(
-      RENTAL_INCOME,
       BANK_OR_BUILDING_SOCIETY_INTEREST,
-      INVESTMENT_OR_DIVIDENDS,
       FOREIGN_INCOME,
+      INVESTMENT_OR_DIVIDENDS,
+      RENTAL_INCOME,
       OTHER_TAXABLE_INCOME
     )
 }

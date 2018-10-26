@@ -14,15 +14,14 @@
  * limitations under the License.
  */
 
-package forms
+package models
 
-import forms.mappings.Mappings
-import play.api.data.Form
+import java.util.Locale
+import com.ibm.icu.text.RuleBasedNumberFormat
 
-class BooleanForm extends FormErrorHelper with Mappings {
-
-  def apply(errorMessage: String = "error.boolean"): Form[Boolean] =
-    Form(
-      "value" -> boolean(errorMessage)
-    )
+object Ordinal {
+	def getOrdinal(index: Index): String = {
+		val ordinalFormat: RuleBasedNumberFormat = new RuleBasedNumberFormat(Locale.UK, RuleBasedNumberFormat.SPELLOUT)
+		ordinalFormat.format(index.toInt + 1, "%spellout-ordinal")
+	}
 }

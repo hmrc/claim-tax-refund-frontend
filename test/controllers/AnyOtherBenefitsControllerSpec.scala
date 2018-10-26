@@ -28,6 +28,7 @@ import play.api.test.Helpers._
 import utils._
 import viewmodels.AnswerSection
 import views.html.anyOtherBenefits
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class AnyOtherBenefitsControllerSpec extends ControllerSpecBase {
 

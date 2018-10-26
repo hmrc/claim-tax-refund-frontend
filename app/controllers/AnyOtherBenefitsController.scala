@@ -16,6 +16,8 @@
 
 package controllers
 
+import java.util.Locale
+
 import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
@@ -33,7 +35,7 @@ import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, Navigator, UserA
 import viewmodels.AnswerSection
 import views.html.anyOtherBenefits
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class AnyOtherBenefitsController @Inject()(appConfig: FrontendAppConfig,
                                            override val messagesApi: MessagesApi,
@@ -44,10 +46,11 @@ class AnyOtherBenefitsController @Inject()(appConfig: FrontendAppConfig,
                                            requireData: DataRequiredAction,
                                            formProvider: BooleanForm,
                                            implicit val formPartialRetriever: FormPartialRetriever,
-                                           implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
+                                           implicit val templateRenderer: TemplateRenderer
+                                          )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val errorKey = "anyOtherBenefits.blank"
-  val form: Form[Boolean] = formProvider(errorKey)
+  val form: Form[Boolean] = formProvider(messagesApi(errorKey))
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>

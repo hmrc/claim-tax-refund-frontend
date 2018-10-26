@@ -27,7 +27,7 @@ import models.{Benefits, NormalMode}
 import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito.when
 import views.html.selectBenefits
-
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class SelectBenefitsControllerSpec extends ControllerSpecBase with MockitoSugar {
 

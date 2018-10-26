@@ -40,9 +40,9 @@ object Benefits extends Enumeration {
     benefitValue match {
       case "bereavement-allowance" => HowMuchBereavementAllowanceId
       case "carers-allowance" => HowMuchCarersAllowanceId
-      case "jobseekers-allowance" => HowMuchJobseekersAllowanceId
-      case "incapacity-benefit" => HowMuchIncapacityBenefitId
-      case "employment-and-support-allowance" => HowMuchEmploymentAndSupportAllowanceId
+			case "jobseekers-allowance" => HowMuchJobseekersAllowanceId
+			case "employment-and-support-allowance" => HowMuchEmploymentAndSupportAllowanceId
+			case "incapacity-benefit" => HowMuchIncapacityBenefitId
       case "state-pension" => HowMuchStatePensionId
       case "other-taxable-benefit" => OtherBenefitId
     }
@@ -52,9 +52,9 @@ object Benefits extends Enumeration {
     Seq(
       BEREAVEMENT_ALLOWANCE,
       CARERS_ALLOWANCE,
-      JOBSEEKERS_ALLOWANCE,
-      INCAPACITY_BENEFIT,
-      EMPLOYMENT_AND_SUPPORT_ALLOWANCE,
+			JOBSEEKERS_ALLOWANCE,
+			EMPLOYMENT_AND_SUPPORT_ALLOWANCE,
+			INCAPACITY_BENEFIT,
       STATE_PENSION,
       OTHER_TAXABLE_BENEFIT
   )

@@ -32,7 +32,7 @@ import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, UserAnswers}
 import views.html.selectBenefits
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class SelectBenefitsController @Inject()(
                                           appConfig: FrontendAppConfig,
@@ -43,7 +43,8 @@ class SelectBenefitsController @Inject()(
                                           getData: DataRetrievalAction,
                                           requireData: DataRequiredAction,
                                           implicit val formPartialRetriever: FormPartialRetriever,
-                                          implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
+                                          implicit val templateRenderer: TemplateRenderer
+                                        )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
