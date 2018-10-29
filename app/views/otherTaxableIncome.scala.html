@@ -36,8 +36,12 @@
     templateRenderer: TemplateRenderer
 )
 
+@title = @{
+    if(form.errors.nonEmpty) messages("site.title.error", messages("otherTaxableIncome.title", Ordinal.getOrdinal(index).capitalize)) else messages("otherTaxableIncome.title", Ordinal.getOrdinal(index).capitalize)
+}
+
 @main_template(
-    title = messages("otherTaxableIncome.title", Ordinal.getOrdinal(index).capitalize),
+    title = title,
     appConfig = appConfig,
     bodyClasses = None
 ) {

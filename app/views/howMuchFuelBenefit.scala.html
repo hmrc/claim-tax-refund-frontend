@@ -35,8 +35,12 @@
     templateRenderer: TemplateRenderer
 )
 
+@title = @{
+    if(form.errors.nonEmpty) messages("site.title.error", messages("howMuchFuelBenefit.title")) else messages("howMuchFuelBenefit.title")
+}
+
 @main_template(
-    title = messages("howMuchFuelBenefit.title"),
+    title = title,
     appConfig = appConfig,
     bodyClasses = None
 ) {

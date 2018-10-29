@@ -22,6 +22,7 @@ import forms.mappings.{AnyTaxPaidMapping, Constraints, Mappings}
 import models.{Index, OtherTaxableIncome}
 import play.api.data.Form
 import play.api.data.Forms._
+import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 
 class OtherTaxableIncomeForm @Inject()(appConfig: FrontendAppConfig) extends FormErrorHelper with Mappings with Constraints with AnyTaxPaidMapping {
 
@@ -35,9 +36,18 @@ class OtherTaxableIncomeForm @Inject()(appConfig: FrontendAppConfig) extends For
   private val invalidKey = "anyTaxableOtherIncome.invalid"
 
   def apply(otherBenefit: Seq[OtherTaxableIncome], index: Index): Form[OtherTaxableIncome] = {
+    val duplicateNameConstraint = Constraint[String] {
+      benefitName: String =>
+        if(filter(otherBenefit, index, benefitName).forall(otherBenefit => otherBenefit.name != benefitName)) {
+          Valid
+        } else {
+          Invalid(Seq(ValidationError(duplicateBenefitKey, benefitName)))
+        }
+    }
+
     Form(
       mapping(
-        "name" -> text(nameBlankKey).verifying(duplicateBenefitKey, a => filter(otherBenefit, index, a).forall(p => p.name != a)),
+        "name" -> text(nameBlankKey).verifying(duplicateNameConstraint),
         "amount" -> text(amountBlankKey).verifying(amountInvalidKey, a => a.matches(currencyRegex)),
         "anyTaxPaid" -> optional(anyTaxPaidMapping(notSelectedKey, blankKey, invalidKey))
       )(OtherTaxableIncome.apply)(OtherTaxableIncome.unapply)

@@ -18,7 +18,7 @@ package forms
 
 import config.FrontendAppConfig
 import forms.behaviours.FormBehaviours
-import models.{Index, MandatoryField, OtherTaxableIncome}
+import models.{Index, OtherTaxableIncome}
 import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito._
 import play.api.data.{Form, FormError}
@@ -41,9 +41,10 @@ class OtherTaxableIncomeFormSpec extends FormBehaviours with MockitoSugar {
 
   override val form: Form[OtherTaxableIncome] = new OtherTaxableIncomeForm(appConfig)(Seq.empty, 0)
 
-  def otherTaxableIncomeForm(otherTaxableIncome: Seq[OtherTaxableIncome], index: Index): Form[OtherTaxableIncome] = new OtherTaxableIncomeForm(appConfig)(otherTaxableIncome, index)
+  def otherTaxableIncomeForm(otherTaxableIncome: Seq[OtherTaxableIncome], index: Index): Form[OtherTaxableIncome] =
+		new OtherTaxableIncomeForm(appConfig)(otherTaxableIncome, index)
 
-  "OtherTaxableIncomeName Form" must {
+  "OtherTaxableIncome Form" must {
 
     "bind successfully with valid name and amount" in {
       val result: Form[OtherTaxableIncome] = otherTaxableIncomeForm(Seq.empty, 0).bind(validData)
@@ -69,7 +70,7 @@ class OtherTaxableIncomeFormSpec extends FormBehaviours with MockitoSugar {
         otherTaxableIncomeForm(Seq(OtherTaxableIncome("qwerty", "123", None)), 1).bind(validData)
 
       result.errors.size shouldBe 1
-      result.errors shouldBe Seq(FormError("name", duplicateBenefitKey))
+      result.errors shouldBe Seq(FormError("name", duplicateBenefitKey, Seq("qwerty")))
     }
 
     "fail to bind with missing amount" in {

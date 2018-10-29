@@ -36,8 +36,13 @@
     templateRenderer: TemplateRenderer
 )
 
+@title = @{
+    if(form.errors.nonEmpty) messages("site.title.error", messages("isPaymentAddressInTheUK.title")) else messages("isPaymentAddressInTheUK.title")
+}
+
+
 @main_template(
-    title = messages("isPaymentAddressInTheUK.title"),
+    title = title,
     appConfig = appConfig,
     bodyClasses = None
 ) {

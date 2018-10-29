@@ -72,6 +72,11 @@ trait YesNoViewBehaviours extends QuestionViewBehaviours[Boolean] {
           val doc = asDocument(createView(form))
           assertNotRenderedById(doc, "error-summary_header")
         }
+
+				"show error in the title" in {
+					val doc = asDocument(createView(form.withError(error)))
+					doc.title.contains("Error: ") mustBe true
+				}
       }
 
       "rendered with a value of true" must {
