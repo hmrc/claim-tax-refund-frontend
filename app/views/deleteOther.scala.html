@@ -38,8 +38,12 @@
     templateRenderer: TemplateRenderer
 )
 
+@title = @{
+    if(form.errors.nonEmpty) messages("site.title.error", messages("deleteOther.title", itemName)) else messages("deleteOther.title", itemName)
+}
+
 @main_template(
-    title = messages("deleteOther.title", itemName),
+    title = title,
     appConfig = appConfig,
     bodyClasses = None
 ) {

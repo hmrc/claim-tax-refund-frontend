@@ -36,6 +36,7 @@ class OtherTaxableIncomeForm @Inject()(appConfig: FrontendAppConfig) extends For
   private val invalidKey = "anyTaxableOtherIncome.invalid"
 
   def apply(otherBenefit: Seq[OtherTaxableIncome], index: Index): Form[OtherTaxableIncome] = {
+
     val duplicateBenefitConstraint: Constraint[String] = validation.Constraint[String] {
       name: String =>
         if (filter(otherBenefit, index, name).forall(otherTaxableIncome => otherTaxableIncome.name != name)) {

@@ -18,7 +18,7 @@ package forms
 
 import config.FrontendAppConfig
 import forms.behaviours.FormBehaviours
-import models.{Index, MandatoryField, OtherTaxableIncome}
+import models.{Index, OtherTaxableIncome}
 import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito._
 import play.api.data.{Form, FormError}
@@ -41,7 +41,8 @@ class OtherTaxableIncomeFormSpec extends FormBehaviours with MockitoSugar {
 
   override val form: Form[OtherTaxableIncome] = new OtherTaxableIncomeForm(appConfig)(Seq.empty, 0)
 
-  def otherTaxableIncomeForm(otherTaxableIncome: Seq[OtherTaxableIncome], index: Index): Form[OtherTaxableIncome] = new OtherTaxableIncomeForm(appConfig)(otherTaxableIncome, index)
+  def otherTaxableIncomeForm(otherTaxableIncome: Seq[OtherTaxableIncome], index: Index): Form[OtherTaxableIncome] =
+		new OtherTaxableIncomeForm(appConfig)(otherTaxableIncome, index)
 
   "OtherTaxableIncome Form" must {
 

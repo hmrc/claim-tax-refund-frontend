@@ -45,8 +45,12 @@
     if (incomplete.isEmpty) messages("site.continue") else messages("anyOtherTaxableIncome.incompleteSubmit", incomplete.head._1.name)
 }
 
+@title = @{
+    if(form.errors.nonEmpty) messages("site.title.error", messages("anyOtherTaxableIncome.title")) else messages("anyOtherTaxableIncome.title")
+}
+
 @main_template(
-    title = messages("anyOtherTaxableIncome.title"),
+    title = title,
     appConfig = appConfig,
     bodyClasses = None
 ) {

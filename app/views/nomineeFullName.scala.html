@@ -35,8 +35,12 @@
     templateRenderer: TemplateRenderer
 )
 
+@title = @{
+    if(form.errors.nonEmpty) messages("site.title.error", messages("nomineeFullName.title")) else messages("nomineeFullName.title")
+}
+
 @main_template(
-    title = messages("nomineeFullName.title"),
+    title = title,
     appConfig = appConfig,
     bodyClasses = None
 ) {

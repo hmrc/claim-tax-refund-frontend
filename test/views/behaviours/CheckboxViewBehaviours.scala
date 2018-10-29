@@ -93,6 +93,12 @@ trait CheckboxViewBehaviours[A] extends ViewSpecBase {
         val doc = asDocument(createView())
         assertNotRenderedById(doc, "error-summary-heading")
       }
+
+
+			"show error in the title" in {
+				val doc = asDocument(createView(form.withError(error)))
+				doc.title.contains("Error: ") mustBe true
+			}
     }
 
     "rendered with an error" must {
