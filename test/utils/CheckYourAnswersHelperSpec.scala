@@ -143,9 +143,9 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
       )
       when(answers.selectBenefits) thenReturn Some(benefits)
       helper.selectBenefits.get.label.key mustBe s"selectBenefits.checkYourAnswersLabel"
-      helper.selectBenefits.get.answer.key mustBe benefits.map(
-        benefit => messages("selectBenefits." + benefit).capitalize
-      ).mkString("<br>")
+      helper.selectBenefits.get.answer.key mustBe "<ul>" + benefits.map(
+        benefit => "<li>" + messages("selectBenefits." + benefit).capitalize + "</li>"
+      ).mkString + "</ul>"
     }
   }
 
@@ -244,9 +244,9 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
       )
       when(answers.selectCompanyBenefits) thenReturn Some(companyBenefits)
       helper.selectCompanyBenefits.get.label.key mustBe s"selectCompanyBenefits.checkYourAnswersLabel"
-      helper.selectCompanyBenefits.get.answer.key mustBe companyBenefits.map(
-        companyBenefit => messages("selectCompanyBenefits." + companyBenefit).capitalize
-      ).mkString("<br>")
+      helper.selectCompanyBenefits.get.answer.key mustBe "<ul>" + companyBenefits.map(
+        companyBenefit => "<li>" + messages("selectCompanyBenefits." + companyBenefit).capitalize + "</li>"
+      ).mkString + "</ul>"
     }
   }
 
@@ -325,9 +325,9 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
       )
       when(answers.selectTaxableIncome) thenReturn Some(taxableIncomes)
       helper.selectTaxableIncome.get.label.key mustBe s"selectTaxableIncome.checkYourAnswersLabel"
-      helper.selectTaxableIncome.get.answer.key mustBe taxableIncomes.map(
-        income => messages("selectTaxableIncome." + income).capitalize
-      ).mkString("<br>")
+      helper.selectTaxableIncome.get.answer.key mustBe "<ul>" + taxableIncomes.map(
+        income => "<li>" +  messages("selectTaxableIncome." + income).capitalize + "</li>"
+      ).mkString + "</ul>"
     }
   }
 

@@ -29,6 +29,7 @@ import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.howMuchEmploymentAndSupportAllowance
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class HowMuchEmploymentAndSupportAllowanceControllerSpec extends ControllerSpecBase {
 

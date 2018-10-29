@@ -26,6 +26,7 @@ import play.api.test.Helpers.{status, _}
 import utils.{FakeNavigator, MockUserAnswers}
 
 import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class AddressLookupRoutingControllerSpec extends ControllerSpecBase with MockitoSugar {
 

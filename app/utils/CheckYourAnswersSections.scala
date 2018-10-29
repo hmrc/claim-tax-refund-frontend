@@ -233,7 +233,6 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
   def paymentSection = AnswerSection(Some("checkYourAnswers.paymentSection"), Seq(
     cyaHelper.whereToSendPayment,
     cyaHelper.itmpAddress,
-    cyaHelper.paymentAddressCorrect,
     cyaHelper.nomineeFullName,
     cyaHelper.anyAgentRef,
     cyaHelper.agentReferenceNumber,

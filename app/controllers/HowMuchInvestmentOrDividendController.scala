@@ -31,7 +31,7 @@ import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, UserAnswers}
 import views.html.howMuchInvestmentOrDividend
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class HowMuchInvestmentOrDividendController @Inject()(appConfig: FrontendAppConfig,
                                                       override val messagesApi: MessagesApi,
@@ -42,7 +42,8 @@ class HowMuchInvestmentOrDividendController @Inject()(appConfig: FrontendAppConf
                                                       requireData: DataRequiredAction,
                                                       formBuilder: HowMuchInvestmentOrDividendForm,
                                                       implicit val formPartialRetriever: FormPartialRetriever,
-                                                      implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
+                                                      implicit val templateRenderer: TemplateRenderer
+                                                     )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val form: Form[String] = formBuilder()
 

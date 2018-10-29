@@ -26,6 +26,7 @@ import play.api.data.Form
 import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.howMuchBankInterest
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class HowMuchBankInterestControllerSpec extends ControllerSpecBase {
 

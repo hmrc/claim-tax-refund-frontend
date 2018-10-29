@@ -28,7 +28,7 @@ import play.api.data.Form
 import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.employmentDetails
-
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 class EmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSugar {

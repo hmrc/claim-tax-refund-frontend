@@ -34,7 +34,7 @@ import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, UserAnswers}
 import views.html.deleteOther
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.ExecutionContext.Implicits.global
 
 class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
@@ -46,7 +46,8 @@ class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
                                       requireData: DataRequiredAction,
                                       formProvider: BooleanForm,
                                       implicit val formPartialRetriever: FormPartialRetriever,
-                                      implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
+                                      implicit val templateRenderer: TemplateRenderer
+                                     )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val errorKey = "deleteOther.blank"
 

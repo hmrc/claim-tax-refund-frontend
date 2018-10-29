@@ -29,7 +29,7 @@ import play.api.test.Helpers._
 import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.paymentAddressCorrect
-
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 class PaymentAddressCorrectControllerSpec extends ControllerSpecBase {

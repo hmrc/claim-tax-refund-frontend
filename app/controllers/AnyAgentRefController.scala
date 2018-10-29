@@ -32,7 +32,7 @@ import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, UserAnswers}
 import views.html.anyAgentRef
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class AnyAgentRefController @Inject()(appConfig: FrontendAppConfig,
                                       override val messagesApi: MessagesApi,
@@ -43,7 +43,8 @@ class AnyAgentRefController @Inject()(appConfig: FrontendAppConfig,
                                       requireData: DataRequiredAction,
                                       formProvider: AnyAgentReferenceForm,
                                       implicit val formPartialRetriever: FormPartialRetriever,
-                                      implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
+                                      implicit val templateRenderer: TemplateRenderer
+                                     )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   val requiredKey = "anyAgentRef.blank"
   val requiredAgentRefKey = "anyAgentRef.blankAgentRef"

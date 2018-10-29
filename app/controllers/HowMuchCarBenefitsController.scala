@@ -31,7 +31,7 @@ import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, UserAnswers}
 import views.html.howMuchCarBenefits
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class HowMuchCarBenefitsController @Inject()(
                                               appConfig: FrontendAppConfig,
@@ -43,7 +43,8 @@ class HowMuchCarBenefitsController @Inject()(
                                               requireData: DataRequiredAction,
                                               formBuilder: HowMuchCarBenefitsForm,
                                               implicit val formPartialRetriever: FormPartialRetriever,
-                                              implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
+                                              implicit val templateRenderer: TemplateRenderer
+                                            )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val form: Form[String] = formBuilder()
 

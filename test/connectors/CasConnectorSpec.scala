@@ -29,7 +29,6 @@ import utils.{ReferenceGenerator, WireMockHelper}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-
 class CasConnectorSpec extends SpecBase with MockitoSugar with WireMockHelper with GuiceOneAppPerSuite with ScalaFutures with IntegrationPatience {
 
   override implicit lazy val app: Application =

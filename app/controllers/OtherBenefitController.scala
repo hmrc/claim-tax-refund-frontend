@@ -32,19 +32,20 @@ import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, SequenceUtil, UserAnswers}
 import views.html.otherBenefit
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class OtherBenefitController @Inject()(appConfig: FrontendAppConfig,
-																			 override val messagesApi: MessagesApi,
-																			 dataCacheConnector: DataCacheConnector,
-																			 navigator: Navigator,
-																			 authenticate: AuthAction,
-																			 getData: DataRetrievalAction,
-																			 requireData: DataRequiredAction,
-																			 sequenceUtil: SequenceUtil[OtherBenefit],
-																			 formBuilder: OtherBenefitForm,
-																			 implicit val formPartialRetriever: FormPartialRetriever,
-																			 implicit val templateRenderer: TemplateRenderer) extends FrontendController with I18nSupport {
+                                       override val messagesApi: MessagesApi,
+                                       dataCacheConnector: DataCacheConnector,
+                                       navigator: Navigator,
+                                       authenticate: AuthAction,
+                                       getData: DataRetrievalAction,
+                                       requireData: DataRequiredAction,
+                                       sequenceUtil: SequenceUtil[OtherBenefit],
+                                       formBuilder: OtherBenefitForm,
+                                       implicit val formPartialRetriever: FormPartialRetriever,
+                                       implicit val templateRenderer: TemplateRenderer
+                                      )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
 	def onPageLoad(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
 		implicit request =>

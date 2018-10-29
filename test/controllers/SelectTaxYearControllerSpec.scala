@@ -28,6 +28,7 @@ import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
 import utils.FakeNavigator
 import views.html.selectTaxYear
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class SelectTaxYearControllerSpec extends ControllerSpecBase {
 

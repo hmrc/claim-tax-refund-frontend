@@ -27,15 +27,17 @@ import views.html.confirmation
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import uk.gov.hmrc.renderer.TemplateRenderer
 
+import scala.concurrent.ExecutionContext
+
 class ConfirmationController @Inject()(appConfig: FrontendAppConfig,
-                                                 override val messagesApi: MessagesApi,
-                                                 authenticate: AuthAction,
-                                                 getData: DataRetrievalAction,
-                                                 requireData: DataRequiredAction,
-                                                 dataCacheConnector: DataCacheConnector,
-                                                 implicit val formPartialRetriever: FormPartialRetriever,
-                                                 implicit val templateRenderer: TemplateRenderer
-                                      ) extends FrontendController with I18nSupport {
+                                       override val messagesApi: MessagesApi,
+                                       authenticate: AuthAction,
+                                       getData: DataRetrievalAction,
+                                       requireData: DataRequiredAction,
+                                       dataCacheConnector: DataCacheConnector,
+                                       implicit val formPartialRetriever: FormPartialRetriever,
+                                       implicit val templateRenderer: TemplateRenderer
+                                      )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   def onPageLoad(mode: Mode, submissionReference: String): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>

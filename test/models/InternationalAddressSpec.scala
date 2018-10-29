@@ -48,7 +48,7 @@ class InternationalAddressSpec extends SpecBase {
 
     "give a comma-separated string of all of the answered lines" in {
       val address = InternationalAddress("line1", "line2", None, Some("line4"), None, "country")
-      InternationalAddress.asString(address) mustBe "line1, <br>line2, <br>line4, <br>country"
+      InternationalAddress.asString(address) mustBe "line1<br>line2<br>line4<br>country"
     }
   }
 }

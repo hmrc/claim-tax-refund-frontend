@@ -27,6 +27,7 @@ import models.SelectTaxYear.CYMinus2
 import org.mockito.Mockito.when
 import play.api.mvc.Call
 import views.html.otherBenefit
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class OtherBenefitControllerSpec extends ControllerSpecBase {
 
