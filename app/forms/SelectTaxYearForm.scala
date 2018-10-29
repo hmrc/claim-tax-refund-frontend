@@ -18,7 +18,7 @@ package forms
 
 import models.SelectTaxYear
 import models.SelectTaxYear.{CYMinus1, CYMinus2, CYMinus3, CYMinus4, CYMinus5}
-import play.api.data.Form
+import play.api.data.{Form, FormError}
 import play.api.data.Forms._
 import play.api.data.format.Formatter
 import play.api.i18n.Messages
@@ -55,11 +55,11 @@ object SelectTaxYearForm extends FormErrorHelper {
         TaxYearResolver.endOfCurrentTaxYear.minusYears(5).toString(dateFormat)))
   )
 
-  private def selectTaxYearFormatter = new Formatter[SelectTaxYear] {
+  private def selectTaxYearFormatter: Formatter[SelectTaxYear] = new Formatter[SelectTaxYear] {
 
     private val errorKeyBlank = "selectTaxYear.blank"
 
-    def bind(key: String, data: Map[String, String]) = data.get(key) match {
+    def bind(key: String, data: Map[String, String]): Either[Seq[FormError], SelectTaxYear] = data.get(key) match {
       case Some(s) => SelectTaxYear.withName(s)
         .map(Right.apply)
         .getOrElse(produceError(key, "error.unknown"))
