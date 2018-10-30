@@ -81,10 +81,7 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with ScalaFuture
       val result: Future[Result] = controller().onSubmit()(fakeRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result).map {
-        response =>
-          response contains "/claim-tax-refund/confirmation?submissionReference=" mustBe true
-      }
+      redirectLocation(result) mustBe Some(routes.ConfirmationController.onPageLoad().url)
     }
 
     "throw an exception when a submission fails" in {

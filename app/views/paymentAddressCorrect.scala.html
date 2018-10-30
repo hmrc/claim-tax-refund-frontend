@@ -54,7 +54,7 @@
 
         @components.heading(messages("paymentAddressCorrect.heading"), taxYear = Some(taxYear.asString))
 
-        <div class="panel form-group" id="usersAddress">
+        <div class="form-group panel panel-border-wide" id="usersAddress">
             @if(address.line1.exists(_.trim.nonEmpty)) {@address.line1<br>}
             @if(address.line2.exists(_.trim.nonEmpty)) {@address.line2<br>}
             @if(address.line3.exists(_.trim.nonEmpty)) {@address.line3<br>}

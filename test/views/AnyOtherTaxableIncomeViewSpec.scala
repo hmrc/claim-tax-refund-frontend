@@ -121,8 +121,8 @@ class AnyOtherTaxableIncomeViewSpec extends YesNoViewBehaviours {
 			doc.getElementById("add-list-0-change").text.contains("Change") mustBe true
 		}
 
-		"list item must have a delete button" in {
-			doc.getElementById("add-list-0-remove").text.contains("Delete") mustBe true
+		"list item must have a remove button" in {
+			doc.getElementById("add-list-0-remove").text.contains("Remove") mustBe true
 		}
 	}
 }

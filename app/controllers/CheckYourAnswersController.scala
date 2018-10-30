@@ -103,6 +103,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
 
       val futureSubmission: Future[Submission] = for {
         metadata <- futureMetadata
+        _ <- dataCacheConnector.save[String](request.externalId, key = "submissionReference", submissionReference)
         _ <- dataCacheConnector.save[String](request.externalId, key = "pdf", pdfHtml)
         _ <- dataCacheConnector.save[String](request.externalId, key = "xml", xml)
         _ <- dataCacheConnector.save[String](request.externalId, key = "metadata", Metadata.toXml(metadata).toString)
@@ -116,7 +117,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
       futureSubmission.flatMap {
         submission =>
           submissionService.ctrSubmission(submission) map {
-            case SubmissionSuccessful => Redirect(routes.ConfirmationController.onPageLoad(submissionReference))
+            case SubmissionSuccessful => Redirect(routes.ConfirmationController.onPageLoad())
             case _ => throw new Exception("[Check your answers][Submission failed]")
           }
       }
