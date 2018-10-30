@@ -226,12 +226,12 @@ POST       /address                                                         cont
 GET        /change-address                                                  controllers.PaymentAddressCorrectController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-address                                                  controllers.PaymentAddressCorrectController.onSubmit(mode: Mode = CheckMode)
 
-GET        /delete-other-:index                                             controllers.DeleteOtherController.onPageLoad(mode: Mode = NormalMode, index: Index, itemName: String, collectionId: String)
-POST       /delete-other-:index                                             controllers.DeleteOtherController.onSubmit(mode: Mode = NormalMode, index: Index, itemName: String, collectionId: String)
-GET        /change-delete-other-:index                                      controllers.DeleteOtherController.onPageLoad(mode: Mode = CheckMode, index: Index, itemName: String, collectionId: String)
-POST       /change-delete-other-:index                                      controllers.DeleteOtherController.onSubmit(mode: Mode = CheckMode, index: Index, itemName: String, collectionId: String)
+GET        /remove-other-:index                                             controllers.DeleteOtherController.onPageLoad(mode: Mode = NormalMode, index: Index, itemName: String, collectionId: String)
+POST       /remove-other-:index                                             controllers.DeleteOtherController.onSubmit(mode: Mode = NormalMode, index: Index, itemName: String, collectionId: String)
+GET        /change-remove-other-:index                                      controllers.DeleteOtherController.onPageLoad(mode: Mode = CheckMode, index: Index, itemName: String, collectionId: String)
+POST       /change-remove-other-:index                                      controllers.DeleteOtherController.onSubmit(mode: Mode = CheckMode, index: Index, itemName: String, collectionId: String)
 
-GET        /confirmation                                                    controllers.ConfirmationController.onPageLoad(mode: Mode = NormalMode)
+GET        /claim-sent                                                      controllers.ConfirmationController.onPageLoad(mode: Mode = NormalMode)
 
 GET        /do-you-want-to-add-any-other                                    controllers.RemoveOtherSelectedOptionController.onPageLoad(mode: Mode = NormalMode, collectionId: String)
 POST       /do-you-want-to-add-any-other                                    controllers.RemoveOtherSelectedOptionController.onSubmit(mode: Mode = NormalMode, collectionId: String)

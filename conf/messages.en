@@ -99,10 +99,10 @@ session_expired.heading = You will have to start again
 session_expired.guidance = For your security, we cleared your details because you did not do anything for 15 minutes. Start again to claim a tax refund.
 
 site.back = Back
-site.delete = Delete
-site.delete.item = Delete {0}
+site.delete = Remove
+site.delete.item = Remove {0}
 site.edit = Change
-site.hidden-delete = Delete {0}
+site.hidden-delete = Remove {0}
 site.hidden-edit = Change {0}
 site.no = No
 site.yes = Yes
@@ -480,7 +480,7 @@ confirmation.title = Claim sent
 confirmation.heading = Claim sent
 confirmation.reference = Your reference number is
 confirmation.whatHappensNext.title = What happens next
-confirmation.whatHappensNext.line1 = We will process your claim within 15 days and contact you by letter or phone.
+confirmation.whatHappensNext.line1 = We will process your claim within 15 days and contact you by letter.
 confirmation.survey.linkText = What did you think of this service?
 confirmation.survey.time = (takes 30 seconds)
 
