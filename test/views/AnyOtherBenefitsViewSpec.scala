@@ -69,7 +69,7 @@ class AnyOtherBenefitsViewSpec extends YesNoViewBehaviours {
         doc.getElementById("component-answer-list").text.contains("Change qwerty") mustBe true
       }
 
-			"list item must have a remvoe button" in {
+			"list item must have a remove button" in {
 				doc.getElementById("component-answer-list").text.contains("Remove qwerty") mustBe true
 			}
 		}
