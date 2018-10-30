@@ -39,8 +39,9 @@ class ConfirmationController @Inject()(appConfig: FrontendAppConfig,
                                        implicit val templateRenderer: TemplateRenderer
                                       )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
-  def onPageLoad(mode: Mode, submissionReference: String): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
+			val submissionReference = request.userAnswers.submissionReference.getOrElse("")
       dataCacheConnector.removeAll(request.userAnswers.cacheMap.id)
       Ok(confirmation(appConfig, submissionReference))
   }

@@ -26,15 +26,17 @@ class UserAnswers(val cacheMap: CacheMap) {
   //Submission data
   //------------------------------------------------------------------------------
 
-  def name: Option[ItmpName] = cacheMap.getEntry[ItmpName]("name")(ItmpNameFormat.format)
+  def name: Option[ItmpName] = cacheMap.getEntry[ItmpName](key = "name")(ItmpNameFormat.format)
 
-  def nino: Option[String] = cacheMap.getEntry[String]("nino")
+  def nino: Option[String] = cacheMap.getEntry[String](key = "nino")
 
-  def pdf: Option[String] = cacheMap.getEntry[String]("pdf")
+  def pdf: Option[String] = cacheMap.getEntry[String](key = "pdf")
 
-  def xml: Option[String] = cacheMap.getEntry[String]("xml")
+  def xml: Option[String] = cacheMap.getEntry[String](key = "xml")
 
   def metadata: Option[Metadata] = cacheMap.getEntry[Metadata]("metadata")
+
+  def submissionReference: Option[String] = cacheMap.getEntry[String](key = "submissionReference")
 
 	def removeOtherSelectedOption: Option[Boolean] = cacheMap.getEntry[Boolean](RemoveOtherSelectedOptionId.toString)
 

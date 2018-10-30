@@ -47,12 +47,12 @@ trait ControllerSpecBase extends SpecBase {
     new DataRetrievalAction {
       override protected def transform[A](request: AuthenticatedRequest[A]): Future[OptionalDataRequest[A]] = {
         Future.successful(OptionalDataRequest(
-          request,
-          "123123",
-          "AB123456A",
-          Some(ItmpName(Some("sdadsad"), None, None)),
-          Some(itmpAddress),
-          Some(mockUserAnswers)
+          request = request,
+          externalId = "123123",
+          nino = "AB123456A",
+          name = Some(ItmpName(Some("sdadsad"), None, None)),
+          address = Some(itmpAddress),
+          userAnswers = Some(mockUserAnswers)
         ))
       }
     }

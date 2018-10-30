@@ -25,13 +25,16 @@ import views.html.confirmation
 import org.mockito.Mockito._
 import org.mockito.Matchers._
 import play.api.mvc.Call
+import uk.gov.hmrc.http.cache.client.CacheMap
+import utils.{MockUserAnswers, UserAnswers}
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
 class ConfirmationControllerSpec extends ControllerSpecBase with ScalaFutures{
-  val mockDataCacheConnector = mock[DataCacheConnector]
+	val mockDataCacheConnector = mock[DataCacheConnector]
   def onwardRoute: Call = routes.IndexController.onPageLoad()
 
-  def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
+  def controller(dataRetrievalAction: DataRetrievalAction = someData) =
     new ConfirmationController(frontendAppConfig, messagesApi, FakeAuthAction,
       dataRetrievalAction, new DataRequiredActionImpl, mockDataCacheConnector, formPartialRetriever, templateRenderer)
 
@@ -43,14 +46,15 @@ class ConfirmationControllerSpec extends ControllerSpecBase with ScalaFutures{
   "Confirmation Controller" must {
 
     "return OK and the correct view for a GET" in {
-      val result = controller().onPageLoad(NormalMode, submissionReference)(fakeRequest)
-
-      status(result) mustBe OK
-      contentAsString(result) mustBe viewAsString
+      val mockUserAnswers: UserAnswers = MockUserAnswers.minimalValidUserAnswers
+			when(mockUserAnswers.cacheMap) thenReturn CacheMap(cacheMapId, Map())
+			val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
+			status(result) mustBe OK
+			contentAsString(result) mustBe viewAsString
     }
 
     "redirect to Session Expired for a GET if no existing data is found" in {
-      val result = controller(dontGetAnyData).onPageLoad(NormalMode, submissionReference)(fakeRequest)
+      val result = controller(dontGetAnyData).onPageLoad(NormalMode)(fakeRequest)
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
 

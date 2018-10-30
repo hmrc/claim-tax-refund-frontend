@@ -231,7 +231,7 @@ POST       /delete-other-:index                                             cont
 GET        /change-delete-other-:index                                      controllers.DeleteOtherController.onPageLoad(mode: Mode = CheckMode, index: Index, itemName: String, collectionId: String)
 POST       /change-delete-other-:index                                      controllers.DeleteOtherController.onSubmit(mode: Mode = CheckMode, index: Index, itemName: String, collectionId: String)
 
-GET        /confirmation                                                    controllers.ConfirmationController.onPageLoad(mode: Mode = NormalMode, submissionReference: String)
+GET        /confirmation                                                    controllers.ConfirmationController.onPageLoad(mode: Mode = NormalMode)
 
 GET        /do-you-want-to-add-any-other                                    controllers.RemoveOtherSelectedOptionController.onPageLoad(mode: Mode = NormalMode, collectionId: String)
 POST       /do-you-want-to-add-any-other                                    controllers.RemoveOtherSelectedOptionController.onSubmit(mode: Mode = NormalMode, collectionId: String)

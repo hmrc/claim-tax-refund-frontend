@@ -84,6 +84,8 @@ object MockUserAnswers extends MockitoSugar {
     //contact details
     when(answers.anyTelephoneNumber) thenReturn None
 
+    //submission parts
+    when(answers.submissionReference) thenReturn None
     when(answers.removeOtherSelectedOption) thenReturn None
 
     answers
@@ -116,7 +118,7 @@ object MockUserAnswers extends MockitoSugar {
     when(answers.paymentAddressCorrect) thenReturn Some(true)
     when(answers.anyTelephoneNumber) thenReturn Some(TelephoneOption.No)
 
-
+		when(answers.submissionReference) thenReturn Some("ABC-1234-DEF")
     when(answers.pdf) thenReturn Some("<html>Test result</html>")
     when(answers.metadata) thenReturn Some(metadata)
     when(answers.xml) thenReturn Some("<xml>Test XML</xml>")
@@ -340,6 +342,7 @@ object MockUserAnswers extends MockitoSugar {
 
     when(answers.anyTelephoneNumber) thenReturn Some(TelephoneOption.Yes("0191123123"))
 
+		when(answers.submissionReference) thenReturn Some("ABC-1234-DEF")
     when(answers.pdf) thenReturn Some("<html>Test result</html>")
     when(answers.metadata) thenReturn Some(metadata)
     when(answers.xml) thenReturn Some("<xml>Test XML</xml>")
