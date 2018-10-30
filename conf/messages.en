@@ -489,4 +489,4 @@ itmpAddress.checkYourAnswersLabel = Do you want to send any payment to this addr
 
 RemoveOtherSelectedOption.title = Do you need to tell us about any other {0} you got?
 RemoveOtherSelectedOption.heading = Do you need to tell us about any other {0} you got?
-RemoveOtherSelectedOption.blank = RemoveOtherSelectedOption
+RemoveOtherSelectedOption.blank = Select yes if you need to tell us about any other {0} you got
