@@ -17,6 +17,7 @@
 @import config.FrontendAppConfig
 @import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
 @import viewmodels.{AnswerSection, Section}
+@import org.joda.time.LocalDateTime
 
 @(
         appConfig: FrontendAppConfig,
@@ -24,7 +25,8 @@
         nino: String,
         name: ItmpName,
         address: ItmpAddress,
-        telephone: Option[TelephoneOption]
+        telephone: Option[TelephoneOption],
+        date: LocalDateTime
 )(
     implicit
         request: Request[_],
@@ -37,6 +39,10 @@
 <h2>@messages("checkYourAnswers.userSection")</h2>
 
 <ul>
+    <li>
+        @messages("userDetails.checkYourAnswersLabel.date")<br>
+        @date.toString("dd/MM/yyyy HH:mm:ss")
+    </li>
     <li>
         @messages("userDetails.checkYourAnswersLabel.nino")<br>
         @nino

@@ -40,9 +40,19 @@ class RobotXML {
         <dateCreated>{dateCreated}</dateCreated>
 
         <userDetails>
-            <name>{ItmpNameFormat.asString(itmpName)}</name>
-            <nino>{nino}</nino>
-            <itmpAddress>{ItmpAddressFormat.toXml(itmpAddress)}</itmpAddress>
+          {
+            itmpName.givenName.map { value =>
+              <firstName>{value}</firstName>
+            } ++
+            itmpName.middleName.map { value =>
+              <middleName>{value}</middleName>
+            } ++
+            itmpName.familyName.map { value =>
+              <lastName>{value}</lastName>
+            }
+          }
+          <nino>{nino}</nino>
+          <itmpAddress>{ItmpAddressFormat.toXml(itmpAddress)}</itmpAddress>
         </userDetails>
 
         <claimSection>

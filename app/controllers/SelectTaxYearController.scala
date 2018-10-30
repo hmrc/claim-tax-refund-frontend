@@ -25,6 +25,7 @@ import javax.inject.Inject
 import models.{Mode, SelectTaxYear}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import uk.gov.hmrc.renderer.TemplateRenderer
@@ -45,7 +46,7 @@ class SelectTaxYearController @Inject()(
                                          implicit val templateRenderer: TemplateRenderer
                                        )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
-  def onPageLoad(mode: Mode) = (authenticate andThen getData) {
+  def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData) {
     implicit request =>
       val preparedForm = request.userAnswers.flatMap(x => x.selectTaxYear) match {
         case None => SelectTaxYearForm()
@@ -54,12 +55,12 @@ class SelectTaxYearController @Inject()(
       Ok(selectTaxYear(appConfig, preparedForm, mode))
   }
 
-  def onSubmit(mode: Mode) = (authenticate andThen getData).async {
+  def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData).async {
     implicit request =>
       SelectTaxYearForm().bindFromRequest().fold(
         (formWithErrors: Form[_]) =>
           Future.successful(BadRequest(selectTaxYear(appConfig, formWithErrors, mode))),
-        (value) =>
+        value =>
           for {
             cacheMap <- dataCacheConnector.save[SelectTaxYear](request.externalId, SelectTaxYearId.toString, value)
           } yield Redirect(navigator.nextPage(SelectTaxYearId, mode)(new UserAnswers(cacheMap)))

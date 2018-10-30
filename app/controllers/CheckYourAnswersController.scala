@@ -71,20 +71,21 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
       val itmpAddress: ItmpAddress = request.address.getOrElse(ItmpAddress(Some("No address returned from ITMP"), None, None, None, None, None, None, None))
       val nino: String = request.nino
 
+      val submissionReference = referenceGenerator.generateSubmissionNumber
+      val timeStamp = LocalDateTime.now
+
       val pdfHtml: String = pdf_check_your_answers(
         appConfig = appConfig,
         answerSections = cyaSections.sections,
         nino = nino,
         name = itmpName,
         address = itmpAddress,
-        telephone = request.userAnswers.anyTelephoneNumber
+        telephone = request.userAnswers.anyTelephoneNumber,
+        date = timeStamp
       ).toString
 
-      val submissionReference = referenceGenerator.generateSubmissionNumber
-      val timeStamp = LocalDateTime.now
-
       val robotXml = new RobotXML
-      val xml: String = robotXml.generateXml(request.userAnswers, submissionReference, timeStamp.toString("ssMMyyddmmHH"), nino, itmpName, itmpAddress).toString
+      val xml: String = robotXml.generateXml(request.userAnswers, submissionReference, timeStamp.toString("dd/MM/yyyy HH:mm:ss"), nino, itmpName, itmpAddress).toString
 
       val submissionMark = SubmissionMark.getSfMark(xml)
 

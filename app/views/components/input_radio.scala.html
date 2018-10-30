@@ -18,32 +18,32 @@
 @import viewmodels.InputViewModelBase
 
 @(
-viewModel: InputViewModelBase,
-legend: String,
-legendClass: Option[String] = None,
-hint: Option[String] = None,
-trackGa: Boolean = false,
-inputs: Seq[RadioOption]
+    viewModel: InputViewModelBase,
+    legend: String,
+    legendClass: Option[String] = None,
+    hint: Option[String] = None,
+    trackGa: Boolean = false,
+    inputs: Seq[RadioOption]
 )(implicit messages: Messages)
 
-<div class="form-group">
-    <fieldset class="form-group" id="@{viewModel.id}">
+<div class="form-group @if(viewModel.errorKey.nonEmpty){form-field--error}">
+    <fieldset id="@{viewModel.id}">
         <legend>
-          <span class="@if(legendClass.nonEmpty){@{legendClass.get}}">@legend</span>
-          @if(hint.nonEmpty){
-          <span class="form-hint">@{hint.get}</span>
-          }
-          @if(viewModel.errorKey.nonEmpty){
-          <span class="error-notification" id="error-message-@{viewModel.id}-input">@messages(viewModel.errorKey)</span>
-          }
+            <span class="@if(legendClass.nonEmpty){@{legendClass.get}}">@legend</span>
+            @if(hint.nonEmpty){
+                <span class="form-hint">@{hint.get}</span>
+            }
+            @if(viewModel.errorKey.nonEmpty){
+                <span class="error-notification" id="error-message-@{viewModel.id}-input">@messages(viewModel.errorKey)</span>
+            }
         </legend>
         @for(input <- inputs) {
-        <div class="multiple-choice">
-            <input id="@{input.id}" type="radio" name="@{viewModel.id}" value="@{input.value}" @if(viewModel.value == Some(input.value)){checked="checked"} @if(trackGa){data-journey-click="claim-tax-refund-frontend:click:@{input.id}"}/>
-            <label for="@{input.id}">
-                @messages(input.messageKey)
-            </label>
-        </div>
-        }
+            <div class="multiple-choice">
+                <input id="@{input.id}" type="radio" name="@{viewModel.id}" value="@{input.value}" @if(viewModel.value.contains(input.value)){checked="checked"} @if(trackGa){data-journey-click="claim-tax-refund-frontend:click:@{input.id}"}/>
+                <label for="@{input.id}">
+                    @messages(input.messageKey)
+                </label>
+            </div>
+            }
     </fieldset>
 </div>

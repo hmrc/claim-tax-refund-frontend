@@ -18,6 +18,7 @@ package views
 
 import base.SpecBase
 import models.TelephoneOption
+import org.joda.time.LocalDateTime
 import org.scalatest.mockito.MockitoSugar
 import play.api.i18n.Messages
 import play.twirl.api.Html
@@ -34,6 +35,7 @@ class PdfCheckYourAnswersViewSpec extends SpecBase with ViewBehaviours with Mock
   private val cyaSection = new CheckYourAnswersSections(helper, answers)
   private val sections = cyaSection.sections
   private val nino = "AB123456A"
+  private val date = LocalDateTime.now()
   private val itmpName: ItmpName = ItmpName(Some("First"), Some("Middle"), Some("Last"))
   private val telephoneNumber: Option[TelephoneOption] = Some(TelephoneOption.Yes("01234567890"))
 
@@ -43,7 +45,8 @@ class PdfCheckYourAnswersViewSpec extends SpecBase with ViewBehaviours with Mock
     nino = nino,
     name = itmpName,
     address = itmpAddress,
-    telephone = telephoneNumber)(fakeRequest, messages: Messages)
+    telephone = telephoneNumber,
+    date = date)(fakeRequest, messages: Messages)
 
   "PDF Check your answers view" must {
     "display the correct page title" in {
@@ -60,6 +63,11 @@ class PdfCheckYourAnswersViewSpec extends SpecBase with ViewBehaviours with Mock
       assertContainsText(doc, messagesApi("checkYourAnswers.taxableIncomeSection"))
       assertContainsText(doc, messagesApi("checkYourAnswers.paymentSection"))
       assertContainsText(doc, messagesApi("checkYourAnswers.contactSection"))
+    }
+
+    "display date" in {
+      val doc = asDocument(view())
+      assertContainsText(doc, date.toString("dd/MM/yyyy HH:mm:ss"))
     }
 
     "display nino" in {

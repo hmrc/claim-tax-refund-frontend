@@ -135,6 +135,7 @@ userDetails.title = Your details
 userDetails.heading = Your details
 userDetails.checkYourAnswersLabel.name = Name
 userDetails.checkYourAnswersLabel.nino = National insurance number
+userDetails.checkYourAnswersLabel.date = Date received
 userDetails.checkYourAnswersLabel.address = Address
 userDetails.checkYourAnswersLabel.telephone = Telephone number
 userDetails.checkYourAnswersLabel.noTelephone = Not provided
