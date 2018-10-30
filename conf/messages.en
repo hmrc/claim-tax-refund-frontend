@@ -133,6 +133,7 @@ unauthorised.heading = You can’t access this service with this account
 
 userDetails.title = Your details
 userDetails.heading = Your details
+userDetails.checkYourAnswersLabel.date = Date received
 userDetails.checkYourAnswersLabel.name = Name
 userDetails.checkYourAnswersLabel.nino = National insurance number
 userDetails.checkYourAnswersLabel.address = Address

@@ -32,7 +32,7 @@ class RobotsSpec extends SpecBase {
 
   private val submissionReference: String = "1234"
   private val timeStamp: String = "1234567890"
-  private val name: ItmpName = ItmpName(Some("TestName"),None,Some("TestLastName"))
+  private val name: ItmpName = ItmpName(Some("TestName"),Some("TestMiddleName"),Some("TestLastName"))
   private val address: ItmpAddress = ItmpAddress(
     Some("Address line 1"),
     Some("Address line 2"),
@@ -57,7 +57,9 @@ class RobotsSpec extends SpecBase {
         <submissionReference>1234</submissionReference>
         <dateCreated>1234567890</dateCreated>
         <userDetails>
-          <name>TestName TestLastName</name>
+          <firstName>TestName</firstName>
+          <middleName>TestMiddleName</middleName>
+          <lastName>TestLastName</lastName>
           <nino>ZZ123456A</nino>
           <itmpAddress>Address line 1, Address line 2, Address line 3, Address line 4, Address line 5, ZZ11ZZ, United Kingdom, GB</itmpAddress>
         </userDetails>
@@ -93,7 +95,9 @@ class RobotsSpec extends SpecBase {
     }
 
     "have correct sections in userDetails" in {
-      fullXml \ "userDetails" \ "name" must contain(<name>TestName TestLastName</name>)
+      fullXml \ "userDetails" \ "firstName" must contain(<firstName>TestName</firstName>)
+      fullXml \ "userDetails" \ "middleName" must contain(<middleName>TestMiddleName</middleName>)
+      fullXml \ "userDetails" \ "lastName" must contain(<lastName>TestLastName</lastName>)
       fullXml \ "userDetails" \ "nino" must contain(<nino>ZZ123456A</nino>)
       fullXml \ "userDetails" \ "itmpAddress" must contain(<itmpAddress>Address line 1, Address line 2, Address line 3, Address line 4, Address line 5, ZZ11ZZ, United Kingdom, GB</itmpAddress>)
     }
