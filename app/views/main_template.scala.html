@@ -59,7 +59,9 @@
     )
 }
 
-@helpForm = @{formPartialRetriever.getPartialContent(appConfig.reportAProblemPartialUrl)}
+@helpForm = @{
+    formPartialRetriever.getPartialContent(appConfig.reportAProblemPartialUrl)
+}
 
 @{
     templateRenderer.renderDefaultTemplate(
