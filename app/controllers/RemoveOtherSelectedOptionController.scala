@@ -46,12 +46,20 @@ class RemoveOtherSelectedOptionController @Inject()(appConfig: FrontendAppConfig
 																									 )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
 	private val errorKey = "RemoveOtherSelectedOption.blank"
-	val form: Form[Boolean] = formProvider(messagesApi(errorKey))
+	private val otherBenefitsKey = messagesApi("RemoveOtherSelectedOption.otherBenefits")
+	private val otherCompanyBenefitsKey = messagesApi("RemoveOtherSelectedOption.companyBenefits")
+	private val otherTaxableIncomeKey = messagesApi("RemoveOtherSelectedOption.otherIncome")
 
 	def onPageLoad(mode: Mode, collectionId: String): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
 		implicit request =>
 			request.userAnswers.selectTaxYear.map {
 				selectedTaxYear =>
+					val collectionName = collectionId match {
+						case OtherBenefit.collectionId => otherBenefitsKey
+						case OtherCompanyBenefit.collectionId => otherCompanyBenefitsKey
+						case OtherTaxableIncome.collectionId => otherTaxableIncomeKey
+					}
+					val form: Form[Boolean] = formProvider(messagesApi(errorKey, collectionName))
 					Ok(removeOtherSelectedOption(appConfig, form, mode, selectedTaxYear, collectionId))
 			}.getOrElse {
 				Redirect(routes.SessionExpiredController.onPageLoad())
@@ -63,6 +71,13 @@ class RemoveOtherSelectedOptionController @Inject()(appConfig: FrontendAppConfig
 			request.userAnswers.selectTaxYear.map {
 				selectedTaxYear =>
 					val taxYear = selectedTaxYear
+					val collectionName = collectionId match {
+						case OtherBenefit.collectionId => otherBenefitsKey
+						case OtherCompanyBenefit.collectionId => otherCompanyBenefitsKey
+						case OtherTaxableIncome.collectionId => otherTaxableIncomeKey
+					}
+					val form: Form[Boolean] = formProvider(messagesApi(errorKey, collectionName))
+
 					form.bindFromRequest().fold(
 						(formWithErrors: Form[_]) =>
 							Future.successful(BadRequest(removeOtherSelectedOption(appConfig, formWithErrors, mode, taxYear, collectionId))),
