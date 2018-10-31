@@ -26,7 +26,7 @@ class ReferenceGenerator {
     val dmsSubmission = new StringBuilder
     for (count <- 1 to 10) {
       if (count == 4 || count == 8) {
-        dmsSubmission.append("-")
+        dmsSubmission.append("‑")
       }
       dmsSubmission.append(charList(randomGen.nextInt(charList.length)))
     }
