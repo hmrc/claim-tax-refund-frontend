@@ -27,6 +27,7 @@ class CascadeUpsert {
 
   val funcMap: Map[String, (JsValue, CacheMap) => CacheMap] =
     Map(
+      SelectTaxYearId.toString -> removeEmployments,
       SelectBenefitsId.toString -> storeBenefit,
       SelectCompanyBenefitsId.toString -> storeCompanyBenefit,
       SelectTaxableIncomeId.toString -> storeTaxableIncome,
@@ -52,6 +53,19 @@ class CascadeUpsert {
 
   private def store[A](key: String, value: A, cacheMap: CacheMap)(implicit fmt: Format[A]) =
     cacheMap copy (data = cacheMap.data + (key -> Json.toJson(value)))
+
+  private def removeEmployments(newTaxYear: JsValue, cacheMap: CacheMap): CacheMap = {
+    val mapToStore = cacheMap.data.get(SelectTaxYearId.toString).map {
+      cachedTaxYear =>
+        if(cachedTaxYear != newTaxYear){
+          cacheMap copy (data = cacheMap.data - (EmploymentDetailsId.toString, EnterPayeReferenceId.toString, DetailsOfEmploymentOrPensionId.toString))
+        } else {
+          cacheMap
+        }
+    }.getOrElse(cacheMap)
+
+    store(SelectTaxYearId.toString, newTaxYear, mapToStore)
+  }
 
   private def anyBenefits(value: JsValue, cacheMap: CacheMap): CacheMap =
     if (value.as[Boolean]) {
