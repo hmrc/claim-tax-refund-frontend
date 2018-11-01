@@ -59,6 +59,10 @@
     )
 }
 
+@helpForm = @{
+    formPartialRetriever.getPartialContent(appConfig.reportAProblemPartialUrl)
+}
+
 @{
     templateRenderer.renderDefaultTemplate(
         path = appConfig.frontendTemplatePath,
@@ -71,6 +75,7 @@
             "linkElems" -> linkElem,
             "scriptElems" -> scriptElem,
             "mainClass" -> mainClass,
+            "getHelpForm" -> helpForm,
             "isWelsh" -> {
                 messages.lang.code == "cy"
             },

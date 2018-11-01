@@ -50,7 +50,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
   }
 
   def employmentDetails: Option[AnswerRow] = userAnswers.employmentDetails map {
-    x => AnswerRow(label = "employmentDetails.heading",
+    x => AnswerRow(label = "employmentDetails.correctDetails",
 			answer = if(x) "site.yes" else "site.no",
 			answerIsMessageKey = true,
 			url = Some(routes.EmploymentDetailsController.onPageLoad(CheckMode).url),
@@ -329,6 +329,15 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
   }
 
 
+	def howMuchBankInterest: Option[AnswerRow] = userAnswers.howMuchBankInterest map {
+		x =>
+			AnswerRow(label = "howMuchBankInterest.heading",
+				answer = s"£$x",
+				answerIsMessageKey = false,
+				url = Some(routes.HowMuchBankInterestController.onPageLoad(CheckMode).url),
+				changeLabel = "howMuchBankInterest.changeLabel")
+	}
+
   def howMuchRentalIncome: Option[AnswerRow] = userAnswers.howMuchRentalIncome map {
     x =>
       AnswerRow(label = "howMuchRentalIncome.heading",
@@ -336,15 +345,6 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
                 answerIsMessageKey = false,
                 url = Some(routes.HowMuchRentalIncomeController.onPageLoad(CheckMode).url),
                 changeLabel = "howMuchRentalIncome.changeLabel")
-  }
-
-  def howMuchBankInterest: Option[AnswerRow] = userAnswers.howMuchBankInterest map {
-    x =>
-      AnswerRow(label = "howMuchBankInterest.heading",
-                answer = s"£$x",
-                answerIsMessageKey = false,
-                url = Some(routes.HowMuchBankInterestController.onPageLoad(CheckMode).url),
-                changeLabel = "howMuchBankInterest.changeLabel")
   }
 
   def howMuchInvestmentOrDividend: Option[AnswerRow] = userAnswers.howMuchInvestmentOrDividend map {
@@ -441,17 +441,9 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
         s"whereToSendPayment.$x", true, Some(routes.WhereToSendPaymentController.onPageLoad(CheckMode).url), "whereToSendPayment.changeLabel")
   }
 
-  def paymentAddressCorrect: Option[AnswerRow] = userAnswers.paymentAddressCorrect map {
-    x => AnswerRow(
-			label = "paymentAddressCorrect.heading",
-			answer = if(x) "site.yes" else "site.no",
-			answerIsMessageKey = true,
-			url = Some(routes.PaymentAddressCorrectController.onPageLoad(CheckMode).url),
-			changeLabel = "paymentAddressCorrect.changeLabel")
-  }
-
-  def itmpAddress: Option[AnswerRow] = userAnswers.itmpAddress map {
+  def paymentAddressCorrect: Option[AnswerRow] = userAnswers.itmpAddress map {
     x =>
+			val label = if(userAnswers.paymentAddressCorrect.getOrElse(true)) "site.yes" else "site.no"
       AnswerRow(
         label = "<p>" + messages("itmpAddress.heading") + "</p>" + ItmpAddressFormat.asString(
           ItmpAddress(
@@ -479,25 +471,25 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
 
   def anyAgentRef: Option[AnswerRow] = userAnswers.anyAgentRef map {
     x => AnswerRow(
-			label = "anyAgentRef.heading",
+			label = messages("anyAgentRef.heading", userAnswers.nomineeFullName.getOrElse("your nominee")),
       answer = x match {
         case AnyAgentRef.Yes(agentRef) => "site.yes"
         case AnyAgentRef.No => "site.no"
       },
 			answerIsMessageKey = true,
 			url = Some(routes.AnyAgentRefController.onPageLoad(CheckMode).url),
-			changeLabel = "anyAgentRef.changeLabel"
+			changeLabel = messages("anyAgentRef.changeLabel", userAnswers.nomineeFullName.getOrElse("your nominee"))
 		)
   }
 
   def agentReferenceNumber: Option[AnswerRow] = userAnswers.anyAgentRef match {
     case Some(AnyAgentRef.Yes(number)) =>
       Some(
-				AnswerRow(label = "anyAgentRef.heading",
+				AnswerRow(label = "anyAgentRef.agentRefField",
         answer = s"$number",
 				answerIsMessageKey = false,
         url = Some(routes.AnyAgentRefController.onPageLoad(CheckMode).url),
-				changeLabel = "anyAgentRef.changeLabel"
+				changeLabel = messages("anyAgentRef.changeLabel", userAnswers.nomineeFullName.getOrElse("your nominee"))
       ))
     case _ => None
   }
@@ -548,7 +540,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
   def paymentLookupAddress: Option[AnswerRow] = userAnswers.paymentLookupAddress map {
     x =>
       AnswerRow(
-        label = "addressLookup.heading",
+        label = "paymentAddressCorrect.checkYourAnswersLabel",
         answer = AddressLookup.asString(
           AddressLookup(
             x.address,
@@ -556,7 +548,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
         ),
 				answerIsMessageKey = false,
         url = Some(routes.IsPaymentAddressInTheUKController.onPageLoad(CheckMode).url),
-				changeLabel = "addressLookup.changeLabel"
+				changeLabel = "paymentAddressCorrect.changeLabel"
       )
   }
 
@@ -581,11 +573,11 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
   def telephoneNumber: Option[AnswerRow] = userAnswers.anyTelephoneNumber match {
     case Some(TelephoneOption.Yes(number)) =>
       Some(AnswerRow(
-				label = "telephoneNumber.heading",
+				label = "telephoneNumber.telephoneNumberField",
         answer = s"$number",
 				answerIsMessageKey = false,
         url = Some(routes.TelephoneNumberController.onPageLoad(CheckMode).url),
-				changeLabel = "telephoneNumber.changeLabel"
+				changeLabel = "telephoneNumber.telephoneNumberField.changeLabel"
       ))
     case _ => None
   }

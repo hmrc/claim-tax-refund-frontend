@@ -149,7 +149,6 @@ selectTaxYear.current-year-minus-2 = 6 April {0} to 5 April {1}
 selectTaxYear.current-year-minus-3 = 6 April {0} to 5 April {1}
 selectTaxYear.current-year-minus-4 = 6 April {0} to 5 April {1}
 selectTaxYear.current-year-minus-5 = 6 April {0} to 5 April {1}
-selectTaxYear.checkYourAnswersLabel = The tax year your claim is for
 selectTaxYear.blank = Select which tax year you want to claim for
 
 anyBenefits.title = Did you get any taxable benefits?
@@ -232,17 +231,18 @@ anyOtherTaxableIncome.incompleteSubmit = Complete {0}
 nomineeFullName.title = What is the full name of the person you want us to send any payment to?
 nomineeFullName.heading = What is the full name of the person you want us to send any payment to?
 nomineeFullName.checkYourAnswersLabel = Full name of the person you want us to send any payment to
-nomineeFullName.changeLabel = Change what is the full name of the person you want us to send any payment to
+nomineeFullName.changeLabel = Change the full name of the person you want us to send any payment to
 nomineeFullName.blank = Enter the full name of the person you want us to send any payment to
 nomineeFullName.tooLong = Full name of the person you want us to send any payment must be 100 characters or less
 
 anyAgentRef.title = Is {0} an agent with an agent reference number?
 anyAgentRef.heading = Is {0} an agent with an agent reference number?
+AnyAgentRef.changeLabel = Change is {0} an agent with an agent reference number
 anyAgentRefOption.checkYourAnswersLabel = Does the person you want us to send any payment to have an agent reference?
 anyAgentRef.checkYourAnswersLabel = Agent reference
-anyAgentRef.changeLabel =
 anyAgentRef.blank = Select yes if {0} is an agent with an agent reference
 anyAgentRef.agentRefField = Agent reference
+anyagentRef.agentRefField.changeLabel = Change {0} agent reference
 anyAgentRef.blankAgentRef = Enter {0}’s agent reference
 anyAgentRef.maxLength = Agent reference can only be up to 160 characters
 
@@ -274,17 +274,18 @@ telephoneNumber.title = Can we contact you by telephone if we need more informat
 telephoneNumber.heading = Can we contact you by telephone if we need more information about your claim?
 telephoneNumberOption.checkYourAnswersLabel = Can we contact you by phone?
 telephoneNumber.checkYourAnswersLabel = Phone number
-telephoneNumber.changeLabel = Change can we contact you by telephone if we need more information about your claim
+telephoneNumber.changeLabel = Change if we can contact you by phone if we need more information about your claim
 telephoneNumber.invalid = Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192
 telephoneNumber.notSelected = Select yes if we can contact you by telephone if we need more information about your claim
 telephoneNumber.blank = Enter a telephone number we can contact you on
 telephoneNumber.telephoneNumberField = Telephone number
+telephoneNumber.telephoneNumberField.changeLabel = Change telephone number
 telephoneNumber.hintPara1 = This is the quickest way to get more information and process your claim. If you do not want us to contact you by telephone, we will contact you by letter.
 
 employmentDetails.title = Are these details correct?
 employmentDetails.heading = Are these details correct?
 employmentDetails.checkYourAnswersLabel = Employment details
-employmentDetails.changeLabel = change are these details correct
+employmentDetails.changeLabel = Change if your employment and pension details are correct
 employmentDetails.blank = Select yes if these employment and pension details are correct
 employmentDetails.correctDetails = Are these employment and pension details correct?
 employmentDetails.employer = Name of employer or pension provider
@@ -295,7 +296,7 @@ selectCompanyBenefits.title = Which taxable company benefits did you get?
 selectCompanyBenefits.heading = Which taxable company benefits did you get?
 selectCompanyBenefits.blank = Select the taxable company benefits you got
 selectCompanyBenefits.checkYourAnswersLabel = Which taxable company benefits did you get?
-selectCompanyBenefits.changeLabel = Change which taxable company benefits did you get
+selectCompanyBenefits.changeLabel = Change which taxable company benefits you got
 selectCompanyBenefits.company-car-benefit = company car benefit
 selectCompanyBenefits.fuel-benefit = fuel benefit
 selectCompanyBenefits.medical-benefit = medical benefit
@@ -304,7 +305,7 @@ selectCompanyBenefits.other-company-benefit = Other taxable company benefits
 anyCompanyBenefits.title = Did you get any taxable company benefits from your employer?
 anyCompanyBenefits.heading = Did you get any taxable company benefits from your employer?
 anyCompanyBenefits.checkYourAnswersLabel = Did you get any company benefits
-anyCompanyBenefits.changeLabel = Change did you get any taxable company benefits from your employer
+anyCompanyBenefits.changeLabel = Change if you got any taxable company benefits
 anyCompanyBenefits.blank =  Select yes if you got any taxable company benefits
 anyCompanyBenefits.listHeading = Taxable company benefits include:
 
@@ -331,7 +332,7 @@ otherCompanyBenefit.change = Change other company benefits
 selectBenefits.title = Which taxable benefits did you get?
 selectBenefits.heading = Which taxable benefits did you get?
 selectBenefits.checkYourAnswersLabel = Which taxable benefits did you get?
-selectBenefits.changeLabel = Change which taxable benefits did you get
+selectBenefits.changeLabel = Change Change which taxable benefits you got
 selectBenefits.blank = Select the taxable benefits you got
 selectBenefits.jobseekers-allowance = contribution-based Jobseeker’s Allowance
 selectBenefits.incapacity-benefit = Incapacity Benefit
@@ -407,7 +408,7 @@ selectTaxableIncome.blank = Select which taxable incomes you got
 selectTaxableIncome.heading = Which taxable incomes did you get?
 selectTaxableIncome.title = Which taxable incomes did you get?
 selectTaxableIncome.checkYourAnswersLabel = Which taxable incomes did you get?
-selectTaxableIncome.changeLabel = Change which taxable incomes did you got
+selectTaxableIncome.changeLabel = Change which taxable incomes you got
 selectTaxableIncome.rental-income = property rental income
 selectTaxableIncome.bank-or-building-society-interest = bank and building society interest
 selectTaxableIncome.investment-or-dividends = investments and dividends
@@ -442,6 +443,7 @@ otherTaxableIncome.change = Change other taxable incomes
 
 anyTaxableRentalIncome.title = Did you pay Income Tax on your property rental income?
 anyTaxableRentalIncome.heading = Did you pay Income Tax on your property rental income?
+anyTaxableRentalIncome.changeLabel = Change if you paid Income Tax on your property rental income
 anyTaxableRentalIncomeOption.checkYourAnswersLabel = Did you pay Income Tax on your your property rental income?
 anyTaxableRentalIncome.checkYourAnswersLabel = Income tax you paid on property rental income
 anyTaxableRentalIncome.invalid = How much Income Tax you paid on your property rental income must be an amount of money, like 199 or 234.56
@@ -451,6 +453,7 @@ anyTaxableRentalIncome.anyTaxPaidAmountField = How much Income Tax did you pay o
 
 anyTaxableBankInterest.title = Did you pay Income Tax on your bank and building society interest?
 anyTaxableBankInterest.heading = Did you pay Income Tax on your bank and building society interest?
+anyTaxableBankInterest.changeLabel = Change if you paid Income Tax on your bank and building society interest
 anyTaxableBankInterest.hint = This may be shown on an annual statement from your bank or building society.
 anyTaxableBankInterestOption.checkYourAnswersLabel = Did you pay Income Tax on your bank and building society interest?
 anyTaxableBankInterest.checkYourAnswersLabel = Income tax you paid on Bank and Building Society Interest
@@ -461,6 +464,7 @@ anyTaxableBankInterest.anyTaxPaidAmountField = How much Income Tax did you pay o
 
 anyTaxableInvestments.title = Did you pay Income Tax on your income from investments and dividends?
 anyTaxableInvestments.heading = Did you pay Income Tax on your income from investments and dividends?
+anyTaxableInvestments.changeLabel = Change if you paid Income Tax on your investments and dividends
 anyTaxableInvestmentsOption.checkYourAnswersLabel = Did you pay Income Tax on your income from investments and dividends?
 anyTaxableInvestments.checkYourAnswersLabel = Income tax you paid on investment or dividend income
 anyTaxableInvestments.invalid = How much Income Tax you paid on your income from investments and dividends must be an amount of money, like 199 or 234.56
@@ -470,6 +474,7 @@ anyTaxableInvestments.anyTaxPaidAmountField = How much Income Tax did you pay on
 
 anyTaxableForeignIncome.title = Did you pay Income Tax on your foreign income?
 anyTaxableForeignIncome.heading = Did you pay Income Tax on your foreign income?
+anyTaxableForeignIncome.changeLabel = Change if you paid Income Tax on your foreign income
 anyTaxableForeignIncomeOption.checkYourAnswersLabel = Did you pay Income Tax on your foreign income?
 anyTaxableForeignIncome.checkYourAnswersLabel = Income tax you paid on foreign income
 anyTaxableForeignIncome.invalid = How much Income Tax you paid on your foreign income must be an amount of money, like 199 or 234.56
@@ -488,8 +493,8 @@ anyTaxableOtherIncome.anyTaxPaidAmountField = How much Income Tax did you pay on
 
 paymentAddressCorrect.title = Is this the address you want us to send any payment to?
 paymentAddressCorrect.heading = Is this the address you want us to send any payment to?
-paymentAddressCorrect.checkYourAnswersLabel = Do you want to send any payment to this address?
-paymentAddressCorrect.changeLabel = Change do you want to send any payment to this address
+paymentAddressCorrect.checkYourAnswersLabel = Address you want us to send any payment to
+paymentAddressCorrect.changeLabel = Change if this is the address you want us to send any payment to
 paymentAddressCorrect.blank = Select yes if you want us to send any payment to this address
 
 deleteOther.title = Are you sure you want to remove {0}?
@@ -504,7 +509,7 @@ confirmation.whatHappensNext.line1 = We will process your claim within 15 days a
 confirmation.survey.linkText = What did you think of this service?
 confirmation.survey.time = (takes 30 seconds)
 
-itmpAddress.heading = Do you want to send any payment to this address?
+itmpAddress.heading = Is this the address you want us to send any payment to?
 itmpAddress.changeLabel = Change do you want to send any payment to this address
 
 RemoveOtherSelectedOption.title = Do you need to tell us about any other {0} you got?

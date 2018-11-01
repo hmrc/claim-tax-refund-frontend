@@ -29,14 +29,11 @@ class FrontendAppConfig @Inject()(override val runModeConfiguration: Configurati
 
   override protected def mode: Mode = environment.mode
 
-  private def loadConfig(key: String) = runModeConfiguration.getString(key).getOrElse(throw new Exception(s"Missing configuration key: $key"))
+  private def loadConfig(key: String): String = runModeConfiguration.getString(key).getOrElse(throw new Exception(s"Missing configuration key: $key"))
 
-  private def loadConfigInt(key: String) = runModeConfiguration.getInt(key).getOrElse(throw new Exception(s"Missing configuration key: $key"))
+  private def loadConfigInt(key: String): Int = runModeConfiguration.getInt(key).getOrElse(throw new Exception(s"Missing configuration key: $key"))
 
-  private def loadBoolean(key: String) = runModeConfiguration.getBoolean(key).getOrElse(throw new Exception(s"Missing configuration key: $key"))
-
-
-  private lazy val contactHost = runModeConfiguration.getString("contact-frontend.host").getOrElse("")
+  private lazy val contactHost = baseUrl("contact-frontend")
   private val contactFormServiceIdentifier = "claimtaxrefundfrontend"
 
   lazy val assetsPrefix: String = loadConfig(s"assets.url") + loadConfig(s"assets.version") + '/'
@@ -44,7 +41,7 @@ class FrontendAppConfig @Inject()(override val runModeConfiguration: Configurati
 
   lazy val analyticsToken: String = loadConfig(s"google-analytics.token")
   lazy val analyticsHost: String = loadConfig(s"google-analytics.host")
-  lazy val reportAProblemPartialUrl = s"$contactHost/contact/problem_reports_ajax?service=$contactFormServiceIdentifier"
+  lazy val reportAProblemPartialUrl = s"$contactHost/contact/problem_reports?service=$contactFormServiceIdentifier&secure=true"
   lazy val reportAProblemNonJSUrl = s"$contactHost/contact/problem_reports_nonjs?service=$contactFormServiceIdentifier"
   lazy val betaFeedbackUrl = s"$contactHost/contact/beta-feedback"
   lazy val betaFeedbackUnauthenticatedUrl = s"$contactHost/contact/beta-feedback-unauthenticated"
@@ -81,9 +78,7 @@ class FrontendAppConfig @Inject()(override val runModeConfiguration: Configurati
   lazy val payeRegex: String = loadConfig("microservice.services.validation.paye-regex")
   lazy val currencyRegex: String = loadConfig("microservice.services.validation.currency-regex")
 
-  def languageMap: Map[String, Lang] = Map(
-    "english" -> Lang("en"),
-    "cymraeg" -> Lang("cy"))
+  def languageMap: Map[String, Lang] = Map("english" -> Lang("en"), "cymraeg" -> Lang("cy"))
 
   def routeToSwitchLanguage: String => Call = (lang: String) => routes.LanguageSwitchController.switchToLanguage(lang)
 }

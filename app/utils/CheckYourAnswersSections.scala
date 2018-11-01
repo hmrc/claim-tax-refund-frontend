@@ -17,8 +17,8 @@
 package utils
 
 import controllers.routes
-import models.{CheckMode, Index, NormalMode}
-import viewmodels.AnswerSection
+import models.{CheckMode, Index, NormalMode, WhereToSendPayment}
+import viewmodels.{AnswerRow, AnswerSection}
 
 class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: UserAnswers) {
 
@@ -145,6 +145,43 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
   def taxableIncomeSection = AnswerSection(Some("checkYourAnswers.taxableIncomeSection"), Seq(
     cyaHelper.anyTaxableIncome,
     cyaHelper.selectTaxableIncome,
+		//bank interest
+		cyaHelper.howMuchBankInterest,
+		cyaHelper.anyTaxPaid(
+			"anyTaxableBankInterestOption.checkYourAnswersLabel",
+			userAnswers.anyTaxableBankInterest,
+			Some(routes.AnyTaxableBankInterestController.onPageLoad(CheckMode).url)
+		),
+		cyaHelper.taxPaid(
+			"anyTaxableBankInterest.checkYourAnswersLabel",
+			userAnswers.anyTaxableBankInterest,
+			Some(routes.AnyTaxableBankInterestController.onPageLoad(CheckMode).url)
+		),
+		//Foreign income
+		cyaHelper.howMuchForeignIncome,
+		cyaHelper.anyTaxPaid(
+			"anyTaxableForeignIncomeOption.checkYourAnswersLabel",
+			userAnswers.anyTaxableForeignIncome,
+			Some(routes.AnyTaxableForeignIncomeController.onPageLoad(CheckMode).url)
+		),
+		cyaHelper.taxPaid(
+			"anyTaxableForeignIncome.checkYourAnswersLabel",
+			userAnswers.anyTaxableForeignIncome,
+			Some(routes.AnyTaxableForeignIncomeController.onPageLoad(CheckMode).url)
+		),
+		//Investments and dividends
+		cyaHelper.howMuchInvestmentOrDividend,
+		cyaHelper.anyTaxPaid(
+			"anyTaxableInvestmentsOption.checkYourAnswersLabel",
+			userAnswers.anyTaxableInvestments,
+			Some(routes.AnyTaxableInvestmentsController.onPageLoad(CheckMode).url)
+		),
+		cyaHelper.taxPaid(
+			"anyTaxableInvestments.checkYourAnswersLabel",
+			userAnswers.anyTaxableInvestments,
+			Some(routes.AnyTaxableInvestmentsController.onPageLoad(CheckMode).url)
+		),
+		//property Rental
     cyaHelper.howMuchRentalIncome,
     cyaHelper.anyTaxPaid(
       "anyTaxableRentalIncomeOption.checkYourAnswersLabel",
@@ -155,39 +192,6 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
       "anyTaxableRentalIncome.checkYourAnswersLabel",
       userAnswers.anyTaxableRentalIncome,
       Some(routes.AnyTaxableRentalIncomeController.onPageLoad(CheckMode).url)
-    ),
-    cyaHelper.howMuchBankInterest,
-    cyaHelper.anyTaxPaid(
-      "anyTaxableBankInterestOption.checkYourAnswersLabel",
-      userAnswers.anyTaxableBankInterest,
-      Some(routes.AnyTaxableBankInterestController.onPageLoad(CheckMode).url)
-    ),
-    cyaHelper.taxPaid(
-      "anyTaxableBankInterest.checkYourAnswersLabel",
-      userAnswers.anyTaxableBankInterest,
-      Some(routes.AnyTaxableBankInterestController.onPageLoad(CheckMode).url)
-    ),
-    cyaHelper.howMuchInvestmentOrDividend,
-    cyaHelper.anyTaxPaid(
-      "anyTaxableInvestmentsOption.checkYourAnswersLabel",
-      userAnswers.anyTaxableInvestments,
-      Some(routes.AnyTaxableInvestmentsController.onPageLoad(CheckMode).url)
-    ),
-    cyaHelper.taxPaid(
-      "anyTaxableInvestments.checkYourAnswersLabel",
-      userAnswers.anyTaxableInvestments,
-      Some(routes.AnyTaxableInvestmentsController.onPageLoad(CheckMode).url)
-    ),
-    cyaHelper.howMuchForeignIncome,
-    cyaHelper.anyTaxPaid(
-      "anyTaxableForeignIncomeOption.checkYourAnswersLabel",
-      userAnswers.anyTaxableForeignIncome,
-      Some(routes.AnyTaxableForeignIncomeController.onPageLoad(CheckMode).url)
-    ),
-    cyaHelper.taxPaid(
-      "anyTaxableForeignIncome.checkYourAnswersLabel",
-      userAnswers.anyTaxableForeignIncome,
-      Some(routes.AnyTaxableForeignIncomeController.onPageLoad(CheckMode).url)
     )
   ).flatten)
 
@@ -230,17 +234,29 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
     }
   }
 
-  def paymentSection = AnswerSection(Some("checkYourAnswers.paymentSection"), Seq(
-    cyaHelper.whereToSendPayment,
-    cyaHelper.itmpAddress,
-    cyaHelper.nomineeFullName,
-    cyaHelper.anyAgentRef,
-    cyaHelper.agentReferenceNumber,
-    cyaHelper.isPaymentAddressInTheUK,
-    cyaHelper.paymentUKAddress,
-    cyaHelper.paymentInternationalAddress,
-    cyaHelper.paymentLookupAddress
-  ).flatten)
+  def generatePaymentSection: Seq[AnswerRow] = {
+		if (userAnswers.whereToSendPayment.nonEmpty && userAnswers.whereToSendPayment.get == WhereToSendPayment.Myself) {
+      Seq(cyaHelper.whereToSendPayment,
+        cyaHelper.paymentAddressCorrect,
+        cyaHelper.isPaymentAddressInTheUK,
+        cyaHelper.paymentUKAddress,
+        cyaHelper.paymentInternationalAddress,
+        cyaHelper.paymentLookupAddress
+      )
+    } else {
+      Seq(cyaHelper.whereToSendPayment,
+        cyaHelper.nomineeFullName,
+				cyaHelper.anyAgentRef,
+        cyaHelper.agentReferenceNumber,
+        cyaHelper.isPaymentAddressInTheUK,
+        cyaHelper.paymentUKAddress,
+        cyaHelper.paymentInternationalAddress,
+        cyaHelper.paymentLookupAddress
+			)
+    }
+  }.flatten
+
+  def paymentSection = AnswerSection(Some("checkYourAnswers.paymentSection"), generatePaymentSection)
 
   def contactSection = AnswerSection(Some("checkYourAnswers.contactSection"), Seq(
     cyaHelper.anyTelephoneNumber,
