@@ -17,7 +17,7 @@
 package utils
 
 import base.SpecBase
-import identifiers.{EmploymentDetailsId, _}
+import identifiers._
 import play.api.libs.json._
 import uk.gov.hmrc.http.cache.client.CacheMap
 import org.scalatest.prop.PropertyChecks
