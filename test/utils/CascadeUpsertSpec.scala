@@ -17,7 +17,7 @@
 package utils
 
 import base.SpecBase
-import identifiers._
+import identifiers.{EmploymentDetailsId, _}
 import play.api.libs.json._
 import uk.gov.hmrc.http.cache.client.CacheMap
 import org.scalatest.prop.PropertyChecks
@@ -268,7 +268,9 @@ class CascadeUpsertSpec extends SpecBase with PropertyChecks {
     "clear employment details if selectTaxYear has changed" in {
       val originalCacheMap = new CacheMap(id = "test", Map(
         SelectTaxYearId.toString -> Json.toJson("current-year-minus-3"),
-        EmploymentDetailsId.toString -> Json.toJson(true)
+        EmploymentDetailsId.toString -> Json.toJson(true),
+        EnterPayeReferenceId.toString -> Json.toJson("123/AB456"),
+        DetailsOfEmploymentOrPensionId.toString -> Json.toJson("value")
       ))
 
       val cascadeUpsert = new CascadeUpsert
@@ -282,7 +284,9 @@ class CascadeUpsertSpec extends SpecBase with PropertyChecks {
     "change nothing if selectTaxYear is the same" in {
       val originalCacheMap = new CacheMap(id = "test", Map(
         SelectTaxYearId.toString -> Json.toJson("current-year-minus-2"),
-        EmploymentDetailsId.toString -> Json.toJson(true)
+        EmploymentDetailsId.toString -> Json.toJson(true),
+        EnterPayeReferenceId.toString -> Json.toJson("123/AB456"),
+        DetailsOfEmploymentOrPensionId.toString -> Json.toJson("value")
       ))
 
       val cascadeUpsert = new CascadeUpsert
@@ -290,7 +294,9 @@ class CascadeUpsertSpec extends SpecBase with PropertyChecks {
 
       result.data mustBe Map(
         SelectTaxYearId.toString -> Json.toJson("current-year-minus-2"),
-        EmploymentDetailsId.toString -> Json.toJson(true)
+        EmploymentDetailsId.toString -> Json.toJson(true),
+        EnterPayeReferenceId.toString -> Json.toJson("123/AB456"),
+        DetailsOfEmploymentOrPensionId.toString -> Json.toJson("value")
       )
     }
   }

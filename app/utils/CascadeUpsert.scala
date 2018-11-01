@@ -54,17 +54,17 @@ class CascadeUpsert {
   private def store[A](key: String, value: A, cacheMap: CacheMap)(implicit fmt: Format[A]) =
     cacheMap copy (data = cacheMap.data + (key -> Json.toJson(value)))
 
-  private def removeEmployments(value: JsValue, cacheMap: CacheMap): CacheMap = {
+  private def removeEmployments(newTaxYear: JsValue, cacheMap: CacheMap): CacheMap = {
     val mapToStore = cacheMap.data.get(SelectTaxYearId.toString).map {
       cachedTaxYear =>
-        if(cachedTaxYear != value){
-          cacheMap copy (data = cacheMap.data - EmploymentDetailsId.toString)
+        if(cachedTaxYear != newTaxYear){
+          cacheMap copy (data = cacheMap.data - (EmploymentDetailsId.toString, EnterPayeReferenceId.toString, DetailsOfEmploymentOrPensionId.toString))
         } else {
           cacheMap
         }
     }.getOrElse(cacheMap)
 
-    store(SelectTaxYearId.toString, value, mapToStore)
+    store(SelectTaxYearId.toString, newTaxYear, mapToStore)
   }
 
   private def anyBenefits(value: JsValue, cacheMap: CacheMap): CacheMap =
