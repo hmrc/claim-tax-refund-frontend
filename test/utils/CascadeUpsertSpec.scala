@@ -263,4 +263,35 @@ class CascadeUpsertSpec extends SpecBase with PropertyChecks {
       }
     }
   }
+
+  "SelectTaxYear" must {
+    "clear employment details if selectTaxYear has changed" in {
+      val originalCacheMap = new CacheMap(id = "test", Map(
+        SelectTaxYearId.toString -> Json.toJson("current-year-minus-3"),
+        EmploymentDetailsId.toString -> Json.toJson(true)
+      ))
+
+      val cascadeUpsert = new CascadeUpsert
+      val result = cascadeUpsert("selectTaxYear", Json.toJson("current-year-minus-2"), originalCacheMap)
+
+      result.data mustBe Map(
+        SelectTaxYearId.toString -> Json.toJson("current-year-minus-2")
+      )
+    }
+
+    "change nothing if selectTaxYear is the same" in {
+      val originalCacheMap = new CacheMap(id = "test", Map(
+        SelectTaxYearId.toString -> Json.toJson("current-year-minus-2"),
+        EmploymentDetailsId.toString -> Json.toJson(true)
+      ))
+
+      val cascadeUpsert = new CascadeUpsert
+      val result = cascadeUpsert("selectTaxYear", Json.toJson("current-year-minus-2"), originalCacheMap)
+
+      result.data mustBe Map(
+        SelectTaxYearId.toString -> Json.toJson("current-year-minus-2"),
+        EmploymentDetailsId.toString -> Json.toJson(true)
+      )
+    }
+  }
 }
