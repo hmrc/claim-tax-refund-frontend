@@ -85,7 +85,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
     val keyPrefix = "selectBenefits."
     x =>
 			AnswerRow(
-				label = keyPrefix + "checkYourAnswersLabel",
+				label = keyPrefix + "heading",
 				answer = "<ul>" + x.map {
 					case Benefits.BEREAVEMENT_ALLOWANCE => "<li>" + messages(keyPrefix + "bereavement-allowance").capitalize + "</li>"
 					case Benefits.CARERS_ALLOWANCE => "<li>" + messages(keyPrefix + "carers-allowance").capitalize + "</li>"
