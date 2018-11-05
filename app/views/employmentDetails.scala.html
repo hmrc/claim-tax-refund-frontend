@@ -54,8 +54,6 @@
 
         @components.heading(heading = messages("employmentDetails.heading"), taxYear = Some(taxYear.asString))
 
-        <p id="hint-text">@messages("employmentDetails.hintText")</p>
-
         <table>
             <thead>
                 <tr>
@@ -74,12 +72,14 @@
 
             </tbody>
         </table>
+
         <br>
 
         @components.input_yes_no(
             InputViewModel("value", form),
             label = messages("employmentDetails.correctDetails"),
-            labelClass = Some("bold")
+            labelClass = Some("bold"),
+            hint = Some(messages("employmentDetails.hintText"))
         )
 
 

@@ -196,12 +196,14 @@ class CascadeUpsert {
             IsPaymentAddressInTheUKId.toString,
             PaymentLookupAddressId.toString,
             PaymentUKAddressId.toString,
-            PaymentInternationalAddressId.toString))
+            PaymentInternationalAddressId.toString,
+            PaymentAddressCorrectId.toString))
         case JsString("nominee") =>
           cacheMap copy (data = cacheMap.data - (PaymentAddressCorrectId.toString,
             IsPaymentAddressInTheUKId.toString,
             PaymentUKAddressId.toString,
-            PaymentInternationalAddressId.toString))
+            PaymentInternationalAddressId.toString,
+            PaymentAddressCorrectId.toString))
         case _ => cacheMap
       }
       store(WhereToSendPaymentId.toString, value, mapToStore)

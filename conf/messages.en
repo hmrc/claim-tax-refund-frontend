@@ -61,7 +61,8 @@ global.addToList.incomplete = Incomplete
 index.title = Claim a tax refund
 index.heading = Claim a tax refund
 
-addressLookup.checkYourAnswersLabel = Do you want to send any payment to this address?
+addressLookup.heading = Do you want to send any payment to this address?
+addressLookup.changeLabel = Change do you want to send any payment to this address
 addressLookup.lookupPage.title = Address you want us to send any payment to
 addressLookup.lookupPage.heading = Address you want us to send any payment to
 addressLookup.lookupPage.filterLabel = Property name or number
@@ -142,36 +143,34 @@ userDetails.checkYourAnswersLabel.noTelephone = Not provided
 
 selectTaxYear.title = Which tax year do you want to claim for?
 selectTaxYear.heading = Which tax year do you want to claim for?
+selectTaxYear.changeLabel = Change which tax year do you want to claim for
 selectTaxYear.current-year-minus-1 = 6 April {0} to 5 April {1}
 selectTaxYear.current-year-minus-2 = 6 April {0} to 5 April {1}
 selectTaxYear.current-year-minus-3 = 6 April {0} to 5 April {1}
 selectTaxYear.current-year-minus-4 = 6 April {0} to 5 April {1}
 selectTaxYear.current-year-minus-5 = 6 April {0} to 5 April {1}
-selectTaxYear.checkYourAnswersLabel = The tax year your claim is for
 selectTaxYear.blank = Select which tax year you want to claim for
 
 anyBenefits.title = Did you get any taxable benefits?
 anyBenefits.heading = Did you get any taxable benefits?
-anyBenefits.checkYourAnswersLabel = Did you get any taxable benefits?
+anyBenefits.changeLabel = Change did you get any taxable benefits
 anyBenefits.blank = Select yes if you got any taxable benefits
 anyBenefits.listHeading = Taxable benefits include:
 
 anyTaxableIncome.title = Did you get any other taxable income?
 anyTaxableIncome.heading = Did you get any other taxable income?
-anyTaxableIncome.checkYourAnswersLabel = Did you get any other taxable income?
+anyTaxableIncome.changeLabel = Change did you get any other taxable income
 anyTaxableIncome.blank = Select yes if you got any other taxable income
 anyTaxableIncome.listHeading = Taxable income includes:
 
 howMuchCarBenefits.title = How much company car benefit did you get?
 howMuchCarBenefits.heading = How much company car benefit did you get?
-howMuchCarBenefits.checkYourAnswersLabel = How much company car benefit did you get?
 howMuchCarBenefits.changeLabel = Change how much company car benefit you got
 howMuchCarBenefits.blank = Enter how much company car benefit you got
 howMuchCarBenefits.invalid = How much company car benefit you got must be an amount of money, like 199 or 234.56
 
 howMuchRentalIncome.title = How much property rental income did you get?
 howMuchRentalIncome.heading = How much property rental income did you get?
-howMuchRentalIncome.checkYourAnswersLabel = How much property rental income did you get?
 howMuchRentalIncome.changeLabel = Change how much property rental income you got
 howMuchRentalIncome.blank = Enter the property rental income you got
 howMuchRentalIncome.invalid = How much property rental income you got must be an amount of money, like 199 or 234.56
@@ -185,95 +184,90 @@ howMuchJobseekersAllowance.title = How much contribution-based Jobseeker’s All
 howMuchJobseekersAllowance.heading = How much contribution-based Jobseeker’s Allowance did you get?
 howMuchJobseekersAllowance.blank = Enter how much Jobseeker’s Allowance you got
 howMuchJobseekersAllowance.invalid = How much Jobseeker’s Allowance you got must be an amount of money, like 199 or 234.56
-howMuchJobseekersAllowance.checkYourAnswersLabel = How much contribution-based Jobseeker’s Allowance did you get?
 howMuchJobseekersAllowance.changeLabel = Change how much Jobseeker’s Allowance you got
 
 howMuchIncapacityBenefit.title = How much Incapacity Benefit did you get?
 howMuchIncapacityBenefit.heading = How much Incapacity Benefit did you get?
 howMuchIncapacityBenefit.blank = Enter how much Incapacity Benefit you got
 howMuchIncapacityBenefit.invalid = How much Incapacity Benefit you got must be an amount of money, like 199 or 234.56
-howMuchIncapacityBenefit.checkYourAnswersLabel = How much Incapacity Benefit did you get?
 howMuchIncapacityBenefit.changeLabel = Change how much Incapacity Benefit you got
 
 howMuchEmploymentAndSupportAllowance.title = How much Employment and Support Allowance did you get?
 howMuchEmploymentAndSupportAllowance.heading = How much Employment and Support Allowance did you get?
 howMuchEmploymentAndSupportAllowance.blank = Enter how much Employment and Support Allowance you got
 howMuchEmploymentAndSupportAllowance.invalid = How much Employment and Support Allowance you got must be an amount of money, like 199 or 234.56
-howMuchEmploymentAndSupportAllowance.checkYourAnswersLabel =  How much Employment and Support Allowance did you get?
 howMuchEmploymentAndSupportAllowance.changeLabel = Change how much Employment and Support Allowance you got
 
 howMuchStatePension.title = How much State Pension did you get?
 howMuchStatePension.heading = How much State Pension did you get?
 howMuchStatePension.blank = Enter how much State Pension you got
 howMuchStatePension.invalid = How much State Pension you got must be an amount of money, like 199 or 234.56
-howMuchStatePension.checkYourAnswersLabel = How much State Pension did you get?
 howMuchStatePension.changeLabel = Change how much State Pension you got
 
 howMuchMedicalBenefits.title = How much medical benefit did you get?
 howMuchMedicalBenefits.heading = How much medical benefit did you get?
 howMuchMedicalBenefits.blank = Enter how much medical benefit you got
 howMuchMedicalBenefits.invalid = How much medical benefit you got must be an amount of money, like 199 or 234.56
-howMuchMedicalBenefits.checkYourAnswersLabel = How much medical benefit did you get?
 howMuchMedicalBenefits.changeLabel = Change how much medical benefit you got
 
 anyOtherTaxableIncome.title = Other taxable income
 anyOtherTaxableIncome.heading = Other taxable income
-anyOtherTaxableIncome.checkYourAnswersLabel = Other taxable income
-anyOtherTaxableIncome.add = Did you get any other taxable income?
-anyOtherTaxableIncome.blank = Select yes if you got any other taxable income
+anyOtherTaxableIncome.changeLabel = Change other taxable income
+anyOtherTaxableIncome.add = Do you need to add another taxable income?
+anyOtherTaxableIncome.blank = Select yes if you need to add another taxable income
 anyOtherTaxableIncome.incompleteMessage = You have incomplete other taxable income
 anyOtherTaxableIncome.incompleteSubmit = Complete {0}
 
 nomineeFullName.title = What is the full name of the person you want us to send any payment to?
 nomineeFullName.heading = What is the full name of the person you want us to send any payment to?
-nomineeFullName.checkYourAnswersLabel = Full name of the person you want us to send any payment to
+nomineeFullName.changeLabel = Change the full name of the person you want us to send any payment to
 nomineeFullName.blank = Enter the full name of the person you want us to send any payment to
 nomineeFullName.tooLong = Full name of the person you want us to send any payment must be 100 characters or less
 
 anyAgentRef.title = Is {0} an agent with an agent reference number?
 anyAgentRef.heading = Is {0} an agent with an agent reference number?
-anyAgentRefOption.checkYourAnswersLabel = Does the person you want us to send any payment to have an agent reference?
-anyAgentRef.checkYourAnswersLabel = Agent reference
+AnyAgentRef.changeLabel = Change is {0} an agent with an agent reference number
 anyAgentRef.blank = Select yes if {0} is an agent with an agent reference
 anyAgentRef.agentRefField = Agent reference
+anyagentRef.agentRefField.changeLabel = Change {0} agent reference
 anyAgentRef.blankAgentRef = Enter {0}’s agent reference
 anyAgentRef.maxLength = Agent reference can only be up to 160 characters
 
 isPaymentAddressInTheUK.title = Is the address you want us to send any payment to in the UK?
 isPaymentAddressInTheUK.heading = Is the address you want us to send any payment to in the UK?
-isPaymentAddressInTheUK.checkYourAnswersLabel = Is the address you want us to send any payment to in the UK?
+isPaymentAddressInTheUK.changeLabel = Change is the address you want us to send any payment to in the UK
 isPaymentAddressInTheUK.blank = Select yes if the address you want us to send any payment to is in the UK
 
 paymentInternationalAddress.title = What is the address you us to send any payment to?
 paymentInternationalAddress.heading = What is the address you us to send any payment to?
-paymentInternationalAddress.checkYourAnswersLabel = Address of the person you want us to send any payment to
+paymentInternationalAddress.changeLabel = Change what is the address you us to send any payment to
 
 paymentUKAddress.title = What is the address you us to send any payment to?
 paymentUKAddress.heading = What is the address you us to send any payment to?
-paymentUKAddress.checkYourAnswersLabel = Address of the person you want us to send any payment to
+paymentUKAddress.changeLabel = Change what is the address you us to send any payment to
 
 whereToSendPayment.title = Who would you like us to send any payment to?
 whereToSendPayment.heading = Who would you like us to send any payment to?
+whereToSendPayment.changeLabel = Change who would you like us to send any payment to
 whereToSendPayment.myself = You
 whereToSendPayment.nominee = Someone else
-whereToSendPayment.checkYourAnswersLabel = Who would you like us to make any payment to?
 whereToSendPayment.blank = Select who you would like us to send any payment to
 
 telephoneNumber.title = Can we contact you by telephone if we need more information about your claim?
 telephoneNumber.heading = Can we contact you by telephone if we need more information about your claim?
-telephoneNumberOption.checkYourAnswersLabel = Can we contact you by phone?
-telephoneNumber.checkYourAnswersLabel = Phone number
+telephoneNumber.changeLabel = Change if we can contact you by phone if we need more information about your claim
 telephoneNumber.invalid = Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192
 telephoneNumber.notSelected = Select yes if we can contact you by telephone if we need more information about your claim
 telephoneNumber.blank = Enter a telephone number we can contact you on
 telephoneNumber.telephoneNumberField = Telephone number
+telephoneNumber.telephoneNumberField.changeLabel = Change telephone number
 telephoneNumber.hintPara1 = This is the quickest way to get more information and process your claim. If you do not want us to contact you by telephone, we will contact you by letter.
 
-employmentDetails.title = Are these employment and pension details correct?
-employmentDetails.heading = Are these employment and pension details correct?
-employmentDetails.checkYourAnswersLabel = Employment details
+employmentDetails.title = Are these details correct?
+employmentDetails.heading = Are these details correct?
+employmentDetails.changeLabel = Change if your employment and pension details are correct
 employmentDetails.blank = Select yes if these employment and pension details are correct
-employmentDetails.correctDetails = Are these details correct?
+employmentDetails.correctDetails = Are these employment and pension details correct?
 employmentDetails.employer = Name of employer or pension provider
 employmentDetails.staffNumber = Staff number
 employmentDetails.hintText = If you do not recognise these details, check with your employer or pension provider. Their registered name may be different to their trading name.
@@ -281,7 +275,7 @@ employmentDetails.hintText = If you do not recognise these details, check with y
 selectCompanyBenefits.title = Which taxable company benefits did you get?
 selectCompanyBenefits.heading = Which taxable company benefits did you get?
 selectCompanyBenefits.blank = Select the taxable company benefits you got
-selectCompanyBenefits.checkYourAnswersLabel = Which taxable company benefits did you get?
+selectCompanyBenefits.changeLabel = Change which taxable company benefits you got
 selectCompanyBenefits.company-car-benefit = company car benefit
 selectCompanyBenefits.fuel-benefit = fuel benefit
 selectCompanyBenefits.medical-benefit = medical benefit
@@ -289,8 +283,8 @@ selectCompanyBenefits.other-company-benefit = Other taxable company benefits
 
 anyCompanyBenefits.title = Did you get any taxable company benefits from your employer?
 anyCompanyBenefits.heading = Did you get any taxable company benefits from your employer?
-anyCompanyBenefits.checkYourAnswersLabel = Did you get any company benefits
-anyCompanyBenefits.blank =  Select yes if you got any company benefits
+anyCompanyBenefits.changeLabel = Change if you got any taxable company benefits
+anyCompanyBenefits.blank =  Select yes if you got any taxable company benefits
 anyCompanyBenefits.listHeading = Taxable company benefits include:
 
 howMuchFuelBenefit.title = How much fuel benefit did you get?
@@ -298,7 +292,6 @@ howMuchFuelBenefit.heading = How much fuel benefit did you get?
 howMuchFuelBenefit.blank = Enter how much fuel benefit you got
 howMuchFuelBenefit.invalid = How much fuel benefit you got must be an amount of money, like 199 or 234.56
 howMuchFuelBenefit.changeLabel = Change how much fuel benefit you got
-howMuchFuelBenefit.checkYourAnswersLabel = How much fuel benefit did you get?
 
 otherCompanyBenefits = company benefit
 otherCompanyBenefit.title = {0} other taxable company benefit
@@ -315,7 +308,7 @@ otherCompanyBenefit.change = Change other company benefits
 
 selectBenefits.title = Which taxable benefits did you get?
 selectBenefits.heading = Which taxable benefits did you get?
-selectBenefits.checkYourAnswersLabel = Which taxable benefits did you get?
+selectBenefits.changeLabel = Change Change which taxable benefits you got
 selectBenefits.blank = Select the taxable benefits you got
 selectBenefits.jobseekers-allowance = contribution-based Jobseeker’s Allowance
 selectBenefits.incapacity-benefit = Incapacity Benefit
@@ -327,7 +320,7 @@ selectBenefits.carers-allowance = Carer’s Allowance
 
 enterPayeReference.title = What is your employer or pension provider’s employer PAYE reference?
 enterPayeReference.heading = What is your employer or pension provider’s employer PAYE reference?
-enterPayeReference.checkYourAnswersLabel = PAYE reference
+enterPayeReference.changeLabel = Change what is your employer or pension provider’s employer PAYE reference
 enterPayeReference.hint = This is a 3 digit tax office number, a forward slash, and a tax office employer reference, like 123/AB456. It may be called ‘Employer PAYE reference’ or ‘PAYE reference’. It will be on your P60.
 enterPayeReference.blank = Enter your employer or pension provider’s employer PAYE reference
 enterPayeReference.invalid = Enter an employer PAYE reference in the correct format
@@ -342,14 +335,12 @@ howMuchBereavementAllowance.heading = How much Bereavement Allowance did you get
 howMuchBereavementAllowance.blank = Enter how much Bereavement Allowance you got
 howMuchBereavementAllowance.invalid = How much Bereavement Allowance you got must be an amount of money, like 199 or 234.56
 howMuchBereavementAllowance.changeLabel = Change how much Bereavement Allowance you got
-howMuchBereavementAllowance.checkYourAnswersLabel = How much Bereavement Allowance did you get?
 
 howMuchCarersAllowance.title = How much Carer’s Allowance did you get?
 howMuchCarersAllowance.heading = How much Carer’s Allowance did you get?
 howMuchCarersAllowance.blank = Enter how much Carer’s Allowance you got
 howMuchCarersAllowance.invalid = How much Carer’s Allowance you got must be an amount of money, like 199 or 234.56
 howMuchCarersAllowance.changeLabel = Change how much Carer’s Allowance you got
-howMuchCarersAllowance.checkYourAnswersLabel = How much Carer’s Allowance did you get?
 
 otherBenefits = taxable benefit
 otherBenefit.title = {0} other taxable benefit
@@ -369,27 +360,24 @@ howMuchForeignIncome.title = How much foreign income did you get?
 howMuchForeignIncome.heading = How much foreign income did you get?
 howMuchForeignIncome.blank = Enter how much foreign income you got
 howMuchForeignIncome.invalid = How much foreign income you got must be an amount of money, like 199 or 234.56
-howMuchForeignIncome.checkYourAnswersLabel = How much foreign income did you get?
 howMuchForeignIncome.changeLabel = Change how much foreign income you got
 
 howMuchBankInterest.heading = How much bank and building society interest income did you get?
 howMuchBankInterest.title = How much bank and building society interest income did you get?
 howMuchBankInterest.blank = Enter how much bank and building society interest you got
 howMuchBankInterest.invalid = How much bank and building society interest you got must be an amount of money, like 199 or 234.56
-howMuchBankInterest.checkYourAnswersLabel = How much Bank and Building Society Interest income did you get?
 howMuchBankInterest.changeLabel = Change how much Bank and Building Society Interest income you got
 
 detailsOfEmploymentOrPension.title = What are the details of your employment or pension?
 detailsOfEmploymentOrPension.heading = What are the details of your employment or pension?
 detailsOfEmploymentOrPension.hintText = Include the name of your employer or pension provider and start and end dates.
-detailsOfEmploymentOrPension.checkYourAnswersLabel = Details of employment or pension
 detailsOfEmploymentOrPension.blank = Enter details of your employment or pension
 detailsOfEmploymentOrPension.tooLong = The details of your employment or pension must be 500 characters or less
 
 selectTaxableIncome.blank = Select which taxable incomes you got
 selectTaxableIncome.heading = Which taxable incomes did you get?
 selectTaxableIncome.title = Which taxable incomes did you get?
-selectTaxableIncome.checkYourAnswersLabel = Which taxable incomes did you get?
+selectTaxableIncome.changeLabel = Change which taxable incomes you got
 selectTaxableIncome.rental-income = property rental income
 selectTaxableIncome.bank-or-building-society-interest = bank and building society interest
 selectTaxableIncome.investment-or-dividends = investments and dividends
@@ -400,12 +388,10 @@ howMuchInvestmentOrDividend.title = How much income did you get from investments
 howMuchInvestmentOrDividend.heading = How much income did you get from investments and dividends?
 howMuchInvestmentOrDividend.blank = Enter how much income you got from investments and dividends
 howMuchInvestmentOrDividend.invalid = How much income you got from investments and dividends must be an amount of money, like 199 or 234.56
-howMuchInvestmentOrDividend.checkYourAnswersLabel = How much investments or dividends did you get?
 howMuchInvestmentOrDividend.changeLabel = Change how much investment or dividend income you got
 
 howMuchOtherTaxableIncome.title = How much {0} did you get between {1}?
 howMuchOtherTaxableIncome.heading = How much {0} did you get between {1}?
-howMuchOtherTaxableIncome.checkYourAnswersLabel =  How much other taxable income did you get?
 howMuchOtherTaxableIncome.blank = Enter the amount of other taxable income you got
 howMuchOtherTaxableIncome.invalid = Enter a valid amount of other taxable income
 
@@ -418,12 +404,13 @@ otherTaxableIncome.amount = How much of this taxable income you got
 otherTaxableIncome.name.blank = Enter the name of the taxable income you got
 otherTaxableIncome.amount.blank = Enter how much of this taxable income you got
 otherTaxableIncome.amount.invalid = How much of this taxable income you got must be an amount of money, like 199 or 234.56
-otherTaxableIncome.duplicate = You have already entered this other taxable income name {0}
+otherTaxableIncome.duplicate = Enter a different taxable income name – you already entered {0}
 otherTaxableIncome.add = Add another taxable income
 otherTaxableIncome.change = Change other taxable incomes
 
 anyTaxableRentalIncome.title = Did you pay Income Tax on your property rental income?
 anyTaxableRentalIncome.heading = Did you pay Income Tax on your property rental income?
+anyTaxableRentalIncome.changeLabel = Change if you paid Income Tax on your property rental income
 anyTaxableRentalIncomeOption.checkYourAnswersLabel = Did you pay Income Tax on your your property rental income?
 anyTaxableRentalIncome.checkYourAnswersLabel = Income tax you paid on property rental income
 anyTaxableRentalIncome.invalid = How much Income Tax you paid on your property rental income must be an amount of money, like 199 or 234.56
@@ -433,6 +420,7 @@ anyTaxableRentalIncome.anyTaxPaidAmountField = How much Income Tax did you pay o
 
 anyTaxableBankInterest.title = Did you pay Income Tax on your bank and building society interest?
 anyTaxableBankInterest.heading = Did you pay Income Tax on your bank and building society interest?
+anyTaxableBankInterest.changeLabel = Change if you paid Income Tax on your bank and building society interest
 anyTaxableBankInterest.hint = This may be shown on an annual statement from your bank or building society.
 anyTaxableBankInterestOption.checkYourAnswersLabel = Did you pay Income Tax on your bank and building society interest?
 anyTaxableBankInterest.checkYourAnswersLabel = Income tax you paid on Bank and Building Society Interest
@@ -443,6 +431,7 @@ anyTaxableBankInterest.anyTaxPaidAmountField = How much Income Tax did you pay o
 
 anyTaxableInvestments.title = Did you pay Income Tax on your income from investments and dividends?
 anyTaxableInvestments.heading = Did you pay Income Tax on your income from investments and dividends?
+anyTaxableInvestments.changeLabel = Change if you paid Income Tax on your investments and dividends
 anyTaxableInvestmentsOption.checkYourAnswersLabel = Did you pay Income Tax on your income from investments and dividends?
 anyTaxableInvestments.checkYourAnswersLabel = Income tax you paid on investment or dividend income
 anyTaxableInvestments.invalid = How much Income Tax you paid on your income from investments and dividends must be an amount of money, like 199 or 234.56
@@ -452,6 +441,7 @@ anyTaxableInvestments.anyTaxPaidAmountField = How much Income Tax did you pay on
 
 anyTaxableForeignIncome.title = Did you pay Income Tax on your foreign income?
 anyTaxableForeignIncome.heading = Did you pay Income Tax on your foreign income?
+anyTaxableForeignIncome.changeLabel = Change if you paid Income Tax on your foreign income
 anyTaxableForeignIncomeOption.checkYourAnswersLabel = Did you pay Income Tax on your foreign income?
 anyTaxableForeignIncome.checkYourAnswersLabel = Income tax you paid on foreign income
 anyTaxableForeignIncome.invalid = How much Income Tax you paid on your foreign income must be an amount of money, like 199 or 234.56
@@ -470,7 +460,8 @@ anyTaxableOtherIncome.anyTaxPaidAmountField = How much Income Tax did you pay on
 
 paymentAddressCorrect.title = Is this the address you want us to send any payment to?
 paymentAddressCorrect.heading = Is this the address you want us to send any payment to?
-paymentAddressCorrect.checkYourAnswersLabel = Do you want to send any payment to this address?
+paymentAddressCorrect.checkYourAnswersLabel = Address you want us to send any payment to
+paymentAddressCorrect.changeLabel = Change if this is the address you want us to send any payment to
 paymentAddressCorrect.blank = Select yes if you want us to send any payment to this address
 
 deleteOther.title = Are you sure you want to remove {0}?
@@ -485,8 +476,12 @@ confirmation.whatHappensNext.line1 = We will process your claim within 15 days a
 confirmation.survey.linkText = What did you think of this service?
 confirmation.survey.time = (takes 30 seconds)
 
-itmpAddress.checkYourAnswersLabel = Do you want to send any payment to this address?
+itmpAddress.heading = Is this the address you want us to send any payment to?
+itmpAddress.changeLabel = Change do you want to send any payment to this address
 
 RemoveOtherSelectedOption.title = Do you need to tell us about any other {0} you got?
 RemoveOtherSelectedOption.heading = Do you need to tell us about any other {0} you got?
 RemoveOtherSelectedOption.blank = Select yes if you need to tell us about any other {0} you got
+RemoveOtherSelectedOption.otherBenefits = taxable benefit
+RemoveOtherSelectedOption.companyBenefits = company benefit
+RemoveOtherSelectedOption.otherIncome = taxable income

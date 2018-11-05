@@ -17,15 +17,19 @@
 package views
 
 import org.scalatest.mockito.MockitoSugar
+import play.twirl.api.HtmlFormat
 import views.behaviours.ViewBehaviours
 import views.html.confirmation
 
 class ConfirmationViewSpec extends ViewBehaviours with MockitoSugar {
 
   private val messageKeyPrefix = "confirmation"
-  private val submissionReference = " ABC-1234-DEF"
+  private val submissionReference = " ABC-1234-DEF"  //this contains normal hyphens
+  private val formattedSubmissionReference = " ABC‑1234‑DEF" //this contains non-breaking hyphens "‑"
 
-  def createView = () => confirmation(frontendAppConfig, submissionReference)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createView: () =>
+		HtmlFormat.Appendable = () =>
+			confirmation(frontendAppConfig, submissionReference)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "Confirmation view" must {
     behave like normalPage(createView, messageKeyPrefix, None)
@@ -36,10 +40,10 @@ class ConfirmationViewSpec extends ViewBehaviours with MockitoSugar {
       h1.parent.hasClass("govuk-box-highlight") mustBe true
     }
 
-    "have a reference number in a highlight box" in {
+    "have a reference with non-breaking hyphen in a highlight box" in {
       val doc = asDocument(createView())
       val referenceText = doc.getElementById("reference")
-      referenceText.text mustBe messages("confirmation.reference") + submissionReference
+      referenceText.text mustBe messages("confirmation.reference") + formattedSubmissionReference
       referenceText.parent.hasClass("govuk-box-highlight") mustBe true
     }
 

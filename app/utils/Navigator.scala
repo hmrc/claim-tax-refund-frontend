@@ -530,7 +530,11 @@ class Navigator @Inject()() {
     case Some(Nominee) =>
       if (userAnswers.nomineeFullName.isEmpty) routes.NomineeFullNameController.onPageLoad(CheckMode) else routes.CheckYourAnswersController.onPageLoad()
     case Some(Myself) =>
-      if (userAnswers.isPaymentAddressInTheUK.isEmpty) routes.PaymentAddressCorrectController.onPageLoad(CheckMode) else routes.CheckYourAnswersController.onPageLoad()
+      if ((userAnswers.isPaymentAddressInTheUK.isDefined && userAnswers.isPaymentAddressInTheUK.isEmpty) || (userAnswers.paymentAddressCorrect.isDefined && userAnswers.paymentAddressCorrect.isEmpty)){
+        routes.PaymentAddressCorrectController.onPageLoad(CheckMode)
+      } else {
+        routes.CheckYourAnswersController.onPageLoad()
+      }
     case None => routes.SessionExpiredController.onPageLoad()
   }
 
@@ -541,7 +545,7 @@ class Navigator @Inject()() {
   }
 
   private def paymentAddressCorrectCheck(userAnswers: UserAnswers): Call = userAnswers.paymentAddressCorrect match {
-    case Some(true) => routes.TelephoneNumberController.onPageLoad(CheckMode)
+    case Some(true) => routes.CheckYourAnswersController.onPageLoad()
     case Some(false) => routes.IsPaymentAddressInTheUKController.onPageLoad(CheckMode)
     case None => routes.SessionExpiredController.onPageLoad()
   }

@@ -27,6 +27,7 @@ import views.html.employmentDetails
 class EmploymentDetailsViewSpec extends YesNoViewBehaviours {
 
   private val messageKeyPrefix = "employmentDetails"
+  private val hintTextKey = "employmentDetails.hintText"
   private val fakeEmployments = Seq(Employment("AVIVA PENSIONS", "754", "AZ00070"))
   private val taxYear = CYMinus2
 
@@ -48,14 +49,8 @@ class EmploymentDetailsViewSpec extends YesNoViewBehaviours {
       createView = createViewUsingForm,
       messageKeyPrefix = messageKeyPrefix,
       expectedFormAction = routes.EmploymentDetailsController.onSubmit(NormalMode).url,
-      expectedHintTextKey = None
+      expectedHintTextKey = Some(hintTextKey)
     )
-
-    "contain correct hint text" in {
-      val doc = asDocument(createViewUsingForm(form))
-      val hintText = doc.getElementById("hint-text")
-      hintText.text() mustBe messages("employmentDetails.hintText")
-    }
 
     "contain a table" in {
       val doc = asDocument(createViewUsingForm(form))

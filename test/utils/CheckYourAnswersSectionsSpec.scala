@@ -66,10 +66,10 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       val rows = sections.claimSection.rows
 
       rows.size mustBe 4
-      rows.head.label.key mustBe "selectTaxYear.checkYourAnswersLabel"
-      rows(1).label.key mustBe "employmentDetails.checkYourAnswersLabel"
-      rows(2).label.key mustBe "enterPayeReference.checkYourAnswersLabel"
-      rows(3).label.key mustBe "detailsOfEmploymentOrPension.checkYourAnswersLabel"
+      rows.head.label.key mustBe "selectTaxYear.heading"
+      rows(1).label.key mustBe "employmentDetails.correctDetails"
+      rows(2).label.key mustBe "enterPayeReference.heading"
+      rows(3).label.key mustBe "detailsOfEmploymentOrPension.heading"
     }
 
     "Benefits section" in {
@@ -80,14 +80,14 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       val otherBenefitSection = sections.otherBenefitsSection
 
       rows.size mustBe 8
-      rows.head.label.key mustBe "anyBenefits.checkYourAnswersLabel"
-      rows(1).label.key mustBe "selectBenefits.checkYourAnswersLabel"
-      rows(2).label.key mustBe "howMuchBereavementAllowance.checkYourAnswersLabel"
-      rows(3).label.key mustBe "howMuchCarersAllowance.checkYourAnswersLabel"
-      rows(4).label.key mustBe "howMuchJobseekersAllowance.checkYourAnswersLabel"
-      rows(5).label.key mustBe "howMuchEmploymentAndSupportAllowance.checkYourAnswersLabel"
-      rows(6).label.key mustBe "howMuchIncapacityBenefit.checkYourAnswersLabel"
-      rows(7).label.key mustBe "howMuchStatePension.checkYourAnswersLabel"
+      rows.head.label.key mustBe "anyBenefits.heading"
+      rows(1).label.key mustBe "selectBenefits.heading"
+      rows(2).label.key mustBe "howMuchBereavementAllowance.heading"
+      rows(3).label.key mustBe "howMuchCarersAllowance.heading"
+      rows(4).label.key mustBe "howMuchJobseekersAllowance.heading"
+      rows(5).label.key mustBe "howMuchEmploymentAndSupportAllowance.heading"
+      rows(6).label.key mustBe "howMuchIncapacityBenefit.heading"
+      rows(7).label.key mustBe "howMuchStatePension.heading"
 
       otherBenefitSection.rows.size mustBe 3
       otherBenefitSection.headingKey.get mustBe "otherBenefit.checkYourAnswersLabel"
@@ -103,11 +103,11 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       val otherCompanyBenefitSection = sections.otherCompanyBenefitSection
 
       rows.size mustBe 5
-      rows.head.label.key mustBe "anyCompanyBenefits.checkYourAnswersLabel"
-      rows(1).label.key mustBe "selectCompanyBenefits.checkYourAnswersLabel"
-      rows(2).label.key mustBe "howMuchCarBenefits.checkYourAnswersLabel"
-      rows(3).label.key mustBe "howMuchFuelBenefit.checkYourAnswersLabel"
-      rows(4).label.key mustBe "howMuchMedicalBenefits.checkYourAnswersLabel"
+      rows.head.label.key mustBe "anyCompanyBenefits.heading"
+      rows(1).label.key mustBe "selectCompanyBenefits.heading"
+      rows(2).label.key mustBe "howMuchCarBenefits.heading"
+      rows(3).label.key mustBe "howMuchFuelBenefit.heading"
+      rows(4).label.key mustBe "howMuchMedicalBenefits.heading"
 
       otherCompanyBenefitSection.rows.size mustBe 3
       otherCompanyBenefitSection.headingKey.get mustBe "otherCompanyBenefit.checkYourAnswersLabel"
@@ -123,20 +123,24 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       val otherTaxableIncomeSection = sections.otherTaxableIncomeSection
 
       rows.size mustBe 14
-      rows.head.label.key mustBe "anyTaxableIncome.checkYourAnswersLabel"
-      rows(1).label.key mustBe "selectTaxableIncome.checkYourAnswersLabel"
-      rows(2).label.key mustBe "howMuchRentalIncome.checkYourAnswersLabel"
-      rows(3).label.key mustBe "anyTaxableRentalIncomeOption.checkYourAnswersLabel"
-      rows(4).label.key mustBe "anyTaxableRentalIncome.checkYourAnswersLabel"
-      rows(5).label.key mustBe "howMuchBankInterest.checkYourAnswersLabel"
-      rows(6).label.key mustBe "anyTaxableBankInterestOption.checkYourAnswersLabel"
-      rows(7).label.key mustBe "anyTaxableBankInterest.checkYourAnswersLabel"
-      rows(8).label.key mustBe "howMuchInvestmentOrDividend.checkYourAnswersLabel"
+      rows.head.label.key mustBe "anyTaxableIncome.heading"
+      rows(1).label.key mustBe "selectTaxableIncome.heading"
+
+      rows(2).label.key mustBe "howMuchBankInterest.heading"
+      rows(3).label.key mustBe "anyTaxableBankInterestOption.checkYourAnswersLabel"
+      rows(4).label.key mustBe "anyTaxableBankInterest.checkYourAnswersLabel"
+
+      rows(5).label.key mustBe "howMuchForeignIncome.heading"
+      rows(6).label.key mustBe "anyTaxableForeignIncomeOption.checkYourAnswersLabel"
+      rows(7).label.key mustBe "anyTaxableForeignIncome.checkYourAnswersLabel"
+
+      rows(8).label.key mustBe "howMuchInvestmentOrDividend.heading"
       rows(9).label.key mustBe "anyTaxableInvestmentsOption.checkYourAnswersLabel"
       rows(10).label.key mustBe "anyTaxableInvestments.checkYourAnswersLabel"
-      rows(11).label.key mustBe "howMuchForeignIncome.checkYourAnswersLabel"
-      rows(12).label.key mustBe "anyTaxableForeignIncomeOption.checkYourAnswersLabel"
-      rows(13).label.key mustBe "anyTaxableForeignIncome.checkYourAnswersLabel"
+
+      rows(11).label.key mustBe "howMuchRentalIncome.heading"
+      rows(12).label.key mustBe "anyTaxableRentalIncomeOption.checkYourAnswersLabel"
+      rows(13).label.key mustBe "anyTaxableRentalIncome.checkYourAnswersLabel"
 
       otherTaxableIncomeSection.rows.size mustBe 7
       otherTaxableIncomeSection.headingKey.get mustBe "otherTaxableIncome.checkYourAnswersLabel"
@@ -147,7 +151,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       otherTaxableIncomeSection.rows(1).answer.key mustBe "£12"
       otherTaxableIncomeSection.rows(2).label.key mustBe messages("anyTaxableOtherIncomeOption.checkYourAnswersLabel", "qwerty")
       otherTaxableIncomeSection.rows(2).answer.key mustBe "site.yes"
-      otherTaxableIncomeSection.rows(3).label.key mustBe messages("anyTaxableOtherIncome.checkYourAnswersLabel", "qwerty")
+      otherTaxableIncomeSection.rows(3).label.key mustBe messages("anyTaxableOtherIncome.heading", "qwerty")
       otherTaxableIncomeSection.rows(3).answer.key mustBe "£1234"
 
       //Header for second otherTaxableIncome
@@ -168,9 +172,9 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       val rows = sections.paymentSection.rows
 
       rows.size mustBe 3
-      rows.head.label.key mustBe "whereToSendPayment.checkYourAnswersLabel"
-      rows(1).label.key mustBe "isPaymentAddressInTheUK.checkYourAnswersLabel"
-      rows(2).label.key mustBe "paymentUKAddress.checkYourAnswersLabel"
+      rows.head.label.key mustBe "whereToSendPayment.heading"
+      rows(1).label.key mustBe "isPaymentAddressInTheUK.heading"
+      rows(2).label.key mustBe "paymentUKAddress.heading"
     }
 
     "Payment details section (Nominee)" in {
@@ -180,12 +184,12 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       val rows = sections.paymentSection.rows
 
       rows.size mustBe 6
-      rows.head.label.key mustBe "whereToSendPayment.checkYourAnswersLabel"
-      rows(1).label.key mustBe "nomineeFullName.checkYourAnswersLabel"
-      rows(2).label.key mustBe "anyAgentRefOption.checkYourAnswersLabel"
-      rows(3).label.key mustBe "anyAgentRef.checkYourAnswersLabel"
-      rows(4).label.key mustBe "isPaymentAddressInTheUK.checkYourAnswersLabel"
-      rows(5).label.key mustBe "paymentInternationalAddress.checkYourAnswersLabel"
+      rows.head.label.key mustBe "whereToSendPayment.heading"
+      rows(1).label.key mustBe "nomineeFullName.heading"
+      rows(2).label.key mustBe messages("anyAgentRef.heading", "Nominee")
+      rows(3).label.key mustBe "anyAgentRef.agentRefField"
+      rows(4).label.key mustBe "isPaymentAddressInTheUK.heading"
+      rows(5).label.key mustBe "paymentInternationalAddress.heading"
     }
 
     "Contact Details section" in {
@@ -195,8 +199,8 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       val rows = sections.contactSection.rows
 
       rows.size mustBe 2
-      rows.head.label.key mustBe "telephoneNumberOption.checkYourAnswersLabel"
-      rows(1).label.key mustBe "telephoneNumber.checkYourAnswersLabel"
+      rows.head.label.key mustBe "telephoneNumber.heading"
+      rows(1).label.key mustBe "telephoneNumber.telephoneNumberField"
     }
 
     "Other Benefits section normal mode" in {

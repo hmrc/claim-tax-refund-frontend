@@ -25,6 +25,7 @@ import org.mockito.Mockito.when
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.mockito.MockitoSugar
 import play.api.i18n.Messages
+import uk.gov.hmrc.auth.core.retrieve.ItmpAddress
 
 class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeAndAfterEach {
 
@@ -40,7 +41,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "Select current year minus 1" must {
     s"have correct label and answer" in {
       when(answers.selectTaxYear) thenReturn Some(CYMinus1)
-      helper.selectTaxYear.get.label.key mustBe s"selectTaxYear.checkYourAnswersLabel"
+      helper.selectTaxYear.get.label.key mustBe s"selectTaxYear.heading"
       helper.selectTaxYear.get.answer.key mustBe CYMinus1.asString(messages)
     }
   }
@@ -48,7 +49,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "Select current year minus 2" must {
     s"have correct label and answer" in {
       when(answers.selectTaxYear) thenReturn Some(CYMinus2)
-      helper.selectTaxYear.get.label.key mustBe s"selectTaxYear.checkYourAnswersLabel"
+      helper.selectTaxYear.get.label.key mustBe s"selectTaxYear.heading"
       helper.selectTaxYear.get.answer.key mustBe CYMinus2.asString(messages)
     }
   }
@@ -56,7 +57,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "Select current year minus 3" must {
     s"have correct label and answer" in {
       when(answers.selectTaxYear) thenReturn Some(CYMinus3)
-      helper.selectTaxYear.get.label.key mustBe s"selectTaxYear.checkYourAnswersLabel"
+      helper.selectTaxYear.get.label.key mustBe s"selectTaxYear.heading"
       helper.selectTaxYear.get.answer.key mustBe CYMinus3.asString(messages)
     }
   }
@@ -64,7 +65,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "Select current year minus 4" must {
     s"have correct label and answer" in {
       when(answers.selectTaxYear) thenReturn Some(CYMinus4)
-      helper.selectTaxYear.get.label.key mustBe s"selectTaxYear.checkYourAnswersLabel"
+      helper.selectTaxYear.get.label.key mustBe s"selectTaxYear.heading"
       helper.selectTaxYear.get.answer.key mustBe CYMinus4.asString(messages)
     }
   }
@@ -72,7 +73,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "Select current year minus 5" must {
     s"have correct label and answer" in {
       when(answers.selectTaxYear) thenReturn Some(CYMinus5)
-      helper.selectTaxYear.get.label.key mustBe s"selectTaxYear.checkYourAnswersLabel"
+      helper.selectTaxYear.get.label.key mustBe s"selectTaxYear.heading"
       helper.selectTaxYear.get.answer.key mustBe CYMinus5.asString(messages)
     }
   }
@@ -80,7 +81,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "Employment details (yes)" must {
     s"have correct label and answer" in {
       when(answers.employmentDetails) thenReturn Some(true)
-      helper.employmentDetails.get.label.key mustBe s"employmentDetails.checkYourAnswersLabel"
+      helper.employmentDetails.get.label.key mustBe s"employmentDetails.correctDetails"
       helper.employmentDetails.get.answer.key mustBe yes
     }
   }
@@ -88,7 +89,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "Employment details (no)" must {
     s"have correct label and answer" in {
       when(answers.employmentDetails) thenReturn Some(false)
-      helper.employmentDetails.get.label.key mustBe s"employmentDetails.checkYourAnswersLabel"
+      helper.employmentDetails.get.label.key mustBe s"employmentDetails.correctDetails"
       helper.employmentDetails.get.answer.key mustBe no
     }
   }
@@ -97,7 +98,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have correct label and answer" in {
       val testRef = "AB12345"
       when(answers.enterPayeReference) thenReturn Some(testRef)
-      helper.enterPayeReference.get.label.key mustBe s"enterPayeReference.checkYourAnswersLabel"
+      helper.enterPayeReference.get.label.key mustBe s"enterPayeReference.heading"
       helper.enterPayeReference.get.answer.key mustBe testRef
     }
   }
@@ -106,7 +107,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have correct label and answer" in {
       val details = "Details of employment or pension"
       when(answers.detailsOfEmploymentOrPension) thenReturn Some(details)
-      helper.detailsOfEmploymentOrPension.get.label.key mustBe s"detailsOfEmploymentOrPension.checkYourAnswersLabel"
+      helper.detailsOfEmploymentOrPension.get.label.key mustBe s"detailsOfEmploymentOrPension.heading"
       helper.detailsOfEmploymentOrPension.get.answer.key mustBe details
     }
   }
@@ -117,7 +118,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "Any benefits (true)" must {
     s"have the correct label and answer" in {
       when(answers.anyBenefits) thenReturn Some(true)
-      helper.anyBenefits.get.label.key mustBe s"anyBenefits.checkYourAnswersLabel"
+      helper.anyBenefits.get.label.key mustBe s"anyBenefits.heading"
       helper.anyBenefits.get.answer.key mustBe yes
     }
   }
@@ -125,7 +126,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "Any benefits (false)" must {
     s"have the correct label and answer" in {
       when(answers.anyBenefits) thenReturn Some(false)
-      helper.anyBenefits.get.label.key mustBe s"anyBenefits.checkYourAnswersLabel"
+      helper.anyBenefits.get.label.key mustBe s"anyBenefits.heading"
       helper.anyBenefits.get.answer.key mustBe no
     }
   }
@@ -142,7 +143,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
         Benefits.OTHER_TAXABLE_BENEFIT
       )
       when(answers.selectBenefits) thenReturn Some(benefits)
-      helper.selectBenefits.get.label.key mustBe s"selectBenefits.checkYourAnswersLabel"
+      helper.selectBenefits.get.label.key mustBe s"selectBenefits.heading"
       helper.selectBenefits.get.answer.key mustBe "<ul>" + benefits.map(
         benefit => "<li>" + messages("selectBenefits." + benefit).capitalize + "</li>"
       ).mkString + "</ul>"
@@ -152,7 +153,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "howMuchBereavementAllowance" must {
     s"have the correct label and answer" in {
       when(answers.howMuchBereavementAllowance) thenReturn Some(amount)
-      helper.howMuchBereavementAllowance.get.label.key mustBe s"howMuchBereavementAllowance.checkYourAnswersLabel"
+      helper.howMuchBereavementAllowance.get.label.key mustBe s"howMuchBereavementAllowance.heading"
       helper.howMuchBereavementAllowance.get.answer.key mustBe s"£$amount"
     }
   }
@@ -160,7 +161,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "howMuchCarersAllowance" must {
     s"have the correct label and answer" in {
       when(answers.howMuchCarersAllowance) thenReturn Some(amount)
-      helper.howMuchCarersAllowance.get.label.key mustBe s"howMuchCarersAllowance.checkYourAnswersLabel"
+      helper.howMuchCarersAllowance.get.label.key mustBe s"howMuchCarersAllowance.heading"
       helper.howMuchCarersAllowance.get.answer.key mustBe s"£$amount"
     }
   }
@@ -168,7 +169,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "howMuchJobseekersAllowance" must {
     s"have the correct label and answer" in {
       when(answers.howMuchJobseekersAllowance) thenReturn Some(amount)
-      helper.howMuchJobseekersAllowance.get.label.key mustBe s"howMuchJobseekersAllowance.checkYourAnswersLabel"
+      helper.howMuchJobseekersAllowance.get.label.key mustBe s"howMuchJobseekersAllowance.heading"
       helper.howMuchJobseekersAllowance.get.answer.key mustBe s"£$amount"
     }
   }
@@ -176,7 +177,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "howMuchIncapacityBenefit" must {
     s"have the correct label and answer" in {
       when(answers.howMuchIncapacityBenefit) thenReturn Some(amount)
-      helper.howMuchIncapacityBenefit.get.label.key mustBe s"howMuchIncapacityBenefit.checkYourAnswersLabel"
+      helper.howMuchIncapacityBenefit.get.label.key mustBe s"howMuchIncapacityBenefit.heading"
       helper.howMuchIncapacityBenefit.get.answer.key mustBe s"£$amount"
     }
   }
@@ -184,7 +185,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "howMuchEmploymentAndSupportAllowance" must {
     s"have the correct label and answer" in {
       when(answers.howMuchEmploymentAndSupportAllowance) thenReturn Some(amount)
-      helper.howMuchEmploymentAndSupportAllowance.get.label.key mustBe s"howMuchEmploymentAndSupportAllowance.checkYourAnswersLabel"
+      helper.howMuchEmploymentAndSupportAllowance.get.label.key mustBe s"howMuchEmploymentAndSupportAllowance.heading"
       helper.howMuchEmploymentAndSupportAllowance.get.answer.key mustBe s"£$amount"
     }
   }
@@ -192,7 +193,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "howMuchStatePension" must {
     s"have the correct label and answer" in {
       when(answers.howMuchStatePension) thenReturn Some(amount)
-      helper.howMuchStatePension.get.label.key mustBe s"howMuchStatePension.checkYourAnswersLabel"
+      helper.howMuchStatePension.get.label.key mustBe s"howMuchStatePension.heading"
       helper.howMuchStatePension.get.answer.key mustBe s"£$amount"
     }
   }
@@ -221,7 +222,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "Any company benefit (true)" must {
     s"have the correct label and answer" in {
       when(answers.anyCompanyBenefits) thenReturn Some(true)
-      helper.anyCompanyBenefits.get.label.key mustBe s"anyCompanyBenefits.checkYourAnswersLabel"
+      helper.anyCompanyBenefits.get.label.key mustBe s"anyCompanyBenefits.heading"
       helper.anyCompanyBenefits.get.answer.key mustBe yes
     }
   }
@@ -229,7 +230,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "Any company benefit (false)" must {
     s"have the correct label and answer" in {
       when(answers.anyCompanyBenefits) thenReturn Some(false)
-      helper.anyCompanyBenefits.get.label.key mustBe s"anyCompanyBenefits.checkYourAnswersLabel"
+      helper.anyCompanyBenefits.get.label.key mustBe s"anyCompanyBenefits.heading"
       helper.anyCompanyBenefits.get.answer.key mustBe no
     }
   }
@@ -243,7 +244,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
         CompanyBenefits.OTHER_COMPANY_BENEFIT
       )
       when(answers.selectCompanyBenefits) thenReturn Some(companyBenefits)
-      helper.selectCompanyBenefits.get.label.key mustBe s"selectCompanyBenefits.checkYourAnswersLabel"
+      helper.selectCompanyBenefits.get.label.key mustBe s"selectCompanyBenefits.heading"
       helper.selectCompanyBenefits.get.answer.key mustBe "<ul>" + companyBenefits.map(
         companyBenefit => "<li>" + messages("selectCompanyBenefits." + companyBenefit).capitalize + "</li>"
       ).mkString + "</ul>"
@@ -253,7 +254,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "howMuchCarBenefits" must {
     s"have the correct label and answer" in {
       when(answers.howMuchCarBenefits) thenReturn Some(amount)
-      helper.howMuchCarBenefits.get.label.key mustBe s"howMuchCarBenefits.checkYourAnswersLabel"
+      helper.howMuchCarBenefits.get.label.key mustBe s"howMuchCarBenefits.heading"
       helper.howMuchCarBenefits.get.answer.key mustBe s"£$amount"
     }
   }
@@ -261,7 +262,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "howMuchFuelBenefit" must {
     s"have the correct label and answer" in {
       when(answers.howMuchFuelBenefit) thenReturn Some(amount)
-      helper.howMuchFuelBenefit.get.label.key mustBe s"howMuchFuelBenefit.checkYourAnswersLabel"
+      helper.howMuchFuelBenefit.get.label.key mustBe s"howMuchFuelBenefit.heading"
       helper.howMuchFuelBenefit.get.answer.key mustBe s"£$amount"
     }
   }
@@ -269,7 +270,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "howMuchMedicalBenefits" must {
     s"have the correct label and answer" in {
       when(answers.howMuchMedicalBenefits) thenReturn Some(amount)
-      helper.howMuchMedicalBenefits.get.label.key mustBe s"howMuchMedicalBenefits.checkYourAnswersLabel"
+      helper.howMuchMedicalBenefits.get.label.key mustBe s"howMuchMedicalBenefits.heading"
       helper.howMuchMedicalBenefits.get.answer.key mustBe s"£$amount"
     }
   }
@@ -301,7 +302,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "Any taxable income (true)" must {
     s"have the correct label and answer" in {
       when(answers.anyTaxableIncome) thenReturn Some(true)
-      helper.anyTaxableIncome.get.label.key mustBe s"anyTaxableIncome.checkYourAnswersLabel"
+      helper.anyTaxableIncome.get.label.key mustBe s"anyTaxableIncome.heading"
       helper.anyTaxableIncome.get.answer.key mustBe yes
     }
   }
@@ -309,7 +310,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "Any taxable income (false)" must {
     s"have the correct label and answer" in {
       when(answers.anyTaxableIncome) thenReturn Some(false)
-      helper.anyTaxableIncome.get.label.key mustBe s"anyTaxableIncome.checkYourAnswersLabel"
+      helper.anyTaxableIncome.get.label.key mustBe s"anyTaxableIncome.heading"
       helper.anyTaxableIncome.get.answer.key mustBe no
     }
   }
@@ -324,7 +325,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
         TaxableIncome.OTHER_TAXABLE_INCOME
       )
       when(answers.selectTaxableIncome) thenReturn Some(taxableIncomes)
-      helper.selectTaxableIncome.get.label.key mustBe s"selectTaxableIncome.checkYourAnswersLabel"
+      helper.selectTaxableIncome.get.label.key mustBe s"selectTaxableIncome.heading"
       helper.selectTaxableIncome.get.answer.key mustBe "<ul>" + taxableIncomes.map(
         income => "<li>" +  messages("selectTaxableIncome." + income).capitalize + "</li>"
       ).mkString + "</ul>"
@@ -334,7 +335,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "howMuchRentalIncome" must {
     s"have correct label and answer" in {
       when(answers.howMuchRentalIncome) thenReturn Some(amount)
-      helper.howMuchRentalIncome.get.label.key mustBe s"howMuchRentalIncome.checkYourAnswersLabel"
+      helper.howMuchRentalIncome.get.label.key mustBe s"howMuchRentalIncome.heading"
       helper.howMuchRentalIncome.get.answer.key mustBe s"£$amount"
     }
   }
@@ -361,7 +362,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "howMuchBankInterest" must {
     s"have correct label and answer" in {
       when(answers.howMuchBankInterest) thenReturn Some(amount)
-      helper.howMuchBankInterest.get.label.key mustBe "howMuchBankInterest.checkYourAnswersLabel"
+      helper.howMuchBankInterest.get.label.key mustBe "howMuchBankInterest.heading"
       helper.howMuchBankInterest.get.answer.key mustBe s"£$amount"
     }
   }
@@ -388,7 +389,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "howMuchInvestmentOrDividend" must {
     s"have correct label and answer" in {
       when(answers.howMuchInvestmentOrDividend) thenReturn Some(amount)
-      helper.howMuchInvestmentOrDividend.get.label.key mustBe "howMuchInvestmentOrDividend.checkYourAnswersLabel"
+      helper.howMuchInvestmentOrDividend.get.label.key mustBe "howMuchInvestmentOrDividend.heading"
       helper.howMuchInvestmentOrDividend.get.answer.key mustBe s"£$amount"
     }
   }
@@ -414,7 +415,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "howMuchForeignIncome" must {
     s"have correct label and answer" in {
       when(answers.howMuchForeignIncome) thenReturn Some(amount)
-      helper.howMuchForeignIncome.get.label.key mustBe "howMuchForeignIncome.checkYourAnswersLabel"
+      helper.howMuchForeignIncome.get.label.key mustBe "howMuchForeignIncome.heading"
       helper.howMuchForeignIncome.get.answer.key mustBe s"£$amount"
     }
   }
@@ -447,7 +448,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
       helper.otherTaxableIncomeCheckYourAnswers(1).get.answer.key mustBe s"£$amount"
       helper.otherTaxableIncomeCheckYourAnswers(2).get.label.key mustBe messages("anyTaxableOtherIncomeOption.checkYourAnswersLabel", "qwerty")
       helper.otherTaxableIncomeCheckYourAnswers(2).get.answer.key mustBe "site.yes"
-      helper.otherTaxableIncomeCheckYourAnswers(3).get.label.key mustBe messages("anyTaxableOtherIncome.checkYourAnswersLabel", "qwerty")
+      helper.otherTaxableIncomeCheckYourAnswers(3).get.label.key mustBe messages("anyTaxableOtherIncome.heading", "qwerty")
       helper.otherTaxableIncomeCheckYourAnswers(3).get.answer.key mustBe "£123"
     }
   }
@@ -474,7 +475,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "anyOtherTaxableIncome (yes)" must {
     s"have the correct label and answer" in {
       when(answers.anyOtherTaxableIncome) thenReturn Some(true)
-      helper.anyOtherTaxableIncome.get.label.key mustBe "anyOtherTaxableIncome.checkYourAnswersLabel"
+      helper.anyOtherTaxableIncome.get.label.key mustBe "anyOtherTaxableIncome.heading"
       helper.anyOtherTaxableIncome.get.answer.key mustBe yes
     }
   }
@@ -482,7 +483,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "anyOtherTaxableIncome (no)" must {
     s"have the correct label and answer" in {
       when(answers.anyOtherTaxableIncome) thenReturn Some(false)
-      helper.anyOtherTaxableIncome.get.label.key mustBe s"anyOtherTaxableIncome.checkYourAnswersLabel"
+      helper.anyOtherTaxableIncome.get.label.key mustBe s"anyOtherTaxableIncome.heading"
       helper.anyOtherTaxableIncome.get.answer.key mustBe no
     }
   }
@@ -494,7 +495,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "Is WhereToSendPayment yourself" must {
     s"have the correct label and answer" in {
       when(answers.whereToSendPayment) thenReturn Some(Myself)
-      helper.whereToSendPayment.get.label.key mustBe "whereToSendPayment.checkYourAnswersLabel"
+      helper.whereToSendPayment.get.label.key mustBe "whereToSendPayment.heading"
       helper.whereToSendPayment.get.answer.key mustBe "whereToSendPayment.myself"
     }
   }
@@ -502,23 +503,25 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "Is WhereToSendPayment nominee else" must {
     s"have the correct label and answer" in {
       when(answers.whereToSendPayment) thenReturn Some(Nominee)
-      helper.whereToSendPayment.get.label.key mustBe "whereToSendPayment.checkYourAnswersLabel"
+      helper.whereToSendPayment.get.label.key mustBe "whereToSendPayment.heading"
       helper.whereToSendPayment.get.answer.key mustBe "whereToSendPayment.nominee"
     }
   }
 
   "Payment address correct (yes)" must {
     s"have the correct label and answer" in {
+      when(answers.itmpAddress) thenReturn Some(ItmpAddress(Some("line1"), Some("line2"), None, None, None, Some("AB1 2CD"), None, None))
       when(answers.paymentAddressCorrect) thenReturn Some(true)
-      helper.paymentAddressCorrect.get.label.key mustBe "paymentAddressCorrect.checkYourAnswersLabel"
+      helper.paymentAddressCorrect.get.label.key mustBe "<p>" + messages("paymentAddressCorrect.heading") + "</p>line1<br>line2<br>AB1 2CD"
       helper.paymentAddressCorrect.get.answer.key mustBe yes
     }
   }
 
   "Payment address correct (no)" must {
     s"have the correct label and answer" in {
+      when(answers.itmpAddress) thenReturn Some(ItmpAddress(Some("line1"), Some("line2"), None, None, None, Some("AB1 2CD"), None, None))
       when(answers.paymentAddressCorrect) thenReturn Some(false)
-      helper.paymentAddressCorrect.get.label.key mustBe "paymentAddressCorrect.checkYourAnswersLabel"
+      helper.paymentAddressCorrect.get.label.key mustBe "<p>" + messages("paymentAddressCorrect.heading") + "</p>line1<br>line2<br>AB1 2CD"
       helper.paymentAddressCorrect.get.answer.key mustBe no
     }
   }
@@ -527,7 +530,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have the correct label and answer" in {
       val nomineeName = "Test name"
       when(answers.nomineeFullName) thenReturn Some(nomineeName)
-      helper.nomineeFullName.get.label.key mustBe "nomineeFullName.checkYourAnswersLabel"
+      helper.nomineeFullName.get.label.key mustBe "nomineeFullName.heading"
       helper.nomineeFullName.get.answer.key mustBe nomineeName
     }
   }
@@ -537,8 +540,8 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
       val agentRef = "AB12345"
       when(answers.anyAgentRef) thenReturn Some(AnyAgentRef.Yes(agentRef))
 
-      helper.anyAgentRef.get.label.key mustBe "anyAgentRefOption.checkYourAnswersLabel"
-      helper.agentReferenceNumber.get.label.key mustBe "anyAgentRef.checkYourAnswersLabel"
+      helper.anyAgentRef.get.label.key mustBe messages("anyAgentRef.heading", "Test name")
+      helper.agentReferenceNumber.get.label.key mustBe "anyAgentRef.agentRefField"
 
       helper.anyAgentRef.get.answer.key mustBe yes
       helper.agentReferenceNumber.get.answer.key mustBe agentRef
@@ -548,7 +551,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "Is anyAgentRef (false)" must {
     s"have the correct label and answer" in {
       when(answers.anyAgentRef) thenReturn Some(AnyAgentRef.No)
-      helper.anyAgentRef.get.label.key mustBe "anyAgentRefOption.checkYourAnswersLabel"
+      helper.anyAgentRef.get.label.key mustBe messages("anyAgentRef.heading", "Test name")
       helper.anyAgentRef.get.answer.key mustBe no
     }
   }
@@ -556,7 +559,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "Is isPaymentAddressInTheUK (true)" must {
     s"have the correct label and answer" in {
       when(answers.isPaymentAddressInTheUK) thenReturn Some(true)
-      helper.isPaymentAddressInTheUK.get.label.key mustBe "isPaymentAddressInTheUK.checkYourAnswersLabel"
+      helper.isPaymentAddressInTheUK.get.label.key mustBe "isPaymentAddressInTheUK.heading"
       helper.isPaymentAddressInTheUK.get.answer.key mustBe yes
     }
   }
@@ -564,7 +567,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "Is isPaymentAddressInTheUK (false)" must {
     s"have the correct label and answer" in {
       when(answers.isPaymentAddressInTheUK) thenReturn Some(false)
-      helper.isPaymentAddressInTheUK.get.label.key mustBe "isPaymentAddressInTheUK.checkYourAnswersLabel"
+      helper.isPaymentAddressInTheUK.get.label.key mustBe "isPaymentAddressInTheUK.heading"
       helper.isPaymentAddressInTheUK.get.answer.key mustBe no
     }
   }
@@ -573,7 +576,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have correct label and answer" in {
       val address = UkAddress("line 1", "line 2", None, None, None, "AA11 1AA")
       when(answers.paymentUKAddress) thenReturn Some(address)
-      helper.paymentUKAddress.get.label.key mustBe "paymentUKAddress.checkYourAnswersLabel"
+      helper.paymentUKAddress.get.label.key mustBe "paymentUKAddress.heading"
       helper.paymentUKAddress.get.answer.key mustBe UkAddress.asString(address)
     }
   }
@@ -582,7 +585,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have correct label and answer" in {
       val intAddress = InternationalAddress("line 1", "line 2", None, None, None, "country")
       when(answers.paymentInternationalAddress) thenReturn Some(intAddress)
-      helper.paymentInternationalAddress.get.label.key mustBe "paymentInternationalAddress.checkYourAnswersLabel"
+      helper.paymentInternationalAddress.get.label.key mustBe "paymentInternationalAddress.heading"
       helper.paymentInternationalAddress.get.answer.key mustBe InternationalAddress.asString(intAddress)
     }
   }
@@ -594,8 +597,8 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     s"have the correct label and answer" in {
       val telNo = "0191123123"
       when(answers.anyTelephoneNumber) thenReturn Some(TelephoneOption.Yes(telNo))
-      helper.anyTelephoneNumber.get.label.key mustBe "telephoneNumberOption.checkYourAnswersLabel"
-      helper.telephoneNumber.get.label.key mustBe "telephoneNumber.checkYourAnswersLabel"
+      helper.anyTelephoneNumber.get.label.key mustBe "telephoneNumber.heading"
+      helper.telephoneNumber.get.label.key mustBe "telephoneNumber.telephoneNumberField"
 
       helper.anyTelephoneNumber.get.answer.key mustBe yes
       helper.telephoneNumber.get.answer.key mustBe telNo
@@ -605,7 +608,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
   "Telephone number (no)" must {
     s"have the correct label and answer" in {
       when(answers.anyTelephoneNumber) thenReturn Some(TelephoneOption.No)
-      helper.anyTelephoneNumber.get.label.key mustBe "telephoneNumberOption.checkYourAnswersLabel"
+      helper.anyTelephoneNumber.get.label.key mustBe "telephoneNumber.heading"
       helper.anyTelephoneNumber.get.answer.key mustBe no
     }
   }

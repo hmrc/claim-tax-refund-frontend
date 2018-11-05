@@ -440,7 +440,13 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
       "go to PaymentAddressCorrect from WhereToSendPayment when Myself is selected and isPaymentAddressInTheUK empty" in {
         when(answers.whereToSendPayment) thenReturn Some(Myself)
         when(answers.isPaymentAddressInTheUK) thenReturn None
-        navigator.nextPage(WhereToSendPaymentId, CheckMode)(answers) mustBe routes.PaymentAddressCorrectController.onPageLoad(CheckMode)
+        navigator.nextPage(WhereToSendPaymentId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+      }
+
+      "go to checkYourAnswers from Payment address correct in CheckMode" in {
+        when(answers.paymentAddressCorrect) thenReturn Some(true)
+        navigator.nextPage(PaymentAddressCorrectId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+
       }
 
       "go to CYA from WhereToSendPayment when Myself is selected and isPaymentAddressInTheUK is complete" in {
