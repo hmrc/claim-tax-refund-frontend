@@ -45,7 +45,6 @@ case class AnswerRow(label: Message,
 object AnswerRow {
 	def apply(label: String,
 						answer: String,
-						answerIsMessageKey: Boolean,
 						url: Option[String] = None,
 						changeLabel: String,
             deleteUrl: Option[String] = None,
