@@ -78,7 +78,7 @@ class Navigator @Inject()() {
 
   private val routeMap: Map[Identifier, UserAnswers => Call] = Map(
     //Claim details
-    SelectTaxYearId -> (_ => routes.EmploymentDetailsController.onPageLoad(NormalMode)),
+    SelectTaxYearId -> selectTaxYear(NormalMode),
     EmploymentDetailsId -> employmentDetails,
     EnterPayeReferenceId -> (_ => routes.DetailsOfEmploymentOrPensionController.onPageLoad(NormalMode)),
     DetailsOfEmploymentOrPensionId -> (_ => routes.AnyBenefitsController.onPageLoad(NormalMode)),
@@ -132,6 +132,7 @@ class Navigator @Inject()() {
 
   private val editRouteMap: Map[Identifier, UserAnswers => Call] = Map(
     //Claim details
+    SelectTaxYearId -> selectTaxYear(CheckMode),
     EmploymentDetailsId -> employmentDetailsCheck,
     EnterPayeReferenceId -> detailsOfEmploymentCheck,
     //Benefits
@@ -177,6 +178,16 @@ class Navigator @Inject()() {
   )
 
   //Claim Details-----------------------------
+
+  private def selectTaxYear(mode: Mode)(userAnswers: UserAnswers): Call = mode match {
+    case NormalMode => routes.EmploymentDetailsController.onPageLoad(NormalMode)
+    case CheckMode =>
+      if (userAnswers.employmentDetails.isDefined) {
+        routes.CheckYourAnswersController.onPageLoad()
+      } else {
+        routes.EmploymentDetailsController.onPageLoad(CheckMode)
+    }
+  }
 
   private def employmentDetails(userAnswers: UserAnswers): Call = userAnswers.employmentDetails match {
     case Some(true) => routes.AnyBenefitsController.onPageLoad(NormalMode)
