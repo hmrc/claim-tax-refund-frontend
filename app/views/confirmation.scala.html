@@ -29,6 +29,8 @@
     templateRenderer: TemplateRenderer
 )
 
+@formattedSubmissionReference = @{submissionReference.replaceAll("-", "‑")}
+
 @main_template(
     title = messages("confirmation.title"),
     appConfig = appConfig,
@@ -36,7 +38,7 @@
 
     <div class="govuk-box-highlight">
         <h1 class="heading-xlarge">@messages("confirmation.heading")</h1>
-        <div class="govuk-panel__body" id="reference">@messages("confirmation.reference") <strong>@submissionReference</strong></div>
+        <div class="govuk-panel__body" id="reference">@messages("confirmation.reference") <strong>@formattedSubmissionReference</strong></div>
     </div>
 
     <h2 class="heading-medium">@messages("confirmation.whatHappensNext.title")</h2>
