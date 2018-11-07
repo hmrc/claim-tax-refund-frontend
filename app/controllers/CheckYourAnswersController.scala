@@ -85,21 +85,31 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
       ).toString
 
       val robotXml = new RobotXML
-      val xml: String = robotXml.generateXml(request.userAnswers, submissionReference, timeStamp.toString("dd/MM/yyyy HH:mm:ss"), nino, itmpName, itmpAddress).toString
+
+      val xml: String =
+        robotXml.generateXml(
+          userAnswers = request.userAnswers,
+          submissionReference = submissionReference,
+          dateCreated = timeStamp.toString("dd/MM/yyyy HH:mm:ss"),
+          nino = nino,
+          itmpName = itmpName,
+          itmpAddress = itmpAddress
+        ).toString
 
       val submissionMark = SubmissionMark.getSfMark(xml)
 
-      val submissionArchiveRequest = SubmissionArchiveRequest(
-        checksum = DigestUtils.sha1Hex(xml.getBytes("UTF-8")),
-        submissionRef = submissionReference,
-        submissionMark = submissionMark,
-        submissionData = xml
-      )
+//      val submissionArchiveRequest = SubmissionArchiveRequest(
+//        checksum = DigestUtils.sha1Hex(xml.getBytes("UTF-8")),
+//        submissionRef = submissionReference,
+//        submissionMark = submissionMark,
+//        submissionData = xml
+//      )
 
-      val futureMetadata: Future[Metadata] = casConnector.archiveSubmission(submissionReference, submissionArchiveRequest).map {
-        submissionResponse =>
-          new Metadata(nino, submissionReference, submissionMark, timeStamp, submissionResponse.casKey)
-      }
+      val futureMetadata: Future[Metadata] =
+//        casConnector.archiveSubmission(submissionReference, submissionArchiveRequest).map {
+//          submissionResponse =>
+            Future(new Metadata(nino, submissionReference, submissionMark, timeStamp, "test-cas-key"))
+//        }
 
       val futureSubmission: Future[Submission] = for {
         metadata <- futureMetadata
