@@ -138,8 +138,10 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
       futureSubmission.flatMap {
         submission =>
           submissionService.ctrSubmission(submission) map {
-            case SubmissionSuccessful => Redirect(routes.ConfirmationController.onPageLoad())
-            case _ => throw new Exception("[Check your answers][Submission failed]")
+            case SubmissionSuccessful =>
+              Redirect(routes.ConfirmationController.onPageLoad())
+            case _ =>
+              throw new Exception("[Check your answers][Submission failed]")
           }
       }
   }
