@@ -98,18 +98,29 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
 
       val submissionMark = SubmissionMark.getSfMark(xml)
 
-//      val submissionArchiveRequest = SubmissionArchiveRequest(
-//        checksum = DigestUtils.sha1Hex(xml.getBytes("UTF-8")),
-//        submissionRef = submissionReference,
-//        submissionMark = submissionMark,
-//        submissionData = xml
-//      )
+      val submissionArchiveRequest = SubmissionArchiveRequest(
+        checksum = DigestUtils.sha1Hex(xml.getBytes("UTF-8")),
+        submissionRef = submissionReference,
+        submissionMark = submissionMark,
+        submissionData = xml
+      )
 
       val futureMetadata: Future[Metadata] =
-//        casConnector.archiveSubmission(submissionReference, submissionArchiveRequest).map {
-//          submissionResponse =>
-            Future(new Metadata(nino, submissionReference, submissionMark, timeStamp, "test-cas-key"))
-//        }
+        casConnector.archiveSubmission(submissionReference, submissionArchiveRequest).map {
+          submissionResponse =>
+            new Metadata(
+              customerId = nino,
+              submissionRef = submissionReference,
+              submissionMark = submissionMark,
+              timeStamp = timeStamp,
+              casKey = submissionResponse.casKey
+            )
+        }
+      
+      futureMetadata.onFailure {
+        case e =>
+          Logger.error(s"[CasConnector][archiveSubmission][Submission Reference: $submissionReference][Submission Mark: $submissionMark] failed", e)
+      }
 
       val futureSubmission: Future[Submission] = for {
         metadata <- futureMetadata
