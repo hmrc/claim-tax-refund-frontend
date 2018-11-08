@@ -27,11 +27,11 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class CasConnector @Inject()(appConfig: FrontendAppConfig, http: HttpClient) {
 
-  def archiveSubmission(submissionRef: String, data: SubmissionArchiveRequest)
-                       (implicit hc: HeaderCarrier, ec:ExecutionContext): Future[SubmissionArchiveResponse] = {
-    Logger.debug(s"Sending submission $submissionRef to CAS via DMS API")
+    def archiveSubmission(submissionRef: String, data: SubmissionArchiveRequest)
+                         (implicit hc: HeaderCarrier, ec:ExecutionContext): Future[SubmissionArchiveResponse] = {
+      Logger.debug(s"Sending submission $submissionRef to CAS via DMS API")
 
-    val url: String = s"${appConfig.dmsApiUrl}/digital-form/archive/$submissionRef"
+    val url: String = s"${appConfig.ctrUrl}/claim-tax-refund/archive-submission/"
     http.POST[SubmissionArchiveRequest, SubmissionArchiveResponse](url, data)
   }
 }
