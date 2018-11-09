@@ -60,7 +60,6 @@ class FrontendAppConfig @Inject()(override val runModeConfiguration: Configurati
   lazy val unauthorisedCallback: String = loadConfig("identity-verification-uplift.unauthorised-callback.url")
 
   lazy val taiUrl: String = baseUrl("tai")
-  lazy val dmsApiUrl: String = baseUrl("dmsapi")
 
   lazy val languageTranslationEnabled: Boolean = runModeConfiguration.getBoolean("microservice.services.features.welsh-translation").getOrElse(true)
 
