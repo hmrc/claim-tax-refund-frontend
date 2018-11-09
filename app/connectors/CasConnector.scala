@@ -16,8 +16,9 @@
 
 package connectors
 
+import javax.inject.Singleton
+import com.google.inject.{ImplementedBy, Inject}
 import config.FrontendAppConfig
-import javax.inject.Inject
 import models.{SubmissionArchiveRequest, SubmissionArchiveResponse}
 import play.api.Logger
 import uk.gov.hmrc.http.HeaderCarrier
@@ -25,13 +26,18 @@ import uk.gov.hmrc.play.bootstrap.http.HttpClient
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class CasConnector @Inject()(appConfig: FrontendAppConfig, http: HttpClient) {
+@Singleton
+class CasConnectorImpl @Inject()(appConfig: FrontendAppConfig, val http: HttpClient) extends CasConnector {
 
-  def archiveSubmission(submissionRef: String, data: SubmissionArchiveRequest)
-                       (implicit hc: HeaderCarrier, ec:ExecutionContext): Future[SubmissionArchiveResponse] = {
-    Logger.debug(s"Sending submission $submissionRef to CAS via DMS API")
+    def archiveSubmission(submissionRef: String, data: SubmissionArchiveRequest)(implicit hc: HeaderCarrier, ec:ExecutionContext): Future[SubmissionArchiveResponse] = {
+      Logger.debug(s"Sending submission $submissionRef to CAS via DMS API")
 
-    val url: String = s"${appConfig.dmsApiUrl}/digital-form/archive/$submissionRef"
+    val url: String = s"${appConfig.ctrUrl}/claim-tax-refund/archive-submission/"
     http.POST[SubmissionArchiveRequest, SubmissionArchiveResponse](url, data)
   }
+}
+
+@ImplementedBy(classOf[CasConnectorImpl])
+trait CasConnector {
+  def archiveSubmission(submissionRef: String, data: SubmissionArchiveRequest)(implicit hc: HeaderCarrier, ec:ExecutionContext): Future[SubmissionArchiveResponse]
 }

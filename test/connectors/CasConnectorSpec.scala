@@ -34,7 +34,7 @@ class CasConnectorSpec extends SpecBase with MockitoSugar with WireMockHelper wi
   override implicit lazy val app: Application =
     new GuiceApplicationBuilder()
       .configure(
-        conf = "microservice.services.dmsapi.port" -> server.port
+        conf = "microservice.services.claim-tax-refund.port" -> server.port
       )
       .build()
 
@@ -50,7 +50,7 @@ class CasConnectorSpec extends SpecBase with MockitoSugar with WireMockHelper wi
       val data: SubmissionArchiveRequest = SubmissionArchiveRequest("", submissionReference, "", "")
 
       server.stubFor(
-        post(urlEqualTo(s"/digital-form/archive/$submissionReference"))
+        post(urlEqualTo(s"/claim-tax-refund/archive-submission/"))
           .willReturn(
             aResponse()
               .withStatus(200)
