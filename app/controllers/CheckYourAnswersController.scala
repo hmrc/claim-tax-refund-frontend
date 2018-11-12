@@ -86,7 +86,8 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
 
       val robotXml = new RobotXML
 
-      val xml: String =
+      val robotXmlSubmission: String =
+        """<?xml version="1.0" encoding="UTF-8" standalone="no"?>""" +
         robotXml.generateXml(
           userAnswers = request.userAnswers,
           submissionReference = submissionReference,
@@ -94,15 +95,15 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
           nino = nino,
           itmpName = itmpName,
           itmpAddress = itmpAddress
-        ).toString
+        ).toString()
 
-      val submissionMark = SubmissionMark.getSfMark(xml)
+      val submissionMark = SubmissionMark.getSfMark(robotXmlSubmission)
 
       val submissionArchiveRequest = SubmissionArchiveRequest(
-        checksum = DigestUtils.sha1Hex(xml.getBytes("UTF-8")),
+        checksum = DigestUtils.sha1Hex(robotXmlSubmission.getBytes("UTF-8")),
         submissionRef = submissionReference,
         submissionMark = submissionMark,
-        submissionData = xml
+        submissionData = robotXmlSubmission
       )
 
       val futureMetadata: Future[Metadata] =
@@ -116,7 +117,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
               casKey = submissionResponse.casKey
             )
         }
-      
+
       futureMetadata.onFailure {
         case e =>
           Logger.error(s"[CasConnector][archiveSubmission][Submission Reference: $submissionReference][Submission Mark: $submissionMark] failed", e)
@@ -126,9 +127,9 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
         metadata <- futureMetadata
         _ <- dataCacheConnector.save[String](request.externalId, key = "submissionReference", submissionReference)
         _ <- dataCacheConnector.save[String](request.externalId, key = "pdf", pdfHtml)
-        _ <- dataCacheConnector.save[String](request.externalId, key = "xml", xml)
-        _ <- dataCacheConnector.save[String](request.externalId, key = "metadata", Metadata.toXml(metadata).toString)
-      } yield new Submission(pdfHtml, Metadata.toXml(metadata).toString, xml)
+        _ <- dataCacheConnector.save[String](request.externalId, key = "xml", robotXmlSubmission)
+        _ <- dataCacheConnector.save[String](request.externalId, key = "metadata", """<?xml version="1.0" encoding="UTF-8" standalone="no"?>""" + Metadata.toXml(metadata).toString())
+      } yield new Submission(pdfHtml, """<?xml version="1.0" encoding="UTF-8" standalone="no"?>""" + Metadata.toXml(metadata).toString(), robotXmlSubmission)
 
       futureSubmission.onFailure {
         case e =>
