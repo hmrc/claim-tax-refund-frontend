@@ -52,7 +52,7 @@ object Metadata {
 
 	def toXml(metadata: Metadata): NodeSeq = {
 		val metadataXml: Elem = {
-			<documents>
+			<documents xmlns="http://govtalk.gov.uk/hmrc/gis/content/1">
 				<document>
 					<header>
 						<title>{metadata.submissionRef}</title>
