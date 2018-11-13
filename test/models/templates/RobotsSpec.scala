@@ -61,7 +61,16 @@ class RobotsSpec extends SpecBase {
           <middleName>TestMiddleName</middleName>
           <lastName>TestLastName</lastName>
           <nino>ZZ123456A</nino>
-          <itmpAddress>Address line 1, Address line 2, Address line 3, Address line 4, Address line 5, ZZ11ZZ, United Kingdom, GB</itmpAddress>
+          <itmpAddress>
+            <addressLine1>Address line 1</addressLine1>
+            <addressLine2>Address line 2</addressLine2>
+            <addressLine3>Address line 3</addressLine3>
+            <addressLine4>Address line 4</addressLine4>
+            <addressLine5>Address line 5</addressLine5>
+            <postcode>ZZ11ZZ</postcode>
+            <country>United Kingdom</country>
+            <countryCode>GB</countryCode>
+          </itmpAddress>
         </userDetails>
         <claimSection>
           <selectedTaxYear>6 April 2016 to 5 April 2017</selectedTaxYear>
@@ -99,7 +108,20 @@ class RobotsSpec extends SpecBase {
       fullXml \ "userDetails" \ "middleName" must contain(<middleName>TestMiddleName</middleName>)
       fullXml \ "userDetails" \ "lastName" must contain(<lastName>TestLastName</lastName>)
       fullXml \ "userDetails" \ "nino" must contain(<nino>ZZ123456A</nino>)
-      fullXml \ "userDetails" \ "itmpAddress" must contain(<itmpAddress>Address line 1, Address line 2, Address line 3, Address line 4, Address line 5, ZZ11ZZ, United Kingdom, GB</itmpAddress>)
+      fullXml \ "userDetails" \ "itmpAddress" must contain(
+        trim(
+          <itmpAddress>
+            <addressLine1>Address line 1</addressLine1>
+            <addressLine2>Address line 2</addressLine2>
+            <addressLine3>Address line 3</addressLine3>
+            <addressLine4>Address line 4</addressLine4>
+            <addressLine5>Address line 5</addressLine5>
+            <postcode>ZZ11ZZ</postcode>
+            <country>United Kingdom</country>
+            <countryCode>GB</countryCode>
+          </itmpAddress>
+        )
+      )
     }
 
     "have correct sections in claimSection when employmentDetails are true" in {
@@ -202,7 +224,20 @@ class RobotsSpec extends SpecBase {
       fullXml \ "paymentSection" \ "anyAgentRef" must contain(<anyAgentRef>Yes</anyAgentRef>)
       fullXml \ "paymentSection" \ "agentReference" must contain(<agentReference>12341234</agentReference>)
       fullXml \ "paymentSection" \ "isPaymentAddressInTheUK" must contain(<isPaymentAddressInTheUK>false</isPaymentAddressInTheUK>)
-      fullXml \ "paymentSection" \ "paymentAddress" must contain(<paymentAddress><internationalAddress>1, 2, Country</internationalAddress></paymentAddress>)
+      fullXml \ "paymentSection" \ "paymentAddress" must contain(
+        trim(
+          <paymentAddress>
+            <internationalAddress>
+              <addressLine1>1</addressLine1>
+              <addressLine2>2</addressLine2>
+              <addressLine3></addressLine3>
+              <addressLine4></addressLine4>
+              <addressLine5></addressLine5>
+              <country>Country</country>
+            </internationalAddress>
+          </paymentAddress>
+        )
+      )
     }
 
     "have correct sections in the paymentSection when payment address is in the UK" in {
@@ -218,7 +253,20 @@ class RobotsSpec extends SpecBase {
       newXmlToNode \ "paymentSection" \ "anyAgentRef" must contain(<anyAgentRef>Yes</anyAgentRef>)
       newXmlToNode \ "paymentSection" \ "agentReference" must contain(<agentReference>12341234</agentReference>)
       newXmlToNode \ "paymentSection" \ "isPaymentAddressInTheUK" must contain(<isPaymentAddressInTheUK>true</isPaymentAddressInTheUK>)
-      newXmlToNode \ "paymentSection" \ "paymentAddress" \ "ukAddress" must contain(<ukAddress>qwerty, qwerty1, AB1 0CD</ukAddress>)
+      newXmlToNode \ "paymentSection" \ "paymentAddress" must contain(
+        trim(
+          <paymentAddress>
+            <ukAddress>
+              <addressLine1>qwerty</addressLine1>
+              <addressLine2>qwerty1</addressLine2>
+              <addressLine3></addressLine3>
+              <addressLine4></addressLine4>
+              <addressLine5></addressLine5>
+              <postcode>AB1 0CD</postcode>
+            </ukAddress>
+          </paymentAddress>
+        )
+      )
     }
 
     "have correct sections in the paymentSection when payment address is a lookup" in {
@@ -237,7 +285,22 @@ class RobotsSpec extends SpecBase {
 
       val newXmlToNode = formatXml(fullUserAnswers)
 
-      newXmlToNode \ "paymentSection" \ "paymentAddress" \ "lookupAddress" must contain(<lookupAddress>Line1, Line2, Line3, Line4, NE1 1LX, United Kingdom, GB</lookupAddress>)
+      newXmlToNode \ "paymentSection" \ "paymentAddress" must contain(
+        trim(
+          <paymentAddress>
+            <lookupAddress>
+              <addressLine1>Line1</addressLine1>
+              <addressLine2>Line2</addressLine2>
+              <addressLine3>Line3</addressLine3>
+              <addressLine4>Line4</addressLine4>
+              <addressLine5></addressLine5>
+              <postcode>NE1 1LX</postcode>
+              <country>United Kingdom</country>
+              <countryCode>GB</countryCode>
+            </lookupAddress>
+          </paymentAddress>
+        )
+      )
     }
 
     "have the correct parts in contact section" in {

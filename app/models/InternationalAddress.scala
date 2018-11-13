@@ -18,7 +18,8 @@ package models
 
 import play.api.libs.json._
 
-import scala.xml.Elem
+import scala.xml.Node
+import scala.xml.Utility._
 
 case class InternationalAddress(addressLine1: String,
                                 addressLine2: String,
@@ -39,7 +40,17 @@ object InternationalAddress {
       Some(a.country)
     ).flatten
 
-  def toXml(a: InternationalAddress): Elem = <paymentAddress><internationalAddress>{answeredLines(a).mkString(", ")}</internationalAddress></paymentAddress>
+  def toXml(a: InternationalAddress): Node =
+    trim(<paymentAddress>
+      <internationalAddress>
+        <addressLine1>{a.addressLine1}</addressLine1>
+        <addressLine2>{a.addressLine2}</addressLine2>
+        <addressLine3>{a.addressLine3.getOrElse("")}</addressLine3>
+        <addressLine4>{a.addressLine4.getOrElse("")}</addressLine4>
+        <addressLine5>{a.addressLine5.getOrElse("")}</addressLine5>
+        <country>{a.country}</country>
+      </internationalAddress>
+    </paymentAddress>)
 
   def asString(a: InternationalAddress): String = answeredLines(a).mkString("<br>")
 }

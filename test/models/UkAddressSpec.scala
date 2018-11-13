@@ -18,7 +18,8 @@ package models
 
 import base.SpecBase
 
-import scala.xml.Elem
+import scala.xml.Node
+import scala.xml.Utility.trim
 
 class UkAddressSpec extends SpecBase {
 
@@ -38,7 +39,18 @@ class UkAddressSpec extends SpecBase {
   "as Xml" must {
     "pass the correct xml back" in {
       val address = UkAddress("line1", "line2", None, Some("line4"), None, "postcode")
-      val expectedElem: Elem = <paymentAddress><ukAddress>line1, line2, line4, postcode</ukAddress></paymentAddress>
+      val expectedElem: Node =
+        trim(<paymentAddress>
+          <ukAddress>
+            <addressLine1>line1</addressLine1>
+            <addressLine2>line2</addressLine2>
+            <addressLine3></addressLine3>
+            <addressLine4>line4</addressLine4>
+            <addressLine5></addressLine5>
+            <postcode>postcode</postcode>
+          </ukAddress>
+        </paymentAddress>)
+
       UkAddress.toXml(address) mustBe expectedElem
     }
   }
