@@ -20,7 +20,7 @@ val compile = Seq(
   ws,
   "uk.gov.hmrc" %% "simple-reactivemongo" % "7.1.0-play-25",
   "uk.gov.hmrc" %% "logback-json-logger" % "4.1.0",
-  "uk.gov.hmrc" %% "govuk-template" % "5.23.0",
+  "uk.gov.hmrc" %% "govuk-template" % "5.25.0-play-25",
   "uk.gov.hmrc" %% "play-health" % "3.7.0-play-25",
   "uk.gov.hmrc" %% "play-ui" % "7.25.0-play-25",
   "uk.gov.hmrc" %% "http-caching-client" % "7.2.0",
