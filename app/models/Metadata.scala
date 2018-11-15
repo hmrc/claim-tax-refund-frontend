@@ -75,7 +75,7 @@ object Metadata {
 						{attributeXml("cas_key", "string", metadata.cas)}
 						{attributeXml("classification_type", "string", metadata.classificationType)}
 						{attributeXml("business_area", "string", metadata.businessArea)}
-						{attributeXml("attachment_count", "integer", metadata.attachmentCount.toString)}
+						{attributeXml("attachment_count", "int", metadata.attachmentCount.toString)}
 					</metadata>
 				</document>
 			</documents>

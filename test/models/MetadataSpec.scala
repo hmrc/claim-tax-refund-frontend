@@ -202,7 +202,7 @@ MetadataSpec extends WordSpec with MustMatchers with OptionValues with PropertyC
         trim(
           <attribute>
             <attribute_name>attachment_count</attribute_name>
-            <attribute_type>integer</attribute_type>
+            <attribute_type>int</attribute_type>
             <attribute_values>
               <attribute_value>{testMetadata.attachmentCount.toString}</attribute_value>
             </attribute_values>
