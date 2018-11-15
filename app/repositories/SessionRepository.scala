@@ -23,6 +23,7 @@ import play.api.{Configuration, Logger}
 import play.modules.reactivemongo.{MongoDbConnection, ReactiveMongoComponent}
 import reactivemongo.api.DefaultDB
 import reactivemongo.api.indexes.{Index, IndexType}
+import reactivemongo.bson.buffer.DefaultBufferHandler.BSONDocumentBufferHandler
 import reactivemongo.bson.{BSONDocument, BSONObjectID}
 import reactivemongo.play.json.ImplicitBSONHandlers.JsObjectDocumentWriter
 import uk.gov.hmrc.http.cache.client.CacheMap
@@ -46,25 +47,38 @@ object DatedCacheMap {
 class ReactiveMongoRepository(config: Configuration, mongo: () => DefaultDB)
   extends ReactiveRepository[DatedCacheMap, BSONObjectID](config.getString("appName").get, mongo, DatedCacheMap.formats) {
 
-  val fieldName = "lastUpdated"
-  val createdIndexName = "userAnswersExpiry"
-  val expireAfterSeconds = "expireAfterSeconds"
-  val timeToLiveInSeconds: Int = config.getInt("mongodb.timeToLiveInSeconds").get
+  val timeToLiveInSeconds: Int = config.underlying.getInt("mongodb.timeToLiveInSeconds")
 
-  createIndex(fieldName, createdIndexName, timeToLiveInSeconds)
+  val ttlIndex = Index(
+    key  = Seq(
+      "lastUpdated" -> IndexType.Ascending
+    ),
+    name = Some("userAnswersExpiry"),
+    options = BSONDocument("expireAfterSeconds" -> timeToLiveInSeconds)
+  )
 
-  private def createIndex(field: String, indexName: String, ttl: Int): Future[Boolean] = {
-    collection.indexesManager.ensure(Index(Seq((field, IndexType.Ascending)), Some(indexName),
-      options = BSONDocument(expireAfterSeconds -> ttl))) map {
-      result => {
-        Logger.debug(s"set [$indexName] with value $ttl -> result : $result")
-        result
-      }
-    } recover {
-      case e => Logger.error("Failed to set TTL index", e)
-        false
+  val idIndex = Index(
+    key = Seq(
+      "id" -> IndexType.Ascending
+    ),
+    name = Some("userAnswersId")
+  )
+
+  collection.indexesManager.ensure(ttlIndex).map {
+    result => {
+      Logger.debug(s"set [userAnswersExpiry] with value $timeToLiveInSeconds -> result : $result")
+      result
     }
+  }.recover {
+    case e =>
+      Logger.error("Failed to set TTL index", e)
+      false
+  }.flatMap {
+    _ =>
+      collection.indexesManager.ensure(idIndex)
   }
+
+  collection.indexesManager.ensure(Index(Seq()))
 
   def upsert(cm: CacheMap): Future[Boolean] = {
     val selector = Json.obj("id" -> cm.id)
