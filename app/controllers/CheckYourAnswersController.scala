@@ -46,6 +46,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
                                            requireData: DataRequiredAction,
                                            submissionService: SubmissionService,
                                            referenceGenerator: ReferenceGenerator,
+                                           robotXML: RobotXML,
                                            implicit val formPartialRetriever: FormPartialRetriever,
                                            implicit val templateRenderer: TemplateRenderer
                                           )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
@@ -84,30 +85,26 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
         date = timeStamp
       ).toString
 
-      val robotXml = new RobotXML
+      val submissionXml = robotXML.generateXml(
+        userAnswers = request.userAnswers,
+        submissionReference = submissionReference,
+        dateCreated = timeStamp.toString("dd/MM/yyyy HH:mm:ss"),
+        nino = nino,
+        itmpName = itmpName,
+        itmpAddress = itmpAddress
+      ).toString
 
-      val robotXmlSubmission: String =
-        """<?xml version="1.0" encoding="UTF-8" standalone="no"?>""" +
-        robotXml.generateXml(
-          userAnswers = request.userAnswers,
-          submissionReference = submissionReference,
-          dateCreated = timeStamp.toString("dd/MM/yyyy HH:mm:ss"),
-          nino = nino,
-          itmpName = itmpName,
-          itmpAddress = itmpAddress
-        ).toString()
-
-      val submissionMark = SubmissionMark.getSfMark(robotXmlSubmission)
+      val submissionMark = SubmissionMark.getSfMark( """<?xml version="1.0" encoding="UTF-8" standalone="no"?>""" + submissionXml)
 
       val submissionArchiveRequest = SubmissionArchiveRequest(
-        checksum = DigestUtils.sha1Hex(robotXmlSubmission.getBytes("UTF-8")),
+        checksum = DigestUtils.sha1Hex(submissionXml.getBytes("UTF-8")),
         submissionRef = submissionReference,
         submissionMark = submissionMark,
-        submissionData = robotXmlSubmission
+        submissionData = submissionXml
       )
 
-      val futureMetadata: Future[Metadata] =
-        casConnector.archiveSubmission(submissionReference, submissionArchiveRequest).map {
+      val futureSubmission: Future[Submission] = for {
+        metadata <- casConnector.archiveSubmission(submissionReference, submissionArchiveRequest).map {
           submissionResponse =>
             new Metadata(
               customerId = nino,
@@ -117,19 +114,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
               casKey = submissionResponse.casKey
             )
         }
-
-      futureMetadata.onFailure {
-        case e =>
-          Logger.error(s"[CasConnector][archiveSubmission][Submission Reference: $submissionReference][Submission Mark: $submissionMark] failed", e)
-      }
-
-      val futureSubmission: Future[Submission] = for {
-        metadata <- futureMetadata
-        _ <- dataCacheConnector.save[String](request.externalId, key = "submissionReference", submissionReference)
-        _ <- dataCacheConnector.save[String](request.externalId, key = "pdf", pdfHtml)
-        _ <- dataCacheConnector.save[String](request.externalId, key = "xml", robotXmlSubmission)
-        _ <- dataCacheConnector.save[String](request.externalId, key = "metadata", """<?xml version="1.0" encoding="UTF-8" standalone="no"?>""" + Metadata.toXml(metadata).toString())
-      } yield new Submission(pdfHtml, """<?xml version="1.0" encoding="UTF-8" standalone="no"?>""" + Metadata.toXml(metadata).toString(), robotXmlSubmission)
+      } yield new Submission(pdfHtml, """<?xml version="1.0" encoding="UTF-8" standalone="no"?>""" + Metadata.toXml(metadata).toString(), submissionXml)
 
       futureSubmission.onFailure {
         case e =>
