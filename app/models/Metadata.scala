@@ -20,8 +20,8 @@ import org.joda.time.LocalDateTime
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
 
-import scala.xml._
 import scala.xml.Utility._
+import scala.xml._
 
 case class Metadata(customerId: String,
 										submissionRef: String,
