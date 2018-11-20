@@ -74,6 +74,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
 
       val submissionReference = referenceGenerator.generateSubmissionNumber
       val timeStamp = LocalDateTime.now
+      val xmlDeclaration: String = """<?xml version="1.0" encoding="UTF-8" standalone="no"?>"""
 
       val pdfHtml: String = pdf_check_your_answers(
         appConfig = appConfig,
@@ -94,7 +95,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
         itmpAddress = itmpAddress
       ).toString
 
-      val submissionMark = SubmissionMark.getSfMark( """<?xml version="1.0" encoding="UTF-8" standalone="no"?>""" + submissionXml)
+      val submissionMark = SubmissionMark.getSfMark(xmlDeclaration + submissionXml)
 
       val submissionArchiveRequest = SubmissionArchiveRequest(
         checksum = DigestUtils.sha1Hex(submissionXml.getBytes("UTF-8")),
@@ -114,7 +115,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
               casKey = submissionResponse.casKey
             )
         }
-      } yield new Submission(pdfHtml, """<?xml version="1.0" encoding="UTF-8" standalone="no"?>""" + Metadata.toXml(metadata).toString(), submissionXml)
+      } yield new Submission(pdfHtml, xmlDeclaration + Metadata.toXml(metadata).toString(), submissionXml)
 
       futureSubmission.onFailure {
         case e =>

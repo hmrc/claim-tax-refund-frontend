@@ -18,6 +18,7 @@ package controllers
 
 import connectors.{CasConnector, DataCacheConnector, FakeDataCacheConnector}
 import controllers.actions.{DataRequiredActionImpl, DataRetrievalAction, FakeAuthAction}
+import models.templates.RobotXML
 import models.{SubmissionArchiveResponse, SubmissionFailed, SubmissionSuccessful}
 import org.mockito.Matchers._
 import org.mockito.Mockito._
@@ -34,6 +35,7 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with ScalaFuture
   implicit val dataCacheConnector: DataCacheConnector = mock[DataCacheConnector]
   implicit val casConnector: CasConnector = mock[CasConnector]
   implicit val referenceGenerator: ReferenceGenerator = mock[ReferenceGenerator]
+  implicit val robotXML: RobotXML = mock[RobotXML]
   private val mockSubmissionService: SubmissionService = mock[SubmissionService]
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap, submissionService: SubmissionService = mockSubmissionService) =
@@ -47,6 +49,7 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with ScalaFuture
       new DataRequiredActionImpl,
       submissionService,
       referenceGenerator,
+      robotXML,
       formPartialRetriever,
       templateRenderer
     )
@@ -77,6 +80,7 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with ScalaFuture
 
     "Redirect to Confirmation page on a POST when submission is successful" in {
       when(casConnector.archiveSubmission(any(), any())(any(), any())) thenReturn Future.successful(SubmissionArchiveResponse("123"))
+      when(robotXML.generateXml(any(), any(), any(), any(), any(), any())(any())) thenReturn <ctr>data</ctr>
       when(mockSubmissionService.ctrSubmission(any())(any())) thenReturn Future.successful(SubmissionSuccessful)
       val result: Future[Result] = controller().onSubmit()(fakeRequest)
 

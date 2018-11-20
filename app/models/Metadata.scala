@@ -16,16 +16,12 @@
 
 package models
 
-import java.io.{PrintWriter, StringWriter, Writer}
-
 import org.joda.time.LocalDateTime
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
 
-import scala.xml._
 import scala.xml.Utility._
-import scala.xml.XML._
-import scala.xml.dtd.DocType
+import scala.xml._
 
 case class Metadata(customerId: String,
 										submissionRef: String,
@@ -85,8 +81,6 @@ object Metadata {
 			</documents>
 		}
 
-		val writer: StringWriter = new StringWriter()
-		write(w = writer, node = metadataXml, enc = "UTF-8", xmlDecl = true, doctype = DocType("testName"))
 		trim(metadataXml)
 	}
 
