@@ -41,7 +41,7 @@ class OtherTaxableIncomeViewSpec extends QuestionViewBehaviours[OtherTaxableInco
     otherTaxableIncome(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "OtherTaxableIncome view" must {
-    behave like normalPage(createView, messageKeyPrefix, None, "First", taxYear.asString(messages))
+    behave like normalPage(createView, messageKeyPrefix, None, "1", taxYear.asString(messages))
 
     behave like pageWithBackLink(createView)
 
