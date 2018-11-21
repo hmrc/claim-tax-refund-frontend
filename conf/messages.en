@@ -294,8 +294,8 @@ howMuchFuelBenefit.invalid = How much fuel benefit you got must be an amount of 
 howMuchFuelBenefit.changeLabel = Change how much fuel benefit you got
 
 otherCompanyBenefits = company benefit
-otherCompanyBenefit.title = Other taxable company benefit: {0}
-otherCompanyBenefit.heading = Other taxable company benefit: {0}
+otherCompanyBenefit.title = Other taxable company benefit {0}
+otherCompanyBenefit.heading = Other taxable company benefit {0}
 otherCompanyBenefit.checkYourAnswersLabel = Other company benefit details
 otherCompanyBenefit.name = Name of taxable company benefit
 otherCompanyBenefit.amount = How much of this taxable company benefit you got
@@ -343,8 +343,8 @@ howMuchCarersAllowance.invalid = How much Carer’s Allowance you got must be an
 howMuchCarersAllowance.changeLabel = Change how much Carer’s Allowance you got
 
 otherBenefits = taxable benefit
-otherBenefit.title = Other taxable benefit: {0}
-otherBenefit.heading = Other taxable benefit: {0}
+otherBenefit.title = Other taxable benefit {0}
+otherBenefit.heading = Other taxable benefit {0}
 otherBenefit.checkYourAnswersLabel = Other taxable benefit details
 otherBenefit.name = Name of taxable benefit
 otherBenefit.name.blank = Enter the name of the taxable benefit you got
@@ -396,8 +396,8 @@ howMuchOtherTaxableIncome.blank = Enter the amount of other taxable income you g
 howMuchOtherTaxableIncome.invalid = Enter a valid amount of other taxable income
 
 otherTaxableIncome = taxable income
-otherTaxableIncome.title = Other taxable income: {0}
-otherTaxableIncome.heading = Other taxable income: {0}
+otherTaxableIncome.title = Other taxable income {0}
+otherTaxableIncome.heading = Other taxable income {0}
 otherTaxableIncome.checkYourAnswersLabel = Other taxable income details
 otherTaxableIncome.name = Name of taxable income
 otherTaxableIncome.amount = How much of this taxable income you got
