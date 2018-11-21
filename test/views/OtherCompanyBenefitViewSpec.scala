@@ -39,7 +39,7 @@ class OtherCompanyBenefitViewSpec extends QuestionViewBehaviours[OtherCompanyBen
     otherCompanyBenefit(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "OtherCompanyBenefit view" must {
-    behave like normalPage(createView, messageKeyPrefix, None, "First", "bob")
+    behave like normalPage(createView, messageKeyPrefix, None, "1", "bob")
 
     behave like pageWithBackLink(createView)
 

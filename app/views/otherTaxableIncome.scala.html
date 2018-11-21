@@ -17,7 +17,7 @@
 @import config.FrontendAppConfig
 @import uk.gov.hmrc.play.views.html._
 @import controllers.routes._
-@import models.Mode
+@import models.{Mode, Index}
 @import viewmodels.InputViewModel
 @import uk.gov.hmrc.renderer.TemplateRenderer
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
@@ -37,7 +37,7 @@
 )
 
 @title = @{
-    if(form.errors.nonEmpty) messages("site.title.error", messages("otherTaxableIncome.title", Ordinal.getOrdinal(index).capitalize)) else messages("otherTaxableIncome.title", Ordinal.getOrdinal(index).capitalize)
+    if(form.errors.nonEmpty) messages("site.title.error", messages("otherTaxableIncome.title", index.id + 1)) else messages("otherTaxableIncome.title", index.id + 1)
 }
 
 @main_template(
@@ -52,7 +52,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading(messages("otherTaxableIncome.heading", Ordinal.getOrdinal(index).capitalize), taxYear = Some(taxYear.asString))
+        @components.heading(messages("otherTaxableIncome.heading", index.id + 1), taxYear = Some(taxYear.asString))
 
         @components.input_text(
             InputViewModel("name", form),

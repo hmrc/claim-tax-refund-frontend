@@ -16,12 +16,11 @@
 
 @import config.FrontendAppConfig
 @import controllers.routes._
-@import models.{Mode, Ordinal}
+@import models.Mode
 @import uk.gov.hmrc.play.views.html._
 @import viewmodels.InputViewModel
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
 @import uk.gov.hmrc.renderer.TemplateRenderer
-@import com.ibm.icu.text.RuleBasedNumberFormat
 
 @(
     appConfig: FrontendAppConfig,
@@ -38,7 +37,7 @@
 )
 
 @title = @{
-    if(form.errors.nonEmpty) messages("site.title.error", messages("otherBenefit.title", Ordinal.getOrdinal(index).capitalize)) else messages("otherBenefit.title", Ordinal.getOrdinal(index).capitalize)
+    if(form.errors.nonEmpty) messages("site.title.error", messages("otherBenefit.title", index.id + 1)) else messages("otherBenefit.title", index.id + 1)
 }
 
 @main_template(
@@ -53,7 +52,7 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading(messages("otherBenefit.heading", Ordinal.getOrdinal(index).capitalize), taxYear = Some(taxYear.asString))
+        @components.heading(messages("otherBenefit.heading", index.id + 1), taxYear = Some(taxYear.asString))
 
         @components.input_text(
             InputViewModel("name", form),
