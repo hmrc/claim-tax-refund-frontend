@@ -29,8 +29,10 @@ MetadataSpec extends WordSpec with MustMatchers with OptionValues with PropertyC
 
   private val localDT = LocalDateTime.now()
   private val submissionRef = "123"
-  private val testMetadata: Metadata = new Metadata("AB123456", "123", "123", localDT, "")
+  private val testMetadata: Metadata = new Metadata("AB123456", "123", "123", localDT, "", "en")
+  private val testWelshMetadata: Metadata = new Metadata("AB123456", "123", "123", localDT, "", "cy")
   private val testXml: NodeSeq = Metadata.toXml(testMetadata)
+  private val testWelshXml: NodeSeq = Metadata.toXml(testWelshMetadata)
 
   "metadata xml" must {
     "contain correct header" in {
@@ -210,6 +212,21 @@ MetadataSpec extends WordSpec with MustMatchers with OptionValues with PropertyC
         )
       )
     }
+
+    "contain correct metadata xml for classification_type when set to welsh" in {
+      testWelshXml \ "document" \ "metadata" \ "attribute" must contain(
+        trim(
+          <attribute>
+            <attribute_name>classification_type</attribute_name>
+            <attribute_type>string</attribute_type>
+            <attribute_values>
+              <attribute_value>{testWelshMetadata.classificationType}</attribute_value>
+            </attribute_values>
+          </attribute>
+        )
+      )
+    }
+
   }
 
   ".writes" must {

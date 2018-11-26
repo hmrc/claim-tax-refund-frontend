@@ -30,6 +30,7 @@ import play.api.mvc.{Action, AnyContent}
 import services.SubmissionService
 import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import uk.gov.hmrc.play.language.LanguageUtils
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, ReferenceGenerator, SubmissionMark}
@@ -72,6 +73,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
       val itmpAddress: ItmpAddress = request.address.getOrElse(ItmpAddress(Some("No address returned from ITMP"), None, None, None, None, None, None, None))
       val nino: String = request.nino
 
+      val language = LanguageUtils.getCurrentLang(request).code
       val submissionReference = referenceGenerator.generateSubmissionNumber
       val timeStamp = LocalDateTime.now
       val xmlDeclaration: String = """<?xml version="1.0" encoding="UTF-8" standalone="no"?>"""
@@ -112,7 +114,8 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
               submissionRef = submissionReference,
               submissionMark = submissionMark,
               timeStamp = timeStamp,
-              casKey = submissionResponse.casKey
+              casKey = submissionResponse.casKey,
+              language = language
             )
         }
       } yield new Submission(pdfHtml, xmlDeclaration + Metadata.toXml(metadata).toString(), submissionXml)
@@ -133,4 +136,3 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
       }
   }
 }
-
