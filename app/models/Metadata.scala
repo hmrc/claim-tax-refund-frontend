@@ -27,7 +27,8 @@ case class Metadata(customerId: String,
 										submissionRef: String,
 										submissionMark: String,
 										timeStamp: LocalDateTime,
-										casKey: String
+										casKey: String,
+                    language: String
 									 ) {
 
 	val formattedTimeStamp: String = timeStamp.toString("ssMMyyddmmHH")
@@ -41,7 +42,7 @@ case class Metadata(customerId: String,
 
 	val formId: String = "R39_EN"
 	val businessArea: String = "PSA"
-	val classificationType: String = "PSA-DFS Repayments"
+	val classificationType: String = if(language == "cy") "WLU-WCC-XDFSWelshLanguageService" else "PSA-DFS Repayments"
 	val source: String = "R39_EN"
 	val target: String = "DMS"
 	val store: Boolean = true
@@ -123,7 +124,8 @@ object Metadata {
 			(__ \ "submissionMark").read[String] and
 			(__ \ "submissionReference").read[String] and
 			(__ \ "timeStamp").read[LocalDateTime](jodaDateReads) and
-			(__ \ "casKey").read[String]
+			(__ \ "casKey").read[String] and
+			(__ \ "language").read[String]
 		) (apply _)
 
 	val jodaDateReads: Reads[LocalDateTime] = Reads[LocalDateTime](js =>
