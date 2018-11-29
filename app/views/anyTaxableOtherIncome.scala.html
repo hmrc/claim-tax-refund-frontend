@@ -21,6 +21,7 @@
 @import viewmodels.InputViewModel
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
 @import uk.gov.hmrc.renderer.TemplateRenderer
+@import com.github.tototoshi.play2.scalate._
 
 @(
         appConfig: FrontendAppConfig,
@@ -34,7 +35,8 @@
         request: Request[_],
         messages: Messages,
         formPartialRetriever: FormPartialRetriever,
-        templateRenderer: TemplateRenderer
+        templateRenderer: TemplateRenderer,
+scalate: Scalate
 )
 
 @main_template(

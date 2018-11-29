@@ -16,6 +16,7 @@
 
 package controllers
 
+import com.github.tototoshi.play2.scalate.Scalate
 import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
@@ -42,7 +43,8 @@ class PaymentUKAddressController @Inject()(appConfig: FrontendAppConfig,
                                            requireData: DataRequiredAction,
                                            formBuilder: PaymentUKAddressForm,
                                            implicit val formPartialRetriever: FormPartialRetriever,
-                                           implicit val templateRenderer: TemplateRenderer
+                                           implicit val templateRenderer: TemplateRenderer,
+                                           implicit val scalate: Scalate
                                           )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val form: Form[UkAddress] = formBuilder()

@@ -16,6 +16,7 @@
 
 package controllers
 
+import com.github.tototoshi.play2.scalate.Scalate
 import javax.inject.Inject
 import config.FrontendAppConfig
 import connectors.DataCacheConnector
@@ -43,14 +44,15 @@ class AnyTaxableBankInterestController @Inject()(appConfig: FrontendAppConfig,
                                                  requireData: DataRequiredAction,
                                                  formProvider: AnyTaxPaidForm,
                                                  implicit val formPartialRetriever: FormPartialRetriever,
-                                                 implicit val templateRenderer: TemplateRenderer
+                                                 implicit val templateRenderer: TemplateRenderer,
+                                                 implicit val scalate: Scalate
                                                 )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val notSelectedKey = "anyTaxableBankInterest.notSelected"
   private val blankKey = "anyTaxableBankInterest.blank"
   private val invalidKey = "anyTaxableBankInterest.invalid"
 
-  private val form: Form[AnyTaxPaid] = formProvider(notSelectedKey,blankKey,invalidKey)
+  private val form: Form[AnyTaxPaid] = formProvider(notSelectedKey, blankKey, invalidKey)
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
@@ -59,10 +61,10 @@ class AnyTaxableBankInterestController @Inject()(appConfig: FrontendAppConfig,
         case Some(value) => form.fill(value)
       }
 
-      request.userAnswers.selectTaxYear.map{
+      request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
           Ok(anyTaxableBankInterest(appConfig, preparedForm, mode, selectedTaxYear))
-      }.getOrElse{
+      }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
   }
@@ -76,7 +78,7 @@ class AnyTaxableBankInterestController @Inject()(appConfig: FrontendAppConfig,
               Future.successful(BadRequest(anyTaxableBankInterest(appConfig, formWithErrors, mode, selectedTaxYear))),
             (value) =>
               dataCacheConnector.save[AnyTaxPaid](request.externalId, AnyTaxableBankInterestId.toString, value).map(cacheMap =>
-                Redirect(navigator.nextPage(AnyTaxableBankInterestId, mode)(new UserAnswers(cacheMap))))            )
+                Redirect(navigator.nextPage(AnyTaxableBankInterestId, mode)(new UserAnswers(cacheMap)))))
       }.getOrElse {
         Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
       }

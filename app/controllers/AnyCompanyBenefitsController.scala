@@ -32,6 +32,7 @@ import utils.{Navigator, UserAnswers}
 import views.html.anyCompanyBenefits
 
 import scala.concurrent.{ExecutionContext, Future}
+import com.github.tototoshi.play2.scalate._
 
 class AnyCompanyBenefitsController @Inject()(
                                               appConfig: FrontendAppConfig,
@@ -43,7 +44,8 @@ class AnyCompanyBenefitsController @Inject()(
                                               requireData: DataRequiredAction,
                                               formProvider: BooleanForm,
                                               implicit val formPartialRetriever: FormPartialRetriever,
-                                              implicit val templateRenderer: TemplateRenderer
+                                              implicit val templateRenderer: TemplateRenderer,
+                                              implicit val scalate: Scalate
                                             )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val errorKey = "anyCompanyBenefits.blank"
@@ -57,19 +59,19 @@ class AnyCompanyBenefitsController @Inject()(
         case Some(value) => form.fill(value)
       }
 
-      request.userAnswers.selectTaxYear.map{
+      request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
           val taxYear = selectedTaxYear
           Ok(anyCompanyBenefits(appConfig, preparedForm, mode, taxYear))
-      }.getOrElse{
-          Redirect(routes.SessionExpiredController.onPageLoad())
+      }.getOrElse {
+        Redirect(routes.SessionExpiredController.onPageLoad())
       }
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
 
-      request.userAnswers.selectTaxYear.map{
+      request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
           val taxYear = selectedTaxYear
           form.bindFromRequest().fold(
@@ -79,7 +81,7 @@ class AnyCompanyBenefitsController @Inject()(
               dataCacheConnector.save[Boolean](request.externalId, AnyCompanyBenefitsId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(AnyCompanyBenefitsId, mode)(new UserAnswers(cacheMap))))
           )
-      }.getOrElse{
+      }.getOrElse {
         Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
       }
   }

@@ -16,6 +16,7 @@
 
 package controllers
 
+import com.github.tototoshi.play2.scalate.Scalate
 import javax.inject.Inject
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -43,7 +44,8 @@ class HowMuchBereavementAllowanceController @Inject()(appConfig: FrontendAppConf
                                                       requireData: DataRequiredAction,
                                                       formBuilder: HowMuchBereavementAllowanceForm,
                                                       implicit val formPartialRetriever: FormPartialRetriever,
-                                                      implicit val templateRenderer: TemplateRenderer
+                                                      implicit val templateRenderer: TemplateRenderer,
+                                                      implicit val scalate: Scalate
                                                      )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val form: Form[String] = formBuilder()
@@ -66,19 +68,19 @@ class HowMuchBereavementAllowanceController @Inject()(appConfig: FrontendAppConf
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-    request.userAnswers.selectTaxYear.map {
-      selectedTaxYear =>
-        val taxYear = selectedTaxYear
-        form.bindFromRequest().fold(
-          (formWithErrors: Form[_]) =>
-            Future.successful(BadRequest(howMuchBereavementAllowance(appConfig, formWithErrors, mode, taxYear))),
-          value =>
-            dataCacheConnector.save[String](request.externalId, HowMuchBereavementAllowanceId.toString, value).map(cacheMap =>
-              Redirect(navigator.nextPage(HowMuchBereavementAllowanceId, mode)(new UserAnswers(cacheMap))))
-        )
-    }.getOrElse {
-      Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
-    }
+      request.userAnswers.selectTaxYear.map {
+        selectedTaxYear =>
+          val taxYear = selectedTaxYear
+          form.bindFromRequest().fold(
+            (formWithErrors: Form[_]) =>
+              Future.successful(BadRequest(howMuchBereavementAllowance(appConfig, formWithErrors, mode, taxYear))),
+            value =>
+              dataCacheConnector.save[String](request.externalId, HowMuchBereavementAllowanceId.toString, value).map(cacheMap =>
+                Redirect(navigator.nextPage(HowMuchBereavementAllowanceId, mode)(new UserAnswers(cacheMap))))
+          )
+      }.getOrElse {
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+      }
 
   }
 }

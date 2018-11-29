@@ -16,6 +16,7 @@
 
 package config
 
+import com.github.tototoshi.play2.scalate.Scalate
 import play.api.inject.{Binding, Module}
 import play.api.{Configuration, Environment}
 import uk.gov.hmrc.play.partials.FormPartialRetriever
@@ -24,6 +25,7 @@ import uk.gov.hmrc.renderer.TemplateRenderer
 class HmrcModule extends Module {
   override def bindings(environment: Environment, configuration: Configuration): Seq[Binding[_]] = Seq(
     bind[FormPartialRetriever].to[CtrFormPartialRetriever],
-    bind[TemplateRenderer].to[LocalTemplateRenderer]
+    bind[TemplateRenderer].to[LocalTemplateRenderer],
+    bind[Scalate].toSelf.eagerly()
   )
 }

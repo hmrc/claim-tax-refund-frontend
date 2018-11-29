@@ -16,6 +16,7 @@
 
 package controllers
 
+import com.github.tototoshi.play2.scalate.Scalate
 import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
@@ -44,50 +45,51 @@ class OtherBenefitController @Inject()(appConfig: FrontendAppConfig,
                                        sequenceUtil: SequenceUtil[OtherBenefit],
                                        formBuilder: OtherBenefitForm,
                                        implicit val formPartialRetriever: FormPartialRetriever,
-                                       implicit val templateRenderer: TemplateRenderer
+                                       implicit val templateRenderer: TemplateRenderer,
+                                       implicit val scalate: Scalate
                                       )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
-	def onPageLoad(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
-		implicit request =>
-			val form = formBuilder(request.userAnswers.otherBenefit.getOrElse(Seq.empty), index)
+  def onPageLoad(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
+    implicit request =>
+      val form = formBuilder(request.userAnswers.otherBenefit.getOrElse(Seq.empty), index)
 
-			val preparedForm = request.userAnswers.otherBenefit match {
-				case Some(value) =>
-					if (index >= value.length) form else form.fill(value(index))
-				case None => form
-			}
+      val preparedForm = request.userAnswers.otherBenefit match {
+        case Some(value) =>
+          if (index >= value.length) form else form.fill(value(index))
+        case None => form
+      }
 
-			request.userAnswers.selectTaxYear.map {
-				selectedTaxYear =>
-					Ok(otherBenefit(appConfig, preparedForm, mode, index, selectedTaxYear))
-			}.getOrElse {
-				Redirect(routes.SessionExpiredController.onPageLoad())
-			}
-	}
+      request.userAnswers.selectTaxYear.map {
+        selectedTaxYear =>
+          Ok(otherBenefit(appConfig, preparedForm, mode, index, selectedTaxYear))
+      }.getOrElse {
+        Redirect(routes.SessionExpiredController.onPageLoad())
+      }
+  }
 
-	def onSubmit(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
-		implicit request =>
-			val form = formBuilder(request.userAnswers.otherBenefit.getOrElse(Seq.empty), index)
-			request.userAnswers.selectTaxYear.map {
-				selectedTaxYear =>
-					val taxYear = selectedTaxYear
-					form.bindFromRequest().fold(
-						(formWithErrors: Form[OtherBenefit]) =>
-							Future.successful(BadRequest(otherBenefit(appConfig, formWithErrors, mode, index, taxYear))),
-						value => {
-							val otherBenefits: Seq[OtherBenefit] = request.userAnswers.otherBenefit.getOrElse(Seq(value))
-							dataCacheConnector.save[Seq[OtherBenefit]](
-								request.externalId,
-								OtherBenefitId.toString,
-								sequenceUtil.updateSeq(otherBenefits, index, value)
-							).map(cacheMap =>
-								Redirect(navigator.nextPage(OtherBenefitId, mode)(new UserAnswers(cacheMap))))
-						}
+  def onSubmit(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
+    implicit request =>
+      val form = formBuilder(request.userAnswers.otherBenefit.getOrElse(Seq.empty), index)
+      request.userAnswers.selectTaxYear.map {
+        selectedTaxYear =>
+          val taxYear = selectedTaxYear
+          form.bindFromRequest().fold(
+            (formWithErrors: Form[OtherBenefit]) =>
+              Future.successful(BadRequest(otherBenefit(appConfig, formWithErrors, mode, index, taxYear))),
+            value => {
+              val otherBenefits: Seq[OtherBenefit] = request.userAnswers.otherBenefit.getOrElse(Seq(value))
+              dataCacheConnector.save[Seq[OtherBenefit]](
+                request.externalId,
+                OtherBenefitId.toString,
+                sequenceUtil.updateSeq(otherBenefits, index, value)
+              ).map(cacheMap =>
+                Redirect(navigator.nextPage(OtherBenefitId, mode)(new UserAnswers(cacheMap))))
+            }
 
-					)
-			}.getOrElse {
-				Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
-			}
-	}
+          )
+      }.getOrElse {
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+      }
+  }
 
 }

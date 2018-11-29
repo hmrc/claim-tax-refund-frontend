@@ -19,17 +19,16 @@ package handlers
 import config.FrontendAppConfig
 import controllers.actions.AuthAction
 import javax.inject.{Inject, Singleton}
-import play.api.Logger
-import play.api.http.HttpErrorHandler
 import play.api.http.Status.{BAD_REQUEST, FORBIDDEN}
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.MessagesApi
 import play.api.mvc.Results._
-import play.api.mvc.{Request, RequestHeader, Result, Results}
+import play.api.mvc.{Request, RequestHeader, Result}
 import play.twirl.api.Html
 import uk.gov.hmrc.play.bootstrap.http.FrontendErrorHandler
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import uk.gov.hmrc.renderer.TemplateRenderer
 import views.html.error_template
+import com.github.tototoshi.play2.scalate._
 
 import scala.concurrent.Future
 
@@ -39,6 +38,7 @@ class ErrorHandler @Inject()(
                               val messagesApi: MessagesApi,
                               implicit val formPartialRetriever: FormPartialRetriever,
                               implicit val templateRenderer: TemplateRenderer,
+                              implicit val scalate: Scalate,
                               authAction: AuthAction
                             ) extends FrontendErrorHandler {
 

@@ -16,8 +16,7 @@
 
 package controllers
 
-import java.util.Locale
-
+import com.github.tototoshi.play2.scalate.Scalate
 import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
@@ -46,7 +45,8 @@ class AnyOtherBenefitsController @Inject()(appConfig: FrontendAppConfig,
                                            requireData: DataRequiredAction,
                                            formProvider: BooleanForm,
                                            implicit val formPartialRetriever: FormPartialRetriever,
-                                           implicit val templateRenderer: TemplateRenderer
+                                           implicit val templateRenderer: TemplateRenderer,
+                                           implicit val scalate: Scalate
                                           )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val errorKey = "anyOtherBenefits.blank"
@@ -58,8 +58,8 @@ class AnyOtherBenefitsController @Inject()(appConfig: FrontendAppConfig,
         taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
         cyaHelper: CheckYourAnswersHelper = new CheckYourAnswersHelper(request.userAnswers)
         otherBenefitsAnswers: AnswerSection = mode match {
-            case NormalMode => new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherBenefitsAddToListNormalMode
-            case CheckMode => new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherBenefitsAddToListCheckMode
+          case NormalMode => new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherBenefitsAddToListNormalMode
+          case CheckMode => new CheckYourAnswersSections(cyaHelper, request.userAnswers).otherBenefitsAddToListCheckMode
         }
       } yield {
         Ok(anyOtherBenefits(appConfig, form, mode, taxYear, otherBenefitsAnswers))

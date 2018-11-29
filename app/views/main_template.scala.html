@@ -17,25 +17,28 @@
 @import config.FrontendAppConfig
 @import uk.gov.hmrc.renderer.TemplateRenderer
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
+@import scalate._
+@import com.github.tototoshi.play2.scalate._
 
 @(
-    title: String,
-    appConfig: FrontendAppConfig,
-    sidebarLinks: Option[Html] = None,
-    contentHeader: Option[Html] = None,
-    bodyClasses: Option[String] = None,
-    mainClass: Option[String] = None,
-    includeGridWrapper: Boolean = false,
-    articleClasses: Option[String] = None,
-    scriptElem: Option[Html] = None
+        title: String,
+        appConfig: FrontendAppConfig,
+        sidebarLinks: Option[Html] = None,
+        contentHeader: Option[Html] = None,
+        bodyClasses: Option[String] = None,
+        mainClass: Option[String] = None,
+        includeGridWrapper: Boolean = false,
+        articleClasses: Option[String] = None,
+        scriptElem: Option[Html] = None
 )(
-    mainContent: Html
+        mainContent: Html
 )(
-    implicit
-    request : Request[_],
-    messages: Messages,
-    formPartialRetriever: FormPartialRetriever,
-    templateRenderer: TemplateRenderer
+        implicit
+        request: Request[_],
+        messages: Messages,
+        formPartialRetriever: FormPartialRetriever,
+        templateRenderer: TemplateRenderer,
+        scalate: Scalate
 )
 
 @import uk.gov.hmrc.play.views.html.layouts
@@ -63,7 +66,30 @@
     formPartialRetriever.getPartialContent(appConfig.reportAProblemPartialUrl)
 }
 
-@{
+@scalate.engine.boot()
+
+@scalate.render(
+    "/templates/mustache/production/govuk-template.mustache.html",
+    Map(
+        "pageTitle" -> title,
+        "navTitle" -> messages("site.service_name"),
+        "assetsPath" -> appConfig.assetsPrefix,
+        "sidebar" -> sidebar,
+        "scriptElems" -> scriptElem,
+        "mainClass" -> mainClass,
+        "article" -> mainContent,
+        "isWelsh" -> {
+            messages.lang.code == "cy"
+        },
+        "showPropositionLinks" -> true,
+        "langSelector" -> {
+            Map("enUrl" -> appConfig.routeToSwitchLanguage("english"),
+                "cyUrl" -> appConfig.routeToSwitchLanguage("cymraeg"))
+        }
+    )
+)
+
+@*{
     templateRenderer.renderDefaultTemplate(
         path = appConfig.frontendTemplatePath,
         content = layouts.article(mainContent, includeGridWrapper, articleClasses),
@@ -86,4 +112,4 @@
             }
         )
     )
-}
+}*@

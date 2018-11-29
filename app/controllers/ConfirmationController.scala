@@ -15,6 +15,8 @@
  */
 
 package controllers
+
+import com.github.tototoshi.play2.scalate.Scalate
 import javax.inject.Inject
 import config.FrontendAppConfig
 import connectors.DataCacheConnector
@@ -36,12 +38,13 @@ class ConfirmationController @Inject()(appConfig: FrontendAppConfig,
                                        requireData: DataRequiredAction,
                                        dataCacheConnector: DataCacheConnector,
                                        implicit val formPartialRetriever: FormPartialRetriever,
-                                       implicit val templateRenderer: TemplateRenderer
+                                       implicit val templateRenderer: TemplateRenderer,
+                                       implicit val scalate: Scalate
                                       )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
-			val submissionReference = request.userAnswers.submissionReference.getOrElse("")
+      val submissionReference = request.userAnswers.submissionReference.getOrElse("")
       dataCacheConnector.removeAll(request.userAnswers.cacheMap.id)
       Ok(confirmation(appConfig, submissionReference))
   }

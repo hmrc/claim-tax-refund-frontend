@@ -16,6 +16,7 @@
 
 package controllers
 
+import com.github.tototoshi.play2.scalate.Scalate
 import javax.inject.Inject
 import config.FrontendAppConfig
 import connectors.DataCacheConnector
@@ -43,7 +44,8 @@ class SelectCompanyBenefitsController @Inject()(
                                                  getData: DataRetrievalAction,
                                                  requireData: DataRequiredAction,
                                                  implicit val formPartialRetriever: FormPartialRetriever,
-                                                 implicit val templateRenderer: TemplateRenderer
+                                                 implicit val templateRenderer: TemplateRenderer,
+                                                 implicit val scalate: Scalate
                                                )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {

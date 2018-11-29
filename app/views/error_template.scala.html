@@ -18,19 +18,21 @@
 
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
 @import uk.gov.hmrc.renderer.TemplateRenderer
+@import com.github.tototoshi.play2.scalate.Scalate
 @import models.requests.AuthenticatedRequest
 
 @(
-    pageTitle: String,
-    heading: String,
-    errorMessages: Seq[String],
-    appConfig: FrontendAppConfig
+        pageTitle: String,
+        heading: String,
+        errorMessages: Seq[String],
+        appConfig: FrontendAppConfig
 )(
-    implicit
-    request: AuthenticatedRequest[_],
-    messages: Messages,
-    formPartialRetriever: FormPartialRetriever,
-    templateRenderer: TemplateRenderer
+        implicit
+        request: AuthenticatedRequest[_],
+        messages: Messages,
+        formPartialRetriever: FormPartialRetriever,
+        templateRenderer: TemplateRenderer,
+        scalate: Scalate
 )
 
 @main_template(
@@ -38,7 +40,7 @@
     appConfig = appConfig
 ) {
     @components.heading(messages(heading))
-    @for(errorMessage <- errorMessages){
+    @for(errorMessage <- errorMessages) {
         <p>@messages(errorMessage)</p>
     }
 }

@@ -16,6 +16,7 @@
 
 package controllers
 
+import com.github.tototoshi.play2.scalate.Scalate
 import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
@@ -44,7 +45,8 @@ class PaymentAddressCorrectController @Inject()(appConfig: FrontendAppConfig,
                                                 requireData: DataRequiredAction,
                                                 formProvider: BooleanForm,
                                                 implicit val formPartialRetriever: FormPartialRetriever,
-                                                implicit val templateRenderer: TemplateRenderer
+                                                implicit val templateRenderer: TemplateRenderer,
+                                                implicit val scalate: Scalate
                                                )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val errorKey = "paymentAddressCorrect.blank"
@@ -78,24 +80,24 @@ class PaymentAddressCorrectController @Inject()(appConfig: FrontendAppConfig,
     implicit request =>
       request.userAnswers.selectTaxYear.map {
         taxYear =>
-        form.bindFromRequest().fold(
-          (formWithErrors: Form[_]) =>
-            Future.successful(BadRequest(paymentAddressCorrect(appConfig, formWithErrors, mode, request.address.get, taxYear))),
-          value => {
-            if (value) {
-              for {
-                _ <- dataCacheConnector.save[Boolean](request.externalId, PaymentAddressCorrectId.toString, value)
-                updatedCacheMap <- dataCacheConnector.save[ItmpAddress](request.externalId, ItmpAddressId.toString, request.address.get)
-              } yield
-                Redirect(navigator.nextPage(PaymentAddressCorrectId, mode)(new UserAnswers(updatedCacheMap)))
-            } else {
-              dataCacheConnector.save[Boolean](request.externalId, PaymentAddressCorrectId.toString, value).map(cacheMap =>
-                Redirect(navigator.nextPage(PaymentAddressCorrectId, mode)(new UserAnswers(cacheMap)))
-              )
+          form.bindFromRequest().fold(
+            (formWithErrors: Form[_]) =>
+              Future.successful(BadRequest(paymentAddressCorrect(appConfig, formWithErrors, mode, request.address.get, taxYear))),
+            value => {
+              if (value) {
+                for {
+                  _ <- dataCacheConnector.save[Boolean](request.externalId, PaymentAddressCorrectId.toString, value)
+                  updatedCacheMap <- dataCacheConnector.save[ItmpAddress](request.externalId, ItmpAddressId.toString, request.address.get)
+                } yield
+                  Redirect(navigator.nextPage(PaymentAddressCorrectId, mode)(new UserAnswers(updatedCacheMap)))
+              } else {
+                dataCacheConnector.save[Boolean](request.externalId, PaymentAddressCorrectId.toString, value).map(cacheMap =>
+                  Redirect(navigator.nextPage(PaymentAddressCorrectId, mode)(new UserAnswers(cacheMap)))
+                )
+              }
             }
-          }
-        )
-      }.getOrElse{
+          )
+      }.getOrElse {
         Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
       }
   }

@@ -16,6 +16,7 @@
 
 package controllers
 
+import com.github.tototoshi.play2.scalate.Scalate
 import javax.inject.Inject
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -47,7 +48,8 @@ class EmploymentDetailsController @Inject()(appConfig: FrontendAppConfig,
                                             formProvider: BooleanForm,
                                             taiConnector: TaiConnector,
                                             implicit val formPartialRetriever: FormPartialRetriever,
-                                            implicit val templateRenderer: TemplateRenderer
+                                            implicit val templateRenderer: TemplateRenderer,
+                                            implicit val scalate: Scalate
                                            )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val errorKey = "employmentDetails.blank"
@@ -73,7 +75,7 @@ class EmploymentDetailsController @Inject()(appConfig: FrontendAppConfig,
             case NonFatal(e) =>
               Redirect(routes.EnterPayeReferenceController.onPageLoad(NormalMode).url)
           }
-      }.getOrElse{
+      }.getOrElse {
         Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
       }
   }

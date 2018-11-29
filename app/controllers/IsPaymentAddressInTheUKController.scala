@@ -16,6 +16,7 @@
 
 package controllers
 
+import com.github.tototoshi.play2.scalate.Scalate
 import config.FrontendAppConfig
 import connectors.{AddressLookupConnector, DataCacheConnector}
 import controllers.actions._
@@ -45,7 +46,8 @@ class IsPaymentAddressInTheUKController @Inject()(appConfig: FrontendAppConfig,
                                                   formProvider: BooleanForm,
                                                   addressLookup: AddressLookupConnector,
                                                   implicit val formPartialRetriever: FormPartialRetriever,
-                                                  implicit val templateRenderer: TemplateRenderer
+                                                  implicit val templateRenderer: TemplateRenderer,
+                                                  implicit val scalate: Scalate
                                                  )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val errorKey = "isPaymentAddressInTheUK.blank"

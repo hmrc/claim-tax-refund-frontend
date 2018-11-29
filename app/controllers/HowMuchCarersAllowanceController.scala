@@ -16,6 +16,7 @@
 
 package controllers
 
+import com.github.tototoshi.play2.scalate.Scalate
 import javax.inject.Inject
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -43,7 +44,8 @@ class HowMuchCarersAllowanceController @Inject()(
                                                   requireData: DataRequiredAction,
                                                   formBuilder: HowMuchCarersAllowanceForm,
                                                   implicit val formPartialRetriever: FormPartialRetriever,
-                                                  implicit val templateRenderer: TemplateRenderer
+                                                  implicit val templateRenderer: TemplateRenderer,
+                                                  implicit val scalate: Scalate
                                                 )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val form: Form[String] = formBuilder()
@@ -59,14 +61,14 @@ class HowMuchCarersAllowanceController @Inject()(
         selectedTaxYear =>
           val taxYear = selectedTaxYear
           Ok(howMuchCarersAllowance(appConfig, preparedForm, mode, taxYear))
-      }.getOrElse{
+      }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
 
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
-     implicit request =>
+    implicit request =>
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
           val taxYear = selectedTaxYear

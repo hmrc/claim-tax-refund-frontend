@@ -16,6 +16,7 @@
 
 package controllers
 
+import com.github.tototoshi.play2.scalate.Scalate
 import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
@@ -43,7 +44,8 @@ class HowMuchEmploymentAndSupportAllowanceController @Inject()(
                                                                 requireData: DataRequiredAction,
                                                                 formBuilder: HowMuchEmploymentAndSupportAllowanceForm,
                                                                 implicit val formPartialRetriever: FormPartialRetriever,
-                                                                implicit val templateRenderer: TemplateRenderer
+                                                                implicit val templateRenderer: TemplateRenderer,
+                                                                implicit val scalate: Scalate
                                                               )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val form: Form[String] = formBuilder()
@@ -55,10 +57,10 @@ class HowMuchEmploymentAndSupportAllowanceController @Inject()(
         case Some(value) => form.fill(value)
       }
 
-      request.userAnswers.selectTaxYear.map{
+      request.userAnswers.selectTaxYear.map {
         taxYear =>
           Ok(howMuchEmploymentAndSupportAllowance(appConfig, preparedForm, mode, taxYear))
-      }.getOrElse{
+      }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
   }
@@ -66,7 +68,7 @@ class HowMuchEmploymentAndSupportAllowanceController @Inject()(
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
 
-      request.userAnswers.selectTaxYear.map{
+      request.userAnswers.selectTaxYear.map {
         taxYear =>
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
@@ -75,7 +77,7 @@ class HowMuchEmploymentAndSupportAllowanceController @Inject()(
               dataCacheConnector.save[String](request.externalId, HowMuchEmploymentAndSupportAllowanceId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(HowMuchEmploymentAndSupportAllowanceId, mode)(new UserAnswers(cacheMap))))
           )
-      }.getOrElse{
+      }.getOrElse {
         Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
       }
   }
