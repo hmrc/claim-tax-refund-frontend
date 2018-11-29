@@ -44,14 +44,14 @@ class IsPaymentAddressInTheUKControllerSpec extends ControllerSpecBase with Mock
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new IsPaymentAddressInTheUKController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, formProvider, mockAddressLookup, formPartialRetriever, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl, formProvider, mockAddressLookup, formPartialRetriever, scalate)
 
   def viewAsString(form: Form[_] = form) : String = isPaymentAddressInTheUK(
     frontendAppConfig,
     form,
     NormalMode,
     taxYear
-  )(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+  )(fakeRequest, messages, formPartialRetriever, scalate).toString
 
   "IsPaymentAddressInTheUK Controller" must {
 

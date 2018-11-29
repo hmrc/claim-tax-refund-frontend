@@ -37,10 +37,10 @@ class SelectTaxableIncomeControllerSpec extends ControllerSpecBase {
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new SelectTaxableIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, formPartialRetriever, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl, formPartialRetriever, scalate)
 
   def viewAsString(form: Form[_] = SelectTaxableIncomeForm()) =
-    selectTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+    selectTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
 
   "SelectTaxableIncome Controller" must {
 

@@ -43,10 +43,10 @@ class RemoveOtherSelectedOptionControllerSpec extends ControllerSpecBase with Mo
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new RemoveOtherSelectedOptionController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, formProvider, formPartialRetriever, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl, formProvider, formPartialRetriever, scalate)
 
   def viewAsString(form: Form[_] = form): String =
-    removeOtherSelectedOption(frontendAppConfig, form, NormalMode, taxYear, collectionId)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+    removeOtherSelectedOption(frontendAppConfig, form, NormalMode, taxYear, collectionId)(fakeRequest, messages, formPartialRetriever, scalate).toString
 
   "RemoveOtherSelectedOption Controller" must {
 

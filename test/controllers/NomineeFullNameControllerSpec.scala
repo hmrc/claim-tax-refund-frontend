@@ -35,7 +35,7 @@ class NomineeFullNameControllerSpec extends ControllerSpecBase {
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new NomineeFullNameController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, new NomineeFullNameForm(frontendAppConfig), formPartialRetriever, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl, new NomineeFullNameForm(frontendAppConfig), formPartialRetriever, scalate)
 
   private val testAnswer = "answer"
   private val testTooLongAnswer = "A" * (frontendAppConfig.nomineeFullNameMaxLength + 1)
@@ -44,7 +44,7 @@ class NomineeFullNameControllerSpec extends ControllerSpecBase {
   val form = new NomineeFullNameForm(frontendAppConfig)()
 
   def viewAsString(form: Form[_] = form) =
-    nomineeFullName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+    nomineeFullName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
 
   "NomineeFullName Controller" must {
 

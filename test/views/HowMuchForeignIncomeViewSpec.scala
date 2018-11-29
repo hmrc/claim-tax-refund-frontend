@@ -32,9 +32,9 @@ class HowMuchForeignIncomeViewSpec extends StringViewBehaviours with MockitoSuga
 
   override val form: Form[String] = new HowMuchForeignIncomeForm(frontendAppConfig)()
 
-  def createView = () => howMuchForeignIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createView = () => howMuchForeignIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
 
-  def createViewUsingForm = (form: Form[String]) => howMuchForeignIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createViewUsingForm = (form: Form[String]) => howMuchForeignIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
 
   "HowMuchForeignIncome view" must {
     behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))

@@ -33,10 +33,10 @@ class PaymentInternationalAddressViewSpec extends QuestionViewBehaviours[Interna
   override val form: Form[InternationalAddress] = new PaymentInternationalAddressForm(frontendAppConfig)()
 
   def createView = () =>
-    paymentInternationalAddress(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+    paymentInternationalAddress(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
 
   def createViewUsingForm = (form: Form[InternationalAddress]) =>
-    paymentInternationalAddress(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+    paymentInternationalAddress(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
 
   "PaymentInternationalAddress view" must {
 

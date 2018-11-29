@@ -28,9 +28,9 @@ class SelectTaxYearViewSpec extends ViewBehaviours {
 
   private val messageKeyPrefix = "selectTaxYear"
 
-  def createView = () => selectTaxYear(frontendAppConfig, SelectTaxYearForm(), NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createView = () => selectTaxYear(frontendAppConfig, SelectTaxYearForm(), NormalMode)(fakeRequest, messages, formPartialRetriever, scalate)
 
-  def createViewUsingForm = (form: Form[_]) => selectTaxYear(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createViewUsingForm = (form: Form[_]) => selectTaxYear(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, scalate)
 
   def radioButtonOptions(implicit messages: Messages): Seq[RadioOption] = SelectTaxYearForm.options(messages)
 

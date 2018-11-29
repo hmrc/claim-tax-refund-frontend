@@ -51,7 +51,7 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with ScalaFuture
       referenceGenerator,
       robotXML,
       formPartialRetriever,
-      templateRenderer
+      scalate
     )
 
   "Check Your Answers Controller" must {

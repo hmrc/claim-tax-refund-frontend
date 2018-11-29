@@ -31,6 +31,7 @@ import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.filters.frontend.crypto.SessionCookieCrypto
 import uk.gov.hmrc.play.bootstrap.http.HttpClient
 import utils.SequenceUtil
+import com.github.tototoshi.play2.scalate._
 
 trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with MockitoSugar {
 
@@ -47,6 +48,8 @@ trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with MockitoSugar {
   def messages: Messages = messagesApi.preferred(fakeRequest)
 
   def sequenceUtil[A]: SequenceUtil[A] = injector.instanceOf[SequenceUtil[A]]
+
+  def scalate: Scalate = injector.instanceOf[Scalate]
 
   val itmpAddress = ItmpAddress(
     Some("Line1"),
