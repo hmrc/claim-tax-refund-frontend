@@ -16,6 +16,7 @@
 
 package handlers
 
+import com.github.tototoshi.play2.scalate._
 import config.FrontendAppConfig
 import controllers.actions.AuthAction
 import javax.inject.{Inject, Singleton}
@@ -26,9 +27,7 @@ import play.api.mvc.{Request, RequestHeader, Result}
 import play.twirl.api.Html
 import uk.gov.hmrc.play.bootstrap.http.FrontendErrorHandler
 import uk.gov.hmrc.play.partials.FormPartialRetriever
-import uk.gov.hmrc.renderer.TemplateRenderer
 import views.html.error_template
-import com.github.tototoshi.play2.scalate._
 
 import scala.concurrent.Future
 
@@ -37,7 +36,6 @@ class ErrorHandler @Inject()(
                               appConfig: FrontendAppConfig,
                               val messagesApi: MessagesApi,
                               implicit val formPartialRetriever: FormPartialRetriever,
-                              implicit val templateRenderer: TemplateRenderer,
                               implicit val scalate: Scalate,
                               authAction: AuthAction
                             ) extends FrontendErrorHandler {

@@ -30,7 +30,7 @@ import uk.gov.hmrc.auth.core.retrieve.ItmpAddress
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.filters.frontend.crypto.SessionCookieCrypto
 import uk.gov.hmrc.play.bootstrap.http.HttpClient
-import utils.{MockTemplateRenderer, ReferenceGenerator, SequenceUtil}
+import utils.SequenceUtil
 
 trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with MockitoSugar {
 
@@ -67,9 +67,6 @@ trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with MockitoSugar {
 
   implicit val formPartialRetriever: CtrFormPartialRetriever =
     new MockCtrFormPartialRetriever(httpGet = mock[HttpClient], sessionCookieCrypto = mock[SessionCookieCrypto])
-
-  implicit val templateRenderer: MockTemplateRenderer.type =
-    MockTemplateRenderer
 }
 
 class MockCtrFormPartialRetriever(httpGet:HttpClient, sessionCookieCrypto: SessionCookieCrypto)

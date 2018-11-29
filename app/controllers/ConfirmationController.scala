@@ -17,17 +17,16 @@
 package controllers
 
 import com.github.tototoshi.play2.scalate.Scalate
-import javax.inject.Inject
 import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
+import javax.inject.Inject
 import models.Mode
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
-import views.html.confirmation
 import uk.gov.hmrc.play.partials.FormPartialRetriever
-import uk.gov.hmrc.renderer.TemplateRenderer
+import views.html.confirmation
 
 import scala.concurrent.ExecutionContext
 
@@ -38,7 +37,6 @@ class ConfirmationController @Inject()(appConfig: FrontendAppConfig,
                                        requireData: DataRequiredAction,
                                        dataCacheConnector: DataCacheConnector,
                                        implicit val formPartialRetriever: FormPartialRetriever,
-                                       implicit val templateRenderer: TemplateRenderer,
                                        implicit val scalate: Scalate
                                       )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 

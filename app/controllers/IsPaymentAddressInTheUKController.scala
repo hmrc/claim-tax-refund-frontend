@@ -30,7 +30,6 @@ import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.play.partials.FormPartialRetriever
-import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, UserAnswers}
 import views.html.isPaymentAddressInTheUK
 
@@ -46,7 +45,6 @@ class IsPaymentAddressInTheUKController @Inject()(appConfig: FrontendAppConfig,
                                                   formProvider: BooleanForm,
                                                   addressLookup: AddressLookupConnector,
                                                   implicit val formPartialRetriever: FormPartialRetriever,
-                                                  implicit val templateRenderer: TemplateRenderer,
                                                   implicit val scalate: Scalate
                                                  )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 

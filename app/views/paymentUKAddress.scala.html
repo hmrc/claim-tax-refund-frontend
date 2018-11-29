@@ -14,60 +14,57 @@
  * limitations under the License.
  *@
 
-@import config.FrontendAppConfig
-@import uk.gov.hmrc.play.views.html._
-@import controllers.routes._
-@import utils.FormHelpers
-@import models.{Mode, UkAddress}
-@import viewmodels.InputViewModel
-@import uk.gov.hmrc.renderer.TemplateRenderer
 @import com.github.tototoshi.play2.scalate._
+@import config.FrontendAppConfig
+@import controllers.routes._
+@import models.{Mode, UkAddress}
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
+@import uk.gov.hmrc.play.views.html._
+@import viewmodels.InputViewModel
 
 @(
-    appConfig: FrontendAppConfig,
-    form: Form[UkAddress],
-    mode: Mode,
-    taxYear: SelectTaxYear
+        appConfig: FrontendAppConfig,
+        form: Form[UkAddress],
+        mode: Mode,
+        taxYear: SelectTaxYear
 )(
-    implicit
-    request: Request[_],
-    messages: Messages,
-    formPartialRetriever: FormPartialRetriever,
-    templateRenderer: TemplateRenderer,
+        implicit
+        request: Request[_],
+        messages: Messages,
+        formPartialRetriever: FormPartialRetriever,
         scalate: Scalate
 )
 
-@title = @{
-    if(form.errors.nonEmpty) messages("site.title.error", messages("paymentUKAddress.title")) else messages("paymentUKAddress.title")
-}
-
-@main_template(
-    title = title,
-    appConfig = appConfig,
-    bodyClasses = None
-) {
-
-    @helpers.form(action = PaymentUKAddressController.onSubmit(mode), 'autoComplete -> "off") {
-
-        @components.back_link()
-
-        @components.error_summary(form.errors)
-
-        @components.heading(messages("paymentUKAddress.heading"), taxYear = Some(taxYear.asString))
-
-        @components.input_text(InputViewModel[UkAddress]("addressLine1", form), label = messages("global.addressLine1"))
-
-        @components.input_text(InputViewModel[UkAddress]("addressLine2", form), label = messages("global.addressLine2"))
-
-        @components.input_text(InputViewModel[UkAddress]("addressLine3", form), label = messages("global.addressLine3"))
-
-        @components.input_text(InputViewModel[UkAddress]("addressLine4", form), label = messages("global.addressLine4"))
-
-        @components.input_text(InputViewModel[UkAddress]("addressLine5", form), label = messages("global.addressLine5"))
-
-        @components.input_text(InputViewModel[UkAddress]("postcode", form), label = messages("global.postcode"))
-
-        @components.submit_button()
+    @title = @{
+        if(form.errors.nonEmpty) messages("site.title.error", messages("paymentUKAddress.title")) else messages("paymentUKAddress.title")
     }
-}
+
+    @main_template(
+        title = title,
+        appConfig = appConfig,
+        bodyClasses = None
+    ) {
+
+        @helpers.form(action = PaymentUKAddressController.onSubmit(mode), 'autoComplete -> "off") {
+
+            @components.back_link()
+
+            @components.error_summary(form.errors)
+
+            @components.heading(messages("paymentUKAddress.heading"), taxYear = Some(taxYear.asString))
+
+            @components.input_text(InputViewModel[UkAddress]("addressLine1", form), label = messages("global.addressLine1"))
+
+            @components.input_text(InputViewModel[UkAddress]("addressLine2", form), label = messages("global.addressLine2"))
+
+            @components.input_text(InputViewModel[UkAddress]("addressLine3", form), label = messages("global.addressLine3"))
+
+            @components.input_text(InputViewModel[UkAddress]("addressLine4", form), label = messages("global.addressLine4"))
+
+            @components.input_text(InputViewModel[UkAddress]("addressLine5", form), label = messages("global.addressLine5"))
+
+            @components.input_text(InputViewModel[UkAddress]("postcode", form), label = messages("global.postcode"))
+
+            @components.submit_button()
+        }
+    }

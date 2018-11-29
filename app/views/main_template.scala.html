@@ -14,11 +14,9 @@
  * limitations under the License.
  *@
 
-@import config.FrontendAppConfig
-@import uk.gov.hmrc.renderer.TemplateRenderer
-@import uk.gov.hmrc.play.partials.FormPartialRetriever
-@import scalate._
 @import com.github.tototoshi.play2.scalate._
+@import config.FrontendAppConfig
+@import uk.gov.hmrc.play.partials.FormPartialRetriever
 
 @(
         title: String,
@@ -37,18 +35,17 @@
         request: Request[_],
         messages: Messages,
         formPartialRetriever: FormPartialRetriever,
-        templateRenderer: TemplateRenderer,
         scalate: Scalate
 )
 
 @import uk.gov.hmrc.play.views.html.layouts
 
-@serviceInfoContent = {}
+@sidebar = @{
+    sidebarLinks.map(links => layouts.sidebar(links, Some("sidebar")))
+}
 
-@sidebar = {
-    @if(sidebarLinks.isDefined) {
-        @layouts.sidebar(sidebarLinks.get, Some("sidebar"))
-    }
+@article = @{
+    layouts.article(mainContent, includeGridWrapper, articleClasses)
 }
 
 @linkElem = @{
@@ -66,7 +63,7 @@
     formPartialRetriever.getPartialContent(appConfig.reportAProblemPartialUrl)
 }
 
-@scalate.engine.boot()
+@scalate.engine.boot
 
 @scalate.render(
     "/templates/mustache/production/govuk-template.mustache.html",
@@ -75,9 +72,11 @@
         "navTitle" -> messages("site.service_name"),
         "assetsPath" -> appConfig.assetsPrefix,
         "sidebar" -> sidebar,
+        "linkElems" -> linkElem,
         "scriptElems" -> scriptElem,
         "mainClass" -> mainClass,
-        "article" -> mainContent,
+        "article" -> article,
+        "getHelpForm" -> helpForm,
         "isWelsh" -> {
             messages.lang.code == "cy"
         },
@@ -88,28 +87,3 @@
         }
     )
 )
-
-@*{
-    templateRenderer.renderDefaultTemplate(
-        path = appConfig.frontendTemplatePath,
-        content = layouts.article(mainContent, includeGridWrapper, articleClasses),
-        extraArgs = Map[String, Any](
-            "pageTitle" -> title,
-            "navTitle" -> messages("site.service_name"),
-            "assetsPath" -> appConfig.assetsPrefix,
-            "sidebar" -> sidebar,
-            "linkElems" -> linkElem,
-            "scriptElems" -> scriptElem,
-            "mainClass" -> mainClass,
-            "getHelpForm" -> helpForm,
-            "isWelsh" -> {
-                messages.lang.code == "cy"
-            },
-            "showPropositionLinks" -> true,
-            "langSelector" -> {
-                Map("enUrl" -> appConfig.routeToSwitchLanguage("english"),
-                    "cyUrl" -> appConfig.routeToSwitchLanguage("cymraeg"))
-            }
-        )
-    )
-}*@

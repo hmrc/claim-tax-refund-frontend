@@ -14,59 +14,56 @@
  * limitations under the License.
  *@
 
+@import com.github.tototoshi.play2.scalate._
 @import config.FrontendAppConfig
-@import uk.gov.hmrc.play.views.html._
 @import controllers.routes._
 @import models.Mode
-@import utils.FormHelpers
-@import viewmodels._
-@import uk.gov.hmrc.renderer.TemplateRenderer
-@import com.github.tototoshi.play2.scalate._
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
+@import uk.gov.hmrc.play.views.html._
+@import viewmodels._
 
 @(
-    appConfig: FrontendAppConfig,
-    form: Form[_],
-    mode: Mode,
-    taxYear: SelectTaxYear,
-    otherCompanyBenefits: AnswerSection
+        appConfig: FrontendAppConfig,
+        form: Form[_],
+        mode: Mode,
+        taxYear: SelectTaxYear,
+        otherCompanyBenefits: AnswerSection
 )(
-    implicit
+        implicit
         request: Request[_],
         messages: Messages,
         formPartialRetriever: FormPartialRetriever,
-        templateRenderer: TemplateRenderer,
-scalate: Scalate
+        scalate: Scalate
 )
 
-@title = @{
-    if(form.errors.nonEmpty) messages("site.title.error", messages("anyOtherCompanyBenefits.title")) else messages("anyOtherCompanyBenefits.title")
-}
-
-@main_template(
-    title = title,
-    appConfig = appConfig,
-    bodyClasses = None
-) {
-
-    @helpers.form(action = AnyOtherCompanyBenefitsController.onSubmit(mode), 'autoComplete -> "off") {
-
-        @components.back_link()
-
-        @components.error_summary(form.errors)
-
-        @components.heading(messages(s"anyOtherCompanyBenefits.heading"), taxYear = Some(taxYear.asString))
-
-        @components.other_summary(
-            answers = otherCompanyBenefits.rows
-        )
-
-        @components.input_yes_no(
-            InputViewModel("value", form),
-            label = messages("anyOtherCompanyBenefits.addAnotherCompanyBenefit"),
-            labelClass = Some("heading-medium")
-        )
-
-        @components.submit_button()
+    @title = @{
+        if(form.errors.nonEmpty) messages("site.title.error", messages("anyOtherCompanyBenefits.title")) else messages("anyOtherCompanyBenefits.title")
     }
-}
+
+    @main_template(
+        title = title,
+        appConfig = appConfig,
+        bodyClasses = None
+    ) {
+
+        @helpers.form(action = AnyOtherCompanyBenefitsController.onSubmit(mode), 'autoComplete -> "off") {
+
+            @components.back_link()
+
+            @components.error_summary(form.errors)
+
+            @components.heading(messages(s"anyOtherCompanyBenefits.heading"), taxYear = Some(taxYear.asString))
+
+            @components.other_summary(
+                answers = otherCompanyBenefits.rows
+            )
+
+            @components.input_yes_no(
+                InputViewModel("value", form),
+                label = messages("anyOtherCompanyBenefits.addAnotherCompanyBenefit"),
+                labelClass = Some("heading-medium")
+            )
+
+            @components.submit_button()
+        }
+    }

@@ -29,7 +29,6 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, Result}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.play.partials.FormPartialRetriever
-import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, SequenceUtil, UserAnswers}
 import views.html.anyTaxableOtherIncome
 
@@ -46,7 +45,6 @@ class AnyTaxableOtherIncomeController @Inject()(appConfig: FrontendAppConfig,
                                                 formProvider: OtherTaxableIncomeForm,
                                                 taxPaidFormProvider: AnyTaxPaidForm,
                                                 implicit val formPartialRetriever: FormPartialRetriever,
-                                                implicit val templateRenderer: TemplateRenderer,
                                                 implicit val scalate: Scalate
                                                )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
