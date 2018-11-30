@@ -17,7 +17,6 @@
 package views.behaviours
 
 import org.jsoup.Jsoup
-import play.api.data.Form
 import play.twirl.api.HtmlFormat
 import views.ViewSpecBase
 
@@ -34,8 +33,8 @@ trait ViewBehaviours extends ViewSpecBase {
           val doc = asDocument(view())
           //Template as a service handles the test view rendering
           //that we are passing the required argument to
-          val nav = doc.getElementById("navTitle")
-          nav.text mustBe messagesApi("site.service_name")
+          val nav = doc.getElementById("proposition-menu")
+          nav.getElementsByClass("header__menu__proposition-name").text mustBe messagesApi("site.service_name")
         }
 
         "display the correct browser title" in {

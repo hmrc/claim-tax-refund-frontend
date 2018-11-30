@@ -14,16 +14,12 @@
  * limitations under the License.
  */
 
-package config
+package scalate
 
-import play.api.inject.{Binding, Module}
-import play.api.{Configuration, Environment}
-import scalate.ScalateEngineBoot
-import uk.gov.hmrc.play.partials.FormPartialRetriever
+import com.github.tototoshi.play2.scalate.Scalate
+import javax.inject._
 
-class HmrcModule extends Module {
-  override def bindings(environment: Environment, configuration: Configuration): Seq[Binding[_]] = Seq(
-    bind[FormPartialRetriever].to[CtrFormPartialRetriever],
-    bind[ScalateEngineBoot].toSelf.eagerly()
-  )
+@Singleton
+class ScalateEngineBoot @Inject()(scalate: Scalate) {
+  scalate.engine.boot
 }
