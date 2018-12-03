@@ -18,7 +18,8 @@ package models
 
 import play.api.libs.json._
 
-import scala.xml.Elem
+import scala.xml.Node
+import scala.xml.Utility._
 
 case class Country (name: Option[String], code: Option[String])
 
@@ -39,7 +40,19 @@ final case class AddressLookup (address: Option[Address], auditRef: Option[Strin
 object AddressLookup {
   implicit val format: Format[AddressLookup] = Json.format[AddressLookup]
 
-  def toXml(a: AddressLookup): Elem = <paymentAddress><lookupAddress>{completedAddress(a).mkString(", ")}</lookupAddress></paymentAddress>
+  def toXml(a: AddressLookup): Node =
+    trim(<paymentAddress>
+      <lookupAddress>
+        <addressLine1>{a.address.get.lines.get.headOption.getOrElse("")}</addressLine1>
+        <addressLine2>{a.address.get.lines.get.lift(1).getOrElse("")}</addressLine2>
+        <addressLine3>{a.address.get.lines.get.lift(2).getOrElse("")}</addressLine3>
+        <addressLine4>{a.address.get.lines.get.lift(3).getOrElse("")}</addressLine4>
+        <addressLine5>{a.address.get.lines.get.lift(4).getOrElse("")}</addressLine5>
+        <postcode>{a.address.get.postcode.getOrElse("")}</postcode>
+        <country>{a.address.get.country.map(country => country.name.getOrElse("")).getOrElse("")}</country>
+        <countryCode>{a.address.get.country.map(country => country.code.getOrElse("")).getOrElse("")}</countryCode>
+      </lookupAddress>
+    </paymentAddress>)
 
   def completedAddress(a: AddressLookup): Seq[String] = Seq(
       a.address.get.lines.get :+

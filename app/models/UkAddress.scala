@@ -17,7 +17,8 @@
 package models
 
 import play.api.libs.json._
-import scala.xml.Elem
+import scala.xml.Node
+import scala.xml.Utility._
 
 case class UkAddress(addressLine1: String,
                      addressLine2: String,
@@ -27,7 +28,7 @@ case class UkAddress(addressLine1: String,
                      postcode: String)
 
 object UkAddress {
-  implicit val format = Json.format[UkAddress]
+  implicit val format: Format[UkAddress] = Json.format[UkAddress]
 
   def answeredLines(a: UkAddress): Seq[String] = Seq(
       Some(a.addressLine1),
@@ -38,7 +39,17 @@ object UkAddress {
       Some(a.postcode)
     ).flatten
 
-  def toXml(a: UkAddress): Elem = <paymentAddress><ukAddress>{answeredLines(a).mkString(", ")}</ukAddress></paymentAddress>
+  def toXml(a: UkAddress): Node =
+    trim(<paymentAddress>
+      <ukAddress>
+        <addressLine1>{a.addressLine1}</addressLine1>
+        <addressLine2>{a.addressLine2}</addressLine2>
+        <addressLine3>{a.addressLine3.getOrElse("")}</addressLine3>
+        <addressLine4>{a.addressLine4.getOrElse("")}</addressLine4>
+        <addressLine5>{a.addressLine5.getOrElse("")}</addressLine5>
+        <postcode>{a.postcode}</postcode>
+      </ukAddress>
+    </paymentAddress>)
 
   def asString(a: UkAddress): String = answeredLines(a).mkString("<br>")
 }

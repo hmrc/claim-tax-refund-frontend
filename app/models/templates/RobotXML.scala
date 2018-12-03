@@ -52,7 +52,7 @@ class RobotXML {
             }
           }
           <nino>{nino}</nino>
-          <itmpAddress>{ItmpAddressFormat.toXml(itmpAddress)}</itmpAddress>
+          {ItmpAddressFormat.toXml(itmpAddress)}
         </userDetails>
 
         <claimSection>
