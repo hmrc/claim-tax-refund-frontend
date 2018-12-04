@@ -17,21 +17,16 @@
 package base
 
 import com.github.tototoshi.play2.scalate._
-import com.google.inject.Inject
-import config.{AddressLookupConfig, CtrFormPartialRetriever, FrontendAppConfig, HmrcModule}
+import config.{AddressLookupConfig, CtrFormPartialRetriever, FrontendAppConfig}
 import org.scalatest.mockito.MockitoSugar
 import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice._
-import play.api.Application
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.Injector
-import play.api.inject.bind
-import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.RequestHeader
 import play.api.test.FakeRequest
 import play.twirl.api.Html
-import scalate.ScalateEngineBoot
 import uk.gov.hmrc.auth.core.retrieve.ItmpAddress
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.filters.frontend.crypto.SessionCookieCrypto
@@ -40,13 +35,11 @@ import utils.SequenceUtil
 
 trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with MockitoSugar {
 
-  override lazy val app: Application = new GuiceApplicationBuilder()
-    .overrides(bind[MockScalateEngineBoot].toSelf.eagerly())
-    .build
-
   def injector: Injector = app.injector
 
   def frontendAppConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
+
+  def scalate: Scalate = injector.instanceOf[Scalate]
 
   def addressLookupConfig: AddressLookupConfig = injector.instanceOf[AddressLookupConfig]
 
@@ -57,8 +50,6 @@ trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with MockitoSugar {
   def messages: Messages = messagesApi.preferred(fakeRequest)
 
   def sequenceUtil[A]: SequenceUtil[A] = injector.instanceOf[SequenceUtil[A]]
-
-  implicit val scalate: Scalate = mock[Scalate]
 
   val itmpAddress = ItmpAddress(
     Some("Line1"),
@@ -87,8 +78,4 @@ class MockCtrFormPartialRetriever(httpGet:HttpClient, sessionCookieCrypto: Sessi
   override def getPartialContent(url: String, templateParameters: Map[String, String], errorMessage: Html)(implicit request:RequestHeader): Html = {
     Html("")
   }
-}
-
-class MockScalateEngineBoot @Inject()(mockScalate: Scalate) {
-  mockScalate.engine.boot
 }
