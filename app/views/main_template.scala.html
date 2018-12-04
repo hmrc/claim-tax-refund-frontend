@@ -64,8 +64,8 @@
 }
 
 @scalate.render(
-    "/templates/mustache/production/govuk-template.mustache.html",
-    Map(
+    template = "/templates/mustache/production/govuk-template.mustache.html",
+    params = Map(
         "pageTitle" -> title,
         "navTitle" -> messages("site.service_name"),
         "assetsPath" -> appConfig.assetsPrefix,
