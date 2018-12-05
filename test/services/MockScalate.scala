@@ -20,7 +20,6 @@ import com.github.tototoshi.play2.scalate.Scalate
 import com.google.inject.Inject
 import play.api.Environment
 import play.twirl.api.{Html, HtmlFormat}
-import views.html.templates.{div, title}
 
 import scala.collection.immutable
 
@@ -29,13 +28,15 @@ class MockScalate @Inject() (environment: Environment) extends Scalate(environme
 
   override def render(template: String, params: Map[String, Any]): Html = {
 
-    val titleTag: Html = title(params("pageTitle").toString)
+    val pageTitle: Html = Html(s"<title>${params("pageTitle")}</title>")
+
     val parameters: Html = HtmlFormat.fill(
       params.map {
-        case (key, value) => div(key, value)
+        case (key, value) =>
+          Html(s"<div id=$key>$value</div>")
       }.toList
     )
 
-    HtmlFormat.fill(immutable.Seq(titleTag, parameters))
+    HtmlFormat.fill(immutable.Seq(pageTitle, parameters))
   }
 }
