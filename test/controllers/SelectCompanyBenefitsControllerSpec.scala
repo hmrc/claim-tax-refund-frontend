@@ -38,10 +38,10 @@ class SelectCompanyBenefitsControllerSpec extends ControllerSpecBase with Mockit
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new SelectCompanyBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, formPartialRetriever, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl, formPartialRetriever, scalate)
 
   def viewAsString(form: Form[_] = SelectCompanyBenefitsForm()) =
-    selectCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+    selectCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
 
   "SelectCompanyBenefits Controller" must {
 

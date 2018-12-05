@@ -37,14 +37,14 @@ class HowMuchCarersAllowanceControllerSpec extends ControllerSpecBase {
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new HowMuchCarersAllowanceController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, new HowMuchCarersAllowanceForm(frontendAppConfig), formPartialRetriever, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl, new HowMuchCarersAllowanceForm(frontendAppConfig), formPartialRetriever, scalate)
 
   val testAnswer = "9,999.99"
   private val taxYear = CYMinus2
   val form = new HowMuchCarersAllowanceForm(frontendAppConfig)()
   val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
 
-  def viewAsString(form: Form[_] = form) = howMuchCarersAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+  def viewAsString(form: Form[_] = form) = howMuchCarersAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
 
   "HowMuchCarersAllowance Controller" must {
 

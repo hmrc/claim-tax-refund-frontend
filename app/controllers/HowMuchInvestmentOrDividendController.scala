@@ -16,18 +16,18 @@
 
 package controllers
 
+import com.github.tototoshi.play2.scalate.Scalate
+import config.FrontendAppConfig
+import connectors.DataCacheConnector
+import controllers.actions._
+import forms.HowMuchInvestmentOrDividendForm
+import identifiers.HowMuchInvestmentsId
 import javax.inject.Inject
+import models.Mode
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
-import connectors.DataCacheConnector
-import controllers.actions._
-import config.FrontendAppConfig
-import forms.HowMuchInvestmentOrDividendForm
-import identifiers.HowMuchInvestmentsId
-import models.Mode
 import uk.gov.hmrc.play.partials.FormPartialRetriever
-import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, UserAnswers}
 import views.html.howMuchInvestmentOrDividend
 
@@ -42,7 +42,7 @@ class HowMuchInvestmentOrDividendController @Inject()(appConfig: FrontendAppConf
                                                       requireData: DataRequiredAction,
                                                       formBuilder: HowMuchInvestmentOrDividendForm,
                                                       implicit val formPartialRetriever: FormPartialRetriever,
-                                                      implicit val templateRenderer: TemplateRenderer
+                                                      implicit val scalate: Scalate
                                                      )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val form: Form[String] = formBuilder()
@@ -54,11 +54,11 @@ class HowMuchInvestmentOrDividendController @Inject()(appConfig: FrontendAppConf
         case Some(value) => form.fill(value)
       }
 
-      request.userAnswers.selectTaxYear.map{
+      request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
           val taxYear = selectedTaxYear
           Ok(howMuchInvestmentOrDividend(appConfig, preparedForm, mode, taxYear))
-      }.getOrElse{
+      }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
   }

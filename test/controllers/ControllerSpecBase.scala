@@ -26,7 +26,6 @@ import play.api.libs.json.Json
 import uk.gov.hmrc.auth.core.retrieve.ItmpName
 import uk.gov.hmrc.http.cache.client.CacheMap
 import utils.{MockUserAnswers, UserAnswers}
-
 import scala.concurrent.Future
 
 trait ControllerSpecBase extends SpecBase {

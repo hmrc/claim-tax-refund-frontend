@@ -33,10 +33,10 @@ class NomineeFullNameViewSpec extends StringViewBehaviours with MockitoSugar {
   override val form: Form[String] = new NomineeFullNameForm(frontendAppConfig)()
 
   def createView = () =>
-    nomineeFullName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+    nomineeFullName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
 
   def createViewUsingForm = (form: Form[String]) =>
-    nomineeFullName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+    nomineeFullName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
 
   "NomineeFullName view" must {
     behave like normalPage(createView, messageKeyPrefix, None)

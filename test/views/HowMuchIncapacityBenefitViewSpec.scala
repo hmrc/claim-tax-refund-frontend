@@ -32,9 +32,9 @@ class HowMuchIncapacityBenefitViewSpec extends StringViewBehaviours with Mockito
 
   override val form: Form[String] = new HowMuchIncapacityBenefitForm(frontendAppConfig)()
 
-  def createView = () => howMuchIncapacityBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createView = () => howMuchIncapacityBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
 
-  def createViewUsingForm = (form: Form[String]) => howMuchIncapacityBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createViewUsingForm = (form: Form[String]) => howMuchIncapacityBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
 
   "HowMuchIncapacityBenefit view" must {
     behave like normalPage(createView, messageKeyPrefix, None)

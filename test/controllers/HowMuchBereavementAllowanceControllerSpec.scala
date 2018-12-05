@@ -35,7 +35,7 @@ class HowMuchBereavementAllowanceControllerSpec extends ControllerSpecBase {
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new HowMuchBereavementAllowanceController(
       frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, new HowMuchBereavementAllowanceForm(frontendAppConfig), formPartialRetriever, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl, new HowMuchBereavementAllowanceForm(frontendAppConfig), formPartialRetriever, scalate)
 
   val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
 
@@ -43,7 +43,7 @@ class HowMuchBereavementAllowanceControllerSpec extends ControllerSpecBase {
   private val taxYear = CYMinus2
   val form = new HowMuchBereavementAllowanceForm(frontendAppConfig)()
 
-  def viewAsString(form: Form[_] = form) = howMuchBereavementAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+  def viewAsString(form: Form[_] = form) = howMuchBereavementAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
 
   "HowMuchBereavementAllowance Controller" must {
 

@@ -14,26 +14,26 @@
  * limitations under the License.
  *@
 
+@import com.github.tototoshi.play2.scalate._
 @import config.FrontendAppConfig
 @import controllers.routes._
 @import models.Mode
+@import uk.gov.hmrc.play.partials.FormPartialRetriever
 @import uk.gov.hmrc.play.views.html._
 @import viewmodels.InputViewModel
-@import uk.gov.hmrc.renderer.TemplateRenderer
-@import uk.gov.hmrc.play.partials.FormPartialRetriever
 
 @(
-    appConfig: FrontendAppConfig,
-    form: Form[_],
-    mode: Mode,
-    results: Seq[Employment],
-    taxYear: SelectTaxYear
+        appConfig: FrontendAppConfig,
+        form: Form[_],
+        mode: Mode,
+        results: Seq[Employment],
+        taxYear: SelectTaxYear
 )(
-    implicit
-    request: Request[_],
-    messages: Messages,
-    formPartialRetriever: FormPartialRetriever,
-    templateRenderer: TemplateRenderer
+        implicit
+        request: Request[_],
+        messages: Messages,
+        formPartialRetriever: FormPartialRetriever,
+        scalate: Scalate
 )
 
 @title = @{
@@ -63,12 +63,12 @@
             </thead>
             <tbody>
 
-                @for(employments <- results) {
-                    <tr>
-                        <th scope="row">@employments.name</th>
-                        <td class="numeric">@employments.payeNumber</td>
-                    </tr>
-                }
+            @for(employments <- results) {
+                <tr>
+                    <th scope="row">@employments.name</th>
+                    <td class="numeric">@employments.payeNumber</td>
+                </tr>
+            }
 
             </tbody>
         </table>
@@ -81,7 +81,6 @@
             labelClass = Some("bold"),
             hint = Some(messages("employmentDetails.hintText"))
         )
-
 
         @components.submit_button()
     }

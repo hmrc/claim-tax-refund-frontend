@@ -43,10 +43,10 @@ class PaymentAddressCorrectViewSpec extends YesNoViewBehaviours {
   override val form = new BooleanForm()()
 
   def createView = () =>
-    paymentAddressCorrect(frontendAppConfig, form, NormalMode, testAddress, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+    paymentAddressCorrect(frontendAppConfig, form, NormalMode, testAddress, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
 
   def createViewUsingForm = (form: Form[_]) =>
-    paymentAddressCorrect(frontendAppConfig, form, NormalMode, testAddress, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+    paymentAddressCorrect(frontendAppConfig, form, NormalMode, testAddress, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
 
   "PaymentAddressCorrect view" must {
 

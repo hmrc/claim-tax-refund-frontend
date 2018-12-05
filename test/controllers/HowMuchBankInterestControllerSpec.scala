@@ -39,9 +39,9 @@ class HowMuchBankInterestControllerSpec extends ControllerSpecBase {
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new HowMuchBankInterestController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, new HowMuchBankInterestForm(frontendAppConfig), formPartialRetriever, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl, new HowMuchBankInterestForm(frontendAppConfig), formPartialRetriever, scalate)
 
-  def viewAsString(form: Form[_] = form) = howMuchBankInterest(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+  def viewAsString(form: Form[_] = form) = howMuchBankInterest(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
 
   "HowMuchBankInterest Controller" must {
 

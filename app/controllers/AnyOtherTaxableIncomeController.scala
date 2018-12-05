@@ -16,6 +16,7 @@
 
 package controllers
 
+import com.github.tototoshi.play2.scalate.Scalate
 import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
@@ -28,7 +29,6 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, Result}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.play.partials.FormPartialRetriever
-import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, UserAnswers}
 import views.html.anyOtherTaxableIncome
 
@@ -43,7 +43,8 @@ class AnyOtherTaxableIncomeController @Inject()(appConfig: FrontendAppConfig,
                                                 requireData: DataRequiredAction,
                                                 formProvider: BooleanForm,
                                                 implicit val formPartialRetriever: FormPartialRetriever,
-                                                implicit val templateRenderer: TemplateRenderer
+                                                implicit val scalate: Scalate
+
                                                )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val errorKey = "anyOtherTaxableIncome.blank"

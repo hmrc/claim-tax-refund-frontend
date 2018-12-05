@@ -16,19 +16,19 @@
 
 package controllers
 
-import javax.inject.Inject
+import com.github.tototoshi.play2.scalate.Scalate
 import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions.{AuthAction, DataRequiredAction, DataRetrievalAction}
 import forms.AnyTaxPaidForm
-import identifiers.{AnyTaxableForeignIncomeId, TaxPaidAmountId}
+import identifiers.AnyTaxableForeignIncomeId
+import javax.inject.Inject
 import models.{AnyTaxPaid, Mode}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.play.partials.FormPartialRetriever
-import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, UserAnswers}
 import views.html.anyTaxableForeignIncome
 
@@ -43,14 +43,14 @@ class AnyTaxableForeignIncomeController @Inject()(appConfig: FrontendAppConfig,
                                                   requireData: DataRequiredAction,
                                                   formProvider: AnyTaxPaidForm,
                                                   implicit val formPartialRetriever: FormPartialRetriever,
-                                                  implicit val templateRenderer: TemplateRenderer
+                                                  implicit val scalate: Scalate
                                                  )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val notSelectedKey = "anyTaxableForeignIncome.notSelected"
   private val blankKey = "anyTaxableForeignIncome.blank"
   private val invalidKey = "anyTaxableForeignIncome.invalid"
 
-  private val form: Form[AnyTaxPaid] = formProvider(notSelectedKey,blankKey,invalidKey)
+  private val form: Form[AnyTaxPaid] = formProvider(notSelectedKey, blankKey, invalidKey)
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
@@ -59,10 +59,10 @@ class AnyTaxableForeignIncomeController @Inject()(appConfig: FrontendAppConfig,
         case Some(value) => form.fill(value)
       }
 
-      request.userAnswers.selectTaxYear.map{
+      request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
           Ok(anyTaxableForeignIncome(appConfig, preparedForm, mode, selectedTaxYear))
-      }.getOrElse{
+      }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
   }

@@ -19,7 +19,7 @@
 @import controllers.routes._
 @import models.Mode
 @import viewmodels.InputViewModel
-@import uk.gov.hmrc.renderer.TemplateRenderer
+@import com.github.tototoshi.play2.scalate._
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
 
 @(
@@ -32,7 +32,7 @@
     request: Request[_],
     messages: Messages,
     formPartialRetriever: FormPartialRetriever,
-    templateRenderer: TemplateRenderer
+    scalate: Scalate
 )
 
 @title = @{

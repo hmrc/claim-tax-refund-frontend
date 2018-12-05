@@ -16,19 +16,19 @@
 
 package controllers
 
-import javax.inject.Inject
+import com.github.tototoshi.play2.scalate._
 import config.FrontendAppConfig
 import connectors.{DataCacheConnector, TaiConnector}
 import controllers.actions._
 import forms.BooleanForm
 import identifiers.AnyBenefitsId
+import javax.inject.Inject
 import models.Mode
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.play.partials.FormPartialRetriever
-import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, UserAnswers}
 import views.html.anyBenefits
 
@@ -44,7 +44,7 @@ class AnyBenefitsController @Inject()(appConfig: FrontendAppConfig,
                                       requireData: DataRequiredAction,
                                       formProvider: BooleanForm,
                                       implicit val formPartialRetriever: FormPartialRetriever,
-                                      implicit val templateRenderer: TemplateRenderer
+                                      implicit val scalate: Scalate
                                      )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val errorKey = "anyBenefits.blank"
@@ -57,7 +57,7 @@ class AnyBenefitsController @Inject()(appConfig: FrontendAppConfig,
         case Some(value) => form.fill(value)
       }
 
-      request.userAnswers.selectTaxYear.map{
+      request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
           val taxYear = selectedTaxYear
           Ok(anyBenefits(appConfig, preparedForm, mode, taxYear))
@@ -69,7 +69,7 @@ class AnyBenefitsController @Inject()(appConfig: FrontendAppConfig,
   def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
 
-      request.userAnswers.selectTaxYear.map{
+      request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
           val taxYear = selectedTaxYear
           form.bindFromRequest().fold(
@@ -79,7 +79,7 @@ class AnyBenefitsController @Inject()(appConfig: FrontendAppConfig,
               dataCacheConnector.save[Boolean](request.externalId, AnyBenefitsId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(AnyBenefitsId, mode)(new UserAnswers(cacheMap))))
           )
-      }.getOrElse{
+      }.getOrElse {
         Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
       }
 

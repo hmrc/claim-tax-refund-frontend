@@ -42,9 +42,9 @@ class HowMuchEmploymentAndSupportAllowanceControllerSpec extends ControllerSpecB
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new HowMuchEmploymentAndSupportAllowanceController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute),
-      FakeAuthAction, dataRetrievalAction, new DataRequiredActionImpl, new HowMuchEmploymentAndSupportAllowanceForm(frontendAppConfig), formPartialRetriever, templateRenderer)
+      FakeAuthAction, dataRetrievalAction, new DataRequiredActionImpl, new HowMuchEmploymentAndSupportAllowanceForm(frontendAppConfig), formPartialRetriever, scalate)
 
-  def viewAsString(form: Form[_] = form) = howMuchEmploymentAndSupportAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+  def viewAsString(form: Form[_] = form) = howMuchEmploymentAndSupportAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
 
   "HowMuchEmploymentAndSupportAllowance Controller" must {
 

@@ -14,51 +14,49 @@
  * limitations under the License.
  *@
 
+@import com.github.tototoshi.play2.scalate._
 @import config.FrontendAppConfig
-@import uk.gov.hmrc.play.views.html._
 @import controllers.routes._
 @import forms.WhereToSendPaymentForm
-@import models.WhereToSendPayment
 @import models.Mode
-@import utils.FormHelpers
-@import viewmodels.InputViewModel
-@import uk.gov.hmrc.renderer.TemplateRenderer
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
+@import uk.gov.hmrc.play.views.html._
+@import viewmodels.InputViewModel
 
 @(
-    appConfig: FrontendAppConfig,
-    form: Form[_],
-    mode: Mode,
-    taxYear: SelectTaxYear
+        appConfig: FrontendAppConfig,
+        form: Form[_],
+        mode: Mode,
+        taxYear: SelectTaxYear
 )(
-    implicit
-    request: Request[_],
-    messages: Messages,
-    formPartialRetriever: FormPartialRetriever,
-    templateRenderer: TemplateRenderer
+        implicit
+        request: Request[_],
+        messages: Messages,
+        formPartialRetriever: FormPartialRetriever,
+        scalate: Scalate
 )
 
-@main_template(
-    title = messages("whereToSendPayment.title"),
-    appConfig = appConfig,
-    bodyClasses = None
-) {
+    @main_template(
+        title = messages("whereToSendPayment.title"),
+        appConfig = appConfig,
+        bodyClasses = None
+    ) {
 
-    @helpers.form(action = WhereToSendPaymentController.onSubmit(mode), 'autoComplete -> "off") {
+        @helpers.form(action = WhereToSendPaymentController.onSubmit(mode), 'autoComplete -> "off") {
 
-        @components.back_link()
+            @components.back_link()
 
-        @components.error_summary(form.errors)
+            @components.error_summary(form.errors)
 
-        @components.heading(messages("whereToSendPayment.heading"), taxYear = Some(taxYear.asString))
+            @components.heading(messages("whereToSendPayment.heading"), taxYear = Some(taxYear.asString))
 
-        @components.input_radio(
-            viewModel = InputViewModel("value", form),
-            legend = messages("whereToSendPayment.heading"),
-            legendClass = Some("visually-hidden"),
-            inputs = WhereToSendPaymentForm.options.toSeq
-        )
+            @components.input_radio(
+                viewModel = InputViewModel("value", form),
+                legend = messages("whereToSendPayment.heading"),
+                legendClass = Some("visually-hidden"),
+                inputs = WhereToSendPaymentForm.options.toSeq
+            )
 
-        @components.submit_button()
+            @components.submit_button()
+        }
     }
-}

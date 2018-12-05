@@ -52,10 +52,10 @@ class AnyTaxableOtherIncomeControllerSpec extends ControllerSpecBase {
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyTaxableOtherIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, sequenceUtil, formProvider, taxPaidFormProvider, formPartialRetriever, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl, sequenceUtil, formProvider, taxPaidFormProvider, formPartialRetriever, scalate)
 
   def viewAsString(form: Form[_] = taxPaidForm): String =
-    anyTaxableOtherIncome(frontendAppConfig, form, NormalMode, 0, taxYear, incomeName)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+    anyTaxableOtherIncome(frontendAppConfig, form, NormalMode, 0, taxYear, incomeName)(fakeRequest, messages, formPartialRetriever, scalate).toString
 
 
   "AnyTaxableOtherIncome Controller" must {

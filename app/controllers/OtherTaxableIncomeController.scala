@@ -16,19 +16,19 @@
 
 package controllers
 
-import javax.inject.Inject
-import play.api.data.Form
-import play.api.i18n.{I18nSupport, MessagesApi}
-import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import com.github.tototoshi.play2.scalate.Scalate
+import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
-import config.FrontendAppConfig
 import forms.OtherTaxableIncomeForm
 import identifiers.OtherTaxableIncomeId
+import javax.inject.Inject
 import models.{Index, Mode, OtherTaxableIncome}
+import play.api.data.Form
+import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
+import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.play.partials.FormPartialRetriever
-import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, SequenceUtil, UserAnswers}
 import views.html.otherTaxableIncome
 
@@ -45,7 +45,7 @@ class OtherTaxableIncomeController @Inject()(
                                               sequenceUtil: SequenceUtil[OtherTaxableIncome],
                                               formBuilder: OtherTaxableIncomeForm,
                                               implicit val formPartialRetriever: FormPartialRetriever,
-                                              implicit val templateRenderer: TemplateRenderer
+                                              implicit val scalate: Scalate
                                             )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   def onPageLoad(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData) {

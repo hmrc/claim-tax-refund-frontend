@@ -40,9 +40,9 @@ class HowMuchForeignIncomeControllerSpec extends ControllerSpecBase with Mockito
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new HowMuchForeignIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, new HowMuchForeignIncomeForm(frontendAppConfig), formPartialRetriever, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl, new HowMuchForeignIncomeForm(frontendAppConfig), formPartialRetriever, scalate)
 
-  def viewAsString(form: Form[_] = form) = howMuchForeignIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+  def viewAsString(form: Form[_] = form) = howMuchForeignIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
 
   "HowMuchForeignIncome Controller" must {
 

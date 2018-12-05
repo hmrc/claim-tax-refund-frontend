@@ -36,12 +36,12 @@ class ConfirmationControllerSpec extends ControllerSpecBase with ScalaFutures{
 
   def controller(dataRetrievalAction: DataRetrievalAction = someData) =
     new ConfirmationController(frontendAppConfig, messagesApi, FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, mockDataCacheConnector, formPartialRetriever, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl, mockDataCacheConnector, formPartialRetriever, scalate)
 
   private val submissionReference = "ABC-1234-DEF"
 
 
-  def viewAsString: String = confirmation(frontendAppConfig, submissionReference)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+  def viewAsString: String = confirmation(frontendAppConfig, submissionReference)(fakeRequest, messages, formPartialRetriever, scalate).toString
 
   "Confirmation Controller" must {
 

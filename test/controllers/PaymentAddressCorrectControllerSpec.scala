@@ -43,7 +43,7 @@ class PaymentAddressCorrectControllerSpec extends ControllerSpecBase {
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new PaymentAddressCorrectController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, formProvider, formPartialRetriever, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl, formProvider, formPartialRetriever, scalate)
 
   def fakeDataRetrievalActionItmpAddress(itmpAddress: Option[ItmpAddress]): DataRetrievalAction = new DataRetrievalAction {
     override protected def transform[A](request: AuthenticatedRequest[A]): Future[OptionalDataRequest[A]] = {
@@ -98,7 +98,7 @@ class PaymentAddressCorrectControllerSpec extends ControllerSpecBase {
       form,
       NormalMode,
       itmpAddress,
-      taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+      taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
 
   "PaymentAddressCorrect Controller" must {
 

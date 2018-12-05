@@ -42,7 +42,7 @@ class DeleteOtherViewSpec extends YesNoViewBehaviours {
       index = index,
       itemName = itemName,
       collectionId = benefitCollectionId,
-      taxYear = taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+      taxYear = taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
 
   def createViewUsingForm = (form: Form[_]) =>
     deleteOther(
@@ -52,7 +52,7 @@ class DeleteOtherViewSpec extends YesNoViewBehaviours {
       index = index,
       itemName = itemName,
       collectionId = benefitCollectionId,
-      taxYear = taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+      taxYear = taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
 
   "DeleteOther view" must {
 

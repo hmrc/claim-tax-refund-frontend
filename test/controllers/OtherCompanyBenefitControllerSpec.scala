@@ -41,10 +41,10 @@ class OtherCompanyBenefitControllerSpec extends ControllerSpecBase with MockitoS
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new OtherCompanyBenefitController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, sequenceUtil, new OtherCompanyBenefitForm(messagesApi, frontendAppConfig), formPartialRetriever, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl, sequenceUtil, new OtherCompanyBenefitForm(messagesApi, frontendAppConfig), formPartialRetriever, scalate)
 
   def viewAsString(form: Form[OtherCompanyBenefit], index: Index): String =
-    otherCompanyBenefit(frontendAppConfig, form, NormalMode, index, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+    otherCompanyBenefit(frontendAppConfig, form, NormalMode, index, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
 
   "OtherBenefit Controller" must {
 

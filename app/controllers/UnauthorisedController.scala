@@ -16,13 +16,13 @@
 
 package controllers
 
+import com.github.tototoshi.play2.scalate.Scalate
 import config.FrontendAppConfig
 import javax.inject.{Inject, Singleton}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.play.partials.FormPartialRetriever
-import uk.gov.hmrc.renderer.TemplateRenderer
 import views.html.unauthorised
 
 import scala.concurrent.ExecutionContext
@@ -31,7 +31,7 @@ import scala.concurrent.ExecutionContext
 class UnauthorisedController @Inject()(val appConfig: FrontendAppConfig,
                                        val messagesApi: MessagesApi,
                                        implicit val formPartialRetriever: FormPartialRetriever,
-                                       implicit val templateRenderer: TemplateRenderer
+                                       implicit val scalate: Scalate
                                       )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = Action { implicit request =>

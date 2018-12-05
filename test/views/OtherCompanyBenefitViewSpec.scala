@@ -33,10 +33,10 @@ class OtherCompanyBenefitViewSpec extends QuestionViewBehaviours[OtherCompanyBen
 
   override val form: Form[OtherCompanyBenefit] = new OtherCompanyBenefitForm(messagesApi, frontendAppConfig)(Seq.empty, 0)
 
-  def createView: () => HtmlFormat.Appendable = () => otherCompanyBenefit(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createView: () => HtmlFormat.Appendable = () => otherCompanyBenefit(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
 
   def createViewUsingForm: Form[OtherCompanyBenefit] => HtmlFormat.Appendable = (form: Form[OtherCompanyBenefit]) =>
-    otherCompanyBenefit(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+    otherCompanyBenefit(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
 
   "OtherCompanyBenefit view" must {
     behave like normalPage(createView, messageKeyPrefix, None, "1", "bob")

@@ -29,10 +29,10 @@ class WhereToSendPaymentViewSpec extends ViewBehaviours {
   private val taxYear = CYMinus1
 
   def createView = () =>
-    whereToSendPayment(frontendAppConfig, WhereToSendPaymentForm(), NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+    whereToSendPayment(frontendAppConfig, WhereToSendPaymentForm(), NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
 
   def createViewUsingForm = (form: Form[_]) =>
-    whereToSendPayment(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+    whereToSendPayment(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
 
   "WhereToSendPayment view" must {
     behave like normalPage(createView, messageKeyPrefix, None)

@@ -16,6 +16,7 @@
 
 package controllers
 
+import com.github.tototoshi.play2.scalate.Scalate
 import com.google.inject.Inject
 import config.FrontendAppConfig
 import connectors.{CasConnector, DataCacheConnector}
@@ -32,7 +33,6 @@ import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.play.language.LanguageUtils
 import uk.gov.hmrc.play.partials.FormPartialRetriever
-import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, ReferenceGenerator, SubmissionMark}
 import views.html.{check_your_answers, pdf_check_your_answers}
 
@@ -49,7 +49,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
                                            referenceGenerator: ReferenceGenerator,
                                            robotXML: RobotXML,
                                            implicit val formPartialRetriever: FormPartialRetriever,
-                                           implicit val templateRenderer: TemplateRenderer
+                                           implicit val scalate: Scalate
                                           )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   def onPageLoad(): Action[AnyContent] = (authenticate andThen getData andThen requireData) {

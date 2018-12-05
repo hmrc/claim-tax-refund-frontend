@@ -14,25 +14,25 @@
  * limitations under the License.
  *@
 
+@import com.github.tototoshi.play2.scalate._
 @import config.FrontendAppConfig
-@import uk.gov.hmrc.play.views.html._
 @import controllers.routes._
 @import models.Mode
-@import viewmodels.InputViewModel
-@import uk.gov.hmrc.renderer.TemplateRenderer
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
+@import uk.gov.hmrc.play.views.html._
+@import viewmodels.InputViewModel
 
 @(
-    appConfig: FrontendAppConfig,
-    form: Form[_],
-    mode: Mode,
-    taxYear: SelectTaxYear,
-    characterLimit: Int
+        appConfig: FrontendAppConfig,
+        form: Form[_],
+        mode: Mode,
+        taxYear: SelectTaxYear,
+        characterLimit: Int
 )(
-    implicit request: Request[_],
-    messages: Messages,
-    formPartialRetriever: FormPartialRetriever,
-    templateRenderer: TemplateRenderer
+        implicit request: Request[_],
+        messages: Messages,
+        formPartialRetriever: FormPartialRetriever,
+        scalate: Scalate
 )
 
 @title = @{
@@ -55,9 +55,9 @@
         @components.input_textarea(
             InputViewModel("value", form),
             label = messages("detailsOfEmploymentOrPension.heading"),
-            labelClass=Some("visually-hidden"),
+            labelClass = Some("visually-hidden"),
             hint = Some(messages("detailsOfEmploymentOrPension.hintText")),
-            charLimit=Some(characterLimit)
+            charLimit = Some(characterLimit)
         )
 
         @components.submit_button()

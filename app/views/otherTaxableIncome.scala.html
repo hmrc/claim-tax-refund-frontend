@@ -14,26 +14,26 @@
  * limitations under the License.
  *@
 
+@import com.github.tototoshi.play2.scalate._
 @import config.FrontendAppConfig
-@import uk.gov.hmrc.play.views.html._
 @import controllers.routes._
-@import models.{Mode, Index}
-@import viewmodels.InputViewModel
-@import uk.gov.hmrc.renderer.TemplateRenderer
+@import models.{Index, Mode}
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
+@import uk.gov.hmrc.play.views.html._
+@import viewmodels.InputViewModel
 
 @(
-    appConfig: FrontendAppConfig,
-    form: Form[_],
-    mode: Mode,
-    index: Index,
-    taxYear: SelectTaxYear
+        appConfig: FrontendAppConfig,
+        form: Form[_],
+        mode: Mode,
+        index: Index,
+        taxYear: SelectTaxYear
 )(
-    implicit
-    request: Request[_],
-    messages: Messages,
-    formPartialRetriever: FormPartialRetriever,
-    templateRenderer: TemplateRenderer
+        implicit
+        request: Request[_],
+        messages: Messages,
+        formPartialRetriever: FormPartialRetriever,
+        scalate: Scalate
 )
 
 @title = @{

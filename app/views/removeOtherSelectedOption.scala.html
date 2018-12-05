@@ -14,13 +14,13 @@
  * limitations under the License.
  *@
 
+@import com.github.tototoshi.play2.scalate._
 @import config.FrontendAppConfig
-@import uk.gov.hmrc.play.views.html._
 @import controllers.routes._
 @import models.Mode
-@import viewmodels.InputViewModel
-@import uk.gov.hmrc.renderer.TemplateRenderer
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
+@import uk.gov.hmrc.play.views.html._
+@import viewmodels.InputViewModel
 
 
 @(
@@ -34,32 +34,32 @@
         request: Request[_],
         messages: Messages,
         formPartialRetriever: FormPartialRetriever,
-        templateRenderer: TemplateRenderer
+        scalate: Scalate
 )
 
 @title = @{
     if(form.errors.nonEmpty) messages("site.title.error", messages("RemoveOtherSelectedOption.title", messages(collectionId))) else messages("RemoveOtherSelectedOption.title", messages(collectionId))
 }
 
-    @main_template(
-        title = title,
-        appConfig = appConfig,
-        bodyClasses = None) {
+@main_template(
+    title = title,
+    appConfig = appConfig,
+    bodyClasses = None) {
 
-        @helpers.form(action = RemoveOtherSelectedOptionController.onSubmit(mode, collectionId), 'autoComplete -> "off") {
+    @helpers.form(action = RemoveOtherSelectedOptionController.onSubmit(mode, collectionId), 'autoComplete -> "off") {
 
-            @components.back_link()
+        @components.back_link()
 
-            @components.error_summary(form.errors)
+        @components.error_summary(form.errors)
 
-            @components.heading(messages("RemoveOtherSelectedOption.heading", messages(collectionId)), taxYear = Some(taxYear.asString))
+        @components.heading(messages("RemoveOtherSelectedOption.heading", messages(collectionId)), taxYear = Some(taxYear.asString))
 
-            @components.input_yes_no(
-                InputViewModel("value", form),
-                label = messages("RemoveOtherSelectedOption.heading", taxYear.asString),
-                labelClass = Some("visually-hidden")
-            )
+        @components.input_yes_no(
+            InputViewModel("value", form),
+            label = messages("RemoveOtherSelectedOption.heading", taxYear.asString),
+            labelClass = Some("visually-hidden")
+        )
 
-            @components.submit_button()
-        }
+        @components.submit_button()
     }
+}

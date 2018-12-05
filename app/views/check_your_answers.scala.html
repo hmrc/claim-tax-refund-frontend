@@ -15,20 +15,20 @@
  *@
 
 @import config.FrontendAppConfig
-@import viewmodels.AnswerSection
-@import uk.gov.hmrc.renderer.TemplateRenderer
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
 @import uk.gov.hmrc.play.views.html._
+@import viewmodels.AnswerSection
+@import com.github.tototoshi.play2.scalate.Scalate
 
 @(
-    appConfig: FrontendAppConfig,
-    answerSections: Seq[AnswerSection]
+        appConfig: FrontendAppConfig,
+        answerSections: Seq[AnswerSection]
 )(
-    implicit
-    request: Request[_],
-    messages: Messages,
-    formPartialRetriever: FormPartialRetriever,
-    templateRenderer: TemplateRenderer
+        implicit
+        request: Request[_],
+        messages: Messages,
+        formPartialRetriever: FormPartialRetriever,
+        scalate: Scalate
 )
 
 @main_template(
@@ -38,7 +38,7 @@
 ) {
     <h1 class="heading-xlarge">@messages("checkYourAnswers.heading")</h1>
 
-    @for((section, i) <- answerSections.zipWithIndex){
+    @for((section, i) <- answerSections.zipWithIndex) {
         @components.answer_section(section, i.toString)
     }
 

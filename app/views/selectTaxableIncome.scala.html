@@ -14,52 +14,52 @@
  * limitations under the License.
  *@
 
+@import com.github.tototoshi.play2.scalate._
 @import config.FrontendAppConfig
-@import uk.gov.hmrc.play.views.html._
 @import controllers.routes._
-@import models.Mode
 @import forms.SelectTaxableIncomeForm
-@import uk.gov.hmrc.renderer.TemplateRenderer
+@import models.Mode
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
+@import uk.gov.hmrc.play.views.html._
 
 @(
-    appConfig: FrontendAppConfig,
-    form: Form[_],
-    mode: Mode,
-    taxYear: SelectTaxYear
+        appConfig: FrontendAppConfig,
+        form: Form[_],
+        mode: Mode,
+        taxYear: SelectTaxYear
 )(
-    implicit
-    request: Request[_],
-    messages: Messages,
-    formPartialRetriever: FormPartialRetriever,
-    templateRenderer: TemplateRenderer
+        implicit
+        request: Request[_],
+        messages: Messages,
+        formPartialRetriever: FormPartialRetriever,
+        scalate: Scalate
 )
 
-@title = @{
-    if(form.errors.nonEmpty) messages("site.title.error", messages("selectTaxableIncome.title")) else messages("selectTaxableIncome.title")
-}
-
-@main_template(
-    title = messages(title, taxYear.asString),
-    appConfig = appConfig,
-    bodyClasses = None
-) {
-
-    @helpers.form(action = SelectTaxableIncomeController.onSubmit(mode), 'autoComplete -> "off") {
-
-        @components.back_link()
-
-        @components.error_summary(form.errors)
-
-        @components.heading(messages("selectTaxableIncome.heading"), taxYear = Some(taxYear.asString))
-
-        @components.input_check_box(
-            form("value"),
-            legend = messages("selectTaxableIncome.heading", taxYear.asString),
-            legendClass = Some("visually-hidden"),
-            inputs = SelectTaxableIncomeForm.options
-        )
-
-        @components.submit_button()
+    @title = @{
+        if(form.errors.nonEmpty) messages("site.title.error", messages("selectTaxableIncome.title")) else messages("selectTaxableIncome.title")
     }
-}
+
+    @main_template(
+        title = messages(title, taxYear.asString),
+        appConfig = appConfig,
+        bodyClasses = None
+    ) {
+
+        @helpers.form(action = SelectTaxableIncomeController.onSubmit(mode), 'autoComplete -> "off") {
+
+            @components.back_link()
+
+            @components.error_summary(form.errors)
+
+            @components.heading(messages("selectTaxableIncome.heading"), taxYear = Some(taxYear.asString))
+
+            @components.input_check_box(
+                form("value"),
+                legend = messages("selectTaxableIncome.heading", taxYear.asString),
+                legendClass = Some("visually-hidden"),
+                inputs = SelectTaxableIncomeForm.options
+            )
+
+            @components.submit_button()
+        }
+    }

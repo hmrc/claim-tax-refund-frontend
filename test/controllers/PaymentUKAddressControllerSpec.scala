@@ -34,14 +34,14 @@ class PaymentUKAddressControllerSpec extends ControllerSpecBase {
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new PaymentUKAddressController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, new PaymentUKAddressForm(frontendAppConfig), formPartialRetriever, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl, new PaymentUKAddressForm(frontendAppConfig), formPartialRetriever, scalate)
 
   val form = new PaymentUKAddressForm(frontendAppConfig)()
   private val taxYear = CYMinus2
   private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers
 
   def viewAsString(form: Form[UkAddress] = form) =
-    paymentUKAddress(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+    paymentUKAddress(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
 
   "PaymentUKAddress Controller" must {
 

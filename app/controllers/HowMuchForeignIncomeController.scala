@@ -16,18 +16,18 @@
 
 package controllers
 
+import com.github.tototoshi.play2.scalate.Scalate
+import config.FrontendAppConfig
+import connectors.DataCacheConnector
+import controllers.actions._
+import forms.HowMuchForeignIncomeForm
+import identifiers.HowMuchForeignIncomeId
 import javax.inject.Inject
+import models.Mode
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
-import connectors.DataCacheConnector
-import controllers.actions._
-import config.FrontendAppConfig
-import forms.HowMuchForeignIncomeForm
-import identifiers.HowMuchForeignIncomeId
-import models.Mode
 import uk.gov.hmrc.play.partials.FormPartialRetriever
-import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, UserAnswers}
 import views.html.howMuchForeignIncome
 
@@ -43,7 +43,7 @@ class HowMuchForeignIncomeController @Inject()(
                                                 requireData: DataRequiredAction,
                                                 formBuilder: HowMuchForeignIncomeForm,
                                                 implicit val formPartialRetriever: FormPartialRetriever,
-                                                implicit val templateRenderer: TemplateRenderer
+                                                implicit val scalate: Scalate
                                               )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val form: Form[String] = formBuilder()
@@ -55,11 +55,11 @@ class HowMuchForeignIncomeController @Inject()(
         case Some(value) => form.fill(value)
       }
 
-      request.userAnswers.selectTaxYear.map{
+      request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
           val taxYear = selectedTaxYear
           Ok(howMuchForeignIncome(appConfig, preparedForm, mode, taxYear))
-      }.getOrElse{
+      }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
   }
@@ -69,13 +69,13 @@ class HowMuchForeignIncomeController @Inject()(
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
           val taxYear = selectedTaxYear
-        form.bindFromRequest().fold(
-          (formWithErrors: Form[_]) =>
-            Future.successful(BadRequest(howMuchForeignIncome(appConfig, formWithErrors, mode, taxYear))),
-          (value) =>
-            dataCacheConnector.save[String](request.externalId, HowMuchForeignIncomeId.toString, value).map(cacheMap =>
-              Redirect(navigator.nextPage(HowMuchForeignIncomeId, mode)(new UserAnswers(cacheMap))))
-        )
+          form.bindFromRequest().fold(
+            (formWithErrors: Form[_]) =>
+              Future.successful(BadRequest(howMuchForeignIncome(appConfig, formWithErrors, mode, taxYear))),
+            (value) =>
+              dataCacheConnector.save[String](request.externalId, HowMuchForeignIncomeId.toString, value).map(cacheMap =>
+                Redirect(navigator.nextPage(HowMuchForeignIncomeId, mode)(new UserAnswers(cacheMap))))
+          )
       }.getOrElse {
         Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
       }

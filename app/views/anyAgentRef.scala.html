@@ -15,57 +15,56 @@
  *@
 
 @import config.FrontendAppConfig
-@import uk.gov.hmrc.play.views.html._
 @import controllers.routes._
 @import models.Mode
-@import utils.FormHelpers
-@import viewmodels.InputViewModel
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
-@import uk.gov.hmrc.renderer.TemplateRenderer
+@import uk.gov.hmrc.play.views.html._
+@import viewmodels.InputViewModel
+@import com.github.tototoshi.play2.scalate._
 
 @(
-    appConfig: FrontendAppConfig,
-    form: Form[_],
-    mode: Mode,
-    nomineeName: String,
-    taxYear: SelectTaxYear
-    )(
-    implicit
+        appConfig: FrontendAppConfig,
+        form: Form[_],
+        mode: Mode,
+        nomineeName: String,
+        taxYear: SelectTaxYear
+)(
+        implicit
         request: Request[_],
         messages: Messages,
         formPartialRetriever: FormPartialRetriever,
-        templateRenderer: TemplateRenderer
+        scalate: Scalate
 )
 
-@main_template(
-    title = messages("anyAgentRef.title", nomineeName),
-    appConfig = appConfig,
-    bodyClasses = None
-) {
+    @main_template(
+        title = messages("anyAgentRef.title", nomineeName),
+        appConfig = appConfig,
+        bodyClasses = None
+    ) {
 
-    @helpers.form(action = AnyAgentRefController.onSubmit(mode), 'autoComplete -> "off") {
+        @helpers.form(action = AnyAgentRefController.onSubmit(mode), 'autoComplete -> "off") {
 
-        @components.back_link()
+            @components.back_link()
 
-        @components.error_summary(form.errors)
+            @components.error_summary(form.errors)
 
-        @components.heading(messages("anyAgentRef.heading", nomineeName), taxYear = Some(taxYear.asString))
+            @components.heading(messages("anyAgentRef.heading", nomineeName), taxYear = Some(taxYear.asString))
 
-        @components.input_yes_no(
-            viewModel = InputViewModel("anyAgentRef", form),
-            label = messages("anyAgentRef.heading", nomineeName),
-            labelClass = Some("visually-hidden"),
-            yesAssoc = Some("yesAgentRef")
-        )
+            @components.input_yes_no(
+                viewModel = InputViewModel("anyAgentRef", form),
+                label = messages("anyAgentRef.heading", nomineeName),
+                labelClass = Some("visually-hidden"),
+                yesAssoc = Some("yesAgentRef")
+            )
 
-        <div id="yesAgentRef" class="js-hidden">
+            <div id="yesAgentRef" class="js-hidden">
             @components.input_text(
                 viewModel = InputViewModel("agentRef", form),
                 label = messages("anyAgentRef.agentRefField"),
                 divClass = Some("panel panel-border-narrow")
             )
-        </div>
+            </div>
 
-        @components.submit_button()
+            @components.submit_button()
+        }
     }
-}

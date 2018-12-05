@@ -16,27 +16,43 @@
 
 package base
 
+import com.github.tototoshi.play2.scalate._
 import config.{AddressLookupConfig, CtrFormPartialRetriever, FrontendAppConfig}
 import org.scalatest.mockito.MockitoSugar
 import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice._
+import play.api.Application
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.Injector
+import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.RequestHeader
 import play.api.test.FakeRequest
 import play.twirl.api.Html
+import services.MockScalate
 import uk.gov.hmrc.auth.core.retrieve.ItmpAddress
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.filters.frontend.crypto.SessionCookieCrypto
 import uk.gov.hmrc.play.bootstrap.http.HttpClient
-import utils.{MockTemplateRenderer, ReferenceGenerator, SequenceUtil}
+import utils.SequenceUtil
 
 trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with MockitoSugar {
+
+  override lazy val app: Application = {
+
+    import play.api.inject._
+
+    new GuiceApplicationBuilder()
+      .overrides(
+        bind[Scalate].to[MockScalate]
+      ).build()
+  }
 
   def injector: Injector = app.injector
 
   def frontendAppConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
+
+  def scalate: Scalate = injector.instanceOf[Scalate]
 
   def addressLookupConfig: AddressLookupConfig = injector.instanceOf[AddressLookupConfig]
 
@@ -67,9 +83,6 @@ trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with MockitoSugar {
 
   implicit val formPartialRetriever: CtrFormPartialRetriever =
     new MockCtrFormPartialRetriever(httpGet = mock[HttpClient], sessionCookieCrypto = mock[SessionCookieCrypto])
-
-  implicit val templateRenderer: MockTemplateRenderer.type =
-    MockTemplateRenderer
 }
 
 class MockCtrFormPartialRetriever(httpGet:HttpClient, sessionCookieCrypto: SessionCookieCrypto)

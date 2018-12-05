@@ -37,9 +37,9 @@ class AnyTaxableRentalIncomeViewSpec extends QuestionViewBehaviours[AnyTaxPaid] 
   val formProvider = new AnyTaxPaidForm()
   val form = formProvider(notSelectedKey, blankKey, invalidKey)
 
-  def createView = () => anyTaxableRentalIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createView = () => anyTaxableRentalIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
 
-  def createViewUsingForm = (form: Form[_]) => anyTaxableRentalIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createViewUsingForm = (form: Form[_]) => anyTaxableRentalIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
 
   "AnyTaxableRentalIncome view" must {
 

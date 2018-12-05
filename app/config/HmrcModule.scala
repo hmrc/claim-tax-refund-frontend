@@ -18,12 +18,12 @@ package config
 
 import play.api.inject.{Binding, Module}
 import play.api.{Configuration, Environment}
+import scalate.ScalateEngineBoot
 import uk.gov.hmrc.play.partials.FormPartialRetriever
-import uk.gov.hmrc.renderer.TemplateRenderer
 
 class HmrcModule extends Module {
   override def bindings(environment: Environment, configuration: Configuration): Seq[Binding[_]] = Seq(
     bind[FormPartialRetriever].to[CtrFormPartialRetriever],
-    bind[TemplateRenderer].to[LocalTemplateRenderer]
+    bind[ScalateEngineBoot].toSelf.eagerly()
   )
 }

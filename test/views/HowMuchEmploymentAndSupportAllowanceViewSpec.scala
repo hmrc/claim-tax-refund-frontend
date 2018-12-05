@@ -32,9 +32,9 @@ class HowMuchEmploymentAndSupportAllowanceViewSpec extends StringViewBehaviours 
 
   override val form: Form[String] = new HowMuchEmploymentAndSupportAllowanceForm(frontendAppConfig)()
 
-  def createView = () => howMuchEmploymentAndSupportAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createView = () => howMuchEmploymentAndSupportAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
 
-  def createViewUsingForm = (form: Form[String]) => howMuchEmploymentAndSupportAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createViewUsingForm = (form: Form[String]) => howMuchEmploymentAndSupportAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
 
   "HowMuchEmploymentAndSupportAllowance view" must {
     behave like normalPage(createView, messageKeyPrefix, None)

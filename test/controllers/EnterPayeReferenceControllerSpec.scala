@@ -34,14 +34,14 @@ class EnterPayeReferenceControllerSpec extends ControllerSpecBase {
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new EnterPayeReferenceController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, new EnterPayeReferenceForm(frontendAppConfig), formPartialRetriever, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl, new EnterPayeReferenceForm(frontendAppConfig), formPartialRetriever, scalate)
 
   val testAnswer = "123/AB1234"
   val form = new EnterPayeReferenceForm(frontendAppConfig)()
   private val taxYear = CYMinus2
   private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers
 
-  def viewAsString(form: Form[_] = form) = enterPayeReference(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+  def viewAsString(form: Form[_] = form) = enterPayeReference(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
 
   "EnterPayeReference Controller" must {
 

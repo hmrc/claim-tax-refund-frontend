@@ -16,18 +16,18 @@
 
 package controllers
 
+import com.github.tototoshi.play2.scalate.Scalate
+import config.FrontendAppConfig
+import connectors.DataCacheConnector
+import controllers.actions._
+import forms.DetailsOfEmploymentOrPensionForm
+import identifiers.DetailsOfEmploymentOrPensionId
 import javax.inject.Inject
+import models.Mode
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
-import connectors.DataCacheConnector
-import controllers.actions._
-import config.FrontendAppConfig
-import forms.DetailsOfEmploymentOrPensionForm
-import identifiers.DetailsOfEmploymentOrPensionId
-import models.Mode
 import uk.gov.hmrc.play.partials.FormPartialRetriever
-import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, UserAnswers}
 import views.html.detailsOfEmploymentOrPension
 
@@ -43,7 +43,7 @@ class DetailsOfEmploymentOrPensionController @Inject()(
                                                         requireData: DataRequiredAction,
                                                         formBuilder: DetailsOfEmploymentOrPensionForm,
                                                         implicit val formPartialRetriever: FormPartialRetriever,
-                                                        implicit val templateRenderer: TemplateRenderer
+                                                        implicit val scalate: Scalate
                                                       )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val form: Form[String] = formBuilder()

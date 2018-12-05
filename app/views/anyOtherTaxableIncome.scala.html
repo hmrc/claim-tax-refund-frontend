@@ -19,62 +19,62 @@
 @import models.Mode
 @import uk.gov.hmrc.play.views.html._
 @import viewmodels._
-@import uk.gov.hmrc.renderer.TemplateRenderer
+@import com.github.tototoshi.play2.scalate.Scalate
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
 
 @(
-    appConfig: FrontendAppConfig,
-    form: Form[_],
-    mode: Mode,
-    taxYear: SelectTaxYear,
-    complete: Seq[(OtherTaxableIncome, Int)],
-    incomplete: Seq[(OtherTaxableIncome, Int)]
+        appConfig: FrontendAppConfig,
+        form: Form[_],
+        mode: Mode,
+        taxYear: SelectTaxYear,
+        complete: Seq[(OtherTaxableIncome, Int)],
+        incomplete: Seq[(OtherTaxableIncome, Int)]
 )(
-    implicit
+        implicit
         request: Request[_],
         messages: Messages,
         formPartialRetriever: FormPartialRetriever,
-        templateRenderer: TemplateRenderer
+        scalate: Scalate
 )
 
-@formAction = @{
-    if (incomplete.isEmpty) AnyOtherTaxableIncomeController.onSubmit(mode) else OtherTaxableIncomeController.onPageLoad(mode, incomplete.head._2)
-}
-
-@callToAction = @{
-    if (incomplete.isEmpty) messages("site.continue") else messages("anyOtherTaxableIncome.incompleteSubmit", incomplete.head._1.name)
-}
-
-@title = @{
-    if(form.errors.nonEmpty) messages("site.title.error", messages("anyOtherTaxableIncome.title")) else messages("anyOtherTaxableIncome.title")
-}
-
-@main_template(
-    title = title,
-    appConfig = appConfig,
-    bodyClasses = None
-) {
-
-    @helpers.form(action = formAction, 'autoComplete -> "off") {
-
-        @components.back_link()
-
-        @components.error_summary(form.errors)
-
-        @components.heading(messages("anyOtherTaxableIncome.heading"), taxYear = Some(taxYear.asString))
-
-        @components.add_list_summary(
-            complete, incomplete, mode
-        )
-
-        @if(incomplete.isEmpty) {
-            @components.input_yes_no(
-                InputViewModel("value", form),
-                label = messages("anyOtherTaxableIncome.add"),
-                labelClass = Some("heading-medium")
-            )
-        }
-
-        @components.submit_button(callToAction)
+    @formAction = @{
+        if(incomplete.isEmpty) AnyOtherTaxableIncomeController.onSubmit(mode) else OtherTaxableIncomeController.onPageLoad(mode, incomplete.head._2)
     }
-}
+
+    @callToAction = @{
+        if(incomplete.isEmpty) messages("site.continue") else messages("anyOtherTaxableIncome.incompleteSubmit", incomplete.head._1.name)
+    }
+
+    @title = @{
+        if(form.errors.nonEmpty) messages("site.title.error", messages("anyOtherTaxableIncome.title")) else messages("anyOtherTaxableIncome.title")
+    }
+
+    @main_template(
+        title = title,
+        appConfig = appConfig,
+        bodyClasses = None
+    ) {
+
+        @helpers.form(action = formAction, 'autoComplete -> "off") {
+
+            @components.back_link()
+
+            @components.error_summary(form.errors)
+
+            @components.heading(messages("anyOtherTaxableIncome.heading"), taxYear = Some(taxYear.asString))
+
+            @components.add_list_summary(
+                complete, incomplete, mode
+            )
+
+            @if(incomplete.isEmpty) {
+                @components.input_yes_no(
+                    InputViewModel("value", form),
+                    label = messages("anyOtherTaxableIncome.add"),
+                    labelClass = Some("heading-medium")
+                )
+            }
+
+            @components.submit_button(callToAction)
+        }
+    }

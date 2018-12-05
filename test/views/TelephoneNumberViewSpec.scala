@@ -35,10 +35,10 @@ class TelephoneNumberViewSpec extends QuestionViewBehaviours[TelephoneOption]{
   val form = formProvider()
 
   def createView = () =>
-    telephoneNumber(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+    telephoneNumber(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
 
   def createViewUsingForm = (form: Form[_]) =>
-    telephoneNumber(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+    telephoneNumber(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
 
   "TelephoneNumber view" must {
     behave like normalPage(createView, messageKeyPrefix, None)

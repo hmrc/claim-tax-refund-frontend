@@ -14,60 +14,59 @@
  * limitations under the License.
  *@
 
+@import com.github.tototoshi.play2.scalate.Scalate
 @import config.FrontendAppConfig
-@import uk.gov.hmrc.play.views.html._
 @import controllers.routes._
 @import models.Mode
-@import utils.FormHelpers
-@import viewmodels.InputViewModel
-@import uk.gov.hmrc.renderer.TemplateRenderer
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
+@import uk.gov.hmrc.play.views.html._
+@import viewmodels.InputViewModel
 
 @(
-    appConfig: FrontendAppConfig,
-    form: Form[_],
-    mode: Mode,
-    taxYear: SelectTaxYear
+        appConfig: FrontendAppConfig,
+        form: Form[_],
+        mode: Mode,
+        taxYear: SelectTaxYear
 )(
-    implicit
+        implicit
         request: Request[_],
         messages: Messages,
         formPartialRetriever: FormPartialRetriever,
-        templateRenderer: TemplateRenderer
+        scalate: Scalate
 )
 
-@title = @{
-    if(form.errors.nonEmpty) messages("site.title.error", messages("anyBenefits.title")) else messages("anyBenefits.title")
-}
-
-@main_template(
-    title = title,
-    appConfig = appConfig,
-    bodyClasses = None
-) {
-
-    @helpers.form(action = AnyBenefitsController.onSubmit(mode), 'autoComplete -> "off") {
-
-        @components.back_link()
-
-        @components.error_summary(form.errors)
-
-        @components.heading(messages("anyBenefits.heading"), taxYear = Some(taxYear.asString))
-
-        <p id="listHeading">@messages("anyBenefits.listHeading")</p>
-
-        @components.list(
-            pageKey = Some("selectBenefits"),
-            addCssClass = None,
-            bulletList = Benefits.sortedBenefits.dropRight(1).map(_.toString)
-        )
-
-        @components.input_yes_no(
-            InputViewModel("value", form),
-            label = messages("anyBenefits.heading", taxYear.asString),
-            labelClass = Some("visually-hidden")
-        )
-
-        @components.submit_button()
+    @title = @{
+        if(form.errors.nonEmpty) messages("site.title.error", messages("anyBenefits.title")) else messages("anyBenefits.title")
     }
-}
+
+    @main_template(
+        title = title,
+        appConfig = appConfig,
+        bodyClasses = None
+    ) {
+
+        @helpers.form(action = AnyBenefitsController.onSubmit(mode), 'autoComplete -> "off") {
+
+            @components.back_link()
+
+            @components.error_summary(form.errors)
+
+            @components.heading(messages("anyBenefits.heading"), taxYear = Some(taxYear.asString))
+
+            <p id="listHeading">@messages("anyBenefits.listHeading")</p>
+
+            @components.list(
+                pageKey = Some("selectBenefits"),
+                addCssClass = None,
+                bulletList = Benefits.sortedBenefits.dropRight(1).map(_.toString)
+            )
+
+            @components.input_yes_no(
+                InputViewModel("value", form),
+                label = messages("anyBenefits.heading", taxYear.asString),
+                labelClass = Some("visually-hidden")
+            )
+
+            @components.submit_button()
+        }
+    }

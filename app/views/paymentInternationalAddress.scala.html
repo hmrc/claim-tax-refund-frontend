@@ -14,58 +14,57 @@
  * limitations under the License.
  *@
 
+@import com.github.tototoshi.play2.scalate._
 @import config.FrontendAppConfig
-@import uk.gov.hmrc.play.views.html._
 @import controllers.routes._
-@import utils.FormHelpers
-@import models.{Mode, InternationalAddress}
-@import viewmodels.InputViewModel
-@import uk.gov.hmrc.renderer.TemplateRenderer
+@import models.{InternationalAddress, Mode}
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
+@import uk.gov.hmrc.play.views.html._
+@import viewmodels.InputViewModel
 
 @(
-    appConfig: FrontendAppConfig,
-    form: Form[InternationalAddress],
-    mode: Mode,
-    taxYear: SelectTaxYear
+        appConfig: FrontendAppConfig,
+        form: Form[InternationalAddress],
+        mode: Mode,
+        taxYear: SelectTaxYear
 )(
-    implicit
-    request: Request[_],
-    messages: Messages,
-    formPartialRetriever: FormPartialRetriever,
-    templateRenderer: TemplateRenderer
+        implicit
+        request: Request[_],
+        messages: Messages,
+        formPartialRetriever: FormPartialRetriever,
+        scalate: Scalate
 )
 
-@title = @{
-    if(form.errors.nonEmpty) messages("site.title.error", messages("paymentInternationalAddress.title")) else messages("paymentInternationalAddress.title")
-}
-
-@main_template(
-    title = title,
-    appConfig = appConfig,
-    bodyClasses = None
-) {
-
-    @helpers.form(action = PaymentInternationalAddressController.onSubmit(mode), 'autoComplete -> "off") {
-
-        @components.back_link()
-
-        @components.error_summary(form.errors)
-
-        @components.heading(messages("paymentInternationalAddress.heading"), taxYear = Some(taxYear.asString))
-
-        @components.input_text(InputViewModel[InternationalAddress]("addressLine1", form), label = messages("global.addressLine1"))
-
-        @components.input_text(InputViewModel[InternationalAddress]("addressLine2", form), label = messages("global.addressLine2"))
-
-        @components.input_text(InputViewModel[InternationalAddress]("addressLine3", form), label = messages("global.addressLine3"))
-
-        @components.input_text(InputViewModel[InternationalAddress]("addressLine4", form), label = messages("global.addressLine4"))
-
-        @components.input_text(InputViewModel[InternationalAddress]("addressLine5", form), label = messages("global.addressLine5"))
-
-        @components.input_text(InputViewModel[InternationalAddress]("country", form), label = messages("global.country"))
-
-        @components.submit_button()
+    @title = @{
+        if(form.errors.nonEmpty) messages("site.title.error", messages("paymentInternationalAddress.title")) else messages("paymentInternationalAddress.title")
     }
-}
+
+    @main_template(
+        title = title,
+        appConfig = appConfig,
+        bodyClasses = None
+    ) {
+
+        @helpers.form(action = PaymentInternationalAddressController.onSubmit(mode), 'autoComplete -> "off") {
+
+            @components.back_link()
+
+            @components.error_summary(form.errors)
+
+            @components.heading(messages("paymentInternationalAddress.heading"), taxYear = Some(taxYear.asString))
+
+            @components.input_text(InputViewModel[InternationalAddress]("addressLine1", form), label = messages("global.addressLine1"))
+
+            @components.input_text(InputViewModel[InternationalAddress]("addressLine2", form), label = messages("global.addressLine2"))
+
+            @components.input_text(InputViewModel[InternationalAddress]("addressLine3", form), label = messages("global.addressLine3"))
+
+            @components.input_text(InputViewModel[InternationalAddress]("addressLine4", form), label = messages("global.addressLine4"))
+
+            @components.input_text(InputViewModel[InternationalAddress]("addressLine5", form), label = messages("global.addressLine5"))
+
+            @components.input_text(InputViewModel[InternationalAddress]("country", form), label = messages("global.country"))
+
+            @components.submit_button()
+        }
+    }

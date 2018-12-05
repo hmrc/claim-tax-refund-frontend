@@ -34,10 +34,10 @@ class RemoveOtherSelectedOptionViewSpec extends YesNoViewBehaviours {
   override val form = new BooleanForm()()
 
   def createView: () => Html = () =>
-    removeOtherSelectedOption(frontendAppConfig, form, NormalMode, taxYear, collectionId)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+    removeOtherSelectedOption(frontendAppConfig, form, NormalMode, taxYear, collectionId)(fakeRequest, messages, formPartialRetriever, scalate)
 
   def createViewUsingForm: Form[_] => Html = (form: Form[_]) =>
-    removeOtherSelectedOption(frontendAppConfig, form, NormalMode, taxYear, collectionId)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+    removeOtherSelectedOption(frontendAppConfig, form, NormalMode, taxYear, collectionId)(fakeRequest, messages, formPartialRetriever, scalate)
 
   "RemoveOtherSelectedOption view" must {
 

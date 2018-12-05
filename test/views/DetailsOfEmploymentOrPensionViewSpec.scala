@@ -34,10 +34,10 @@ class DetailsOfEmploymentOrPensionViewSpec extends StringViewBehaviours with Moc
   override val form: Form[String] = new DetailsOfEmploymentOrPensionForm(frontendAppConfig)()
 
   def createView = () =>
-    detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+    detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages, formPartialRetriever, scalate)
 
   def createViewUsingForm = (form: Form[String]) =>
-    detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+    detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages, formPartialRetriever, scalate)
 
   "DetailsOfEmploymentOrPension view" must {
     behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))

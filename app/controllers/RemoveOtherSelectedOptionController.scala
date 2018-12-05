@@ -16,6 +16,7 @@
 
 package controllers
 
+import com.github.tototoshi.play2.scalate.Scalate
 import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
@@ -27,67 +28,66 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.play.partials.FormPartialRetriever
-import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{Navigator, UserAnswers}
 import views.html.removeOtherSelectedOption
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class RemoveOtherSelectedOptionController @Inject()(appConfig: FrontendAppConfig,
-																										override val messagesApi: MessagesApi,
-																										dataCacheConnector: DataCacheConnector,
-																										navigator: Navigator,
-																										authenticate: AuthAction,
-																										getData: DataRetrievalAction,
-																										requireData: DataRequiredAction,
-																										formProvider: BooleanForm,
-																										implicit val formPartialRetriever: FormPartialRetriever,
-																										implicit val templateRenderer: TemplateRenderer
-																									 )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
+                                                    override val messagesApi: MessagesApi,
+                                                    dataCacheConnector: DataCacheConnector,
+                                                    navigator: Navigator,
+                                                    authenticate: AuthAction,
+                                                    getData: DataRetrievalAction,
+                                                    requireData: DataRequiredAction,
+                                                    formProvider: BooleanForm,
+                                                    implicit val formPartialRetriever: FormPartialRetriever,
+                                                    implicit val scalate: Scalate
+                                                   )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
-	private val errorKey = "RemoveOtherSelectedOption.blank"
-	private val otherBenefitsKey = messagesApi("RemoveOtherSelectedOption.otherBenefits")
-	private val otherCompanyBenefitsKey = messagesApi("RemoveOtherSelectedOption.companyBenefits")
-	private val otherTaxableIncomeKey = messagesApi("RemoveOtherSelectedOption.otherIncome")
+  private val errorKey = "RemoveOtherSelectedOption.blank"
+  private val otherBenefitsKey = messagesApi("RemoveOtherSelectedOption.otherBenefits")
+  private val otherCompanyBenefitsKey = messagesApi("RemoveOtherSelectedOption.companyBenefits")
+  private val otherTaxableIncomeKey = messagesApi("RemoveOtherSelectedOption.otherIncome")
 
-	def onPageLoad(mode: Mode, collectionId: String): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
-		implicit request =>
-			request.userAnswers.selectTaxYear.map {
-				selectedTaxYear =>
-					val collectionName = collectionId match {
-						case OtherBenefit.collectionId => otherBenefitsKey
-						case OtherCompanyBenefit.collectionId => otherCompanyBenefitsKey
-						case OtherTaxableIncome.collectionId => otherTaxableIncomeKey
-					}
-					val form: Form[Boolean] = formProvider(messagesApi(errorKey, collectionName))
-					Ok(removeOtherSelectedOption(appConfig, form, mode, selectedTaxYear, collectionId))
-			}.getOrElse {
-				Redirect(routes.SessionExpiredController.onPageLoad())
-			}
-	}
+  def onPageLoad(mode: Mode, collectionId: String): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
+    implicit request =>
+      request.userAnswers.selectTaxYear.map {
+        selectedTaxYear =>
+          val collectionName = collectionId match {
+            case OtherBenefit.collectionId => otherBenefitsKey
+            case OtherCompanyBenefit.collectionId => otherCompanyBenefitsKey
+            case OtherTaxableIncome.collectionId => otherTaxableIncomeKey
+          }
+          val form: Form[Boolean] = formProvider(messagesApi(errorKey, collectionName))
+          Ok(removeOtherSelectedOption(appConfig, form, mode, selectedTaxYear, collectionId))
+      }.getOrElse {
+        Redirect(routes.SessionExpiredController.onPageLoad())
+      }
+  }
 
-	def onSubmit(mode: Mode, collectionId: String): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
-		implicit request =>
-			request.userAnswers.selectTaxYear.map {
-				selectedTaxYear =>
-					val taxYear = selectedTaxYear
-					val collectionName = collectionId match {
-						case OtherBenefit.collectionId => otherBenefitsKey
-						case OtherCompanyBenefit.collectionId => otherCompanyBenefitsKey
-						case OtherTaxableIncome.collectionId => otherTaxableIncomeKey
-					}
-					val form: Form[Boolean] = formProvider(messagesApi(errorKey, collectionName))
+  def onSubmit(mode: Mode, collectionId: String): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
+    implicit request =>
+      request.userAnswers.selectTaxYear.map {
+        selectedTaxYear =>
+          val taxYear = selectedTaxYear
+          val collectionName = collectionId match {
+            case OtherBenefit.collectionId => otherBenefitsKey
+            case OtherCompanyBenefit.collectionId => otherCompanyBenefitsKey
+            case OtherTaxableIncome.collectionId => otherTaxableIncomeKey
+          }
+          val form: Form[Boolean] = formProvider(messagesApi(errorKey, collectionName))
 
-					form.bindFromRequest().fold(
-						(formWithErrors: Form[_]) =>
-							Future.successful(BadRequest(removeOtherSelectedOption(appConfig, formWithErrors, mode, taxYear, collectionId))),
-						(value: Boolean) => {
-							dataCacheConnector.save[Boolean](request.externalId, collectionId.toString, value).map(cacheMap =>
-								Redirect(navigator.nextPageWithCollectionId(collectionId, mode)(new UserAnswers(cacheMap))))
-						}
-					)
-			}.getOrElse {
-				Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
-			}
-	}
+          form.bindFromRequest().fold(
+            (formWithErrors: Form[_]) =>
+              Future.successful(BadRequest(removeOtherSelectedOption(appConfig, formWithErrors, mode, taxYear, collectionId))),
+            (value: Boolean) => {
+              dataCacheConnector.save[Boolean](request.externalId, collectionId.toString, value).map(cacheMap =>
+                Redirect(navigator.nextPageWithCollectionId(collectionId, mode)(new UserAnswers(cacheMap))))
+            }
+          )
+      }.getOrElse {
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+      }
+  }
 }
