@@ -59,6 +59,19 @@ class AddressLookupSpec extends SpecBase {
       val address: AddressLookup = testAddress.as[AddressLookup]
       AddressLookup.asString(address) mustBe "Line1<br>Line2<br>Line3<br>Line4<br>NE1 1LX<br>United Kingdom<br>GB"
     }
+
+    "return correct string format when passed asString missing postcode" in {
+      val address = new AddressLookup(
+        address = Some(
+          Address(
+            lines = Some(Seq("Line1", "Line2", "Line3", "Line4")),
+            postcode = Some("NE1 1LX"),
+            country = Some(Country(Some("United Kingdom"),Some("GB")))
+          )),
+        auditRef = Some("e9e2fb3f-268f-4c4c-b928-3dc0b17259f2")
+      )
+      AddressLookup.asString(address) mustBe "Line1<br>Line2<br>Line3<br>Line4<br>NE1 1LX<br>United Kingdom<br>GB"
+    }
   }
 
   val testAddress = {
