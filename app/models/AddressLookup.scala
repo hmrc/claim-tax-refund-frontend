@@ -55,10 +55,16 @@ object AddressLookup {
     </paymentAddress>)
 
   def completedAddress(a: AddressLookup): Seq[String] = Seq(
-      a.address.get.lines.get :+
-        a.address.get.postcode.get :+
-        a.address.get.country.get.name.get :+
-        a.address.get.country.get.code.get
+		if (a.address.get.postcode.isDefined) {
+			a.address.get.lines.get :+
+				a.address.get.postcode.get :+
+				a.address.get.country.get.name.get :+
+				a.address.get.country.get.code.get
+		} else {
+			a.address.get.lines.get :+
+				a.address.get.country.get.name.get :+
+				a.address.get.country.get.code.get
+		}
     ).flatten
 
   def asString(a: AddressLookup): String = completedAddress(a).mkString("<br>")

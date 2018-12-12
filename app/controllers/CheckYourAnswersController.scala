@@ -107,6 +107,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
       )
 
       val futureSubmission: Future[Submission] = for {
+        _ <- dataCacheConnector.save[String](request.externalId, key = "submissionReference", submissionReference)
         metadata <- casConnector.archiveSubmission(submissionReference, submissionArchiveRequest).map {
           submissionResponse =>
             new Metadata(
