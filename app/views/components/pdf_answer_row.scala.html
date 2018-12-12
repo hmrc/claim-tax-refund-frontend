@@ -28,7 +28,7 @@
 }
 @if(!row.isHeadingRow) {
 <li>
-    <div>@row.label.print.replaceAll("<br>", ", ").replaceAll("<p>", "").replaceAll("</p>", "")</div>
+    <div>@Html(row.label.print)</div>
     <div>@Html(row.answer.print)</div>
 </li>
 }
