@@ -48,7 +48,7 @@ class SelectBenefitsController @Inject()(
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val preparedForm = request.userAnswers.selectBenefits match {
+      val preparedForm: Form[Seq[Benefits.Value]] = request.userAnswers.selectBenefits match {
         case None => SelectBenefitsForm()
         case Some(value) => SelectBenefitsForm().fill(value)
       }
