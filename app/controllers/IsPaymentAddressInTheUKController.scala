@@ -29,6 +29,7 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import uk.gov.hmrc.play.language.LanguageUtils
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import utils.{Navigator, UserAnswers}
 import views.html.isPaymentAddressInTheUK
@@ -59,6 +60,7 @@ class IsPaymentAddressInTheUKController @Inject()(appConfig: FrontendAppConfig,
         case Some(value) => form.fill(value)
       }
 
+      val language = LanguageUtils.getCurrentLang(request)
       request.userAnswers.selectTaxYear.map {
         taxYear =>
           val continueUrl = mode match {
@@ -67,7 +69,7 @@ class IsPaymentAddressInTheUKController @Inject()(appConfig: FrontendAppConfig,
           }
 
           val addressInit = for {
-            result: Option[String] <- addressLookup.initialise(continueUrl = continueUrl)(hc: HeaderCarrier)
+            result: Option[String] <- addressLookup.initialise(continueUrl = continueUrl, language)(hc: HeaderCarrier)
           } yield {
             result map (
               url => Redirect(url)

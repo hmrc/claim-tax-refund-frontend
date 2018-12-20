@@ -21,7 +21,7 @@ import javax.inject.Inject
 import models.AddressLookup
 import models.requests.DataRequest
 import play.api.Logger
-import play.api.i18n.MessagesApi
+import play.api.i18n.{Lang, MessagesApi}
 import play.api.libs.json.Json
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.http.cache.client.CacheMap
@@ -39,9 +39,9 @@ class AddressLookupConnector @Inject()(
 																				dataCacheConnector: DataCacheConnector
 																			) {
 
-	def initialise(continueUrl: String)(implicit hc: HeaderCarrier): Future[Option[String]] = {
+	def initialise(continueUrl: String, language: Lang)(implicit hc: HeaderCarrier): Future[Option[String]] = {
 		val addressLookupUrl = s"${appConfig.addressLookupUrl}/api/init"
-		val addressConfig = Json.toJson(addressLookupConfig.config(continueUrl = s"$continueUrl"))
+		val addressConfig = Json.toJson(addressLookupConfig.config(continueUrl = s"$continueUrl", language))
 		http.POST(addressLookupUrl, body = addressConfig).map {
 			response =>
 				response.status match {
