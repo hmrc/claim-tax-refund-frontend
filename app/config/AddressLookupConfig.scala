@@ -31,7 +31,7 @@ class AddressLookupConfig @Inject()(messagesApi: MessagesApi) {
       Json.obj(
       fields = "continueUrl" -> s"$continueUrl",
       "homeNavHref" -> "http://www.hmrc.gov.uk/",
-      "navTitle" -> messagesApi("index.title"),
+      "navTitle" -> messagesApi("index.title")(language),
       "showPhaseBanner" -> false,
       "alphaPhase" -> false,
       "phaseFeedbackLink" -> "/help/alpha",

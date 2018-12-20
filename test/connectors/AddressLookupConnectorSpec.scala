@@ -29,6 +29,7 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.Format
 import play.api.mvc.Request
 import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.play.language.LanguageUtils
 import utils.{UserAnswers, WireMockHelper}
 
 import scala.concurrent.duration._
@@ -69,6 +70,9 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with WireMoc
 
   private lazy val connector: AddressLookupConnector = app.injector.instanceOf[AddressLookupConnector]
 
+  private val language = LanguageUtils.English
+
+
   "AddressLookupConnector" must {
 
     "return a location when addressLookup.initialise" in {
@@ -81,7 +85,7 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with WireMoc
           )
       )
 
-      val result: Option[String] = Await.result(connector.initialise(continueUrl = ""), 500.millisecond)
+      val result: Option[String] = Await.result(connector.initialise(continueUrl = "", language), 500.millisecond)
       result mustBe Some("/api/location")
 
     }
@@ -97,7 +101,7 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with WireMoc
           )
       )
 
-      val result: Option[String] = Await.result(connector.initialise(""), 500.millisecond)
+      val result: Option[String] = Await.result(connector.initialise("", language), 500.millisecond)
       result mustBe Some(s"[AddressLookupConnector][initialise] - Failed to obtain location from http://localhost:${server.port}/api/init")
     }
 
@@ -110,7 +114,7 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with WireMoc
           )
       )
 
-      val result: Option[String] = Await.result(connector.initialise(""), 500.millisecond)
+      val result: Option[String] = Await.result(connector.initialise("", language), 500.millisecond)
       result mustBe None
     }
 
@@ -122,7 +126,7 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with WireMoc
           )
       )
 
-      val result: Future[Option[String]] = connector.initialise("")
+      val result: Future[Option[String]] = connector.initialise("", language)
       whenReady(result) {
         res =>
           res mustBe None
@@ -139,7 +143,7 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with WireMoc
           )
       )
 
-      val result: Future[Option[String]] = connector.initialise("")
+      val result: Future[Option[String]] = connector.initialise("", language)
       whenReady(result) {
         res =>
           res mustBe None
