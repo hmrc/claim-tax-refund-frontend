@@ -17,20 +17,18 @@
 package config
 
 import com.google.inject.Inject
-import models.requests.DataRequest
 import play.api.i18n.{Lang, MessagesApi}
 import play.api.libs.json.{JsObject, Json}
-import uk.gov.hmrc.play.language.LanguageUtils
 
 class AddressLookupConfig @Inject()(messagesApi: MessagesApi) {
 
 
 
-  def config(continueUrl: String, language: Lang): JsObject = {
+  def config(continueUrl: String)(implicit language: Lang): JsObject = {
       Json.obj(
       fields = "continueUrl" -> s"$continueUrl",
       "homeNavHref" -> "http://www.hmrc.gov.uk/",
-      "navTitle" -> messagesApi("index.title")(language),
+      "navTitle" -> messagesApi("index.title"),
       "showPhaseBanner" -> false,
       "alphaPhase" -> false,
       "phaseFeedbackLink" -> "/help/alpha",
@@ -39,47 +37,47 @@ class AddressLookupConfig @Inject()(messagesApi: MessagesApi) {
       "includeHMRCBranding" -> true,
       "deskProServiceName" -> "",
       "lookupPage" -> Json.obj(
-        fields = "title" -> messagesApi("addressLookup.lookupPage.title")(language),
-        "heading" -> messagesApi("addressLookup.lookupPage.heading")(language),
-        "filterLabel" -> messagesApi("addressLookup.lookupPage.filterLabel")(language),
-        "postcodeLabel" -> messagesApi("addressLookup.lookupPage.postcodeLabel")(language),
-        "submitLabel" -> messagesApi("addressLookup.lookupPage.submitLabel")(language),
-        "noResultsFoundMessage" -> messagesApi("addressLookup.lookupPage.noResultsFoundMessage")(language),
-        "resultLimitExceededMessage" -> messagesApi("addressLookup.lookupPage.resultLimitExceededMessage")(language),
-        "manualAddressLinkText" -> messagesApi("addressLookup.lookupPage.manualAddressLinkText")(language)
+        fields = "title" -> messagesApi("addressLookup.lookupPage.title"),
+        "heading" -> messagesApi("addressLookup.lookupPage.heading"),
+        "filterLabel" -> messagesApi("addressLookup.lookupPage.filterLabel"),
+        "postcodeLabel" -> messagesApi("addressLookup.lookupPage.postcodeLabel"),
+        "submitLabel" -> messagesApi("addressLookup.lookupPage.submitLabel"),
+        "noResultsFoundMessage" -> messagesApi("addressLookup.lookupPage.noResultsFoundMessage"),
+        "resultLimitExceededMessage" -> messagesApi("addressLookup.lookupPage.resultLimitExceededMessage"),
+        "manualAddressLinkText" -> messagesApi("addressLookup.lookupPage.manualAddressLinkText")
       ),
       "selectPage" -> Json.obj(
-        fields = "title" -> messagesApi("addressLookup.selectPage.title")(language),
-        "heading" -> messagesApi("addressLookup.selectPage.heading")(language),
-        "proposalListLabel" -> messagesApi("addressLookup.selectPage.proposalListLabel")(language),
-        "submitLabel" -> messagesApi("addressLookup.selectPage.submitLabel")(language),
+        fields = "title" -> messagesApi("addressLookup.selectPage.title"),
+        "heading" -> messagesApi("addressLookup.selectPage.heading"),
+        "proposalListLabel" -> messagesApi("addressLookup.selectPage.proposalListLabel"),
+        "submitLabel" -> messagesApi("addressLookup.selectPage.submitLabel"),
         "proposalListLimit" -> 50,
         "showSearchAgainLink" -> false,
-        "searchAgainLinkText" -> messagesApi("addressLookup.selectPage.searchAgainLinkText")(language),
-        "editAddressLinkText" -> messagesApi("addressLookup.selectPage.editAddressLinkText")(language)
+        "searchAgainLinkText" -> messagesApi("addressLookup.selectPage.searchAgainLinkText"),
+        "editAddressLinkText" -> messagesApi("addressLookup.selectPage.editAddressLinkText")
       ),
       "confirmPage" -> Json.obj(
-        fields = "title" -> messagesApi("addressLookup.confirmPage.title")(language),
-        "heading" -> messagesApi("addressLookup.confirmPage.heading")(language),
-        "infoSubheading" -> messagesApi("addressLookup.confirmPage.infoSubheading")(language),
-        "infoMessage" -> messagesApi("addressLookup.confirmPage.infoMessage")(language),
-        "submitLabel" -> messagesApi("addressLookup.confirmPage.submitLabel")(language),
+        fields = "title" -> messagesApi("addressLookup.confirmPage.title"),
+        "heading" -> messagesApi("addressLookup.confirmPage.heading"),
+        "infoSubheading" -> messagesApi("addressLookup.confirmPage.infoSubheading"),
+        "infoMessage" -> messagesApi("addressLookup.confirmPage.infoMessage"),
+        "submitLabel" -> messagesApi("addressLookup.confirmPage.submitLabel"),
         "showSearchAgainLink" -> false,
-        "searchAgainLinkText" -> messagesApi("addressLookup.confirmPage.searchAgainLinkText")(language),
-        "changeLinkText" -> messagesApi("addressLookup.confirmPage.changeLinkText")(language)
+        "searchAgainLinkText" -> messagesApi("addressLookup.confirmPage.searchAgainLinkText"),
+        "changeLinkText" -> messagesApi("addressLookup.confirmPage.changeLinkText")
       ),
       "editPage" -> Json.obj(
-        fields = "title" -> messagesApi("addressLookup.editPage.title")(language),
-        "heading" -> messagesApi("addressLookup.editPage.heading")(language),
-        "line1Label" -> messagesApi("addressLookup.editPage.line1Label")(language),
-        "line2Label" -> messagesApi("addressLookup.editPage.line2Label")(language),
-        "line3Label" -> messagesApi("addressLookup.editPage.line3Label")(language),
-        "townLabel" -> messagesApi("addressLookup.editPage.townLabel")(language),
-        "postcodeLabel" -> messagesApi("addressLookup.editPage.postcodeLabel")(language),
-        "countryLabel" -> messagesApi("addressLookup.editPage.countryLabel")(language),
-        "submitLabel" -> messagesApi("addressLookup.editPage.submitLabel")(language),
+        fields = "title" -> messagesApi("addressLookup.editPage.title"),
+        "heading" -> messagesApi("addressLookup.editPage.heading"),
+        "line1Label" -> messagesApi("addressLookup.editPage.line1Label"),
+        "line2Label" -> messagesApi("addressLookup.editPage.line2Label"),
+        "line3Label" -> messagesApi("addressLookup.editPage.line3Label"),
+        "townLabel" -> messagesApi("addressLookup.editPage.townLabel"),
+        "postcodeLabel" -> messagesApi("addressLookup.editPage.postcodeLabel"),
+        "countryLabel" -> messagesApi("addressLookup.editPage.countryLabel"),
+        "submitLabel" -> messagesApi("addressLookup.editPage.submitLabel"),
         "showSearchAgainLink" -> false,
-        "searchAgainLinkText" -> messagesApi("addressLookup.editPage.searchAgainLinkText")(language)
+        "searchAgainLinkText" -> messagesApi("addressLookup.editPage.searchAgainLinkText")
       ),
       "timeout" -> Json.obj(
         fields = "timeoutAmount" -> 900,

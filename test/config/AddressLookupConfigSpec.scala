@@ -18,7 +18,7 @@ package config
 
 import base.SpecBase
 import play.api.i18n.Lang
-import play.api.libs.json.{JsString, JsValue, Json}
+import play.api.libs.json.{JsString, Json}
 import uk.gov.hmrc.play.language.LanguageUtils
 
 class AddressLookupConfigSpec extends SpecBase {
@@ -29,8 +29,7 @@ class AddressLookupConfigSpec extends SpecBase {
 
 	"config" must {
 		for (lang <- languages) {
-			val addressConfig = Json.toJson(addressLookupConfig.config(continueUrl = s"", lang))
-
+			val addressConfig = Json.toJson(addressLookupConfig.config(continueUrl = s"")(lang))
 			s"return ${lang.language} based config when passed ${lang.language} Language" must {
 
 				s"""navTitle must be "${messagesApi("index.title")(lang)}"""" in {

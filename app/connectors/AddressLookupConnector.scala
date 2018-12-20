@@ -32,39 +32,39 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 class AddressLookupConnector @Inject()(
-																				appConfig: FrontendAppConfig,
-																				addressLookupConfig: AddressLookupConfig,
-																				http: HttpClient,
-																				messagesApi: MessagesApi,
-																				dataCacheConnector: DataCacheConnector
-																			) {
+                                        appConfig: FrontendAppConfig,
+                                        addressLookupConfig: AddressLookupConfig,
+                                        http: HttpClient,
+                                        messagesApi: MessagesApi,
+                                        dataCacheConnector: DataCacheConnector
+                                      ) {
 
-	def initialise(continueUrl: String, language: Lang)(implicit hc: HeaderCarrier): Future[Option[String]] = {
-		val addressLookupUrl = s"${appConfig.addressLookupUrl}/api/init"
-		val addressConfig = Json.toJson(addressLookupConfig.config(continueUrl = s"$continueUrl", language))
-		http.POST(addressLookupUrl, body = addressConfig).map {
-			response =>
-				response.status match {
-					case 202 =>
-						Some(response.header(key = "Location")
-							.getOrElse(s"[AddressLookupConnector][initialise] - Failed to obtain location from $addressLookupUrl"))
-					case other =>
-						Logger.warn(s"[AddressLookupConnector][initialise] - received HTTP status $other from $addressLookupUrl")
-						None
-				}
-		}.recover {
-			case e: Exception =>
-				Logger.warn(s"[AddressLookupConnector][initialise] - connection to $addressLookupUrl failed", e)
-				None
-		}
-	}
+  def initialise(continueUrl: String)(implicit hc: HeaderCarrier, language: Lang): Future[Option[String]] = {
+    val addressLookupUrl = s"${appConfig.addressLookupUrl}/api/init"
+    val addressConfig = Json.toJson(addressLookupConfig.config(continueUrl = s"$continueUrl"))
+    http.POST(addressLookupUrl, body = addressConfig).map {
+      response =>
+        response.status match {
+          case 202 =>
+            Some(response.header(key = "Location")
+              .getOrElse(s"[AddressLookupConnector][initialise] - Failed to obtain location from $addressLookupUrl"))
+          case other =>
+            Logger.warn(s"[AddressLookupConnector][initialise] - received HTTP status $other from $addressLookupUrl")
+            None
+        }
+    }.recover {
+      case e: Exception =>
+        Logger.warn(s"[AddressLookupConnector][initialise] - connection to $addressLookupUrl failed", e)
+        None
+    }
+  }
 
-	def getAddress(cacheId: String, saveKey: String, id: String)(implicit hc: HeaderCarrier, request: DataRequest[_]): Future[UserAnswers] = {
-		val getAddressUrl = s"${appConfig.addressLookupUrl}/api/confirmed?id=$id"
+  def getAddress(cacheId: String, saveKey: String, id: String)(implicit hc: HeaderCarrier, request: DataRequest[_]): Future[UserAnswers] = {
+    val getAddressUrl = s"${appConfig.addressLookupUrl}/api/confirmed?id=$id"
 
-		for {
-			address: AddressLookup <- http.GET[AddressLookup](getAddressUrl)
-			cacheMap: CacheMap <- dataCacheConnector.save(cacheId, saveKey, address)
-		} yield new UserAnswers(cacheMap)
-	}
+    for {
+      address: AddressLookup <- http.GET[AddressLookup](getAddressUrl)
+      cacheMap: CacheMap <- dataCacheConnector.save(cacheId, saveKey, address)
+    } yield new UserAnswers(cacheMap)
+  }
 }
