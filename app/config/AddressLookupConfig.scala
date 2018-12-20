@@ -27,7 +27,6 @@ class AddressLookupConfig @Inject()(messagesApi: MessagesApi) {
 
 
   def config(continueUrl: String, language: Lang): JsObject = {
-      //val language = LanguageUtils.getCurrentLang(request)
       Json.obj(
       fields = "continueUrl" -> s"$continueUrl",
       "homeNavHref" -> "http://www.hmrc.gov.uk/",
