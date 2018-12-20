@@ -73,7 +73,7 @@ class IsPaymentAddressInTheUKController @Inject()(appConfig: FrontendAppConfig,
           } yield {
             result map (
               url => Redirect(url)
-            )
+              )
           }
 
           addressInit.map(_.getOrElse(
