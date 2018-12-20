@@ -81,17 +81,126 @@ class AddressLookupConfigSpec extends SpecBase {
 				}
 
 				"have selectPage section" must {
+					s"""have correct title of "${messagesApi("addressLookup.selectPage.title")(lang)}""" in {
+						val element = addressConfig \ "selectPage" \ "title"
+						element.get mustBe JsString(messagesApi("addressLookup.selectPage.title")(lang))
+					}
 
+					s"""have correct heading of "${messagesApi("addressLookup.selectPage.heading")(lang)}""" in {
+						val element = addressConfig \ "selectPage" \ "heading"
+						element.get mustBe JsString(messagesApi("addressLookup.selectPage.heading")(lang))
+					}
+
+					s"""have correct proposalListLabel of "${messagesApi("addressLookup.selectPage.proposalListLabel")(lang)}""" in {
+						val element = addressConfig \ "selectPage" \ "proposalListLabel"
+						element.get mustBe JsString(messagesApi("addressLookup.selectPage.proposalListLabel")(lang))
+					}
+
+					s"""have correct submitLabel of "${messagesApi("addressLookup.selectPage.submitLabel")(lang)}""" in {
+						val element = addressConfig \ "selectPage" \ "submitLabel"
+						element.get mustBe JsString(messagesApi("addressLookup.selectPage.submitLabel")(lang))
+					}
+
+					s"""have correct searchAgainLinkText of "${messagesApi("addressLookup.selectPage.searchAgainLinkText")(lang)}""" in {
+						val element = addressConfig \ "selectPage" \ "searchAgainLinkText"
+						element.get mustBe JsString(messagesApi("addressLookup.selectPage.searchAgainLinkText")(lang))
+					}
+
+					s"""have correct editAddressLinkText of "${messagesApi("addressLookup.selectPage.editAddressLinkText")(lang)}""" in {
+						val element = addressConfig \ "selectPage" \ "editAddressLinkText"
+						element.get mustBe JsString(messagesApi("addressLookup.selectPage.editAddressLinkText")(lang))
+					}
 				}
 
 				"have confirmPage section" must {
+					s"""have correct title of "${messagesApi("addressLookup.confirmPage.title")(lang)}""" in {
+						val element = addressConfig \ "confirmPage" \ "title"
+						element.get mustBe JsString(messagesApi("addressLookup.confirmPage.title")(lang))
+					}
+
+					s"""have correct heading of "${messagesApi("addressLookup.confirmPage.heading")(lang)}""" in {
+						val element = addressConfig \ "confirmPage" \ "heading"
+						element.get mustBe JsString(messagesApi("addressLookup.confirmPage.heading")(lang))
+					}
+
+					s"""have correct infoSubheading of "${messagesApi("addressLookup.confirmPage.infoSubheading")(lang)}""" in {
+						val element = addressConfig \ "confirmPage" \ "infoSubheading"
+						element.get mustBe JsString(messagesApi("addressLookup.confirmPage.infoSubheading")(lang))
+					}
+
+					s"""have correct infoMessage of "${messagesApi("addressLookup.confirmPage.infoMessage")(lang)}""" in {
+						val element = addressConfig \ "confirmPage" \ "infoMessage"
+						element.get mustBe JsString(messagesApi("addressLookup.confirmPage.infoMessage")(lang))
+					}
+
+					s"""have correct submitLabel of "${messagesApi("addressLookup.confirmPage.submitLabel")(lang)}""" in {
+						val element = addressConfig \ "confirmPage" \ "submitLabel"
+						element.get mustBe JsString(messagesApi("addressLookup.confirmPage.submitLabel")(lang))
+					}
+
+					s"""have correct searchAgainLinkText of "${messagesApi("addressLookup.confirmPage.searchAgainLinkText")(lang)}""" in {
+						val element = addressConfig \ "confirmPage" \ "searchAgainLinkText"
+						element.get mustBe JsString(messagesApi("addressLookup.confirmPage.searchAgainLinkText")(lang))
+					}
+
+					s"""have correct changeLinkText of "${messagesApi("addressLookup.confirmPage.changeLinkText")(lang)}""" in {
+						val element = addressConfig \ "confirmPage" \ "changeLinkText"
+						element.get mustBe JsString(messagesApi("addressLookup.confirmPage.changeLinkText")(lang))
+					}
 
 				}
 
-				"have editPAge section" must {
+				"have editPage section" must {
+					s"""have correct title of "${messagesApi("addressLookup.editPage.title")(lang)}""" in {
+						val element = addressConfig \ "editPage" \ "title"
+						element.get mustBe JsString(messagesApi("addressLookup.editPage.title")(lang))
+					}
 
+					s"""have correct heading of "${messagesApi("addressLookup.editPage.heading")(lang)}""" in {
+						val element = addressConfig \ "editPage" \ "heading"
+						element.get mustBe JsString(messagesApi("addressLookup.editPage.heading")(lang))
+					}
+
+					s"""have correct line1Label of "${messagesApi("addressLookup.editPage.line1Label")(lang)}""" in {
+						val element = addressConfig \ "editPage" \ "line1Label"
+						element.get mustBe JsString(messagesApi("addressLookup.editPage.line1Label")(lang))
+					}
+
+					s"""have correct line2Label of "${messagesApi("addressLookup.editPage.line2Label")(lang)}""" in {
+						val element = addressConfig \ "editPage" \ "line2Label"
+						element.get mustBe JsString(messagesApi("addressLookup.editPage.line2Label")(lang))
+					}
+
+					s"""have correct line3Label of "${messagesApi("addressLookup.editPage.line3Label")(lang)}""" in {
+						val element = addressConfig \ "editPage" \ "line3Label"
+						element.get mustBe JsString(messagesApi("addressLookup.editPage.line3Label")(lang))
+					}
+
+					s"""have correct townLabel of "${messagesApi("addressLookup.editPage.townLabel")(lang)}""" in {
+						val element = addressConfig \ "editPage" \ "townLabel"
+						element.get mustBe JsString(messagesApi("addressLookup.editPage.townLabel")(lang))
+					}
+
+					s"""have correct postcodeLabel of "${messagesApi("addressLookup.editPage.postcodeLabel")(lang)}""" in {
+						val element = addressConfig \ "editPage" \ "postcodeLabel"
+						element.get mustBe JsString(messagesApi("addressLookup.editPage.postcodeLabel")(lang))
+					}
+
+					s"""have correct countryLabel of "${messagesApi("addressLookup.editPage.countryLabel")(lang)}""" in {
+						val element = addressConfig \ "editPage" \ "countryLabel"
+						element.get mustBe JsString(messagesApi("addressLookup.editPage.countryLabel")(lang))
+					}
+
+					s"""have correct submitLabel of "${messagesApi("addressLookup.editPage.submitLabel")(lang)}""" in {
+						val element = addressConfig \ "editPage" \ "submitLabel"
+						element.get mustBe JsString(messagesApi("addressLookup.editPage.submitLabel")(lang))
+					}
+
+					s"""have correct searchAgainLinkText of "${messagesApi("addressLookup.editPage.searchAgainLinkText")(lang)}""" in {
+						val element = addressConfig \ "editPage" \ "searchAgainLinkText"
+						element.get mustBe JsString(messagesApi("addressLookup.editPage.searchAgainLinkText")(lang))
+					}
 				}
-
 			}
 		}
 	}
