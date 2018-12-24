@@ -29,6 +29,7 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.Format
 import play.api.mvc.Request
 import uk.gov.hmrc.http.cache.client.CacheMap
+import uk.gov.hmrc.play.language.LanguageUtils
 import utils.{UserAnswers, WireMockHelper}
 
 import scala.concurrent.duration._
@@ -68,6 +69,9 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with WireMoc
   implicit val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 
   private lazy val connector: AddressLookupConnector = app.injector.instanceOf[AddressLookupConnector]
+
+  private val language = LanguageUtils.English
+
 
   "AddressLookupConnector" must {
 
