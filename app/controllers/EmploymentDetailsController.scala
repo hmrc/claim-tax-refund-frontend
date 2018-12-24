@@ -51,10 +51,10 @@ class EmploymentDetailsController @Inject()(appConfig: FrontendAppConfig,
                                            )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val errorKey = "employmentDetails.blank"
-  val form: Form[Boolean] = formProvider(messagesApi(errorKey))
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
+      val form: Form[Boolean] = formProvider(messagesApi(errorKey))
 
       val preparedForm = request.userAnswers.employmentDetails match {
         case None => form
@@ -80,6 +80,7 @@ class EmploymentDetailsController @Inject()(appConfig: FrontendAppConfig,
 
   def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
+      val form: Form[Boolean] = formProvider(messagesApi(errorKey))
 
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>

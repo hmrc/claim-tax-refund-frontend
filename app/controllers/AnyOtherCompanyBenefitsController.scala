@@ -48,10 +48,11 @@ class AnyOtherCompanyBenefitsController @Inject()(appConfig: FrontendAppConfig,
                                                  )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val errorKey = "anyOtherCompanyBenefits.blank"
-  val form: Form[Boolean] = formProvider(messagesApi(errorKey))
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
+      val form: Form[Boolean] = formProvider(messagesApi(errorKey))
+
       val result: Option[Result] = for {
         taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
         cyaHelper: CheckYourAnswersHelper = new CheckYourAnswersHelper(request.userAnswers)
@@ -70,6 +71,8 @@ class AnyOtherCompanyBenefitsController @Inject()(appConfig: FrontendAppConfig,
 
   def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
+      val form: Form[Boolean] = formProvider(messagesApi(errorKey))
+
       val result: Option[Future[Result]] = for {
         taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
         cyaHelper: CheckYourAnswersHelper = new CheckYourAnswersHelper(request.userAnswers)
