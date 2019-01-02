@@ -238,13 +238,13 @@ isPaymentAddressInTheUK.heading = Is the address you want us to send any payment
 isPaymentAddressInTheUK.changeLabel = Change is the address you want us to send any payment to in the UK
 isPaymentAddressInTheUK.blank = Select yes if the address you want us to send any payment to is in the UK
 
-paymentInternationalAddress.title = What is the address you us to send any payment to?
-paymentInternationalAddress.heading = What is the address you us to send any payment to?
-paymentInternationalAddress.changeLabel = Change what is the address you us to send any payment to
+paymentInternationalAddress.title = What is the address you want us to send any payment to?
+paymentInternationalAddress.heading = What is the address want you us to send any payment to?
+paymentInternationalAddress.changeLabel = Change what is the address want you us to send any payment to
 
-paymentUKAddress.title = What is the address you us to send any payment to?
-paymentUKAddress.heading = What is the address you us to send any payment to?
-paymentUKAddress.changeLabel = Change what is the address you us to send any payment to
+paymentUKAddress.title = What is the address you want us to send any payment to?
+paymentUKAddress.heading = What is the address you want us to send any payment to?
+paymentUKAddress.changeLabel = Change what is the address you want us to send any payment to
 
 whereToSendPayment.title = Who would you like us to send any payment to?
 whereToSendPayment.heading = Who would you like us to send any payment to?
