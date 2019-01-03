@@ -52,6 +52,7 @@ anyOtherTaxableIncome.heading=Incwm trethadwy arall
 anyOtherTaxableIncome.incompleteMessage=Mae gennych incwm trethadwy arall sydd heb ei lenwi
 anyOtherTaxableIncome.incompleteSubmit=Llenwch {0}
 anyOtherTaxableIncome.title=Incwm trethadwy arall
+anyOtherTaxableIncome.add=A oes angen i chi ychwanegu incwm trethadwy arall?
 anyTaxableBankInterest.anyTaxPaidAmountField=Faint o Dreth Incwm y gwnaethoch ei thalu ar eich llog banc neu gymdeithas adeiladu?
 anyTaxableBankInterest.blank=Nodwch swm y Dreth Incwm y gwnaethoch ei thalu ar eich llog banc neu gymdeithas adeiladu
 anyTaxableBankInterest.changeLabel=Newid os gwnaethoch dalu Treth Incwm ar eich llog banc neu gymdeithas adeiladu
