@@ -48,10 +48,11 @@ class AnyOtherTaxableIncomeController @Inject()(appConfig: FrontendAppConfig,
                                                )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val errorKey = "anyOtherTaxableIncome.blank"
-  val form: Form[Boolean] = formProvider(messagesApi(errorKey))
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
+      val form: Form[Boolean] = formProvider(messagesApi(errorKey))
+
       val result: Option[Result] = for {
         taxYear <- request.userAnswers.selectTaxYear
         otherTaxableIncome <- request.userAnswers.otherTaxableIncome
@@ -69,6 +70,8 @@ class AnyOtherTaxableIncomeController @Inject()(appConfig: FrontendAppConfig,
 
   def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
+      val form: Form[Boolean] = formProvider(messagesApi(errorKey))
+
       val result: Option[Future[Result]] = for {
         taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
         otherTaxableIncome: Seq[OtherTaxableIncome] <- request.userAnswers.otherTaxableIncome
