@@ -41,7 +41,7 @@
             <div class="multiple-choice">
                 <input id="@{input.id}" type="radio" name="@{viewModel.id}" value="@{input.value}" @if(viewModel.value.contains(input.value)){checked="checked"} @if(trackGa){data-journey-click="claim-tax-refund-frontend:click:@{input.id}"}/>
                 <label for="@{input.id}">
-                    @messages(input.messageKey)
+                    @input.message
                 </label>
             </div>
             }

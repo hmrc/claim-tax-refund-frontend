@@ -40,7 +40,7 @@ class SelectTaxYearControllerSpec extends ControllerSpecBase {
 
   def viewAsString(form: Form[_] = SelectTaxYearForm()) = selectTaxYear(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, scalate).toString
 
-  def radioButtonOptions(implicit messages: Messages): String = SelectTaxYearForm.options(messages).head.value
+  def radioButtonOptions(implicit messages: Messages): String = SelectTaxYear.options.head.value
 
   "SelectTaxYear Controller" must {
 

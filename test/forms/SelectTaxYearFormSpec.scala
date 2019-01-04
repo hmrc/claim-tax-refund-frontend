@@ -26,7 +26,7 @@ class SelectTaxYearFormSpec extends FormBehaviours {
 
   private val errorKeyBlank = "selectTaxYear.blank"
 
-  def radioButtonOptions(implicit messages: Messages): Seq[RadioOption] = SelectTaxYearForm.options(messages)
+  def radioButtonOptions(implicit messages: Messages): Seq[RadioOption] = SelectTaxYear.options
 
   val validData: Map[String, String] = Map(
     "value" -> radioButtonOptions(messages).head.value

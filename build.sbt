@@ -25,10 +25,11 @@ val compile = Seq(
   "uk.gov.hmrc"           %% "play-ui"                        % "7.25.0-play-25",
   "uk.gov.hmrc"           %% "http-caching-client"            % "7.2.0",
   "uk.gov.hmrc"           %% "play-conditional-form-mapping"  % "0.2.0",
-  "uk.gov.hmrc"           %% "bootstrap-play-25"              % "3.13.0",
+  "uk.gov.hmrc"           %% "bootstrap-play-25"              % "4.3.0",
   "uk.gov.hmrc"           %% "local-template-renderer"        % "2.0.0",
   "uk.gov.hmrc"           %% "play-partials"                  % "6.1.0",
   "uk.gov.hmrc"           %% "play-language"                  % "3.4.0",
+  "uk.gov.hmrc"           %% "tax-year"                       % "0.4.0",
   "com.github.tototoshi"  %% "play-scalate"                   % "0.3.0",
   "org.scalatra.scalate"  %% "scalate-core"                   % "1.7.1"
 )
