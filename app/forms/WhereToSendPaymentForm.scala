@@ -32,7 +32,7 @@ object WhereToSendPaymentForm extends FormErrorHelper {
   def options: Set[RadioOption] = WhereToSendPayment.values.map {
     value =>
       RadioOption(
-        id = s"whereToSendPayment-$value",
+        id = s"whereToSendPayment.$value",
         value = value.toString,
         message = Message(s"whereToSendPayment.$value")
       )
