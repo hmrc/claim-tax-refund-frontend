@@ -32,7 +32,7 @@ object WhereToSendPaymentForm extends FormErrorHelper {
   def options: Set[RadioOption] = WhereToSendPayment.values.map {
     value =>
       RadioOption(
-        id = "whereToSendPayment",
+        id = s"whereToSendPayment-$value",
         value = value.toString,
         message = Message(s"whereToSendPayment.$value")
       )
@@ -49,6 +49,4 @@ object WhereToSendPaymentForm extends FormErrorHelper {
 
     def unbind(key: String, value: WhereToSendPayment): Map[String, String] = Map(key -> value.toString)
   }
-
-  private def optionIsValid(value: String) = options.exists(o => o.value == value)
 }

@@ -32,8 +32,8 @@ case class RadioOption(id: String, value: String, message: Message)
 object RadioOption {
   def apply(keyPrefix: String, option: String, messageArgs: Any*): RadioOption =
     new RadioOption(
-      id = s"$keyPrefix.$option",
+      id = option,
       value = option,
-      message = Message(s"$keyPrefix.$option", messageArgs)
+      message = Message(s"$keyPrefix.$option", messageArgs: _*)
     )
 }

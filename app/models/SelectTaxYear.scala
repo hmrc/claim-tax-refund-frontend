@@ -32,27 +32,47 @@ object SelectTaxYear extends Enumerable[SelectTaxYear] {
   case object CYMinus1 extends WithName("current-year-minus-1") with SelectTaxYear {
     override def year: Int = TaxYear.current.back(1).currentYear
     override def asString(implicit messages: Messages): String =
-      messages(s"global.${CYMinus1.toString}", TaxYear.current.back(1).startYear, TaxYear.current.back(1).finishYear)
+      messages(
+        s"global.${CYMinus1.toString}",
+        TaxYear.current.back(1).startYear.toString.format(dateFormat),
+        TaxYear.current.back(1).finishYear.toString.format(dateFormat)
+      )
   }
   case object CYMinus2 extends WithName("current-year-minus-2") with SelectTaxYear {
     override def year: Int = TaxYear.current.back(2).currentYear
     override def asString(implicit messages: Messages): String =
-      messages(s"global.${CYMinus2.toString}", TaxYear.current.back(2).startYear, TaxYear.current.back(2).finishYear)
+      messages(
+        s"global.${CYMinus2.toString}",
+        TaxYear.current.back(2).startYear.toString.format(dateFormat),
+        TaxYear.current.back(2).finishYear.toString.format(dateFormat)
+      )
   }
   case object CYMinus3 extends WithName("current-year-minus-3") with SelectTaxYear {
     override def year: Int = TaxYear.current.back(3).currentYear
     override def asString(implicit messages: Messages): String =
-      messages(s"global.${CYMinus3.toString}", TaxYear.current.back(3).startYear, TaxYear.current.back(3).finishYear)
+      messages(
+        s"global.${CYMinus3.toString}",
+        TaxYear.current.back(3).startYear.toString.format(dateFormat),
+        TaxYear.current.back(3).finishYear.toString.format(dateFormat)
+      )
   }
   case object CYMinus4 extends WithName("current-year-minus-4") with SelectTaxYear {
     override def year: Int = TaxYear.current.back(4).currentYear
     override def asString(implicit messages: Messages): String =
-      messages(s"global.${CYMinus4.toString}", TaxYear.current.back(4).startYear, TaxYear.current.back(4).finishYear)
+      messages(
+        s"global.${CYMinus4.toString}",
+        TaxYear.current.back(4).startYear.toString.format(dateFormat),
+        TaxYear.current.back(4).finishYear.toString.format(dateFormat)
+      )
   }
   case object CYMinus5 extends WithName("current-year-minus-5") with SelectTaxYear {
     override def year: Int = TaxYear.current.back(5).currentYear
     override def asString(implicit messages: Messages): String =
-      messages(s"global.${CYMinus5.toString}", TaxYear.current.back(5).startYear, TaxYear.current.back(5).finishYear)
+      messages(
+        s"global.${CYMinus5.toString}",
+        TaxYear.current.back(5).startYear.toString.format(dateFormat),
+        TaxYear.current.back(5).finishYear.toString.format(dateFormat)
+      )
   }
 
   def options: List[RadioOption] = List(
@@ -64,10 +84,10 @@ object SelectTaxYear extends Enumerable[SelectTaxYear] {
   )
 
   private def taxYearRadioOption(taxYear: TaxYear, option: SelectTaxYear) =
-    new RadioOption(
-      id = option.toString,
-      value = option.toString,
-      message = Message(s"global.$option", taxYear.startYear.toString, taxYear.finishYear.toString)
+    RadioOption(
+      keyPrefix   = "global",
+      option      = option.toString,
+      messageArgs = Seq(taxYear.startYear.toString.format(dateFormat), taxYear.finishYear.toString.format(dateFormat)): _*
     )
 
   val mappings: Map[String, SelectTaxYear] = Map(
