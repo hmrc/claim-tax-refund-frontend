@@ -17,10 +17,10 @@
 package forms
 
 import models.WhereToSendPayment
-import play.api.data.Form
+import play.api.data.{Form, FormError}
 import play.api.data.Forms._
 import play.api.data.format.Formatter
-import utils.RadioOption
+import utils.{Message, RadioOption}
 
 object WhereToSendPaymentForm extends FormErrorHelper {
 
@@ -29,22 +29,24 @@ object WhereToSendPaymentForm extends FormErrorHelper {
   def apply(): Form[WhereToSendPayment] =
     Form(single("value" -> of(whereToSendPaymentFormatter)))
 
-  def options = WhereToSendPayment.values.map {
+  def options: Set[RadioOption] = WhereToSendPayment.values.map {
     value =>
-      RadioOption("whereToSendPayment", value.toString)
+      RadioOption(
+        id = s"whereToSendPayment.$value",
+        value = value.toString,
+        message = Message(s"whereToSendPayment.$value")
+      )
   }
 
-  private def whereToSendPaymentFormatter = new Formatter[WhereToSendPayment] {
+  private def whereToSendPaymentFormatter: Formatter[WhereToSendPayment] = new Formatter[WhereToSendPayment] {
 
-    def bind(key: String, data: Map[String, String]) = data.get(key) match {
+    def bind(key: String, data: Map[String, String]): Either[Seq[FormError], WhereToSendPayment] = data.get(key) match {
       case Some(s) => WhereToSendPayment.withName(s)
         .map(Right.apply)
         .getOrElse(produceError(key, "error.unknown"))
       case None => produceError(key, errorKeyBlank)
     }
 
-    def unbind(key: String, value: WhereToSendPayment) = Map(key -> value.toString)
+    def unbind(key: String, value: WhereToSendPayment): Map[String, String] = Map(key -> value.toString)
   }
-
-  private def optionIsValid(value: String) = options.exists(o => o.value == value)
 }

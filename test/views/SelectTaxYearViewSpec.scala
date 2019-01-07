@@ -17,7 +17,7 @@
 package views
 
 import forms.SelectTaxYearForm
-import models.NormalMode
+import models.{NormalMode, SelectTaxYear}
 import play.api.data.Form
 import play.api.i18n.Messages
 import utils.RadioOption
@@ -32,7 +32,7 @@ class SelectTaxYearViewSpec extends ViewBehaviours {
 
   def createViewUsingForm = (form: Form[_]) => selectTaxYear(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, scalate)
 
-  def radioButtonOptions(implicit messages: Messages): Seq[RadioOption] = SelectTaxYearForm.options(messages)
+  def radioButtonOptions(implicit messages: Messages): Seq[RadioOption] = SelectTaxYear.options
 
 
   "SelectTaxYear view" must {

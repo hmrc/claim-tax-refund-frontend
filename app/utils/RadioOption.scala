@@ -15,13 +15,25 @@
  */
 
 package utils
+import play.api.i18n.Messages
+import play.twirl.api.{Html, HtmlFormat}
 
-case class RadioOption(id: String, value: String, messageKey: String)
+case class Message(key: String, args: Any*) {
+
+  def string(implicit messages: Messages): String =
+    messages(key, args: _*)
+
+  def html(implicit messages: Messages): HtmlFormat.Appendable =
+    Html(string)
+}
+
+case class RadioOption(id: String, value: String, message: Message)
 
 object RadioOption {
-  def apply(keyPrefix: String, option: String): RadioOption = RadioOption(
-    s"$keyPrefix.$option",
-    option,
-    s"$keyPrefix.$option"
-  )
+  def apply(keyPrefix: String, option: String, messageArgs: Any*): RadioOption =
+    new RadioOption(
+      id = option,
+      value = option,
+      message = Message(s"$keyPrefix.$option", messageArgs: _*)
+    )
 }
