@@ -75,7 +75,7 @@ object SelectTaxYear extends Enumerable[SelectTaxYear] {
       )
   }
 
-  def options: List[RadioOption] = List(
+  def options: Seq[RadioOption] = Seq(
     taxYearRadioOption(TaxYear.current.back(1), CYMinus1),
     taxYearRadioOption(TaxYear.current.back(2), CYMinus2),
     taxYearRadioOption(TaxYear.current.back(3), CYMinus3),
@@ -89,14 +89,6 @@ object SelectTaxYear extends Enumerable[SelectTaxYear] {
       option      = option.toString,
       messageArgs = Seq(taxYear.startYear.toString.format(dateFormat), taxYear.finishYear.toString.format(dateFormat)): _*
     )
-
-  val mappings: Map[String, SelectTaxYear] = Map(
-    CYMinus1.toString -> CYMinus1,
-    CYMinus2.toString -> CYMinus2,
-    CYMinus3.toString -> CYMinus3,
-    CYMinus4.toString -> CYMinus4,
-    CYMinus5.toString -> CYMinus5
-  )
 
   lazy val values: Set[SelectTaxYear] = Set(
     CYMinus1, CYMinus2, CYMinus3, CYMinus4, CYMinus5
