@@ -70,14 +70,6 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
     }
   }
 
-  "Select current year minus 5" must {
-    s"have correct label and answer" in {
-      when(answers.selectTaxYear) thenReturn Some(CYMinus5)
-      helper.selectTaxYear.get.label.key mustBe s"selectTaxYear.heading"
-      helper.selectTaxYear.get.answer.key mustBe CYMinus5.asString(messages)
-    }
-  }
-
   "Employment details (yes)" must {
     s"have correct label and answer" in {
       when(answers.employmentDetails) thenReturn Some(true)
