@@ -17,7 +17,7 @@
 package utils
 
 import controllers.routes
-import models.SelectTaxYear.{CYMinus1, CYMinus2, CYMinus3, CYMinus4, CYMinus5}
+import models.SelectTaxYear.{CYMinus1, CYMinus2, CYMinus3, CYMinus4}
 import models._
 import play.api.i18n.Messages
 import uk.gov.hmrc.auth.core.retrieve.ItmpAddress
@@ -41,8 +41,6 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
             CYMinus3.asString
           case CYMinus4 =>
             CYMinus4.asString
-          case CYMinus5 =>
-            CYMinus5.asString
         },
 				url = Some(routes.SelectTaxYearController.onPageLoad(CheckMode).url),
 				changeLabel = "selectTaxYear.changeLabel")

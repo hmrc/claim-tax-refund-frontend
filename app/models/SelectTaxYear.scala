@@ -65,22 +65,12 @@ object SelectTaxYear extends Enumerable[SelectTaxYear] {
         TaxYear.current.back(4).finishYear.toString.format(dateFormat)
       )
   }
-  case object CYMinus5 extends WithName("current-year-minus-5") with SelectTaxYear {
-    override def year: Int = TaxYear.current.back(5).currentYear
-    override def asString(implicit messages: Messages): String =
-      messages(
-        s"global.${CYMinus5.toString}",
-        TaxYear.current.back(5).startYear.toString.format(dateFormat),
-        TaxYear.current.back(5).finishYear.toString.format(dateFormat)
-      )
-  }
 
   def options: Seq[RadioOption] = Seq(
     taxYearRadioOption(TaxYear.current.back(1), CYMinus1),
     taxYearRadioOption(TaxYear.current.back(2), CYMinus2),
     taxYearRadioOption(TaxYear.current.back(3), CYMinus3),
-    taxYearRadioOption(TaxYear.current.back(4), CYMinus4),
-    taxYearRadioOption(TaxYear.current.back(5), CYMinus5)
+    taxYearRadioOption(TaxYear.current.back(4), CYMinus4)
   )
 
   private def taxYearRadioOption(taxYear: TaxYear, option: SelectTaxYear) =
@@ -91,6 +81,6 @@ object SelectTaxYear extends Enumerable[SelectTaxYear] {
     )
 
   lazy val values: Set[SelectTaxYear] = Set(
-    CYMinus1, CYMinus2, CYMinus3, CYMinus4, CYMinus5
+    CYMinus1, CYMinus2, CYMinus3, CYMinus4
   )
 }

@@ -42,10 +42,6 @@ class SelectTaxYearSpec(implicit messages: Messages) extends WordSpec with MustM
       val taxYear = SelectTaxYear.CYMinus4
       taxYear.year mustBe TaxYear.current.back(4).currentYear
     }
-    "return the currect tax year for CYMinus5" in {
-      val taxYear = SelectTaxYear.CYMinus5
-      taxYear.year mustBe TaxYear.current.back(5).currentYear
-    }
 
     "return the currect tax year for CYMinus1 as String" in {
       val taxYear = SelectTaxYear.CYMinus1
@@ -62,10 +58,6 @@ class SelectTaxYearSpec(implicit messages: Messages) extends WordSpec with MustM
     "return the currect tax year for CYMinus4 as String" in {
       val taxYear = SelectTaxYear.CYMinus4
       taxYear.asString mustBe messages(s"global.${CYMinus4.toString}", TaxYear.current.back(4).startYear, TaxYear.current.back(4).finishYear)
-    }
-    "return the currect tax year for CYMinus5 as String" in {
-      val taxYear = SelectTaxYear.CYMinus5
-      taxYear.asString mustBe messages(s"global.${CYMinus5.toString}", TaxYear.current.back(5).startYear, TaxYear.current.back(5).finishYear)
     }
   }
 }
