@@ -71,7 +71,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
       val cyaSections: CheckYourAnswersSections = new CheckYourAnswersSections(cyaHelper, request.userAnswers)
       val itmpName: ItmpName = request.name.getOrElse(ItmpName(Some("No name returned from ITMP"), None, None))
       val itmpAddress: ItmpAddress = request.address.getOrElse(ItmpAddress(Some("No address returned from ITMP"), None, None, None, None, None, None, None))
-      val nino: String = request.nino
+      val nino: String = if (request.nino.length == 9) request.nino.dropRight(1) else request.nino
 
       val language = LanguageUtils.getCurrentLang(request).code
       val submissionReference = referenceGenerator.generateSubmissionNumber
