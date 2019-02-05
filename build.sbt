@@ -31,7 +31,8 @@ val compile = Seq(
   "uk.gov.hmrc"           %% "play-language"                  % "3.4.0",
   "uk.gov.hmrc"           %% "tax-year"                       % "0.4.0",
   "com.github.tototoshi"  %% "play-scalate"                   % "0.3.0",
-  "org.scalatra.scalate"  %% "scalate-core"                   % "1.7.1"
+  "org.scalatra.scalate"  %% "scalate-core"                   % "1.7.1",
+  "uk.gov.hmrc"           %% "domain"                         % "5.3.0"
 )
 
 def test(scope: String = "test"): Seq[ModuleID] = Seq(

@@ -35,6 +35,7 @@ import uk.gov.hmrc.play.language.LanguageUtils
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, ReferenceGenerator, SubmissionMark}
 import views.html.{check_your_answers, pdf_check_your_answers}
+import uk.gov.hmrc.domain.Nino
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -71,7 +72,8 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
       val cyaSections: CheckYourAnswersSections = new CheckYourAnswersSections(cyaHelper, request.userAnswers)
       val itmpName: ItmpName = request.name.getOrElse(ItmpName(Some("No name returned from ITMP"), None, None))
       val itmpAddress: ItmpAddress = request.address.getOrElse(ItmpAddress(Some("No address returned from ITMP"), None, None, None, None, None, None, None))
-      val nino: String = if (request.nino.length == 9) request.nino.dropRight(1) else request.nino
+      val nino: String = Nino(request.nino).withoutSuffix
+
 
       val language = LanguageUtils.getCurrentLang(request).code
       val submissionReference = referenceGenerator.generateSubmissionNumber

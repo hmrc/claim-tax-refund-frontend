@@ -34,6 +34,7 @@ class AuthActionImpl @Inject()(override val authConnector: AuthConnector, config
                               (implicit ec: ExecutionContext) extends AuthAction with AuthorisedFunctions {
 
   override def invokeBlock[A](request: Request[A], block: AuthenticatedRequest[A] => Future[Result]): Future[Result] = {
+
     implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromHeadersAndSession(request.headers, Some(request.session))
 
     authorised(ConfidenceLevel.L200 and AffinityGroup.Individual)
@@ -43,6 +44,8 @@ class AuthActionImpl @Inject()(override val authConnector: AuthConnector, config
           val nino = x.a.a.b.getOrElse(throw new UnauthorizedException("unable to retrieve NINO"))
           val name = x.a.b
           val address = x.b
+
+          if (!uk.gov.hmrc.domain.Nino.isValid(nino)) throw new UnauthorizedException(s"$nino is not a valid nino.")
 
           block(AuthenticatedRequest(request, externalId, nino, Some(name), Some(address)))
 
