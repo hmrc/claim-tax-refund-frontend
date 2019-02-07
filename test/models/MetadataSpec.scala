@@ -42,7 +42,7 @@ MetadataSpec extends WordSpec with MustMatchers with OptionValues with PropertyC
       testXml \ "document" \ "header" \ "store" must contain(<store>{true}</store>)
       testXml \ "document" \ "header" \ "source" must contain(<source>R39_EN</source>)
       testXml \ "document" \ "header" \ "target" must contain(<target>DMS</target>)
-      testXml \ "document" \ "header" \ "reconciliation_id" must contain(<reconciliation_id>{localDT.toString("ssMMyyddmmHH")}</reconciliation_id>)
+      testXml \ "document" \ "header" \ "reconciliation_id" must contain(<reconciliation_id>{testMetadata.submissionRef + "-" + localDT.toString("ssMMyyddmmHH")}</reconciliation_id>)
     }
 
     "contain correct metadata xml for hmrc_time_of_receipt" in {
