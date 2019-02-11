@@ -62,7 +62,7 @@ object Metadata {
 						<store>{metadata.store}</store>
 						<source>{metadata.source}</source>
 						<target>{metadata.target}</target>
-						<reconciliation_id>{metadata.reconciliationId}</reconciliation_id>
+						<reconciliation_id>{metadata.submissionRef + "-" + metadata.reconciliationId}</reconciliation_id>
 					</header>
 					<metadata>
 						{attributeXml("hmrc_time_of_receipt", "time", metadata.timeStamp.toString("dd/MM/yyyy HH:mm:ss"))}
