@@ -188,9 +188,7 @@ howMuchStatePension.title=Faint o Bensiwn y Wladwriaeth a gawsoch?
 nomineeFullName.changeLabel=Newid enw llawn y person rydych am i ni anfon y taliad ato
 nomineeFullName.heading=Beth yw enw llawn y person rydych am i ni anfon unrhyw daliad ato?
 
-otherBenefit.amount=Faint o’r buddiant trethadwy hwn a gawsoch
-otherBenefit.amount.blank=Rhiad i Faint o’r buddiant trethadwy hwn a gawsoch fod yn swm o arian, megis 199 neu 234.56
-otherBenefit.name.blank=Nodwch enw’r buddiant trethadwy a gawsoch
+
 
 otherCompanyBenefit.checkYourAnswersLabel=Buddiant cwmni arall
 otherCompanyBenefit.duplicate=Nodwch enw buddiant cwmni trethadwy gwahanol – rydych eisoes wedi nodi {0}
@@ -227,7 +225,6 @@ userDetails.checkYourAnswersLabel.name=Enw
 userDetails.checkYourAnswersLabel.noTelephone=Heb ei ddarparu
 userDetails.checkYourAnswersLabel.telephone=Rhif ffôn
 
-otherBenefit.name=Enw’r buddiant trethadwy
 
 howMuchJobseekersAllowance.heading=Faint o Lwfans Ceisio Gwaith yn seiliedig ar gyfraniadau a gawsoch?
 howMuchJobseekersAllowance.invalid=Mae’n rhaid i swm y Lwfans Ceisio Gwaith a gawsoch fod yn swm o arian, megis 199 neu 234.56
@@ -410,25 +407,31 @@ otherBenefit.amount.invalid=Mae’n rhaid i swm y buddiant trethadwy hwn a gawso
 otherBenefit.change=Newidiwch fuddiannau trethadwy eraill
 otherBenefit.checkYourAnswersLabel=Manylion buddiannau trethadwy arall
 otherBenefit.duplicate=Nodwch enw buddiant trethadwy gwahanol – rydych eisoes wedi nodi {0}
+otherBenefit.amount=Faint o’r buddiant trethadwy hwn a gawsoch
+otherBenefit.amount.blank=Nodwch faint o’r buddiant trethadwy hwn a gawsoch
+otherBenefit.name.blank=Nodwch enw’r buddiant trethadwy a gawsoch
+otherBenefit.name=Enw’r buddiant trethadwy
+
 otherBenefits=buddiant trethadwy
 
-otherCompanyBenefit.heading=Buddiant cwmni trethadwy arall {0} am y buddiant cwmni arall {0}?
+otherCompanyBenefit.title=Buddiant cwmni trethadwy arall {0}
+otherCompanyBenefit.heading=Buddiant cwmni trethadwy arall {0}
 otherCompanyBenefit.add=Ychwanegu buddiant cwmni
 otherCompanyBenefit.amount=Faint o’r buddiant cwmni trethadwy hwn a gawsoch
-otherCompanyBenefit.amount.blank=Rhaid i Faint o’r buddiant trethadwy hwn a gawsoch fod yn swm o arian, megis 199 neu 234.56
+otherCompanyBenefit.amount.blank=Nodwch faint o’r buddiant cwmni trethadwy hwn a gawsoch
 otherCompanyBenefit.amount.invalid=Mae’n rhaid i swm y buddiant cwmni trethadwy a gawsoch fod yn swm o arian, megis 199 neu 234.56
 otherCompanyBenefit.change=Newidiwch fuddiannau cwmni eraill
 otherCompanyBenefit.name=Enw’r buddiant cwmni trethadwy
 otherCompanyBenefit.name.blank=Nodwch enw’r buddiant cwmni trethadwy a gawsoch
 otherCompanyBenefits=buddiant cwmni
 
-otherTaxableIncome=incwm trethadwy
-otherTaxableIncome.duplicate=Nodwch enw incwm tretadwy gwahanol - rydych eisoes wedi nodi {0}
 otherTaxableIncome.title=Incwm trethadwy arall {0}
 otherTaxableIncome.heading=Incwm trethadwy arall {0}
+otherTaxableIncome=incwm trethadwy
+otherTaxableIncome.duplicate=Nodwch enw incwm tretadwy gwahanol - rydych eisoes wedi nodi {0}
 otherTaxableIncome.add=Ychwanegu incwm trethadwy arall
 otherTaxableIncome.amount=Faint o’r incwm trethadwy hwn a gawsoch
-otherTaxableIncome.amount.blank=Rhiad i Faint o’r buddiant trethadwy hwn a gawsoch fod yn swm o arian, megis 199 neu 234.56
+otherTaxableIncome.amount.blank=Nodwch faint o’r incwm trethadwy hwn a gawsoch
 otherTaxableIncome.amount.invalid=Mae’n rhaid i swm yr incwm trethadwy hwn a gawsoch fod yn swm o arian, megis 199 neu 234.56
 otherTaxableIncome.change=Newidiwch incymau trethadwy eraill
 otherTaxableIncome.checkYourAnswersLabel=Manylion incwm trethadwy arall
