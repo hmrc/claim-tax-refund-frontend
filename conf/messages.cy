@@ -424,8 +424,8 @@ otherCompanyBenefits=buddiant cwmni
 
 otherTaxableIncome=incwm trethadwy
 otherTaxableIncome.duplicate=Nodwch enw incwm tretadwy gwahanol - rydych eisoes wedi nodi {0}
-otherTaxableIncome.title=Buddiant trethadwy arall {0}
-otherTaxableIncome.heading=Buddiant trethadwy arall {0}
+otherTaxableIncome.title=Incwm trethadwy arall {0}
+otherTaxableIncome.heading=Incwm trethadwy arall {0}
 otherTaxableIncome.add=Ychwanegu incwm trethadwy arall
 otherTaxableIncome.amount=Faint o’r incwm trethadwy hwn a gawsoch
 otherTaxableIncome.amount.blank=Rhiad i Faint o’r buddiant trethadwy hwn a gawsoch fod yn swm o arian, megis 199 neu 234.56
