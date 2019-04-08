@@ -80,7 +80,7 @@ object SelectTaxYear extends Enumerable[SelectTaxYear] {
       messageArgs = Seq(taxYear.startYear.toString.format(dateFormat), taxYear.finishYear.toString.format(dateFormat)): _*
     )
 
-  lazy val values: Set[SelectTaxYear] = Set(
+  def values: Set[SelectTaxYear] = Set(
     CYMinus1, CYMinus2, CYMinus3, CYMinus4
   )
 }
