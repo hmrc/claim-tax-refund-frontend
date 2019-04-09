@@ -73,7 +73,7 @@ class RobotsSpec extends SpecBase {
           </itmpAddress>
         </userDetails>
         <claimSection>
-          <selectedTaxYear>6 April 2016 to 5 April 2017</selectedTaxYear>
+          <selectedTaxYear>6 April 2017 to 5 April 2018</selectedTaxYear>
           <employmentDetails>true</employmentDetails>
         </claimSection>
         <benefitSection>
@@ -125,7 +125,7 @@ class RobotsSpec extends SpecBase {
     }
 
     "have correct sections in claimSection when employmentDetails are true" in {
-      fullXml \ "claimSection" \ "selectedTaxYear" must contain(<selectedTaxYear>6 April 2016 to 5 April 2017</selectedTaxYear>)
+      fullXml \ "claimSection" \ "selectedTaxYear" must contain(<selectedTaxYear>6 April 2017 to 5 April 2018</selectedTaxYear>)
       fullXml \ "claimSection" \ "employmentDetails" must contain(<employmentDetails>true</employmentDetails>)
     }
 
@@ -137,7 +137,7 @@ class RobotsSpec extends SpecBase {
 
       val newXmlToNode = formatXml(fullUserAnswers)
 
-      newXmlToNode \ "claimSection" \ "selectedTaxYear"  must contain(<selectedTaxYear>6 April 2016 to 5 April 2017</selectedTaxYear>)
+      newXmlToNode \ "claimSection" \ "selectedTaxYear"  must contain(<selectedTaxYear>6 April 2017 to 5 April 2018</selectedTaxYear>)
       newXmlToNode \ "claimSection" \ "employmentDetails" must contain(<employmentDetails>false</employmentDetails>)
       newXmlToNode \ "claimSection" \ "payeReference" must contain(<payeReference>123456789</payeReference>)
       newXmlToNode \ "claimSection" \ "detailsOfEmploymentOrPension" must contain(<detailsOfEmploymentOrPension>Employment details</detailsOfEmploymentOrPension>)
