@@ -54,7 +54,7 @@ class EmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSug
 
     "return OK and the correct view for a GET" in {
       when(mockUserAnswers.employmentDetails).thenReturn(None)
-      when(mockTaiConnector.taiEmployments(Matchers.eq("AB123456A"), Matchers.eq(2016))(Matchers.any(), Matchers.any()))
+      when(mockTaiConnector.taiEmployments(Matchers.eq("AB123456A"), Matchers.eq(2017))(Matchers.any(), Matchers.any()))
         .thenReturn(Future.successful(Seq(Employment("AVIVA PENSIONS", "754", "AZ00070"))))
 
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
@@ -65,7 +65,7 @@ class EmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSug
 
     "populate the view correctly on a GET when the question has previously been answered" in {
       when(mockUserAnswers.employmentDetails).thenReturn(Some(true))
-      when(mockTaiConnector.taiEmployments(Matchers.eq("AB123456A"), Matchers.eq(2016))(Matchers.any(), Matchers.any()))
+      when(mockTaiConnector.taiEmployments(Matchers.eq("AB123456A"), Matchers.eq(2017))(Matchers.any(), Matchers.any()))
         .thenReturn(Future.successful(Seq(Employment("AVIVA PENSIONS", "754", "AZ00070"))))
 
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
@@ -75,7 +75,7 @@ class EmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSug
 
     "redirect to the next page when valid data is submitted" in {
       when(mockUserAnswers.employmentDetails).thenReturn(None)
-      when(mockTaiConnector.taiEmployments(Matchers.eq("AB123456A"), Matchers.eq(2016))(Matchers.any(), Matchers.any()))
+      when(mockTaiConnector.taiEmployments(Matchers.eq("AB123456A"), Matchers.eq(2017))(Matchers.any(), Matchers.any()))
         .thenReturn(Future.successful(Seq(Employment("AVIVA PENSIONS", "754", "AZ00070"))))
 
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
@@ -87,7 +87,7 @@ class EmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSug
 
     "return a Bad Request and errors when invalid data is submitted" in {
       when(mockUserAnswers.employmentDetails).thenReturn(None)
-      when(mockTaiConnector.taiEmployments(Matchers.eq("AB123456A"), Matchers.eq(2016))(Matchers.any(), Matchers.any()))
+      when(mockTaiConnector.taiEmployments(Matchers.eq("AB123456A"), Matchers.eq(2017))(Matchers.any(), Matchers.any()))
         .thenReturn(Future.successful(Seq(Employment("AVIVA PENSIONS", "754", "AZ00070"))))
 
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
@@ -116,7 +116,7 @@ class EmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSug
     "redirect to paye reference page when call to tai returns nothing" in {
       when(mockUserAnswers.employmentDetails).thenReturn(None)
 
-      when(mockTaiConnector.taiEmployments(Matchers.eq("AB123456A"), Matchers.eq(2016))(Matchers.any(), Matchers.any()))
+      when(mockTaiConnector.taiEmployments(Matchers.eq("AB123456A"), Matchers.eq(2017))(Matchers.any(), Matchers.any()))
         .thenReturn(Future.failed(new Exception("Couldnt find tai details")))
 
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
