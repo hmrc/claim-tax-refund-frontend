@@ -19,15 +19,15 @@ lazy val playSettings: Seq[Setting[_]] = Seq.empty
 val compile = Seq(
   ws,
   "uk.gov.hmrc"           %% "simple-reactivemongo"           % "7.16.0-play-25",
-  "uk.gov.hmrc"           %% "logback-json-logger"            % "4.4.0",
-  "uk.gov.hmrc"           %% "govuk-template"                 % "5.31.0-play-25",
-  "uk.gov.hmrc"           %% "play-health"                    % "3.12.0-play-25",
-  "uk.gov.hmrc"           %% "play-ui"                        % "7.38.0-play-25",
-  "uk.gov.hmrc"           %% "http-caching-client"            % "8.1.0",
+  "uk.gov.hmrc"           %% "logback-json-logger"            % "4.6.0",
+  "uk.gov.hmrc"           %% "govuk-template"                 % "5.34.0-play-25",
+  "uk.gov.hmrc"           %% "play-health"                    % "3.14.0-play-25",
+  "uk.gov.hmrc"           %% "play-ui"                        % "7.39.0-play-25",
+  "uk.gov.hmrc"           %% "http-caching-client"            % "8.3.0",
   "uk.gov.hmrc"           %% "play-conditional-form-mapping"  % "0.2.0",
-  "uk.gov.hmrc"           %% "bootstrap-play-25"              % "4.10.0",
+  "uk.gov.hmrc"           %% "bootstrap-play-25"              % "4.11.0",
   "uk.gov.hmrc"           %% "local-template-renderer"        % "2.4.0",
-  "uk.gov.hmrc"           %% "play-partials"                  % "6.7.0-play-25",
+  "uk.gov.hmrc"           %% "play-partials"                  % "6.9.0-play-25",
   "uk.gov.hmrc"           %% "play-language"                  % "3.4.0",
   "uk.gov.hmrc"           %% "tax-year"                       % "0.4.0",
   "com.github.tototoshi"  %% "play-scalate"                   % "0.3.0",
@@ -36,13 +36,13 @@ val compile = Seq(
 )
 
 def test(scope: String = "test"): Seq[ModuleID] = Seq(
-  "com.github.tomakehurst"  % "wiremock"                % "2.15.0" % scope,
+  "com.github.tomakehurst"  % "wiremock"                % "2.23.2" % scope,
   "uk.gov.hmrc"             %% "hmrctest"               % "3.6.0-play-25" % scope,
   "org.scalatest"           %% "scalatest"              % "3.0.1" % scope,
   "org.scalatestplus.play"  %% "scalatestplus-play"     % "2.0.1" % scope,
   "org.scalacheck"          %% "scalacheck"             % "1.14.0" % scope,
   "org.pegdown"             % "pegdown"                 % "1.6.0" % scope,
-  "org.jsoup"               % "jsoup"                   % "1.10.3" % scope,
+  "org.jsoup"               % "jsoup"                   % "1.11.3" % scope,
   "com.typesafe.play"       %% "play-test"              % PlayVersion.current % scope,
   "org.mockito"             % "mockito-all"             % "1.10.19" % scope,
   "uk.gov.hmrc"             %% "play-whitelist-filter"  % "2.0.0"
