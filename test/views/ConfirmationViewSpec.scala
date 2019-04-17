@@ -57,7 +57,7 @@ class ConfirmationViewSpec extends ViewBehaviours with MockitoSugar {
       val doc = asDocument(createView())
       val link = doc.getElementById("survey-link")
       link.text mustBe messages("confirmation.survey.linkText")
-      link.attr("href") must include("/feedback-survey/?origin=CTR")
+      link.attr("href") must include("/feedback/CTR")
     }
   }
 }
