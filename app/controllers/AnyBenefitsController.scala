@@ -26,7 +26,7 @@ import javax.inject.Inject
 import models.Mode
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import utils.{Navigator, UserAnswers}
@@ -42,17 +42,16 @@ class AnyBenefitsController @Inject()(appConfig: FrontendAppConfig,
                                       authenticate: AuthAction,
                                       getData: DataRetrievalAction,
                                       requireData: DataRequiredAction,
-cc: MessagesControllerComponents,
                                       formProvider: BooleanForm,
                                       implicit val formPartialRetriever: FormPartialRetriever,
                                       implicit val scalate: Scalate
-                                     )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
+                                     )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val errorKey = "anyBenefits.blank"
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val form: Form[Boolean] = formProvider(cc.messagesApi.preferred(request).messages.apply(errorKey))
+      val form: Form[Boolean] = formProvider(messagesApi(errorKey))
 
       val preparedForm = request.userAnswers.anyBenefits match {
         case None => form
@@ -70,7 +69,7 @@ cc: MessagesControllerComponents,
 
   def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      val form: Form[Boolean] = formProvider(cc.messagesApi.preferred(request).messages.apply(errorKey))
+      val form: Form[Boolean] = formProvider(messagesApi(errorKey))
 
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>

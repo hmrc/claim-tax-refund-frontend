@@ -34,7 +34,7 @@ class DetailsOfEmploymentOrPensionControllerSpec extends ControllerSpecBase {
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new DetailsOfEmploymentOrPensionController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute),
-      FakeAuthAction(authConnector, frontendAppConfig), dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, new DetailsOfEmploymentOrPensionForm(frontendAppConfig), formPartialRetriever, scalate)
+      FakeAuthAction, dataRetrievalAction, new DataRequiredActionImpl, new DetailsOfEmploymentOrPensionForm(frontendAppConfig), formPartialRetriever, scalate)
 
   private val form = new DetailsOfEmploymentOrPensionForm(frontendAppConfig)()
   private val testAnswer = "This is some sample text"

@@ -24,7 +24,6 @@ import identifiers.PaymentLookupAddressId
 import models.{CheckMode, Mode, NormalMode}
 import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
-import play.api.mvc.MessagesControllerComponents
 import utils.Navigator
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -33,10 +32,9 @@ class AddressLookupRoutingController @Inject()(appConfig: FrontendAppConfig,
                                                navigator: Navigator,
                                                addressLookupConnector: AddressLookupConnector,
                                                authenticate: AuthAction,
-                                               cc: MessagesControllerComponents,
                                                getData: DataRetrievalAction,
                                                requireData: DataRequiredAction
-                                              )(implicit ec: ExecutionContext) extends FrontendController(cc) {
+                                              )(implicit ec: ExecutionContext) extends FrontendController {
 
 
   def addressLookupCallback(addressId: Option[String], mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {

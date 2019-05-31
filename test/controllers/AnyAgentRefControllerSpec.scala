@@ -38,15 +38,15 @@ class AnyAgentRefControllerSpec extends ControllerSpecBase {
   val requiredAgentRefKey = "anyAgentRef.blankAgentRef"
   val nomineeName = "Test Nominee"
   val formProvider = new AnyAgentReferenceForm()
-  val form: Form[AnyAgentRef] = formProvider(messages(requiredKey, nomineeName), messages(requiredAgentRefKey, nomineeName))
+  val form: Form[AnyAgentRef] = formProvider(messagesApi(requiredKey, nomineeName), messagesApi(requiredAgentRefKey, nomineeName))
   val validYesData = Map(AnyAgentRefId.toString -> Json.obj(AnyAgentRefId.toString -> JsBoolean(true), AgentRefId.toString -> JsString("AB1234")))
   val validNoData = Map(AnyAgentRefId.toString -> Json.obj(AnyAgentRefId.toString -> JsBoolean(false)))
   private val taxYear = CYMinus2
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new AnyAgentRefController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, formProvider, formPartialRetriever, scalate)
+    new AnyAgentRefController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+      dataRetrievalAction, new DataRequiredActionImpl, formProvider, formPartialRetriever, scalate)
 
   def viewAsString(form: Form[_] = form) = anyAgentRef(frontendAppConfig, form, NormalMode, nomineeName, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
 

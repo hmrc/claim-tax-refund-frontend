@@ -34,8 +34,8 @@ class HowMuchInvestmentOrDividendControllerSpec extends ControllerSpecBase {
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new HowMuchInvestmentOrDividendController(
-      frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, new HowMuchInvestmentOrDividendForm(frontendAppConfig), formPartialRetriever, scalate)
+      frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+      dataRetrievalAction, new DataRequiredActionImpl, new HowMuchInvestmentOrDividendForm(frontendAppConfig), formPartialRetriever, scalate)
 
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
   private val taxYear = CYMinus2

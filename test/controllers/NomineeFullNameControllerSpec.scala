@@ -34,8 +34,8 @@ class NomineeFullNameControllerSpec extends ControllerSpecBase {
   def onwardRoute: Call = routes.IndexController.onPageLoad()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new NomineeFullNameController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, new NomineeFullNameForm(frontendAppConfig), formPartialRetriever, scalate)
+    new NomineeFullNameController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+      dataRetrievalAction, new DataRequiredActionImpl, new NomineeFullNameForm(frontendAppConfig), formPartialRetriever, scalate)
 
   private val testAnswer = "answer"
   private val testTooLongAnswer = "A" * (frontendAppConfig.nomineeFullNameMaxLength + 1)

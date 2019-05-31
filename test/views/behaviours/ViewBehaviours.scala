@@ -34,7 +34,7 @@ trait ViewBehaviours extends ViewSpecBase {
           //Template as a service handles the test view rendering
           //that we are passing the required argument to
           val nav = doc.getElementById("navTitle")
-          nav.text mustBe messages("site.service_name")
+          nav.text mustBe messagesApi("site.service_name")
         }
 
         "display the correct browser title" in {

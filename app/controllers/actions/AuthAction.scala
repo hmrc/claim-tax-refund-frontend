@@ -22,7 +22,7 @@ import connectors.DataCacheConnector
 import controllers.routes
 import models.requests.AuthenticatedRequest
 import play.api.mvc.Results._
-import play.api.mvc.{ActionBuilder, ActionFunction, AnyContent, BodyParser, MessagesControllerComponents, Request, Result}
+import play.api.mvc.{ActionBuilder, ActionFunction, Request, Result}
 import uk.gov.hmrc.auth.core._
 import uk.gov.hmrc.auth.core.retrieve.Retrievals
 import uk.gov.hmrc.http.{HeaderCarrier, UnauthorizedException}
@@ -30,19 +30,8 @@ import uk.gov.hmrc.play.HeaderCarrierConverter
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class AuthActionImpl @Inject()(override val authConnector: AuthConnector,
-                               val config: FrontendAppConfig,
-                               cc: MessagesControllerComponents)(dataCacheConnector: DataCacheConnector)
-                              (implicit val executionContext: ExecutionContext) extends AuthAction with AuthorisedFunctions {
-
-  def parser: BodyParser[AnyContent] = cc.parsers.defaultBodyParser
-}
-
-@ImplementedBy(classOf[AuthActionImpl])
-trait AuthAction extends ActionBuilder[AuthenticatedRequest, AnyContent] with ActionFunction[Request, AuthenticatedRequest] with AuthorisedFunctions {
-
-  val config: FrontendAppConfig
-  implicit val executionContext: ExecutionContext
+class AuthActionImpl @Inject()(override val authConnector: AuthConnector, config: FrontendAppConfig)(dataCacheConnector: DataCacheConnector)
+                              (implicit ec: ExecutionContext) extends AuthAction with AuthorisedFunctions {
 
   override def invokeBlock[A](request: Request[A], block: AuthenticatedRequest[A] => Future[Result]): Future[Result] = {
 
@@ -61,22 +50,26 @@ trait AuthAction extends ActionBuilder[AuthenticatedRequest, AnyContent] with Ac
           block(AuthenticatedRequest(request, externalId, nino, Some(name), Some(address)))
 
       } recover {
-      case _: NoActiveSession =>
+      case ex: NoActiveSession =>
         Redirect(config.loginUrl, Map("continue" -> Seq(config.loginContinueUrl)))
-      case _: InsufficientEnrolments =>
+      case ex: InsufficientEnrolments =>
         Redirect(routes.UnauthorisedController.onPageLoad())
-      case _: InsufficientConfidenceLevel =>
+      case ex: InsufficientConfidenceLevel =>
         Redirect(s"${config.ivUpliftUrl}?origin=CTR&" +
           s"confidenceLevel=200&" +
           s"completionURL=${config.authorisedCallback}&" +
           s"failureURL=${config.unauthorisedCallback}"
-        )
-      case _: UnsupportedAuthProvider =>
+          )
+      case ex: UnsupportedAuthProvider =>
         Redirect(routes.UnauthorisedController.onPageLoad())
-      case _: UnsupportedAffinityGroup =>
+      case ex: UnsupportedAffinityGroup =>
         Redirect(routes.UnauthorisedController.onPageLoad())
-      case _: UnsupportedCredentialRole =>
+      case ex: UnsupportedCredentialRole =>
         Redirect(routes.UnauthorisedController.onPageLoad())
     }
   }
 }
+
+
+@ImplementedBy(classOf[AuthActionImpl])
+trait AuthAction extends ActionBuilder[AuthenticatedRequest] with ActionFunction[Request, AuthenticatedRequest]

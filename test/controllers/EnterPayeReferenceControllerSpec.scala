@@ -33,8 +33,8 @@ class EnterPayeReferenceControllerSpec extends ControllerSpecBase {
   def onwardRoute = routes.IndexController.onPageLoad()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new EnterPayeReferenceController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, new EnterPayeReferenceForm(frontendAppConfig), formPartialRetriever, scalate)
+    new EnterPayeReferenceController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+      dataRetrievalAction, new DataRequiredActionImpl, new EnterPayeReferenceForm(frontendAppConfig), formPartialRetriever, scalate)
 
   val testAnswer = "123/AB1234"
   val form = new EnterPayeReferenceForm(frontendAppConfig)()

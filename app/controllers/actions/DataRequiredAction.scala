@@ -20,15 +20,12 @@ import com.google.inject.{ImplementedBy, Inject}
 import controllers.routes
 import models.requests.{DataRequest, OptionalDataRequest}
 import play.api.mvc.Results.Redirect
-import play.api.mvc.{ActionRefiner, AnyContent, BodyParser, MessagesControllerComponents, Result}
+import play.api.mvc.{ActionRefiner, Result}
 import uk.gov.hmrc.play.HeaderCarrierConverter
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class DataRequiredActionImpl @Inject()(cc: MessagesControllerComponents) extends DataRequiredAction {
-
-  override protected def executionContext: ExecutionContext = cc.executionContext
-  def parser: BodyParser[AnyContent] = cc.parsers.defaultBodyParser
+class DataRequiredActionImpl @Inject() extends DataRequiredAction {
 
   override protected def refine[A](request: OptionalDataRequest[A]): Future[Either[Result, DataRequest[A]]] = {
     implicit val hc = HeaderCarrierConverter.fromHeadersAndSession(request.headers, Some(request.session))

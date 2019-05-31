@@ -60,7 +60,7 @@ class AnyTaxPaidSpec extends SpecBase {
 
     "return failure for when no input given" in {
       val json = Json.obj("anyTaxPaid" -> "notABoolean")
-      Json.fromJson[AnyTaxPaid](json) mustEqual JsError(Seq((JsPath \ "anyTaxPaid", Seq(JsonValidationError(Seq("error.expected.jsboolean"))))))
+      Json.fromJson[AnyTaxPaid](json) mustEqual JsError(Seq((JsPath \ "anyTaxPaid", Seq(ValidationError(Seq("error.expected.jsboolean"))))))
     }
   }
 

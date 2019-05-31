@@ -39,8 +39,8 @@ class OtherTaxableIncomeControllerSpec extends ControllerSpecBase {
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new OtherTaxableIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, sequenceUtil, new OtherTaxableIncomeForm(frontendAppConfig), formPartialRetriever, scalate)
+    new OtherTaxableIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+      dataRetrievalAction, new DataRequiredActionImpl, sequenceUtil, new OtherTaxableIncomeForm(frontendAppConfig), formPartialRetriever, scalate)
 
 
   def viewAsString(form: Form[OtherTaxableIncome], index: Index): String = otherTaxableIncome(frontendAppConfig, form, NormalMode, index, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString

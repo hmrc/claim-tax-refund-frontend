@@ -34,8 +34,8 @@ class HowMuchBereavementAllowanceControllerSpec extends ControllerSpecBase {
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new HowMuchBereavementAllowanceController(
-      frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, new HowMuchBereavementAllowanceForm(frontendAppConfig), formPartialRetriever, scalate)
+      frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+      dataRetrievalAction, new DataRequiredActionImpl, new HowMuchBereavementAllowanceForm(frontendAppConfig), formPartialRetriever, scalate)
 
   val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
 

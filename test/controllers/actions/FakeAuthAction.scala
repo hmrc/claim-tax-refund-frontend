@@ -16,18 +16,14 @@
 
 package controllers.actions
 
-import config.FrontendAppConfig
 import models.requests.AuthenticatedRequest
-import play.api.mvc.{AnyContent, BodyParser, MessagesControllerComponents, Request, Result}
-import uk.gov.hmrc.auth.core.AuthConnector
+import play.api.mvc.{Request, Result}
 import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
 
-import scala.concurrent.{ExecutionContext, Future}
-import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
-case class FakeAuthAction(authConnector: AuthConnector,
-                          config: FrontendAppConfig)(implicit mcc: MessagesControllerComponents) extends AuthAction {
-  override def invokeBlock[A](request: Request[A], block: AuthenticatedRequest[A] => Future[Result]): Future[Result] =
+object FakeAuthAction extends AuthAction {
+  override def invokeBlock[A](request: Request[A], block: (AuthenticatedRequest[A]) => Future[Result]): Future[Result] =
     block(AuthenticatedRequest(
       request, "",
       "AB123456A",
@@ -43,7 +39,4 @@ case class FakeAuthAction(authConnector: AuthConnector,
         Some("UK")
       ))
     ))
-
-  override def parser: BodyParser[AnyContent] = mcc.parsers.anyContent
-  override val executionContext: ExecutionContext = implicitly[ExecutionContext]
 }

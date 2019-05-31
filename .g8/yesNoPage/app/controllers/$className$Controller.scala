@@ -5,7 +5,6 @@ import javax.inject.Inject
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
-import play.api.mvc.MessagesControllerComponents
 import connectors.DataCacheConnector
 import controllers.actions._
 import config.FrontendAppConfig
@@ -24,11 +23,10 @@ class $className;format="cap"$Controller @Inject()(appConfig: FrontendAppConfig,
                                          authenticate: AuthAction,
                                          getData: DataRetrievalAction,
                                          requireData: DataRequiredAction,
-cc: MessagesControllerComponents,
-                                         formProvider: BooleanForm)(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
+                                         formProvider: BooleanForm)(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val errorKey = "$className;format="decap"$.blank"
-  val form: Form[Boolean] = formProvider(cc.messagesApi.preferred(request).messages.apply(errorKey))
+  val form: Form[Boolean] = formProvider(messagesApi(errorKey))
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>

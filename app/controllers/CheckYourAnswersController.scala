@@ -31,7 +31,7 @@ import play.api.mvc.{Action, AnyContent}
 import services.SubmissionService
 import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
-import play.api.mvc.MessagesControllerComponents
+import uk.gov.hmrc.play.language.LanguageUtils
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, ReferenceGenerator, SubmissionMark}
 import views.html.{check_your_answers, pdf_check_your_answers}
@@ -46,13 +46,12 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
                                            authenticate: AuthAction,
                                            getData: DataRetrievalAction,
                                            requireData: DataRequiredAction,
-                                           cc: MessagesControllerComponents,
                                            submissionService: SubmissionService,
                                            referenceGenerator: ReferenceGenerator,
                                            robotXML: RobotXML,
                                            implicit val formPartialRetriever: FormPartialRetriever,
                                            implicit val scalate: Scalate
-                                          )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
+                                          )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   def onPageLoad(): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
@@ -76,7 +75,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
       val nino: String = Nino(request.nino).withoutSuffix
 
 
-      val language = cc.messagesApi.preferred(request).lang.code
+      val language = LanguageUtils.getCurrentLang(request).code
       val submissionReference = referenceGenerator.generateSubmissionNumber
       val timeStamp = LocalDateTime.now
       val xmlDeclaration: String = """<?xml version="1.0" encoding="UTF-8" standalone="no"?>"""

@@ -50,8 +50,8 @@ class DeleteOtherControllerSpec extends ControllerSpecBase {
 
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new DeleteOtherController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, formProvider, formPartialRetriever, scalate)
+    new DeleteOtherController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+      dataRetrievalAction, new DataRequiredActionImpl, formProvider, formPartialRetriever, scalate)
 
   def viewAsString(form: Form[_] = form, index: Index, itemName: String, collectionId: String): String =
     deleteOther(frontendAppConfig, form, NormalMode, index, itemName, collectionId, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString

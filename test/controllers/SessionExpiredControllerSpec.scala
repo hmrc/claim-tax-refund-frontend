@@ -24,12 +24,12 @@ class SessionExpiredControllerSpec extends ControllerSpecBase {
 
   "SessionExpired Controller" must {
     "return 200 for a GET" in {
-      val result = new SessionExpiredController(frontendAppConfig, messagesControllerComponents, formPartialRetriever, scalate).onPageLoad()(fakeRequest)
+      val result = new SessionExpiredController(frontendAppConfig, messagesApi, formPartialRetriever, scalate).onPageLoad()(fakeRequest)
       status(result) mustBe OK
     }
 
     "return the correct view for a GET" in {
-      val result = new SessionExpiredController(frontendAppConfig, messagesControllerComponents, formPartialRetriever, scalate).onPageLoad()(fakeRequest)
+      val result = new SessionExpiredController(frontendAppConfig, messagesApi, formPartialRetriever, scalate).onPageLoad()(fakeRequest)
       contentAsString(result) mustBe session_expired(frontendAppConfig)(fakeRequest, messages, formPartialRetriever, scalate).toString
     }
   }

@@ -43,8 +43,8 @@ class AnyOtherBenefitsControllerSpec extends ControllerSpecBase {
   private val otherBenefitsSection: AnswerSection = new CheckYourAnswersSections(cya, mockUserAnswers).otherBenefitsSection
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new AnyOtherBenefitsController(frontendAppConfig, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), formProvider, messagesControllerComponents, formPartialRetriever, scalate)
+    new AnyOtherBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+      dataRetrievalAction, new DataRequiredActionImpl, formProvider, formPartialRetriever, scalate)
 
   def viewAsString(form: Form[_] = form, mode: Mode = NormalMode): String =
     anyOtherBenefits(frontendAppConfig, form, mode, taxYear, otherBenefitsSection)(fakeRequest, messages, formPartialRetriever, scalate).toString

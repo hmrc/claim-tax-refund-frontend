@@ -43,8 +43,8 @@ class IsPaymentAddressInTheUKControllerSpec extends ControllerSpecBase with Mock
   private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new IsPaymentAddressInTheUKController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, formProvider, mockAddressLookup, formPartialRetriever, scalate)
+    new IsPaymentAddressInTheUKController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
+      dataRetrievalAction, new DataRequiredActionImpl, formProvider, mockAddressLookup, formPartialRetriever, scalate)
 
   def viewAsString(form: Form[_] = form) : String = isPaymentAddressInTheUK(
     frontendAppConfig,

@@ -39,36 +39,36 @@ class CheckYourAnswersViewSpec extends SpecBase with ViewBehaviours with Mockito
 
   "Page should display correct sections" in {
     val doc = asDocument(view())
-    assertContainsText(doc, messages("checkYourAnswers.claimSection"))
-    assertContainsText(doc, messages("checkYourAnswers.benefitSection"))
-    assertContainsText(doc, messages("checkYourAnswers.companyBenefitSection"))
-    assertContainsText(doc, messages("checkYourAnswers.taxableIncomeSection"))
-    assertContainsText(doc, messages("checkYourAnswers.paymentSection"))
-    assertContainsText(doc, messages("checkYourAnswers.contactSection"))
+    assertContainsText(doc, messagesApi("checkYourAnswers.claimSection"))
+    assertContainsText(doc, messagesApi("checkYourAnswers.benefitSection"))
+    assertContainsText(doc, messagesApi("checkYourAnswers.companyBenefitSection"))
+    assertContainsText(doc, messagesApi("checkYourAnswers.taxableIncomeSection"))
+    assertContainsText(doc, messagesApi("checkYourAnswers.paymentSection"))
+    assertContainsText(doc, messagesApi("checkYourAnswers.contactSection"))
   }
 
   "Page should have correct hidden messages for change links in Taxable benefit details section" in {
     val doc = asDocument(view())
-    assertContainsText(doc, messages("howMuchBereavementAllowance.changeLabel"))
-    assertContainsText(doc, messages("howMuchCarersAllowance.changeLabel"))
-    assertContainsText(doc, messages("howMuchJobseekersAllowance.changeLabel"))
-    assertContainsText(doc, messages("howMuchEmploymentAndSupportAllowance.changeLabel"))
-    assertContainsText(doc, messages("howMuchIncapacityBenefit.changeLabel"))
-    assertContainsText(doc, messages("howMuchStatePension.changeLabel"))
+    assertContainsText(doc, messagesApi("howMuchBereavementAllowance.changeLabel"))
+    assertContainsText(doc, messagesApi("howMuchCarersAllowance.changeLabel"))
+    assertContainsText(doc, messagesApi("howMuchJobseekersAllowance.changeLabel"))
+    assertContainsText(doc, messagesApi("howMuchEmploymentAndSupportAllowance.changeLabel"))
+    assertContainsText(doc, messagesApi("howMuchIncapacityBenefit.changeLabel"))
+    assertContainsText(doc, messagesApi("howMuchStatePension.changeLabel"))
   }
 
   "Page should have correct hidden messages for change links in Taxable company benefit details section" in {
     val doc = asDocument(view())
-    assertContainsText(doc, messages("howMuchCarBenefits.changeLabel"))
-    assertContainsText(doc, messages("howMuchFuelBenefit.changeLabel"))
-    assertContainsText(doc, messages("howMuchMedicalBenefits.changeLabel"))
+    assertContainsText(doc, messagesApi("howMuchCarBenefits.changeLabel"))
+    assertContainsText(doc, messagesApi("howMuchFuelBenefit.changeLabel"))
+    assertContainsText(doc, messagesApi("howMuchMedicalBenefits.changeLabel"))
   }
 
   "Page should have correct hidden messages for change links in Taxable income details section" in {
     val doc = asDocument(view())
-    assertContainsText(doc, messages("howMuchBankInterest.changeLabel"))
-    assertContainsText(doc, messages("howMuchForeignIncome.changeLabel"))
-    assertContainsText(doc, messages("howMuchInvestmentOrDividend.changeLabel"))
-    assertContainsText(doc, messages("howMuchRentalIncome.changeLabel"))
+    assertContainsText(doc, messagesApi("howMuchBankInterest.changeLabel"))
+    assertContainsText(doc, messagesApi("howMuchForeignIncome.changeLabel"))
+    assertContainsText(doc, messagesApi("howMuchInvestmentOrDividend.changeLabel"))
+    assertContainsText(doc, messagesApi("howMuchRentalIncome.changeLabel"))
   }
 }

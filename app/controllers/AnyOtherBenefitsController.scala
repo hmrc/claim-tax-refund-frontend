@@ -26,9 +26,8 @@ import javax.inject.Inject
 import models.{CheckMode, Mode, NormalMode, SelectTaxYear}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
+import play.api.mvc.{Action, AnyContent, Result}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
-import play.api.mvc.MessagesControllerComponents
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, Navigator, UserAnswers}
 import viewmodels.AnswerSection
@@ -37,22 +36,22 @@ import views.html.anyOtherBenefits
 import scala.concurrent.{ExecutionContext, Future}
 
 class AnyOtherBenefitsController @Inject()(appConfig: FrontendAppConfig,
+                                           override val messagesApi: MessagesApi,
                                            dataCacheConnector: DataCacheConnector,
                                            navigator: Navigator,
                                            authenticate: AuthAction,
                                            getData: DataRetrievalAction,
                                            requireData: DataRequiredAction,
                                            formProvider: BooleanForm,
-                                           cc: MessagesControllerComponents,
                                            implicit val formPartialRetriever: FormPartialRetriever,
                                            implicit val scalate: Scalate
-                                          )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
+                                          )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   private val errorKey = "anyOtherBenefits.blank"
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val form: Form[Boolean] = formProvider(cc.messagesApi.preferred(request).messages.apply(errorKey))
+      val form: Form[Boolean] = formProvider(messagesApi(errorKey))
 
       val result: Option[Result] = for {
         taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
@@ -72,7 +71,7 @@ class AnyOtherBenefitsController @Inject()(appConfig: FrontendAppConfig,
 
   def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      val form: Form[Boolean] = formProvider(cc.messagesApi.preferred(request).messages.apply(errorKey))
+      val form: Form[Boolean] = formProvider(messagesApi(errorKey))
 
       val result: Option[Future[Result]] = for {
         taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear

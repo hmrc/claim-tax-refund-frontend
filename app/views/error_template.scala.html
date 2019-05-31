@@ -25,7 +25,8 @@
         errorMessages: Seq[String],
         appConfig: FrontendAppConfig
 )(
-        implicit request: Request[_],
+        implicit
+        request: AuthenticatedRequest[_],
         messages: Messages,
         formPartialRetriever: FormPartialRetriever,
         scalate: Scalate

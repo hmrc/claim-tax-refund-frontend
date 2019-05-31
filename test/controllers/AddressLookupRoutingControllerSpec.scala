@@ -36,8 +36,8 @@ class AddressLookupRoutingControllerSpec extends ControllerSpecBase with Mockito
   private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new AddressLookupRoutingController(frontendAppConfig, new FakeNavigator(desiredRoute = onwardRoute), mockAddressLookup, FakeAuthAction(authConnector, frontendAppConfig),
-      messagesControllerComponents, dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents))
+    new AddressLookupRoutingController(frontendAppConfig, new FakeNavigator(desiredRoute = onwardRoute), mockAddressLookup, FakeAuthAction,
+      dataRetrievalAction, new DataRequiredActionImpl)
 
   "AddressLookupRoutingController" must {
     when(mockAddressLookup.getAddress(any(),any(),any())(any(),any())).thenReturn(Future.successful(mockUserAnswers))

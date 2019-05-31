@@ -26,11 +26,10 @@ import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.Injector
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.{JsValue, Json}
-import play.api.mvc.{MessagesControllerComponents, RequestHeader}
+import play.api.mvc.RequestHeader
 import play.api.test.FakeRequest
 import play.twirl.api.Html
 import services.MockScalate
-import uk.gov.hmrc.auth.core.AuthConnector
 import uk.gov.hmrc.auth.core.retrieve.ItmpAddress
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.filters.frontend.crypto.SessionCookieCrypto
@@ -56,10 +55,8 @@ trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with MockitoSugar {
   def scalate: Scalate = injector.instanceOf[Scalate]
 
   def addressLookupConfig: AddressLookupConfig = injector.instanceOf[AddressLookupConfig]
-  def messagesControllerComponents: MessagesControllerComponents = injector.instanceOf[MessagesControllerComponents]
-  def authConnector: AuthConnector = injector.instanceOf[AuthConnector]
 
-  def messagesApi: MessagesApi = messagesControllerComponents.messagesApi
+  def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
 
   def fakeRequest = FakeRequest(method = "", path = "")
 

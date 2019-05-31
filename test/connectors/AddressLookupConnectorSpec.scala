@@ -70,7 +70,7 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with WireMoc
 
   private lazy val connector: AddressLookupConnector = app.injector.instanceOf[AddressLookupConnector]
 
-  private implicit val language = LanguageUtils.English
+  private val language = LanguageUtils.English
 
 
   "AddressLookupConnector" must {

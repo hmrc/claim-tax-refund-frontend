@@ -35,8 +35,8 @@ class ConfirmationControllerSpec extends ControllerSpecBase with ScalaFutures{
   def onwardRoute: Call = routes.IndexController.onPageLoad()
 
   def controller(dataRetrievalAction: DataRetrievalAction = someData) =
-    new ConfirmationController(frontendAppConfig, messagesApi, FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, mockDataCacheConnector, formPartialRetriever, scalate)
+    new ConfirmationController(frontendAppConfig, messagesApi, FakeAuthAction,
+      dataRetrievalAction, new DataRequiredActionImpl, mockDataCacheConnector, formPartialRetriever, scalate)
 
   private val submissionReference = "ABC-1234-DEF"
 
