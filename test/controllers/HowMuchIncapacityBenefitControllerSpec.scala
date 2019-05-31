@@ -38,8 +38,8 @@ class HowMuchIncapacityBenefitControllerSpec extends ControllerSpecBase {
   def onwardRoute = routes.IndexController.onPageLoad()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new HowMuchIncapacityBenefitController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, new HowMuchIncapacityBenefitForm(frontendAppConfig), formPartialRetriever, scalate)
+    new HowMuchIncapacityBenefitController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, new HowMuchIncapacityBenefitForm(frontendAppConfig), formPartialRetriever, scalate)
 
   def viewAsString(form: Form[_] = form) = howMuchIncapacityBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
 

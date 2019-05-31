@@ -36,8 +36,8 @@ class SelectTaxableIncomeControllerSpec extends ControllerSpecBase {
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new SelectTaxableIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, formPartialRetriever, scalate)
+    new SelectTaxableIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, formPartialRetriever, scalate)
 
   def viewAsString(form: Form[_] = SelectTaxableIncomeForm()) =
     selectTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString

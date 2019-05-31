@@ -18,28 +18,29 @@ lazy val playSettings: Seq[Setting[_]] = Seq.empty
 
 val compile = Seq(
   ws,
-  "uk.gov.hmrc"           %% "simple-reactivemongo"           % "7.16.0-play-25",
+  "uk.gov.hmrc"           %% "simple-reactivemongo"           % "7.19.0-play-26",
   "uk.gov.hmrc"           %% "logback-json-logger"            % "4.6.0",
-  "uk.gov.hmrc"           %% "govuk-template"                 % "5.34.0-play-25",
-  "uk.gov.hmrc"           %% "play-health"                    % "3.14.0-play-25",
-  "uk.gov.hmrc"           %% "play-ui"                        % "7.39.0-play-25",
+  "uk.gov.hmrc"           %% "govuk-template"                 % "5.34.0-play-26",
+  "uk.gov.hmrc"           %% "play-health"                    % "3.14.0-play-26",
+  "uk.gov.hmrc"           %% "play-ui"                        % "7.39.0-play-26",
   "uk.gov.hmrc"           %% "http-caching-client"            % "8.3.0",
   "uk.gov.hmrc"           %% "play-conditional-form-mapping"  % "0.2.0",
-  "uk.gov.hmrc"           %% "bootstrap-play-25"              % "4.11.0",
+  "uk.gov.hmrc"           %% "bootstrap-play-26"              % "0.39.0",
   "uk.gov.hmrc"           %% "local-template-renderer"        % "2.4.0",
-  "uk.gov.hmrc"           %% "play-partials"                  % "6.9.0-play-25",
+  "uk.gov.hmrc"           %% "play-partials"                  % "6.9.0-play-26",
   "uk.gov.hmrc"           %% "play-language"                  % "3.4.0",
   "uk.gov.hmrc"           %% "tax-year"                       % "0.4.0",
-  "com.github.tototoshi"  %% "play-scalate"                   % "0.3.0",
-  "org.scalatra.scalate"  %% "scalate-core"                   % "1.7.1",
-  "uk.gov.hmrc"           %% "domain"                         % "5.6.0-play-25"
+  "org.scalatra.scalate"  %% "play-scalate"                   % "0.4.0",
+  "org.scalatra.scalate"  %% "scalate-core"                   % "1.8.0",
+  "uk.gov.hmrc"           %% "domain"                         % "5.6.0-play-26"
 )
 
 def test(scope: String = "test"): Seq[ModuleID] = Seq(
   "com.github.tomakehurst"  % "wiremock"                % "2.23.2" % scope,
-  "uk.gov.hmrc"             %% "hmrctest"               % "3.6.0-play-25" % scope,
+  "com.github.tomakehurst"  % "wiremock-jre8"           % "2.23.2" % scope,
+  "uk.gov.hmrc"             %% "hmrctest"               % "3.8.0-play-26" % scope,
   "org.scalatest"           %% "scalatest"              % "3.0.1" % scope,
-  "org.scalatestplus.play"  %% "scalatestplus-play"     % "2.0.1" % scope,
+  "org.scalatestplus.play"  %% "scalatestplus-play"     % "3.1.0" % scope,
   "org.scalacheck"          %% "scalacheck"             % "1.14.0" % scope,
   "org.pegdown"             % "pegdown"                 % "1.6.0" % scope,
   "org.jsoup"               % "jsoup"                   % "1.11.3" % scope,
@@ -70,7 +71,7 @@ lazy val microservice = Project(appName, file("."))
   .settings(publishingSettings: _*)
   .settings(defaultSettings(): _*)
   .settings(
-    scalacOptions ++= Seq("-Xfatal-warnings", "-feature"),
+    scalacOptions ++= Seq("-feature"),
     libraryDependencies ++= appDependencies,
     retrieveManaged := true,
     evictionWarningOptions in update := EvictionWarningOptions.default.withWarnScalaVersionEviction(false),
@@ -90,7 +91,7 @@ lazy val microservice = Project(appName, file("."))
       "javascripts/claimtaxrefundfrontend-app.js" -> group(Seq("javascripts/show-hide-content.js", "javascripts/claimtaxrefundfrontend.js"))
     ),
     // prevent removal of unused code which generates warning errors due to use of third-party libs
-    UglifyKeys.compressOptions := Seq("unused=false", "dead_code=false"),
+    uglifyCompressOptions := Seq("unused=false", "dead_code=false"),
     pipelineStages := Seq(digest),
     // below line required to force asset pipeline to operate in dev rather than only prod
     pipelineStages in Assets := Seq(concat, uglify),

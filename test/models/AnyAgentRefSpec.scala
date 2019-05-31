@@ -57,7 +57,7 @@ class AnyAgentRefSpec extends SpecBase {
 
     "return failure for when no input given" in {
       val json = Json.obj("anyAgentRef" -> "notABoolean")
-      Json.fromJson[AnyAgentRef](json) mustEqual JsError(Seq((JsPath \ "anyAgentRef", Seq(ValidationError(Seq("error.expected.jsboolean"))))))
+      Json.fromJson[AnyAgentRef](json) mustEqual JsError(Seq((JsPath \ "anyAgentRef", Seq(JsonValidationError(Seq("error.expected.jsboolean"))))))
     }
   }
 }

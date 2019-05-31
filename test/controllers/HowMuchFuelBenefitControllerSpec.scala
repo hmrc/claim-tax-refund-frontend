@@ -39,8 +39,8 @@ class HowMuchFuelBenefitControllerSpec extends ControllerSpecBase with MockitoSu
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new HowMuchFuelBenefitController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, new HowMuchFuelBenefitForm(frontendAppConfig), formPartialRetriever, scalate)
+    new HowMuchFuelBenefitController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, new HowMuchFuelBenefitForm(frontendAppConfig), formPartialRetriever, scalate)
 
   def viewAsString(form: Form[_] = form) = howMuchFuelBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
 

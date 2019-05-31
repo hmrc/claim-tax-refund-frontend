@@ -29,8 +29,9 @@ import play.api.test.Helpers._
 import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.paymentAddressCorrect
+
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class PaymentAddressCorrectControllerSpec extends ControllerSpecBase {
 
@@ -42,10 +43,12 @@ class PaymentAddressCorrectControllerSpec extends ControllerSpecBase {
   private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new PaymentAddressCorrectController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, formProvider, formPartialRetriever, scalate)
+    new PaymentAddressCorrectController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, formProvider, formPartialRetriever, scalate)
 
   def fakeDataRetrievalActionItmpAddress(itmpAddress: Option[ItmpAddress]): DataRetrievalAction = new DataRetrievalAction {
+    override protected def executionContext: ExecutionContext = implicitly[ExecutionContext]
+
     override protected def transform[A](request: AuthenticatedRequest[A]): Future[OptionalDataRequest[A]] = {
       Future.successful(
         OptionalDataRequest(

@@ -40,8 +40,8 @@ class OtherCompanyBenefitControllerSpec extends ControllerSpecBase with MockitoS
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new OtherCompanyBenefitController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, sequenceUtil, new OtherCompanyBenefitForm(messagesApi, frontendAppConfig), formPartialRetriever, scalate)
+    new OtherCompanyBenefitController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, sequenceUtil, new OtherCompanyBenefitForm(messagesApi, frontendAppConfig), formPartialRetriever, scalate)
 
   def viewAsString(form: Form[OtherCompanyBenefit], index: Index): String =
     otherCompanyBenefit(frontendAppConfig, form, NormalMode, index, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString

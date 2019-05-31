@@ -45,7 +45,7 @@ class AuthActionSpec extends SpecBase {
   "Auth Action" when {
     "the user hasn't logged in" must {
       "redirect the user to log in " in {
-        val authAction = new AuthActionImpl(new FakeFailingAuthConnector(new MissingBearerToken), frontendAppConfig)(FakeDataCacheConnector)
+        val authAction = new AuthActionImpl(new FakeFailingAuthConnector(new MissingBearerToken), frontendAppConfig, messagesControllerComponents)(FakeDataCacheConnector)
         val controller = new Harness(authAction)
         val result = controller.onPageLoad()(fakeRequest)
         status(result) mustBe SEE_OTHER
@@ -55,7 +55,7 @@ class AuthActionSpec extends SpecBase {
 
     "the user's session has expired" must {
       "redirect the user to log in " in {
-        val authAction = new AuthActionImpl(new FakeFailingAuthConnector(new BearerTokenExpired), frontendAppConfig)(FakeDataCacheConnector)
+        val authAction = new AuthActionImpl(new FakeFailingAuthConnector(new BearerTokenExpired), frontendAppConfig, messagesControllerComponents)(FakeDataCacheConnector)
         val controller = new Harness(authAction)
         val result = controller.onPageLoad()(fakeRequest)
         status(result) mustBe SEE_OTHER
@@ -65,7 +65,7 @@ class AuthActionSpec extends SpecBase {
 
     "the user doesn't have sufficient enrolments" must {
       "redirect the user to the unauthorised page" in {
-        val authAction = new AuthActionImpl(new FakeFailingAuthConnector(new InsufficientEnrolments), frontendAppConfig)(FakeDataCacheConnector)
+        val authAction = new AuthActionImpl(new FakeFailingAuthConnector(new InsufficientEnrolments), frontendAppConfig, messagesControllerComponents)(FakeDataCacheConnector)
         val controller = new Harness(authAction)
         val result = controller.onPageLoad()(fakeRequest)
         status(result) mustBe SEE_OTHER
@@ -75,7 +75,7 @@ class AuthActionSpec extends SpecBase {
 
     "the user doesn't have sufficient confidence level" must {
       "redirect the user to the unauthorised page" in {
-        val authAction = new AuthActionImpl(new FakeFailingAuthConnector(new InsufficientConfidenceLevel), frontendAppConfig)(FakeDataCacheConnector)
+        val authAction = new AuthActionImpl(new FakeFailingAuthConnector(new InsufficientConfidenceLevel), frontendAppConfig, messagesControllerComponents)(FakeDataCacheConnector)
         val controller = new Harness(authAction)
         val result = controller.onPageLoad()(fakeRequest)
         status(result) mustBe SEE_OTHER
@@ -85,7 +85,7 @@ class AuthActionSpec extends SpecBase {
 
     "the user used an unaccepted auth provider" must {
       "redirect the user to the unauthorised page" in {
-        val authAction = new AuthActionImpl(new FakeFailingAuthConnector(new UnsupportedAuthProvider), frontendAppConfig)(FakeDataCacheConnector)
+        val authAction = new AuthActionImpl(new FakeFailingAuthConnector(new UnsupportedAuthProvider), frontendAppConfig, messagesControllerComponents)(FakeDataCacheConnector)
         val controller = new Harness(authAction)
         val result = controller.onPageLoad()(fakeRequest)
         status(result) mustBe SEE_OTHER
@@ -95,7 +95,7 @@ class AuthActionSpec extends SpecBase {
 
     "the user has an unsupported affinity group" must {
       "redirect the user to the unauthorised page" in {
-        val authAction = new AuthActionImpl(new FakeFailingAuthConnector(new UnsupportedAffinityGroup), frontendAppConfig)(FakeDataCacheConnector)
+        val authAction = new AuthActionImpl(new FakeFailingAuthConnector(new UnsupportedAffinityGroup), frontendAppConfig, messagesControllerComponents)(FakeDataCacheConnector)
         val controller = new Harness(authAction)
         val result = controller.onPageLoad()(fakeRequest)
         status(result) mustBe SEE_OTHER
@@ -105,7 +105,7 @@ class AuthActionSpec extends SpecBase {
 
     "the user has an unsupported credential role" must {
       "redirect the user to the unauthorised page" in {
-        val authAction = new AuthActionImpl(new FakeFailingAuthConnector(new UnsupportedCredentialRole), frontendAppConfig)(FakeDataCacheConnector)
+        val authAction = new AuthActionImpl(new FakeFailingAuthConnector(new UnsupportedCredentialRole), frontendAppConfig, messagesControllerComponents)(FakeDataCacheConnector)
         val controller = new Harness(authAction)
         val result = controller.onPageLoad()(fakeRequest)
         status(result) mustBe SEE_OTHER

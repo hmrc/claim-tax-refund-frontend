@@ -28,6 +28,7 @@ import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import play.api.mvc.MessagesControllerComponents
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import utils.{Navigator, UserAnswers}
 import views.html.employmentDetails
@@ -44,17 +45,18 @@ class EmploymentDetailsController @Inject()(appConfig: FrontendAppConfig,
                                             authenticate: AuthAction,
                                             getData: DataRetrievalAction,
                                             requireData: DataRequiredAction,
+cc: MessagesControllerComponents,
                                             formProvider: BooleanForm,
                                             taiConnector: TaiConnector,
                                             implicit val formPartialRetriever: FormPartialRetriever,
                                             implicit val scalate: Scalate
-                                           )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
+                                           )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   private val errorKey = "employmentDetails.blank"
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      val form: Form[Boolean] = formProvider(messagesApi(errorKey))
+      val form: Form[Boolean] = formProvider(cc.messagesApi.preferred(request).messages.apply(errorKey))
 
       val preparedForm = request.userAnswers.employmentDetails match {
         case None => form
@@ -80,7 +82,7 @@ class EmploymentDetailsController @Inject()(appConfig: FrontendAppConfig,
 
   def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      val form: Form[Boolean] = formProvider(messagesApi(errorKey))
+      val form: Form[Boolean] = formProvider(cc.messagesApi.preferred(request).messages.apply(errorKey))
 
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
