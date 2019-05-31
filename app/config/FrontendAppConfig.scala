@@ -18,22 +18,19 @@ package config
 
 import com.google.inject.{Inject, Singleton}
 import controllers.routes
-import play.api.Mode.Mode
 import play.api.i18n.Lang
 import play.api.mvc.Call
-import play.api.{Configuration, Environment}
-import uk.gov.hmrc.play.config.ServicesConfig
+import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
+
+import scala.util.Try
 
 @Singleton
-class FrontendAppConfig @Inject()(override val runModeConfiguration: Configuration, environment: Environment) extends ServicesConfig {
+class FrontendAppConfig @Inject()(val servicesConfig: ServicesConfig) {
 
-  override protected def mode: Mode = environment.mode
+  private def loadConfig(key: String): String = Try(servicesConfig.getString(key)).getOrElse(throw new Exception(s"Missing configuration key: $key"))
+  private def loadConfigInt(key: String): Int = Try(servicesConfig.getInt(key)).getOrElse(throw new Exception(s"Missing configuration key: $key"))
 
-  private def loadConfig(key: String): String = runModeConfiguration.getString(key).getOrElse(throw new Exception(s"Missing configuration key: $key"))
-
-  private def loadConfigInt(key: String): Int = runModeConfiguration.getInt(key).getOrElse(throw new Exception(s"Missing configuration key: $key"))
-
-  private lazy val contactHost = baseUrl("contact-frontend")
+  private lazy val contactHost = servicesConfig.baseUrl("contact-frontend")
   private val contactFormServiceIdentifier = "claimtaxrefundfrontend"
 
   lazy val assetsPrefix: String = loadConfig(s"assets.url") + loadConfig(s"assets.version") + '/'
@@ -47,11 +44,11 @@ class FrontendAppConfig @Inject()(override val runModeConfiguration: Configurati
   lazy val betaFeedbackUnauthenticatedUrl = s"$contactHost/contact/beta-feedback-unauthenticated"
   lazy val feedbackSurveyUrl: String = loadConfig("urls.feedback-survey")
 
-  lazy val authUrl: String = baseUrl("auth")
+  lazy val authUrl: String = servicesConfig.baseUrl("auth")
   lazy val loginUrl: String = loadConfig("urls.login")
   lazy val loginContinueUrl: String = loadConfig("urls.loginContinue")
-  lazy val ctrUrl: String = baseUrl("claim-tax-refund")
-  lazy val addressLookupUrl: String = baseUrl(serviceName = "address-lookup-frontend")
+  lazy val ctrUrl: String = servicesConfig.baseUrl("claim-tax-refund")
+  lazy val addressLookupUrl: String = servicesConfig.baseUrl(serviceName = "address-lookup-frontend")
   lazy val addressLookupContinueUrlNormalMode: String = loadConfig(key = "microservice.services.address-lookup-frontend.continueUrlNormalMode")
   lazy val addressLookupContinueUrlCheckMode: String = loadConfig(key = "microservice.services.address-lookup-frontend.continueUrlCheckMode")
 
@@ -59,9 +56,9 @@ class FrontendAppConfig @Inject()(override val runModeConfiguration: Configurati
   lazy val authorisedCallback: String = loadConfig("identity-verification-uplift.authorised-callback.url")
   lazy val unauthorisedCallback: String = loadConfig("identity-verification-uplift.unauthorised-callback.url")
 
-  lazy val taiUrl: String = baseUrl("tai")
+  lazy val taiUrl: String = servicesConfig.baseUrl("tai")
 
-  lazy val languageTranslationEnabled: Boolean = runModeConfiguration.getBoolean("microservice.services.features.welsh-translation").getOrElse(true)
+  lazy val languageTranslationEnabled: Boolean = Try(servicesConfig.getBoolean("microservice.services.features.welsh-translation")).getOrElse(true)
 
   lazy val fullNameLength: Int = loadConfigInt("microservice.services.validation.full-name-length")
   lazy val ninoRegex: String = loadConfig("microservice.services.validation.nino-regex")

@@ -36,8 +36,8 @@ class HowMuchCarersAllowanceControllerSpec extends ControllerSpecBase {
   def onwardRoute = routes.IndexController.onPageLoad()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new HowMuchCarersAllowanceController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, new HowMuchCarersAllowanceForm(frontendAppConfig), formPartialRetriever, scalate)
+    new HowMuchCarersAllowanceController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, new HowMuchCarersAllowanceForm(frontendAppConfig), formPartialRetriever, scalate)
 
   val testAnswer = "9,999.99"
   private val taxYear = CYMinus2

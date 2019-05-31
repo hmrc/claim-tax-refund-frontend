@@ -27,6 +27,7 @@ import models.{Mode, WhereToSendPayment}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import play.api.mvc.MessagesControllerComponents
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import utils.{Navigator, UserAnswers}
 import views.html.whereToSendPayment
@@ -41,9 +42,10 @@ class WhereToSendPaymentController @Inject()(
                                               authenticate: AuthAction,
                                               getData: DataRetrievalAction,
                                               requireData: DataRequiredAction,
+cc: MessagesControllerComponents,
                                               implicit val formPartialRetriever: FormPartialRetriever,
                                               implicit val scalate: Scalate
-                                            )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
+                                            )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>

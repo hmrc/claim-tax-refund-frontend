@@ -28,6 +28,7 @@ import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import play.api.mvc.MessagesControllerComponents
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import utils.{Navigator, SequenceUtil, UserAnswers}
 import views.html.otherTaxableIncome
@@ -42,11 +43,12 @@ class OtherTaxableIncomeController @Inject()(
                                               authenticate: AuthAction,
                                               getData: DataRetrievalAction,
                                               requireData: DataRequiredAction,
+cc: MessagesControllerComponents,
                                               sequenceUtil: SequenceUtil[OtherTaxableIncome],
                                               formBuilder: OtherTaxableIncomeForm,
                                               implicit val formPartialRetriever: FormPartialRetriever,
                                               implicit val scalate: Scalate
-                                            )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
+                                            )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   def onPageLoad(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>

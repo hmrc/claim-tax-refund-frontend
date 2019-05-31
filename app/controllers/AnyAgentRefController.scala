@@ -28,6 +28,7 @@ import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.Result
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import play.api.mvc.MessagesControllerComponents
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import utils.{Navigator, UserAnswers}
 import views.html.anyAgentRef
@@ -41,10 +42,11 @@ class AnyAgentRefController @Inject()(appConfig: FrontendAppConfig,
                                       authenticate: AuthAction,
                                       getData: DataRetrievalAction,
                                       requireData: DataRequiredAction,
+                                      cc: MessagesControllerComponents,
                                       formProvider: AnyAgentReferenceForm,
                                       implicit val formPartialRetriever: FormPartialRetriever,
                                       implicit val scalate: Scalate
-                                     )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
+                                     )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   val requiredKey = "anyAgentRef.blank"
   val requiredAgentRefKey = "anyAgentRef.blankAgentRef"
@@ -55,7 +57,10 @@ class AnyAgentRefController @Inject()(appConfig: FrontendAppConfig,
         taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
         nomineeName: String <- request.userAnswers.nomineeFullName
       } yield {
-        val form: Form[AnyAgentRef] = formProvider(messagesApi(requiredKey, nomineeName), messagesApi(requiredAgentRefKey, nomineeName))
+        val form: Form[AnyAgentRef] = formProvider(
+          cc.messagesApi.preferred(request).messages(requiredKey, nomineeName),
+          cc.messagesApi.preferred(request).messages(requiredAgentRefKey, nomineeName)
+        )
         val preparedForm = request.userAnswers.anyAgentRef match {
           case None => form
           case Some(value) => form.fill(value)
@@ -74,7 +79,10 @@ class AnyAgentRefController @Inject()(appConfig: FrontendAppConfig,
         taxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
         nomineeName: String <- request.userAnswers.nomineeFullName
       } yield {
-        val form: Form[AnyAgentRef] = formProvider(messagesApi(requiredKey, nomineeName), messagesApi(requiredAgentRefKey, nomineeName))
+        val form: Form[AnyAgentRef] = formProvider(
+          cc.messagesApi.preferred(request).messages(requiredKey, nomineeName),
+          cc.messagesApi.preferred(request).messages(requiredAgentRefKey, nomineeName)
+        )
         form.bindFromRequest().fold(
           (formWithErrors: Form[_]) =>
             Future.successful(BadRequest(anyAgentRef(appConfig, formWithErrors, mode, nomineeName, taxYear))),

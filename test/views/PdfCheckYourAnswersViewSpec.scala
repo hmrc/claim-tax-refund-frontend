@@ -56,13 +56,13 @@ class PdfCheckYourAnswersViewSpec extends SpecBase with ViewBehaviours with Mock
 
     "display correct sections" in {
       val doc = asDocument(view())
-      assertContainsText(doc, messagesApi("checkYourAnswers.userSection"))
-      assertContainsText(doc, messagesApi("checkYourAnswers.claimSection"))
-      assertContainsText(doc, messagesApi("checkYourAnswers.benefitSection"))
-      assertContainsText(doc, messagesApi("checkYourAnswers.companyBenefitSection"))
-      assertContainsText(doc, messagesApi("checkYourAnswers.taxableIncomeSection"))
-      assertContainsText(doc, messagesApi("checkYourAnswers.paymentSection"))
-      assertContainsText(doc, messagesApi("checkYourAnswers.contactSection"))
+      assertContainsText(doc, messages("checkYourAnswers.userSection"))
+      assertContainsText(doc, messages("checkYourAnswers.claimSection"))
+      assertContainsText(doc, messages("checkYourAnswers.benefitSection"))
+      assertContainsText(doc, messages("checkYourAnswers.companyBenefitSection"))
+      assertContainsText(doc, messages("checkYourAnswers.taxableIncomeSection"))
+      assertContainsText(doc, messages("checkYourAnswers.paymentSection"))
+      assertContainsText(doc, messages("checkYourAnswers.contactSection"))
     }
 
     "display date" in {

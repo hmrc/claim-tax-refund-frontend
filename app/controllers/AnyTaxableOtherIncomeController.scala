@@ -28,6 +28,7 @@ import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, Result}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import play.api.mvc.MessagesControllerComponents
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import utils.{Navigator, SequenceUtil, UserAnswers}
 import views.html.anyTaxableOtherIncome
@@ -41,12 +42,13 @@ class AnyTaxableOtherIncomeController @Inject()(appConfig: FrontendAppConfig,
                                                 authenticate: AuthAction,
                                                 getData: DataRetrievalAction,
                                                 requireData: DataRequiredAction,
+                                                cc: MessagesControllerComponents,
                                                 sequenceUtil: SequenceUtil[OtherTaxableIncome],
                                                 formProvider: OtherTaxableIncomeForm,
                                                 taxPaidFormProvider: AnyTaxPaidForm,
                                                 implicit val formPartialRetriever: FormPartialRetriever,
                                                 implicit val scalate: Scalate
-                                               )(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
+                                               )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   private val notSelectedKey = "anyTaxableOtherIncome.notSelected"
   private val blankKey = "anyTaxableOtherIncome.blank"
@@ -67,9 +69,9 @@ class AnyTaxableOtherIncomeController @Inject()(appConfig: FrontendAppConfig,
         otherTaxableIncome: Seq[OtherTaxableIncome] <- request.userAnswers.otherTaxableIncome
       } yield {
         val form: Form[AnyTaxPaid] = taxPaidFormProvider(
-          messagesApi(notSelectedKey, otherTaxableIncome(index).name),
-          messagesApi(blankKey, otherTaxableIncome(index).name),
-          messagesApi(invalidKey, otherTaxableIncome(index).name)
+          cc.messagesApi.preferred(request).messages(notSelectedKey, otherTaxableIncome(index).name),
+          cc.messagesApi.preferred(request).messages(blankKey, otherTaxableIncome(index).name),
+          cc.messagesApi.preferred(request).messages(invalidKey, otherTaxableIncome(index).name)
         )
 
         val preparedForm = request.userAnswers.otherTaxableIncome match {
@@ -94,9 +96,9 @@ class AnyTaxableOtherIncomeController @Inject()(appConfig: FrontendAppConfig,
         otherTaxableIncome: Seq[OtherTaxableIncome] <- request.userAnswers.otherTaxableIncome
       } yield {
         val form: Form[AnyTaxPaid] = taxPaidFormProvider(
-          messagesApi(notSelectedKey, otherTaxableIncome(index).name),
-          messagesApi(blankKey, otherTaxableIncome(index).name),
-          messagesApi(invalidKey, otherTaxableIncome(index).name)
+          cc.messagesApi.preferred(request).messages(notSelectedKey, otherTaxableIncome(index).name),
+          cc.messagesApi.preferred(request).messages(blankKey, otherTaxableIncome(index).name),
+          cc.messagesApi.preferred(request).messages(invalidKey, otherTaxableIncome(index).name)
         )
         form.bindFromRequest().fold(
           (formWithErrors: Form[AnyTaxPaid]) =>

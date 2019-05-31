@@ -33,8 +33,8 @@ class PaymentInternationalAddressControllerSpec extends ControllerSpecBase {
   def onwardRoute = routes.IndexController.onPageLoad()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new PaymentInternationalAddressController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction,
-      dataRetrievalAction, new DataRequiredActionImpl, new PaymentInternationalAddressForm(frontendAppConfig), formPartialRetriever, scalate)
+    new PaymentInternationalAddressController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, new PaymentInternationalAddressForm(frontendAppConfig), formPartialRetriever, scalate)
 
   val form = new PaymentInternationalAddressForm(frontendAppConfig)()
   private val taxYear = CYMinus2

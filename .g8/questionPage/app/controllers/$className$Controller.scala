@@ -5,6 +5,7 @@ import javax.inject.Inject
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import play.api.mvc.MessagesControllerComponents
 import connectors.DataCacheConnector
 import controllers.actions._
 import config.FrontendAppConfig
@@ -23,7 +24,8 @@ class $className$Controller @Inject()(appConfig: FrontendAppConfig,
                                                   authenticate: AuthAction,
                                                   getData: DataRetrievalAction,
                                                   requireData: DataRequiredAction,
-                                                  formBuilder: $className$Form)(implicit ec: ExecutionContext) extends FrontendController with I18nSupport {
+cc: MessagesControllerComponents,
+                                                  formBuilder: $className$Form)(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   private val form: Form[$className$] = formBuilder()
 
