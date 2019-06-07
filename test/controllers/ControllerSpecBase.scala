@@ -23,10 +23,13 @@ import identifiers.SelectTaxYearId
 import models.SelectTaxYear
 import models.requests.{AuthenticatedRequest, OptionalDataRequest}
 import play.api.libs.json.Json
+import play.api.mvc.MessagesControllerComponents
 import uk.gov.hmrc.auth.core.retrieve.ItmpName
 import uk.gov.hmrc.http.cache.client.CacheMap
 import utils.{MockUserAnswers, UserAnswers}
-import scala.concurrent.Future
+
+import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext.Implicits.global
 
 trait ControllerSpecBase extends SpecBase {
 
@@ -42,6 +45,8 @@ trait ControllerSpecBase extends SpecBase {
     Some(CacheMap(cacheMapId, Map(SelectTaxYearId.toString -> Json.toJson(SelectTaxYear.CYMinus2))))
   )
 
+  implicit lazy val cc: MessagesControllerComponents = messagesControllerComponents
+
   def fakeDataRetrievalAction(mockUserAnswers: UserAnswers = MockUserAnswers.minimalValidUserAnswers): DataRetrievalAction =
     new DataRetrievalAction {
       override protected def transform[A](request: AuthenticatedRequest[A]): Future[OptionalDataRequest[A]] = {
@@ -54,5 +59,7 @@ trait ControllerSpecBase extends SpecBase {
           userAnswers = Some(mockUserAnswers)
         ))
       }
+
+      override protected def executionContext: ExecutionContext = implicitly[ExecutionContext]
     }
 }

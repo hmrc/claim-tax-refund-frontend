@@ -35,7 +35,7 @@ class AnyAgentRefViewSpec extends QuestionViewBehaviours[AnyAgentRef]{
   private val taxYear = CYMinus1
 
   val formProvider = new AnyAgentReferenceForm()
-  val form = formProvider(messagesApi(requiredKey, nomineeName), messagesApi(requiredAgentRefKey, nomineeName))
+  val form = formProvider(messages(requiredKey, nomineeName), messages(requiredAgentRefKey, nomineeName))
 
   def createView = () => anyAgentRef(frontendAppConfig, form, NormalMode, nomineeName, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
 

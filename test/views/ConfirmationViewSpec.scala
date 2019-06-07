@@ -49,8 +49,8 @@ class ConfirmationViewSpec extends ViewBehaviours with MockitoSugar {
 
     "have what happens next header and text" in {
       val doc = asDocument(createView())
-      assertContainsText(doc, messagesApi("confirmation.whatHappensNext.title"))
-      assertContainsText(doc, messagesApi("confirmation.whatHappensNext.line1"))
+      assertContainsText(doc, messages("confirmation.whatHappensNext.title"))
+      assertContainsText(doc, messages("confirmation.whatHappensNext.line1"))
     }
 
     "have a link to an exit survey" in {

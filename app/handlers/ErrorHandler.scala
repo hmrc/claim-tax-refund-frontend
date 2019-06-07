@@ -18,7 +18,6 @@ package handlers
 
 import com.github.tototoshi.play2.scalate._
 import config.FrontendAppConfig
-import controllers.actions.AuthAction
 import javax.inject.{Inject, Singleton}
 import play.api.http.Status.{BAD_REQUEST, FORBIDDEN}
 import play.api.i18n.MessagesApi
@@ -36,21 +35,21 @@ class ErrorHandler @Inject()(
                               appConfig: FrontendAppConfig,
                               val messagesApi: MessagesApi,
                               implicit val formPartialRetriever: FormPartialRetriever,
-                              implicit val scalate: Scalate,
-                              authAction: AuthAction
+                              implicit val scalate: Scalate
                             ) extends FrontendErrorHandler {
 
   override def onClientError(request: RequestHeader, statusCode: Int, message: String): Future[Result] = {
     statusCode match {
       case BAD_REQUEST =>
-        authAction.invokeBlock[None.type](Request(request, None), { implicit request =>
-          Future.successful(BadRequest(error_template(
-            pageTitle = "error.generic.title",
-            heading = "error.generic.title",
-            errorMessages = Seq("error.generic.message1", "error.generic.message2"),
-            appConfig = appConfig
-          )))
-        })
+        implicit val req: Request[Result.type] = Request(request, Result)
+        val body: Result = BadRequest(error_template(
+          pageTitle = "error.generic.title",
+          heading = "error.generic.title",
+          errorMessages = Seq("error.generic.message1", "error.generic.message2"),
+          appConfig = appConfig
+        ))
+
+        Future.successful(body)
       case FORBIDDEN =>
         Future.successful(Forbidden(views.html.defaultpages.unauthorized()))
       case _ =>

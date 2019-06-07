@@ -57,7 +57,7 @@ class TelephoneOptionSpec extends SpecBase {
 
     "return failure for when no input given" in {
       val json = Json.obj("anyTelephone" -> "notABoolean")
-      Json.fromJson[TelephoneOption](json) mustEqual JsError(Seq((JsPath \ "anyTelephone", Seq(ValidationError(Seq("error.expected.jsboolean"))))))
+      Json.fromJson[TelephoneOption](json) mustEqual JsError(Seq((JsPath \ "anyTelephone", Seq(JsonValidationError(Seq("error.expected.jsboolean"))))))
     }
   }
 }
