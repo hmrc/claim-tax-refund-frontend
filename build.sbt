@@ -18,32 +18,32 @@ lazy val playSettings: Seq[Setting[_]] = Seq.empty
 
 val compile = Seq(
   ws,
-  "uk.gov.hmrc"           %% "simple-reactivemongo"           % "7.19.0-play-26",
+  "uk.gov.hmrc"           %% "simple-reactivemongo"           % "7.20.0-play-26",
   "uk.gov.hmrc"           %% "logback-json-logger"            % "4.6.0",
-  "uk.gov.hmrc"           %% "govuk-template"                 % "5.35.0-play-26",
+  "uk.gov.hmrc"           %% "govuk-template"                 % "5.36.0-play-26",
   "uk.gov.hmrc"           %% "play-health"                    % "3.14.0-play-26",
   "uk.gov.hmrc"           %% "play-ui"                        % "7.40.0-play-26",
   "uk.gov.hmrc"           %% "http-caching-client"            % "8.3.0",
   "uk.gov.hmrc"           %% "play-conditional-form-mapping"  % "0.2.0",
-  "uk.gov.hmrc"           %% "bootstrap-play-26"              % "0.40.0",
-  "uk.gov.hmrc"           %% "local-template-renderer"        % "2.4.0",
+  "uk.gov.hmrc"           %% "bootstrap-play-26"              % "0.41.0",
+  "uk.gov.hmrc"           %% "local-template-renderer"        % "2.5.0",
   "uk.gov.hmrc"           %% "play-partials"                  % "6.9.0-play-26",
   "uk.gov.hmrc"           %% "play-language"                  % "3.4.0",
   "uk.gov.hmrc"           %% "tax-year"                       % "0.4.0",
-  "org.scalatra.scalate"  %% "play-scalate"                   % "0.4.0",
-  "org.scalatra.scalate"  %% "scalate-core"                   % "1.8.0",
+  "org.scalatra.scalate"  %% "play-scalate"                   % "0.5.0",
+  "org.scalatra.scalate"  %% "scalate-core"                   % "1.9.4",
   "uk.gov.hmrc"           %% "domain"                         % "5.6.0-play-26"
 )
 
 def test(scope: String = "test"): Seq[ModuleID] = Seq(
   "com.github.tomakehurst"  % "wiremock"                % "2.23.2" % scope,
   "com.github.tomakehurst"  % "wiremock-jre8"           % "2.23.2" % scope,
-  "uk.gov.hmrc"             %% "hmrctest"               % "3.8.0-play-26" % scope,
-  "org.scalatest"           %% "scalatest"              % "3.0.1" % scope,
-  "org.scalatestplus.play"  %% "scalatestplus-play"     % "3.1.0" % scope,
+  "uk.gov.hmrc"             %% "hmrctest"               % "3.9.0-play-26" % scope,
+  "org.scalatest"           %% "scalatest"              % "3.0.8" % scope,
+  "org.scalatestplus.play"  %% "scalatestplus-play"     % "3.1.2" % scope,
   "org.scalacheck"          %% "scalacheck"             % "1.14.0" % scope,
   "org.pegdown"             % "pegdown"                 % "1.6.0" % scope,
-  "org.jsoup"               % "jsoup"                   % "1.11.3" % scope,
+  "org.jsoup"               % "jsoup"                   % "1.12.1" % scope,
   "com.typesafe.play"       %% "play-test"              % PlayVersion.current % scope,
   "org.mockito"             % "mockito-all"             % "1.10.19" % scope,
   "uk.gov.hmrc"             %% "play-whitelist-filter"  % "2.0.0"
