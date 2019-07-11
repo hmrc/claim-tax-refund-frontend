@@ -20,7 +20,7 @@ import connectors.{AddressLookupConnector, FakeDataCacheConnector}
 import controllers.actions._
 import forms.BooleanForm
 import models.NormalMode
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.CustomTaxYear
 import org.mockito.Matchers._
 import org.mockito.Mockito._
 import org.scalatest.mockito.MockitoSugar
@@ -39,8 +39,8 @@ class IsPaymentAddressInTheUKControllerSpec extends ControllerSpecBase with Mock
   val formProvider = new BooleanForm()
   val form = formProvider()
   private val mockAddressLookup = mock[AddressLookupConnector]
-  private val taxYear = CYMinus2
-  private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers
+  private val taxYear = CustomTaxYear(2017)
+  private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new IsPaymentAddressInTheUKController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),

@@ -23,7 +23,7 @@ import controllers.actions._
 import play.api.test.Helpers._
 import forms.HowMuchInvestmentOrDividendForm
 import models.NormalMode
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.CustomTaxYear
 import org.mockito.Mockito.when
 import views.html.howMuchInvestmentOrDividend
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -37,8 +37,8 @@ class HowMuchInvestmentOrDividendControllerSpec extends ControllerSpecBase {
       frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
       dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, new HowMuchInvestmentOrDividendForm(frontendAppConfig), formPartialRetriever, scalate)
 
-  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
-  private val taxYear = CYMinus2
+  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
+  private val taxYear = CustomTaxYear(2017)
   val testAnswer = "9,999.99"
   val form = new HowMuchInvestmentOrDividendForm(frontendAppConfig)()
 
@@ -47,7 +47,7 @@ class HowMuchInvestmentOrDividendControllerSpec extends ControllerSpecBase {
   "HowMuchInvestmentOrDividend Controller" must {
 
     "return OK and the correct view for a GET" in {
-      val result = controller(someData).onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(someData()).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe OK
       contentAsString(result) mustBe viewAsString()

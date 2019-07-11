@@ -23,7 +23,7 @@ import controllers.actions._
 import play.api.test.Helpers._
 import forms.OtherTaxableIncomeForm
 import models.{AnyTaxPaid, Index, NormalMode, OtherTaxableIncome}
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.CustomTaxYear
 import org.mockito.Mockito.when
 import play.api.mvc.Call
 import views.html.otherTaxableIncome
@@ -35,8 +35,8 @@ class OtherTaxableIncomeControllerSpec extends ControllerSpecBase {
 
   val testAnswer = OtherTaxableIncome("answer", "123", Some(AnyTaxPaid.Yes("123")))
   val form = new OtherTaxableIncomeForm(frontendAppConfig)(Seq.empty, 0)
-  private val taxYear = CYMinus2
-  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
+  private val taxYear = CustomTaxYear(2017)
+  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new OtherTaxableIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),

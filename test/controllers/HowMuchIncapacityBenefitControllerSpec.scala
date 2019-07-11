@@ -20,7 +20,7 @@ import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.HowMuchIncapacityBenefitForm
 import models.NormalMode
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.CustomTaxYear
 import org.mockito.Mockito.when
 import play.api.data.Form
 import play.api.test.Helpers._
@@ -32,8 +32,8 @@ class HowMuchIncapacityBenefitControllerSpec extends ControllerSpecBase {
 
   private val testAnswer = "9,999.99"
   private val form = new HowMuchIncapacityBenefitForm(frontendAppConfig)()
-  private val taxYear = CYMinus2
-  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
+  private val taxYear = CustomTaxYear(2017)
+  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
 
   def onwardRoute = routes.IndexController.onPageLoad()
 

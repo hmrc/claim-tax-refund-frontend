@@ -18,7 +18,7 @@ package views
 
 import controllers.routes
 import forms.BooleanForm
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.CustomTaxYear
 import models.{Employment, NormalMode}
 import play.api.data.Form
 import views.behaviours.YesNoViewBehaviours
@@ -29,7 +29,7 @@ class EmploymentDetailsViewSpec extends YesNoViewBehaviours {
   private val messageKeyPrefix = "employmentDetails"
   private val hintTextKey = "employmentDetails.hintText"
   private val fakeEmployments = Seq(Employment("AVIVA PENSIONS", "754", "AZ00070"))
-  private val taxYear = CYMinus2
+  private val taxYear = CustomTaxYear(2017)
 
   override val form = new BooleanForm()()
 

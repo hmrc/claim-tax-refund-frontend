@@ -19,7 +19,7 @@ package controllers
 import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.WhereToSendPaymentForm
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.CustomTaxYear
 import models.{NormalMode, WhereToSendPayment}
 import org.mockito.Mockito.when
 import play.api.data.Form
@@ -30,8 +30,8 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 class WhereToSendPaymentControllerSpec extends ControllerSpecBase {
 
-  private val taxYear = CYMinus2
-  private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers
+  private val taxYear = CustomTaxYear(2017)
+  private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers()
 
   def onwardRoute = routes.IndexController.onPageLoad()
 

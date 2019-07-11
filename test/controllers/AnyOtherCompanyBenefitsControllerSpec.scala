@@ -23,7 +23,7 @@ import controllers.actions._
 import play.api.test.Helpers._
 import forms.BooleanForm
 import models.{CheckMode, Mode, NormalMode, OtherCompanyBenefit}
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.CustomTaxYear
 import org.mockito.Mockito.when
 import play.api.mvc.Call
 import viewmodels.AnswerSection
@@ -36,8 +36,8 @@ class AnyOtherCompanyBenefitsControllerSpec extends ControllerSpecBase {
 
   val formProvider = new BooleanForm()
   val form = formProvider()
-  private val taxYear = CYMinus2
-  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
+  private val taxYear = CustomTaxYear(2017)
+  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
   private val cya: CheckYourAnswersHelper = new CheckYourAnswersHelper(mockUserAnswers)(messages)
   private val otherCompanyBenefits: AnswerSection = new CheckYourAnswersSections(cya, mockUserAnswers).otherBenefitsAddToListNormalMode
 

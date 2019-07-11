@@ -28,7 +28,7 @@ import scala.xml._
 class RobotsSpec extends SpecBase {
   val robotXML = new RobotXML
 
-  private val fullUserAnswers: UserAnswers = MockUserAnswers.fullValidUserAnswers
+  private val fullUserAnswers: UserAnswers = MockUserAnswers.fullValidUserAnswers(2016)
 
   private val submissionReference: String = "1234"
   private val timeStamp: String = "1234567890"
@@ -73,7 +73,7 @@ class RobotsSpec extends SpecBase {
           </itmpAddress>
         </userDetails>
         <claimSection>
-          <selectedTaxYear>6 April 2017 to 5 April 2018</selectedTaxYear>
+          <selectedTaxYear>6 April 2016 to 5 April 2017</selectedTaxYear>
           <employmentDetails>true</employmentDetails>
         </claimSection>
         <benefitSection>
@@ -125,7 +125,7 @@ class RobotsSpec extends SpecBase {
     }
 
     "have correct sections in claimSection when employmentDetails are true" in {
-      fullXml \ "claimSection" \ "selectedTaxYear" must contain(<selectedTaxYear>6 April 2017 to 5 April 2018</selectedTaxYear>)
+      fullXml \ "claimSection" \ "selectedTaxYear" must contain(<selectedTaxYear>6 April 2016 to 5 April 2017</selectedTaxYear>)
       fullXml \ "claimSection" \ "employmentDetails" must contain(<employmentDetails>true</employmentDetails>)
     }
 
@@ -137,7 +137,7 @@ class RobotsSpec extends SpecBase {
 
       val newXmlToNode = formatXml(fullUserAnswers)
 
-      newXmlToNode \ "claimSection" \ "selectedTaxYear"  must contain(<selectedTaxYear>6 April 2017 to 5 April 2018</selectedTaxYear>)
+      newXmlToNode \ "claimSection" \ "selectedTaxYear"  must contain(<selectedTaxYear>6 April 2016 to 5 April 2017</selectedTaxYear>)
       newXmlToNode \ "claimSection" \ "employmentDetails" must contain(<employmentDetails>false</employmentDetails>)
       newXmlToNode \ "claimSection" \ "payeReference" must contain(<payeReference>123456789</payeReference>)
       newXmlToNode \ "claimSection" \ "detailsOfEmploymentOrPension" must contain(<detailsOfEmploymentOrPension>Employment details</detailsOfEmploymentOrPension>)
@@ -310,7 +310,7 @@ class RobotsSpec extends SpecBase {
     }
 
     "minimal valid answers must form correctly" in {
-      val xml: Node = formatXml(MockUserAnswers.minimalValidUserAnswers)
+      val xml: Node = formatXml(MockUserAnswers.minimalValidUserAnswers(2016))
 
       xml mustBe validMinimalXml
     }

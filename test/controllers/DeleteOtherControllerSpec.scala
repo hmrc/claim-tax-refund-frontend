@@ -19,7 +19,7 @@ package controllers
 import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.BooleanForm
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.CustomTaxYear
 import models._
 import org.mockito.Mockito._
 import play.api.data.Form
@@ -36,7 +36,7 @@ class DeleteOtherControllerSpec extends ControllerSpecBase {
   val formProvider = new BooleanForm()
   val form = formProvider()
   private val mockUserAnswers = MockUserAnswers
-  private val taxYear = CYMinus2
+  private val taxYear = CustomTaxYear(2017)
 
   val itemName = "qwerty"
 
@@ -59,7 +59,7 @@ class DeleteOtherControllerSpec extends ControllerSpecBase {
   "DeleteOther Controller" must {
 
     "return OK and the correct view for a GET" in {
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers.minimalValidUserAnswers))
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers.minimalValidUserAnswers()))
         .onPageLoad(NormalMode, index, itemName, benefitCollectionId)(fakeRequest)
 
       status(result) mustBe OK
@@ -69,7 +69,7 @@ class DeleteOtherControllerSpec extends ControllerSpecBase {
     "redirect to AnyOtherBenefit when value is true and valid benefit submitted" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
 
-      val result = controller(fakeDataRetrievalAction(mockUserAnswers.benefitsUserAnswers))
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers.benefitsUserAnswers()))
         .onSubmit(CheckMode, index, itemName, benefitCollectionId)(postRequest)
 
       status(result) mustBe SEE_OTHER
@@ -78,7 +78,7 @@ class DeleteOtherControllerSpec extends ControllerSpecBase {
 
     "redirect to RemoveOtherSelectedOption when value is true and no other benefits are available" in {
       val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
-      val answers = mockUserAnswers.benefitsUserAnswers
+      val answers = mockUserAnswers.benefitsUserAnswers()
 
       when(answers.otherBenefit) thenReturn Some(Seq.empty)
 
@@ -249,7 +249,7 @@ class DeleteOtherControllerSpec extends ControllerSpecBase {
     }
 
     "redirect to Session Expired for a GET if no taxYear is available" in {
-      val minimalValidUserAnswers = mockUserAnswers.minimalValidUserAnswers
+      val minimalValidUserAnswers = mockUserAnswers.minimalValidUserAnswers()
 
       when(minimalValidUserAnswers.selectTaxYear) thenReturn None
 

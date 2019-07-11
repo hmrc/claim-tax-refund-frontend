@@ -23,7 +23,7 @@ import controllers.actions._
 import play.api.test.Helpers._
 import forms.OtherBenefitForm
 import models.{Index, NormalMode, OtherBenefit}
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.CustomTaxYear
 import org.mockito.Mockito.when
 import play.api.mvc.Call
 import views.html.otherBenefit
@@ -36,8 +36,8 @@ class OtherBenefitControllerSpec extends ControllerSpecBase {
   val testAnswer = OtherBenefit("qwerty", "123")
   val form = new OtherBenefitForm(frontendAppConfig)(Seq.empty, 0)
   val formFilled = new OtherBenefitForm(frontendAppConfig)(Seq.empty, 1)
-  private val taxYear = CYMinus2
-  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
+  private val taxYear = CustomTaxYear(2017)
+  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new OtherBenefitController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),

@@ -19,7 +19,7 @@ package views
 import controllers.routes
 import forms.OtherBenefitForm
 import models.{NormalMode, OtherBenefit}
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.CustomTaxYear
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
@@ -29,7 +29,7 @@ import views.html.otherBenefit
 class OtherBenefitViewSpec extends QuestionViewBehaviours[OtherBenefit] with MockitoSugar {
 
   private val messageKeyPrefix = "otherBenefit"
-  private val taxYear = CYMinus2
+  private val taxYear = CustomTaxYear(2017)
 
   override val form: Form[OtherBenefit] = new OtherBenefitForm(frontendAppConfig)(Seq.empty, 0)
 

@@ -8,6 +8,8 @@ resolvers += "HMRC Artifactory Releases" at "https://artefacts.tax.service.gov.u
 
 resolvers += "HMRC Releases" at "https://dl.bintray.com/hmrc/releases"
 
+libraryDependencies += "io.monix" %% "monix" % "2.3.0" pomOnly()
+
 addSbtPlugin("uk.gov.hmrc" % "sbt-auto-build" % "1.16.0")
 
 addSbtPlugin("uk.gov.hmrc" % "sbt-git-versioning" % "1.19.0")

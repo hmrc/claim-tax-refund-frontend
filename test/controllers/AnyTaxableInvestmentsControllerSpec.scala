@@ -20,7 +20,7 @@ import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.AnyTaxPaidForm
 import identifiers.{AnyTaxPaidId, TaxPaidAmountId}
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.CustomTaxYear
 import models.{AnyTaxPaid, NormalMode}
 import org.mockito.Mockito.when
 import play.api.data.Form
@@ -41,8 +41,8 @@ class AnyTaxableInvestmentsControllerSpec extends ControllerSpecBase {
   val testAnswer = "9,999.00"
   val validYesData = Map(AnyTaxPaidId.toString -> Json.obj(AnyTaxPaidId.toString -> JsBoolean(true), TaxPaidAmountId.toString -> JsString(testAnswer)))
   val validNoData = Map(AnyTaxPaidId.toString -> Json.obj(AnyTaxPaidId.toString -> JsBoolean(false)))
-  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
-  private val taxYear = CYMinus2
+  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
+  private val taxYear = CustomTaxYear(2017)
 
   val formProvider = new AnyTaxPaidForm
   private val form = formProvider(notSelectedKey, blankKey, invalidKey)

@@ -20,7 +20,7 @@ import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.HowMuchBereavementAllowanceForm
 import models.NormalMode
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.CustomTaxYear
 import org.mockito.Mockito.when
 import play.api.data.Form
 import play.api.test.Helpers._
@@ -37,10 +37,10 @@ class HowMuchBereavementAllowanceControllerSpec extends ControllerSpecBase {
       frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
       dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, new HowMuchBereavementAllowanceForm(frontendAppConfig), formPartialRetriever, scalate)
 
-  val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
+  val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
 
   val testAnswer = "9,999.99"
-  private val taxYear = CYMinus2
+  private val taxYear = CustomTaxYear(2017)
   val form = new HowMuchBereavementAllowanceForm(frontendAppConfig)()
 
   def viewAsString(form: Form[_] = form) = howMuchBereavementAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
@@ -48,7 +48,7 @@ class HowMuchBereavementAllowanceControllerSpec extends ControllerSpecBase {
   "HowMuchBereavementAllowance Controller" must {
 
     "return OK and the correct view for a GET" in {
-      val result = controller(someData).onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(someData()).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe OK
       contentAsString(result) mustBe viewAsString()

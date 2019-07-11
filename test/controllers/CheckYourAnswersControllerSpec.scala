@@ -58,7 +58,7 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with ScalaFuture
   "Check Your Answers Controller" must {
 
     "return 200 and the correct view for a GET" in {
-      val result = controller(someData).onPageLoad()(fakeRequest)
+      val result = controller(someData()).onPageLoad()(fakeRequest)
       status(result) mustBe OK
     }
 
@@ -71,7 +71,7 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with ScalaFuture
 
     "return RuntimeException" in {
       when(dataCacheConnector.save(any(), any(), any())(any())) thenReturn Future.failed(new RuntimeException)
-      val result = controller(someData).onSubmit()(fakeRequest)
+      val result = controller(someData()).onSubmit()(fakeRequest)
 
       whenReady(result.failed) {
         result =>
@@ -91,7 +91,7 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with ScalaFuture
 
     "throw an exception when a submission fails" in {
       when(mockSubmissionService.ctrSubmission(any())(any())) thenReturn Future.successful(SubmissionFailed)
-      val result = controller(someData).onSubmit()(fakeRequest)
+      val result = controller(someData()).onSubmit()(fakeRequest)
 
       whenReady(result.failed) {
         result =>

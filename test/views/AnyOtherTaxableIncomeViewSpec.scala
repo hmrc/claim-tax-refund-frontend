@@ -19,7 +19,7 @@ package views
 import controllers.routes
 import forms.BooleanForm
 import models.{AnyTaxPaid, NormalMode, OtherTaxableIncome}
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.CustomTaxYear
 import org.jsoup.nodes.Document
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
@@ -29,7 +29,7 @@ import views.html.anyOtherTaxableIncome
 class AnyOtherTaxableIncomeViewSpec extends YesNoViewBehaviours {
 
 	private val messageKeyPrefix = "anyOtherTaxableIncome"
-	private val taxYear = CYMinus2
+	private val taxYear = CustomTaxYear(2017)
 
 	val completeSeq: Seq[(OtherTaxableIncome, Int)] = Seq((OtherTaxableIncome("qwerty1", "1234", Some(AnyTaxPaid.Yes("1234"))), 0))
 	val incompleteSeq: Seq[(OtherTaxableIncome, Int)] = Seq((OtherTaxableIncome("qwerty2", "1234", None), 1))

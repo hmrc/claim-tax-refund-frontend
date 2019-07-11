@@ -30,6 +30,8 @@ object EnumerableSpec {
 
   object Foo extends Enumerable[Foo] {
     override def values: Set[Foo] = Set(Bar, Baz)
+
+    override def harnessReads: PartialFunction[Any, Nothing] = PartialFunction.empty
   }
 
 }

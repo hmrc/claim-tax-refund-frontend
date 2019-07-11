@@ -20,7 +20,7 @@ import play.api.i18n.Messages
 import uk.gov.hmrc.time.TaxYear
 import utils._
 
-sealed trait SelectTaxYear {
+trait SelectTaxYear {
   def year: Int
   def asString(implicit messages: Messages): String
 }
@@ -64,6 +64,15 @@ object SelectTaxYear extends Enumerable[SelectTaxYear] {
         TaxYear.current.back(4).startYear.toString.format(dateFormat),
         TaxYear.current.back(4).finishYear.toString.format(dateFormat)
       )
+  }
+
+  case class CustomTaxYear(year: Int) extends SelectTaxYear {
+    override def asString(implicit messages: Messages): String = s"6 April $year to 5 April ${year + 1}"
+  }
+
+  private val regex = "CustomTaxYear\\(([0-9]+)\\)".r
+  def harnessReads: PartialFunction[String, SelectTaxYear] = PartialFunction[String, SelectTaxYear] {
+    case regex(y) => CustomTaxYear(y.toInt)
   }
 
   def options: Seq[RadioOption] = Seq(
