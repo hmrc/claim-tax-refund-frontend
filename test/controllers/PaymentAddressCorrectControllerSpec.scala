@@ -20,7 +20,7 @@ import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.BooleanForm
 import models.NormalMode
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.CustomTaxYear
 import models.requests.{AuthenticatedRequest, OptionalDataRequest}
 import org.mockito.Mockito.when
 import play.api.data.Form
@@ -39,8 +39,8 @@ class PaymentAddressCorrectControllerSpec extends ControllerSpecBase {
 
   val formProvider = new BooleanForm()
   val form = formProvider()
-  private val taxYear = CYMinus2
-  private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers
+  private val taxYear = CustomTaxYear(2017)
+  private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new PaymentAddressCorrectController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
@@ -57,7 +57,7 @@ class PaymentAddressCorrectControllerSpec extends ControllerSpecBase {
           nino = "AB123456A",
           name = Some(ItmpName(Some("sdadsad"), None, None)),
           address = itmpAddress,
-          userAnswers = Some(MockUserAnswers.claimDetailsUserAnswers))
+          userAnswers = Some(MockUserAnswers.claimDetailsUserAnswers()))
       )
     }
   }

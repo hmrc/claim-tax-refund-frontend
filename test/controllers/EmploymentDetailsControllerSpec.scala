@@ -19,7 +19,7 @@ package controllers
 import connectors.{FakeDataCacheConnector, TaiConnector}
 import controllers.actions._
 import forms.BooleanForm
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.{CYMinus2, CustomTaxYear}
 import models.{Employment, NormalMode}
 import org.mockito.Matchers
 import org.mockito.Mockito.when
@@ -28,6 +28,7 @@ import play.api.data.Form
 import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.employmentDetails
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
@@ -39,8 +40,8 @@ class EmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSug
   val formProvider = new BooleanForm()
   val form = formProvider()
   val mockTaiConnector = mock[TaiConnector]
-  private val taxYear = CYMinus2
-  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
+  private val taxYear = CustomTaxYear(2017)
+  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
 
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =

@@ -17,7 +17,7 @@
 package views
 
 import forms.SelectBenefitsForm
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.CustomTaxYear
 import models.{Benefits, NormalMode}
 import play.api.data.Form
 import play.twirl.api.Html
@@ -29,7 +29,7 @@ class SelectBenefitsViewSpec extends ViewBehaviours with CheckboxViewBehaviours[
   val messageKeyPrefix = "selectBenefits"
   val fieldKey = "value"
   val errorMessage = "error.invalid"
-  private val taxYear = CYMinus2
+  private val taxYear = CustomTaxYear(2017)
 
   val values: Seq[(String, String)] = SelectBenefitsForm.options
 

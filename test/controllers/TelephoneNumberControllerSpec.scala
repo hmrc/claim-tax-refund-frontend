@@ -19,7 +19,7 @@ package controllers
 import connectors._
 import controllers.actions._
 import forms.TelephoneNumberForm
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.CustomTaxYear
 import models._
 import org.mockito.Mockito.when
 import org.scalatest.concurrent.ScalaFutures
@@ -39,8 +39,8 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar
   private val testAnswer = "0191 111 1111"
   private val formProvider = new TelephoneNumberForm()
   private val form = formProvider()
-  private val taxYear = CYMinus2
-  private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers
+  private val taxYear = CustomTaxYear(2017)
+  private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new TelephoneNumberController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),

@@ -19,7 +19,7 @@ package controllers
 import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.PaymentUKAddressForm
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.CustomTaxYear
 import models.{NormalMode, UkAddress}
 import org.mockito.Mockito.when
 import play.api.data.Form
@@ -37,8 +37,8 @@ class PaymentUKAddressControllerSpec extends ControllerSpecBase {
       dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, new PaymentUKAddressForm(frontendAppConfig), formPartialRetriever, scalate)
 
   val form = new PaymentUKAddressForm(frontendAppConfig)()
-  private val taxYear = CYMinus2
-  private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers
+  private val taxYear = CustomTaxYear(2017)
+  private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers()
 
   def viewAsString(form: Form[UkAddress] = form) =
     paymentUKAddress(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString

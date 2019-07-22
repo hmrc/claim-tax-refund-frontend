@@ -22,7 +22,7 @@ import connectors.FakeDataCacheConnector
 import controllers.actions._
 import play.api.test.Helpers._
 import forms.SelectBenefitsForm
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.CustomTaxYear
 import models.{Benefits, NormalMode}
 import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito.when
@@ -33,8 +33,8 @@ class SelectBenefitsControllerSpec extends ControllerSpecBase with MockitoSugar 
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
-  private val taxYear = CYMinus2
-  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
+  private val taxYear = CustomTaxYear(2017)
+  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new SelectBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),

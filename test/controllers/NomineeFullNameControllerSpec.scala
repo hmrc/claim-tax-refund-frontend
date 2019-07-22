@@ -20,7 +20,7 @@ import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.NomineeFullNameForm
 import models.NormalMode
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.CustomTaxYear
 import org.mockito.Mockito.when
 import play.api.data.Form
 import play.api.mvc.Call
@@ -39,8 +39,8 @@ class NomineeFullNameControllerSpec extends ControllerSpecBase {
 
   private val testAnswer = "answer"
   private val testTooLongAnswer = "A" * (frontendAppConfig.nomineeFullNameMaxLength + 1)
-  private val taxYear = CYMinus2
-  private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers
+  private val taxYear = CustomTaxYear(2017)
+  private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers()
   val form = new NomineeFullNameForm(frontendAppConfig)()
 
   def viewAsString(form: Form[_] = form) =

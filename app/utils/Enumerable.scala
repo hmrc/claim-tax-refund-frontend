@@ -22,6 +22,8 @@ trait Enumerable[A] {
 
   def values: Set[A]
 
+  def harnessReads: PartialFunction[String, A]
+
   def withName(str: String): Option[A] =
     mappings.get(str)
 
@@ -35,6 +37,8 @@ trait Enumerable[A] {
     Reads {
       case JsString(str) if mappings.contains(str) =>
         JsSuccess(mappings(str))
+      case JsString(str) if harnessReads.isDefinedAt(str) =>
+        JsSuccess(harnessReads(str))
       case _ =>
         JsError("error.invalid")
     }

@@ -16,12 +16,13 @@
 
 package utils
 
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.{CYMinus2, CustomTaxYear}
 import models.WhereToSendPayment.{Myself, Nominee}
 import models.{Metadata, _}
 import org.joda.time.LocalDateTime
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
+import play.api.i18n.Messages
 import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
 
 object MockUserAnswers extends MockitoSugar {
@@ -91,7 +92,7 @@ object MockUserAnswers extends MockitoSugar {
     answers
   }
 
-  def minimalValidUserAnswers: UserAnswers = {
+  def minimalValidUserAnswers(year: Int = 2017): UserAnswers = {
     val answers = nothingAnswered
     val metadata: Metadata = new Metadata(customerId = "ZZ123456A", "123", "123", LocalDateTime.now(), "", "en")
 
@@ -109,7 +110,7 @@ object MockUserAnswers extends MockitoSugar {
         Some("GB")
       ))
 
-    when(answers.selectTaxYear) thenReturn Some(CYMinus2)
+    when(answers.selectTaxYear) thenReturn Some(CustomTaxYear(year))
     when(answers.employmentDetails) thenReturn Some(true)
     when(answers.anyBenefits) thenReturn Some(false)
     when(answers.anyCompanyBenefits) thenReturn Some(false)
@@ -126,10 +127,10 @@ object MockUserAnswers extends MockitoSugar {
     answers
   }
 
-  def claimDetailsUserAnswers: UserAnswers = {
+  def claimDetailsUserAnswers(year: Int = 2017): UserAnswers = {
     val answers = nothingAnswered
 
-    when(answers.selectTaxYear) thenReturn Some(CYMinus2)
+    when(answers.selectTaxYear) thenReturn Some(CustomTaxYear(year))
     when(answers.employmentDetails) thenReturn Some(false)
     when(answers.enterPayeReference) thenReturn Some("AB12345")
     when(answers.detailsOfEmploymentOrPension) thenReturn Some("Details of employment")
@@ -137,10 +138,10 @@ object MockUserAnswers extends MockitoSugar {
     answers
   }
 
-  def benefitsUserAnswers: UserAnswers = {
+  def benefitsUserAnswers(year: Int = 2017): UserAnswers = {
     val answers = nothingAnswered
 
-    when(answers.selectTaxYear) thenReturn Some(CYMinus2)
+    when(answers.selectTaxYear) thenReturn Some(CustomTaxYear(year))
     when(answers.anyBenefits) thenReturn Some(true)
     when(answers.selectBenefits) thenReturn Some(
       Seq(Benefits.CARERS_ALLOWANCE,
@@ -251,7 +252,7 @@ object MockUserAnswers extends MockitoSugar {
     answers
   }
 
-  def fullValidUserAnswers: UserAnswers = {
+  def fullValidUserAnswers(year: Int = 2017): UserAnswers = {
     val answers = nothingAnswered
 
     val metadata = new Metadata(customerId = "ZZ123456A", "123", "123", LocalDateTime.now(), "", "en")
@@ -270,7 +271,7 @@ object MockUserAnswers extends MockitoSugar {
         Some("GB")
       ))
 
-    when(answers.selectTaxYear) thenReturn Some(CYMinus2)
+    when(answers.selectTaxYear) thenReturn Some(CustomTaxYear(year))
     when(answers.employmentDetails) thenReturn Some(true)
 
     when(answers.anyBenefits) thenReturn Some(true)

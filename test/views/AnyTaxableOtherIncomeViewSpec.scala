@@ -18,7 +18,7 @@ package views
 
 import controllers.routes
 import forms.AnyTaxPaidForm
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.CustomTaxYear
 import models.{AnyTaxPaid, NormalMode}
 import play.api.data.{Form, FormError}
 import play.twirl.api.HtmlFormat
@@ -32,7 +32,7 @@ class AnyTaxableOtherIncomeViewSpec extends QuestionViewBehaviours[AnyTaxPaid] {
   private val notSelectedKey = "anyTaxableOtherIncome.notSelected"
   private val blankKey = "anyTaxableOtherIncome.blank"
   private val invalidKey = "anyTaxableOtherIncome.invalid"
-  private val taxYear = CYMinus2
+  private val taxYear = CustomTaxYear(2017)
   private val incomeName = "test income"
 
   val formProvider = new AnyTaxPaidForm()

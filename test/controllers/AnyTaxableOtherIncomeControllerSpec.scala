@@ -19,7 +19,7 @@ package controllers
 import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.{AnyTaxPaidForm, OtherTaxableIncomeForm}
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.CustomTaxYear
 import models.{AnyTaxPaid, NormalMode, OtherTaxableIncome}
 import org.mockito.Mockito.when
 import play.api.data.Form
@@ -38,8 +38,8 @@ class AnyTaxableOtherIncomeControllerSpec extends ControllerSpecBase {
   private val invalidKey = "anyTaxableOtherIncome.invalid"
 
   private val testAnswer = "9,999.00"
-  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
-  private val taxYear = CYMinus2
+  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
+  private val taxYear = CustomTaxYear(2017)
   private val incomeName = "test income"
 
   private val formProvider = new OtherTaxableIncomeForm(frontendAppConfig)

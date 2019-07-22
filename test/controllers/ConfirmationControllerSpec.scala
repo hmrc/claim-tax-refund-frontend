@@ -34,7 +34,7 @@ class ConfirmationControllerSpec extends ControllerSpecBase with ScalaFutures{
 	val mockDataCacheConnector = mock[DataCacheConnector]
   def onwardRoute: Call = routes.IndexController.onPageLoad()
 
-  def controller(dataRetrievalAction: DataRetrievalAction = someData) =
+  def controller(dataRetrievalAction: DataRetrievalAction = someData()) =
     new ConfirmationController(frontendAppConfig, messagesApi, FakeAuthAction(authConnector, frontendAppConfig),
       dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, mockDataCacheConnector, formPartialRetriever, scalate)
 
@@ -46,7 +46,7 @@ class ConfirmationControllerSpec extends ControllerSpecBase with ScalaFutures{
   "Confirmation Controller" must {
 
     "return OK and the correct view for a GET" in {
-      val mockUserAnswers: UserAnswers = MockUserAnswers.minimalValidUserAnswers
+      val mockUserAnswers: UserAnswers = MockUserAnswers.minimalValidUserAnswers()
 			when(mockUserAnswers.cacheMap) thenReturn CacheMap(cacheMapId, Map())
 			val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 			status(result) mustBe OK

@@ -21,7 +21,7 @@ import controllers.actions._
 import forms.HowMuchEmploymentAndSupportAllowanceForm
 import identifiers.HowMuchEmploymentAndSupportAllowanceId
 import models.NormalMode
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.CustomTaxYear
 import org.mockito.Mockito.when
 import play.api.data.Form
 import play.api.libs.json.JsString
@@ -35,8 +35,8 @@ class HowMuchEmploymentAndSupportAllowanceControllerSpec extends ControllerSpecB
 
   private val testAnswer = "9,999.99"
   private val form = new HowMuchEmploymentAndSupportAllowanceForm(frontendAppConfig)()
-  private val taxYear = CYMinus2
-  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
+  private val taxYear = CustomTaxYear(2017)
+  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
 
   def onwardRoute = routes.IndexController.onPageLoad()
 

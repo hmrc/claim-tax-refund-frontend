@@ -26,7 +26,7 @@ import views.html.check_your_answers
 class CheckYourAnswersViewSpec extends SpecBase with ViewBehaviours with MockitoSugar {
 
   private val messageKeyPrefix = "checkYourAnswers"
-  private val answers = MockUserAnswers.fullValidUserAnswers
+  private val answers = MockUserAnswers.fullValidUserAnswers()
   private val helper = new CheckYourAnswersHelper(answers)(messages: Messages)
   private val cyaSection = new CheckYourAnswersSections(helper, answers)
   private val sections = cyaSection.sections

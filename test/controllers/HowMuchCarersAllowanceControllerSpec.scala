@@ -26,7 +26,7 @@ import play.api.test.Helpers._
 import forms.HowMuchCarersAllowanceForm
 import identifiers.HowMuchCarersAllowanceId
 import models.NormalMode
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.CustomTaxYear
 import views.html.howMuchCarersAllowance
 import org.mockito.Mockito.when
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -40,9 +40,9 @@ class HowMuchCarersAllowanceControllerSpec extends ControllerSpecBase {
       dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, new HowMuchCarersAllowanceForm(frontendAppConfig), formPartialRetriever, scalate)
 
   val testAnswer = "9,999.99"
-  private val taxYear = CYMinus2
+  private val taxYear = CustomTaxYear(2017)
   val form = new HowMuchCarersAllowanceForm(frontendAppConfig)()
-  val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
+  val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
 
   def viewAsString(form: Form[_] = form) = howMuchCarersAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
 

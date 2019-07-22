@@ -20,7 +20,7 @@ import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.HowMuchRentalIncomeForm
 import models.NormalMode
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.CustomTaxYear
 import org.mockito.Mockito.when
 import play.api.data.Form
 import play.api.test.Helpers._
@@ -34,8 +34,8 @@ class HowMuchRentalIncomeControllerSpec extends ControllerSpecBase {
 
   val testAnswer = "9,999.99"
   val form = new HowMuchRentalIncomeForm(frontendAppConfig)()
-  private val taxYear = CYMinus2
-  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
+  private val taxYear = CustomTaxYear(2017)
+  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new HowMuchRentalIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),

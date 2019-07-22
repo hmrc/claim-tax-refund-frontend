@@ -19,7 +19,7 @@ package views
 import controllers.routes
 import forms.BooleanForm
 import models.NormalMode
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.CustomTaxYear
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 import views.behaviours.YesNoViewBehaviours
@@ -29,7 +29,7 @@ class AnyBenefitsViewSpec extends YesNoViewBehaviours {
 
   private val messageKeyPrefix = "anyBenefits"
   private val listMessageKeyPrefix = "selectBenefits"
-  private val taxYear = CYMinus2
+  private val taxYear = CustomTaxYear(2017)
 
   override val form = new BooleanForm()()
 

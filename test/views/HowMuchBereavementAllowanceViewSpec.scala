@@ -19,7 +19,7 @@ package views
 import controllers.routes
 import forms.HowMuchBereavementAllowanceForm
 import models.NormalMode
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.CustomTaxYear
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
 import views.behaviours.StringViewBehaviours
@@ -28,7 +28,7 @@ import views.html.howMuchBereavementAllowance
 class HowMuchBereavementAllowanceViewSpec extends StringViewBehaviours with MockitoSugar {
 
   private val messageKeyPrefix = "howMuchBereavementAllowance"
-  private val taxYear = CYMinus2
+  private val taxYear = CustomTaxYear(2017)
 
   override val form: Form[String] = new HowMuchBereavementAllowanceForm(frontendAppConfig)()
 

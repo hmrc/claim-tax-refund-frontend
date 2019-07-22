@@ -30,7 +30,7 @@ import views.html.pdf_check_your_answers
 class PdfCheckYourAnswersViewSpec extends SpecBase with ViewBehaviours with MockitoSugar {
 
   private val messageKeyPrefix = "checkYourAnswers"
-  private val answers = MockUserAnswers.minimalValidUserAnswers
+  private val answers = MockUserAnswers.minimalValidUserAnswers()
   private val helper = new CheckYourAnswersHelper(answers)(messages: Messages)
   private val cyaSection = new CheckYourAnswersSections(helper, answers)
   private val sections = cyaSection.sections

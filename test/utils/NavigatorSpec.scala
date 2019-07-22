@@ -19,7 +19,7 @@ package utils
 import base.SpecBase
 import controllers.routes
 import identifiers._
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.CustomTaxYear
 import models.WhereToSendPayment.{Myself, Nominee}
 import models._
 import org.mockito.Mockito._
@@ -379,13 +379,13 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
       //Claim details section
 
       "go to Employment details from SelectTaxYear if Employment details is empty" in {
-        when(answers.selectTaxYear) thenReturn Some(CYMinus2)
+        when(answers.selectTaxYear) thenReturn Some(CustomTaxYear(2017))
         when(answers.employmentDetails) thenReturn None
         navigator.nextPage(SelectTaxYearId, CheckMode)(answers) mustBe routes.EmploymentDetailsController.onPageLoad(CheckMode)
       }
 
       "got to CYA from SelectTaxYear if Employment details is not empty" in {
-        when(answers.selectTaxYear) thenReturn Some(CYMinus2)
+        when(answers.selectTaxYear) thenReturn Some(CustomTaxYear(2017))
         when(answers.employmentDetails) thenReturn Some(true)
         navigator.nextPage(SelectTaxYearId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
       }

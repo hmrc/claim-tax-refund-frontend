@@ -19,7 +19,7 @@ package views
 import controllers.routes
 import forms.BooleanForm
 import models.NormalMode
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.CustomTaxYear
 import play.api.data.Form
 import views.behaviours.YesNoViewBehaviours
 import views.html.isPaymentAddressInTheUK
@@ -27,7 +27,7 @@ import views.html.isPaymentAddressInTheUK
 class IsPaymentAddressInTheUKViewSpec extends YesNoViewBehaviours {
 
   val messageKeyPrefix = "isPaymentAddressInTheUK"
-  private val taxYear = CYMinus2
+  private val taxYear = CustomTaxYear(2017)
 
   override val form = new BooleanForm()()
 

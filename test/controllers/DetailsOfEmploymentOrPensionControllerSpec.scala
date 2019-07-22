@@ -20,7 +20,7 @@ import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.DetailsOfEmploymentOrPensionForm
 import models.NormalMode
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.CustomTaxYear
 import org.mockito.Mockito.when
 import play.api.data.Form
 import play.api.test.Helpers._
@@ -38,9 +38,9 @@ class DetailsOfEmploymentOrPensionControllerSpec extends ControllerSpecBase {
 
   private val form = new DetailsOfEmploymentOrPensionForm(frontendAppConfig)()
   private val testAnswer = "This is some sample text"
-  private val taxYear = CYMinus2
+  private val taxYear = CustomTaxYear(2017)
   private val characterLimit = 500
-  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
+  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
 
 
   def viewAsString(form: Form[_] = form) =
@@ -49,7 +49,7 @@ class DetailsOfEmploymentOrPensionControllerSpec extends ControllerSpecBase {
   "DetailsOfEmploymentOrPension Controller" must {
 
     "return OK and the correct view for a GET" in {
-      val result = controller(someData).onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(someData()).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe OK
       contentAsString(result) mustBe viewAsString()

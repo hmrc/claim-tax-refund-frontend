@@ -18,7 +18,7 @@ package views
 
 import controllers.routes
 import forms.OtherTaxableIncomeForm
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.CustomTaxYear
 import models.{NormalMode, OtherTaxableIncome}
 import org.scalatest.mockito.MockitoSugar
 import play.api.data.Form
@@ -29,7 +29,7 @@ import views.html.otherTaxableIncome
 class OtherTaxableIncomeViewSpec extends QuestionViewBehaviours[OtherTaxableIncome] with MockitoSugar {
 
   private val messageKeyPrefix = "otherTaxableIncome"
-  private val taxYear = CYMinus2
+  private val taxYear = CustomTaxYear(2017)
 
   override val form: Form[OtherTaxableIncome] = new OtherTaxableIncomeForm(frontendAppConfig)(Seq.empty, 0)
 

@@ -19,7 +19,7 @@ package views
 import controllers.routes
 import forms.BooleanForm
 import models.NormalMode
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.CustomTaxYear
 import org.jsoup.nodes.Document
 import play.api.data.Form
 import play.twirl.api.Html
@@ -31,10 +31,10 @@ import views.html.anyOtherBenefits
 class AnyOtherBenefitsViewSpec extends YesNoViewBehaviours {
 
   private val messageKeyPrefix = "anyOtherBenefits"
-  private val taxYear = CYMinus2
+  private val taxYear = CustomTaxYear(2017)
 
-	private val cya: CheckYourAnswersHelper = new CheckYourAnswersHelper(MockUserAnswers.fullValidUserAnswers)(messages)
-	private val otherBenefits: AnswerSection = new CheckYourAnswersSections(cya, MockUserAnswers.fullValidUserAnswers).otherBenefitsAddToListNormalMode
+	private val cya: CheckYourAnswersHelper = new CheckYourAnswersHelper(MockUserAnswers.fullValidUserAnswers())(messages)
+	private val otherBenefits: AnswerSection = new CheckYourAnswersSections(cya, MockUserAnswers.fullValidUserAnswers()).otherBenefitsAddToListNormalMode
 
   override val form = new BooleanForm()()
 

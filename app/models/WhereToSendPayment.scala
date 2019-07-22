@@ -29,4 +29,6 @@ object WhereToSendPayment extends Enumerable[WhereToSendPayment] {
   lazy val values: Set[WhereToSendPayment] = Set(
     Myself, Nominee
   )
+
+  override def harnessReads: PartialFunction[String, WhereToSendPayment] = PartialFunction.empty
 }

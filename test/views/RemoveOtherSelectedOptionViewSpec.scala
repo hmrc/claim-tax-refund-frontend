@@ -21,14 +21,14 @@ import controllers.routes
 import forms.BooleanForm
 import views.behaviours.YesNoViewBehaviours
 import models.{NormalMode, OtherBenefit}
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.CustomTaxYear
 import play.twirl.api.Html
 import views.html.removeOtherSelectedOption
 
 class RemoveOtherSelectedOptionViewSpec extends YesNoViewBehaviours {
 
   private val messageKeyPrefix = "RemoveOtherSelectedOption"
-  private val taxYear = CYMinus2
+  private val taxYear = CustomTaxYear(2017)
   private val collectionId = OtherBenefit.collectionId
 
   override val form = new BooleanForm()()

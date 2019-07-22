@@ -29,7 +29,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
 
 
   "sections have correct label" must {
-    val answers = MockUserAnswers.minimalValidUserAnswers
+    val answers = MockUserAnswers.minimalValidUserAnswers()
     val helper = new CheckYourAnswersHelper(answers)(messages: Messages)
     val sections = new CheckYourAnswersSections(helper, answers)
 
@@ -60,7 +60,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
 
   "all questions are answered and have the correct rows in the right order" must {
     "Claim details section" in {
-      val answers = MockUserAnswers.claimDetailsUserAnswers
+      val answers = MockUserAnswers.claimDetailsUserAnswers()
       val helper = new CheckYourAnswersHelper(answers)(messages: Messages)
       val sections = new CheckYourAnswersSections(helper, answers)
       val rows = sections.claimSection.rows
@@ -73,7 +73,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
     }
 
     "Benefits section" in {
-      val answers = MockUserAnswers.benefitsUserAnswers
+      val answers = MockUserAnswers.benefitsUserAnswers()
       val helper = new CheckYourAnswersHelper(answers)(messages: Messages)
       val sections = new CheckYourAnswersSections(helper, answers)
       val rows: Seq[AnswerRow] = sections.benefitSection.rows
@@ -204,7 +204,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
     }
 
     "Other Benefits section normal mode" in {
-      val answers = MockUserAnswers.fullValidUserAnswers
+      val answers = MockUserAnswers.fullValidUserAnswers()
       val helper = new CheckYourAnswersHelper(answers)(messages: Messages)
       val sections = new CheckYourAnswersSections(helper, answers)
       val normalModeRows = sections.otherBenefitsAddToListNormalMode.rows

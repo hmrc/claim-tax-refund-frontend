@@ -41,13 +41,13 @@ trait ControllerSpecBase extends SpecBase {
 
   def dontGetAnyData = new FakeDataRetrievalAction(None)
 
-  def someData = new FakeDataRetrievalAction(
-    Some(CacheMap(cacheMapId, Map(SelectTaxYearId.toString -> Json.toJson(SelectTaxYear.CYMinus2))))
+  def someData(year: Int = 2017) = new FakeDataRetrievalAction(
+    Some(CacheMap(cacheMapId, Map(SelectTaxYearId.toString -> Json.toJson(SelectTaxYear.CustomTaxYear(year)))))
   )
 
   implicit lazy val cc: MessagesControllerComponents = messagesControllerComponents
 
-  def fakeDataRetrievalAction(mockUserAnswers: UserAnswers = MockUserAnswers.minimalValidUserAnswers): DataRetrievalAction =
+  def fakeDataRetrievalAction(mockUserAnswers: UserAnswers = MockUserAnswers.minimalValidUserAnswers()): DataRetrievalAction =
     new DataRetrievalAction {
       override protected def transform[A](request: AuthenticatedRequest[A]): Future[OptionalDataRequest[A]] = {
         Future.successful(OptionalDataRequest(

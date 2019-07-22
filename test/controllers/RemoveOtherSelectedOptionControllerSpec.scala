@@ -19,7 +19,7 @@ package controllers
 import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.BooleanForm
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.CustomTaxYear
 import models.{NormalMode, OtherBenefit}
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
@@ -37,8 +37,8 @@ class RemoveOtherSelectedOptionControllerSpec extends ControllerSpecBase with Mo
   val formProvider = new BooleanForm()
   val form = formProvider()
 
-  private val taxYear = CYMinus2
-  private val mockUserAnswers = MockUserAnswers.benefitsUserAnswers
+  private val taxYear = CustomTaxYear(2017)
+  private val mockUserAnswers = MockUserAnswers.benefitsUserAnswers()
   private val collectionId = OtherBenefit.collectionId
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =

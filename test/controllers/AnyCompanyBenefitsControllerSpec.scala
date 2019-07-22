@@ -20,7 +20,7 @@ import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.BooleanForm
 import models.NormalMode
-import models.SelectTaxYear.CYMinus2
+import models.SelectTaxYear.CustomTaxYear
 import org.mockito.Mockito.when
 import play.api.data.Form
 import play.api.test.Helpers._
@@ -34,8 +34,8 @@ class AnyCompanyBenefitsControllerSpec extends ControllerSpecBase {
 
   val formProvider = new BooleanForm()
   val form = formProvider()
-  private val taxYear = CYMinus2
-  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers
+  private val taxYear = CustomTaxYear(2017)
+  private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyCompanyBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
@@ -46,7 +46,7 @@ class AnyCompanyBenefitsControllerSpec extends ControllerSpecBase {
   "AnyCompanyBenefits Controller" must {
 
     "return OK and the correct view for a GET" in {
-      val result = controller(someData).onPageLoad(NormalMode)(fakeRequest)
+      val result = controller(someData()).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe OK
       contentAsString(result) mustBe viewAsString()
