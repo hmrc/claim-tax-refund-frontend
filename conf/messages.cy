@@ -481,9 +481,9 @@ selectTaxYear.current-year-minus-5=6 Ebrill {0} i 5 Ebrill {1}
 selectTaxYear.heading=Pa flwyddyn dreth rydych am hawlio ar ei chyfer?
 selectTaxYear.title=Pa flwyddyn dreth rydych am hawlio ar ei chyfer?
 
-session_expired.guidance=Er eich diogelwch, rydym wedi clirio’ch manylion oherwydd nid ydych wedi gwneud unrhyw beth am 15 munud. Dechreuwch eto i hawlio ad-daliad treth.
-session_expired.heading=Bydd yn rhaid i chi ddechrau o’r dechrau
-session_expired.title=Bydd yn rhaid i chi ddechrau o’r dechrau
+session_expired.heading=Er eich diogelwch, gwnaethom ddileu’ch atebion
+session_expired.title=Er eich diogelwch, gwnaethom ddileu’ch atebion
+session_expired.button=Dechrau eto
 
 site.back=Yn ôl
 site.continue=Yn eich blaen

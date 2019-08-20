@@ -25,6 +25,6 @@ class SessionExpiredViewSpec extends ViewBehaviours {
 
   "Session Expired view" must {
 
-    behave like normalPage(view, "session_expired", Some("guidance"))
+    behave like normalPage(view, "session_expired", Some("button"))
   }
 }
