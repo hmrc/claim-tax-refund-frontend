@@ -128,19 +128,27 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
 
       rows(2).label.key mustBe "howMuchBankInterest.heading"
       rows(3).label.key mustBe "anyTaxableBankInterestOption.checkYourAnswersLabel"
+      rows(3).url mustBe Some(routes.AnyTaxableBankInterestController.onPageLoad(CheckMode).url + "/#anyTaxPaid-yes")
       rows(4).label.key mustBe "anyTaxableBankInterest.checkYourAnswersLabel"
+      rows(4).url mustBe Some(routes.AnyTaxableBankInterestController.onPageLoad(CheckMode).url + "/#taxPaidAmount")
 
       rows(5).label.key mustBe "howMuchForeignIncome.heading"
       rows(6).label.key mustBe "anyTaxableForeignIncomeOption.checkYourAnswersLabel"
+      rows(6).url mustBe Some(routes.AnyTaxableForeignIncomeController.onPageLoad(CheckMode).url + "/#anyTaxPaid-yes")
       rows(7).label.key mustBe "anyTaxableForeignIncome.checkYourAnswersLabel"
+      rows(7).url mustBe Some(routes.AnyTaxableForeignIncomeController.onPageLoad(CheckMode).url + "/#taxPaidAmount")
 
       rows(8).label.key mustBe "howMuchInvestmentOrDividend.heading"
       rows(9).label.key mustBe "anyTaxableInvestmentsOption.checkYourAnswersLabel"
+      rows(9).url mustBe Some(routes.AnyTaxableInvestmentsController.onPageLoad(CheckMode).url + "/#anyTaxPaid-yes")
       rows(10).label.key mustBe "anyTaxableInvestments.checkYourAnswersLabel"
+      rows(10).url mustBe Some(routes.AnyTaxableInvestmentsController.onPageLoad(CheckMode).url + "/#taxPaidAmount")
 
       rows(11).label.key mustBe "howMuchRentalIncome.heading"
       rows(12).label.key mustBe "anyTaxableRentalIncomeOption.checkYourAnswersLabel"
+      rows(12).url mustBe Some(routes.AnyTaxableRentalIncomeController.onPageLoad(CheckMode).url + "/#anyTaxPaid-yes")
       rows(13).label.key mustBe "anyTaxableRentalIncome.checkYourAnswersLabel"
+      rows(13).url mustBe Some(routes.AnyTaxableRentalIncomeController.onPageLoad(CheckMode).url + "/#taxPaidAmount")
 
       otherTaxableIncomeSection.rows.size mustBe 7
       otherTaxableIncomeSection.headingKey.get mustBe "otherTaxableIncome.checkYourAnswersLabel"
@@ -151,7 +159,7 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
       otherTaxableIncomeSection.rows(1).answer.key mustBe "£12"
       otherTaxableIncomeSection.rows(2).label.key mustBe messages("anyTaxableOtherIncomeOption.checkYourAnswersLabel", "qwerty")
       otherTaxableIncomeSection.rows(2).answer.key mustBe "site.yes"
-      otherTaxableIncomeSection.rows(3).label.key mustBe messages("anyTaxableOtherIncome.heading", "qwerty")
+      otherTaxableIncomeSection.rows(3).label.key mustBe messages("anyTaxableOtherIncome.checkYourAnswersLabel", "qwerty")
       otherTaxableIncomeSection.rows(3).answer.key mustBe "£1234"
 
       //Header for second otherTaxableIncome

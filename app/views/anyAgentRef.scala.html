@@ -50,20 +50,16 @@
 
             @components.heading(messages("anyAgentRef.heading", nomineeName), taxYear = Some(taxYear.asString))
 
-            @components.input_yes_no(
+            @components.input_yes_no_with_text_expander(
                 viewModel = InputViewModel("anyAgentRef", form),
+                form = form,
                 label = messages("anyAgentRef.heading", nomineeName),
                 labelClass = Some("visually-hidden"),
+                textFieldLabel = messages("anyAgentRef.agentRefField"),
+                textFieldLabelId = "yesAgentRef",
+                textFieldId = "agentRef",
                 yesAssoc = Some("yesAgentRef")
             )
-
-            <div id="yesAgentRef" class="js-hidden">
-            @components.input_text(
-                viewModel = InputViewModel("agentRef", form),
-                label = messages("anyAgentRef.agentRefField"),
-                divClass = Some("panel panel-border-narrow")
-            )
-            </div>
 
             @components.submit_button()
         }

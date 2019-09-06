@@ -150,48 +150,48 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
 		cyaHelper.anyTaxPaid(
 			"anyTaxableBankInterestOption.checkYourAnswersLabel",
 			userAnswers.anyTaxableBankInterest,
-			Some(routes.AnyTaxableBankInterestController.onPageLoad(CheckMode).url)
+			Some(routes.AnyTaxableBankInterestController.onPageLoad(CheckMode).url + "/#anyTaxPaid-yes")
 		),
 		cyaHelper.taxPaid(
 			"anyTaxableBankInterest.checkYourAnswersLabel",
 			userAnswers.anyTaxableBankInterest,
-			Some(routes.AnyTaxableBankInterestController.onPageLoad(CheckMode).url)
+			Some(routes.AnyTaxableBankInterestController.onPageLoad(CheckMode).url + "/#taxPaidAmount")
 		),
 		//Foreign income
 		cyaHelper.howMuchForeignIncome,
 		cyaHelper.anyTaxPaid(
 			"anyTaxableForeignIncomeOption.checkYourAnswersLabel",
 			userAnswers.anyTaxableForeignIncome,
-			Some(routes.AnyTaxableForeignIncomeController.onPageLoad(CheckMode).url)
+			Some(routes.AnyTaxableForeignIncomeController.onPageLoad(CheckMode).url + "/#anyTaxPaid-yes")
 		),
 		cyaHelper.taxPaid(
 			"anyTaxableForeignIncome.checkYourAnswersLabel",
 			userAnswers.anyTaxableForeignIncome,
-			Some(routes.AnyTaxableForeignIncomeController.onPageLoad(CheckMode).url)
+			Some(routes.AnyTaxableForeignIncomeController.onPageLoad(CheckMode).url + "/#taxPaidAmount")
 		),
 		//Investments and dividends
 		cyaHelper.howMuchInvestmentOrDividend,
 		cyaHelper.anyTaxPaid(
 			"anyTaxableInvestmentsOption.checkYourAnswersLabel",
 			userAnswers.anyTaxableInvestments,
-			Some(routes.AnyTaxableInvestmentsController.onPageLoad(CheckMode).url)
+			Some(routes.AnyTaxableInvestmentsController.onPageLoad(CheckMode).url + "/#anyTaxPaid-yes")
 		),
 		cyaHelper.taxPaid(
 			"anyTaxableInvestments.checkYourAnswersLabel",
 			userAnswers.anyTaxableInvestments,
-			Some(routes.AnyTaxableInvestmentsController.onPageLoad(CheckMode).url)
+			Some(routes.AnyTaxableInvestmentsController.onPageLoad(CheckMode).url + "/#taxPaidAmount")
 		),
 		//property Rental
     cyaHelper.howMuchRentalIncome,
     cyaHelper.anyTaxPaid(
       "anyTaxableRentalIncomeOption.checkYourAnswersLabel",
       userAnswers.anyTaxableRentalIncome,
-      Some(routes.AnyTaxableRentalIncomeController.onPageLoad(CheckMode).url)
+      Some(routes.AnyTaxableRentalIncomeController.onPageLoad(CheckMode).url + "/#anyTaxPaid-yes")
     ),
     cyaHelper.taxPaid(
       "anyTaxableRentalIncome.checkYourAnswersLabel",
       userAnswers.anyTaxableRentalIncome,
-      Some(routes.AnyTaxableRentalIncomeController.onPageLoad(CheckMode).url)
+      Some(routes.AnyTaxableRentalIncomeController.onPageLoad(CheckMode).url + "/#taxPaidAmount")
     )
   ).flatten)
 

@@ -51,17 +51,17 @@
 
         <p>@messages("telephoneNumber.hintPara1")</p>
 
-        @components.input_yes_no(
+        @components.input_yes_no_with_text_expander(
             InputViewModel("anyTelephoneNumber", form),
+            form = form,
             label = messages("telephoneNumber.heading"),
             labelClass = Some("visually-hidden"),
+            textFieldLabel = messages("telephoneNumber.telephoneNumberField"),
+            textFieldLabelId = "yesTelephoneNumber",
+            textFieldId = "telephoneNumber",
             yesAssoc = Some("yesTelephoneNumber"),
             noAssoc = Some("noTelephoneNumber")
         )
-
-        <div id="yesTelephoneNumber" class="js-hidden">
-        @components.input_text(InputViewModel("telephoneNumber", form), messages("telephoneNumber.telephoneNumberField"), Some("panel panel-border-narrow"))
-        </div>
 
         @components.submit_button()
     }

@@ -50,22 +50,17 @@
         @components.heading(messages("anyTaxableBankInterest.heading"), taxYear = Some(taxYear.asString))
 
 
-        @components.input_yes_no(
+        @components.input_yes_no_with_text_expander(
             InputViewModel("anyTaxPaid", form),
             label = messages("anyTaxableBankInterest.heading", taxYear.asString),
+            form = form,
             labelClass = Some("visually-hidden"),
+            textFieldLabel = messages("anyTaxableBankInterest.anyTaxPaidAmountField"),
+            textHintLine1 = Some(messages("anyTaxableBankInterest.hint")),
+            currency = true,
             yesAssoc = Some("yesAnyTaxPaid"),
             noAssoc = Some("noAnyTaxPaid")
         )
-
-        <div id="yesAnyTaxPaid" class="js-hidden">
-        @components.input_text(InputViewModel("taxPaidAmount", form),
-            messages("anyTaxableBankInterest.anyTaxPaidAmountField"),
-            Some("panel panel-border-narrow"),
-            hintLine1 = Some(messages("anyTaxableBankInterest.hint")),
-            currency = true
-        )
-        </div>
 
         @components.submit_button()
     }

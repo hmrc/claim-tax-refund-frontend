@@ -1,0 +1,73 @@
+@*
+ * Copyright 2019 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import viewmodels.{InputViewModelBase, InputViewModel}
+@import uk.gov.hmrc.play.views.html._
+
+
+@(
+viewModel: InputViewModelBase,
+form: Form[_],
+label: String,
+textFieldLabel: String,
+textFieldLabelId: String = "yesAnyTaxPaid",
+textFieldId: String = "taxPaidAmount",
+secondaryLabel: Option[String] = None,
+inputClass: Option[String] = None,
+hint: Option[String] = None,
+yesAssoc: Option[String] = None,
+noAssoc: Option[String] = None,
+labelClass: Option[String] = None,
+textHintLine1: Option[String] = None,
+textHintLine2: Option[String] = None,
+currency: Boolean = false
+)(implicit messages: Messages)
+
+
+<div class="form-group @if(viewModel.errorKey.nonEmpty){form-field--error}">
+    <fieldset class="inline" id="@{viewModel.id}">
+
+        <legend>
+          <span @if(labelClass.nonEmpty){class="@labelClass"}>@label</span>
+          @if(hint.nonEmpty){
+            <span class="form-hint">@hint</span>
+          }
+          @if(viewModel.errorKey.nonEmpty){
+            <span class="error-notification" id="error-message-@{viewModel.id}-input">@messages(viewModel.errorKey)</span>
+          }
+        </legend>
+        <div class="multiple-choice" data-target="@if(yesAssoc.nonEmpty){@yesAssoc}">
+            <input id="@{viewModel.id}-yes" type="radio" name="@{viewModel.id}" value="true" @if(viewModel.value.contains("true")){checked="checked"} />
+            <label for="@{viewModel.id}-yes" > @messages("site.yes") </label>
+        </div>
+        <div class="multiple-choice" data-target="@if(noAssoc.nonEmpty){@noAssoc}">
+            <input id="@{viewModel.id}-no" type="radio" name="@{viewModel.id}" value="false" @if(viewModel.value.contains("false")){checked="checked"} />
+            <label for="@{viewModel.id}-no" > @messages("site.no") </label>
+        </div>
+
+        <div id="@textFieldLabelId" class="js-hidden">
+            @components.input_text(InputViewModel(textFieldId, form),
+            textFieldLabel,
+            Some("panel panel-border-narrow"),
+            hintLine1 = textHintLine1,
+            hintLine2 = textHintLine2,
+            currency = currency
+            )
+        </div>
+
+    </fieldset>
+
+</div>

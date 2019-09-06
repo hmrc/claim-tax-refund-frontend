@@ -51,21 +51,16 @@
         @components.heading(messages("anyTaxableOtherIncome.heading", incomeName), taxYear = Some(taxYear.asString))
 
 
-        @components.input_yes_no(
+        @components.input_yes_no_with_text_expander(
             InputViewModel("anyTaxPaid", form),
             label = messages("anyTaxableOtherIncome.heading", incomeName, taxYear.asString),
             labelClass = Some("visually-hidden"),
+            form = form,
+            textFieldLabel = messages("anyTaxableOtherIncome.anyTaxPaidAmountField", incomeName),
+            currency = true,
             yesAssoc = Some("yesAnyTaxPaid"),
             noAssoc = Some("noAnyTaxPaid")
         )
-
-        <div id="yesAnyTaxPaid" class="js-hidden">
-        @components.input_text(InputViewModel("taxPaidAmount", form),
-            messages("anyTaxableOtherIncome.anyTaxPaidAmountField", incomeName),
-            Some("panel panel-border-narrow"),
-            currency = true
-        )
-        </div>
 
         @components.submit_button()
     }
