@@ -80,8 +80,8 @@ class AddressLookupConfig @Inject()(messagesApi: MessagesApi) {
         "searchAgainLinkText" -> messagesApi("addressLookup.editPage.searchAgainLinkText")
       ),
       "timeout" -> Json.obj(
-        fields = "timeoutAmount" -> 900,
-        "timeoutUrl" -> "http://service/timeout-uri"
+        fields = "timeoutAmount" -> 890,
+        "timeoutUrl" -> "http://tax.service.gov.uk/claim-tax-refund/sign-out"
       ),
       "ukMode" -> false
     )

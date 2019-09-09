@@ -34,7 +34,8 @@
     bodyClasses = None,
     timeout = false
 ) {
-    <h1 class="heading-xlarge">@messages("session_expired.heading")</h1>
+    <h1 class="heading-xlarge">@messages("timedOut.heading")</h1>
+    <p>@messages("timedOut.message")</p>
 
-    <a href=/claim-tax-refund class="button" role="button">@messages("session_expired.button")</a>
+    <a href=/claim-tax-refund class="button" role="button">@messages("timedOut.button")</a>
 }

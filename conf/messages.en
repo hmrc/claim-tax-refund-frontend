@@ -490,3 +490,11 @@ RemoveOtherSelectedOption.blank = Select yes if you need to tell us about any ot
 RemoveOtherSelectedOption.otherBenefits = taxable benefit
 RemoveOtherSelectedOption.companyBenefits = company benefit
 RemoveOtherSelectedOption.otherIncome = taxable income
+
+timeout.message = For your security, we will delete your answers and you will be signed out in
+timeout.continue = Get another 15 minutes
+timeout.exit = Sign out now
+
+timedOut.heading = For your security, we signed you out
+timedOut.message = We did not save your answers.
+timedOut.button = Sign in

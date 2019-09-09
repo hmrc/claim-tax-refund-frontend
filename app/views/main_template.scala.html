@@ -28,7 +28,8 @@
         mainClass: Option[String] = None,
         includeGridWrapper: Boolean = false,
         articleClasses: Option[String] = None,
-        scriptElem: Option[Html] = None
+        scriptElem: Option[Html] = None,
+        timeout: Boolean = true
 )(
         mainContent: Html
 )(
@@ -68,6 +69,22 @@
     formPartialRetriever.getPartialContent(appConfig.reportAProblemPartialUrl)
 }
 
+@inlineScript = {
+    @if(timeout){
+        <script type="text/javascript">
+                window.GOVUK.timeoutDialog({
+                    timeout: 890,
+                    countdown: 300,
+                    message: '@Messages("timeout.message")',
+                    keepAliveUrl: '/claim-tax-refund/keep-alive',
+                    signOutUrl: '/claim-tax-refund/sign-out',
+                    keepAliveButtonText: '@Messages("timeout.continue")',
+                    signOutButtonText: '@Messages("timeout.exit")'
+                });
+        </script>
+    }
+}
+
 @scalate.render(
     template = "/templates/mustache/production/govuk-template.mustache.html",
     params = Map(
@@ -84,6 +101,7 @@
         "isWelsh" -> {
             messages.lang.code == "cy"
         },
-        "showPropositionLinks" -> true
+        "showPropositionLinks" -> true,
+        "inlineScript" -> inlineScript
     )
 )

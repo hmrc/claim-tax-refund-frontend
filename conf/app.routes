@@ -8,6 +8,10 @@ GET        /language/:lang                                                  cont
 
 GET        /this-service-has-been-reset                                     controllers.SessionExpiredController.onPageLoad
 
+GET        /keep-alive                                                      controllers.SessionManagementController.extendSession
+GET        /sign-out                                                        controllers.SessionManagementController.clearSessionData
+GET        /signed-out                                                      controllers.SessionManagementController.signedOut
+
 GET        /check-your-answers                                              controllers.CheckYourAnswersController.onPageLoad
 POST       /check-your-answers                                              controllers.CheckYourAnswersController.onSubmit
 
