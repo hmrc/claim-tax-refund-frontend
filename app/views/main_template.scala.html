@@ -17,6 +17,7 @@
 @import com.github.tototoshi.play2.scalate._
 @import config.FrontendAppConfig
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
+@import uk.gov.hmrc.play.views.html._
 
 @(
         title: String,
@@ -48,6 +49,10 @@
     layouts.article(mainContent, includeGridWrapper, articleClasses)
 }
 
+@mainContentHeader = {
+    @components.language_selector(appConfig)
+}
+
 @linkElem = @{
     Map("url" -> controllers.routes.Assets.versioned("stylesheets/claimtaxrefundfrontend-app.css"))
 }
@@ -73,15 +78,12 @@
         "linkElems" -> linkElem,
         "scriptElems" -> scriptElem,
         "mainClass" -> mainClass,
+        "mainContentHeader" -> mainContentHeader,
         "article" -> article,
         "getHelpForm" -> helpForm,
         "isWelsh" -> {
             messages.lang.code == "cy"
         },
-        "showPropositionLinks" -> true,
-        "langSelector" -> {
-            Map("enUrl" -> appConfig.routeToSwitchLanguage("english"),
-                "cyUrl" -> appConfig.routeToSwitchLanguage("cymraeg"))
-        }
+        "showPropositionLinks" -> true
     )
 )

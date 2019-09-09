@@ -380,7 +380,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
               route = if(cya) None else Some(routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode, Index(index)).url)
             ),
             taxPaid(
-              label = messages("anyTaxableOtherIncome.heading", taxableIncome.name),
+              label = messages("anyTaxableOtherIncome.checkYourAnswersLabel", taxableIncome.name),
               answer = Some(taxableIncome.anyTaxPaid.get),
               route = if(cya) None else Some(routes.AnyTaxableOtherIncomeController.onPageLoad(CheckMode, Index(index)).url)
             ),
@@ -450,7 +450,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
         case AnyAgentRef.Yes(agentRef) => "site.yes"
         case AnyAgentRef.No => "site.no"
       },
-			url = Some(routes.AnyAgentRefController.onPageLoad(CheckMode).url),
+			url = Some(routes.AnyAgentRefController.onPageLoad(CheckMode).url + "/#anyAgentRef-yes"),
 			changeLabel = messages("anyAgentRef.changeLabel", userAnswers.nomineeFullName.getOrElse("your nominee"))
 		)
   }
@@ -460,7 +460,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
       Some(
 				AnswerRow(label = "anyAgentRef.agentRefField",
         answer = s"$number",
-        url = Some(routes.AnyAgentRefController.onPageLoad(CheckMode).url),
+        url = Some(routes.AnyAgentRefController.onPageLoad(CheckMode).url + "/#agentRef"),
 				changeLabel = messages("anyAgentRef.changeLabel", userAnswers.nomineeFullName.getOrElse("your nominee"))
       ))
     case _ => None
@@ -533,7 +533,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
           case TelephoneOption.Yes(number) => "site.yes"
           case TelephoneOption.No => "site.no"
         },
-        url = Some(routes.TelephoneNumberController.onPageLoad(CheckMode).url),
+        url = Some(routes.TelephoneNumberController.onPageLoad(CheckMode).url + "/#anyTelephoneNumber-yes"),
 				changeLabel = "telephoneNumber.changeLabel"
       )
   }
@@ -543,7 +543,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
       Some(AnswerRow(
 				label = "telephoneNumber.telephoneNumberField",
         answer = s"$number",
-        url = Some(routes.TelephoneNumberController.onPageLoad(CheckMode).url),
+        url = Some(routes.TelephoneNumberController.onPageLoad(CheckMode).url + "/#telephoneNumber"),
 				changeLabel = "telephoneNumber.telephoneNumberField.changeLabel"
       ))
     case _ => None

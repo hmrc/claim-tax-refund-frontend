@@ -1,3 +1,8 @@
+language-switcher.english=English
+language-switcher.english.hover=Use this account in English
+language-switcher.welsh=Cymraeg
+language-switcher.welsh.hover=Defnyddio''r cyfrif hwn yn Cymraeg
+
 addressLookup.changeLabel=Newid a ydych am i ni anfon unrhyw daliad i’r cyfeiriad hwn?
 addressLookup.confirmPage.changeLinkText=Golygwch y cyfeiriad
 addressLookup.confirmPage.heading=Adolygu a chadarnhau
