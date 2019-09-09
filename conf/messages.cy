@@ -556,3 +556,10 @@ detailsOfEmploymentOrPension.checkYourAnswersLabel=Manylion cyflogaeth neu bensi
 
 howMuchOtherTaxableIncome.checkYourAnswersLabel=Faint o incwm o incwm trethadwy a gawsoch?
 
+timeout.message = Er eich diogelwch, byddwn yn dileu’ch atebion a byddwch yn cael eich allgofnodi cyn pen
+timeout.continue = Hoffwn gael 15 munud arall
+timeout.exit = Allgofnodi nawr
+
+timedOut.heading = Er eich diogelwch, gwnaethom eich allgofnodi
+timedOut.message = Ni wnaethom gadw’ch atebion.
+timedOut.button = Mewngofnodi
