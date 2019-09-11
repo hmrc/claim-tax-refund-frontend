@@ -33,7 +33,9 @@ noAssoc: Option[String] = None,
 labelClass: Option[String] = None,
 textHintLine1: Option[String] = None,
 textHintLine2: Option[String] = None,
-currency: Boolean = false
+currency: Boolean = false,
+inputType: Option[String] = Some("text"),
+autoComplete: Boolean = false
 )(implicit messages: Messages)
 
 
@@ -64,7 +66,9 @@ currency: Boolean = false
             Some("panel panel-border-narrow"),
             hintLine1 = textHintLine1,
             hintLine2 = textHintLine2,
-            currency = currency
+            currency = currency,
+            inputType = inputType,
+            autoComplete = autoComplete
             )
         </div>
 

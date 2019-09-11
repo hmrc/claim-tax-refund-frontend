@@ -25,7 +25,9 @@
         hintLine2: Option[String] = None,
         labelClass: Option[String] = None,
         currency: Boolean = false,
-        valueError: Boolean = false
+        inputType: Option[String] = Some("text"),
+        valueError: Boolean = false,
+        autoComplete: Boolean = false
 )(implicit messages: Messages)
 
 <div class="form-group @if(divClass.nonEmpty){@divClass} @if(viewModel.errorKey.nonEmpty){form-field--error}">
@@ -50,10 +52,11 @@
         }
         <input
             class="form-control @if(currency){govuk-currency-input__inner__input} @inputClass"
-            type="text"
+            type=@inputType
             id="@{viewModel.id}"
             name="@{viewModel.id}"
             value="@{viewModel.value}"
+            @if(autoComplete){autocomplete="tel"}
             @if(viewModel.errorKey.nonEmpty){aria-describedby="error-message-@{viewModel.id}-input"}
         />
     </div>

@@ -59,8 +59,10 @@
             textFieldLabel = messages("telephoneNumber.telephoneNumberField"),
             textFieldLabelId = "yesTelephoneNumber",
             textFieldId = "telephoneNumber",
+            inputType = Some("tel"),
             yesAssoc = Some("yesTelephoneNumber"),
-            noAssoc = Some("noTelephoneNumber")
+            noAssoc = Some("noTelephoneNumber"),
+            autoComplete = true
         )
 
         @components.submit_button()

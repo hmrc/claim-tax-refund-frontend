@@ -118,9 +118,9 @@ class AddressLookupConfigSpec extends SpecBase {
 						element.get mustBe JsString(messagesApi("addressLookup.confirmPage.title")(lang))
 					}
 
-					s"""have correct heading of "${messagesApi("addressLookup.confirmPage.heading")(lang)}""" in {
+					s"""have correct heading of "${messagesApi("addressLookup.confirmPage.title")(lang)}""" in {
 						val element = addressConfig \ "confirmPage" \ "heading"
-						element.get mustBe JsString(messagesApi("addressLookup.confirmPage.heading")(lang))
+						element.get mustBe JsString(messagesApi("addressLookup.confirmPage.title")(lang))
 					}
 
 					s"""have correct infoSubheading of "${messagesApi("addressLookup.confirmPage.infoSubheading")(lang)}""" in {
