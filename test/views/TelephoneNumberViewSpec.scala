@@ -90,11 +90,25 @@ class TelephoneNumberViewSpec extends QuestionViewBehaviours[TelephoneOption]{
             assertContainsText(doc, messages(s"$messageKeyPrefix.hintPara1"))
           }
 
-          "contain an input for the value" in {
+          "contain 2 radioButtons" in {
             val doc = asDocument(createView(form))
+            assert(doc.select("input[type=\"radio\"]").size == 2)
             assertRenderedById(doc, "anyTelephoneNumber-yes")
             assertRenderedById(doc, "anyTelephoneNumber-no")
-            assertRenderedById(doc, "yesTelephoneNumber")
+          }
+
+          "contain a conditionally-revealing text input" which {
+            val doc = asDocument(createView(form))
+            val telInput = doc.getElementById("telephoneNumber")
+
+            "should have an input type of 'tel" in {
+              assert(telInput.attr("type") == "tel")
+            }
+
+            "should have the autocomplete attribute" in {
+              assert(telInput.hasAttr("autocomplete"))
+              assert(telInput.attr("autocomplete") == "tel")
+            }
           }
 
           "have no values checked when rendered with no form" in {
@@ -102,6 +116,7 @@ class TelephoneNumberViewSpec extends QuestionViewBehaviours[TelephoneOption]{
             assert(!doc.getElementById("anyTelephoneNumber-yes").hasAttr("checked"))
             assert(!doc.getElementById("anyTelephoneNumber-no").hasAttr("checked"))
           }
+
 
           "include the form's value in the value input" in {
             val doc = asDocument(createView(form.fill(TelephoneOption.Yes(testPhoneNumber))))

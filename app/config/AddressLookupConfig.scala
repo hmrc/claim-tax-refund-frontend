@@ -58,7 +58,7 @@ class AddressLookupConfig @Inject()(messagesApi: MessagesApi) {
       ),
       "confirmPage" -> Json.obj(
         fields = "title" -> messagesApi("addressLookup.confirmPage.title"),
-        "heading" -> messagesApi("addressLookup.confirmPage.heading"),
+        "heading" -> messagesApi("addressLookup.confirmPage.title"),
         "infoSubheading" -> messagesApi("addressLookup.confirmPage.infoSubheading"),
         "infoMessage" -> messagesApi("addressLookup.confirmPage.infoMessage"),
         "submitLabel" -> messagesApi("addressLookup.confirmPage.submitLabel"),
