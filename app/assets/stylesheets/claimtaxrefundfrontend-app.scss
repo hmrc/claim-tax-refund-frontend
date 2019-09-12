@@ -13,6 +13,12 @@
 
 @import 'partials/_components.scss';
 
+@import 'partials/_palette.scss';
+
+@import 'partials/_focus.scss';
+
+
+
 .govuk-currency-input__inner__unit {
   position: absolute;
   bottom: 5px;
