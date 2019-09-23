@@ -29,7 +29,8 @@
         includeGridWrapper: Boolean = false,
         articleClasses: Option[String] = None,
         scriptElem: Option[Html] = None,
-        timeout: Boolean = true
+        timeout: Boolean = true,
+        isWelshEnabled: Boolean = true
 )(
         mainContent: Html
 )(
@@ -50,8 +51,8 @@
     layouts.article(mainContent, includeGridWrapper, articleClasses)
 }
 
-@mainContentHeader = {
-    @components.language_selector(appConfig)
+@mainContentHeader = @{
+    if (isWelshEnabled) { components.language_selector(appConfig) } else { }
 }
 
 @linkElem = @{
@@ -63,6 +64,10 @@
         Map("url" -> controllers.routes.Assets.versioned("javascripts/claimtaxrefundfrontend.js")),
         Map("url" -> controllers.routes.Assets.versioned("javascripts/google-tag-manager-script.js"))
     )
+}
+
+@accessibilityFooterUrl = @{
+    Map("accessibilityFooterUrl" -> "/claim-tax-refund/accessibility")
 }
 
 @helpForm = @{
@@ -96,6 +101,7 @@
         "scriptElems" -> scriptElem,
         "mainClass" -> mainClass,
         "mainContentHeader" -> mainContentHeader,
+        "accessibilityFooterUrl" -> accessibilityFooterUrl,
         "article" -> article,
         "getHelpForm" -> helpForm,
         "isWelsh" -> {
