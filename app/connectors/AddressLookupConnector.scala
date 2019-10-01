@@ -40,7 +40,7 @@ class AddressLookupConnector @Inject()(
                                       ) {
 
   def initialise(continueUrl: String)(implicit hc: HeaderCarrier, language: Lang): Future[Option[String]] = {
-    val addressLookupUrl = s"${appConfig.addressLookupUrl}/api/init"
+    val addressLookupUrl = s"${appConfig.addressLookupUrl}/api/v2/init"
     val addressConfig = Json.toJson(addressLookupConfig.config(continueUrl = s"$continueUrl"))
     http.POST(addressLookupUrl, body = addressConfig).map {
       response =>
