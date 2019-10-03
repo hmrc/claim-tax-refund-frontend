@@ -77,22 +77,22 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with WireMoc
 
     "return a location when addressLookup.initialise" in {
       server.stubFor(
-        post(urlEqualTo("/api/init"))
+        post(urlEqualTo("/api/v2/init"))
           .willReturn(
             aResponse()
               .withStatus(202)
-              .withHeader("Location", "/api/location")
+              .withHeader("Location", "/api/v2/location")
           )
       )
 
       val result: Option[String] = Await.result(connector.initialise(continueUrl = ""), 500.millisecond)
-      result mustBe Some("/api/location")
+      result mustBe Some("/api/v2/location")
 
     }
 
     "return error when there is no Location" in {
       server.stubFor(
-        post(urlEqualTo("/api/init"))
+        post(urlEqualTo("/api/v2/init"))
           .willReturn(
             aResponse()
               .withStatus(202)
@@ -102,12 +102,12 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with WireMoc
       )
 
       val result: Option[String] = Await.result(connector.initialise(""), 500.millisecond)
-      result mustBe Some(s"[AddressLookupConnector][initialise] - Failed to obtain location from http://localhost:${server.port}/api/init")
+      result mustBe Some(s"[AddressLookupConnector][initialise] - Failed to obtain location from http://localhost:${server.port}/api/v2/init")
     }
 
     "return error when status is other than 202" in {
       server.stubFor(
-        post(urlEqualTo("/api/init"))
+        post(urlEqualTo("/api/v2/init"))
           .willReturn(
             aResponse()
               .withStatus(204)
@@ -120,7 +120,7 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with WireMoc
 
     "get None when there is an error" in {
       server.stubFor(
-        post(urlEqualTo("/api/init"))
+        post(urlEqualTo("/api/v2/init"))
           .willReturn(
             aResponse()
           )
@@ -136,7 +136,7 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with WireMoc
 
     "return None when HTTP call fails" in {
       server.stubFor(
-        post(urlEqualTo("/api/init"))
+        post(urlEqualTo("/api/v2/init"))
           .willReturn(
             aResponse()
               .withStatus(400)
