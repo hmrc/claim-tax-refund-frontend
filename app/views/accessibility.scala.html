@@ -32,14 +32,13 @@
  title = messages(messages("accessibility.heading")),
  appConfig = appConfig,
  bodyClasses = None,
- timeout = false,
- isWelshEnabled = false
+ timeout = false
 ) {
 
  <h1>@messages("accessibility.heading")</h1>
 
  <p>@messages("accessibility.par01")</p>
- <p>@messages("accessibility.par02") <a href="https://www.gov.uk/help/accessibility" >@messages("accessibility.par02.linkText")</a>.</p>
+ <p>@messages("accessibility.par02.before") <a href="https://www.gov.uk/help/accessibility" >@messages("accessibility.par02.linkText")</a> @messages("accessibility.par02.after").</p>
  <p>@messages("accessibility.par03") <a href="https://www.tax.service.gov.uk/claim-tax-refund" >@messages("accessibility.par03.linkText")</a>.</p>
 
  <h2>@messages("accessibility.subheading01")</h2>
@@ -55,7 +54,7 @@
  @components.list(None, None, Seq(messages("accessibility.par08.item01"), messages("accessibility.par08.item02"), messages("accessibility.par08.item03")))
 
  <h2>@messages("accessibility.subheading03")</h2>
- <p>@messages("accessibility.par09") <a href="mailto:hmrc-accessibility-problems@@digital.hmrc.gov.uk" >@messages("accessibility.par09.linkText")</a></p>
+ <p>@messages("accessibility.par09") <a href="https://www.tax.service.gov.uk/contact/accessibility?service=ctr&userAction=/claim-tax-refund/accessibility" target="_blank">@messages("accessibility.par09.linkText")</a>.</p>
 
  <h2>@messages("accessibility.subheading04")</h2>
  <p>@messages("accessibility.par10.part1") <a href="https://www.equalityadvisoryservice.com/" >@messages("accessibility.par10.linkText01")</a>
@@ -69,7 +68,12 @@
 
  <h2>@messages("accessibility.subheading06")</h2>
  <p>@messages("accessibility.par14")</p>
- <p>@messages("accessibility.par15") <a href="https://www.w3.org/TR/WCAG21/" >@messages("accessibility.par15.linkText")</a>.</p>
+ <p>@messages("accessibility.par15.before") <a href="https://www.w3.org/TR/WCAG21/" >@messages("accessibility.par15.linkText")</a> @messages("accessibility.par15.after").</p>
+
+ <h3>@messages("accessibility.subheading08")</h3>
+ <p>@messages("accessibility.par23")</p>
+
+ <h4>@messages("accessibility.subheading09")</h4>
  <p>@messages("accessibility.par16")</p>
  <p>@messages("accessibility.par17")</p>
  <p>@messages("accessibility.par18")</p>
@@ -78,5 +82,6 @@
 
  <h2>@messages("accessibility.subheading07")</h2>
  <p>@messages("accessibility.par21")</p>
+ <p>@messages("accessibility.par24.before") <a href="http://www.digitalaccessibilitycentre.org/" >@messages("accessibility.par24.linkText")</a>. @messages("accessibility.par24.after").</p>
  <p>@messages("accessibility.par22")</p>
 }
