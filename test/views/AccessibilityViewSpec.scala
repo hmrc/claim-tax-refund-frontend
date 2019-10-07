@@ -26,7 +26,7 @@ class AccessibilityViewSpec extends ViewBehaviours {
   "Accessibility view" should {
 
     "have the correct title" in {
-     assert(asDocument(view()).title == "Accessibility statement for 'Claim a tax refund'")
+     assert(asDocument(view()).title == "Accessibility statement for Claim a tax refund")
     }
 
     "have a h1 heading" which {
@@ -35,7 +35,7 @@ class AccessibilityViewSpec extends ViewBehaviours {
         assert(heading.size == 1)
       }
       "should have the correct text" in {
-        assert(heading.text == "Accessibility statement for 'Claim a tax refund'")
+        assert(heading.text == "Accessibility statement for Claim a tax refund")
       }
     }
 
@@ -50,8 +50,29 @@ class AccessibilityViewSpec extends ViewBehaviours {
         }
       }
     }
+
+    "have h3 headings" which {
+      val heading = asDocument(view()).select("h3")
+      "have a h3 heading" in {
+        assert(heading.size() == 1)
+      }
+      "should have the correct text" in {
+          assert(heading.get(0).text == messages("Non-accessible content"))
+      }
+    }
+
+    "have h4 headings" which {
+      val heading = asDocument(view()).select("h4")
+      "have a h4 heading" in {
+        assert(heading.size() == 1)
+      }
+      "should have the correct text" in {
+          assert(heading.get(0).text == messages("Non-compliance with the accessibility regulations"))
+      }
+    }
+
     "have 22 paragraphs" in {
-      assert(asDocument(view()).select("p").size() == 22)
+      assert(asDocument(view()).select("p").size() == 24)
     }
   }
 }
