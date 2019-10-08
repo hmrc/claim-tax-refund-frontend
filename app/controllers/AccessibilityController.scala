@@ -25,7 +25,7 @@ import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import play.api.mvc.MessagesControllerComponents
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import views.html.accessibility
-
+import java.net.URL
 import scala.concurrent.ExecutionContext
 
 @Singleton
@@ -36,6 +36,7 @@ class AccessibilityController @Inject()(val appConfig: FrontendAppConfig,
                                       )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = Action { implicit request =>
-    Ok(accessibility(appConfig))
+    val referer_url = new URL(request.headers("referer")).getPath
+    Ok(accessibility(appConfig, referer_url))
   }
 }

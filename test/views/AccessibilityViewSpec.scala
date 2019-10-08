@@ -21,7 +21,7 @@ import views.html.accessibility
 
 class AccessibilityViewSpec extends ViewBehaviours {
 
-  def view = () => accessibility(frontendAppConfig)(fakeRequest, messages, formPartialRetriever, scalate)
+  def view = () => accessibility(frontendAppConfig, "/url")(fakeRequest, messages, formPartialRetriever, scalate)
 
   "Accessibility view" should {
 
@@ -71,8 +71,8 @@ class AccessibilityViewSpec extends ViewBehaviours {
       }
     }
 
-    "have 22 paragraphs" in {
-      assert(asDocument(view()).select("p").size() == 24)
+    "have 25 paragraphs" in {
+      assert(asDocument(view()).select("p").size() == 25)
     }
   }
 }

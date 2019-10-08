@@ -18,20 +18,23 @@ package controllers
 
 import play.api.test.Helpers._
 import views.html.accessibility
+import java.net.URL
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
 class AccessibilityControllerSpec extends ControllerSpecBase {
 
+  val url = "http://www.example.com/url"
+
   "Accessibility Controller" must {
     "return 200 for a GET" in {
-      val result = new AccessibilityController(frontendAppConfig, messagesControllerComponents, formPartialRetriever, scalate).onPageLoad()(fakeRequest)
+      val result = new AccessibilityController(frontendAppConfig, messagesControllerComponents, formPartialRetriever, scalate).onPageLoad()(fakeRequest.withHeaders(("referer", url)))
       status(result) mustBe OK
     }
 
     "return the correct view for a GET" in {
-      val result = new AccessibilityController(frontendAppConfig, messagesControllerComponents, formPartialRetriever, scalate).onPageLoad()(fakeRequest)
-      contentAsString(result) mustBe accessibility(frontendAppConfig)(fakeRequest, messages, formPartialRetriever, scalate).toString
+      val result = new AccessibilityController(frontendAppConfig, messagesControllerComponents, formPartialRetriever, scalate).onPageLoad()(fakeRequest.withHeaders(("referer", url)))
+      contentAsString(result) mustBe accessibility(frontendAppConfig, new URL(url).getPath)(fakeRequest, messages, formPartialRetriever, scalate).toString
     }
   }
 }

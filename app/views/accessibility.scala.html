@@ -19,7 +19,8 @@
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
 
 @(
-        appConfig: FrontendAppConfig
+        appConfig: FrontendAppConfig,
+        referer_url: String
 )(
         implicit
         request: Request[_],
@@ -49,12 +50,12 @@
  <p><a href="https://mcmw.abilitynet.org.uk/" >@messages("accessibility.par07.linkText")</a> @messages("accessibility.par07")</p>
 
  <h2>@messages("accessibility.subheading02")</h2>
- <p>@messages("accessibility.par08.part1") <a href="https://www.w3.org/TR/WCAG21/" >@messages("accessibility.par08.linkText")</a>
-  @messages("accessibility.par08.part2")</p>
+ <p>@messages("accessibility.par08.part1") <a href="https://www.w3.org/TR/WCAG21/" >@messages("accessibility.par08.linkText")</a>.</p>
+ <p>@messages("accessibility.par25")</p>
  @components.list(None, None, Seq(messages("accessibility.par08.item01"), messages("accessibility.par08.item02"), messages("accessibility.par08.item03")))
 
  <h2>@messages("accessibility.subheading03")</h2>
- <p>@messages("accessibility.par09") <a href="https://www.tax.service.gov.uk/contact/accessibility?service=ctr&userAction=/claim-tax-refund/accessibility" target="_blank">@messages("accessibility.par09.linkText")</a>.</p>
+ <p>@messages("accessibility.par09") <a href="/contact/accessibility?service=ctr&userAction=@referer_url" target="_blank">@messages("accessibility.par09.linkText")</a>.</p>
 
  <h2>@messages("accessibility.subheading04")</h2>
  <p>@messages("accessibility.par10.part1") <a href="https://www.equalityadvisoryservice.com/" >@messages("accessibility.par10.linkText01")</a>
