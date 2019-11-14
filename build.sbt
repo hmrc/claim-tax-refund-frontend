@@ -20,7 +20,7 @@ val compile = Seq(
   ws,
   "uk.gov.hmrc"           %% "simple-reactivemongo"           % "7.20.0-play-26",
   "uk.gov.hmrc"           %% "logback-json-logger"            % "4.6.0",
-  "uk.gov.hmrc"           %% "govuk-template"                 % "5.43.0-play-26",
+  "uk.gov.hmrc"           %% "govuk-template"                 % "5.44.0-play-26",
   "uk.gov.hmrc"           %% "play-health"                    % "3.14.0-play-26",
   "uk.gov.hmrc"           %% "play-ui"                        % "8.2.0-play-26",
   "uk.gov.hmrc"           %% "http-caching-client"            % "8.3.0",
@@ -31,17 +31,17 @@ val compile = Seq(
   "uk.gov.hmrc"           %% "play-language"                  % "3.4.0",
   "uk.gov.hmrc"           %% "tax-year"                       % "0.6.0",
   "org.scalatra.scalate"  %% "play-scalate"                   % "0.5.0",
-  "org.scalatra.scalate"  %% "scalate-core"                   % "1.9.4",
+  "org.scalatra.scalate"  %% "scalate-core"                   % "1.9.5",
   "uk.gov.hmrc"           %% "domain"                         % "5.6.0-play-26"
 )
 
 def test(scope: String = "test"): Seq[ModuleID] = Seq(
-  "com.github.tomakehurst"  % "wiremock"                % "2.24.1" % scope,
-  "com.github.tomakehurst"  % "wiremock-jre8"           % "2.24.1" % scope,
+  "com.github.tomakehurst"  % "wiremock"                % "2.25.1" % scope,
+  "com.github.tomakehurst"  % "wiremock-jre8"           % "2.25.1" % scope,
   "uk.gov.hmrc"             %% "hmrctest"               % "3.9.0-play-26" % scope,
   "org.scalatest"           %% "scalatest"              % "3.0.8" % scope,
   "org.scalatestplus.play"  %% "scalatestplus-play"     % "3.1.2" % scope,
-  "org.scalacheck"          %% "scalacheck"             % "1.14.0" % scope,
+  "org.scalacheck"          %% "scalacheck"             % "1.14.2" % scope,
   "org.pegdown"             % "pegdown"                 % "1.6.0" % scope,
   "org.jsoup"               % "jsoup"                   % "1.12.1" % scope,
   "com.typesafe.play"       %% "play-test"              % PlayVersion.current % scope,
