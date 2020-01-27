@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 HM Revenue & Customs
+ * Copyright 2020 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +18,10 @@ package forms
 
 import forms.mappings.TelephoneOptionMapping
 import models.TelephoneOption
-import org.scalatest.prop.PropertyChecks
+import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import play.api.data.{Form, FormError}
 
-class TelephoneNumberFormSpec extends FormSpec with TelephoneOptionMapping with PropertyChecks {
+class TelephoneNumberFormSpec extends FormSpec with TelephoneOptionMapping with ScalaCheckPropertyChecks {
 
   "TelephoneNumber form" must {
     val form: Form[TelephoneOption] = new TelephoneNumberForm()()

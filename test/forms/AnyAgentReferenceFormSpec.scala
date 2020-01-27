@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 HM Revenue & Customs
+ * Copyright 2020 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,11 +19,11 @@ package forms
 import forms.mappings.AgentRefMapping
 import generators.Generators
 import models.AnyAgentRef
-import org.scalatest.prop.PropertyChecks
+import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import play.api.data.FormError
 
 
-class AnyAgentReferenceFormSpec extends FormSpec with AgentRefMapping with PropertyChecks with Generators {
+class AnyAgentReferenceFormSpec extends FormSpec with AgentRefMapping with ScalaCheckPropertyChecks with Generators {
 
   "AnyAgentRef form" must {
     val form = new AnyAgentReferenceForm()("","anyAgentRef.blankAgentRef")

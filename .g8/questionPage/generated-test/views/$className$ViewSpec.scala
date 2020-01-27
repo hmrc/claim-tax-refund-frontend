@@ -5,7 +5,7 @@ import play.api.data.Form
 import controllers.routes
 import forms.$className$Form
 import models.{NormalMode, $className$}
-import org.scalatest.mockito.MockitoSugar
+import org.scalatestplus.mockito.MockitoSugar
 import views.behaviours.QuestionViewBehaviours
 import views.html.$className;format="decap"$
 

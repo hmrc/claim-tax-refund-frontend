@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 HM Revenue & Customs
+ * Copyright 2020 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,12 +21,13 @@ import com.github.tomakehurst.wiremock.client.WireMock._
 import config.FrontendAppConfig
 import models.requests.DataRequest
 import org.scalatest.concurrent.ScalaFutures
-import org.scalatest.mockito.MockitoSugar
+import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.Application
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.Format
+import play.api.i18n.Lang
 import play.api.mvc.Request
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.language.LanguageUtils
@@ -70,7 +71,7 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with WireMoc
 
   private lazy val connector: AddressLookupConnector = app.injector.instanceOf[AddressLookupConnector]
 
-  private implicit val language = LanguageUtils.English
+  private implicit val language = Lang("en")
 
 
   "AddressLookupConnector" must {

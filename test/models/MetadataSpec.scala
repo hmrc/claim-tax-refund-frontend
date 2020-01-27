@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 HM Revenue & Customs
+ * Copyright 2020 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 package models
 
 import org.joda.time.LocalDateTime
-import org.scalatest.prop.PropertyChecks
+import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import org.scalatest.{MustMatchers, OptionValues, WordSpec}
 import play.api.libs.json.{JsValue, Json}
 
@@ -25,7 +25,7 @@ import scala.xml._
 import scala.xml.Utility._
 
 class
-MetadataSpec extends WordSpec with MustMatchers with OptionValues with PropertyChecks {
+MetadataSpec extends WordSpec with MustMatchers with OptionValues with ScalaCheckPropertyChecks {
 
   private val localDT = LocalDateTime.now()
   private val submissionRef = "123"

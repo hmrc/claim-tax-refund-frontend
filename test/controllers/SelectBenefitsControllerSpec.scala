@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 HM Revenue & Customs
+ * Copyright 2020 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import play.api.test.Helpers._
 import forms.SelectBenefitsForm
 import models.SelectTaxYear.CustomTaxYear
 import models.{Benefits, NormalMode}
-import org.scalatest.mockito.MockitoSugar
+import org.scalatestplus.mockito.MockitoSugar
 import org.mockito.Mockito.when
 import views.html.selectBenefits
 import scala.concurrent.ExecutionContext.Implicits.global

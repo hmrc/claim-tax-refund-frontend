@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 HM Revenue & Customs
+ * Copyright 2020 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import base.SpecBase
 import controllers.routes
 import identifiers._
 import models.{CheckMode, CompanyBenefits, NormalMode, OtherCompanyBenefit}
-import org.scalatest.mockito.MockitoSugar
+import org.scalatestplus.mockito.MockitoSugar
 import org.mockito.Mockito._
 
 class CompanyBenefitNavigatorSpec extends SpecBase with MockitoSugar {

@@ -3,7 +3,7 @@ package forms
 import config.FrontendAppConfig
 import forms.behaviours.FormBehaviours
 import models.MandatoryField
-import org.scalatest.mockito.MockitoSugar
+import org.scalatestplus.mockito.MockitoSugar
 import org.mockito.Mockito._
 import play.api.data.Form
 

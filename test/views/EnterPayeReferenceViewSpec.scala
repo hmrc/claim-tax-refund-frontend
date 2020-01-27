@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 HM Revenue & Customs
+ * Copyright 2020 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import controllers.routes
 import forms.EnterPayeReferenceForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus4
-import org.scalatest.mockito.MockitoSugar
+import org.scalatestplus.mockito.MockitoSugar
 import views.behaviours.StringViewBehaviours
 import views.html.enterPayeReference
 
