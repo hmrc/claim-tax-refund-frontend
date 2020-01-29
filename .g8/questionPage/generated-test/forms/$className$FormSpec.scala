@@ -3,7 +3,7 @@ package forms
 import config.FrontendAppConfig
 import forms.behaviours.FormBehaviours
 import models.{$className$, MandatoryField}
-import org.scalatest.mockito.MockitoSugar
+import org.scalatestplus.mockito.MockitoSugar
 import play.api.data.Form
 import org.mockito.Mockito._
 

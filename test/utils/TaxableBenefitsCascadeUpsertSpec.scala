@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 HM Revenue & Customs
+ * Copyright 2020 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,9 +22,9 @@ import models.{AnyTaxPaid, TaxableIncome}
 import org.scalacheck.{Gen, Shrink}
 import play.api.libs.json._
 import uk.gov.hmrc.http.cache.client.CacheMap
-import org.scalatest.prop.PropertyChecks
+import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 
-class TaxableBenefitsCascadeUpsertSpec extends SpecBase with PropertyChecks {
+class TaxableBenefitsCascadeUpsertSpec extends SpecBase with ScalaCheckPropertyChecks {
 
   implicit def dontShrink[A]: Shrink[A] = Shrink.shrinkAny
 

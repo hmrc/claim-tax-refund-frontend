@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 HM Revenue & Customs
+ * Copyright 2020 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,9 +21,9 @@ import identifiers._
 import models.{AnyAgentRef, InternationalAddress, UkAddress, WhereToSendPayment}
 import play.api.libs.json._
 import uk.gov.hmrc.http.cache.client.CacheMap
-import org.scalatest.prop.PropertyChecks
+import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 
-class PaymentDetailsCascadeUpsertSpec extends SpecBase with PropertyChecks {
+class PaymentDetailsCascadeUpsertSpec extends SpecBase with ScalaCheckPropertyChecks {
 
   "Payment details section" must {
     "when answering where to send payment" must {

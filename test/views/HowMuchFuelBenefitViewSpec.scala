@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 HM Revenue & Customs
+ * Copyright 2020 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import controllers.routes
 import forms.HowMuchFuelBenefitForm
 import models.NormalMode
 import models.SelectTaxYear.CustomTaxYear
-import org.scalatest.mockito.MockitoSugar
+import org.scalatestplus.mockito.MockitoSugar
 import play.api.data.Form
 import views.behaviours.StringViewBehaviours
 import views.html.howMuchFuelBenefit

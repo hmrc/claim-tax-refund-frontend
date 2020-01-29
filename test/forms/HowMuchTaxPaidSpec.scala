@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 HM Revenue & Customs
+ * Copyright 2020 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +18,10 @@ package forms
 
 import forms.mappings.AnyTaxPaidMapping
 import models.AnyTaxPaid
-import org.scalatest.prop.PropertyChecks
+import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import play.api.data.FormError
 
-class HowMuchTaxPaidSpec extends FormSpec with AnyTaxPaidMapping with PropertyChecks {
+class HowMuchTaxPaidSpec extends FormSpec with AnyTaxPaidMapping with ScalaCheckPropertyChecks {
 
   val notSelectedKey = "Value not selected"
   val blankKey = "Value not entered"
