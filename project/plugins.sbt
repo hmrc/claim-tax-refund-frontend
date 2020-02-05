@@ -8,12 +8,6 @@ resolvers += "HMRC Artifactory Releases" at "https://artefacts.tax.service.gov.u
 
 resolvers += "HMRC Releases" at "https://dl.bintray.com/hmrc/releases"
 
-excludeDependencies ++= Seq(
-  ExclusionRule("io.monix", "monix_2.12"),
-  ExclusionRule("org.webjars", "envjs"),
-  ExclusionRule("org.webjars", "npm"),
-  ExclusionRule("com.google.javascript", "closure-compiler-externs"))
-
 libraryDependencies += "io.monix" %% "monix" % "2.3.3" pomOnly()
 
 addSbtPlugin("uk.gov.hmrc" % "sbt-auto-build" % "2.5.0")
