@@ -35,7 +35,6 @@ import uk.gov.hmrc.play.partials.FormPartialRetriever
 import utils.{Navigator, UserAnswers}
 import views.html.deleteOther
 
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{ExecutionContext, Future}
 
 class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,

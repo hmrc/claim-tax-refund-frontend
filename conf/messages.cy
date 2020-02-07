@@ -4,37 +4,12 @@ language-switcher.welsh=Cymraeg
 language-switcher.welsh.hover=Defnyddio''r cyfrif hwn yn Cymraeg
 
 addressLookup.changeLabel=Newid a ydych am i ni anfon unrhyw daliad i’r cyfeiriad hwn?
-addressLookup.confirmPage.changeLinkText=Golygwch y cyfeiriad
-addressLookup.confirmPage.heading=Adolygu a chadarnhau
-addressLookup.confirmPage.infoMessage=Bydd eich cyfeiriad yn edrych fel hyn. Gwiriwch eto, ac os yw’n gywir cliciwch y botwm <kbd>Cadarnhau</kbd>.
-addressLookup.confirmPage.infoSubheading=Rydych wedi dewis cyfeiriad
-addressLookup.confirmPage.searchAgainLinkText=Chwiliwch eto
-addressLookup.confirmPage.submitLabel=Cadarnhau ac yn eich blaen
-addressLookup.confirmPage.title=Cadarnhau’r cyfeiriad
-addressLookup.editPage.countryLabel=Gwlad
 addressLookup.editPage.heading=Nodwch y cyfeiriad rydych am i’r taliad gael ei anfon iddo
-addressLookup.editPage.line1Label=Cyfeiriad – llinell 1
-addressLookup.editPage.line2Label=Cyfeiriad – llinell 2 (dewisol)
-addressLookup.editPage.line3Label=Cyfeiriad – llinell 3 (dewisol)
-addressLookup.editPage.postcodeLabel=Cod post (dewisol)
 addressLookup.editPage.searchAgainLinkText=Chwiliwch eto
-addressLookup.editPage.submitLabel=Yn eich blaen
 addressLookup.editPage.title=Nodwch y cyfeiriad rydych am i’r taliad gael ei anfon iddo
-addressLookup.editPage.townLabel=Tref neu ddinas
 addressLookup.heading=A ydych am i ni anfon unrhyw daliad i’r cyfeiriad hwn?
-addressLookup.lookupPage.filterLabel=Enw neu rif yr eiddo
 addressLookup.lookupPage.heading=Y cyfeiriad rydych am i ni anfon unrhyw daliad iddo
-addressLookup.lookupPage.noResultsFoundMessage=Mae’n ddrwg gennym ond ni allem ddod o hyd i unrhyw beth ar gyfer y cod post hwnnw.
-addressLookup.lookupPage.postcodeLabel=Cod Post yn y DU
-addressLookup.lookupPage.resultLimitExceededMessage=Roedd yna ormod o ganlyniadau. Ychwanegwch fanylion ychwanegol i gyfyngu ar nifer y canlyniadau.
-addressLookup.lookupPage.submitLabel=Dod o hyd i’r cyfeiriad
 addressLookup.lookupPage.title=Y cyfeiriad rydych am i ni anfon unrhyw daliad iddo
-addressLookup.selectPage.editAddressLinkText=Nodwch y cyfeiriad â llaw
-addressLookup.selectPage.heading=Dewiswch y cyfeiriad
-addressLookup.selectPage.proposalListLabel=Dewiswch un o’r cyfeiriadau canlynol
-addressLookup.selectPage.searchAgainLinkText=Chwiliwch eto
-addressLookup.selectPage.submitLabel=Yn eich blaen
-addressLookup.selectPage.title=Dewiswch y cyfeiriad
 
 anyAgentRef.agentRefField=Cyfeirnod yr asiant
 anyagentRef.agentRefField.changeLabel=Newid cyfeirnod asiant {0}
@@ -251,8 +226,6 @@ howMuchIncapacityBenefit.title=Faint o Fudd-dal Analluogrwydd a gawsoch?
 global.addressLine3.tooLong=Gall llinell 3 y cyfeiriad fod hyd at 35 o gymeriadau yn unig
 
 selectBenefits.jobseekers-allowance=Lwfans Ceisio Gwaith yn seiliedig ar gyfraniadau
-
-addressLookup.lookupPage.manualAddressLinkText=Nid oes gan y cyfeiriad god post yn y DU
 
 anyBenefits.changeLabel=Newid a gawsoch unrhyw fuddiannau trethadwy?
 anyBenefits.heading=A gawsoch unrhyw fuddiannau trethadwy?
