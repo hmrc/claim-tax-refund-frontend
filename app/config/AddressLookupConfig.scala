@@ -22,14 +22,14 @@ import play.api.libs.json.{JsObject, Json}
 
 class AddressLookupConfig @Inject()(messagesApi: MessagesApi) {
 
-  def config(continueUrl:String)(implicit language: Lang) = {
+  def config(continueUrl:String, accessibilityFooterUrl: String)(implicit language: Lang) = {
 
     val cy = Lang("CY")
-
     val v2Config = s"""{
                       |  "version": 2,
                       |  "options": {
                       |    "continueUrl": "$continueUrl",
+                      |    "accessibilityFooterUrl": "$accessibilityFooterUrl",
                       |    "phaseFeedbackLink": "/help/alpha",
                       |    "showPhaseBanner": false,
                       |    "alphaPhase": false,

@@ -30,7 +30,7 @@ class AddressLookupConfigSpec extends SpecBase {
 
     for (lang <- languages) {
       s" have ${lang.code} labels " must {
-        val addressConfig = addressLookupConfig.config(continueUrl = s"")(lang)
+        val addressConfig = addressLookupConfig.config(continueUrl = s"", accessibilityFooterUrl = "")(lang)
         "have appsLevel labels" must {
           s"""have correct nav Title of "${messagesApi("index.title")(lang)}" """ in {
             val element = addressConfig \ "labels" \ lang.code \ "appLevelLabels" \ "navTitle"

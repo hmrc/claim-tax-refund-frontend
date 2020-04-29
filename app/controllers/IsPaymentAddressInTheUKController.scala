@@ -68,9 +68,10 @@ cc: MessagesControllerComponents,
             case NormalMode => appConfig.addressLookupContinueUrlNormalMode
             case CheckMode => appConfig.addressLookupContinueUrlCheckMode
           }
-
+          val accessibilityFooterUrl = routes.AccessibilityController.onPageLoad().absoluteURL
           val addressInit = for {
-            result: Option[String] <- addressLookup.initialise(continueUrl = continueUrl)(hc: HeaderCarrier, language)
+            result: Option[String] <- addressLookup.initialise(continueUrl = continueUrl,
+              accessibilityFooterUrl = accessibilityFooterUrl)(hc: HeaderCarrier, language)
           } yield {
             result map (
               url => Redirect(url)
