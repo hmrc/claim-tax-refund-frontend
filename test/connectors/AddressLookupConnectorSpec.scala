@@ -86,7 +86,7 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with WireMoc
           )
       )
 
-      val result: Option[String] = Await.result(connector.initialise(continueUrl = ""), 500.millisecond)
+      val result: Option[String] = Await.result(connector.initialise(continueUrl = "", accessibilityFooterUrl = ""), 500.millisecond)
       result mustBe Some("/api/v2/location")
 
     }
@@ -102,7 +102,7 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with WireMoc
           )
       )
 
-      val result: Option[String] = Await.result(connector.initialise(""), 500.millisecond)
+      val result: Option[String] = Await.result(connector.initialise("", ""), 500.millisecond)
       result mustBe Some(s"[AddressLookupConnector][initialise] - Failed to obtain location from http://localhost:${server.port}/api/v2/init")
     }
 
@@ -115,7 +115,7 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with WireMoc
           )
       )
 
-      val result: Option[String] = Await.result(connector.initialise(""), 500.millisecond)
+      val result: Option[String] = Await.result(connector.initialise("", ""), 500.millisecond)
       result mustBe None
     }
 
@@ -127,7 +127,7 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with WireMoc
           )
       )
 
-      val result: Future[Option[String]] = connector.initialise("")
+      val result: Future[Option[String]] = connector.initialise("", "")
       whenReady(result) {
         res =>
           res mustBe None
@@ -144,7 +144,7 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with WireMoc
           )
       )
 
-      val result: Future[Option[String]] = connector.initialise("")
+      val result: Future[Option[String]] = connector.initialise("", "")
       whenReady(result) {
         res =>
           res mustBe None

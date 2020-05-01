@@ -39,9 +39,9 @@ class AddressLookupConnector @Inject()(
                                         dataCacheConnector: DataCacheConnector
                                       ) {
 
-  def initialise(continueUrl: String)(implicit hc: HeaderCarrier, language: Lang): Future[Option[String]] = {
+  def initialise(continueUrl: String, accessibilityFooterUrl: String)(implicit hc: HeaderCarrier, language: Lang): Future[Option[String]] = {
     val addressLookupUrl = s"${appConfig.addressLookupUrl}/api/v2/init"
-    val addressConfig = Json.toJson(addressLookupConfig.config(continueUrl = s"$continueUrl"))
+    val addressConfig = Json.toJson(addressLookupConfig.config(continueUrl = s"$continueUrl", accessibilityFooterUrl))
     http.POST(addressLookupUrl, body = addressConfig).map {
       response =>
         response.status match {
