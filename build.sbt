@@ -18,19 +18,19 @@ lazy val playSettings: Seq[Setting[_]] = Seq.empty
 
 val compile = Seq(
   ws,
-  "uk.gov.hmrc"           %% "bootstrap-play-26"              % "1.7.0",
-  "uk.gov.hmrc"           %% "simple-reactivemongo"           % "7.26.0-play-26",
+  "uk.gov.hmrc"           %% "bootstrap-play-26"              % "1.8.0",
+  "uk.gov.hmrc"           %% "simple-reactivemongo"           % "7.27.0-play-26",
   "uk.gov.hmrc"           %% "govuk-template"                 % "5.54.0-play-26",
   "uk.gov.hmrc"           %% "play-health"                    % "3.15.0-play-26",
-  "uk.gov.hmrc"           %% "play-ui"                        % "8.9.0-play-26",
+  "uk.gov.hmrc"           %% "play-ui"                        % "8.10.0-play-26",
   "uk.gov.hmrc"           %% "http-caching-client"            % "9.0.0-play-26",
   "uk.gov.hmrc"           %% "play-conditional-form-mapping"  % "1.2.0-play-26",
-  "uk.gov.hmrc"           %% "play-partials"                  % "6.10.0-play-26",
-  "uk.gov.hmrc"           %% "play-language"                  % "4.2.0-play-26",
-  "uk.gov.hmrc"           %% "tax-year"                       % "1.0.0",
+  "uk.gov.hmrc"           %% "play-partials"                  % "6.11.0-play-26",
+  "uk.gov.hmrc"           %% "play-language"                  % "4.3.0-play-26",
+  "uk.gov.hmrc"           %% "tax-year"                       % "1.1.0",
   "org.scalatra.scalate"  %% "play-scalate"                   % "0.6.0",
   "org.scalatra.scalate"  %% "scalate-core"                   % "1.9.5",
-  "uk.gov.hmrc"           %% "domain"                         % "5.8.0-play-26"
+  "uk.gov.hmrc"           %% "domain"                         % "5.9.0-play-26"
 )
 
 def test(scope: String = "test"): Seq[ModuleID] = Seq(
@@ -44,7 +44,7 @@ def test(scope: String = "test"): Seq[ModuleID] = Seq(
   "org.jsoup"               % "jsoup"                   % "1.12.1" % scope,
   "com.typesafe.play"       %% "play-test"              % PlayVersion.current % scope,
   "org.mockito"             % "mockito-all"             % "1.10.19" % scope,
-  "uk.gov.hmrc"             %% "play-whitelist-filter"  % "3.3.0-play-26"
+  "uk.gov.hmrc"             %% "play-whitelist-filter"  % "3.4.0-play-26"
 )
 
 def oneForkedJvmPerTest(tests: Seq[TestDefinition]): Seq[Group] =
