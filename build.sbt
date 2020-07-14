@@ -18,8 +18,8 @@ lazy val playSettings: Seq[Setting[_]] = Seq.empty
 
 val compile = Seq(
   ws,
-  "uk.gov.hmrc"           %% "bootstrap-play-26"              % "1.8.0",
-  "uk.gov.hmrc"           %% "simple-reactivemongo"           % "7.27.0-play-26",
+  "uk.gov.hmrc"           %% "bootstrap-frontend-play-26"     % "2.23.0",
+  "uk.gov.hmrc"           %% "simple-reactivemongo"           % "7.30.0-play-26",
   "uk.gov.hmrc"           %% "govuk-template"                 % "5.54.0-play-26",
   "uk.gov.hmrc"           %% "play-health"                    % "3.15.0-play-26",
   "uk.gov.hmrc"           %% "play-ui"                        % "8.10.0-play-26",
