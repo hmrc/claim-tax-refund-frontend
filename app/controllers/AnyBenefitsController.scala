@@ -27,7 +27,7 @@ import models.Mode
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import utils.{Navigator, UserAnswers}
 import views.html.anyBenefits
@@ -42,6 +42,7 @@ class AnyBenefitsController @Inject()(appConfig: FrontendAppConfig,
                                       authenticate: AuthAction,
                                       getData: DataRetrievalAction,
                                       requireData: DataRequiredAction,
+                                      anyBenefits: anyBenefits,
 cc: MessagesControllerComponents,
                                       formProvider: BooleanForm,
                                       implicit val formPartialRetriever: FormPartialRetriever,

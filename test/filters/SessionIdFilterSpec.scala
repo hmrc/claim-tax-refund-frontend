@@ -26,7 +26,7 @@ import play.api.Application
 import play.api.http.{DefaultHttpFilters, HttpFilters}
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.Json
-import play.api.mvc.{Action, Results}
+import play.api.mvc.{DefaultActionBuilder, Results, SessionCookieBaker}
 import play.api.routing.Router
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -42,20 +42,23 @@ object SessionIdFilterSpec {
 
   class TestSessionIdFilter @Inject() (
                                         override val mat: Materializer,
-                                        ec: ExecutionContext
-                                      ) extends SessionIdFilter(mat, UUID.fromString(sessionId), ec)
+                                        ec: ExecutionContext,
+                                        private val scb: SessionCookieBaker
+                                      ) extends SessionIdFilter(mat, UUID.fromString(sessionId), ec, scb)
 }
 
 class SessionIdFilterSpec extends WordSpec with MustMatchers with GuiceOneAppPerSuite {
 
   import SessionIdFilterSpec._
 
+  val defaultActionBuilder: DefaultActionBuilder = fakeApplication.injector.instanceOf[DefaultActionBuilder]
+
   val router: Router = {
 
     import play.api.routing.sird._
 
     Router.from {
-      case GET(p"/test1") => Action {
+      case GET(p"/test1") => defaultActionBuilder {
         implicit request =>
           val fromHeader = request.headers.get(HeaderNames.xSessionId).getOrElse("")
           val fromSession = request.session.get(SessionKeys.sessionId).getOrElse("")

@@ -22,20 +22,23 @@ import connectors.FakeDataCacheConnector
 import controllers.actions._
 import play.api.test.Helpers._
 import forms.BooleanForm
-import models.{CheckMode, Mode, NormalMode, OtherCompanyBenefit}
+import models.{CheckMode, Mode, NormalMode}
 import models.SelectTaxYear.CustomTaxYear
 import org.mockito.Mockito.when
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.mvc.Call
 import viewmodels.AnswerSection
 import views.html.anyOtherCompanyBenefits
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class AnyOtherCompanyBenefitsControllerSpec extends ControllerSpecBase {
+class AnyOtherCompanyBenefitsControllerSpec extends ControllerSpecBase with GuiceOneAppPerSuite {
 
   def onwardRoute: Call = routes.IndexController.onPageLoad()
 
   val formProvider = new BooleanForm()
-  val form = formProvider()
+  val form: Form[Boolean] = formProvider()
+  val anyOtherCompanyBenefits: anyOtherCompanyBenefits = fakeApplication.injector.instanceOf[anyOtherCompanyBenefits]
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
   private val cya: CheckYourAnswersHelper = new CheckYourAnswersHelper(mockUserAnswers)(messages)
@@ -43,7 +46,7 @@ class AnyOtherCompanyBenefitsControllerSpec extends ControllerSpecBase {
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyOtherCompanyBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, formProvider, formPartialRetriever, scalate)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), anyOtherCompanyBenefits, messagesControllerComponents, formProvider, formPartialRetriever, scalate)
 
   def viewAsString(form: Form[_] = form, mode: Mode = NormalMode): String =
     anyOtherCompanyBenefits(frontendAppConfig, form, mode, taxYear, otherCompanyBenefits)(fakeRequest, messages, formPartialRetriever, scalate).toString

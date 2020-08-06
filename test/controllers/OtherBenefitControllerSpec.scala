@@ -25,23 +25,26 @@ import forms.OtherBenefitForm
 import models.{Index, NormalMode, OtherBenefit}
 import models.SelectTaxYear.CustomTaxYear
 import org.mockito.Mockito.when
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.mvc.Call
 import views.html.otherBenefit
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class OtherBenefitControllerSpec extends ControllerSpecBase {
+class OtherBenefitControllerSpec extends ControllerSpecBase with GuiceOneAppPerSuite {
 
   def onwardRoute: Call = routes.AnyOtherBenefitsController.onPageLoad(NormalMode)
 
   val testAnswer = OtherBenefit("qwerty", "123")
   val form = new OtherBenefitForm(frontendAppConfig)(Seq.empty, 0)
   val formFilled = new OtherBenefitForm(frontendAppConfig)(Seq.empty, 1)
+  val otherBenefit: otherBenefit = fakeApplication.injector.instanceOf[otherBenefit]
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new OtherBenefitController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, sequenceUtil,
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), otherBenefit, messagesControllerComponents, sequenceUtil,
       new OtherBenefitForm(frontendAppConfig), formPartialRetriever, scalate)
 
   def viewAsString(form: Form[OtherBenefit], index: Index): String =

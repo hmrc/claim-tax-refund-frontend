@@ -19,12 +19,13 @@ package views
 import forms.SelectCompanyBenefitsForm
 import models.SelectTaxYear.CustomTaxYear
 import models.{CompanyBenefits, NormalMode}
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.{CheckboxViewBehaviours, ViewBehaviours}
 import views.html.selectCompanyBenefits
 
-class SelectCompanyBenefitsViewSpec extends ViewBehaviours with CheckboxViewBehaviours[CompanyBenefits.Value] {
+class SelectCompanyBenefitsViewSpec extends ViewBehaviours with CheckboxViewBehaviours[CompanyBenefits.Value] with GuiceOneAppPerSuite {
 
   val messageKeyPrefix = "selectCompanyBenefits"
   val fieldKey = "value"
@@ -32,6 +33,8 @@ class SelectCompanyBenefitsViewSpec extends ViewBehaviours with CheckboxViewBeha
   private val taxYear = CustomTaxYear(2017)
 
   val values: Seq[(String, String)] = SelectCompanyBenefitsForm.options
+
+  val selectCompanyBenefits: selectCompanyBenefits = fakeApplication.injector.instanceOf[selectCompanyBenefits]
 
   def form: Form[Seq[CompanyBenefits.Value]] = SelectCompanyBenefitsForm()
 

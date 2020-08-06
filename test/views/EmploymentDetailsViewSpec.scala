@@ -20,11 +20,12 @@ import controllers.routes
 import forms.BooleanForm
 import models.SelectTaxYear.CustomTaxYear
 import models.{Employment, NormalMode}
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import views.behaviours.YesNoViewBehaviours
 import views.html.employmentDetails
 
-class EmploymentDetailsViewSpec extends YesNoViewBehaviours {
+class EmploymentDetailsViewSpec extends YesNoViewBehaviours with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "employmentDetails"
   private val hintTextKey = "employmentDetails.hintText"
@@ -32,6 +33,7 @@ class EmploymentDetailsViewSpec extends YesNoViewBehaviours {
   private val taxYear = CustomTaxYear(2017)
 
   override val form = new BooleanForm()()
+  val employmentDetails: employmentDetails = fakeApplication.injector.instanceOf[employmentDetails]
 
   def createViewUsingForm = (form: Form[_]) => employmentDetails(frontendAppConfig, form, NormalMode, fakeEmployments, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
 

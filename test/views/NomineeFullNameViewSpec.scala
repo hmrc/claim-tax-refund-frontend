@@ -21,16 +21,18 @@ import forms.NomineeFullNameForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus1
 import org.scalatestplus.mockito.MockitoSugar
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import views.behaviours.StringViewBehaviours
 import views.html.nomineeFullName
 
-class NomineeFullNameViewSpec extends StringViewBehaviours with MockitoSugar {
+class NomineeFullNameViewSpec extends StringViewBehaviours with MockitoSugar with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "nomineeFullName"
   private val taxYear = CYMinus1
 
   override val form: Form[String] = new NomineeFullNameForm(frontendAppConfig)()
+  val nomineeFullName: nomineeFullName = fakeApplication.injector.instanceOf[nomineeFullName]
 
   def createView = () =>
     nomineeFullName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)

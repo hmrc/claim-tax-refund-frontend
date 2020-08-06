@@ -20,12 +20,13 @@ import controllers.routes
 import forms.AnyTaxPaidForm
 import models.SelectTaxYear.CustomTaxYear
 import models.{AnyTaxPaid, NormalMode}
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.{Form, FormError}
 import play.twirl.api.HtmlFormat
 import views.behaviours.QuestionViewBehaviours
 import views.html.anyTaxableForeignIncome
 
-class AnyTaxableForeignIncomeViewSpec extends QuestionViewBehaviours[AnyTaxPaid] {
+class AnyTaxableForeignIncomeViewSpec extends QuestionViewBehaviours[AnyTaxPaid] with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "anyTaxableForeignIncome"
   private val testAmount = "9,999.00"
@@ -36,6 +37,7 @@ class AnyTaxableForeignIncomeViewSpec extends QuestionViewBehaviours[AnyTaxPaid]
 
   val formProvider = new AnyTaxPaidForm()
   val form = formProvider(notSelectedKey, blankKey, invalidKey)
+  val anyTaxableForeignIncome: anyTaxableForeignIncome = fakeApplication.injector.instanceOf[anyTaxableForeignIncome]
 
   def createView = () => anyTaxableForeignIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
 

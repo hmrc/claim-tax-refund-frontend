@@ -27,10 +27,12 @@ import identifiers.{AnyTaxPaidId, TaxPaidAmountId}
 import models.SelectTaxYear.CustomTaxYear
 import models.{AnyTaxPaid, NormalMode}
 import org.mockito.Mockito.when
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import views.html.anyTaxableRentalIncome
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class AnyTaxableRentalIncomeControllerSpec extends ControllerSpecBase {
+class AnyTaxableRentalIncomeControllerSpec extends ControllerSpecBase with GuiceOneAppPerSuite {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
@@ -41,6 +43,7 @@ class AnyTaxableRentalIncomeControllerSpec extends ControllerSpecBase {
   val testAnswer = "9,999.00"
   val validYesData = Map(AnyTaxPaidId.toString -> Json.obj(AnyTaxPaidId.toString -> JsBoolean(true), TaxPaidAmountId.toString -> JsString(testAnswer)))
   val validNoData = Map(AnyTaxPaidId.toString -> Json.obj(AnyTaxPaidId.toString -> JsBoolean(false)))
+  val anyTaxableRentalIncome: anyTaxableRentalIncome = fakeApplication.injector.instanceOf[anyTaxableRentalIncome]
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
   private val taxYear = CustomTaxYear(2017)
 
@@ -50,7 +53,7 @@ class AnyTaxableRentalIncomeControllerSpec extends ControllerSpecBase {
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyTaxableRentalIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, formProvider, formPartialRetriever, scalate)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), anyTaxableRentalIncome, messagesControllerComponents, formProvider, formPartialRetriever, scalate)
 
   def viewAsString(form: Form[_] = form) = anyTaxableRentalIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
 

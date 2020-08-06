@@ -71,7 +71,7 @@ object SelectTaxYear extends Enumerable[SelectTaxYear] {
   }
 
   private val regex = "CustomTaxYear\\(([0-9]+)\\)".r
-  def harnessReads: PartialFunction[String, SelectTaxYear] = PartialFunction[String, SelectTaxYear] {
+  def harnessReads: PartialFunction[String, SelectTaxYear] = {
     case regex(y) => CustomTaxYear(y.toInt)
   }
 

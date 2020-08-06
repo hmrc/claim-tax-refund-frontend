@@ -29,7 +29,6 @@ import views.html.pdf_check_your_answers
 
 class PdfCheckYourAnswersViewSpec extends SpecBase with ViewBehaviours with MockitoSugar {
 
-  private val messageKeyPrefix = "checkYourAnswers"
   private val answers = MockUserAnswers.minimalValidUserAnswers()
   private val helper = new CheckYourAnswersHelper(answers)(messages: Messages)
   private val cyaSection = new CheckYourAnswersSections(helper, answers)
@@ -46,7 +45,7 @@ class PdfCheckYourAnswersViewSpec extends SpecBase with ViewBehaviours with Mock
     name = itmpName,
     address = itmpAddress,
     telephone = telephoneNumber,
-    date = date)(fakeRequest, messages: Messages)
+    date = date)(messages: Messages)
 
   "PDF Check your answers view" must {
     "display the correct page title" in {

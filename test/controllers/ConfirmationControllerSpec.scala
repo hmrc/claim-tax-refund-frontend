@@ -24,19 +24,22 @@ import play.api.test.Helpers._
 import views.html.confirmation
 import org.mockito.Mockito._
 import org.mockito.Matchers._
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.mvc.Call
 import uk.gov.hmrc.http.cache.client.CacheMap
 import utils.{MockUserAnswers, UserAnswers}
 
-import scala.concurrent.ExecutionContext.Implicits.global
 
-class ConfirmationControllerSpec extends ControllerSpecBase with ScalaFutures{
-	val mockDataCacheConnector = mock[DataCacheConnector]
+class ConfirmationControllerSpec extends ControllerSpecBase with ScalaFutures with GuiceOneAppPerSuite {
+
+	val mockDataCacheConnector: DataCacheConnector = mock[DataCacheConnector]
+  val confirmation: confirmation = fakeApplication.injector.instanceOf[confirmation]
+
   def onwardRoute: Call = routes.IndexController.onPageLoad()
 
   def controller(dataRetrievalAction: DataRetrievalAction = someData()) =
     new ConfirmationController(frontendAppConfig, messagesApi, FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, mockDataCacheConnector, formPartialRetriever, scalate)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), confirmation, messagesControllerComponents, mockDataCacheConnector, formPartialRetriever, scalate)
 
   private val submissionReference = "ABC-1234-DEF"
 

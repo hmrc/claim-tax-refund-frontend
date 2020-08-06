@@ -418,7 +418,6 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
 
   def paymentAddressCorrect: Option[AnswerRow] = userAnswers.itmpAddress map {
     x =>
-			val label = if(userAnswers.paymentAddressCorrect.getOrElse(true)) "site.yes" else "site.no"
       AnswerRow(
         label = "<p>" + messages("itmpAddress.heading") + "</p>" + ItmpAddressFormat.asString(
           ItmpAddress(

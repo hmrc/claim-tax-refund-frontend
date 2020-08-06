@@ -505,19 +505,6 @@ class Navigator @Inject()() {
     routes.AnyTaxableOtherIncomeController.onPageLoad(mode, index)
   }
 
-  private def deleteOtherTaxableIncome(userAnswers: UserAnswers): Call = {
-    val otherTaxableIncome: Seq[OtherTaxableIncome] = userAnswers.otherTaxableIncome.get
-    val selectTaxableIncome: Seq[TaxableIncome.Value] = userAnswers.selectTaxableIncome.get
-
-    if (otherTaxableIncome.isEmpty && selectTaxableIncome.size == 1) {
-      routes.AnyTaxableIncomeController.onPageLoad(CheckMode)
-    } else if (otherTaxableIncome.isEmpty && selectTaxableIncome.size > 1) {
-      routes.SelectTaxableIncomeController.onPageLoad(CheckMode)
-    } else {
-      routes.CheckYourAnswersController.onPageLoad()
-    }
-  }
-
   //Payment----------------------------
 
   private def whereToSendPayment(userAnswers: UserAnswers): Call = userAnswers.whereToSendPayment match {

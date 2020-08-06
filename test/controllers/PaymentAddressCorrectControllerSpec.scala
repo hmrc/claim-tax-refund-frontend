@@ -23,6 +23,7 @@ import models.NormalMode
 import models.SelectTaxYear.CustomTaxYear
 import models.requests.{AuthenticatedRequest, OptionalDataRequest}
 import org.mockito.Mockito.when
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import play.api.mvc.Call
 import play.api.test.Helpers._
@@ -33,18 +34,19 @@ import views.html.paymentAddressCorrect
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{ExecutionContext, Future}
 
-class PaymentAddressCorrectControllerSpec extends ControllerSpecBase {
+class PaymentAddressCorrectControllerSpec extends ControllerSpecBase with GuiceOneAppPerSuite {
 
   def onwardRoute: Call = routes.IndexController.onPageLoad()
 
   val formProvider = new BooleanForm()
   val form = formProvider()
+  val paymentAddressCorrect: paymentAddressCorrect = fakeApplication.injector.instanceOf[paymentAddressCorrect]
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new PaymentAddressCorrectController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, formProvider, formPartialRetriever, scalate)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), paymentAddressCorrect, messagesControllerComponents, formProvider, formPartialRetriever, scalate)
 
   def fakeDataRetrievalActionItmpAddress(itmpAddress: Option[ItmpAddress]): DataRetrievalAction = new DataRetrievalAction {
     override protected def executionContext: ExecutionContext = implicitly[ExecutionContext]

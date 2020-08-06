@@ -19,14 +19,17 @@ package views
 import forms.WhereToSendPaymentForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus1
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import views.behaviours.ViewBehaviours
 import views.html.whereToSendPayment
 
-class WhereToSendPaymentViewSpec extends ViewBehaviours {
+class WhereToSendPaymentViewSpec extends ViewBehaviours with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "whereToSendPayment"
   private val taxYear = CYMinus1
+
+  val whereToSendPayment: whereToSendPayment = fakeApplication.injector.instanceOf[whereToSendPayment]
 
   def createView = () =>
     whereToSendPayment(frontendAppConfig, WhereToSendPaymentForm(), NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)

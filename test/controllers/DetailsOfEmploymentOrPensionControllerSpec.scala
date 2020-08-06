@@ -22,28 +22,32 @@ import forms.DetailsOfEmploymentOrPensionForm
 import models.NormalMode
 import models.SelectTaxYear.CustomTaxYear
 import org.mockito.Mockito.when
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
+import play.api.mvc.Call
 import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.detailsOfEmploymentOrPension
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class DetailsOfEmploymentOrPensionControllerSpec extends ControllerSpecBase {
+class DetailsOfEmploymentOrPensionControllerSpec extends ControllerSpecBase with GuiceOneAppPerSuite {
 
-  def onwardRoute = routes.IndexController.onPageLoad()
+  def onwardRoute: Call = routes.IndexController.onPageLoad()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new DetailsOfEmploymentOrPensionController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute),
-      FakeAuthAction(authConnector, frontendAppConfig), dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, new DetailsOfEmploymentOrPensionForm(frontendAppConfig), formPartialRetriever, scalate)
+      FakeAuthAction(authConnector, frontendAppConfig), dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), detailsOfEmploymentOrPension, messagesControllerComponents, new DetailsOfEmploymentOrPensionForm(frontendAppConfig), formPartialRetriever, scalate)
 
   private val form = new DetailsOfEmploymentOrPensionForm(frontendAppConfig)()
   private val testAnswer = "This is some sample text"
   private val taxYear = CustomTaxYear(2017)
   private val characterLimit = 500
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
+  private val detailsOfEmploymentOrPension: detailsOfEmploymentOrPension = fakeApplication.injector.instanceOf[detailsOfEmploymentOrPension]
 
 
-  def viewAsString(form: Form[_] = form) =
+  def viewAsString(form: Form[_] = form): String =
     detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages, formPartialRetriever, scalate).toString
 
   "DetailsOfEmploymentOrPension Controller" must {

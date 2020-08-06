@@ -17,15 +17,17 @@
 package views
 
 import org.scalatestplus.mockito.MockitoSugar
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.twirl.api.HtmlFormat
 import views.behaviours.ViewBehaviours
 import views.html.confirmation
 
-class ConfirmationViewSpec extends ViewBehaviours with MockitoSugar {
+class ConfirmationViewSpec extends ViewBehaviours with MockitoSugar with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "confirmation"
   private val submissionReference = " ABC-1234-DEF"  //this contains normal hyphens
   private val formattedSubmissionReference = " ABC‑1234‑DEF" //this contains non-breaking hyphens "‑"
+  private val confirmation: confirmation = fakeApplication.injector.instanceOf[confirmation]
 
   def createView: () =>
 		HtmlFormat.Appendable = () =>

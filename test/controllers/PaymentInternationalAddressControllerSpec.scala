@@ -22,21 +22,24 @@ import forms.PaymentInternationalAddressForm
 import models.SelectTaxYear.CustomTaxYear
 import models.{InternationalAddress, NormalMode}
 import org.mockito.Mockito.when
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.paymentInternationalAddress
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class PaymentInternationalAddressControllerSpec extends ControllerSpecBase {
+class PaymentInternationalAddressControllerSpec extends ControllerSpecBase with GuiceOneAppPerSuite {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new PaymentInternationalAddressController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, new PaymentInternationalAddressForm(frontendAppConfig), formPartialRetriever, scalate)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), paymentInternationalAddress, messagesControllerComponents, new PaymentInternationalAddressForm(frontendAppConfig), formPartialRetriever, scalate)
 
   val form = new PaymentInternationalAddressForm(frontendAppConfig)()
+  val paymentInternationalAddress: paymentInternationalAddress = fakeApplication.injector.instanceOf[paymentInternationalAddress]
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers()
 

@@ -26,7 +26,7 @@ import javax.inject.Inject
 import models.Mode
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
-import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import play.api.mvc.MessagesControllerComponents
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import utils.{Navigator, UserAnswers}
@@ -42,6 +42,7 @@ class HowMuchForeignIncomeController @Inject()(
                                                 authenticate: AuthAction,
                                                 getData: DataRetrievalAction,
                                                 requireData: DataRequiredAction,
+                                                howMuchForeignIncome: howMuchForeignIncome,
 cc: MessagesControllerComponents,
                                                 formBuilder: HowMuchForeignIncomeForm,
                                                 implicit val formPartialRetriever: FormPartialRetriever,

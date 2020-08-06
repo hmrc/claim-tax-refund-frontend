@@ -24,8 +24,7 @@ import org.scalatest.concurrent.ScalaFutures
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.libs.json.{JsValue, Json}
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
-import uk.gov.hmrc.play.bootstrap.http.HttpClient
-import utils.MockUserAnswers
+import uk.gov.hmrc.http.HttpClient
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -41,7 +40,7 @@ class CtrConnectorSpec extends SpecBase with MockitoSugar with ScalaFutures {
 
     "return an Submission Response when the HTTP call succeeds" in {
       when(mockHttpClient.POST[JsValue, HttpResponse](any(), any(), any())(any(), any(), any(), any()))
-        .thenReturn(Future.successful(HttpResponse(200, Some(Json.parse("""{"id":"id","filename":"filename"}""")))))
+        .thenReturn(Future.successful(HttpResponse(status = 200, json = Json.parse("""{"id":"id","filename":"filename"}"""), headers = Map.empty)))
 
       val futureResult = connector.ctrSubmission(Json.toJson(submission))
 
@@ -53,7 +52,7 @@ class CtrConnectorSpec extends SpecBase with MockitoSugar with ScalaFutures {
 
     "return nothing when the HTTP call fails" in {
       when(mockHttpClient.POST[JsValue, HttpResponse](any(), any(), any())(any(), any(), any(), any()))
-        .thenReturn(Future.successful(HttpResponse(500, None)))
+        .thenReturn(Future.successful(HttpResponse(500, "")))
 
       val futureResult = connector.ctrSubmission(Json.toJson(submission))
 

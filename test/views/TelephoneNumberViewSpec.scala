@@ -20,12 +20,13 @@ import controllers.routes
 import forms.TelephoneNumberForm
 import models.SelectTaxYear.CYMinus1
 import models.{NormalMode, TelephoneOption}
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.{Form, FormError}
 import play.twirl.api.HtmlFormat
 import views.behaviours.QuestionViewBehaviours
 import views.html.telephoneNumber
 
-class TelephoneNumberViewSpec extends QuestionViewBehaviours[TelephoneOption]{
+class TelephoneNumberViewSpec extends QuestionViewBehaviours[TelephoneOption] with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "telephoneNumber"
   private val testPhoneNumber = "0191 1111 111"
@@ -33,6 +34,7 @@ class TelephoneNumberViewSpec extends QuestionViewBehaviours[TelephoneOption]{
 
   val formProvider = new TelephoneNumberForm()
   val form = formProvider()
+  val telephoneNumber: telephoneNumber = fakeApplication.injector.instanceOf[telephoneNumber]
 
   def createView = () =>
     telephoneNumber(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)

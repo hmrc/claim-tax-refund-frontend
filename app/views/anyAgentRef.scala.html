@@ -18,9 +18,11 @@
 @import controllers.routes._
 @import models.Mode
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
-@import uk.gov.hmrc.play.views.html._
 @import viewmodels.InputViewModel
 @import com.github.tototoshi.play2.scalate._
+@import uk.gov.hmrc.play.views.html.helpers.FormWithCSRF
+
+@this(main_template: main_template, formWithCSRF: FormWithCSRF)
 
 @(
         appConfig: FrontendAppConfig,
@@ -42,7 +44,7 @@
         bodyClasses = None
     ) {
 
-        @helpers.form(action = AnyAgentRefController.onSubmit(mode), 'autoComplete -> "off") {
+        @formWithCSRF(action = AnyAgentRefController.onSubmit(mode), 'autoComplete -> "off") {
 
             @components.back_link()
 

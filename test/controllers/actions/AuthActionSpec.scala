@@ -19,7 +19,7 @@ package controllers.actions
 import base.SpecBase
 import connectors.FakeDataCacheConnector
 import controllers.routes
-import play.api.mvc.Controller
+import play.api.mvc.{InjectedController, MessagesControllerComponents}
 import play.api.test.Helpers._
 import uk.gov.hmrc.auth.core._
 import uk.gov.hmrc.auth.core.authorise.Predicate
@@ -32,7 +32,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class AuthActionSpec extends SpecBase {
 
-  class Harness(authAction: AuthAction) extends Controller {
+  class Harness(authAction: AuthAction) extends InjectedController {
     def onPageLoad() = authAction { request => Ok }
   }
 

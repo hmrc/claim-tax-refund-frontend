@@ -16,10 +16,13 @@
 
 package views
 
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import views.behaviours.ViewBehaviours
 import views.html.accessibility
 
-class AccessibilityViewSpec extends ViewBehaviours {
+class AccessibilityViewSpec extends ViewBehaviours with GuiceOneAppPerSuite {
+
+  val accessibility: accessibility = fakeApplication.injector.instanceOf[accessibility]
 
   def view = () => accessibility(frontendAppConfig, "/url")(fakeRequest, messages, formPartialRetriever, scalate)
 

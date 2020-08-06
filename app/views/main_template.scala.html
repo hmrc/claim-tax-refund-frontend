@@ -17,7 +17,9 @@
 @import com.github.tototoshi.play2.scalate._
 @import config.FrontendAppConfig
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
-@import uk.gov.hmrc.play.views.html._
+@import uk.gov.hmrc.play.views.html.layouts.{Sidebar,Article}
+
+@this(layoutSidebar: Sidebar, layoutArticle: Article)
 
 @(
         title: String,
@@ -40,14 +42,12 @@
         scalate: Scalate
 )
 
-@import uk.gov.hmrc.play.views.html.layouts
-
 @sidebar = @{
-    sidebarLinks.map(links => layouts.sidebar(links, Some("sidebar")))
+    sidebarLinks.map(links => layoutSidebar(links, Some("sidebar")))
 }
 
 @article = @{
-    layouts.article(mainContent, includeGridWrapper, articleClasses)
+    layoutArticle(mainContent, includeGridWrapper, articleClasses)
 }
 
 @mainContentHeader = {

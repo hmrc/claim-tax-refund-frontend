@@ -23,16 +23,18 @@ import forms.EnterPayeReferenceForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus4
 import org.scalatestplus.mockito.MockitoSugar
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import views.behaviours.StringViewBehaviours
 import views.html.enterPayeReference
 
-class EnterPayeReferenceViewSpec extends StringViewBehaviours with MockitoSugar {
+class EnterPayeReferenceViewSpec extends StringViewBehaviours with MockitoSugar with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "enterPayeReference"
   private val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
   private val taxYear = CYMinus4
 
   override val form: Form[String] = new EnterPayeReferenceForm(appConfig)()
+  val enterPayeReference: enterPayeReference = fakeApplication.injector.instanceOf[enterPayeReference]
 
   def createView = () => enterPayeReference(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
 

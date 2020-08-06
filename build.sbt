@@ -18,13 +18,13 @@ lazy val playSettings: Seq[Setting[_]] = Seq.empty
 
 val compile = Seq(
   ws,
-  "uk.gov.hmrc"           %% "bootstrap-frontend-play-26"     % "2.23.0",
+  "uk.gov.hmrc"           %% "bootstrap-frontend-play-26"     % "2.24.0",
   "uk.gov.hmrc"           %% "simple-reactivemongo"           % "7.30.0-play-26",
   "uk.gov.hmrc"           %% "govuk-template"                 % "5.54.0-play-26",
   "uk.gov.hmrc"           %% "play-health"                    % "3.15.0-play-26",
-  "uk.gov.hmrc"           %% "play-ui"                        % "8.10.0-play-26",
-  "uk.gov.hmrc"           %% "http-caching-client"            % "9.0.0-play-26",
-  "uk.gov.hmrc"           %% "play-conditional-form-mapping"  % "1.2.0-play-26",
+  "uk.gov.hmrc"           %% "play-ui"                        % "8.11.0-play-26",
+  "uk.gov.hmrc"           %% "http-caching-client"            % "9.1.0-play-26",
+  "uk.gov.hmrc"           %% "play-conditional-form-mapping"  % "1.3.0-play-26",
   "uk.gov.hmrc"           %% "play-partials"                  % "6.11.0-play-26",
   "uk.gov.hmrc"           %% "play-language"                  % "4.3.0-play-26",
   "uk.gov.hmrc"           %% "tax-year"                       % "1.1.0",
@@ -98,6 +98,13 @@ lazy val microservice = Project(appName, file("."))
     includeFilter in uglify := GlobFilter("claimtaxrefundfrontend-*.js")
   )
   .settings(majorVersion := 0)
-  .settings(scalaVersion := "2.12.10")
-
-
+  .settings(scalaVersion := "2.12.11")
+// ***************
+// Use the silencer plugin to suppress warnings from unused imports in compiled twirl templates
+scalacOptions += "-P:silencer:pathFilters=routes"
+scalacOptions += "-P:silencer:lineContentFilters=^\\w"
+libraryDependencies ++= Seq(
+  compilerPlugin("com.github.ghik" % "silencer-plugin" % "1.7.0" cross CrossVersion.full),
+  "com.github.ghik" % "silencer-lib" % "1.7.0" % Provided cross CrossVersion.full
+)
+// ***************

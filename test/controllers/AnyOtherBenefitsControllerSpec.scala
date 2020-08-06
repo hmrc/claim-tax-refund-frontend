@@ -22,20 +22,23 @@ import forms.BooleanForm
 import models.{CheckMode, Mode, NormalMode, SelectTaxYear}
 import models.SelectTaxYear.CustomTaxYear
 import org.mockito.Mockito.when
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import play.api.mvc.Call
 import play.api.test.Helpers._
 import utils._
 import viewmodels.AnswerSection
 import views.html.anyOtherBenefits
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class AnyOtherBenefitsControllerSpec extends ControllerSpecBase {
+class AnyOtherBenefitsControllerSpec  extends ControllerSpecBase with GuiceOneAppPerSuite {
 
   def onwardRoute: Call = routes.IndexController.onPageLoad()
 
   val formProvider = new BooleanForm()
-  val form = formProvider()
+  val form: Form[Boolean] = formProvider()
+  val anyOtherBenefits: anyOtherBenefits = fakeApplication.injector.instanceOf[anyOtherBenefits]
   private val taxYear: SelectTaxYear = CustomTaxYear(2017)
   private val mockUserAnswers: UserAnswers = MockUserAnswers.claimDetailsUserAnswers()
 
@@ -44,7 +47,7 @@ class AnyOtherBenefitsControllerSpec extends ControllerSpecBase {
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyOtherBenefitsController(frontendAppConfig, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), formProvider, messagesControllerComponents, formPartialRetriever, scalate)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), formProvider, anyOtherBenefits, messagesControllerComponents, formPartialRetriever, scalate)
 
   def viewAsString(form: Form[_] = form, mode: Mode = NormalMode): String =
     anyOtherBenefits(frontendAppConfig, form, mode, taxYear, otherBenefitsSection)(fakeRequest, messages, formPartialRetriever, scalate).toString

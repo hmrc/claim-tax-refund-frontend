@@ -18,7 +18,6 @@ package models
 
 import base.SpecBase
 import identifiers.{AgentRefId, AnyAgentRefId}
-import play.api.data.validation.ValidationError
 import play.api.libs.json._
 
 class AnyAgentRefSpec extends SpecBase {

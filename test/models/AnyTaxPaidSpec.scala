@@ -18,7 +18,6 @@ package models
 
 import base.SpecBase
 import identifiers.{AnyTaxPaidId, TaxPaidAmountId}
-import play.api.data.validation.ValidationError
 import play.api.libs.json._
 
 class AnyTaxPaidSpec extends SpecBase {

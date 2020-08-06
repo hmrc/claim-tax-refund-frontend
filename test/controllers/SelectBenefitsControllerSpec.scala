@@ -26,19 +26,22 @@ import models.SelectTaxYear.CustomTaxYear
 import models.{Benefits, NormalMode}
 import org.scalatestplus.mockito.MockitoSugar
 import org.mockito.Mockito.when
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import views.html.selectBenefits
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class SelectBenefitsControllerSpec extends ControllerSpecBase with MockitoSugar {
+class SelectBenefitsControllerSpec extends ControllerSpecBase with MockitoSugar with GuiceOneAppPerSuite {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
+  private val selectBenefits: selectBenefits = fakeApplication.injector.instanceOf[selectBenefits]
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new SelectBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, formPartialRetriever, scalate)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), selectBenefits, messagesControllerComponents, formPartialRetriever, scalate)
 
   def viewAsString(form: Form[_] = SelectBenefitsForm()) = selectBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
 

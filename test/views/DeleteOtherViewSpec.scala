@@ -22,9 +22,10 @@ import forms.BooleanForm
 import models.SelectTaxYear.CYMinus3
 import views.behaviours.YesNoViewBehaviours
 import models.{Index, NormalMode}
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import views.html.deleteOther
 
-class DeleteOtherViewSpec extends YesNoViewBehaviours {
+class DeleteOtherViewSpec extends YesNoViewBehaviours with GuiceOneAppPerSuite {
 
   val messageKeyPrefix = "deleteOther"
   val itemName = "qwerty"
@@ -33,6 +34,7 @@ class DeleteOtherViewSpec extends YesNoViewBehaviours {
   private val taxYear = CYMinus3
 
   override val form = new BooleanForm()()
+  val deleteOther: deleteOther = fakeApplication.injector.instanceOf[deleteOther]
 
   def createView = () =>
     deleteOther(

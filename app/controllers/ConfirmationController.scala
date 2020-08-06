@@ -24,23 +24,22 @@ import javax.inject.Inject
 import models.Mode
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
-import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import play.api.mvc.MessagesControllerComponents
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import views.html.confirmation
-
-import scala.concurrent.ExecutionContext
 
 class ConfirmationController @Inject()(appConfig: FrontendAppConfig,
                                        override val messagesApi: MessagesApi,
                                        authenticate: AuthAction,
                                        getData: DataRetrievalAction,
                                        requireData: DataRequiredAction,
+                                       confirmation: confirmation,
 cc: MessagesControllerComponents,
                                        dataCacheConnector: DataCacheConnector,
                                        implicit val formPartialRetriever: FormPartialRetriever,
                                        implicit val scalate: Scalate
-                                      )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
+                                      ) extends FrontendController(cc) with I18nSupport {
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>

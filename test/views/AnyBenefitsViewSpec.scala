@@ -20,16 +20,18 @@ import controllers.routes
 import forms.BooleanForm
 import models.NormalMode
 import models.SelectTaxYear.CustomTaxYear
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 import views.behaviours.YesNoViewBehaviours
 import views.html.anyBenefits
 
-class AnyBenefitsViewSpec extends YesNoViewBehaviours {
+class AnyBenefitsViewSpec extends YesNoViewBehaviours with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "anyBenefits"
   private val listMessageKeyPrefix = "selectBenefits"
   private val taxYear = CustomTaxYear(2017)
+  private val anyBenefits: anyBenefits = fakeApplication.injector.instanceOf[anyBenefits]
 
   override val form = new BooleanForm()()
 

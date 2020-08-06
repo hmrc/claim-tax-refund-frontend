@@ -25,9 +25,9 @@ import identifiers.AnyOtherBenefitsId
 import javax.inject.Inject
 import models.{CheckMode, Mode, NormalMode, SelectTaxYear}
 import play.api.data.Form
-import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
-import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import play.api.i18n.I18nSupport
+import play.api.mvc.{Action, AnyContent, Result}
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import play.api.mvc.MessagesControllerComponents
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, Navigator, UserAnswers}
@@ -43,6 +43,7 @@ class AnyOtherBenefitsController @Inject()(appConfig: FrontendAppConfig,
                                            getData: DataRetrievalAction,
                                            requireData: DataRequiredAction,
                                            formProvider: BooleanForm,
+                                           anyOtherBenefits: anyOtherBenefits,
                                            cc: MessagesControllerComponents,
                                            implicit val formPartialRetriever: FormPartialRetriever,
                                            implicit val scalate: Scalate

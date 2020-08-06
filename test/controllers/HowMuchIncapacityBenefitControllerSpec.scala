@@ -22,24 +22,27 @@ import forms.HowMuchIncapacityBenefitForm
 import models.NormalMode
 import models.SelectTaxYear.CustomTaxYear
 import org.mockito.Mockito.when
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.howMuchIncapacityBenefit
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class HowMuchIncapacityBenefitControllerSpec extends ControllerSpecBase {
+class HowMuchIncapacityBenefitControllerSpec extends ControllerSpecBase with GuiceOneAppPerSuite {
 
   private val testAnswer = "9,999.99"
   private val form = new HowMuchIncapacityBenefitForm(frontendAppConfig)()
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
+  private val howMuchIncapacityBenefit: howMuchIncapacityBenefit = fakeApplication.injector.instanceOf[howMuchIncapacityBenefit]
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new HowMuchIncapacityBenefitController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, new HowMuchIncapacityBenefitForm(frontendAppConfig), formPartialRetriever, scalate)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), howMuchIncapacityBenefit, messagesControllerComponents, new HowMuchIncapacityBenefitForm(frontendAppConfig), formPartialRetriever, scalate)
 
   def viewAsString(form: Form[_] = form) = howMuchIncapacityBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
 

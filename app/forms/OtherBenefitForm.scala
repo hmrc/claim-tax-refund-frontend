@@ -23,7 +23,6 @@ import models.{Index, OtherBenefit}
 import play.api.data.{Form, validation}
 import play.api.data.Forms._
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
-import play.api.i18n.MessagesApi
 
 class OtherBenefitForm @Inject()(appConfig: FrontendAppConfig) extends FormErrorHelper with Mappings with Constraints {
 

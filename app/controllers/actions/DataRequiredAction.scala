@@ -21,7 +21,6 @@ import controllers.routes
 import models.requests.{DataRequest, OptionalDataRequest}
 import play.api.mvc.Results.Redirect
 import play.api.mvc.{ActionRefiner, AnyContent, BodyParser, MessagesControllerComponents, Result}
-import uk.gov.hmrc.play.HeaderCarrierConverter
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -31,8 +30,6 @@ class DataRequiredActionImpl @Inject()(cc: MessagesControllerComponents) extends
   def parser: BodyParser[AnyContent] = cc.parsers.defaultBodyParser
 
   override protected def refine[A](request: OptionalDataRequest[A]): Future[Either[Result, DataRequest[A]]] = {
-    implicit val hc = HeaderCarrierConverter.fromHeadersAndSession(request.headers, Some(request.session))
-
     request.userAnswers match {
       case None => Future.successful(Left(Redirect(routes.SessionExpiredController.onPageLoad())))
       case Some(data) => Future.successful(Right(DataRequest(request.request, request.externalId, request.nino, request.name, request.address, data)))

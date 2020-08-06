@@ -26,7 +26,7 @@ import models._
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Request}
-import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import utils.{Navigator, UserAnswers}
 import views.html.removeOtherSelectedOption
@@ -40,6 +40,7 @@ class RemoveOtherSelectedOptionController @Inject()(appConfig: FrontendAppConfig
                                                     authenticate: AuthAction,
                                                     getData: DataRetrievalAction,
                                                     requireData: DataRequiredAction,
+                                                    removeOtherSelectedOption: removeOtherSelectedOption,
                                                     cc: MessagesControllerComponents,
                                                     formProvider: BooleanForm,
                                                     implicit val formPartialRetriever: FormPartialRetriever,

@@ -15,12 +15,15 @@
  *@
 
 @import config.FrontendAppConfig
-@import uk.gov.hmrc.play.views.html._
 @import controllers.routes._
 @import models.Mode
 @import viewmodels.InputViewModel
 @import com.github.tototoshi.play2.scalate._
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
+@import uk.gov.hmrc.play.views.html.helpers.FormWithCSRF
+
+@this(main_template: main_template, formWithCSRF: FormWithCSRF)
+
 @(
     appConfig: FrontendAppConfig,
     form: Form[_],
@@ -39,7 +42,7 @@
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @helpers.form(action = AnyTaxableForeignIncomeController.onSubmit(mode), 'autoComplete -> "off") {
+    @formWithCSRF(action = AnyTaxableForeignIncomeController.onSubmit(mode), 'autoComplete -> "off") {
 
         @components.back_link()
 

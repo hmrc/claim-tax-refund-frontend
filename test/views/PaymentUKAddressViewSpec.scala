@@ -21,16 +21,18 @@ import forms.PaymentUKAddressForm
 import models.SelectTaxYear.CYMinus1
 import models.{NormalMode, UkAddress}
 import org.scalatestplus.mockito.MockitoSugar
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 import views.html.paymentUKAddress
 
-class PaymentUKAddressViewSpec extends QuestionViewBehaviours[UkAddress] with MockitoSugar {
+class PaymentUKAddressViewSpec extends QuestionViewBehaviours[UkAddress] with MockitoSugar with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "paymentUKAddress"
   private val taxYear = CYMinus1
 
   override val form: Form[UkAddress] = new PaymentUKAddressForm(frontendAppConfig)()
+  val paymentUKAddress: paymentUKAddress = fakeApplication.injector.instanceOf[paymentUKAddress]
 
   def createView = () =>
     paymentUKAddress(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)

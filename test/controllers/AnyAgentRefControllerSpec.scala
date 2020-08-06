@@ -23,14 +23,16 @@ import identifiers.{AgentRefId, AnyAgentRefId}
 import models.SelectTaxYear.CustomTaxYear
 import models.{AnyAgentRef, NormalMode}
 import org.mockito.Mockito.when
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import play.api.libs.json._
 import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.anyAgentRef
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class AnyAgentRefControllerSpec extends ControllerSpecBase {
+class AnyAgentRefControllerSpec extends ControllerSpecBase with GuiceOneAppPerSuite {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
@@ -41,12 +43,13 @@ class AnyAgentRefControllerSpec extends ControllerSpecBase {
   val form: Form[AnyAgentRef] = formProvider(messages(requiredKey, nomineeName), messages(requiredAgentRefKey, nomineeName))
   val validYesData = Map(AnyAgentRefId.toString -> Json.obj(AnyAgentRefId.toString -> JsBoolean(true), AgentRefId.toString -> JsString("AB1234")))
   val validNoData = Map(AnyAgentRefId.toString -> Json.obj(AnyAgentRefId.toString -> JsBoolean(false)))
+  val anyAgentRef: anyAgentRef = fakeApplication.injector.instanceOf[anyAgentRef]
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyAgentRefController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, formProvider, formPartialRetriever, scalate)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), anyAgentRef, messagesControllerComponents, formProvider, formPartialRetriever, scalate)
 
   def viewAsString(form: Form[_] = form) = anyAgentRef(frontendAppConfig, form, NormalMode, nomineeName, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
 

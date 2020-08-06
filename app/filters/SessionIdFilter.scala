@@ -23,18 +23,20 @@ import com.google.inject.Inject
 import play.api.http.HeaderNames
 import play.api.mvc._
 import uk.gov.hmrc.http.{SessionKeys, HeaderNames => HMRCHeaderNames}
+import play.api.mvc.SessionCookieBaker
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class SessionIdFilter(
                        override val mat: Materializer,
                        uuid: => UUID,
-                       implicit val ec: ExecutionContext
+                       implicit val ec: ExecutionContext,
+                       private val scb: SessionCookieBaker
                      ) extends Filter {
 
   @Inject
-  def this(mat: Materializer, ec: ExecutionContext) {
-    this(mat, UUID.randomUUID(), ec)
+  def this(mat: Materializer, ec: ExecutionContext, scb: SessionCookieBaker) {
+    this(mat, UUID.randomUUID(), ec, scb)
   }
 
   override def apply(f: (RequestHeader) => Future[Result])(rh: RequestHeader): Future[Result] = {
@@ -59,13 +61,13 @@ class SessionIdFilter(
         HeaderNames.COOKIE -> cookies
       )
 
-      f(rh.copy(headers = headers)).map {
+      f(rh.withHeaders(headers)).map {
         result =>
 
           val cookies =
             Cookies.fromSetCookieHeader(result.header.headers.get(HeaderNames.SET_COOKIE))
 
-          val session = Session.decodeFromCookie(cookies.get(Session.COOKIE_NAME)).data
+          val session = Session.decodeFromCookie(cookies.get(scb.COOKIE_NAME)).data
             .foldLeft(rh.session) {
               case (m, n) =>
                 m + n

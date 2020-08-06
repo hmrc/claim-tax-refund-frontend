@@ -18,20 +18,22 @@ package views
 
 import base.SpecBase
 import org.scalatestplus.mockito.MockitoSugar
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.i18n.Messages
 import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, MockUserAnswers}
 import views.behaviours.ViewBehaviours
 import views.html.check_your_answers
 
-class CheckYourAnswersViewSpec extends SpecBase with ViewBehaviours with MockitoSugar {
+class CheckYourAnswersViewSpec extends SpecBase with ViewBehaviours with MockitoSugar with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "checkYourAnswers"
   private val answers = MockUserAnswers.fullValidUserAnswers()
   private val helper = new CheckYourAnswersHelper(answers)(messages: Messages)
   private val cyaSection = new CheckYourAnswersSections(helper, answers)
   private val sections = cyaSection.sections
+  private val checkYourAnswers: check_your_answers = fakeApplication.injector.instanceOf[check_your_answers]
 
-  def view = () => check_your_answers(frontendAppConfig, sections)(fakeRequest, messages: Messages, formPartialRetriever, scalate)
+  def view = () => checkYourAnswers(frontendAppConfig, sections)(fakeRequest, messages: Messages, formPartialRetriever, scalate)
 
   "Check your answers view" must {
     behave like normalPage(view, messageKeyPrefix, None)

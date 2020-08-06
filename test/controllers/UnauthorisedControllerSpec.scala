@@ -16,20 +16,22 @@
 
 package controllers
 
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.test.Helpers._
 import views.html.unauthorised
-import scala.concurrent.ExecutionContext.Implicits.global
 
-class UnauthorisedControllerSpec extends ControllerSpecBase {
+class UnauthorisedControllerSpec extends ControllerSpecBase with GuiceOneAppPerSuite {
+
+  val unauthorised: unauthorised = fakeApplication.injector.instanceOf[unauthorised]
 
   "Unauthorised Controller" must {
     "return 200 for a GET" in {
-      val result = new UnauthorisedController(frontendAppConfig, messagesControllerComponents, formPartialRetriever, scalate).onPageLoad()(fakeRequest)
+      val result = new UnauthorisedController(frontendAppConfig, unauthorised, messagesControllerComponents, formPartialRetriever, scalate).onPageLoad()(fakeRequest)
       status(result) mustBe OK
     }
 
     "return the correct view for a GET" in {
-      val result = new UnauthorisedController(frontendAppConfig, messagesControllerComponents, formPartialRetriever, scalate).onPageLoad()(fakeRequest)
+      val result = new UnauthorisedController(frontendAppConfig, unauthorised, messagesControllerComponents, formPartialRetriever, scalate).onPageLoad()(fakeRequest)
       contentAsString(result) mustBe unauthorised(frontendAppConfig)(fakeRequest, messages, formPartialRetriever, scalate).toString
     }
   }

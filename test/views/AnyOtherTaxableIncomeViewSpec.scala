@@ -21,12 +21,13 @@ import forms.BooleanForm
 import models.{AnyTaxPaid, NormalMode, OtherTaxableIncome}
 import models.SelectTaxYear.CustomTaxYear
 import org.jsoup.nodes.Document
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 import views.behaviours.YesNoViewBehaviours
 import views.html.anyOtherTaxableIncome
 
-class AnyOtherTaxableIncomeViewSpec extends YesNoViewBehaviours {
+class AnyOtherTaxableIncomeViewSpec extends YesNoViewBehaviours with GuiceOneAppPerSuite {
 
 	private val messageKeyPrefix = "anyOtherTaxableIncome"
 	private val taxYear = CustomTaxYear(2017)
@@ -34,8 +35,8 @@ class AnyOtherTaxableIncomeViewSpec extends YesNoViewBehaviours {
 	val completeSeq: Seq[(OtherTaxableIncome, Int)] = Seq((OtherTaxableIncome("qwerty1", "1234", Some(AnyTaxPaid.Yes("1234"))), 0))
 	val incompleteSeq: Seq[(OtherTaxableIncome, Int)] = Seq((OtherTaxableIncome("qwerty2", "1234", None), 1))
 
-
 	override val form = new BooleanForm()()
+	val anyOtherTaxableIncome: anyOtherTaxableIncome = fakeApplication.injector.instanceOf[anyOtherTaxableIncome]
 
 	def createView: () => HtmlFormat.Appendable = () =>
 		anyOtherTaxableIncome(frontendAppConfig,

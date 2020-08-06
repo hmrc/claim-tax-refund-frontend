@@ -19,12 +19,14 @@ package controllers
 import connectors.{FakeDataCacheConnector, TaiConnector}
 import controllers.actions._
 import forms.BooleanForm
-import models.SelectTaxYear.{CYMinus2, CustomTaxYear}
+import models.SelectTaxYear.CustomTaxYear
 import models.{Employment, NormalMode}
 import org.mockito.Matchers
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
+import play.api.mvc.Call
 import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.employmentDetails
@@ -32,23 +34,24 @@ import views.html.employmentDetails
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class EmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSugar {
+class EmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSugar with GuiceOneAppPerSuite {
 
-  def onwardRoute = routes.IndexController.onPageLoad()
-  def noTaiRoute = routes.EnterPayeReferenceController.onPageLoad(NormalMode)
+  def onwardRoute: Call = routes.IndexController.onPageLoad()
+  def noTaiRoute: Call = routes.EnterPayeReferenceController.onPageLoad(NormalMode)
 
   val formProvider = new BooleanForm()
-  val form = formProvider()
-  val mockTaiConnector = mock[TaiConnector]
+  val form: Form[Boolean] = formProvider()
+  val mockTaiConnector: TaiConnector = mock[TaiConnector]
+  val employmentDetails: employmentDetails = fakeApplication.injector.instanceOf[employmentDetails]
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
 
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new EmploymentDetailsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, formProvider, mockTaiConnector, formPartialRetriever, scalate)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), employmentDetails, messagesControllerComponents, formProvider, mockTaiConnector, formPartialRetriever, scalate)
 
-  def viewAsString(form: Form[_] = form) = employmentDetails(frontendAppConfig, form, NormalMode,
+  def viewAsString(form: Form[_] = form): String = employmentDetails(frontendAppConfig, form, NormalMode,
     Seq(Employment("AVIVA PENSIONS", "754", "AZ00070")), taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
 
   "EmploymentDetails Controller" must {

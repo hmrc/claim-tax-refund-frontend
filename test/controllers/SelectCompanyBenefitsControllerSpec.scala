@@ -27,18 +27,21 @@ import utils.{FakeNavigator, MockUserAnswers}
 import views.html.selectCompanyBenefits
 import org.scalatestplus.mockito.MockitoSugar
 import org.mockito.Mockito.when
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class SelectCompanyBenefitsControllerSpec extends ControllerSpecBase with MockitoSugar {
+class SelectCompanyBenefitsControllerSpec extends ControllerSpecBase with MockitoSugar with GuiceOneAppPerSuite {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
+  private val selectCompanyBenefits: selectCompanyBenefits = fakeApplication.injector.instanceOf[selectCompanyBenefits]
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new SelectCompanyBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, formPartialRetriever, scalate)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), selectCompanyBenefits, messagesControllerComponents, formPartialRetriever, scalate)
 
   def viewAsString(form: Form[_] = SelectCompanyBenefitsForm()) =
     selectCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
