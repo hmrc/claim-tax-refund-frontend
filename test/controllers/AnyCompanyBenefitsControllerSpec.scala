@@ -22,24 +22,27 @@ import forms.BooleanForm
 import models.NormalMode
 import models.SelectTaxYear.CustomTaxYear
 import org.mockito.Mockito.when
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.anyCompanyBenefits
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class AnyCompanyBenefitsControllerSpec extends ControllerSpecBase {
+class AnyCompanyBenefitsControllerSpec extends ControllerSpecBase with GuiceOneAppPerSuite {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
   val formProvider = new BooleanForm()
-  val form = formProvider()
+  val form: Form[Boolean] = formProvider()
+  val anyCompanyBenefits: anyCompanyBenefits = fakeApplication.injector.instanceOf[anyCompanyBenefits]
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyCompanyBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, formProvider, formPartialRetriever, scalate)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), anyCompanyBenefits, messagesControllerComponents, formProvider, formPartialRetriever, scalate)
 
   def viewAsString(form: Form[_] = form) = anyCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
 

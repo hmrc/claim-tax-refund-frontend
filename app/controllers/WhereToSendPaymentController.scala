@@ -26,8 +26,8 @@ import javax.inject.Inject
 import models.{Mode, WhereToSendPayment}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
-import uk.gov.hmrc.play.bootstrap.controller.FrontendController
-import play.api.mvc.MessagesControllerComponents
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import utils.{Navigator, UserAnswers}
 import views.html.whereToSendPayment
@@ -42,12 +42,13 @@ class WhereToSendPaymentController @Inject()(
                                               authenticate: AuthAction,
                                               getData: DataRetrievalAction,
                                               requireData: DataRequiredAction,
+                                              whereToSendPayment: whereToSendPayment,
 cc: MessagesControllerComponents,
                                               implicit val formPartialRetriever: FormPartialRetriever,
                                               implicit val scalate: Scalate
                                             )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
-  def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.whereToSendPayment match {
         case None => WhereToSendPaymentForm()
@@ -62,7 +63,7 @@ cc: MessagesControllerComponents,
       }
   }
 
-  def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
       request.userAnswers.selectTaxYear.map {
         taxYear =>

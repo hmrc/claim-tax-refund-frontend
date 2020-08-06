@@ -26,7 +26,7 @@ import javax.inject.Inject
 import models.Mode
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
-import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import play.api.mvc.MessagesControllerComponents
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import utils.{Navigator, UserAnswers}
@@ -41,6 +41,7 @@ class HowMuchInvestmentOrDividendController @Inject()(appConfig: FrontendAppConf
                                                       authenticate: AuthAction,
                                                       getData: DataRetrievalAction,
                                                       requireData: DataRequiredAction,
+                                                      howMuchInvestmentOrDividend: howMuchInvestmentOrDividend,
 cc: MessagesControllerComponents,
                                                       formBuilder: HowMuchInvestmentOrDividendForm,
                                                       implicit val formPartialRetriever: FormPartialRetriever,

@@ -19,19 +19,17 @@ package controllers
 import javax.inject.{Inject, Singleton}
 import config.FrontendAppConfig
 import models.NormalMode
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent}
-import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import play.api.mvc.MessagesControllerComponents
-
-import scala.concurrent.ExecutionContext
 
 @Singleton
 class IndexController @Inject()(val appConfig: FrontendAppConfig,
                                 cc: MessagesControllerComponents)
-                               (implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
+                                extends FrontendController(cc) with I18nSupport {
 
-  def onPageLoad: Action[AnyContent] = Action { implicit request =>
+  def onPageLoad: Action[AnyContent] = Action {
     TemporaryRedirect(routes.SelectTaxYearController.onPageLoad(NormalMode).url)
   }
 }

@@ -40,7 +40,7 @@ class AddressLookupRoutingControllerSpec extends ControllerSpecBase with Mockito
       messagesControllerComponents, dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents))
 
   "AddressLookupRoutingController" must {
-    when(mockAddressLookup.getAddress(any(),any(),any())(any(),any())).thenReturn(Future.successful(mockUserAnswers))
+    when(mockAddressLookup.getAddress(any(),any(),any())(any())).thenReturn(Future.successful(mockUserAnswers))
 
     "When addressId present and Normal mode, call getAddress and match mode appropriately" in {
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).addressLookupCallback(Some("AddID1234"), NormalMode)(fakeRequest)

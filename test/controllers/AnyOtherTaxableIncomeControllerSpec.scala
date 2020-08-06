@@ -22,14 +22,16 @@ import forms.BooleanForm
 import models.SelectTaxYear.CustomTaxYear
 import models._
 import org.mockito.Mockito.when
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import play.api.mvc.Call
 import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.anyOtherTaxableIncome
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class AnyOtherTaxableIncomeControllerSpec extends ControllerSpecBase {
+class AnyOtherTaxableIncomeControllerSpec  extends ControllerSpecBase with GuiceOneAppPerSuite {
 
   def onwardRoute: Call = routes.IndexController.onPageLoad()
 
@@ -38,12 +40,14 @@ class AnyOtherTaxableIncomeControllerSpec extends ControllerSpecBase {
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
 
+  val anyOtherTaxableIncome: anyOtherTaxableIncome = fakeApplication.injector.instanceOf[anyOtherTaxableIncome]
+
   val complete: Seq[(OtherTaxableIncome, Int)] = Seq((OtherTaxableIncome("qwerty", "123", Some(AnyTaxPaid.Yes("1234"))),0))
   val incomplete: Seq[(OtherTaxableIncome, Int)] = Seq((OtherTaxableIncome("qwerty", "123", None),1))
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyOtherTaxableIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, formProvider, formPartialRetriever, scalate)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), anyOtherTaxableIncome, messagesControllerComponents, formProvider, formPartialRetriever, scalate)
 
   def viewAsString(form: Form[_] = form, mode: Mode = NormalMode): String =
     anyOtherTaxableIncome(frontendAppConfig,

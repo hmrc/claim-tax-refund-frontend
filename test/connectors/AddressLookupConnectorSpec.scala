@@ -30,7 +30,6 @@ import play.api.libs.json.Format
 import play.api.i18n.Lang
 import play.api.mvc.Request
 import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.play.language.LanguageUtils
 import utils.{UserAnswers, WireMockHelper}
 
 import scala.concurrent.duration._

@@ -21,17 +21,19 @@ import forms.OtherBenefitForm
 import models.{NormalMode, OtherBenefit}
 import models.SelectTaxYear.CustomTaxYear
 import org.scalatestplus.mockito.MockitoSugar
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 import views.behaviours.QuestionViewBehaviours
 import views.html.otherBenefit
 
-class OtherBenefitViewSpec extends QuestionViewBehaviours[OtherBenefit] with MockitoSugar {
+class OtherBenefitViewSpec extends QuestionViewBehaviours[OtherBenefit] with MockitoSugar with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "otherBenefit"
   private val taxYear = CustomTaxYear(2017)
 
   override val form: Form[OtherBenefit] = new OtherBenefitForm(frontendAppConfig)(Seq.empty, 0)
+  val otherBenefit: otherBenefit = fakeApplication.injector.instanceOf[otherBenefit]
 
   def createView: () =>
     HtmlFormat.Appendable = () =>

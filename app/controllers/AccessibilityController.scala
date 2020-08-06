@@ -21,19 +21,19 @@ import config.FrontendAppConfig
 import javax.inject.{Inject, Singleton}
 import play.api.i18n.{I18nSupport}
 import play.api.mvc.{Action, AnyContent}
-import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import play.api.mvc.MessagesControllerComponents
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import views.html.accessibility
 import java.net.URL
-import scala.concurrent.ExecutionContext
 
 @Singleton
 class AccessibilityController @Inject()(val appConfig: FrontendAppConfig,
+                                        accessibility: accessibility,
                                        cc: MessagesControllerComponents,
                                        implicit val formPartialRetriever: FormPartialRetriever,
                                        implicit val scalate: Scalate
-                                      )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
+                                      ) extends FrontendController(cc) with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = Action { implicit request =>
     val referer_url = new URL(request.headers("referer")).getPath

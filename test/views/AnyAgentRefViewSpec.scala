@@ -20,12 +20,13 @@ import controllers.routes
 import forms.AnyAgentReferenceForm
 import models.SelectTaxYear.CYMinus1
 import models.{AnyAgentRef, NormalMode}
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.{Form, FormError}
 import play.twirl.api.HtmlFormat
 import views.behaviours.QuestionViewBehaviours
 import views.html.anyAgentRef
 
-class AnyAgentRefViewSpec extends QuestionViewBehaviours[AnyAgentRef]{
+class AnyAgentRefViewSpec extends QuestionViewBehaviours[AnyAgentRef] with GuiceOneAppPerSuite {
 
   private val requiredKey = "anyAgentRef.blank"
   private val requiredAgentRefKey = "anyAgentRef.blankAgentRef"
@@ -36,6 +37,7 @@ class AnyAgentRefViewSpec extends QuestionViewBehaviours[AnyAgentRef]{
 
   val formProvider = new AnyAgentReferenceForm()
   val form = formProvider(messages(requiredKey, nomineeName), messages(requiredAgentRefKey, nomineeName))
+  val anyAgentRef: anyAgentRef = fakeApplication.injector.instanceOf[anyAgentRef]
 
   def createView = () => anyAgentRef(frontendAppConfig, form, NormalMode, nomineeName, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
 

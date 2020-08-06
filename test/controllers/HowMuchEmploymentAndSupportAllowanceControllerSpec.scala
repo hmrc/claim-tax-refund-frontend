@@ -19,30 +19,30 @@ package controllers
 import connectors.FakeDataCacheConnector
 import controllers.actions._
 import forms.HowMuchEmploymentAndSupportAllowanceForm
-import identifiers.HowMuchEmploymentAndSupportAllowanceId
 import models.NormalMode
 import models.SelectTaxYear.CustomTaxYear
 import org.mockito.Mockito.when
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
-import play.api.libs.json.JsString
 import play.api.test.Helpers._
-import uk.gov.hmrc.http.cache.client.CacheMap
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.howMuchEmploymentAndSupportAllowance
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class HowMuchEmploymentAndSupportAllowanceControllerSpec extends ControllerSpecBase {
+class HowMuchEmploymentAndSupportAllowanceControllerSpec extends ControllerSpecBase with GuiceOneAppPerSuite {
 
   private val testAnswer = "9,999.99"
   private val form = new HowMuchEmploymentAndSupportAllowanceForm(frontendAppConfig)()
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
+  private val howMuchEmploymentAndSupportAllowance: howMuchEmploymentAndSupportAllowance = fakeApplication.injector.instanceOf[howMuchEmploymentAndSupportAllowance]
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new HowMuchEmploymentAndSupportAllowanceController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute),
-      FakeAuthAction(authConnector, frontendAppConfig), dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, new HowMuchEmploymentAndSupportAllowanceForm(frontendAppConfig), formPartialRetriever, scalate)
+      FakeAuthAction(authConnector, frontendAppConfig), dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), howMuchEmploymentAndSupportAllowance, messagesControllerComponents, new HowMuchEmploymentAndSupportAllowanceForm(frontendAppConfig), formPartialRetriever, scalate)
 
   def viewAsString(form: Form[_] = form) = howMuchEmploymentAndSupportAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
 

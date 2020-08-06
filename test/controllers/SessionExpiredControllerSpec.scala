@@ -16,21 +16,23 @@
 
 package controllers
 
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.test.Helpers._
 import views.html.session_expired
-import scala.concurrent.ExecutionContext.Implicits.global
 
-class SessionExpiredControllerSpec extends ControllerSpecBase {
+class SessionExpiredControllerSpec extends ControllerSpecBase with GuiceOneAppPerSuite {
+
+  val sessionExpired: session_expired = fakeApplication.injector.instanceOf[session_expired]
 
   "SessionExpired Controller" must {
     "return 200 for a GET" in {
-      val result = new SessionExpiredController(frontendAppConfig, messagesControllerComponents, formPartialRetriever, scalate).onPageLoad()(fakeRequest)
+      val result = new SessionExpiredController(frontendAppConfig, sessionExpired, messagesControllerComponents, formPartialRetriever, scalate).onPageLoad()(fakeRequest)
       status(result) mustBe OK
     }
 
     "return the correct view for a GET" in {
-      val result = new SessionExpiredController(frontendAppConfig, messagesControllerComponents, formPartialRetriever, scalate).onPageLoad()(fakeRequest)
-      contentAsString(result) mustBe session_expired(frontendAppConfig)(fakeRequest, messages, formPartialRetriever, scalate).toString
+      val result = new SessionExpiredController(frontendAppConfig, sessionExpired, messagesControllerComponents, formPartialRetriever, scalate).onPageLoad()(fakeRequest)
+      contentAsString(result) mustBe sessionExpired(frontendAppConfig)(fakeRequest, messages, formPartialRetriever, scalate).toString
     }
   }
 }

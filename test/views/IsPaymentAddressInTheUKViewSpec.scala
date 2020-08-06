@@ -20,16 +20,18 @@ import controllers.routes
 import forms.BooleanForm
 import models.NormalMode
 import models.SelectTaxYear.CustomTaxYear
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import views.behaviours.YesNoViewBehaviours
 import views.html.isPaymentAddressInTheUK
 
-class IsPaymentAddressInTheUKViewSpec extends YesNoViewBehaviours {
+class IsPaymentAddressInTheUKViewSpec extends YesNoViewBehaviours with GuiceOneAppPerSuite {
 
   val messageKeyPrefix = "isPaymentAddressInTheUK"
   private val taxYear = CustomTaxYear(2017)
 
   override val form = new BooleanForm()()
+  val isPaymentAddressInTheUK: isPaymentAddressInTheUK = fakeApplication.injector.instanceOf[isPaymentAddressInTheUK]
 
   def createView = () => isPaymentAddressInTheUK(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
 

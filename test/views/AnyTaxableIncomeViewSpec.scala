@@ -20,18 +20,20 @@ import controllers.routes
 import forms.BooleanForm
 import models.NormalMode
 import models.SelectTaxYear.CustomTaxYear
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 import views.behaviours.YesNoViewBehaviours
 import views.html.anyTaxableIncome
 
-class AnyTaxableIncomeViewSpec extends YesNoViewBehaviours {
+class AnyTaxableIncomeViewSpec extends YesNoViewBehaviours with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "anyTaxableIncome"
   private val listMessageKeyPrefix = "selectTaxableIncome"
   private val taxYear = CustomTaxYear(2017)
 
   override val form = new BooleanForm()()
+  val anyTaxableIncome: anyTaxableIncome = fakeApplication.injector.instanceOf[anyTaxableIncome]
 
   def createView: () =>
     HtmlFormat.Appendable = () =>

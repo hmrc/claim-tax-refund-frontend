@@ -24,15 +24,17 @@ import play.api.i18n.MessagesApi
 import play.api.mvc.Results._
 import play.api.mvc.{Request, RequestHeader, Result}
 import play.twirl.api.Html
-import uk.gov.hmrc.play.bootstrap.http.FrontendErrorHandler
+import uk.gov.hmrc.play.bootstrap.frontend.http.FrontendErrorHandler
 import uk.gov.hmrc.play.partials.FormPartialRetriever
-import views.html.error_template
+import views.html.{error_template,unauthorised_error_template}
 
 import scala.concurrent.Future
 
 @Singleton
 class ErrorHandler @Inject()(
                               appConfig: FrontendAppConfig,
+                              error_template: error_template,
+                              unauthorised_error_template: unauthorised_error_template,
                               val messagesApi: MessagesApi,
                               implicit val formPartialRetriever: FormPartialRetriever,
                               implicit val scalate: Scalate
@@ -58,6 +60,6 @@ class ErrorHandler @Inject()(
   }
 
   override def standardErrorTemplate(pageTitle: String, heading: String, message: String)(implicit request: Request[_]): Html =
-    views.html.unauthorised_error_template(pageTitle, heading, message, appConfig)
+    unauthorised_error_template(pageTitle, heading, message, appConfig)
 }
 

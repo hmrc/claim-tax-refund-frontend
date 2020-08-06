@@ -27,7 +27,7 @@ import models._
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, Result}
-import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import play.api.mvc.MessagesControllerComponents
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import utils.{Navigator, SequenceUtil, UserAnswers}
@@ -42,6 +42,7 @@ class AnyTaxableOtherIncomeController @Inject()(appConfig: FrontendAppConfig,
                                                 authenticate: AuthAction,
                                                 getData: DataRetrievalAction,
                                                 requireData: DataRequiredAction,
+                                                anyTaxableOtherIncome: anyTaxableOtherIncome,
                                                 cc: MessagesControllerComponents,
                                                 sequenceUtil: SequenceUtil[OtherTaxableIncome],
                                                 formProvider: OtherTaxableIncomeForm,
@@ -56,14 +57,6 @@ class AnyTaxableOtherIncomeController @Inject()(appConfig: FrontendAppConfig,
 
   def onPageLoad(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
-      val form: Form[AnyTaxPaid] = taxPaidFormProvider(notSelectedKey, blankKey, invalidKey)
-
-      val preparedForm = request.userAnswers.otherTaxableIncome match {
-        case Some(value) =>
-          if (index >= value.length || value(index).anyTaxPaid.isEmpty) form else form.fill(value(index).anyTaxPaid.get)
-        case None => form
-      }
-
       val details: Option[Result] = for {
         selectedTaxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
         otherTaxableIncome: Seq[OtherTaxableIncome] <- request.userAnswers.otherTaxableIncome
@@ -89,8 +82,6 @@ class AnyTaxableOtherIncomeController @Inject()(appConfig: FrontendAppConfig,
 
   def onSubmit(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      val form: Form[AnyTaxPaid] = taxPaidFormProvider(notSelectedKey, blankKey, invalidKey)
-
       val details: Option[Future[Result]] = for {
         selectedTaxYear: SelectTaxYear <- request.userAnswers.selectTaxYear
         otherTaxableIncome: Seq[OtherTaxableIncome] <- request.userAnswers.otherTaxableIncome

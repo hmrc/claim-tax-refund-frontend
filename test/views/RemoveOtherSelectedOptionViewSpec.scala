@@ -22,16 +22,18 @@ import forms.BooleanForm
 import views.behaviours.YesNoViewBehaviours
 import models.{NormalMode, OtherBenefit}
 import models.SelectTaxYear.CustomTaxYear
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.twirl.api.Html
 import views.html.removeOtherSelectedOption
 
-class RemoveOtherSelectedOptionViewSpec extends YesNoViewBehaviours {
+class RemoveOtherSelectedOptionViewSpec extends YesNoViewBehaviours with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "RemoveOtherSelectedOption"
   private val taxYear = CustomTaxYear(2017)
   private val collectionId = OtherBenefit.collectionId
 
   override val form = new BooleanForm()()
+  val removeOtherSelectedOption: removeOtherSelectedOption = fakeApplication.injector.instanceOf[removeOtherSelectedOption]
 
   def createView: () => Html = () =>
     removeOtherSelectedOption(frontendAppConfig, form, NormalMode, taxYear, collectionId)(fakeRequest, messages, formPartialRetriever, scalate)

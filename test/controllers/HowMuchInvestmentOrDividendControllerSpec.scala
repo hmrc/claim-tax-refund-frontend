@@ -25,22 +25,25 @@ import forms.HowMuchInvestmentOrDividendForm
 import models.NormalMode
 import models.SelectTaxYear.CustomTaxYear
 import org.mockito.Mockito.when
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import views.html.howMuchInvestmentOrDividend
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class HowMuchInvestmentOrDividendControllerSpec extends ControllerSpecBase {
+class HowMuchInvestmentOrDividendControllerSpec extends ControllerSpecBase with GuiceOneAppPerSuite {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new HowMuchInvestmentOrDividendController(
       frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, new HowMuchInvestmentOrDividendForm(frontendAppConfig), formPartialRetriever, scalate)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), howMuchInvestmentOrDividend, messagesControllerComponents, new HowMuchInvestmentOrDividendForm(frontendAppConfig), formPartialRetriever, scalate)
 
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
   private val taxYear = CustomTaxYear(2017)
   val testAnswer = "9,999.99"
   val form = new HowMuchInvestmentOrDividendForm(frontendAppConfig)()
+  val howMuchInvestmentOrDividend: howMuchInvestmentOrDividend = fakeApplication.injector.instanceOf[howMuchInvestmentOrDividend]
 
   def viewAsString(form: Form[_] = form) = howMuchInvestmentOrDividend(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
 

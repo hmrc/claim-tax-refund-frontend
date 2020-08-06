@@ -22,26 +22,30 @@ import forms.EnterPayeReferenceForm
 import models.NormalMode
 import models.SelectTaxYear.CustomTaxYear
 import org.mockito.Mockito.when
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
+import play.api.mvc.Call
 import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.enterPayeReference
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class EnterPayeReferenceControllerSpec extends ControllerSpecBase {
+class EnterPayeReferenceControllerSpec extends ControllerSpecBase with GuiceOneAppPerSuite {
 
-  def onwardRoute = routes.IndexController.onPageLoad()
+  def onwardRoute: Call = routes.IndexController.onPageLoad()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new EnterPayeReferenceController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, new EnterPayeReferenceForm(frontendAppConfig), formPartialRetriever, scalate)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), enterPayeReference, messagesControllerComponents, new EnterPayeReferenceForm(frontendAppConfig), formPartialRetriever, scalate)
 
   val testAnswer = "123/AB1234"
   val form = new EnterPayeReferenceForm(frontendAppConfig)()
+  val enterPayeReference: enterPayeReference = fakeApplication.injector.instanceOf[enterPayeReference]
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers()
 
-  def viewAsString(form: Form[_] = form) = enterPayeReference(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
+  def viewAsString(form: Form[_] = form): String = enterPayeReference(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
 
   "EnterPayeReference Controller" must {
 

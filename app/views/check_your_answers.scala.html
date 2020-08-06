@@ -16,9 +16,11 @@
 
 @import config.FrontendAppConfig
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
-@import uk.gov.hmrc.play.views.html._
 @import viewmodels.AnswerSection
 @import com.github.tototoshi.play2.scalate.Scalate
+@import uk.gov.hmrc.play.views.html.helpers.FormWithCSRF
+
+@this(main_template: main_template, formWithCSRF: FormWithCSRF)
 
 @(
         appConfig: FrontendAppConfig,
@@ -46,7 +48,7 @@
 
     <p>@messages("checkYourAnswers.declaration")</p>
 
-    @helpers.form(action = controllers.routes.CheckYourAnswersController.onSubmit) {
+    @formWithCSRF(action = controllers.routes.CheckYourAnswersController.onSubmit) {
         @components.submit_button("checkYourAnswers.acceptAndSend")
     }
 }

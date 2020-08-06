@@ -18,7 +18,7 @@ package utils
 
 import base.SpecBase
 import controllers.routes
-import models.{CheckMode, Index}
+import models.CheckMode
 import org.scalatest.BeforeAndAfterEach
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.i18n.Messages

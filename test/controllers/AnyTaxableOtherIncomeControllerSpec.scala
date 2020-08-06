@@ -22,14 +22,16 @@ import forms.{AnyTaxPaidForm, OtherTaxableIncomeForm}
 import models.SelectTaxYear.CustomTaxYear
 import models.{AnyTaxPaid, NormalMode, OtherTaxableIncome}
 import org.mockito.Mockito.when
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import play.api.mvc.Call
 import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.anyTaxableOtherIncome
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class AnyTaxableOtherIncomeControllerSpec extends ControllerSpecBase {
+class AnyTaxableOtherIncomeControllerSpec extends ControllerSpecBase with GuiceOneAppPerSuite {
 
   def onwardRoute: Call = routes.IndexController.onPageLoad()
 
@@ -41,6 +43,7 @@ class AnyTaxableOtherIncomeControllerSpec extends ControllerSpecBase {
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
   private val taxYear = CustomTaxYear(2017)
   private val incomeName = "test income"
+  private val anyTaxableOtherIncome: anyTaxableOtherIncome = fakeApplication.injector.instanceOf[anyTaxableOtherIncome]
 
   private val formProvider = new OtherTaxableIncomeForm(frontendAppConfig)
   private val taxPaidFormProvider = new AnyTaxPaidForm
@@ -52,7 +55,7 @@ class AnyTaxableOtherIncomeControllerSpec extends ControllerSpecBase {
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyTaxableOtherIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, sequenceUtil, formProvider, taxPaidFormProvider, formPartialRetriever, scalate)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), anyTaxableOtherIncome, messagesControllerComponents, sequenceUtil, formProvider, taxPaidFormProvider, formPartialRetriever, scalate)
 
   def viewAsString(form: Form[_] = taxPaidForm): String =
     anyTaxableOtherIncome(frontendAppConfig, form, NormalMode, 0, taxYear, incomeName)(fakeRequest, messages, formPartialRetriever, scalate).toString

@@ -23,20 +23,23 @@ import models.{SubmissionArchiveResponse, SubmissionFailed, SubmissionSuccessful
 import org.mockito.Matchers._
 import org.mockito.Mockito._
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.mvc.Result
 import play.api.test.Helpers._
 import services.SubmissionService
 import utils.ReferenceGenerator
+import views.html.check_your_answers
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class CheckYourAnswersControllerSpec extends ControllerSpecBase with ScalaFutures with IntegrationPatience {
+class CheckYourAnswersControllerSpec extends ControllerSpecBase with ScalaFutures with IntegrationPatience with GuiceOneAppPerSuite {
   implicit val dataCacheConnector: DataCacheConnector = mock[DataCacheConnector]
   implicit val casConnector: CasConnector = mock[CasConnector]
   implicit val referenceGenerator: ReferenceGenerator = mock[ReferenceGenerator]
   implicit val robotXML: RobotXML = mock[RobotXML]
   private val mockSubmissionService: SubmissionService = mock[SubmissionService]
+  private val checkYourAnswers = fakeApplication.injector.instanceOf[check_your_answers]
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap, submissionService: SubmissionService = mockSubmissionService) =
     new CheckYourAnswersController(
@@ -47,6 +50,7 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with ScalaFuture
       FakeAuthAction(authConnector, frontendAppConfig),
       dataRetrievalAction,
       new DataRequiredActionImpl(messagesControllerComponents),
+      checkYourAnswers,
       messagesControllerComponents,
       submissionService,
       referenceGenerator,

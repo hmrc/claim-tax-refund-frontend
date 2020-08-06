@@ -21,17 +21,19 @@ import forms.DetailsOfEmploymentOrPensionForm
 import models.NormalMode
 import models.SelectTaxYear.CustomTaxYear
 import org.scalatestplus.mockito.MockitoSugar
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import views.behaviours.StringViewBehaviours
 import views.html.detailsOfEmploymentOrPension
 
-class DetailsOfEmploymentOrPensionViewSpec extends StringViewBehaviours with MockitoSugar {
+class DetailsOfEmploymentOrPensionViewSpec extends StringViewBehaviours with MockitoSugar with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "detailsOfEmploymentOrPension"
   private val taxYear = CustomTaxYear(2017)
   private val characterLimit = 500
 
   override val form: Form[String] = new DetailsOfEmploymentOrPensionForm(frontendAppConfig)()
+  val detailsOfEmploymentOrPension: detailsOfEmploymentOrPension = fakeApplication.injector.instanceOf[detailsOfEmploymentOrPension]
 
   def createView = () =>
     detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages, formPartialRetriever, scalate)

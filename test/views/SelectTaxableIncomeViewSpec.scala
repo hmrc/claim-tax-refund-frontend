@@ -19,12 +19,13 @@ package views
 import forms.SelectTaxableIncomeForm
 import models.SelectTaxYear.CustomTaxYear
 import models.{NormalMode, TaxableIncome}
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.{CheckboxViewBehaviours, ViewBehaviours}
 import views.html.selectTaxableIncome
 
-class SelectTaxableIncomeViewSpec extends ViewBehaviours with CheckboxViewBehaviours[TaxableIncome.Value] {
+class SelectTaxableIncomeViewSpec extends ViewBehaviours with CheckboxViewBehaviours[TaxableIncome.Value] with GuiceOneAppPerSuite {
 
   val messageKeyPrefix = "selectTaxableIncome"
   val fieldKey = "value"
@@ -32,6 +33,8 @@ class SelectTaxableIncomeViewSpec extends ViewBehaviours with CheckboxViewBehavi
   private val taxYear = CustomTaxYear(2017)
 
   val values: Seq[(String, String)] = SelectTaxableIncomeForm.options
+
+  val selectTaxableIncome: selectTaxableIncome = fakeApplication.injector.instanceOf[selectTaxableIncome]
 
   def form: Form[Seq[TaxableIncome.Value]] = SelectTaxableIncomeForm()
 

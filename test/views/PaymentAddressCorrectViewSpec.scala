@@ -20,12 +20,13 @@ import controllers.routes
 import forms.BooleanForm
 import models.NormalMode
 import models.SelectTaxYear.CYMinus1
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import uk.gov.hmrc.auth.core.retrieve.ItmpAddress
 import views.behaviours.YesNoViewBehaviours
 import views.html.paymentAddressCorrect
 
-class PaymentAddressCorrectViewSpec extends YesNoViewBehaviours {
+class PaymentAddressCorrectViewSpec extends YesNoViewBehaviours with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "paymentAddressCorrect"
   private val taxYear = CYMinus1
@@ -41,6 +42,7 @@ class PaymentAddressCorrectViewSpec extends YesNoViewBehaviours {
   )
 
   override val form = new BooleanForm()()
+  val paymentAddressCorrect: paymentAddressCorrect = fakeApplication.injector.instanceOf[paymentAddressCorrect]
 
   def createView = () =>
     paymentAddressCorrect(frontendAppConfig, form, NormalMode, testAddress, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)

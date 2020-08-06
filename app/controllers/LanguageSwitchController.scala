@@ -19,17 +19,16 @@ package controllers
 import com.google.inject.Inject
 import config.FrontendAppConfig
 import play.api.Configuration
-import play.api.i18n.{I18nSupport, Lang, MessagesApi}
-import play.api.mvc.{Action, AnyContent, Call, Controller, Flash}
+import play.api.i18n.{I18nSupport, Lang}
+import play.api.mvc.{Action, AnyContent, Flash, MessagesControllerComponents}
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 
 // TODO, upstream this into play-language
 class LanguageSwitchController @Inject()(
                                           configuration: Configuration,
                                           appConfig: FrontendAppConfig,
-                                          implicit val messagesApi: MessagesApi
-                                        ) extends Controller with I18nSupport {
-
-  private def langToCall(lang: String): String => Call = appConfig.routeToSwitchLanguage
+                                          implicit val mcc: MessagesControllerComponents
+                                        ) extends FrontendController(mcc) with I18nSupport {
 
   private def fallbackURL: String = routes.IndexController.onPageLoad().url
 
@@ -48,5 +47,5 @@ class LanguageSwitchController @Inject()(
   }
 
   private def isWelshEnabled: Boolean =
-    configuration.getBoolean("microservice.services.features.welsh-translation").getOrElse(true)
+    configuration.get[Boolean]("microservice.services.features.welsh-translation")
 }

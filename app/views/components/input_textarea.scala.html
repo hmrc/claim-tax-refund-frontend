@@ -29,7 +29,7 @@ labelClass: Option[String] = None
 <div class="form-group @if(viewModel.errorKey != ""){form-field--error}">
     <label class="form-label" for="@{viewModel.id}">
         <span class="bold @if(labelClass.nonEmpty){@labelClass}">@label</span>
-        @if(hint != ""){
+        @if(hint.get != ""){
         <span class="form-hint">@hint</span>
         }
         @if(viewModel.errorKey != ""){

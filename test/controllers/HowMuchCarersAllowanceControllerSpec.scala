@@ -17,32 +17,32 @@
 package controllers
 
 import play.api.data.Form
-import play.api.libs.json.JsString
-import uk.gov.hmrc.http.cache.client.CacheMap
 import utils.{FakeNavigator, MockUserAnswers}
 import connectors.FakeDataCacheConnector
 import controllers.actions._
 import play.api.test.Helpers._
 import forms.HowMuchCarersAllowanceForm
-import identifiers.HowMuchCarersAllowanceId
 import models.NormalMode
 import models.SelectTaxYear.CustomTaxYear
 import views.html.howMuchCarersAllowance
 import org.mockito.Mockito.when
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class HowMuchCarersAllowanceControllerSpec extends ControllerSpecBase {
+class HowMuchCarersAllowanceControllerSpec extends ControllerSpecBase with GuiceOneAppPerSuite {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new HowMuchCarersAllowanceController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, new HowMuchCarersAllowanceForm(frontendAppConfig), formPartialRetriever, scalate)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), howMuchCarersAllowance, messagesControllerComponents, new HowMuchCarersAllowanceForm(frontendAppConfig), formPartialRetriever, scalate)
 
   val testAnswer = "9,999.99"
   private val taxYear = CustomTaxYear(2017)
   val form = new HowMuchCarersAllowanceForm(frontendAppConfig)()
   val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
+  val howMuchCarersAllowance: howMuchCarersAllowance = fakeApplication.injector.instanceOf[howMuchCarersAllowance]
 
   def viewAsString(form: Form[_] = form) = howMuchCarersAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
 

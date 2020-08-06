@@ -21,16 +21,18 @@ import forms.HowMuchRentalIncomeForm
 import models.NormalMode
 import models.SelectTaxYear.CustomTaxYear
 import org.scalatestplus.mockito.MockitoSugar
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import views.behaviours.StringViewBehaviours
 import views.html.howMuchRentalIncome
 
-class HowMuchRentalIncomeViewSpec extends StringViewBehaviours with MockitoSugar {
+class HowMuchRentalIncomeViewSpec extends StringViewBehaviours with MockitoSugar with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "howMuchRentalIncome"
   private val taxYear = CustomTaxYear(2017)
 
   override val form: Form[String] = new HowMuchRentalIncomeForm(frontendAppConfig)()
+  val howMuchRentalIncome: howMuchRentalIncome = fakeApplication.injector.instanceOf[howMuchRentalIncome]
 
   def createView = () => howMuchRentalIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
 

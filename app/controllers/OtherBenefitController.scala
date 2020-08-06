@@ -27,7 +27,7 @@ import models.{Index, Mode, OtherBenefit}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
-import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import play.api.mvc.MessagesControllerComponents
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import utils.{Navigator, SequenceUtil, UserAnswers}
@@ -42,6 +42,7 @@ class OtherBenefitController @Inject()(appConfig: FrontendAppConfig,
                                        authenticate: AuthAction,
                                        getData: DataRetrievalAction,
                                        requireData: DataRequiredAction,
+                                       otherBenefit: otherBenefit,
 cc: MessagesControllerComponents,
                                        sequenceUtil: SequenceUtil[OtherBenefit],
                                        formBuilder: OtherBenefitForm,

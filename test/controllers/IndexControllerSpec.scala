@@ -18,12 +18,14 @@ package controllers
 
 import forms.SelectTaxYearForm
 import models.NormalMode
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import play.api.test.Helpers._
 import views.html.selectTaxYear
-import scala.concurrent.ExecutionContext.Implicits.global
 
-class IndexControllerSpec extends ControllerSpecBase {
+class IndexControllerSpec extends ControllerSpecBase with GuiceOneAppPerSuite {
+
+  val selectTaxYear = fakeApplication.injector.instanceOf[selectTaxYear]
 
   def viewAsString(form: Form[_] = SelectTaxYearForm()) = selectTaxYear(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, scalate).toString
 

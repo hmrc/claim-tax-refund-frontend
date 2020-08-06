@@ -331,7 +331,7 @@ class BenefitsCascadeUpsertSpec extends SpecBase with ScalaCheckPropertyChecks {
 
     "Remove all other benefits" must {
       "when answering 'Yes' remove 'Other taxable benefit' from the selection list" in {
-				val originalCacheMap = new CacheMap(id = "test", Map(
+				new CacheMap(id = "test", Map(
 					SelectBenefitsId.toString -> Json.toJson(Seq(
 						Benefits.BEREAVEMENT_ALLOWANCE,
 						Benefits.INCAPACITY_BENEFIT,

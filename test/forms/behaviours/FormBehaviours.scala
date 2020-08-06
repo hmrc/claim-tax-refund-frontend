@@ -18,7 +18,7 @@ package forms.behaviours
 
 import config.FrontendAppConfig
 import forms.FormSpec
-import models.{MandatoryField, MaxLengthField, OtherBenefit, RegexField}
+import models.{MandatoryField, MaxLengthField, RegexField}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import play.api.i18n.{Messages, MessagesApi}

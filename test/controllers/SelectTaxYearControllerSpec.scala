@@ -21,26 +21,29 @@ import controllers.actions._
 import forms.SelectTaxYearForm
 import identifiers.SelectTaxYearId
 import models.{NormalMode, SelectTaxYear}
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
-import play.api.i18n.Messages
 import play.api.libs.json.JsString
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
 import utils.FakeNavigator
 import views.html.selectTaxYear
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class SelectTaxYearControllerSpec extends ControllerSpecBase {
+class SelectTaxYearControllerSpec extends ControllerSpecBase with GuiceOneAppPerSuite {
+
+  val selectTaxYear: selectTaxYear = fakeApplication.injector.instanceOf[selectTaxYear]
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new SelectTaxYearController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, formPartialRetriever, scalate)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), selectTaxYear, messagesControllerComponents, formPartialRetriever, scalate)
 
   def viewAsString(form: Form[_] = SelectTaxYearForm()) = selectTaxYear(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, scalate).toString
 
-  def radioButtonOptions(implicit messages: Messages): String = SelectTaxYear.options.head.value
+  def radioButtonOptions: String = SelectTaxYear.options.head.value
 
   "SelectTaxYear Controller" must {
 
@@ -61,7 +64,7 @@ class SelectTaxYearControllerSpec extends ControllerSpecBase {
     }
 
     "redirect to the next page when valid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", radioButtonOptions(messages: Messages)))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", radioButtonOptions))
 
       val result = controller().onSubmit(NormalMode)(postRequest)
 

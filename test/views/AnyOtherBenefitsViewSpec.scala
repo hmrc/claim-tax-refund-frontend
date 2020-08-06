@@ -21,6 +21,7 @@ import forms.BooleanForm
 import models.NormalMode
 import models.SelectTaxYear.CustomTaxYear
 import org.jsoup.nodes.Document
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import play.twirl.api.Html
 import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, MockUserAnswers}
@@ -28,7 +29,7 @@ import viewmodels.AnswerSection
 import views.behaviours.YesNoViewBehaviours
 import views.html.anyOtherBenefits
 
-class AnyOtherBenefitsViewSpec extends YesNoViewBehaviours {
+class AnyOtherBenefitsViewSpec extends YesNoViewBehaviours with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "anyOtherBenefits"
   private val taxYear = CustomTaxYear(2017)
@@ -37,6 +38,7 @@ class AnyOtherBenefitsViewSpec extends YesNoViewBehaviours {
 	private val otherBenefits: AnswerSection = new CheckYourAnswersSections(cya, MockUserAnswers.fullValidUserAnswers()).otherBenefitsAddToListNormalMode
 
   override val form = new BooleanForm()()
+  val anyOtherBenefits: anyOtherBenefits = fakeApplication.injector.instanceOf[anyOtherBenefits]
 
   def createView: () => Html = () =>
     anyOtherBenefits(frontendAppConfig, form, NormalMode, taxYear, otherBenefits)(fakeRequest, messages, formPartialRetriever, scalate)

@@ -23,13 +23,14 @@ import controllers.actions.{AuthAction, DataRequiredAction, DataRetrievalAction}
 import javax.inject.Inject
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import views.html.sessionTimedout
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class SessionManagementController @Inject()(val appConfig: FrontendAppConfig,
+                                            sessionTimedout: sessionTimedout,
                                             cc: MessagesControllerComponents,
                                             authenticate: AuthAction,
                                             dataCacheConnector: DataCacheConnector,

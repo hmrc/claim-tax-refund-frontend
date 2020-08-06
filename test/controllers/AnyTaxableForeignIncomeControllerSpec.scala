@@ -23,14 +23,16 @@ import identifiers.{AnyTaxPaidId, TaxPaidAmountId}
 import models.SelectTaxYear.CustomTaxYear
 import models.{AnyTaxPaid, NormalMode}
 import org.mockito.Mockito.when
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import play.api.libs.json.{JsBoolean, JsString, Json}
 import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.anyTaxableForeignIncome
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class AnyTaxableForeignIncomeControllerSpec extends ControllerSpecBase {
+class AnyTaxableForeignIncomeControllerSpec extends ControllerSpecBase with GuiceOneAppPerSuite {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
@@ -41,6 +43,7 @@ class AnyTaxableForeignIncomeControllerSpec extends ControllerSpecBase {
   val testAnswer = "9,999.00"
   val validYesData = Map(AnyTaxPaidId.toString -> Json.obj(AnyTaxPaidId.toString -> JsBoolean(true), TaxPaidAmountId.toString -> JsString(testAnswer)))
   val validNoData = Map(AnyTaxPaidId.toString -> Json.obj(AnyTaxPaidId.toString -> JsBoolean(false)))
+  val anyTaxableForeignIncome: anyTaxableForeignIncome = fakeApplication.injector.instanceOf[anyTaxableForeignIncome]
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
   private val taxYear = CustomTaxYear(2017)
 
@@ -50,7 +53,7 @@ class AnyTaxableForeignIncomeControllerSpec extends ControllerSpecBase {
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyTaxableForeignIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, formProvider, formPartialRetriever, scalate)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), anyTaxableForeignIncome, messagesControllerComponents, formProvider, formPartialRetriever, scalate)
 
   def viewAsString(form: Form[_] = form) = anyTaxableForeignIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
 

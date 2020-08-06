@@ -22,28 +22,32 @@ import forms.HowMuchBereavementAllowanceForm
 import models.NormalMode
 import models.SelectTaxYear.CustomTaxYear
 import org.mockito.Mockito.when
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
+import play.api.mvc.Call
 import play.api.test.Helpers._
-import utils.{FakeNavigator, MockUserAnswers}
+import utils.{FakeNavigator, MockUserAnswers, UserAnswers}
 import views.html.howMuchBereavementAllowance
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class HowMuchBereavementAllowanceControllerSpec extends ControllerSpecBase {
+class HowMuchBereavementAllowanceControllerSpec extends ControllerSpecBase with GuiceOneAppPerSuite {
 
-  def onwardRoute = routes.IndexController.onPageLoad()
+  def onwardRoute: Call = routes.IndexController.onPageLoad()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new HowMuchBereavementAllowanceController(
       frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, new HowMuchBereavementAllowanceForm(frontendAppConfig), formPartialRetriever, scalate)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), howMuchBereavementAllowance, messagesControllerComponents, new HowMuchBereavementAllowanceForm(frontendAppConfig), formPartialRetriever, scalate)
 
-  val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
+  val mockUserAnswers: UserAnswers = MockUserAnswers.claimDetailsUserAnswers()
+  val howMuchBereavementAllowance: howMuchBereavementAllowance = fakeApplication.injector.instanceOf[howMuchBereavementAllowance]
 
   val testAnswer = "9,999.99"
   private val taxYear = CustomTaxYear(2017)
   val form = new HowMuchBereavementAllowanceForm(frontendAppConfig)()
 
-  def viewAsString(form: Form[_] = form) = howMuchBereavementAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
+  def viewAsString(form: Form[_] = form): String = howMuchBereavementAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
 
   "HowMuchBereavementAllowance Controller" must {
 

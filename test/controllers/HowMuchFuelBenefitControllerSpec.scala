@@ -23,24 +23,27 @@ import models.NormalMode
 import models.SelectTaxYear.CustomTaxYear
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.howMuchFuelBenefit
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class HowMuchFuelBenefitControllerSpec extends ControllerSpecBase with MockitoSugar {
+class HowMuchFuelBenefitControllerSpec extends ControllerSpecBase with MockitoSugar with GuiceOneAppPerSuite {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
   val testAnswer = "9,999.99"
   val form = new HowMuchFuelBenefitForm(frontendAppConfig)()
+  val howMuchFuelBenefit: howMuchFuelBenefit = fakeApplication.injector.instanceOf[howMuchFuelBenefit]
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new HowMuchFuelBenefitController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, new HowMuchFuelBenefitForm(frontendAppConfig), formPartialRetriever, scalate)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), howMuchFuelBenefit, messagesControllerComponents, new HowMuchFuelBenefitForm(frontendAppConfig), formPartialRetriever, scalate)
 
   def viewAsString(form: Form[_] = form) = howMuchFuelBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
 

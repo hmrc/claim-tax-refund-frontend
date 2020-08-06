@@ -18,21 +18,22 @@ package views
 
 import forms.SelectTaxYearForm
 import models.{NormalMode, SelectTaxYear}
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
-import play.api.i18n.Messages
 import utils.RadioOption
 import views.behaviours.ViewBehaviours
 import views.html.selectTaxYear
 
-class SelectTaxYearViewSpec extends ViewBehaviours {
+class SelectTaxYearViewSpec extends ViewBehaviours with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "selectTaxYear"
+  private val selectTaxYear: selectTaxYear = fakeApplication.injector.instanceOf[selectTaxYear]
 
   def createView = () => selectTaxYear(frontendAppConfig, SelectTaxYearForm(), NormalMode)(fakeRequest, messages, formPartialRetriever, scalate)
 
   def createViewUsingForm = (form: Form[_]) => selectTaxYear(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, scalate)
 
-  def radioButtonOptions(implicit messages: Messages): Seq[RadioOption] = SelectTaxYear.options
+  def radioButtonOptions: Seq[RadioOption] = SelectTaxYear.options
 
 
   "SelectTaxYear view" must {
@@ -47,19 +48,19 @@ class SelectTaxYearViewSpec extends ViewBehaviours {
     "rendered" must {
       "contain radio buttons for the value" in {
         val doc = asDocument(createViewUsingForm(SelectTaxYearForm()))
-        for (option <- radioButtonOptions(messages)) {
+        for (option <- radioButtonOptions) {
           assertContainsRadioButton(doc, option.id, "value", option.value, false)
         }
       }
     }
 
-    for (option <- radioButtonOptions(messages)) {
+    for (option <- radioButtonOptions) {
       s"rendered with a value of '${option.value}'" must {
         s"have the '${option.value}' radio button selected" in {
           val doc = asDocument(createViewUsingForm(SelectTaxYearForm().bind(Map("value" -> s"${option.value}"))))
           assertContainsRadioButton(doc, option.id, "value", option.value, true)
 
-          for (unselectedOption <- radioButtonOptions(messages).filterNot(o => o == option)) {
+          for (unselectedOption <- radioButtonOptions.filterNot(o => o == option)) {
             assertContainsRadioButton(doc, unselectedOption.id, "value", unselectedOption.value, false)
           }
         }

@@ -19,13 +19,13 @@ package connectors
 import config.{AddressLookupConfig, FrontendAppConfig}
 import javax.inject.Inject
 import models.AddressLookup
-import models.requests.DataRequest
 import play.api.Logger
 import play.api.i18n.{Lang, MessagesApi}
-import play.api.libs.json.Json
-import uk.gov.hmrc.http.HeaderCarrier
+import play.api.libs.json.{JsValue, Json}
+import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.play.bootstrap.http.HttpClient
+import uk.gov.hmrc.http.HttpReads.Implicits._
+import uk.gov.hmrc.http.HttpClient
 import utils.UserAnswers
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -42,7 +42,7 @@ class AddressLookupConnector @Inject()(
   def initialise(continueUrl: String, accessibilityFooterUrl: String)(implicit hc: HeaderCarrier, language: Lang): Future[Option[String]] = {
     val addressLookupUrl = s"${appConfig.addressLookupUrl}/api/v2/init"
     val addressConfig = Json.toJson(addressLookupConfig.config(continueUrl = s"$continueUrl", accessibilityFooterUrl))
-    http.POST(addressLookupUrl, body = addressConfig).map {
+    http.POST[JsValue, HttpResponse](addressLookupUrl, body = addressConfig).map {
       response =>
         response.status match {
           case 202 =>
@@ -59,7 +59,7 @@ class AddressLookupConnector @Inject()(
     }
   }
 
-  def getAddress(cacheId: String, saveKey: String, id: String)(implicit hc: HeaderCarrier, request: DataRequest[_]): Future[UserAnswers] = {
+  def getAddress(cacheId: String, saveKey: String, id: String)(implicit hc: HeaderCarrier): Future[UserAnswers] = {
     val getAddressUrl = s"${appConfig.addressLookupUrl}/api/confirmed?id=$id"
 
     for {

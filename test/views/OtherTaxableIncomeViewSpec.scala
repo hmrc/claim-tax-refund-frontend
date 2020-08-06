@@ -21,17 +21,19 @@ import forms.OtherTaxableIncomeForm
 import models.SelectTaxYear.CustomTaxYear
 import models.{NormalMode, OtherTaxableIncome}
 import org.scalatestplus.mockito.MockitoSugar
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 import views.behaviours.QuestionViewBehaviours
 import views.html.otherTaxableIncome
 
-class OtherTaxableIncomeViewSpec extends QuestionViewBehaviours[OtherTaxableIncome] with MockitoSugar {
+class OtherTaxableIncomeViewSpec extends QuestionViewBehaviours[OtherTaxableIncome] with MockitoSugar with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "otherTaxableIncome"
   private val taxYear = CustomTaxYear(2017)
 
   override val form: Form[OtherTaxableIncome] = new OtherTaxableIncomeForm(frontendAppConfig)(Seq.empty, 0)
+  val otherTaxableIncome: otherTaxableIncome = fakeApplication.injector.instanceOf[otherTaxableIncome]
 
   def createView: () =>
     HtmlFormat.Appendable = () =>

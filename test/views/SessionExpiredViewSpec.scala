@@ -16,12 +16,15 @@
 
 package views
 
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import views.behaviours.ViewBehaviours
 import views.html.session_expired
 
-class SessionExpiredViewSpec extends ViewBehaviours {
+class SessionExpiredViewSpec extends ViewBehaviours with GuiceOneAppPerSuite {
 
-  def view = () => session_expired(frontendAppConfig)(fakeRequest, messages, formPartialRetriever, scalate)
+  val sessionExpired: session_expired = fakeApplication.injector.instanceOf[session_expired]
+
+  def view = () => sessionExpired(frontendAppConfig)(fakeRequest, messages, formPartialRetriever, scalate)
 
   "Session Expired view" must {
 

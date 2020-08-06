@@ -20,7 +20,6 @@ import config.FrontendAppConfig
 import forms.behaviours.FormBehaviours
 import models.{MandatoryField, MaxLengthField}
 import org.scalatestplus.mockito.MockitoSugar
-import org.mockito.Mockito._
 import play.api.data.Form
 
 class DetailsOfEmploymentOrPensionFormSpec extends FormBehaviours with MockitoSugar {

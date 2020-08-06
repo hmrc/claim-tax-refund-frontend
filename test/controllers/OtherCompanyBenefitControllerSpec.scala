@@ -26,22 +26,25 @@ import play.api.data.Form
 import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
 import org.mockito.Mockito.when
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import views.html.otherCompanyBenefit
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class OtherCompanyBenefitControllerSpec extends ControllerSpecBase with MockitoSugar {
+class OtherCompanyBenefitControllerSpec extends ControllerSpecBase with MockitoSugar with GuiceOneAppPerSuite {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
   val testAnswer = OtherCompanyBenefit("qwerty", "123")
   val form = new OtherCompanyBenefitForm(messagesApi, frontendAppConfig)(Seq.empty, 0)
   val formFilled = new OtherCompanyBenefitForm(messagesApi, frontendAppConfig)(Seq.empty, 1)
+  val otherCompanyBenefit: otherCompanyBenefit = fakeApplication.injector.instanceOf[otherCompanyBenefit]
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new OtherCompanyBenefitController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, sequenceUtil, new OtherCompanyBenefitForm(messagesApi, frontendAppConfig), formPartialRetriever, scalate)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), otherCompanyBenefit, messagesControllerComponents, sequenceUtil, new OtherCompanyBenefitForm(messagesApi, frontendAppConfig), formPartialRetriever, scalate)
 
   def viewAsString(form: Form[OtherCompanyBenefit], index: Index): String =
     otherCompanyBenefit(frontendAppConfig, form, NormalMode, index, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString

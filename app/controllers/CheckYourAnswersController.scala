@@ -30,7 +30,7 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
 import services.SubmissionService
 import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
-import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import play.api.mvc.MessagesControllerComponents
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, ReferenceGenerator, SubmissionMark}
@@ -46,6 +46,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
                                            authenticate: AuthAction,
                                            getData: DataRetrievalAction,
                                            requireData: DataRequiredAction,
+                                           checkYourAnswers: check_your_answers,
                                            cc: MessagesControllerComponents,
                                            submissionService: SubmissionService,
                                            referenceGenerator: ReferenceGenerator,
@@ -61,7 +62,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
 
       request.userAnswers.selectTaxYear.map {
         _ =>
-          Ok(check_your_answers(appConfig, cyaSections.sections))
+          Ok(checkYourAnswers(appConfig, cyaSections.sections))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
@@ -124,7 +125,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
         }
       } yield new Submission(pdfHtml, xmlDeclaration + Metadata.toXml(metadata).toString(), submissionXml)
 
-      futureSubmission.onFailure {
+      futureSubmission.failed.foreach {
         case e =>
           Logger.error("[CheckYourAnswersController][onSubmit] failed", e)
       }

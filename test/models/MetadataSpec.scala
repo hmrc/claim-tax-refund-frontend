@@ -28,7 +28,6 @@ class
 MetadataSpec extends WordSpec with MustMatchers with OptionValues with ScalaCheckPropertyChecks {
 
   private val localDT = LocalDateTime.now()
-  private val submissionRef = "123"
   private val testMetadata: Metadata = new Metadata("AB123456", "123", "123", localDT, "", "en")
   private val testWelshMetadata: Metadata = new Metadata("AB123456", "123", "123", localDT, "", "cy")
   private val testXml: NodeSeq = Metadata.toXml(testMetadata)

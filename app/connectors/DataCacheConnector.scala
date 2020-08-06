@@ -17,7 +17,6 @@
 package connectors
 
 import com.google.inject.{ImplementedBy, Inject}
-import models.Index
 import play.api.libs.json.{Format, Json}
 import repositories.SessionRepository
 import uk.gov.hmrc.http.cache.client.CacheMap

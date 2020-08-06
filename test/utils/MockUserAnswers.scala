@@ -22,7 +22,6 @@ import models.{Metadata, _}
 import org.joda.time.LocalDateTime
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import play.api.i18n.Messages
 import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
 
 object MockUserAnswers extends MockitoSugar {

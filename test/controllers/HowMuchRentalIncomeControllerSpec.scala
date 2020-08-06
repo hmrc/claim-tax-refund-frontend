@@ -22,24 +22,27 @@ import forms.HowMuchRentalIncomeForm
 import models.NormalMode
 import models.SelectTaxYear.CustomTaxYear
 import org.mockito.Mockito.when
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import play.api.test.Helpers._
 import utils.{FakeNavigator, MockUserAnswers}
 import views.html.howMuchRentalIncome
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class HowMuchRentalIncomeControllerSpec extends ControllerSpecBase {
+class HowMuchRentalIncomeControllerSpec extends ControllerSpecBase with GuiceOneAppPerSuite {
 
   def onwardRoute = routes.IndexController.onPageLoad()
 
   val testAnswer = "9,999.99"
   val form = new HowMuchRentalIncomeForm(frontendAppConfig)()
+  val howMuchRentalIncome: howMuchRentalIncome = fakeApplication.injector.instanceOf[howMuchRentalIncome]
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new HowMuchRentalIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, new HowMuchRentalIncomeForm(frontendAppConfig), formPartialRetriever, scalate)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), howMuchRentalIncome, messagesControllerComponents, new HowMuchRentalIncomeForm(frontendAppConfig), formPartialRetriever, scalate)
 
   def viewAsString(form: Form[_] = form) = howMuchRentalIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
 

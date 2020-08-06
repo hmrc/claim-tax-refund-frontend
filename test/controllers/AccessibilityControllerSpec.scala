@@ -20,20 +20,21 @@ import play.api.test.Helpers._
 import views.html.accessibility
 import java.net.URL
 
-import scala.concurrent.ExecutionContext.Implicits.global
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 
-class AccessibilityControllerSpec extends ControllerSpecBase {
+class AccessibilityControllerSpec extends ControllerSpecBase with GuiceOneAppPerSuite {
 
   val url = "http://www.example.com/url"
+  val accessibility = fakeApplication.injector.instanceOf[accessibility]
 
   "Accessibility Controller" must {
     "return 200 for a GET" in {
-      val result = new AccessibilityController(frontendAppConfig, messagesControllerComponents, formPartialRetriever, scalate).onPageLoad()(fakeRequest.withHeaders(("referer", url)))
+      val result = new AccessibilityController(frontendAppConfig, accessibility, messagesControllerComponents, formPartialRetriever, scalate).onPageLoad()(fakeRequest.withHeaders(("referer", url)))
       status(result) mustBe OK
     }
 
     "return the correct view for a GET" in {
-      val result = new AccessibilityController(frontendAppConfig, messagesControllerComponents, formPartialRetriever, scalate).onPageLoad()(fakeRequest.withHeaders(("referer", url)))
+      val result = new AccessibilityController(frontendAppConfig, accessibility, messagesControllerComponents, formPartialRetriever, scalate).onPageLoad()(fakeRequest.withHeaders(("referer", url)))
       contentAsString(result) mustBe accessibility(frontendAppConfig, new URL(url).getPath)(fakeRequest, messages, formPartialRetriever, scalate).toString
     }
   }

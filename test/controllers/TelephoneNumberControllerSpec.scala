@@ -24,15 +24,17 @@ import models._
 import org.mockito.Mockito.when
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatestplus.mockito.MockitoSugar
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import play.api.mvc._
 import play.api.test.Helpers.{status, _}
 import utils._
 import views.html.telephoneNumber
+
 import scala.concurrent._
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar with ScalaFutures {
+class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar with ScalaFutures with GuiceOneAppPerSuite {
 
   def onwardRoute: Call = routes.IndexController.onPageLoad()
 
@@ -41,10 +43,11 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar
   private val form = formProvider()
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers()
+  private val telephoneNumber: telephoneNumber = fakeApplication.injector.instanceOf[telephoneNumber]
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new TelephoneNumberController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), messagesControllerComponents, formProvider, formPartialRetriever, scalate)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), telephoneNumber, messagesControllerComponents, formProvider, formPartialRetriever, scalate)
 
   def viewAsString(form: Form[_] = form): String =
     telephoneNumber(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString

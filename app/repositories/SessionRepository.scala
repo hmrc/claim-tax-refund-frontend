@@ -20,10 +20,9 @@ import javax.inject.{Inject, Singleton}
 import org.joda.time.{DateTime, DateTimeZone}
 import play.api.libs.json.{JsValue, Json}
 import play.api.{Configuration, Logger}
-import play.modules.reactivemongo.{MongoDbConnection, ReactiveMongoComponent}
+import play.modules.reactivemongo.ReactiveMongoComponent
 import reactivemongo.api.DefaultDB
 import reactivemongo.api.indexes.{Index, IndexType}
-import reactivemongo.bson.buffer.DefaultBufferHandler.BSONDocumentBufferHandler
 import reactivemongo.bson.{BSONDocument, BSONObjectID}
 import reactivemongo.play.json.ImplicitBSONHandlers.JsObjectDocumentWriter
 import uk.gov.hmrc.http.cache.client.CacheMap
@@ -45,7 +44,7 @@ object DatedCacheMap {
 }
 
 class ReactiveMongoRepository(config: Configuration, mongo: () => DefaultDB)
-  extends ReactiveRepository[DatedCacheMap, BSONObjectID](config.getString("appName").get, mongo, DatedCacheMap.formats) {
+  extends ReactiveRepository[DatedCacheMap, BSONObjectID](config.get[String]("appName"), mongo, DatedCacheMap.formats) {
 
   val timeToLiveInSeconds: Int = config.underlying.getInt("mongodb.timeToLiveInSeconds")
 
@@ -85,7 +84,7 @@ class ReactiveMongoRepository(config: Configuration, mongo: () => DefaultDB)
     val cmDocument = Json.toJson(DatedCacheMap(cm))
     val modifier = Json.obj("$set" -> cmDocument)
 
-    collection.update(selector, modifier, upsert = true).map {
+    collection.update(ordered = false).one(selector, modifier, upsert = true).map {
       lastError =>
         lastError.ok
     }

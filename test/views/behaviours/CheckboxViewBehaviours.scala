@@ -20,8 +20,6 @@ import play.api.data.{Form, FormError}
 import play.twirl.api.Html
 import views.ViewSpecBase
 
-import scala.collection.mutable
-
 trait CheckboxViewBehaviours[A] extends ViewSpecBase {
 
   def form: Form[Seq[A]]
