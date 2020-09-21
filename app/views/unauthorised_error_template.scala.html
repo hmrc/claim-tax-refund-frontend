@@ -18,7 +18,7 @@
 
 @this(govuk_wrapper: govuk_wrapper)
 
-@(pageTitle: String, heading: String, message: String, appConfig: FrontendAppConfig)(implicit messages: Messages)
+@(pageTitle: String, heading: String, message: String, appConfig: FrontendAppConfig)(implicit messages: Messages, request: Request[_])
 
 @contentHeader = {
 <h1>@heading</h1>
