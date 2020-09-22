@@ -18,6 +18,7 @@
 @import config.FrontendAppConfig
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
 @import uk.gov.hmrc.play.views.html.layouts.{Sidebar,Article}
+@import uk.gov.hmrc.play.config.AccessibilityStatementConfig
 
 @this(layoutSidebar: Sidebar, layoutArticle: Article)
 
@@ -66,7 +67,7 @@
 }
 
 @accessibilityFooterUrl = @{
-    Map("accessibilityFooterUrl" -> "/claim-tax-refund/accessibility")
+    Map("accessibilityFooterUrl" -> AccessibilityStatementConfig.url(request))
 }
 
 @helpForm = @{
