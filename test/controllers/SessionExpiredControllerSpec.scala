@@ -26,13 +26,13 @@ class SessionExpiredControllerSpec extends ControllerSpecBase with GuiceOneAppPe
 
   "SessionExpired Controller" must {
     "return 200 for a GET" in {
-      val result = new SessionExpiredController(frontendAppConfig, sessionExpired, messagesControllerComponents, formPartialRetriever, scalate).onPageLoad()(fakeRequest)
+      val result = new SessionExpiredController(frontendAppConfig, sessionExpired, messagesControllerComponents, formPartialRetriever, templateRenderer).onPageLoad()(fakeRequest)
       status(result) mustBe OK
     }
 
     "return the correct view for a GET" in {
-      val result = new SessionExpiredController(frontendAppConfig, sessionExpired, messagesControllerComponents, formPartialRetriever, scalate).onPageLoad()(fakeRequest)
-      contentAsString(result) mustBe sessionExpired(frontendAppConfig)(fakeRequest, messages, formPartialRetriever, scalate).toString
+      val result = new SessionExpiredController(frontendAppConfig, sessionExpired, messagesControllerComponents, formPartialRetriever, templateRenderer).onPageLoad()(fakeRequest)
+      contentAsString(result) mustBe sessionExpired(frontendAppConfig)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
     }
   }
 }

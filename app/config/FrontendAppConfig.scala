@@ -19,13 +19,14 @@ package config
 import com.google.inject.{Inject, Singleton}
 import controllers.routes
 import play.api.i18n.Lang
-import play.api.mvc.Call
+import play.api.mvc.{Call, Request}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
+import uk.gov.hmrc.play.config.AccessibilityStatementConfig
 
 import scala.util.Try
 
 @Singleton
-class FrontendAppConfig @Inject()(val servicesConfig: ServicesConfig) {
+class FrontendAppConfig @Inject()(val servicesConfig: ServicesConfig, accessibilityStatementConfig: AccessibilityStatementConfig) {
 
   private def loadConfig(key: String): String = Try(servicesConfig.getString(key)).getOrElse(throw new Exception(s"Missing configuration key: $key"))
   private def loadConfigInt(key: String): Int = Try(servicesConfig.getInt(key)).getOrElse(throw new Exception(s"Missing configuration key: $key"))
@@ -74,6 +75,8 @@ class FrontendAppConfig @Inject()(val servicesConfig: ServicesConfig) {
   lazy val utrRegex: String = loadConfig("microservice.services.validation.utr-regex")
   lazy val payeRegex: String = loadConfig("microservice.services.validation.paye-regex")
   lazy val currencyRegex: String = loadConfig("microservice.services.validation.currency-regex")
+
+  def accessibilityFooterUrl(implicit request: Request[_]): String = accessibilityStatementConfig.url(request).get
 
   def languageMap: Map[String, Lang] = Map("english" -> Lang("en"), "cymraeg" -> Lang("cy"))
 

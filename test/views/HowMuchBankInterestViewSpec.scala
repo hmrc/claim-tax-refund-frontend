@@ -34,9 +34,9 @@ class HowMuchBankInterestViewSpec extends StringViewBehaviours with MockitoSugar
   override val form: Form[String] = new HowMuchBankInterestForm(frontendAppConfig)()
   val howMuchBankInterest: howMuchBankInterest = fakeApplication.injector.instanceOf[howMuchBankInterest]
 
-  def createView = () => howMuchBankInterest(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
+  def createView = () => howMuchBankInterest(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
-  def createViewUsingForm = (form: Form[String]) => howMuchBankInterest(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
+  def createViewUsingForm = (form: Form[String]) => howMuchBankInterest(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "HowMuchBankInterest view" must {
     behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))

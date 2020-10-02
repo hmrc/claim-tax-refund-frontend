@@ -16,8 +16,7 @@
 
 package controllers
 
-import com.github.tototoshi.play2.scalate.Scalate
-import config.FrontendAppConfig
+import config.{FrontendAppConfig, LocalTemplateRenderer}
 import connectors.{AddressLookupConnector, DataCacheConnector}
 import controllers.actions._
 import forms.BooleanForm
@@ -48,7 +47,7 @@ cc: MessagesControllerComponents,
                                                   formProvider: BooleanForm,
                                                   addressLookup: AddressLookupConnector,
                                                   implicit val formPartialRetriever: FormPartialRetriever,
-                                                  implicit val scalate: Scalate
+                                                  implicit val templateRenderer: LocalTemplateRenderer
                                                  )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   private val errorKey = "isPaymentAddressInTheUK.blank"
@@ -69,10 +68,10 @@ cc: MessagesControllerComponents,
             case NormalMode => appConfig.addressLookupContinueUrlNormalMode
             case CheckMode => appConfig.addressLookupContinueUrlCheckMode
           }
-          val accessibilityFooterUrl = routes.AccessibilityController.onPageLoad().url
+
           val addressInit = for {
             result: Option[String] <- addressLookup.initialise(continueUrl = continueUrl,
-              accessibilityFooterUrl = accessibilityFooterUrl)(hc: HeaderCarrier, language)
+              accessibilityFooterUrl = appConfig.accessibilityFooterUrl)(hc: HeaderCarrier, language)
           } yield {
             result map (
               url => Redirect(url)

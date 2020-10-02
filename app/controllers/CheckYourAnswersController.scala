@@ -16,9 +16,8 @@
 
 package controllers
 
-import com.github.tototoshi.play2.scalate.Scalate
 import com.google.inject.Inject
-import config.FrontendAppConfig
+import config.{FrontendAppConfig, LocalTemplateRenderer}
 import connectors.{CasConnector, DataCacheConnector}
 import controllers.actions.{AuthAction, DataRequiredAction, DataRetrievalAction}
 import models.templates.RobotXML
@@ -52,7 +51,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
                                            referenceGenerator: ReferenceGenerator,
                                            robotXML: RobotXML,
                                            implicit val formPartialRetriever: FormPartialRetriever,
-                                           implicit val scalate: Scalate
+                                           implicit val templateRenderer: LocalTemplateRenderer
                                           )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   def onPageLoad(): Action[AnyContent] = (authenticate andThen getData andThen requireData) {

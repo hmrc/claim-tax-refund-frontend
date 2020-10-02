@@ -16,8 +16,7 @@
 
 package controllers
 
-import com.github.tototoshi.play2.scalate.Scalate
-import config.FrontendAppConfig
+import config.{FrontendAppConfig, LocalTemplateRenderer}
 import connectors.DataCacheConnector
 import controllers.actions.{AuthAction, DataRequiredAction, DataRetrievalAction}
 import javax.inject.Inject
@@ -37,7 +36,7 @@ class SessionManagementController @Inject()(val appConfig: FrontendAppConfig,
                                             getData: DataRetrievalAction,
                                             requireData: DataRequiredAction,
                                             implicit val formPartialRetriever: FormPartialRetriever,
-                                            implicit val scalate: Scalate,
+                                            implicit val templateRenderer: LocalTemplateRenderer,
                                             implicit val executionContext: ExecutionContext) extends FrontendController(cc) with I18nSupport{
 
   def extendSession: Action[AnyContent] = Action.async {

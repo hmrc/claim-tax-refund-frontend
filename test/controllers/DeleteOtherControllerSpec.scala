@@ -54,10 +54,10 @@ class DeleteOtherControllerSpec  extends ControllerSpecBase with GuiceOneAppPerS
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new DeleteOtherController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), deleteOther, messagesControllerComponents, formProvider, formPartialRetriever, scalate)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), deleteOther, messagesControllerComponents, formProvider, formPartialRetriever, templateRenderer)
 
   def viewAsString(form: Form[_] = form, index: Index, itemName: String, collectionId: String): String =
-    deleteOther(frontendAppConfig, form, NormalMode, index, itemName, collectionId, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
+    deleteOther(frontendAppConfig, form, NormalMode, index, itemName, collectionId, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "DeleteOther Controller" must {
 

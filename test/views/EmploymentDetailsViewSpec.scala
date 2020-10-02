@@ -35,9 +35,9 @@ class EmploymentDetailsViewSpec extends YesNoViewBehaviours with GuiceOneAppPerS
   override val form = new BooleanForm()()
   val employmentDetails: employmentDetails = fakeApplication.injector.instanceOf[employmentDetails]
 
-  def createViewUsingForm = (form: Form[_]) => employmentDetails(frontendAppConfig, form, NormalMode, fakeEmployments, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
+  def createViewUsingForm = (form: Form[_]) => employmentDetails(frontendAppConfig, form, NormalMode, fakeEmployments, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
-  def createView = () => employmentDetails(frontendAppConfig, form, NormalMode, fakeEmployments, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
+  def createView = () => employmentDetails(frontendAppConfig, form, NormalMode, fakeEmployments, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "EmploymentDetails view" must {
 

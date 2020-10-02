@@ -37,7 +37,7 @@ class NomineeFullNameControllerSpec extends ControllerSpecBase with GuiceOneAppP
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new NomineeFullNameController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), nomineeFullName, messagesControllerComponents, new NomineeFullNameForm(frontendAppConfig), formPartialRetriever, scalate)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), nomineeFullName, messagesControllerComponents, new NomineeFullNameForm(frontendAppConfig), formPartialRetriever, templateRenderer)
 
   private val testAnswer = "answer"
   private val testTooLongAnswer = "A" * (frontendAppConfig.nomineeFullNameMaxLength + 1)
@@ -47,7 +47,7 @@ class NomineeFullNameControllerSpec extends ControllerSpecBase with GuiceOneAppP
   val nomineeFullName: nomineeFullName = fakeApplication.injector.instanceOf[nomineeFullName]
 
   def viewAsString(form: Form[_] = form) =
-    nomineeFullName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
+    nomineeFullName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "NomineeFullName Controller" must {
 

@@ -34,9 +34,9 @@ class HowMuchMedicalBenefitsViewSpec extends StringViewBehaviours with MockitoSu
   override val form: Form[String] = new HowMuchMedicalBenefitsForm(frontendAppConfig)()
   val howMuchMedicalBenefits: howMuchMedicalBenefits = fakeApplication.injector.instanceOf[howMuchMedicalBenefits]
 
-  def createView = () => howMuchMedicalBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
+  def createView = () => howMuchMedicalBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
-  def createViewUsingForm = (form: Form[String]) => howMuchMedicalBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
+  def createViewUsingForm = (form: Form[String]) => howMuchMedicalBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "HowMuchMedicalBenefits view" must {
     behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))

@@ -29,14 +29,6 @@ trait ViewBehaviours extends ViewSpecBase {
 
     "behave like a normal page" when {
       "rendered" must {
-        "have the correct banner title" in {
-          val doc = asDocument(view())
-          //Template as a service handles the test view rendering
-          //that we are passing the required argument to
-          val nav = doc.getElementById("navTitle")
-          nav.text mustBe messages("site.service_name")
-        }
-
         "display the correct browser title" in {
           val doc = asDocument(view())
           assertEqualsMessage(doc, "title", s"$messageKeyPrefix.title", args: _*)

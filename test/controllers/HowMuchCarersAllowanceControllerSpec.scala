@@ -36,7 +36,7 @@ class HowMuchCarersAllowanceControllerSpec extends ControllerSpecBase with Guice
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new HowMuchCarersAllowanceController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), howMuchCarersAllowance, messagesControllerComponents, new HowMuchCarersAllowanceForm(frontendAppConfig), formPartialRetriever, scalate)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), howMuchCarersAllowance, messagesControllerComponents, new HowMuchCarersAllowanceForm(frontendAppConfig), formPartialRetriever, templateRenderer)
 
   val testAnswer = "9,999.99"
   private val taxYear = CustomTaxYear(2017)
@@ -44,7 +44,7 @@ class HowMuchCarersAllowanceControllerSpec extends ControllerSpecBase with Guice
   val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
   val howMuchCarersAllowance: howMuchCarersAllowance = fakeApplication.injector.instanceOf[howMuchCarersAllowance]
 
-  def viewAsString(form: Form[_] = form) = howMuchCarersAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
+  def viewAsString(form: Form[_] = form) = howMuchCarersAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "HowMuchCarersAllowance Controller" must {
 

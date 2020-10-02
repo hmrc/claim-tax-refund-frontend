@@ -14,13 +14,13 @@
  * limitations under the License.
  *@
 
-@import com.github.tototoshi.play2.scalate._
 @import config.FrontendAppConfig
 @import controllers.routes._
 @import models.Mode
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
 @import uk.gov.hmrc.play.views.html.helpers.FormWithCSRF
 @import viewmodels.InputViewModel
+@import uk.gov.hmrc.renderer.TemplateRenderer
 
 @this(main_template: main_template, formWithCSRF: FormWithCSRF)
 
@@ -34,8 +34,7 @@
         request: Request[_],
         messages: Messages,
         formPartialRetriever: FormPartialRetriever,
-        scalate: Scalate
-)
+templateRenderer: TemplateRenderer)
 
     @title = @{
         if(form.errors.nonEmpty) messages("site.title.error", messages("howMuchInvestmentOrDividend.title")) else messages("howMuchInvestmentOrDividend.title")

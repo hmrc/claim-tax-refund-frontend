@@ -46,7 +46,7 @@ class PaymentAddressCorrectControllerSpec extends ControllerSpecBase with GuiceO
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new PaymentAddressCorrectController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), paymentAddressCorrect, messagesControllerComponents, formProvider, formPartialRetriever, scalate)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), paymentAddressCorrect, messagesControllerComponents, formProvider, formPartialRetriever, templateRenderer)
 
   def fakeDataRetrievalActionItmpAddress(itmpAddress: Option[ItmpAddress]): DataRetrievalAction = new DataRetrievalAction {
     override protected def executionContext: ExecutionContext = implicitly[ExecutionContext]
@@ -103,7 +103,7 @@ class PaymentAddressCorrectControllerSpec extends ControllerSpecBase with GuiceO
       form,
       NormalMode,
       itmpAddress,
-      taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
+      taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "PaymentAddressCorrect Controller" must {
 

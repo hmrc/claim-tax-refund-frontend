@@ -31,7 +31,7 @@ class ConfirmationViewSpec extends ViewBehaviours with MockitoSugar with GuiceOn
 
   def createView: () =>
 		HtmlFormat.Appendable = () =>
-			confirmation(frontendAppConfig, submissionReference)(fakeRequest, messages, formPartialRetriever, scalate)
+			confirmation(frontendAppConfig, submissionReference)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "Confirmation view" must {
     behave like normalPage(createView, messageKeyPrefix, None)
