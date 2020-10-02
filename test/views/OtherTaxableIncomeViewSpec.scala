@@ -37,10 +37,10 @@ class OtherTaxableIncomeViewSpec extends QuestionViewBehaviours[OtherTaxableInco
 
   def createView: () =>
     HtmlFormat.Appendable = () =>
-      otherTaxableIncome(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
+      otherTaxableIncome(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   def createViewUsingForm: Form[OtherTaxableIncome] => HtmlFormat.Appendable = (form: Form[OtherTaxableIncome]) =>
-    otherTaxableIncome(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
+    otherTaxableIncome(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "OtherTaxableIncome view" must {
     behave like normalPage(createView, messageKeyPrefix, None, "1", taxYear.asString(messages))

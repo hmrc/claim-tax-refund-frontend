@@ -16,8 +16,7 @@
 
 package controllers
 
-import com.github.tototoshi.play2.scalate.Scalate
-import config.FrontendAppConfig
+import config.{FrontendAppConfig, LocalTemplateRenderer}
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.OtherCompanyBenefitForm
@@ -47,7 +46,7 @@ cc: MessagesControllerComponents,
                                               sequenceUtil: SequenceUtil[OtherCompanyBenefit],
                                               formBuilder: OtherCompanyBenefitForm,
                                               implicit val formPartialRetriever: FormPartialRetriever,
-                                              implicit val scalate: Scalate
+                                              implicit val templateRenderer: LocalTemplateRenderer
                                              )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
 

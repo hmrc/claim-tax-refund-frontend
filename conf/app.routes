@@ -241,5 +241,3 @@ GET        /do-you-want-to-add-any-other                                    cont
 POST       /do-you-want-to-add-any-other                                    controllers.RemoveOtherSelectedOptionController.onSubmit(mode: Mode = NormalMode, collectionId: String)
 GET        /change-do-you-want-to-add-any-other                             controllers.RemoveOtherSelectedOptionController.onPageLoad(mode: Mode = CheckMode, collectionId: String)
 POST       /change-do-you-want-to-add-any-other                             controllers.RemoveOtherSelectedOptionController.onSubmit(mode: Mode = CheckMode, collectionId: String)
-
-GET        /accessibility                                                   controllers.AccessibilityController.onPageLoad

@@ -16,8 +16,7 @@
 
 package controllers
 
-import com.github.tototoshi.play2.scalate.Scalate
-import config.FrontendAppConfig
+import config.{FrontendAppConfig, LocalTemplateRenderer}
 import javax.inject.{Inject, Singleton}
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent}
@@ -31,7 +30,7 @@ class UnauthorisedController @Inject()(val appConfig: FrontendAppConfig,
                                        unauthorised: unauthorised,
                                        cc: MessagesControllerComponents,
                                        implicit val formPartialRetriever: FormPartialRetriever,
-                                       implicit val scalate: Scalate
+                                       implicit val templateRenderer: LocalTemplateRenderer
                                       ) extends FrontendController(cc) with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = Action { implicit request =>

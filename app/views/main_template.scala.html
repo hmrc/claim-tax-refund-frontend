@@ -14,11 +14,11 @@
  * limitations under the License.
  *@
 
-@import com.github.tototoshi.play2.scalate._
+@import play.twirl.api.HtmlFormat
 @import config.FrontendAppConfig
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
 @import uk.gov.hmrc.play.views.html.layouts.{Sidebar,Article}
-@import uk.gov.hmrc.play.config.AccessibilityStatementConfig
+@import uk.gov.hmrc.renderer.TemplateRenderer
 
 @this(layoutSidebar: Sidebar, layoutArticle: Article)
 
@@ -40,7 +40,7 @@
         request: Request[_],
         messages: Messages,
         formPartialRetriever: FormPartialRetriever,
-        scalate: Scalate
+        templateRenderer: TemplateRenderer
 )
 
 @sidebar = @{
@@ -67,7 +67,7 @@
 }
 
 @accessibilityFooterUrl = @{
-    Map("accessibilityFooterUrl" -> AccessibilityStatementConfig.url(request))
+    Map("accessibilityFooterUrl" -> appConfig.accessibilityFooterUrl)
 }
 
 @helpForm = @{
@@ -90,24 +90,34 @@
     }
 }
 
-@scalate.render(
-    template = "/templates/mustache/production/govuk-template.mustache.html",
-    params = Map(
-        "pageTitle" -> title,
-        "navTitle" -> messages("site.service_name"),
-        "assetsPath" -> appConfig.assetsPrefix,
-        "sidebar" -> sidebar,
-        "linkElems" -> linkElem,
-        "scriptElems" -> scriptElem,
-        "mainClass" -> mainClass,
-        "mainContentHeader" -> mainContentHeader,
-        "accessibilityFooterUrl" -> accessibilityFooterUrl,
-        "article" -> article,
-        "getHelpForm" -> helpForm,
-        "isWelsh" -> {
-            messages.lang.code == "cy"
-        },
-        "showPropositionLinks" -> true,
-        "inlineScript" -> inlineScript
-    )
-)
+
+@templateRenderer.renderDefaultTemplate(appConfig.frontendTemplatePath, article, (Map[String, Any](
+"pageTitle" -> title,
+"linkElems" -> linkElem,
+"scriptElems" -> scriptElem,
+"mainClass" -> mainClass,
+"accessibilityFooterUrl" -> accessibilityFooterUrl,
+"mainContentHeader" -> mainContentHeader,
+
+"betaBanner" -> false,
+"feedbackIdentifier" -> "CTR",
+"includeHMRCBranding" -> true,
+
+"getHelpForm" -> helpForm,
+
+"navTitle" -> Some(messages("site.service_name")),
+"navLinks" -> None,
+"sidebar" -> sidebar,
+
+"isSa" -> false,
+"hasNavLinks" -> false,
+"googleAnalytics" -> Map(
+"trackingId" -> appConfig.analyticsToken,
+"cookieDomain" -> appConfig.analyticsHost
+),
+"actingAttorneyBanner" -> HtmlFormat.empty,
+"showPropositionLinks" -> Map(
+"langSelector" -> appConfig.languageTranslationEnabled
+),
+"inlineScript" -> inlineScript
+)))

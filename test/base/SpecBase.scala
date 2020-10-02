@@ -17,7 +17,7 @@
 package base
 
 import com.github.tototoshi.play2.scalate._
-import config.{AddressLookupConfig, CtrFormPartialRetriever, FrontendAppConfig}
+import config.{AddressLookupConfig, CtrFormPartialRetriever, FrontendAppConfig, LocalTemplateRenderer}
 import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice._
@@ -35,7 +35,8 @@ import uk.gov.hmrc.auth.core.retrieve.ItmpAddress
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.filters.crypto.SessionCookieCrypto
 import uk.gov.hmrc.http.HttpClient
-import utils.SequenceUtil
+import uk.gov.hmrc.renderer.TemplateRenderer
+import utils.{MockTemplateRenderer, SequenceUtil}
 
 trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with MockitoSugar {
 
@@ -45,7 +46,7 @@ trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with MockitoSugar {
 
     new GuiceApplicationBuilder()
       .overrides(
-        bind[Scalate].to[MockScalate]
+        bind[TemplateRenderer].to[LocalTemplateRenderer]
       ).build()
   }
 
@@ -53,7 +54,7 @@ trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with MockitoSugar {
 
   def frontendAppConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
 
-  def scalate: Scalate = injector.instanceOf[Scalate]
+  def templateRenderer: LocalTemplateRenderer = MockTemplateRenderer.renderer
 
   def addressLookupConfig: AddressLookupConfig = injector.instanceOf[AddressLookupConfig]
   def messagesControllerComponents: MessagesControllerComponents = injector.instanceOf[MessagesControllerComponents]

@@ -16,8 +16,7 @@
 
 package controllers
 
-import com.github.tototoshi.play2.scalate.Scalate
-import config.FrontendAppConfig
+import config.{FrontendAppConfig, LocalTemplateRenderer}
 import connectors.DataCacheConnector
 import controllers.actions._
 import javax.inject.Inject
@@ -38,7 +37,7 @@ class ConfirmationController @Inject()(appConfig: FrontendAppConfig,
 cc: MessagesControllerComponents,
                                        dataCacheConnector: DataCacheConnector,
                                        implicit val formPartialRetriever: FormPartialRetriever,
-                                       implicit val scalate: Scalate
+                                       implicit val templateRenderer: LocalTemplateRenderer
                                       ) extends FrontendController(cc) with I18nSupport {
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {

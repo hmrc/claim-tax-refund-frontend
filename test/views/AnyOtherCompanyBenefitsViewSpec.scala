@@ -41,10 +41,10 @@ class AnyOtherCompanyBenefitsViewSpec extends YesNoViewBehaviours with GuiceOneA
 	val anyOtherCompanyBenefits: anyOtherCompanyBenefits = fakeApplication.injector.instanceOf[anyOtherCompanyBenefits]
 
 	def createView: () => Html = () =>
-		anyOtherCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear, otherCompanyBenefits)(fakeRequest, messages, formPartialRetriever, scalate)
+		anyOtherCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear, otherCompanyBenefits)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
 	def createViewUsingForm: Form[_] => Html = (form: Form[_]) =>
-		anyOtherCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear, otherCompanyBenefits)(fakeRequest, messages, formPartialRetriever, scalate)
+		anyOtherCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear, otherCompanyBenefits)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
 	"AnyOtherCompanyBenefits view" must {
 

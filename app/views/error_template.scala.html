@@ -14,9 +14,9 @@
  * limitations under the License.
  *@
 
-@import com.github.tototoshi.play2.scalate.Scalate
 @import config.FrontendAppConfig
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
+@import uk.gov.hmrc.renderer.TemplateRenderer
 
 @this(main_template: main_template)
 
@@ -29,8 +29,7 @@
         implicit request: Request[_],
         messages: Messages,
         formPartialRetriever: FormPartialRetriever,
-        scalate: Scalate
-)
+templateRenderer: TemplateRenderer)
 
 @main_template(
     title = messages(pageTitle),

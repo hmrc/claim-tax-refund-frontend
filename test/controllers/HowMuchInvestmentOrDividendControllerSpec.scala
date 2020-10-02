@@ -37,7 +37,7 @@ class HowMuchInvestmentOrDividendControllerSpec extends ControllerSpecBase with 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new HowMuchInvestmentOrDividendController(
       frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), howMuchInvestmentOrDividend, messagesControllerComponents, new HowMuchInvestmentOrDividendForm(frontendAppConfig), formPartialRetriever, scalate)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), howMuchInvestmentOrDividend, messagesControllerComponents, new HowMuchInvestmentOrDividendForm(frontendAppConfig), formPartialRetriever, templateRenderer)
 
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
   private val taxYear = CustomTaxYear(2017)
@@ -45,7 +45,7 @@ class HowMuchInvestmentOrDividendControllerSpec extends ControllerSpecBase with 
   val form = new HowMuchInvestmentOrDividendForm(frontendAppConfig)()
   val howMuchInvestmentOrDividend: howMuchInvestmentOrDividend = fakeApplication.injector.instanceOf[howMuchInvestmentOrDividend]
 
-  def viewAsString(form: Form[_] = form) = howMuchInvestmentOrDividend(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
+  def viewAsString(form: Form[_] = form) = howMuchInvestmentOrDividend(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "HowMuchInvestmentOrDividend Controller" must {
 

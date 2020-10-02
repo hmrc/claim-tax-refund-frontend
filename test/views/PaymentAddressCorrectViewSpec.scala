@@ -45,10 +45,10 @@ class PaymentAddressCorrectViewSpec extends YesNoViewBehaviours with GuiceOneApp
   val paymentAddressCorrect: paymentAddressCorrect = fakeApplication.injector.instanceOf[paymentAddressCorrect]
 
   def createView = () =>
-    paymentAddressCorrect(frontendAppConfig, form, NormalMode, testAddress, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
+    paymentAddressCorrect(frontendAppConfig, form, NormalMode, testAddress, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   def createViewUsingForm = (form: Form[_]) =>
-    paymentAddressCorrect(frontendAppConfig, form, NormalMode, testAddress, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
+    paymentAddressCorrect(frontendAppConfig, form, NormalMode, testAddress, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "PaymentAddressCorrect view" must {
 

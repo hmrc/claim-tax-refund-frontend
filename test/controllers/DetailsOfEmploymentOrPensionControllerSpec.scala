@@ -37,7 +37,7 @@ class DetailsOfEmploymentOrPensionControllerSpec extends ControllerSpecBase with
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new DetailsOfEmploymentOrPensionController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute),
-      FakeAuthAction(authConnector, frontendAppConfig), dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), detailsOfEmploymentOrPension, messagesControllerComponents, new DetailsOfEmploymentOrPensionForm(frontendAppConfig), formPartialRetriever, scalate)
+      FakeAuthAction(authConnector, frontendAppConfig), dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), detailsOfEmploymentOrPension, messagesControllerComponents, new DetailsOfEmploymentOrPensionForm(frontendAppConfig), formPartialRetriever, templateRenderer)
 
   private val form = new DetailsOfEmploymentOrPensionForm(frontendAppConfig)()
   private val testAnswer = "This is some sample text"
@@ -48,7 +48,7 @@ class DetailsOfEmploymentOrPensionControllerSpec extends ControllerSpecBase with
 
 
   def viewAsString(form: Form[_] = form): String =
-    detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages, formPartialRetriever, scalate).toString
+    detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "DetailsOfEmploymentOrPension Controller" must {
 

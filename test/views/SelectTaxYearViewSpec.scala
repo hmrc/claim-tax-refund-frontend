@@ -29,9 +29,9 @@ class SelectTaxYearViewSpec extends ViewBehaviours with GuiceOneAppPerSuite {
   private val messageKeyPrefix = "selectTaxYear"
   private val selectTaxYear: selectTaxYear = fakeApplication.injector.instanceOf[selectTaxYear]
 
-  def createView = () => selectTaxYear(frontendAppConfig, SelectTaxYearForm(), NormalMode)(fakeRequest, messages, formPartialRetriever, scalate)
+  def createView = () => selectTaxYear(frontendAppConfig, SelectTaxYearForm(), NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
-  def createViewUsingForm = (form: Form[_]) => selectTaxYear(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, scalate)
+  def createViewUsingForm = (form: Form[_]) => selectTaxYear(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   def radioButtonOptions: Seq[RadioOption] = SelectTaxYear.options
 

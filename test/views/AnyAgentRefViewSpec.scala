@@ -39,10 +39,10 @@ class AnyAgentRefViewSpec extends QuestionViewBehaviours[AnyAgentRef] with Guice
   val form = formProvider(messages(requiredKey, nomineeName), messages(requiredAgentRefKey, nomineeName))
   val anyAgentRef: anyAgentRef = fakeApplication.injector.instanceOf[anyAgentRef]
 
-  def createView = () => anyAgentRef(frontendAppConfig, form, NormalMode, nomineeName, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
+  def createView = () => anyAgentRef(frontendAppConfig, form, NormalMode, nomineeName, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   def createViewUsingForm = (form: Form[_]) =>
-    anyAgentRef(frontendAppConfig, form, NormalMode, nomineeName, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
+    anyAgentRef(frontendAppConfig, form, NormalMode, nomineeName, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "AnyAgentRef view" must {
 

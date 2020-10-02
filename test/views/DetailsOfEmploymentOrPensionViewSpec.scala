@@ -36,10 +36,10 @@ class DetailsOfEmploymentOrPensionViewSpec extends StringViewBehaviours with Moc
   val detailsOfEmploymentOrPension: detailsOfEmploymentOrPension = fakeApplication.injector.instanceOf[detailsOfEmploymentOrPension]
 
   def createView = () =>
-    detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages, formPartialRetriever, scalate)
+    detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   def createViewUsingForm = (form: Form[String]) =>
-    detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages, formPartialRetriever, scalate)
+    detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "DetailsOfEmploymentOrPension view" must {
     behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))

@@ -34,9 +34,9 @@ class HowMuchFuelBenefitViewSpec extends StringViewBehaviours with MockitoSugar 
   override val form: Form[String] = new HowMuchFuelBenefitForm(frontendAppConfig)()
   val howMuchFuelBenefit: howMuchFuelBenefit = fakeApplication.injector.instanceOf[howMuchFuelBenefit]
 
-  def createView = () => howMuchFuelBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
+  def createView = () => howMuchFuelBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
-  def createViewUsingForm = (form: Form[String]) => howMuchFuelBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
+  def createViewUsingForm = (form: Form[String]) => howMuchFuelBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "HowMuchFuelBenefit view" must {
     behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))

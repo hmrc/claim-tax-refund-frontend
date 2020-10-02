@@ -39,9 +39,9 @@ class AnyTaxableBankInterestViewSpec extends QuestionViewBehaviours[AnyTaxPaid] 
   val form = formProvider(notSelectedKey, blankKey, invalidKey)
   val anyTaxableBankInterest: anyTaxableBankInterest = fakeApplication.injector.instanceOf[anyTaxableBankInterest]
 
-  def createView = () => anyTaxableBankInterest(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
+  def createView = () => anyTaxableBankInterest(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
-  def createViewUsingForm = (form: Form[_]) => anyTaxableBankInterest(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
+  def createViewUsingForm = (form: Form[_]) => anyTaxableBankInterest(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "AnyTaxableBankInterest view" must {
 

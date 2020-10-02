@@ -36,7 +36,7 @@ class PaymentUKAddressControllerSpec extends ControllerSpecBase with GuiceOneApp
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new PaymentUKAddressController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), paymentUKAddress, messagesControllerComponents, new PaymentUKAddressForm(frontendAppConfig), formPartialRetriever, scalate)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), paymentUKAddress, messagesControllerComponents, new PaymentUKAddressForm(frontendAppConfig), formPartialRetriever, templateRenderer)
 
   val form = new PaymentUKAddressForm(frontendAppConfig)()
   val paymentUKAddress: paymentUKAddress = fakeApplication.injector.instanceOf[paymentUKAddress]
@@ -44,7 +44,7 @@ class PaymentUKAddressControllerSpec extends ControllerSpecBase with GuiceOneApp
   private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers()
 
   def viewAsString(form: Form[UkAddress] = form) =
-    paymentUKAddress(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate).toString
+    paymentUKAddress(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "PaymentUKAddress Controller" must {
 

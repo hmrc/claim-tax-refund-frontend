@@ -32,10 +32,10 @@ class WhereToSendPaymentViewSpec extends ViewBehaviours with GuiceOneAppPerSuite
   val whereToSendPayment: whereToSendPayment = fakeApplication.injector.instanceOf[whereToSendPayment]
 
   def createView = () =>
-    whereToSendPayment(frontendAppConfig, WhereToSendPaymentForm(), NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
+    whereToSendPayment(frontendAppConfig, WhereToSendPaymentForm(), NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   def createViewUsingForm = (form: Form[_]) =>
-    whereToSendPayment(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
+    whereToSendPayment(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "WhereToSendPayment view" must {
     behave like normalPage(createView, messageKeyPrefix, None)

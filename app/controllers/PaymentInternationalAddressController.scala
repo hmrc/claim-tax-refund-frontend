@@ -16,8 +16,7 @@
 
 package controllers
 
-import com.github.tototoshi.play2.scalate.Scalate
-import config.FrontendAppConfig
+import config.{FrontendAppConfig, LocalTemplateRenderer}
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.PaymentInternationalAddressForm
@@ -34,7 +33,6 @@ import views.html.paymentInternationalAddress
 
 import scala.concurrent.{ExecutionContext, Future}
 
-
 class PaymentInternationalAddressController @Inject()(appConfig: FrontendAppConfig,
                                                       override val messagesApi: MessagesApi,
                                                       dataCacheConnector: DataCacheConnector,
@@ -46,7 +44,7 @@ class PaymentInternationalAddressController @Inject()(appConfig: FrontendAppConf
 cc: MessagesControllerComponents,
                                                       formBuilder: PaymentInternationalAddressForm,
                                                       implicit val formPartialRetriever: FormPartialRetriever,
-                                                      implicit val scalate: Scalate
+                                                      implicit val templateRenderer: LocalTemplateRenderer
                                                      )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   private val form: Form[InternationalAddress] = formBuilder()

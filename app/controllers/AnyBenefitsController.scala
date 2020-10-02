@@ -16,8 +16,7 @@
 
 package controllers
 
-import com.github.tototoshi.play2.scalate._
-import config.FrontendAppConfig
+import config.{FrontendAppConfig, LocalTemplateRenderer}
 import connectors.{DataCacheConnector, TaiConnector}
 import controllers.actions._
 import forms.BooleanForm
@@ -46,7 +45,7 @@ class AnyBenefitsController @Inject()(appConfig: FrontendAppConfig,
 cc: MessagesControllerComponents,
                                       formProvider: BooleanForm,
                                       implicit val formPartialRetriever: FormPartialRetriever,
-                                      implicit val scalate: Scalate
+                                      implicit val templateRenderer: LocalTemplateRenderer
                                      )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   private val errorKey = "anyBenefits.blank"

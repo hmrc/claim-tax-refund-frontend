@@ -24,7 +24,7 @@ class UnauthorisedViewSpec extends ViewBehaviours with GuiceOneAppPerSuite {
 
   val unauthorised: unauthorised = fakeApplication.injector.instanceOf[unauthorised]
 
-  def view = () => unauthorised(frontendAppConfig)(fakeRequest, messages, formPartialRetriever, scalate)
+  def view = () => unauthorised(frontendAppConfig)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "Unauthorised view" must {
 

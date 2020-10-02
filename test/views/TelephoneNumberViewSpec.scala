@@ -37,10 +37,10 @@ class TelephoneNumberViewSpec extends QuestionViewBehaviours[TelephoneOption] wi
   val telephoneNumber: telephoneNumber = fakeApplication.injector.instanceOf[telephoneNumber]
 
   def createView = () =>
-    telephoneNumber(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
+    telephoneNumber(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   def createViewUsingForm = (form: Form[_]) =>
-    telephoneNumber(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
+    telephoneNumber(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "TelephoneNumber view" must {
     behave like normalPage(createView, messageKeyPrefix, None)

@@ -16,8 +16,7 @@
 
 package handlers
 
-import com.github.tototoshi.play2.scalate._
-import config.FrontendAppConfig
+import config.{FrontendAppConfig, LocalTemplateRenderer}
 import javax.inject.{Inject, Singleton}
 import play.api.http.Status.{BAD_REQUEST, FORBIDDEN}
 import play.api.i18n.MessagesApi
@@ -26,7 +25,7 @@ import play.api.mvc.{Request, RequestHeader, Result}
 import play.twirl.api.Html
 import uk.gov.hmrc.play.bootstrap.frontend.http.FrontendErrorHandler
 import uk.gov.hmrc.play.partials.FormPartialRetriever
-import views.html.{error_template,unauthorised_error_template}
+import views.html.{error_template, unauthorised_error_template}
 
 import scala.concurrent.Future
 
@@ -37,7 +36,7 @@ class ErrorHandler @Inject()(
                               unauthorised_error_template: unauthorised_error_template,
                               val messagesApi: MessagesApi,
                               implicit val formPartialRetriever: FormPartialRetriever,
-                              implicit val scalate: Scalate
+                              implicit val templateRenderer: LocalTemplateRenderer
                             ) extends FrontendErrorHandler {
 
   override def onClientError(request: RequestHeader, statusCode: Int, message: String): Future[Result] = {

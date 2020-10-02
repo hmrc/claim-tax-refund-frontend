@@ -27,7 +27,7 @@ class IndexControllerSpec extends ControllerSpecBase with GuiceOneAppPerSuite {
 
   val selectTaxYear = fakeApplication.injector.instanceOf[selectTaxYear]
 
-  def viewAsString(form: Form[_] = SelectTaxYearForm()) = selectTaxYear(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, scalate).toString
+  def viewAsString(form: Form[_] = SelectTaxYearForm()) = selectTaxYear(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
 
   "Index Controller" must {
     "return redirect for a GET and redirect to select tax year" in {

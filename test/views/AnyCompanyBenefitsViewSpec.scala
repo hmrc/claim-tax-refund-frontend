@@ -34,9 +34,9 @@ class AnyCompanyBenefitsViewSpec extends YesNoViewBehaviours with GuiceOneAppPer
 
   override val form = new BooleanForm()()
 
-  def createView = () => anyCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
+  def createView = () => anyCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
-  def createViewUsingForm = (form: Form[_]) => anyCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, scalate)
+  def createViewUsingForm = (form: Form[_]) => anyCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
 
   "AnyCompanyBenefits view" must {
 
