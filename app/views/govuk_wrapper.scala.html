@@ -20,7 +20,7 @@
 @import views.html.layouts.GovUkTemplate
 
 @this(
-uiHead: HeadWithTrackingConsent,
+uiHead: Head,
 headerNav: HeaderNav,
 footer: Footer,
 servInfo: ServiceInfo,
@@ -45,9 +45,9 @@ scriptElem: Option[Html] = None)(implicit messages: Messages, request: Request[_
 @head = {
 @uiHead(
 linkElem = None,
-headScripts = None,
-nonce = None)
+headScripts = None)
 <meta name="format-detection" content="telephone=no" />
+<link rel="stylesheet" href='@routes.Assets.versioned("stylesheets/requestcorporationtaxnumberfrontend-app.css")' />
 }
 
 @headerNavLinks = {}
@@ -69,6 +69,7 @@ analyticsHost = "",
 ssoUrl = None,
 scriptElem = scriptElem,
 gaCalls = None)
+<script src='@routes.Assets.versioned("javascripts/requestcorporationtaxnumberfrontend-app.min.js")'> </script>
 }
 
 @footerTop = {}

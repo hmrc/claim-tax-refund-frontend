@@ -17,6 +17,7 @@
 package config
 
 import com.google.inject.{Inject, Singleton}
+import play.api.Configuration
 import controllers.routes
 import play.api.i18n.Lang
 import play.api.mvc.{Call, Request}
@@ -26,7 +27,7 @@ import uk.gov.hmrc.play.config.AccessibilityStatementConfig
 import scala.util.Try
 
 @Singleton
-class FrontendAppConfig @Inject()(val servicesConfig: ServicesConfig, accessibilityStatementConfig: AccessibilityStatementConfig) {
+class FrontendAppConfig @Inject()(val servicesConfig: ServicesConfig, val configuration: Configuration, accessibilityStatementConfig: AccessibilityStatementConfig) {
 
   private def loadConfig(key: String): String = Try(servicesConfig.getString(key)).getOrElse(throw new Exception(s"Missing configuration key: $key"))
   private def loadConfigInt(key: String): Int = Try(servicesConfig.getInt(key)).getOrElse(throw new Exception(s"Missing configuration key: $key"))
