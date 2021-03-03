@@ -20,7 +20,7 @@
 @import uk.gov.hmrc.play.views.html.layouts.{Sidebar,Article}
 @import uk.gov.hmrc.renderer.TemplateRenderer
 
-@this(layoutSidebar: Sidebar, layoutArticle: Article)
+@this(layoutSidebar: Sidebar, layoutArticle: Article, govuk_wrapper: govuk_wrapper)
 
 @(
         title: String,
@@ -43,8 +43,14 @@
         templateRenderer: TemplateRenderer
 )
 
-@sidebar = @{
-    sidebarLinks.map(links => layoutSidebar(links, Some("sidebar")))
+@serviceInfoContent = {}
+
+@import uk.gov.hmrc.play.views.html.layouts
+
+@sidebar = {
+    @if(sidebarLinks.isDefined) {
+    @layouts.sidebar(sidebarLinks.get, Some("sidebar"))
+    }
 }
 
 @article = @{
@@ -60,10 +66,7 @@
 }
 
 @scriptElem = @{
-    Seq(
-        Map("url" -> controllers.routes.Assets.versioned("javascripts/claimtaxrefundfrontend.js")),
-        Map("url" -> controllers.routes.Assets.versioned("javascripts/google-tag-manager-script.js"))
-    )
+    Map("url" -> controllers.routes.Assets.versioned("javascripts/claimtaxrefundfrontend.js"))
 }
 
 @accessibilityFooterUrl = @{
@@ -90,6 +93,15 @@
     }
 }
 
+@govuk_wrapper(appConfig = appConfig,
+    title = title,
+    mainClass = mainClass,
+    bodyClasses = bodyClasses,
+    sidebar = sidebar,
+    contentHeader = contentHeader,
+    mainContent = layouts.article(mainContent),
+    serviceInfoContent = serviceInfoContent
+)
 
 @templateRenderer.renderDefaultTemplate(appConfig.frontendTemplatePath, article, (Map[String, Any](
 "pageTitle" -> title,
