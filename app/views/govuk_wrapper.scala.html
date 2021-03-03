@@ -20,7 +20,7 @@
 @import views.html.layouts.GovUkTemplate
 
 @this(
-uiHead: Head,
+uiHead: HeadWithTrackingConsent,
 headerNav: HeaderNav,
 footer: Footer,
 servInfo: ServiceInfo,
@@ -43,17 +43,10 @@ serviceInfoContent: Html = HtmlFormat.empty,
 scriptElem: Option[Html] = None)(implicit messages: Messages, request: Request[_])
 
 @head = {
-@if(appConfig.googleTagManagerId != "N/A") {
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','@appConfig.googleTagManagerId');
-    </script>
-}
 @uiHead(
 linkElem = None,
-headScripts = None)
+headScripts = None,
+nonce = None)
 <meta name="format-detection" content="telephone=no" />
 <link rel="stylesheet" href='@routes.Assets.versioned("stylesheets/requestcorporationtaxnumberfrontend-app.css")' />
 }
@@ -61,11 +54,6 @@ headScripts = None)
 @headerNavLinks = {}
 
 @insideHeader = {
-@if(appConfig.googleTagManagerId != "N/A") {
-<noscript>
- <iframe src="https://www.googletagmanager.com/ns.html?id=@appConfig.googleTagManagerId" height="0" width="0" style="display:none;visibility:hidden"></iframe>
-</noscript>
-}
 @headerNav(
 navTitle = Some(messages("site.service_name")),
 navTitleLink = None,
@@ -77,8 +65,8 @@ navLinks = Some(headerNavLinks))
 
 @bodyEnd = {
 @footer(
-analyticsToken = Some(appConfig.analyticsToken),
-analyticsHost = appConfig.analyticsHost,
+analyticsToken = None,
+analyticsHost = "",
 ssoUrl = None,
 scriptElem = scriptElem,
 gaCalls = None)
