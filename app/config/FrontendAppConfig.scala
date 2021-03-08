@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 package config
 
 import com.google.inject.{Inject, Singleton}
+import play.api.Configuration
 import controllers.routes
 import play.api.i18n.Lang
 import play.api.mvc.{Call, Request}
@@ -26,7 +27,7 @@ import uk.gov.hmrc.play.config.AccessibilityStatementConfig
 import scala.util.Try
 
 @Singleton
-class FrontendAppConfig @Inject()(val servicesConfig: ServicesConfig, accessibilityStatementConfig: AccessibilityStatementConfig) {
+class FrontendAppConfig @Inject()(val servicesConfig: ServicesConfig, val configuration: Configuration, accessibilityStatementConfig: AccessibilityStatementConfig) {
 
   private def loadConfig(key: String): String = Try(servicesConfig.getString(key)).getOrElse(throw new Exception(s"Missing configuration key: $key"))
   private def loadConfigInt(key: String): Int = Try(servicesConfig.getInt(key)).getOrElse(throw new Exception(s"Missing configuration key: $key"))
@@ -37,14 +38,11 @@ class FrontendAppConfig @Inject()(val servicesConfig: ServicesConfig, accessibil
   lazy val assetsPrefix: String = loadConfig(s"assets.url") + loadConfig(s"assets.version") + '/'
   lazy val frontendTemplatePath: String = loadConfig("microservice.services.frontend-template-provider.path")
 
-  lazy val analyticsToken: String = loadConfig(s"google-analytics.token")
-  lazy val analyticsHost: String = loadConfig(s"google-analytics.host")
   lazy val reportAProblemPartialUrl = s"$contactHost/contact/problem_reports?service=$contactFormServiceIdentifier"
   lazy val reportAProblemNonJSUrl = s"$contactHost/contact/problem_reports_nonjs?service=$contactFormServiceIdentifier"
   lazy val betaFeedbackUrl = s"$contactHost/contact/beta-feedback"
   lazy val betaFeedbackUnauthenticatedUrl = s"$contactHost/contact/beta-feedback-unauthenticated"
   lazy val feedbackSurveyUrl: String = loadConfig("urls.feedback-survey")
-  lazy val googleTagManagerId: String = loadConfig("google-tag-manager.id")
 
   lazy val authUrl: String = servicesConfig.baseUrl("auth")
   lazy val loginUrl: String = loadConfig("urls.login")

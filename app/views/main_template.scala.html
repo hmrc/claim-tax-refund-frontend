@@ -1,5 +1,5 @@
 @*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,9 @@
 @import play.twirl.api.HtmlFormat
 @import config.FrontendAppConfig
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
-@import uk.gov.hmrc.play.views.html.layouts.{Sidebar,Article}
 @import uk.gov.hmrc.renderer.TemplateRenderer
+@import uk.gov.hmrc.play.views.html.layouts._
+@import uk.gov.hmrc.play.config.{TrackingConsentConfig, OptimizelyConfig}
 
 @this(layoutSidebar: Sidebar, layoutArticle: Article)
 
@@ -43,8 +44,14 @@
         templateRenderer: TemplateRenderer
 )
 
-@sidebar = @{
-    sidebarLinks.map(links => layoutSidebar(links, Some("sidebar")))
+@serviceInfoContent = {}
+
+@import uk.gov.hmrc.play.views.html.layouts
+
+@sidebar = {
+    @if(sidebarLinks.isDefined) {
+    @layouts.sidebar(sidebarLinks.get, Some("sidebar"))
+    }
 }
 
 @article = @{
@@ -60,10 +67,14 @@
 }
 
 @scriptElem = @{
-    Seq(
-        Map("url" -> controllers.routes.Assets.versioned("javascripts/claimtaxrefundfrontend.js")),
-        Map("url" -> controllers.routes.Assets.versioned("javascripts/google-tag-manager-script.js"))
-    )
+    Map("url" -> controllers.routes.Assets.versioned("javascripts/claimtaxrefundfrontend.js"))
+}
+
+@headInlineScript = @{
+    val trackingConsentConfig = new TrackingConsentConfig(appConfig.configuration)
+    val optimizelyConfig = new OptimizelyConfig(appConfig.configuration)
+
+    Map("headInlineScript" -> new TrackingConsentSnippet(trackingConsentConfig, optimizelyConfig)(None))
 }
 
 @accessibilityFooterUrl = @{
@@ -90,7 +101,6 @@
     }
 }
 
-
 @templateRenderer.renderDefaultTemplate(appConfig.frontendTemplatePath, article, (Map[String, Any](
 "pageTitle" -> title,
 "linkElems" -> linkElem,
@@ -111,10 +121,7 @@
 
 "isSa" -> false,
 "hasNavLinks" -> false,
-"googleAnalytics" -> Map(
-"trackingId" -> appConfig.analyticsToken,
-"cookieDomain" -> appConfig.analyticsHost
-),
+"headInlineScript" -> headInlineScript,
 "actingAttorneyBanner" -> HtmlFormat.empty,
 "showPropositionLinks" -> Map(
 "langSelector" -> appConfig.languageTranslationEnabled
