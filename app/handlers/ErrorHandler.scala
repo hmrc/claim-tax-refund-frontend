@@ -52,9 +52,9 @@ class ErrorHandler @Inject()(
 
         Future.successful(body)
       case FORBIDDEN =>
-        Future.successful(Forbidden(views.html.defaultpages.unauthorized()))
+        Future.successful(Forbidden(views.html.defaultpages.unauthorized()(request)))
       case _ =>
-        Future.successful(BadRequest(views.html.defaultpages.badRequest(request.method, request.uri, message)))
+        Future.successful(BadRequest(views.html.defaultpages.badRequest(request.method, request.uri, message)(request)))
     }
   }
 

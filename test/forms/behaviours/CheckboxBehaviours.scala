@@ -18,6 +18,7 @@ package forms.behaviours
 
 import play.api.data.{Form, FormError}
 import forms.FormSpec
+import org.scalatest.Matchers.convertToAnyShouldWrapper
 
 trait CheckboxBehaviours[A] extends FormSpec {
 

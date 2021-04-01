@@ -24,7 +24,7 @@ import models.templates.RobotXML
 import models.{Metadata, SubmissionSuccessful, _}
 import org.apache.commons.codec.digest.DigestUtils
 import org.joda.time.LocalDateTime
-import play.api.Logger
+import play.api.Logging
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
 import services.SubmissionService
@@ -52,7 +52,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
                                            robotXML: RobotXML,
                                            implicit val formPartialRetriever: FormPartialRetriever,
                                            implicit val templateRenderer: LocalTemplateRenderer
-                                          )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
+                                          )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport with Logging {
 
   def onPageLoad(): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
@@ -126,7 +126,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
 
       futureSubmission.failed.foreach {
         case e =>
-          Logger.error("[CheckYourAnswersController][onSubmit] failed", e)
+          logger.error("[CheckYourAnswersController][onSubmit] failed", e)
       }
 
       futureSubmission.flatMap {

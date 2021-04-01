@@ -20,7 +20,7 @@ import config.FrontendAppConfig
 import connectors.CtrConnector
 import javax.inject.Inject
 import models._
-import play.api.Logger
+import play.api.Logging
 import play.api.libs.json.Json
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.audit.DefaultAuditConnector
@@ -30,7 +30,7 @@ import scala.concurrent.Future
 
 class SubmissionService @Inject()(appConfig: FrontendAppConfig,
                                   ctrConnector: CtrConnector,
-                                  auditConnector: DefaultAuditConnector) {
+                                  auditConnector: DefaultAuditConnector) extends Logging {
 
   def ctrSubmission(submission: Submission)(implicit hc: HeaderCarrier): Future[SubmissionResult] = {
 
@@ -48,7 +48,7 @@ class SubmissionService @Inject()(appConfig: FrontendAppConfig,
 
         auditConnector.sendEvent(event)
 
-        Logger.info(s"[DmsSubmissionService][submitSubmission] - submission successful")
+        logger.info(s"[DmsSubmissionService][submitSubmission] - submission successful")
 
         SubmissionSuccessful
 
