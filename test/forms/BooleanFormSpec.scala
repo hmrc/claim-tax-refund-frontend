@@ -16,6 +16,8 @@
 
 package forms
 
+import org.scalatest.Matchers.convertToAnyShouldWrapper
+
 class BooleanFormSpec extends FormSpec {
 
   val errorKey = "error.boolean"

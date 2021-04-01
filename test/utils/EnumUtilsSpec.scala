@@ -17,12 +17,13 @@
 package utils
 
 import models.CompanyBenefits
+import org.scalatestplus.play.PlaySpec
 import play.api.libs.json.{JsError, JsSuccess, JsValue, Json}
-import uk.gov.hmrc.play.test.UnitSpec
+import org.scalatest.Matchers.convertToAnyShouldWrapper
 
-class EnumUtilsSpec extends UnitSpec {
+class EnumUtilsSpec extends PlaySpec {
 
-  "EnumerationUtil" should {
+  "EnumerationUtil" must {
 
     "return a JsError when it cannot parse json object" in {
       val json = Json.parse(

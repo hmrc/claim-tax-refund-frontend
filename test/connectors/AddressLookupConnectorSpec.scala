@@ -97,7 +97,7 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with WireMoc
             aResponse()
               .withStatus(202)
               .withBody("")
-              .withHeader("", "")
+              .withHeader("notLocation", "")
           )
       )
 

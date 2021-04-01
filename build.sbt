@@ -18,34 +18,33 @@ lazy val playSettings: Seq[Setting[_]] = Seq.empty
 
 val compile = Seq(
   ws,
-  "uk.gov.hmrc"           %% "bootstrap-frontend-play-26"     % "2.24.0",
-  "uk.gov.hmrc"           %% "simple-reactivemongo"           % "7.30.0-play-26",
+  "uk.gov.hmrc"           %% "bootstrap-frontend-play-27"     % "3.0.0",
+  "uk.gov.hmrc"           %% "simple-reactivemongo"           % "7.31.0-play-27",
   "uk.gov.hmrc"           %% "local-template-renderer"        % "2.10.0-play-26",
-  "uk.gov.hmrc"           %% "govuk-template"                 % "5.59.0-play-26",
-  "uk.gov.hmrc"           %% "play-health"                    % "3.15.0-play-26",
-  "uk.gov.hmrc"           %% "play-ui"                        % "8.14.0-play-26",
-  "uk.gov.hmrc"           %% "http-caching-client"            % "9.1.0-play-26",
-  "uk.gov.hmrc"           %% "play-conditional-form-mapping"  % "1.3.0-play-26",
-  "uk.gov.hmrc"           %% "play-partials"                  % "6.11.0-play-26",
-  "uk.gov.hmrc"           %% "play-language"                  % "4.5.0-play-26",
+  "uk.gov.hmrc"           %% "govuk-template"                 % "5.63.0-play-27",
+  "uk.gov.hmrc"           %% "play-health"                    % "3.16.0-play-27",
+  "uk.gov.hmrc"           %% "play-ui"                        % "8.21.0-play-27",
+  "uk.gov.hmrc"           %% "http-caching-client"            % "9.2.0-play-27",
+  "uk.gov.hmrc"           %% "play-conditional-form-mapping"  % "1.5.0-play-27",
+  "uk.gov.hmrc"           %% "play-partials"                  % "7.1.0-play-27",
+  "uk.gov.hmrc"           %% "play-language"                  % "4.10.0-play-27",
   "uk.gov.hmrc"           %% "tax-year"                       % "1.2.0",
   "org.scalatra.scalate"  %% "play-scalate"                   % "0.6.0",
   "org.scalatra.scalate"  %% "scalate-core"                   % "1.9.6",
-  "uk.gov.hmrc"           %% "domain"                         % "5.10.0-play-26",
+  "uk.gov.hmrc"           %% "domain"                         % "5.10.0-play-27",
 )
 
 def test(scope: String = "test"): Seq[ModuleID] = Seq(
   "com.github.tomakehurst"  % "wiremock"                % "2.26.3" % scope,
   "com.github.tomakehurst"  % "wiremock-jre8"           % "2.26.3" % scope,
-  "uk.gov.hmrc"             %% "hmrctest"               % "3.9.0-play-26" % scope,
   "org.scalatest"           %% "scalatest"              % "3.0.9" % scope,
-  "org.scalatestplus.play"  %% "scalatestplus-play"     % "3.1.3" % scope,
+  "org.scalatestplus.play"  %% "scalatestplus-play"     % "4.0.3" % scope,
   "org.scalacheck"          %% "scalacheck"             % "1.15.1" % scope,
   "org.pegdown"             % "pegdown"                 % "1.6.0" % scope,
   "org.jsoup"               % "jsoup"                   % "1.13.1" % scope,
   "com.typesafe.play"       %% "play-test"              % PlayVersion.current % scope,
   "org.mockito"             % "mockito-all"             % "1.10.19" % scope,
-  "uk.gov.hmrc"             %% "play-whitelist-filter"  % "3.4.0-play-26"
+  "uk.gov.hmrc"             %% "play-whitelist-filter"  % "3.4.0-play-27"
 )
 
 def oneForkedJvmPerTest(tests: Seq[TestDefinition]): Seq[Group] =

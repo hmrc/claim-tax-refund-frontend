@@ -24,6 +24,7 @@ import play.api.data.Form
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.Injector
 import play.api.test.FakeRequest
+import org.scalatest.Matchers.convertToAnyShouldWrapper
 
 trait FormBehaviours extends FormSpec with GuiceOneAppPerSuite {
 

@@ -20,6 +20,7 @@ import forms.mappings.TelephoneOptionMapping
 import models.TelephoneOption
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import play.api.data.{Form, FormError}
+import org.scalatest.Matchers.convertToAnyShouldWrapper
 
 class TelephoneNumberFormSpec extends FormSpec with TelephoneOptionMapping with ScalaCheckPropertyChecks {
 

@@ -19,7 +19,7 @@ package connectors
 import config.FrontendAppConfig
 import javax.inject.Inject
 import models.SubmissionResponse
-import play.api.Logger
+import play.api.Logging
 import play.api.http.Status._
 import play.api.libs.json.JsValue
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
@@ -28,7 +28,7 @@ import uk.gov.hmrc.http.HttpClient
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class CtrConnector @Inject()(appConfig: FrontendAppConfig, http: HttpClient) {
+class CtrConnector @Inject()(appConfig: FrontendAppConfig, http: HttpClient) extends Logging {
 
   def ctrSubmission(submissionJson: JsValue)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[Option[SubmissionResponse]] = {
 
@@ -40,14 +40,14 @@ class CtrConnector @Inject()(appConfig: FrontendAppConfig, http: HttpClient) {
             response.json.asOpt[SubmissionResponse]
 
           case other =>
-            Logger.warn(s"[CtrConnector][ctrSubmission] - received HTTP status $other from $submissionUrl")
+            logger.warn(s"[CtrConnector][ctrSubmission] - received HTTP status $other from $submissionUrl")
             None
         }
     }
 
     postRequest.recover {
       case e =>
-        Logger.error(s"[CtrConnector][ctrSubmission] - submission to $submissionUrl failed", e)
+        logger.error(s"[CtrConnector][ctrSubmission] - submission to $submissionUrl failed", e)
         None
     }
   }

@@ -18,6 +18,7 @@ package forms
 
 import play.api.data.Form
 import play.api.data.Forms._
+import org.scalatest.Matchers.convertToAnyShouldWrapper
 
 class WithRequiredBooleanMappingSpec extends FormSpec {
 

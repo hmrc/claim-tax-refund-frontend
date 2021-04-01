@@ -20,6 +20,7 @@ import forms.mappings.AnyTaxPaidMapping
 import models.AnyTaxPaid
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import play.api.data.FormError
+import org.scalatest.Matchers.convertToAnyShouldWrapper
 
 class HowMuchTaxPaidSpec extends FormSpec with AnyTaxPaidMapping with ScalaCheckPropertyChecks {
 

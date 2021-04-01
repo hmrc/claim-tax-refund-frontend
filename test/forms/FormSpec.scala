@@ -16,10 +16,11 @@
 
 package forms
 
+import org.scalatestplus.play.PlaySpec
 import play.api.data.{Form, FormError}
-import uk.gov.hmrc.play.test.UnitSpec
+import org.scalatest.Matchers.convertToAnyShouldWrapper
 
-trait FormSpec extends UnitSpec {
+trait FormSpec extends PlaySpec {
 
   def checkForError(form: Form[_], data: Map[String, String], expectedErrors: Seq[FormError]) = {
     form.bind(data).fold(

@@ -19,7 +19,7 @@ package connectors
 import config.{AddressLookupConfig, FrontendAppConfig}
 import javax.inject.Inject
 import models.AddressLookup
-import play.api.Logger
+import play.api.Logging
 import play.api.i18n.{Lang, MessagesApi}
 import play.api.libs.json.{JsValue, Json}
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
@@ -37,7 +37,7 @@ class AddressLookupConnector @Inject()(
                                         http: HttpClient,
                                         messagesApi: MessagesApi,
                                         dataCacheConnector: DataCacheConnector
-                                      ) {
+                                      ) extends Logging {
 
   def initialise(continueUrl: String, accessibilityFooterUrl: String)(implicit hc: HeaderCarrier, language: Lang): Future[Option[String]] = {
     val addressLookupUrl = s"${appConfig.addressLookupUrl}/api/v2/init"
@@ -49,12 +49,12 @@ class AddressLookupConnector @Inject()(
             Some(response.header(key = "Location")
               .getOrElse(s"[AddressLookupConnector][initialise] - Failed to obtain location from $addressLookupUrl"))
           case other =>
-            Logger.warn(s"[AddressLookupConnector][initialise] - received HTTP status $other from $addressLookupUrl")
+            logger.warn(s"[AddressLookupConnector][initialise] - received HTTP status $other from $addressLookupUrl")
             None
         }
     }.recover {
       case e: Exception =>
-        Logger.warn(s"[AddressLookupConnector][initialise] - connection to $addressLookupUrl failed", e)
+        logger.warn(s"[AddressLookupConnector][initialise] - connection to $addressLookupUrl failed", e)
         None
     }
   }
