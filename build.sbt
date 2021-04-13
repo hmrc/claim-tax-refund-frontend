@@ -35,16 +35,16 @@ val compile = Seq(
 )
 
 def test(scope: String = "test"): Seq[ModuleID] = Seq(
-  "com.github.tomakehurst"  % "wiremock"                % "2.26.3" % scope,
-  "com.github.tomakehurst"  % "wiremock-jre8"           % "2.26.3" % scope,
-  "org.scalatest"           %% "scalatest"              % "3.0.9" % scope,
-  "org.scalatestplus.play"  %% "scalatestplus-play"     % "4.0.3" % scope,
-  "org.scalacheck"          %% "scalacheck"             % "1.15.1" % scope,
-  "org.pegdown"             % "pegdown"                 % "1.6.0" % scope,
-  "org.jsoup"               % "jsoup"                   % "1.13.1" % scope,
-  "com.typesafe.play"       %% "play-test"              % PlayVersion.current % scope,
-  "org.mockito"             % "mockito-all"             % "1.10.19" % scope,
-  "uk.gov.hmrc"             %% "play-whitelist-filter"  % "3.4.0-play-27"
+  "com.github.tomakehurst"  %   "wiremock"                % "2.26.3" % scope,
+  "com.github.tomakehurst"  %   "wiremock-jre8"           % "2.26.3" % scope,
+  "org.scalatest"           %%  "scalatest"               % "3.0.9" % scope,
+  "org.scalatestplus.play"  %%  "scalatestplus-play"      % "4.0.3" % scope,
+  "org.scalacheck"          %%  "scalacheck"              % "1.15.1" % scope,
+  "org.pegdown"             %   "pegdown"                 % "1.6.0" % scope,
+  "org.jsoup"               %   "jsoup"                   % "1.13.1" % scope,
+  "com.typesafe.play"       %%  "play-test"               % PlayVersion.current % scope,
+  "org.mockito"             %   "mockito-all"             % "1.10.19" % scope,
+  "uk.gov.hmrc"             %%  "play-allowlist-filter"   % "1.0.0-play-27"
 )
 
 def oneForkedJvmPerTest(tests: Seq[TestDefinition]): Seq[Group] =
