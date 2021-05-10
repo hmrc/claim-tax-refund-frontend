@@ -18,10 +18,7 @@ package filters
 
 import com.google.inject.Inject
 import play.api.http.DefaultHttpFilters
-import uk.gov.hmrc.play.bootstrap.frontend.filters.FrontendFilters
 
 class FiltersWithAllowlist @Inject()(
-                                       allowlistFilter: AllowlistFilter,
-                                       sessionIdFilter: SessionIdFilter,
-                                       frontendFilters: FrontendFilters
-                                     ) extends DefaultHttpFilters(frontendFilters.filters :+ sessionIdFilter :+ allowlistFilter: _*)
+                                       allowlistFilter: AllowlistFilter
+                                     ) extends DefaultHttpFilters(allowlistFilter)

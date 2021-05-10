@@ -18,7 +18,7 @@ lazy val playSettings: Seq[Setting[_]] = Seq.empty
 
 val compile = Seq(
   ws,
-  "uk.gov.hmrc"           %% "bootstrap-frontend-play-27"     % "3.0.0",
+  "uk.gov.hmrc"           %% "bootstrap-frontend-play-27"     % "4.2.0",
   "uk.gov.hmrc"           %% "simple-reactivemongo"           % "7.31.0-play-27",
   "uk.gov.hmrc"           %% "local-template-renderer"        % "2.10.0-play-26",
   "uk.gov.hmrc"           %% "govuk-template"                 % "5.63.0-play-27",
