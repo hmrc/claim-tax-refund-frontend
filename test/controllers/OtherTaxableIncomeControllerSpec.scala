@@ -43,10 +43,10 @@ class OtherTaxableIncomeControllerSpec extends ControllerSpecBase with GuiceOneA
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new OtherTaxableIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), otherTaxableIncome, messagesControllerComponents, sequenceUtil, new OtherTaxableIncomeForm(frontendAppConfig), formPartialRetriever, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), otherTaxableIncome, messagesControllerComponents, sequenceUtil, new OtherTaxableIncomeForm(frontendAppConfig), templateRenderer)
 
 
-  def viewAsString(form: Form[OtherTaxableIncome], index: Index): String = otherTaxableIncome(frontendAppConfig, form, NormalMode, index, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+  def viewAsString(form: Form[OtherTaxableIncome], index: Index): String = otherTaxableIncome(frontendAppConfig, form, NormalMode, index, taxYear)(fakeRequest, messages, templateRenderer, ec).toString
 
   "OtherTaxableIncomeName Controller" must {
 

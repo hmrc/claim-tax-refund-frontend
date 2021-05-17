@@ -36,7 +36,7 @@ class PaymentInternationalAddressControllerSpec extends ControllerSpecBase with 
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new PaymentInternationalAddressController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), paymentInternationalAddress, messagesControllerComponents, new PaymentInternationalAddressForm(frontendAppConfig), formPartialRetriever, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), paymentInternationalAddress, messagesControllerComponents, new PaymentInternationalAddressForm(frontendAppConfig), templateRenderer)
 
   val form = new PaymentInternationalAddressForm(frontendAppConfig)()
   val paymentInternationalAddress: paymentInternationalAddress = fakeApplication.injector.instanceOf[paymentInternationalAddress]
@@ -44,7 +44,7 @@ class PaymentInternationalAddressControllerSpec extends ControllerSpecBase with 
   private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers()
 
   def viewAsString(form: Form[InternationalAddress] = form) =
-    paymentInternationalAddress(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+    paymentInternationalAddress(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec).toString
 
   "PaymentInternationalAddress Controller" must {
 

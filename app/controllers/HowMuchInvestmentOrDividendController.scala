@@ -43,7 +43,6 @@ class HowMuchInvestmentOrDividendController @Inject()(appConfig: FrontendAppConf
                                                       howMuchInvestmentOrDividend: howMuchInvestmentOrDividend,
 cc: MessagesControllerComponents,
                                                       formBuilder: HowMuchInvestmentOrDividendForm,
-                                                      implicit val formPartialRetriever: FormPartialRetriever,
                                                       implicit val templateRenderer: LocalTemplateRenderer
                                                      )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 

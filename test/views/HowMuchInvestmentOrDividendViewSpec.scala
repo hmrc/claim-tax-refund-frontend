@@ -34,9 +34,9 @@ class HowMuchInvestmentOrDividendViewSpec extends StringViewBehaviours with Mock
   override val form: Form[String] = new HowMuchInvestmentOrDividendForm(frontendAppConfig)()
   val howMuchInvestmentOrDividend: howMuchInvestmentOrDividend = fakeApplication.injector.instanceOf[howMuchInvestmentOrDividend]
 
-  def createView = () => howMuchInvestmentOrDividend(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createView = () => howMuchInvestmentOrDividend(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
 
-  def createViewUsingForm = (form: Form[String]) => howMuchInvestmentOrDividend(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createViewUsingForm = (form: Form[String]) => howMuchInvestmentOrDividend(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
 
   "HowMuchInvestmentOrDividend view" must {
     behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))

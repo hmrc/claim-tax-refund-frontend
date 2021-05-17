@@ -33,9 +33,9 @@ class IsPaymentAddressInTheUKViewSpec extends YesNoViewBehaviours with GuiceOneA
   override val form = new BooleanForm()()
   val isPaymentAddressInTheUK: isPaymentAddressInTheUK = fakeApplication.injector.instanceOf[isPaymentAddressInTheUK]
 
-  def createView = () => isPaymentAddressInTheUK(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createView = () => isPaymentAddressInTheUK(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
 
-  def createViewUsingForm = (form: Form[_]) => isPaymentAddressInTheUK(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createViewUsingForm = (form: Form[_]) => isPaymentAddressInTheUK(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
 
   "IsPaymentAddressInTheUK view" must {
 

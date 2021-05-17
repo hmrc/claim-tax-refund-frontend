@@ -34,9 +34,9 @@ class HowMuchEmploymentAndSupportAllowanceViewSpec extends StringViewBehaviours 
   override val form: Form[String] = new HowMuchEmploymentAndSupportAllowanceForm(frontendAppConfig)()
   val howMuchEmploymentAndSupportAllowance: howMuchEmploymentAndSupportAllowance = fakeApplication.injector.instanceOf[howMuchEmploymentAndSupportAllowance]
 
-  def createView = () => howMuchEmploymentAndSupportAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createView = () => howMuchEmploymentAndSupportAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
 
-  def createViewUsingForm = (form: Form[String]) => howMuchEmploymentAndSupportAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createViewUsingForm = (form: Form[String]) => howMuchEmploymentAndSupportAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
 
   "HowMuchEmploymentAndSupportAllowance view" must {
     behave like normalPage(createView, messageKeyPrefix, None)

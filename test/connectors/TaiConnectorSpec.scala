@@ -17,40 +17,48 @@
 package connectors
 
 import base.SpecBase
+import com.github.tomakehurst.wiremock.client.WireMock.{aResponse, get, urlEqualTo}
 import models.Employment
-import org.mockito.Matchers
-import org.mockito.Mockito.when
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatestplus.mockito.MockitoSugar
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import play.api.Application
+import play.api.inject.guice.GuiceApplicationBuilder
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.http.HttpClient
+import utils.WireMockHelper
 
+import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.duration._
 
+class TaiConnectorSpec extends SpecBase with MockitoSugar with ScalaFutures with WireMockHelper with GuiceOneAppPerSuite {
 
-class TaiConnectorSpec extends SpecBase with MockitoSugar with ScalaFutures {
-
+  override implicit lazy val app: Application =
+    new GuiceApplicationBuilder()
+      .configure(
+        conf = "microservice.services.tai.port" -> server.port
+      )
+      .build()
 
   "TaiConnector" must {
 
     "return a sequence of employments" in {
 
       implicit val hc: HeaderCarrier = HeaderCarrier()
+      lazy val taiConnector = app.injector.instanceOf[TaiConnectorImpl]
 
-      val httpMock = mock[HttpClient]
-      val appConfig = frontendAppConfig
-      val submissionURL = s"${appConfig.taiUrl}/tai/AB123123A/employments/years/2016"
+      server.stubFor(
+        get(urlEqualTo("/tai/AB123123A/employments/years/2016"))
+          .willReturn(
+            aResponse()
+              .withStatus(200)
+              .withBody("""{"data":{"employments":[{"name": "AVIVA PENSIONS","taxDistrictNumber": "754","payeNumber": "AZ00070"}]}}""".stripMargin)
+          )
+      )
 
-      when(httpMock.GET[Seq[Employment]](Matchers.eq(submissionURL))(Matchers.any(), Matchers.any(), Matchers.any()))
-        .thenReturn(Future.successful(Seq(Employment("AVIVA PENSIONS", "754", "AZ00070"))))
-
-      val connector = new TaiConnectorImpl(frontendAppConfig, httpMock)
-      val futureResult = connector.taiEmployments("AB123123A", 2016)
-
-      whenReady(futureResult) { result =>
-        result mustBe Seq(Employment("AVIVA PENSIONS", "754", "AZ00070"))
-      }
+      val result: Seq[Employment] = Await.result(taiConnector.taiEmployments("AB123123A", 2016), 5.second)
+      val expectedEmploymentFromTai = Employment("AVIVA PENSIONS", "754", "AZ00070")
+      assert(expectedEmploymentFromTai == result.head)
     }
   }
 

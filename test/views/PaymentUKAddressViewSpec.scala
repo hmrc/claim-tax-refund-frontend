@@ -35,10 +35,10 @@ class PaymentUKAddressViewSpec extends QuestionViewBehaviours[UkAddress] with Mo
   val paymentUKAddress: paymentUKAddress = fakeApplication.injector.instanceOf[paymentUKAddress]
 
   def createView = () =>
-    paymentUKAddress(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+    paymentUKAddress(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
 
   def createViewUsingForm = (form: Form[UkAddress]) =>
-    paymentUKAddress(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+    paymentUKAddress(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
 
   "PaymentUKAddress view" must {
 

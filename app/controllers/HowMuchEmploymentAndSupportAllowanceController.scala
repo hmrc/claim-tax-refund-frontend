@@ -44,7 +44,6 @@ class HowMuchEmploymentAndSupportAllowanceController @Inject()(
                                                                 howMuchEmploymentAndSupportAllowance: howMuchEmploymentAndSupportAllowance,
 cc: MessagesControllerComponents,
                                                                 formBuilder: HowMuchEmploymentAndSupportAllowanceForm,
-                                                                implicit val formPartialRetriever: FormPartialRetriever,
                                                                 implicit val templateRenderer: LocalTemplateRenderer
                                                               )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 

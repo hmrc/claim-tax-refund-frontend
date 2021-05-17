@@ -45,7 +45,6 @@ class PaymentAddressCorrectController @Inject()(appConfig: FrontendAppConfig,
                                                 paymentAddressCorrect: paymentAddressCorrect,
 cc: MessagesControllerComponents,
                                                 formProvider: BooleanForm,
-                                                implicit val formPartialRetriever: FormPartialRetriever,
                                                 implicit val templateRenderer: LocalTemplateRenderer
                                                )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 

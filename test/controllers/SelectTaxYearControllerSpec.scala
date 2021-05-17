@@ -39,9 +39,9 @@ class SelectTaxYearControllerSpec extends ControllerSpecBase with GuiceOneAppPer
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new SelectTaxYearController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), selectTaxYear, messagesControllerComponents, formPartialRetriever, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), selectTaxYear, messagesControllerComponents, templateRenderer)
 
-  def viewAsString(form: Form[_] = SelectTaxYearForm()) = selectTaxYear(frontendAppConfig, form, NormalMode)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+  def viewAsString(form: Form[_] = SelectTaxYearForm()) = selectTaxYear(frontendAppConfig, form, NormalMode)(fakeRequest, messages, templateRenderer, ec).toString
 
   def radioButtonOptions: String = SelectTaxYear.options.head.value
 

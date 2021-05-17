@@ -34,9 +34,9 @@ class HowMuchBereavementAllowanceViewSpec extends StringViewBehaviours with Mock
   override val form: Form[String] = new HowMuchBereavementAllowanceForm(frontendAppConfig)()
   val howMuchBereavementAllowance: howMuchBereavementAllowance = fakeApplication.injector.instanceOf[howMuchBereavementAllowance]
 
-  def createView = () => howMuchBereavementAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createView = () => howMuchBereavementAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
 
-  def createViewUsingForm = (form: Form[String]) => howMuchBereavementAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createViewUsingForm = (form: Form[String]) => howMuchBereavementAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
 
   "HowMuchBereavementAllowance view" must {
 

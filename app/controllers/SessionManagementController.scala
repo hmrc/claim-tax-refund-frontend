@@ -35,7 +35,6 @@ class SessionManagementController @Inject()(val appConfig: FrontendAppConfig,
                                             dataCacheConnector: DataCacheConnector,
                                             getData: DataRetrievalAction,
                                             requireData: DataRequiredAction,
-                                            implicit val formPartialRetriever: FormPartialRetriever,
                                             implicit val templateRenderer: LocalTemplateRenderer,
                                             implicit val executionContext: ExecutionContext) extends FrontendController(cc) with I18nSupport{
 

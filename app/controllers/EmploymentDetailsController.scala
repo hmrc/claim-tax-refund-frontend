@@ -47,7 +47,6 @@ class EmploymentDetailsController @Inject()(appConfig: FrontendAppConfig,
 cc: MessagesControllerComponents,
                                             formProvider: BooleanForm,
                                             taiConnector: TaiConnector,
-                                            implicit val formPartialRetriever: FormPartialRetriever,
                                             implicit val templateRenderer: LocalTemplateRenderer
                                            )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 

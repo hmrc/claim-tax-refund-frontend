@@ -44,7 +44,7 @@ class AnyOtherTaxableIncomeViewSpec extends YesNoViewBehaviours with GuiceOneApp
 			NormalMode,
 			taxYear,
 			completeSeq,
-			incompleteSeq)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+			incompleteSeq)(fakeRequest, messages, templateRenderer, ec)
 
 	def createViewUsingForm(complete: Seq[(OtherTaxableIncome, Int)], incomplete: Seq[(OtherTaxableIncome, Int)]): Form[_] =>
 		HtmlFormat.Appendable = (form: Form[_]) =>
@@ -53,7 +53,7 @@ class AnyOtherTaxableIncomeViewSpec extends YesNoViewBehaviours with GuiceOneApp
 			NormalMode,
 			taxYear,
 			complete,
-			incomplete)(fakeRequest, messages, formPartialRetriever, templateRenderer
+			incomplete)(fakeRequest, messages, templateRenderer, ec
 		)
 
 	"AnyOtherTaxableIncome view" must {

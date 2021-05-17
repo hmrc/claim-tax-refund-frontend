@@ -37,7 +37,7 @@ class EnterPayeReferenceControllerSpec extends ControllerSpecBase with GuiceOneA
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new EnterPayeReferenceController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), enterPayeReference, messagesControllerComponents, new EnterPayeReferenceForm(frontendAppConfig), formPartialRetriever, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), enterPayeReference, messagesControllerComponents, new EnterPayeReferenceForm(frontendAppConfig), templateRenderer)
 
   val testAnswer = "123/AB1234"
   val form = new EnterPayeReferenceForm(frontendAppConfig)()
@@ -45,7 +45,7 @@ class EnterPayeReferenceControllerSpec extends ControllerSpecBase with GuiceOneA
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers()
 
-  def viewAsString(form: Form[_] = form): String = enterPayeReference(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+  def viewAsString(form: Form[_] = form): String = enterPayeReference(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec).toString
 
   "EnterPayeReference Controller" must {
 

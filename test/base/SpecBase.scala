@@ -16,8 +16,7 @@
 
 package base
 
-import com.github.tototoshi.play2.scalate._
-import config.{AddressLookupConfig, CtrFormPartialRetriever, FrontendAppConfig, LocalTemplateRenderer}
+import config.{AddressLookupConfig, FrontendAppConfig, LocalTemplateRenderer}
 import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice._
@@ -26,17 +25,15 @@ import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.Injector
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.{JsValue, Json}
-import play.api.mvc.{MessagesControllerComponents, RequestHeader}
+import play.api.mvc.MessagesControllerComponents
 import play.api.test.FakeRequest
-import play.twirl.api.Html
-import services.MockScalate
 import uk.gov.hmrc.auth.core.AuthConnector
 import uk.gov.hmrc.auth.core.retrieve.ItmpAddress
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.play.bootstrap.frontend.filters.crypto.SessionCookieCrypto
-import uk.gov.hmrc.http.HttpClient
 import uk.gov.hmrc.renderer.TemplateRenderer
 import utils.{MockTemplateRenderer, SequenceUtil}
+
+import scala.concurrent.ExecutionContext
 
 trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with MockitoSugar {
 
@@ -46,7 +43,7 @@ trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with MockitoSugar {
 
     new GuiceApplicationBuilder()
       .overrides(
-        bind[TemplateRenderer].to[LocalTemplateRenderer]
+        bind[TemplateRenderer].to[LocalTemplateRenderer],
       ).build()
   }
 
@@ -55,7 +52,7 @@ trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with MockitoSugar {
   def frontendAppConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
 
   def templateRenderer: LocalTemplateRenderer = MockTemplateRenderer.renderer
-
+  val ec: ExecutionContext = mock[ExecutionContext]
   def addressLookupConfig: AddressLookupConfig = injector.instanceOf[AddressLookupConfig]
   def messagesControllerComponents: MessagesControllerComponents = injector.instanceOf[MessagesControllerComponents]
   def authConnector: AuthConnector = injector.instanceOf[AuthConnector]
@@ -85,14 +82,4 @@ trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with MockitoSugar {
 
   implicit val hc: HeaderCarrier = HeaderCarrier()
 
-  implicit val formPartialRetriever: CtrFormPartialRetriever =
-    new MockCtrFormPartialRetriever(httpGet = mock[HttpClient], sessionCookieCrypto = mock[SessionCookieCrypto])
-}
-
-class MockCtrFormPartialRetriever(httpGet:HttpClient, sessionCookieCrypto: SessionCookieCrypto)
-  extends CtrFormPartialRetriever(httpGet, sessionCookieCrypto) with MockitoSugar {
-
-  override def getPartialContent(url: String, templateParameters: Map[String, String], errorMessage: Html)(implicit request:RequestHeader): Html = {
-    Html("")
-  }
 }

@@ -23,7 +23,6 @@ import uk.gov.hmrc.play.partials.FormPartialRetriever
 
 class HmrcModule extends Module {
   override def bindings(environment: Environment, configuration: Configuration): Seq[Binding[_]] = Seq(
-    bind[FormPartialRetriever].to[CtrFormPartialRetriever],
     bind[ScalateEngineBoot].toSelf.eagerly()
   )
 }

@@ -44,7 +44,6 @@ class HowMuchRentalIncomeController @Inject()(
                                                howMuchRentalIncome: howMuchRentalIncome,
 cc: MessagesControllerComponents,
                                                formBuilder: HowMuchRentalIncomeForm,
-                                               implicit val formPartialRetriever: FormPartialRetriever,
                                                implicit val templateRenderer: LocalTemplateRenderer
                                              )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 

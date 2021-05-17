@@ -44,7 +44,6 @@ class HowMuchMedicalBenefitsController @Inject()(
                                                   howMuchMedicalBenefits: howMuchMedicalBenefits,
 cc: MessagesControllerComponents,
                                                   formBuilder: HowMuchMedicalBenefitsForm,
-                                                  implicit val formPartialRetriever: FormPartialRetriever,
                                                   implicit val templateRenderer: LocalTemplateRenderer
                                                 )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 

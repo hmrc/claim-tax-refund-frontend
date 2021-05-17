@@ -34,9 +34,9 @@ class HowMuchCarersAllowanceViewSpec extends StringViewBehaviours with MockitoSu
   override val form: Form[String] = new HowMuchCarersAllowanceForm(frontendAppConfig)()
   val howMuchCarersAllowance: howMuchCarersAllowance = fakeApplication.injector.instanceOf[howMuchCarersAllowance]
 
-  def createView = () => howMuchCarersAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createView = () => howMuchCarersAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
 
-  def createViewUsingForm = (form: Form[String]) => howMuchCarersAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createViewUsingForm = (form: Form[String]) => howMuchCarersAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
 
   "HowMuchCarersAllowance view" must {
 

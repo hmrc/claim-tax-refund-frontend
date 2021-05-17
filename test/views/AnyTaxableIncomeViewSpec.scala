@@ -37,11 +37,11 @@ class AnyTaxableIncomeViewSpec extends YesNoViewBehaviours with GuiceOneAppPerSu
 
   def createView: () =>
     HtmlFormat.Appendable = () =>
-      anyTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+      anyTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
 
   def createViewUsingForm: Form[_] =>
     HtmlFormat.Appendable = (form: Form[_]) =>
-      anyTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+      anyTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
 
   "AnyTaxableIncome view" must {
 

@@ -19,9 +19,10 @@
 @import uk.gov.hmrc.play.partials.FormPartialRetriever
 @import uk.gov.hmrc.renderer.TemplateRenderer
 @import uk.gov.hmrc.play.views.html.layouts._
+@import uk.gov.hmrc.play.views.html.helpers._
 @import uk.gov.hmrc.play.config.{TrackingConsentConfig, OptimizelyConfig}
 
-@this(layoutSidebar: Sidebar, layoutArticle: Article)
+@this(layoutSidebar: Sidebar, layoutArticle: Article, formPartialRetriever: FormPartialRetriever, reportAProblemLink: ReportAProblemLink)
 
 @(
         title: String,
@@ -40,17 +41,14 @@
         implicit
         request: Request[_],
         messages: Messages,
-        formPartialRetriever: FormPartialRetriever,
         templateRenderer: TemplateRenderer
 )
 
 @serviceInfoContent = {}
 
-@import uk.gov.hmrc.play.views.html.layouts
-
 @sidebar = {
     @if(sidebarLinks.isDefined) {
-    @layouts.sidebar(sidebarLinks.get, Some("sidebar"))
+    @layoutSidebar(sidebarLinks.get, Some("sidebar"))
     }
 }
 
@@ -81,9 +79,7 @@
     Map("accessibilityFooterUrl" -> appConfig.accessibilityFooterUrl)
 }
 
-@helpForm = @{
-    formPartialRetriever.getPartialContent(appConfig.reportAProblemPartialUrl)
-}
+@helpForm = @{reportAProblemLink(appConfig.reportAProblemPartialUrl, appConfig.reportAProblemNonJSUrl)}
 
 @inlineScript = {
     @if(timeout){

@@ -47,7 +47,7 @@ class AnyOtherTaxableIncomeControllerSpec  extends ControllerSpecBase with Guice
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyOtherTaxableIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), anyOtherTaxableIncome, messagesControllerComponents, formProvider, formPartialRetriever, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), anyOtherTaxableIncome, messagesControllerComponents, formProvider, templateRenderer)
 
   def viewAsString(form: Form[_] = form, mode: Mode = NormalMode): String =
     anyOtherTaxableIncome(frontendAppConfig,
@@ -55,7 +55,7 @@ class AnyOtherTaxableIncomeControllerSpec  extends ControllerSpecBase with Guice
                           mode,
 													taxYear,
                           complete,
-                          incomplete)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+                          incomplete)(fakeRequest, messages, templateRenderer, ec).toString
 
   "AnyOtherTaxableIncome Controller" must {
 

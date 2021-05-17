@@ -26,7 +26,7 @@ import play.api.mvc.{ActionBuilder, ActionFunction, AnyContent, BodyParser, Mess
 import uk.gov.hmrc.auth.core._
 import uk.gov.hmrc.auth.core.retrieve.v2.Retrievals
 import uk.gov.hmrc.http.{HeaderCarrier, UnauthorizedException}
-import uk.gov.hmrc.play.HeaderCarrierConverter
+import uk.gov.hmrc.play.http.HeaderCarrierConverter
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -46,7 +46,7 @@ trait AuthAction extends ActionBuilder[AuthenticatedRequest, AnyContent] with Ac
 
   override def invokeBlock[A](request: Request[A], block: AuthenticatedRequest[A] => Future[Result]): Future[Result] = {
 
-    implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromHeadersAndSession(request.headers, Some(request.session))
+    implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
 
     authorised(ConfidenceLevel.L200 and AffinityGroup.Individual)
       .retrieve(Retrievals.externalId and Retrievals.nino and Retrievals.itmpName and Retrievals.itmpAddress) {

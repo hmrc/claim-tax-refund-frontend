@@ -44,7 +44,6 @@ class HowMuchCarersAllowanceController @Inject()(
                                                   howMuchCarersAllowance: howMuchCarersAllowance,
 cc: MessagesControllerComponents,
                                                   formBuilder: HowMuchCarersAllowanceForm,
-                                                  implicit val formPartialRetriever: FormPartialRetriever,
                                                   implicit val templateRenderer: LocalTemplateRenderer
                                                 )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
