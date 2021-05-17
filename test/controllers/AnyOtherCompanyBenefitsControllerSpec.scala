@@ -46,10 +46,10 @@ class AnyOtherCompanyBenefitsControllerSpec extends ControllerSpecBase with Guic
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyOtherCompanyBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), anyOtherCompanyBenefits, messagesControllerComponents, formProvider, formPartialRetriever, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), anyOtherCompanyBenefits, messagesControllerComponents, formProvider, templateRenderer)
 
   def viewAsString(form: Form[_] = form, mode: Mode = NormalMode): String =
-    anyOtherCompanyBenefits(frontendAppConfig, form, mode, taxYear, otherCompanyBenefits)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+    anyOtherCompanyBenefits(frontendAppConfig, form, mode, taxYear, otherCompanyBenefits)(fakeRequest, messages, templateRenderer, ec).toString
 
   "AnyOtherCompanyBenefits Controller" must {
 

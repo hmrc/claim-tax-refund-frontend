@@ -43,7 +43,6 @@ class WhereToSendPaymentController @Inject()(
                                               requireData: DataRequiredAction,
                                               whereToSendPayment: whereToSendPayment,
 cc: MessagesControllerComponents,
-                                              implicit val formPartialRetriever: FormPartialRetriever,
                                               implicit val templateRenderer: LocalTemplateRenderer
                                             )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 

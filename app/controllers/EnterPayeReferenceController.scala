@@ -44,7 +44,6 @@ class EnterPayeReferenceController @Inject()(
                                               enterPayeReference: enterPayeReference,
 cc: MessagesControllerComponents,
                                               formBuilder: EnterPayeReferenceForm,
-                                              implicit val formPartialRetriever: FormPartialRetriever,
                                               implicit val templateRenderer: LocalTemplateRenderer
                                             )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 

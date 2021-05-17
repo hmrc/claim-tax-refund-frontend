@@ -37,10 +37,10 @@ class OtherBenefitViewSpec extends QuestionViewBehaviours[OtherBenefit] with Moc
 
   def createView: () =>
     HtmlFormat.Appendable = () =>
-    otherBenefit(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+    otherBenefit(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages, templateRenderer, ec)
 
   def createViewUsingForm: Form[OtherBenefit] => HtmlFormat.Appendable = (form: Form[OtherBenefit]) =>
-    otherBenefit(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+    otherBenefit(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages, templateRenderer, ec)
 
   "OtherBenefit view" must {
     behave like normalPage(createView, messageKeyPrefix, None, "1", taxYear.asString(messages))

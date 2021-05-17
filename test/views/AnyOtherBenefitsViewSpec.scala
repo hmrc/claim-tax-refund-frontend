@@ -41,10 +41,10 @@ class AnyOtherBenefitsViewSpec extends YesNoViewBehaviours with GuiceOneAppPerSu
   val anyOtherBenefits: anyOtherBenefits = fakeApplication.injector.instanceOf[anyOtherBenefits]
 
   def createView: () => Html = () =>
-    anyOtherBenefits(frontendAppConfig, form, NormalMode, taxYear, otherBenefits)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+    anyOtherBenefits(frontendAppConfig, form, NormalMode, taxYear, otherBenefits)(fakeRequest, messages, templateRenderer, ec)
 
   def createViewUsingForm: Form[_] => Html = (form: Form[_]) =>
-    anyOtherBenefits(frontendAppConfig, form, NormalMode, taxYear, otherBenefits)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+    anyOtherBenefits(frontendAppConfig, form, NormalMode, taxYear, otherBenefits)(fakeRequest, messages, templateRenderer, ec)
 
   "AnyOtherBenefits view" must {
 

@@ -44,7 +44,6 @@ class SelectBenefitsController @Inject()(
                                           requireData: DataRequiredAction,
                                           selectBenefits: selectBenefits,
 cc: MessagesControllerComponents,
-                                          implicit val formPartialRetriever: FormPartialRetriever,
                                           implicit val templateRenderer: LocalTemplateRenderer
                                         )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 

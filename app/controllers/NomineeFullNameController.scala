@@ -44,7 +44,6 @@ class NomineeFullNameController @Inject()(
                                            nomineeFullName: nomineeFullName,
 cc: MessagesControllerComponents,
                                            formBuilder: NomineeFullNameForm,
-                                           implicit val formPartialRetriever: FormPartialRetriever,
                                            implicit val templateRenderer: LocalTemplateRenderer
                                          )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 

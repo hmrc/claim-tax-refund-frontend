@@ -44,7 +44,6 @@ class HowMuchFuelBenefitController @Inject()(
                                               howMuchFuelBenefit: howMuchFuelBenefit,
 cc: MessagesControllerComponents,
                                               formBuilder: HowMuchFuelBenefitForm,
-                                              implicit val formPartialRetriever: FormPartialRetriever,
                                               implicit val templateRenderer: LocalTemplateRenderer
                                             )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 

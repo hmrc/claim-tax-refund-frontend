@@ -55,7 +55,6 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with ScalaFuture
       submissionService,
       referenceGenerator,
       robotXML,
-      formPartialRetriever,
       templateRenderer
     )
 

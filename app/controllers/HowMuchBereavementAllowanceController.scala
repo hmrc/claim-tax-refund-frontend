@@ -43,7 +43,6 @@ class HowMuchBereavementAllowanceController @Inject()(appConfig: FrontendAppConf
                                                       howMuchBereavementAllowance: howMuchBereavementAllowance,
 cc: MessagesControllerComponents,
                                                       formBuilder: HowMuchBereavementAllowanceForm,
-                                                      implicit val formPartialRetriever: FormPartialRetriever,
                                                       implicit val templateRenderer: LocalTemplateRenderer
                                                      )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 

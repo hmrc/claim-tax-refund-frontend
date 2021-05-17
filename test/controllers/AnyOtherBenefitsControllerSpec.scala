@@ -47,10 +47,10 @@ class AnyOtherBenefitsControllerSpec  extends ControllerSpecBase with GuiceOneAp
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyOtherBenefitsController(frontendAppConfig, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), formProvider, anyOtherBenefits, messagesControllerComponents, formPartialRetriever, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), formProvider, anyOtherBenefits, messagesControllerComponents, templateRenderer)
 
   def viewAsString(form: Form[_] = form, mode: Mode = NormalMode): String =
-    anyOtherBenefits(frontendAppConfig, form, mode, taxYear, otherBenefitsSection)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+    anyOtherBenefits(frontendAppConfig, form, mode, taxYear, otherBenefitsSection)(fakeRequest, messages, templateRenderer, ec).toString
 
   "AnyOtherBenefits Controller" must {
 

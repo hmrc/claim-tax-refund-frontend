@@ -44,7 +44,6 @@ class AnyAgentRefController @Inject()(appConfig: FrontendAppConfig,
                                       anyAgentRef: anyAgentRef,
                                       cc: MessagesControllerComponents,
                                       formProvider: AnyAgentReferenceForm,
-                                      implicit val formPartialRetriever: FormPartialRetriever,
                                       implicit val templateRenderer: LocalTemplateRenderer
                                      )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 

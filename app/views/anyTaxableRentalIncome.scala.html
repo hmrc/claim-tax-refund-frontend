@@ -17,10 +17,10 @@
 @import config.FrontendAppConfig
 @import controllers.routes._
 @import models.Mode
-@import uk.gov.hmrc.play.partials.FormPartialRetriever
 @import viewmodels.InputViewModel
 @import uk.gov.hmrc.play.views.html.helpers.FormWithCSRF
 @import uk.gov.hmrc.renderer.TemplateRenderer
+@import scala.concurrent.ExecutionContext
 
 @this(main_template: main_template, formWithCSRF: FormWithCSRF)
 
@@ -33,8 +33,8 @@
     implicit
     request: Request[_],
     messages: Messages,
-    formPartialRetriever: FormPartialRetriever,
-templateRenderer: TemplateRenderer)
+templateRenderer: TemplateRenderer,
+ec: ExecutionContext)
 
 @main_template(
     title = messages("anyTaxableRentalIncome.title", taxYear.asString),

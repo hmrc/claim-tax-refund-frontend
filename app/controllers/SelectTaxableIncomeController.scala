@@ -42,7 +42,6 @@ class SelectTaxableIncomeController @Inject()(appConfig: FrontendAppConfig,
                                               requireData: DataRequiredAction,
                                               selectTaxableIncome: selectTaxableIncome,
 cc: MessagesControllerComponents,
-                                              implicit val formPartialRetriever: FormPartialRetriever,
                                               implicit val templateRenderer: LocalTemplateRenderer
                                              )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 

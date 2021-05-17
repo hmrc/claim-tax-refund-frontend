@@ -46,7 +46,6 @@ class AnyTaxableOtherIncomeController @Inject()(appConfig: FrontendAppConfig,
                                                 sequenceUtil: SequenceUtil[OtherTaxableIncome],
                                                 formProvider: OtherTaxableIncomeForm,
                                                 taxPaidFormProvider: AnyTaxPaidForm,
-                                                implicit val formPartialRetriever: FormPartialRetriever,
                                                 implicit val templateRenderer: LocalTemplateRenderer
                                                )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 

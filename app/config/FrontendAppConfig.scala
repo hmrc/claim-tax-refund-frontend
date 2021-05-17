@@ -38,7 +38,7 @@ class FrontendAppConfig @Inject()(val servicesConfig: ServicesConfig, val config
   lazy val assetsPrefix: String = loadConfig(s"assets.url") + loadConfig(s"assets.version") + '/'
   lazy val frontendTemplatePath: String = loadConfig("microservice.services.frontend-template-provider.path")
 
-  lazy val reportAProblemPartialUrl = s"$contactHost/contact/problem_reports?service=$contactFormServiceIdentifier"
+  lazy val reportAProblemPartialUrl = s"$contactHost/contact/problem_reports_ajax?service=$contactFormServiceIdentifier"
   lazy val reportAProblemNonJSUrl = s"$contactHost/contact/problem_reports_nonjs?service=$contactFormServiceIdentifier"
   lazy val betaFeedbackUrl = s"$contactHost/contact/beta-feedback"
   lazy val betaFeedbackUnauthenticatedUrl = s"$contactHost/contact/beta-feedback-unauthenticated"

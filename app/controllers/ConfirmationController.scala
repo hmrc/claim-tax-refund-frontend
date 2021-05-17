@@ -19,6 +19,7 @@ package controllers
 import config.{FrontendAppConfig, LocalTemplateRenderer}
 import connectors.DataCacheConnector
 import controllers.actions._
+
 import javax.inject.Inject
 import models.Mode
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -28,6 +29,8 @@ import play.api.mvc.MessagesControllerComponents
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import views.html.confirmation
 
+import scala.concurrent.ExecutionContext
+
 class ConfirmationController @Inject()(appConfig: FrontendAppConfig,
                                        override val messagesApi: MessagesApi,
                                        authenticate: AuthAction,
@@ -36,8 +39,8 @@ class ConfirmationController @Inject()(appConfig: FrontendAppConfig,
                                        confirmation: confirmation,
 cc: MessagesControllerComponents,
                                        dataCacheConnector: DataCacheConnector,
-                                       implicit val formPartialRetriever: FormPartialRetriever,
-                                       implicit val templateRenderer: LocalTemplateRenderer
+                                       implicit val templateRenderer: LocalTemplateRenderer,
+                                       implicit val ec: ExecutionContext
                                       ) extends FrontendController(cc) with I18nSupport {
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {

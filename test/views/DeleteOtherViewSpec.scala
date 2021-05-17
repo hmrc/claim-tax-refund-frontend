@@ -44,7 +44,7 @@ class DeleteOtherViewSpec extends YesNoViewBehaviours with GuiceOneAppPerSuite {
       index = index,
       itemName = itemName,
       collectionId = benefitCollectionId,
-      taxYear = taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+      taxYear = taxYear)(fakeRequest, messages, templateRenderer, ec)
 
   def createViewUsingForm = (form: Form[_]) =>
     deleteOther(
@@ -54,7 +54,7 @@ class DeleteOtherViewSpec extends YesNoViewBehaviours with GuiceOneAppPerSuite {
       index = index,
       itemName = itemName,
       collectionId = benefitCollectionId,
-      taxYear = taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+      taxYear = taxYear)(fakeRequest, messages, templateRenderer, ec)
 
   "DeleteOther view" must {
 

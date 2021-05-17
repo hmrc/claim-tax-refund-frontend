@@ -44,7 +44,6 @@ class HowMuchForeignIncomeController @Inject()(
                                                 howMuchForeignIncome: howMuchForeignIncome,
 cc: MessagesControllerComponents,
                                                 formBuilder: HowMuchForeignIncomeForm,
-                                                implicit val formPartialRetriever: FormPartialRetriever,
                                                 implicit val templateRenderer: LocalTemplateRenderer
                                               )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 

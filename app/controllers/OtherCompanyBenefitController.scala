@@ -45,7 +45,6 @@ class OtherCompanyBenefitController @Inject()(appConfig: FrontendAppConfig,
 cc: MessagesControllerComponents,
                                               sequenceUtil: SequenceUtil[OtherCompanyBenefit],
                                               formBuilder: OtherCompanyBenefitForm,
-                                              implicit val formPartialRetriever: FormPartialRetriever,
                                               implicit val templateRenderer: LocalTemplateRenderer
                                              )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 

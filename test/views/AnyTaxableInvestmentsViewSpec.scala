@@ -39,9 +39,9 @@ class AnyTaxableInvestmentsViewSpec extends QuestionViewBehaviours[AnyTaxPaid] w
   val form = formProvider(notSelectedKey, blankKey, invalidKey)
   val anyTaxableInvestments: anyTaxableInvestments = fakeApplication.injector.instanceOf[anyTaxableInvestments]
 
-  def createView = () => anyTaxableInvestments(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createView = () => anyTaxableInvestments(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
 
-  def createViewUsingForm = (form: Form[_]) => anyTaxableInvestments(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer)
+  def createViewUsingForm = (form: Form[_]) => anyTaxableInvestments(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
 
   "AnyTaxableInvestments view" must {
 

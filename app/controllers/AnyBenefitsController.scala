@@ -44,7 +44,6 @@ class AnyBenefitsController @Inject()(appConfig: FrontendAppConfig,
                                       anyBenefits: anyBenefits,
 cc: MessagesControllerComponents,
                                       formProvider: BooleanForm,
-                                      implicit val formPartialRetriever: FormPartialRetriever,
                                       implicit val templateRenderer: LocalTemplateRenderer
                                      )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 

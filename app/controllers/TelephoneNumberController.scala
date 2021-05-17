@@ -45,7 +45,6 @@ class TelephoneNumberController @Inject()(
                                            telephoneNumber: telephoneNumber,
 cc: MessagesControllerComponents,
                                            formBuilder: TelephoneNumberForm,
-                                           implicit val formPartialRetriever: FormPartialRetriever,
                                            implicit val templateRenderer: LocalTemplateRenderer
                                          )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 

@@ -44,7 +44,6 @@ class AnyTaxableBankInterestController @Inject()(appConfig: FrontendAppConfig,
                                                  anyTaxableBankInterest: anyTaxableBankInterest,
                                                  cc: MessagesControllerComponents,
                                                  formProvider: AnyTaxPaidForm,
-                                                 implicit val formPartialRetriever: FormPartialRetriever,
                                                  implicit val templateRenderer: LocalTemplateRenderer
                                                 )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 

@@ -40,10 +40,10 @@ class WhereToSendPaymentControllerSpec extends ControllerSpecBase with GuiceOneA
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new WhereToSendPaymentController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), whereToSendPayment, messagesControllerComponents, formPartialRetriever, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), whereToSendPayment, messagesControllerComponents, templateRenderer)
 
   def viewAsString(form: Form[_] = WhereToSendPaymentForm()) =
-    whereToSendPayment(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, formPartialRetriever, templateRenderer).toString
+    whereToSendPayment(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec).toString
 
   "WhereToSendPayment Controller" must {
 

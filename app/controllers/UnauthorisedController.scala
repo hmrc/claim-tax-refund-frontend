@@ -17,6 +17,7 @@
 package controllers
 
 import config.{FrontendAppConfig, LocalTemplateRenderer}
+
 import javax.inject.{Inject, Singleton}
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent}
@@ -25,12 +26,14 @@ import play.api.mvc.MessagesControllerComponents
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import views.html.unauthorised
 
+import scala.concurrent.ExecutionContext
+
 @Singleton
 class UnauthorisedController @Inject()(val appConfig: FrontendAppConfig,
                                        unauthorised: unauthorised,
                                        cc: MessagesControllerComponents,
-                                       implicit val formPartialRetriever: FormPartialRetriever,
-                                       implicit val templateRenderer: LocalTemplateRenderer
+                                       implicit val templateRenderer: LocalTemplateRenderer,
+                                       implicit val ec: ExecutionContext
                                       ) extends FrontendController(cc) with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = Action { implicit request =>

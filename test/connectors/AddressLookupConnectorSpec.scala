@@ -64,7 +64,7 @@ class AddressLookupConnectorSpec extends SpecBase with MockitoSugar with WireMoc
       .build()
 
   implicit val dataRequest: DataRequest[_] = mock[DataRequest[_]]
-  implicit val ec: ExecutionContext = mock[ExecutionContext]
+  implicit val ex: ExecutionContext = mock[ExecutionContext]
   implicit val request: Request[_] = mock[Request[_]]
   implicit val appConfig: FrontendAppConfig = mock[FrontendAppConfig]
 

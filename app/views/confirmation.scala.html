@@ -15,8 +15,8 @@
  *@
 
 @import config.FrontendAppConfig
-@import uk.gov.hmrc.play.partials.FormPartialRetriever
 @import uk.gov.hmrc.renderer.TemplateRenderer
+@import scala.concurrent.ExecutionContext
 
 @this(main_template: main_template)
 
@@ -27,8 +27,8 @@
     implicit
     request: Request[_],
     messages: Messages,
-    formPartialRetriever: FormPartialRetriever,
-templateRenderer: TemplateRenderer)
+templateRenderer: TemplateRenderer,
+ec: ExecutionContext)
 
 @formattedSubmissionReference = @{submissionReference.replaceAll("-", "‑")}
 

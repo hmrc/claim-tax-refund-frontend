@@ -44,7 +44,6 @@ class HowMuchIncapacityBenefitController @Inject()(
                                                     howMuchIncapacityBenefit: howMuchIncapacityBenefit,
 cc: MessagesControllerComponents,
                                                     formBuilder: HowMuchIncapacityBenefitForm,
-                                                    implicit val formPartialRetriever: FormPartialRetriever,
                                                     implicit val templateRenderer: LocalTemplateRenderer
                                                   )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 

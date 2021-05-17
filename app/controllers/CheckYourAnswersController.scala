@@ -50,7 +50,6 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
                                            submissionService: SubmissionService,
                                            referenceGenerator: ReferenceGenerator,
                                            robotXML: RobotXML,
-                                           implicit val formPartialRetriever: FormPartialRetriever,
                                            implicit val templateRenderer: LocalTemplateRenderer
                                           )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport with Logging {
 
