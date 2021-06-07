@@ -4,10 +4,8 @@ import play.sbt.routes.RoutesKeys
 import sbt.Tests.{Group, SubProcess}
 import scoverage.ScoverageKeys
 import uk.gov.hmrc.DefaultBuildSettings.{defaultSettings, scalaSettings}
-import uk.gov.hmrc.SbtAutoBuildPlugin
 import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin
 import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin.publishingSettings
-import uk.gov.hmrc.versioning.SbtGitVersioning
 
 
 val appName = "claim-tax-refund-frontend"
@@ -18,7 +16,7 @@ lazy val playSettings: Seq[Setting[_]] = Seq.empty
 
 val compile = Seq(
   ws,
-  "uk.gov.hmrc"           %% "bootstrap-frontend-play-27"     % "4.2.0",
+  "uk.gov.hmrc"           %% "bootstrap-frontend-play-27"     % "5.3.0",
   "uk.gov.hmrc"           %% "simple-reactivemongo"           % "7.31.0-play-27",
   "uk.gov.hmrc"           %% "local-template-renderer"        % "2.14.0-play-27" excludeAll(ExclusionRule(organization="org.scalactic")),
   "uk.gov.hmrc"           %% "govuk-template"                 % "5.63.0-play-27",
@@ -28,10 +26,10 @@ val compile = Seq(
   "uk.gov.hmrc"           %% "play-conditional-form-mapping"  % "1.5.0-play-27",
   "uk.gov.hmrc"           %% "play-partials"                  % "8.1.0-play-27",
   "uk.gov.hmrc"           %% "play-language"                  % "4.10.0-play-27",
-  "uk.gov.hmrc"           %% "tax-year"                       % "1.2.0",
+  "uk.gov.hmrc"           %% "tax-year"                       % "1.3.0",
   "org.scalatra.scalate"  %% "play-scalate"                   % "0.6.0",
   "org.scalatra.scalate"  %% "scalate-core"                   % "1.9.6",
-  "uk.gov.hmrc"           %% "domain"                         % "5.10.0-play-27",
+  "uk.gov.hmrc"           %% "domain"                         % "5.11.0-play-27",
 )
 
 def test(scope: String = "test"): Seq[ModuleID] = Seq(
@@ -52,7 +50,7 @@ def oneForkedJvmPerTest(tests: Seq[TestDefinition]): Seq[Group] =
   }
 
 lazy val microservice = Project(appName, file("."))
-  .enablePlugins(Seq(play.sbt.PlayScala, PlayNettyServer, SbtAutoBuildPlugin, SbtGitVersioning, SbtDistributablesPlugin, SbtArtifactory) ++ plugins: _*)
+  .enablePlugins(Seq(play.sbt.PlayScala, PlayNettyServer, SbtDistributablesPlugin) ++ plugins: _*)
   .disablePlugins(JUnitXmlReportPlugin) // Required to prevent https://github.com/scalatest/scalatest/issues/1427
   .settings(playSettings: _*)
   .settings(RoutesKeys.routesImport ++= Seq("models._"))
@@ -60,13 +58,14 @@ lazy val microservice = Project(appName, file("."))
     ScoverageKeys.coverageExcludedFiles := "<empty>;Reverse.*;.*filters.*;.*handlers.*;.*components.*;.*repositories.*;" +
       ".*BuildInfo.*;.*javascript.*;.*FrontendAuditConnector.*;.*Routes.*;.*GuiceInjector;.*DataCacheConnector;" +
       ".*ControllerConfiguration;.*LanguageSwitchController",
-    ScoverageKeys.coverageMinimum := 80,
+    ScoverageKeys.coverageMinimumStmtTotal := 80,
     ScoverageKeys.coverageFailOnMinimum := true,
     ScoverageKeys.coverageHighlighting := true,
     parallelExecution in Test := false
   )
   .settings(scalaSettings: _*)
   .settings(publishingSettings: _*)
+  .settings(isPublicArtefact := true)
   .settings(defaultSettings(): _*)
   .settings(
     scalacOptions ++= Seq("-feature"),
@@ -79,9 +78,7 @@ lazy val microservice = Project(appName, file("."))
     Keys.fork in Test := true,
     javaOptions in Test += "-Dconfig.file=conf/test.application.conf")
   .settings(resolvers ++= Seq(
-    Resolver.bintrayRepo("hmrc", "releases"),
     Resolver.jcenterRepo,
-    Resolver.bintrayRepo("emueller", "maven")
   ))
   .settings(
     // concatenate js
