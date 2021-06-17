@@ -25,12 +25,12 @@ class TelephoneOptionSpec extends SpecBase {
   "write" must {
 
     "contain true and telephone number" in {
-      Json.toJson(TelephoneOption.Yes("0191 1111 111")) mustBe
+      Json.toJson(TelephoneOption.Yes("0191 1111 111"): TelephoneOption) mustBe
         Json.obj(AnyTelephoneId.toString -> JsBoolean(true), TelephoneNumberId.toString -> JsString("0191 1111 111"))
     }
 
     "contain false and no telephone number" in {
-      Json.toJson(TelephoneOption.No) mustBe Json.obj(AnyTelephoneId.toString -> JsBoolean(false))
+      Json.toJson(TelephoneOption.No: TelephoneOption) mustBe Json.obj(AnyTelephoneId.toString -> JsBoolean(false))
     }
   }
 

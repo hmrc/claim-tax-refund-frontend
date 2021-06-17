@@ -18,7 +18,7 @@ package forms
 
 import org.scalatestplus.play.PlaySpec
 import play.api.data.{Form, FormError}
-import org.scalatest.Matchers.convertToAnyShouldWrapper
+import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 
 trait FormSpec extends PlaySpec {
 

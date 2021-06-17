@@ -19,7 +19,7 @@ package utils
 import models.CompanyBenefits
 import org.scalatestplus.play.PlaySpec
 import play.api.libs.json.{JsError, JsSuccess, JsValue, Json}
-import org.scalatest.Matchers.convertToAnyShouldWrapper
+import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 
 class EnumUtilsSpec extends PlaySpec {
 

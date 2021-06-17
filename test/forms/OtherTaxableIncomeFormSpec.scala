@@ -22,7 +22,7 @@ import models.{Index, OtherTaxableIncome}
 import org.scalatestplus.mockito.MockitoSugar
 import org.mockito.Mockito._
 import play.api.data.{Form, FormError}
-import org.scalatest.Matchers.convertToAnyShouldWrapper
+import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 
 class OtherTaxableIncomeFormSpec extends FormBehaviours with MockitoSugar {
 

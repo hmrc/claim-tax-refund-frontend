@@ -42,7 +42,7 @@ trait ControllerSpecBase extends SpecBase {
   def dontGetAnyData = new FakeDataRetrievalAction(None)
 
   def someData(year: Int = 2017) = new FakeDataRetrievalAction(
-    Some(CacheMap(cacheMapId, Map(SelectTaxYearId.toString -> Json.toJson(SelectTaxYear.CustomTaxYear(year)))))
+    Some(CacheMap(cacheMapId, Map(SelectTaxYearId.toString -> Json.toJson(SelectTaxYear.CustomTaxYear(year): SelectTaxYear))))
   )
 
   implicit lazy val cc: MessagesControllerComponents = messagesControllerComponents
