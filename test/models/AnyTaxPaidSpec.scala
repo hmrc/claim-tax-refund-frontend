@@ -28,12 +28,12 @@ class AnyTaxPaidSpec extends SpecBase {
 
 
     "contain true and tax paid amount" in {
-      Json.toJson(AnyTaxPaid.Yes(testAmount)) mustBe
+      Json.toJson(AnyTaxPaid.Yes(testAmount): AnyTaxPaid) mustBe
         Json.obj(AnyTaxPaidId.toString -> JsBoolean(true), TaxPaidAmountId.toString -> JsString(testAmount))
     }
 
     "contain false and tax paid amount" in {
-      Json.toJson(AnyTaxPaid.No) mustBe Json.obj(AnyTaxPaidId.toString -> JsBoolean(false))
+      Json.toJson(AnyTaxPaid.No: AnyTaxPaid) mustBe Json.obj(AnyTaxPaidId.toString -> JsBoolean(false))
     }
   }
 

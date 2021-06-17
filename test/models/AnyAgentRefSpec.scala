@@ -18,19 +18,21 @@ package models
 
 import base.SpecBase
 import identifiers.{AgentRefId, AnyAgentRefId}
+import models.AnyAgentRef.Yes
 import play.api.libs.json._
 
 class AnyAgentRefSpec extends SpecBase {
 
   "write" must {
 
+
     "contain true and agent ref" in {
-      Json.toJson(AnyAgentRef.Yes("AB1234")) mustBe
+      Json.toJson(AnyAgentRef.Yes("AB1234"): AnyAgentRef) mustBe
         Json.obj(AnyAgentRefId.toString -> JsBoolean(true), AgentRefId.toString -> JsString("AB1234"))
     }
 
     "contain false and no agent ref" in {
-      Json.toJson(AnyAgentRef.No) mustBe Json.obj(AnyAgentRefId.toString -> JsBoolean(false))
+      Json.toJson(AnyAgentRef.No: AnyAgentRef) mustBe Json.obj(AnyAgentRefId.toString -> JsBoolean(false))
     }
   }
 

@@ -29,74 +29,74 @@ class PaymentDetailsCascadeUpsertSpec extends SpecBase with ScalaCheckPropertyCh
     "when answering where to send payment" must {
       "(UK) remove nominee name and agent reference answers when selecting 'Self'" in {
         val originalCacheMap = new CacheMap(id = "test", Map(
-          WhereToSendPaymentId.toString -> Json.toJson(WhereToSendPayment.Nominee),
+          WhereToSendPaymentId.toString -> Json.toJson(WhereToSendPayment.Nominee: WhereToSendPayment),
           NomineeFullNameId.toString -> Json.toJson("Test Name"),
-          AgentRefId.toString -> Json.toJson(AnyAgentRef.Yes("12345")),
+          AgentRefId.toString -> Json.toJson(AnyAgentRef.Yes("12345"): AnyAgentRef),
           IsPaymentAddressInTheUKId.toString -> Json.toJson(true),
           PaymentUKAddressId.toString -> Json.toJson(UkAddress("Road", "Town", None, None, None, "NE1 1LX"))
         ))
         val cascadeUpsert = new CascadeUpsert
-        val result = cascadeUpsert(WhereToSendPaymentId.toString, Json.toJson(WhereToSendPayment.Myself), originalCacheMap)
+        val result = cascadeUpsert(WhereToSendPaymentId.toString, Json.toJson(WhereToSendPayment.Myself: WhereToSendPayment), originalCacheMap)
         result.data mustBe Map(
-          WhereToSendPaymentId.toString -> Json.toJson(WhereToSendPayment.Myself)
+          WhereToSendPaymentId.toString -> Json.toJson(WhereToSendPayment.Myself: WhereToSendPayment)
         )
       }
 
       "(International) remove nominee name and agent reference answers when selecting 'Self'" in {
         val originalCacheMap = new CacheMap(id = "test", Map(
-          WhereToSendPaymentId.toString -> Json.toJson(WhereToSendPayment.Nominee),
+          WhereToSendPaymentId.toString -> Json.toJson(WhereToSendPayment.Nominee: WhereToSendPayment),
           NomineeFullNameId.toString -> Json.toJson("Test Name"),
-          AgentRefId.toString -> Json.toJson(AnyAgentRef.Yes("12345")),
+          AgentRefId.toString -> Json.toJson(AnyAgentRef.Yes("12345"): AnyAgentRef),
           IsPaymentAddressInTheUKId.toString -> Json.toJson(false),
           PaymentInternationalAddressId.toString ->
             Json.toJson(InternationalAddress("Line 1", "Line 2", Some("Line 3"), Some("Line 4"), Some("Line 5"), "Line 6"))
         ))
         val cascadeUpsert = new CascadeUpsert
-        val result = cascadeUpsert(WhereToSendPaymentId.toString, Json.toJson(WhereToSendPayment.Myself), originalCacheMap)
+        val result = cascadeUpsert(WhereToSendPaymentId.toString, Json.toJson(WhereToSendPayment.Myself: WhereToSendPayment), originalCacheMap)
         result.data mustBe Map(
-          WhereToSendPaymentId.toString -> Json.toJson(WhereToSendPayment.Myself)
+          WhereToSendPaymentId.toString -> Json.toJson(WhereToSendPayment.Myself: WhereToSendPayment)
         )
       }
 
       "(Address Correct) remove is payment address correct when selecting 'Nominee'" in {
         val originalCacheMap = new CacheMap(id = "test", Map(
-          WhereToSendPaymentId.toString -> Json.toJson(WhereToSendPayment.Myself),
+          WhereToSendPaymentId.toString -> Json.toJson(WhereToSendPayment.Myself: WhereToSendPayment),
           PaymentAddressCorrectId.toString -> Json.toJson(true)
 
         ))
         val cascadeUpsert = new CascadeUpsert
-        val result = cascadeUpsert(WhereToSendPaymentId.toString, Json.toJson(WhereToSendPayment.Nominee), originalCacheMap)
+        val result = cascadeUpsert(WhereToSendPaymentId.toString, Json.toJson(WhereToSendPayment.Nominee: WhereToSendPayment), originalCacheMap)
         result.data mustBe Map(
-          WhereToSendPaymentId.toString -> Json.toJson(WhereToSendPayment.Nominee)
+          WhereToSendPaymentId.toString -> Json.toJson(WhereToSendPayment.Nominee: WhereToSendPayment)
         )
       }
 
       "(UK) remove is payment address correct when selecting 'Nominee'" in {
         val originalCacheMap = new CacheMap(id = "test", Map(
-          WhereToSendPaymentId.toString -> Json.toJson(WhereToSendPayment.Myself),
+          WhereToSendPaymentId.toString -> Json.toJson(WhereToSendPayment.Myself: WhereToSendPayment),
           PaymentAddressCorrectId.toString -> Json.toJson(false),
           IsPaymentAddressInTheUKId.toString -> Json.toJson(true),
           PaymentUKAddressId.toString -> Json.toJson(UkAddress("Road", "Town", None, None, None, "NE1 1LX"))
         ))
         val cascadeUpsert = new CascadeUpsert
-        val result = cascadeUpsert(WhereToSendPaymentId.toString, Json.toJson(WhereToSendPayment.Nominee), originalCacheMap)
+        val result = cascadeUpsert(WhereToSendPaymentId.toString, Json.toJson(WhereToSendPayment.Nominee: WhereToSendPayment), originalCacheMap)
         result.data mustBe Map(
-          WhereToSendPaymentId.toString -> Json.toJson(WhereToSendPayment.Nominee)
+          WhereToSendPaymentId.toString -> Json.toJson(WhereToSendPayment.Nominee: WhereToSendPayment)
         )
       }
 
       "(International) remove is payment address correct when selecting 'Nominee'" in {
         val originalCacheMap = new CacheMap(id = "test", Map(
-          WhereToSendPaymentId.toString -> Json.toJson(WhereToSendPayment.Myself),
+          WhereToSendPaymentId.toString -> Json.toJson(WhereToSendPayment.Myself: WhereToSendPayment),
           PaymentAddressCorrectId.toString -> Json.toJson(false),
           IsPaymentAddressInTheUKId.toString -> Json.toJson(false),
           PaymentInternationalAddressId.toString ->
             Json.toJson(InternationalAddress("Line 1", "Line 2", Some("Line 3"), Some("Line 4"), Some("Line 5"), "Line 6"))
         ))
         val cascadeUpsert = new CascadeUpsert
-        val result = cascadeUpsert(WhereToSendPaymentId.toString, Json.toJson(WhereToSendPayment.Nominee), originalCacheMap)
+        val result = cascadeUpsert(WhereToSendPaymentId.toString, Json.toJson(WhereToSendPayment.Nominee: WhereToSendPayment), originalCacheMap)
         result.data mustBe Map(
-          WhereToSendPaymentId.toString -> Json.toJson(WhereToSendPayment.Nominee)
+          WhereToSendPaymentId.toString -> Json.toJson(WhereToSendPayment.Nominee: WhereToSendPayment)
         )
       }
     }

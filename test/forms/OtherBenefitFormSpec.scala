@@ -22,7 +22,7 @@ import models.{Index, OtherBenefit}
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.data.{Form, FormError}
-import org.scalatest.Matchers.convertToAnyShouldWrapper
+import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 
 class OtherBenefitFormSpec extends FormBehaviours with MockitoSugar {
 

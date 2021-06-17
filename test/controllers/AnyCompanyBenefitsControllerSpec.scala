@@ -44,7 +44,7 @@ class AnyCompanyBenefitsControllerSpec extends ControllerSpecBase with GuiceOneA
     new AnyCompanyBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
       dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), anyCompanyBenefits, messagesControllerComponents, formProvider, templateRenderer)
 
-  def viewAsString(form: Form[_] = form) = anyCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec).toString
+  def viewAsString(form: Form[_] = form): String = anyCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec).toString
 
   "AnyCompanyBenefits Controller" must {
 

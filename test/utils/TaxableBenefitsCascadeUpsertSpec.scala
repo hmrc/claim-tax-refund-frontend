@@ -32,15 +32,15 @@ class TaxableBenefitsCascadeUpsertSpec extends SpecBase with ScalaCheckPropertyC
     AnyTaxableIncomeId.toString -> Json.toJson(true),
     SelectTaxableIncomeId.toString -> Json.toJson(TaxableIncome.sortedTaxableIncome),
     HowMuchRentalIncomeId.toString ->  JsString("1234"),
-    AnyTaxableRentalIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+    AnyTaxableRentalIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid),
     HowMuchBankInterestId.toString ->  JsString("1234"),
-    AnyTaxableBankInterestId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+    AnyTaxableBankInterestId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid),
     HowMuchInvestmentsId.toString ->  JsString("1234"),
-    AnyTaxableInvestmentsId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+    AnyTaxableInvestmentsId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid),
     HowMuchForeignIncomeId.toString ->  JsString("1234"),
-    AnyTaxableForeignIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+    AnyTaxableForeignIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid),
     OtherTaxableIncomeId.toString ->  JsString("qwerty"),
-    AnyTaxableOtherIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+    AnyTaxableOtherIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid),
     AnyOtherTaxableIncomeId.toString -> JsBoolean(false)
   ))
   private val cascadeUpsert = new CascadeUpsert
@@ -62,15 +62,15 @@ class TaxableBenefitsCascadeUpsertSpec extends SpecBase with ScalaCheckPropertyC
             AnyTaxableIncomeId.toString -> Json.toJson(true),
             SelectTaxableIncomeId.toString -> Json.toJson(taxableIncome),
             HowMuchRentalIncomeId.toString ->  JsString("1234"),
-            AnyTaxableRentalIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+            AnyTaxableRentalIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid),
             HowMuchBankInterestId.toString ->  JsString("1234"),
-            AnyTaxableBankInterestId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+            AnyTaxableBankInterestId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid),
             HowMuchInvestmentsId.toString ->  JsString("1234"),
-            AnyTaxableInvestmentsId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+            AnyTaxableInvestmentsId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid),
             HowMuchForeignIncomeId.toString ->  JsString("1234"),
-            AnyTaxableForeignIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+            AnyTaxableForeignIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid),
             OtherTaxableIncomeId.toString ->  JsString("qwerty"),
-            AnyTaxableOtherIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+            AnyTaxableOtherIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid),
             AnyOtherTaxableIncomeId.toString -> JsBoolean(false)
           ))
           val result = cascadeUpsert(AnyTaxableIncomeId.toString, JsBoolean(false), originalCacheMap)
@@ -98,13 +98,13 @@ class TaxableBenefitsCascadeUpsertSpec extends SpecBase with ScalaCheckPropertyC
           TaxableIncome.OTHER_TAXABLE_INCOME
         )),
         HowMuchBankInterestId.toString ->  JsString("1234"),
-        AnyTaxableBankInterestId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+        AnyTaxableBankInterestId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid),
         HowMuchInvestmentsId.toString ->  JsString("1234"),
-        AnyTaxableInvestmentsId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+        AnyTaxableInvestmentsId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid),
         HowMuchForeignIncomeId.toString ->  JsString("1234"),
-        AnyTaxableForeignIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+        AnyTaxableForeignIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid),
         OtherTaxableIncomeId.toString ->  JsString("qwerty"),
-        AnyTaxableOtherIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+        AnyTaxableOtherIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid),
         AnyOtherTaxableIncomeId.toString -> JsBoolean(false)
       )
     }
@@ -125,13 +125,13 @@ class TaxableBenefitsCascadeUpsertSpec extends SpecBase with ScalaCheckPropertyC
           TaxableIncome.OTHER_TAXABLE_INCOME
         )),
         HowMuchRentalIncomeId.toString ->  JsString("1234"),
-        AnyTaxableRentalIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+        AnyTaxableRentalIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid),
         HowMuchInvestmentsId.toString ->  JsString("1234"),
-        AnyTaxableInvestmentsId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+        AnyTaxableInvestmentsId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid),
         HowMuchForeignIncomeId.toString ->  JsString("1234"),
-        AnyTaxableForeignIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+        AnyTaxableForeignIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid),
         OtherTaxableIncomeId.toString ->  JsString("qwerty"),
-        AnyTaxableOtherIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+        AnyTaxableOtherIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid),
         AnyOtherTaxableIncomeId.toString -> JsBoolean(false)
       )
     }
@@ -152,13 +152,13 @@ class TaxableBenefitsCascadeUpsertSpec extends SpecBase with ScalaCheckPropertyC
           TaxableIncome.OTHER_TAXABLE_INCOME
         )),
         HowMuchRentalIncomeId.toString ->  JsString("1234"),
-        AnyTaxableRentalIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+        AnyTaxableRentalIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid),
         HowMuchBankInterestId.toString ->  JsString("1234"),
-        AnyTaxableBankInterestId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+        AnyTaxableBankInterestId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid),
         HowMuchForeignIncomeId.toString ->  JsString("1234"),
-        AnyTaxableForeignIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+        AnyTaxableForeignIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid),
         OtherTaxableIncomeId.toString ->  JsString("qwerty"),
-        AnyTaxableOtherIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+        AnyTaxableOtherIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid),
         AnyOtherTaxableIncomeId.toString -> JsBoolean(false)
       )
     }
@@ -179,13 +179,13 @@ class TaxableBenefitsCascadeUpsertSpec extends SpecBase with ScalaCheckPropertyC
           TaxableIncome.OTHER_TAXABLE_INCOME
         )),
         HowMuchRentalIncomeId.toString ->  JsString("1234"),
-        AnyTaxableRentalIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+        AnyTaxableRentalIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid),
         HowMuchBankInterestId.toString ->  JsString("1234"),
-        AnyTaxableBankInterestId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+        AnyTaxableBankInterestId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid),
         HowMuchInvestmentsId.toString ->  JsString("1234"),
-        AnyTaxableInvestmentsId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+        AnyTaxableInvestmentsId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid),
         OtherTaxableIncomeId.toString ->  JsString("qwerty"),
-        AnyTaxableOtherIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+        AnyTaxableOtherIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid),
         AnyOtherTaxableIncomeId.toString -> JsBoolean(false)
       )
     }
@@ -206,13 +206,13 @@ class TaxableBenefitsCascadeUpsertSpec extends SpecBase with ScalaCheckPropertyC
           TaxableIncome.FOREIGN_INCOME
         )),
         HowMuchRentalIncomeId.toString ->  JsString("1234"),
-        AnyTaxableRentalIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+        AnyTaxableRentalIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid),
         HowMuchBankInterestId.toString ->  JsString("1234"),
-        AnyTaxableBankInterestId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+        AnyTaxableBankInterestId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid),
         HowMuchInvestmentsId.toString ->  JsString("1234"),
-        AnyTaxableInvestmentsId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+        AnyTaxableInvestmentsId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid),
         HowMuchForeignIncomeId.toString ->  JsString("1234"),
-        AnyTaxableForeignIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123"))
+        AnyTaxableForeignIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid)
       )
     }
 
@@ -230,11 +230,11 @@ class TaxableBenefitsCascadeUpsertSpec extends SpecBase with ScalaCheckPropertyC
           TaxableIncome.OTHER_TAXABLE_INCOME
         )),
         HowMuchRentalIncomeId.toString ->  JsString("1234"),
-        AnyTaxableRentalIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+        AnyTaxableRentalIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid),
         HowMuchForeignIncomeId.toString ->  JsString("1234"),
-        AnyTaxableForeignIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+        AnyTaxableForeignIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid),
         OtherTaxableIncomeId.toString ->  JsString("qwerty"),
-        AnyTaxableOtherIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+        AnyTaxableOtherIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid),
         AnyOtherTaxableIncomeId.toString -> JsBoolean(false)
       )
     }
@@ -251,9 +251,9 @@ class TaxableBenefitsCascadeUpsertSpec extends SpecBase with ScalaCheckPropertyC
           TaxableIncome.FOREIGN_INCOME
         )),
         HowMuchRentalIncomeId.toString ->  JsString("1234"),
-        AnyTaxableRentalIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123")),
+        AnyTaxableRentalIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid),
         HowMuchForeignIncomeId.toString ->  JsString("1234"),
-        AnyTaxableForeignIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123"))
+        AnyTaxableForeignIncomeId.toString -> Json.toJson(AnyTaxPaid.Yes("123"): AnyTaxPaid)
       )
     }
   }

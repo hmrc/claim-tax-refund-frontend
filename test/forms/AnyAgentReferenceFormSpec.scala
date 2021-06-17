@@ -21,7 +21,7 @@ import generators.Generators
 import models.AnyAgentRef
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import play.api.data.FormError
-import org.scalatest.Matchers.convertToAnyShouldWrapper
+import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 
 class AnyAgentReferenceFormSpec extends FormSpec with AgentRefMapping with ScalaCheckPropertyChecks with Generators {
 
