@@ -1,0 +1,58 @@
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.hmrcfrontend.views.html.components._
+@import uk.gov.hmrc.hmrcfrontend.views.html.helpers._
+@import config.FrontendAppConfig
+
+@this(
+        govukLayout: GovukLayout,
+        hmrcAccountMenu: HmrcAccountMenu,
+        hmrcHead: HmrcHead,
+        hmrcStandardHeader: HmrcStandardHeader,
+        hmrcStandardFooter: HmrcStandardFooter,
+        hmrcScripts: HmrcScripts,
+        hmrcLanguageSelectHelper: HmrcLanguageSelectHelper,
+        hmrcReportTechnicalIssueHelper: HmrcReportTechnicalIssueHelper,
+        backLink: playComponents.back_link,
+        appConfig: FrontendAppConfig
+)
+
+@(pageTitle: String)(contentBlock: Html)(implicit request: RequestHeader, messages: Messages)
+
+@accountMenu = {
+    @hmrcAccountMenu(AccountMenu(
+        accountHome = AccountHome(
+            href = "/personal-account",
+            active = true
+        ),
+        messages = AccountMessages(
+            href = "/personal-account/messages",
+            messageCount = None
+        ),
+        checkProgress = CheckProgress(
+            href = "/track"
+        ),
+        paperlessSettings = PaperlessSettings("/personal-account/preferences"),
+        personalDetails = PersonalDetails("/personal-account/personal-details"),
+        signOut = SignOut("/personal-account/signout?continueUrl=%2Ffeedback%2FCTR"),
+        language = if (messages.lang.code == "cy") Cy else En
+    ))
+
+    @hmrcLanguageSelectHelper()
+    @backLink()
+}
+
+@mainContent = {
+    @contentBlock
+    @hmrcReportTechnicalIssueHelper()
+}
+
+@govukLayout(
+    pageTitle = Some(pageTitle),
+    headBlock = Some(hmrcHead()),
+    headerBlock = Some(hmrcStandardHeader(
+        serviceUrl = Some(controllers.routes.IndexController.onPageLoad().url)
+    )),
+    beforeContentBlock = Some(accountMenu),
+    scriptsBlock = Some(hmrcScripts()),
+    footerBlock = Some(hmrcStandardFooter())
+)(mainContent)

@@ -29,6 +29,7 @@ val compile = Seq(
   "org.scalatra.scalate"  %% "play-scalate"                   % "0.6.0",
   "org.scalatra.scalate"  %% "scalate-core"                   % "1.9.6",
   "uk.gov.hmrc"           %% "domain"                         % "5.11.0-play-27",
+  "uk.gov.hmrc"           %% "play-frontend-hmrc"             % "0.76.0-play-28"
 )
 
 def test(scope: String = "test"): Seq[ModuleID] = Seq(
@@ -104,3 +105,5 @@ libraryDependencies ++= Seq(
   "com.github.ghik" % "silencer-lib" % "1.7.1" % Provided cross CrossVersion.full
 )
 // ***************
+
+

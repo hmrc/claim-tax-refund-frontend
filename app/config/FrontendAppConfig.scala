@@ -33,7 +33,7 @@ class FrontendAppConfig @Inject()(val servicesConfig: ServicesConfig, val config
   private def loadConfigInt(key: String): Int = Try(servicesConfig.getInt(key)).getOrElse(throw new Exception(s"Missing configuration key: $key"))
 
   private lazy val contactHost = configuration.getOptional[String]("contact-frontend.host").getOrElse("")
-  private val contactFormServiceIdentifier = "claimtaxrefundfrontend"
+  lazy val contactFormServiceIdentifier = "claimtaxrefundfrontend"
 
   lazy val assetsPrefix: String = loadConfig(s"assets.url") + loadConfig(s"assets.version") + '/'
   lazy val frontendTemplatePath: String = loadConfig("microservice.services.frontend-template-provider.path")
