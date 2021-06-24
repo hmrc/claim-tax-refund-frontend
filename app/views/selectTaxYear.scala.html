@@ -18,11 +18,18 @@
 @import controllers.routes._
 @import models.Mode
 @import viewmodels.InputViewModel
-@import uk.gov.hmrc.play.views.html.helpers.FormWithCSRF
 @import uk.gov.hmrc.renderer.TemplateRenderer
 @import scala.concurrent.ExecutionContext
+@import uk.gov.hmrc.govukfrontend.views.html.components._
 
-@this(main_template: main_template, formWithCSRF: FormWithCSRF)
+@this(
+        formWithCSRF: FormWithCSRF,
+        heading: playComponents.heading,
+        inputRadio: playComponents.input_radio,
+        submitButton: playComponents.submit_button,
+        errorSummary: playComponents.error_summary,
+        layout: Layout
+)
 
 @(
         appConfig: FrontendAppConfig,
@@ -31,14 +38,40 @@
 )(
         implicit
         request: Request[_],
-        messages: Messages,
-templateRenderer: TemplateRenderer,
-ec: ExecutionContext)
+        messages: Messages)
 
 @title = @{
     if(form.errors.nonEmpty) messages("site.title.error", messages("selectTaxYear.title")) else messages("selectTaxYear.title")
 }
 
+@layout(
+    pageTitle = title
+) {
+    @formWithCSRF(action = SelectTaxYearController.onSubmit(mode), 'autoComplete -> "off") {
+
+        @errorSummary(form.errors)
+
+        @heading(messages("selectTaxYear.heading"))
+
+        @inputRadio(
+            viewModel = InputViewModel("value", form),
+            legend = messages("selectTaxYear.heading"),
+            legendClass = Some("visually-hidden"),
+            inputs = SelectTaxYear.options map { radioOption =>
+                RadioItem(
+                    id = Some(radioOption.id),
+                    value = Some(radioOption.value),
+                    content = HtmlContent(radioOption.message.html)
+                )
+            },
+            field = form("value")
+        )
+
+        @submitButton()
+    }
+}
+
+@*
 @main_template(
     title = title,
     appConfig = appConfig,
@@ -62,3 +95,4 @@ ec: ExecutionContext)
         @components.submit_button()
     }
 }
+*@

@@ -33,7 +33,7 @@ class FrontendAppConfig @Inject()(val servicesConfig: ServicesConfig, val config
   private def loadConfigInt(key: String): Int = Try(servicesConfig.getInt(key)).getOrElse(throw new Exception(s"Missing configuration key: $key"))
 
   private lazy val contactHost = configuration.getOptional[String]("contact-frontend.host").getOrElse("")
-  private val contactFormServiceIdentifier = "claimtaxrefundfrontend"
+  lazy val contactFormServiceIdentifier = loadConfig("contact-frontend.serviceId")
 
   lazy val assetsPrefix: String = loadConfig(s"assets.url") + loadConfig(s"assets.version") + '/'
   lazy val frontendTemplatePath: String = loadConfig("microservice.services.frontend-template-provider.path")
@@ -57,6 +57,16 @@ class FrontendAppConfig @Inject()(val servicesConfig: ServicesConfig, val config
   lazy val unauthorisedCallback: String = loadConfig("identity-verification-uplift.unauthorised-callback.url")
 
   lazy val taiUrl: String = servicesConfig.baseUrl("tai")
+
+  lazy val ptaBaseUrl = servicesConfig.baseUrl("pertax-frontend")
+  lazy val ptaHomeUrl = s"$ptaBaseUrl${servicesConfig.getConfString("pertax-frontend.urls.home","/personal-account")}"
+  lazy val messagesUrl = s"$ptaBaseUrl${servicesConfig.getConfString("pertax-frontend.urls.messages","/messages")}"
+  lazy val paperlessSettingsUrl = s"$ptaBaseUrl${servicesConfig.getConfString("pertax-frontend.urls.paperlessSettings","/preferences")}"
+  lazy val personalDetailsUrl = s"$ptaBaseUrl${servicesConfig.getConfString("pertax-frontend.urls.personalDetails","/personal-details")}"
+  lazy val signOutUrl = s"$ptaBaseUrl${servicesConfig.getConfString("pertax-frontend.urls.signOut","/signout?continueUrl=%2Ffeedback%2FCTR")}"
+
+  lazy val trackingBaseUrl = servicesConfig.baseUrl("tracking-frontend")
+  lazy val trackingHomeUrl = s"$trackingBaseUrl${servicesConfig.getConfString("tracking-frontend.urls.home","/track")}"
 
   lazy val languageTranslationEnabled: Boolean = Try(servicesConfig.getBoolean("microservice.services.features.welsh-translation")).getOrElse(true)
 
