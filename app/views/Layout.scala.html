@@ -30,29 +30,47 @@
         appConfig: FrontendAppConfig
 )
 
-@(pageTitle: String)(contentBlock: Html)(implicit request: RequestHeader, messages: Messages)
+@(
+        pageTitle: String,
+        timeoutEnabled: Boolean = true,
+        backLinkEnabled: Boolean = true,
+        accountMenuEnabled: Boolean = true)(contentBlock: Html)(implicit request: RequestHeader, messages: Messages)
 
 @accountMenu = {
-    @hmrcAccountMenu(AccountMenu(
-        accountHome = AccountHome(
-            href = appConfig.ptaHomeUrl,
-            active = true
-        ),
-        messages = AccountMessages(
-            href = appConfig.messagesUrl,
-            messageCount = None
-        ),
-        checkProgress = CheckProgress(
-            href = appConfig.trackingHomeUrl
-        ),
-        paperlessSettings = PaperlessSettings(appConfig.paperlessSettingsUrl),
-        personalDetails = PersonalDetails(appConfig.personalDetailsUrl),
-        signOut = SignOut(appConfig.signOutUrl),
-        language = if (messages.lang.code == "cy") Cy else En
-    ))
+    @if(accountMenuEnabled) {
+        @hmrcAccountMenu(AccountMenu(
+            accountHome = AccountHome(
+                href = appConfig.ptaHomeUrl,
+                active = true
+            ),
+            messages = AccountMessages(
+                href = appConfig.messagesUrl,
+                messageCount = None
+            ),
+            checkProgress = CheckProgress(
+                href = appConfig.trackingHomeUrl
+            ),
+            paperlessSettings = PaperlessSettings(appConfig.paperlessSettingsUrl),
+            personalDetails = PersonalDetails(appConfig.personalDetailsUrl),
+            signOut = SignOut(appConfig.signOutUrl),
+            language = if(messages.lang.code == "cy") Cy else En
+        ))
+    }
 
     @hmrcLanguageSelectHelper()
-    @backLink()
+
+    @if(backLinkEnabled) { @backLink() }
+}
+
+@head = {
+    @if(timeoutEnabled) {
+        @hmrcTimeoutDialogHelper(
+            signOutUrl = controllers.routes.SessionExpiredController.onPageLoad().url,
+            message = Some(Messages("timeout.message")),
+            keepAliveButtonText = Some(Messages("timeout.continue")),
+            signOutButtonText = Some(Messages("timeout.exit"))
+        )
+    }
 }
 
 
@@ -63,7 +81,9 @@
 
 @govukLayout(
     pageTitle = Some(pageTitle),
-    headBlock = Some(hmrcHead()),
+    headBlock = Some(hmrcHead(
+        headBlock = Some(head)
+    )),
     headerBlock = Some(hmrcStandardHeader(
         serviceUrl = Some(controllers.routes.IndexController.onPageLoad().url)
     )),

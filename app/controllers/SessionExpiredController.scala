@@ -31,12 +31,10 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class SessionExpiredController @Inject()(val appConfig: FrontendAppConfig,
                                          sessionExpired: session_expired,
-                                         cc: MessagesControllerComponents,
-                                         implicit val templateRenderer: LocalTemplateRenderer,
-                                         implicit val ec: ExecutionContext
+                                         cc: MessagesControllerComponents
                                         ) extends FrontendController(cc) with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = Action { implicit request =>
-    Ok(sessionExpired(appConfig))
+    Ok(sessionExpired(appConfig)).withNewSession
   }
 }
