@@ -17,12 +17,17 @@
 @import config.FrontendAppConfig
 @import controllers.routes._
 @import models.Mode
-@import viewmodels.InputViewModel
 @import uk.gov.hmrc.play.views.html.helpers.FormWithCSRF
-@import uk.gov.hmrc.renderer.TemplateRenderer
-@import scala.concurrent.ExecutionContext
 
-@this(main_template: main_template, formWithCSRF: FormWithCSRF)
+
+@this(
+        layout: Layout,
+        formWithCSRF: FormWithCSRF,
+        errorSummary: playComponents.error_summary,
+        heading: playComponents.heading,
+        govukInput : GovukInput,
+        submitButton: playComponents.submit_button
+)
 
 @(
         appConfig: FrontendAppConfig,
@@ -32,35 +37,35 @@
 )(
         implicit
         request: Request[_],
-        messages: Messages,
-templateRenderer: TemplateRenderer,
-ec: ExecutionContext)
+        messages: Messages
+)
 
 @title = @{
     if(form.errors.nonEmpty) messages("site.title.error", messages("howMuchBereavementAllowance.title")) else messages("howMuchBereavementAllowance.title")
 }
 
-@main_template(
-    title = title,
-    appConfig = appConfig,
-    bodyClasses = None
-) {
 
+@layout( pageTitle = title) {
     @formWithCSRF(action = HowMuchBereavementAllowanceController.onSubmit(mode), 'autoComplete -> "off") {
+        @errorSummary(form.errors)
 
-        @components.back_link()
+        @heading(messages("howMuchBereavementAllowance.heading"), taxYear = Some(taxYear.asString))
 
-        @components.error_summary(form.errors)
-
-        @components.heading(messages("howMuchBereavementAllowance.heading"), taxYear = Some(taxYear.asString))
-
-        @components.input_text(
-            InputViewModel("value", form),
-            label = messages("howMuchBereavementAllowance.heading", taxYear.asString),
-            labelClass = Some("visually-hidden"),
-            currency = true
+        @govukInput(
+            Input(
+                label = Label(
+                    isPageHeading = true,
+                    classes = "govuk-label--xl",
+                    content = Text(messages("howMuchBereavementAllowance.heading", taxYear.asString))
+                ),
+                classes = "govuk-input--width-10",
+                spellcheck = Some(false),
+                prefix = Some(PrefixOrSuffix(
+                    content = Text("£")
+                ))
+            ).withFormField(form("value"))
         )
 
-        @components.submit_button()
+        @submitButton()
     }
 }
