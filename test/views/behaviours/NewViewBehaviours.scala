@@ -61,7 +61,7 @@ trait NewViewBehaviours extends NewViewSpecBase {
                               heading: String) = {
 
     "behave like a page with a secondary header" in {
-      Jsoup.parse(view().toString()).getElementsByClass("hmrc-caption-xl").text() must include(heading)
+      Jsoup.parse(view().toString()).getElementsByClass("govuk-caption-xl").text() must include(heading)
     }
   }
 

@@ -14,53 +14,47 @@
  * limitations under the License.
  *@
 
-@import config.FrontendAppConfig
 @import controllers.routes._
 @import models.Mode
-@import viewmodels.InputViewModel
-@import uk.gov.hmrc.play.views.html.helpers.FormWithCSRF
-@import uk.gov.hmrc.renderer.TemplateRenderer
-@import scala.concurrent.ExecutionContext
 
-@this(main_template: main_template, formWithCSRF: FormWithCSRF)
+@this(
+    layout: Layout,
+    heading: playComponents.heading,
+    submitButton: playComponents.submit_button,
+    errorSummary: playComponents.error_summary,
+    formWithCSRF: FormWithCSRF,
+    inputText: playComponents.input_text
+)
 
 @(
-        appConfig: FrontendAppConfig,
         form: Form[_],
         mode: Mode,
         taxYear: SelectTaxYear
 )(
         implicit
         request: Request[_],
-        messages: Messages,
-templateRenderer: TemplateRenderer,
-ec: ExecutionContext)
+        messages: Messages
+)
 
 @title = @{
     if(form.errors.nonEmpty) messages("site.title.error", messages("howMuchCarersAllowance.title")) else messages("howMuchCarersAllowance.title")
 }
 
-@main_template(
-    title = title,
-    appConfig = appConfig,
-    bodyClasses = None
+@layout(
+    pageTitle = title
 ) {
-
     @formWithCSRF(action = HowMuchCarersAllowanceController.onSubmit(mode), 'autoComplete -> "off") {
 
-        @components.back_link()
+        @errorSummary(form.errors)
 
-        @components.error_summary(form.errors)
+        @heading(messages("howMuchCarersAllowance.heading"), taxYear = Some(taxYear.asString))
 
-        @components.heading(messages("howMuchCarersAllowance.heading"), taxYear = Some(taxYear.asString))
-
-        @components.input_text(
-            InputViewModel("value", form),
+        @inputText(
             label = messages("howMuchCarersAllowance.heading", taxYear.asString),
-            labelClass = Some("visually-hidden"),
-            currency = true
+            currency = true,
+            field = form("value")
         )
 
-        @components.submit_button()
+        @submitButton()
     }
 }

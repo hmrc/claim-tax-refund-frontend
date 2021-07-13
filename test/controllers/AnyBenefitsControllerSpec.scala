@@ -47,7 +47,7 @@ class AnyBenefitsControllerSpec extends ControllerSpecBase with MockitoSugar wit
     new AnyBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, mockTai, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
       dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), anyBenefits, messagesControllerComponents, formProvider, templateRenderer)
 
-  def viewAsString(form: Form[_] = form) = anyBenefits(form, NormalMode, taxYear)(fakeRequest, messages, ec).toString
+  def viewAsString(form: Form[_] = form) = anyBenefits(form, NormalMode, taxYear)(fakeRequest, messages).toString
 
   "AnyBenefits Controller" must {
 

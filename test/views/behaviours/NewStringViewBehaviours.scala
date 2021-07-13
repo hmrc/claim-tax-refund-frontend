@@ -20,7 +20,7 @@ import org.jsoup.nodes.Document
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 
-trait NewStringViewBehaviours extends QuestionViewBehaviours[String] {
+trait NewStringViewBehaviours extends NewQuestionViewBehaviours[String] {
 
   val answer = "answer"
 

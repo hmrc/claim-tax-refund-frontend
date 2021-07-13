@@ -24,13 +24,14 @@
     label: String,
     hint: Option[String] = None,
     labelClass: Option[String] = None,
-    field: Field
+    isPageHeading: Boolean = true,
+    field: Field,
 )(implicit messages: Messages)
     @govukRadios(Radios(
         fieldset = Some(Fieldset(
             legend = Some(Legend(content = Text(label),
                 classes = s"""govuk-fieldset__legend--l ${labelClass.getOrElse("")}""",
-                isPageHeading = true
+                isPageHeading = isPageHeading
             ))
         )),
         hint = hint.map(hintString => Hint(content = Text(hintString))),
