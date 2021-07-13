@@ -21,6 +21,7 @@ import play.api.data.Forms._
 import play.api.data.format.Formatter
 import play.api.data.validation.{Constraint, Invalid, Valid}
 import play.api.data.{Form, FormError}
+import uk.gov.hmrc.govukfrontend.views.viewmodels.errorsummary.ErrorLink
 
 object SelectBenefitsForm extends FormErrorHelper {
 
@@ -33,6 +34,8 @@ object SelectBenefitsForm extends FormErrorHelper {
 
     def unbind(key: String, value: Benefits.Value) = Map(key -> value.toString)
   }
+
+  ErrorLink
 
   private def optionIsValid(value: String): Boolean = Benefits.sortedBenefits.map(_.toString).contains(value)
 
