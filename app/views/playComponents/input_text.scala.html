@@ -16,9 +16,13 @@
 
 @import viewmodels.InputViewModelBase
 
+@this(
+        govukInput : GovukInput
+)
+
 @(
         viewModel: InputViewModelBase,
-        label: String,
+        label: Html,
         divClass: Option[String] = None,
         inputClass: Option[String] = None,
         hintLine1: Option[String] = None,
@@ -27,9 +31,25 @@
         currency: Boolean = false,
         inputType: Option[String] = Some("text"),
         valueError: Boolean = false,
-        autoComplete: Boolean = false
-)(implicit messages: Messages)
+        autoComplete: Boolean = false,
+        field: Field)(implicit messages: Messages)
 
+
+@govukInput(
+    Input(
+        label = Label(
+            isPageHeading = false,
+            classes = "govuk-label--xl",
+            content = HtmlContent(label)
+        ),
+        classes = "govuk-input--width-10",
+        spellcheck = Some(false),
+        prefix = if (currency) Some(PrefixOrSuffix(content = Text("£"))) else None
+    ).withFormField(field)
+)
+
+
+@*
 <div class="form-group @if(divClass.nonEmpty){@divClass} @if(viewModel.errorKey.nonEmpty){form-field--error}">
     <label class="form-label" for="@{viewModel.id}">
         <span class="bold @if(labelClass.nonEmpty){@labelClass}">@label</span>
@@ -61,3 +81,4 @@
         />
     </div>
 </div>
+*@
