@@ -1,4 +1,4 @@
-/*
+@*
  * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,22 +12,11 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *@
 
-package views
+@()
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NDJKHWK"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
-import views.behaviours.ViewBehaviours
-import views.html.session_expired
-
-class SessionExpiredViewSpec extends ViewBehaviours with GuiceOneAppPerSuite {
-
-  val sessionExpired: session_expired = fakeApplication.injector.instanceOf[session_expired]
-
-  def view = () => sessionExpired(frontendAppConfig)(fakeRequest, messages)
-
-  "Session Expired view" must {
-
-    behave like normalPage(view, "session_expired", Some("button"))
-  }
-}
