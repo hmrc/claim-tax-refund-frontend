@@ -17,12 +17,19 @@
 @import config.FrontendAppConfig
 @import controllers.routes._
 @import models.Mode
-@import viewmodels.InputViewModel
 @import uk.gov.hmrc.play.views.html.helpers.FormWithCSRF
-@import uk.gov.hmrc.renderer.TemplateRenderer
-@import scala.concurrent.ExecutionContext
+@import viewmodels.InputViewModel
 
-@this(main_template: main_template, formWithCSRF: FormWithCSRF)
+
+@this(
+        layout: Layout,
+        formWithCSRF: FormWithCSRF,
+        errorSummary: playComponents.error_summary,
+        heading: hmrcPageHeading,
+        govukInput: GovukInput,
+        submitButton: playComponents.submit_button,
+        inputYesOrNo: playComponents.input_yes_no
+)
 
 @(
         appConfig: FrontendAppConfig,
@@ -32,43 +39,38 @@
 )(
         implicit
         request: Request[_],
-        messages: Messages,
-templateRenderer: TemplateRenderer,
-ec: ExecutionContext)
+        messages: Messages
+)
 
     @title = @{
         if(form.errors.nonEmpty) messages("site.title.error", messages("anyCompanyBenefits.title")) else messages("anyCompanyBenefits.title")
     }
 
-
-    @main_template(
-        title = title,
-        appConfig = appConfig,
-        bodyClasses = None
-    ) {
-
+    @layout( pageTitle = title) {
         @formWithCSRF(action = AnyCompanyBenefitsController.onSubmit(mode), 'autoComplete -> "off") {
 
-            @components.back_link()
+            @errorSummary(form.errors)
 
-            @components.error_summary(form.errors)
+            @heading(PageHeading(
+                text = messages("anyCompanyBenefits.heading"),
+                section = Some(messages("site.service_name.with_tax_year", taxYear.asString))
+            ))
 
-            @components.heading(messages("anyCompanyBenefits.heading"), taxYear = Some(taxYear.asString))
+            <p class="govuk-body" id="listHeading">@messages("anyCompanyBenefits.listHeading")</p>
 
-            <p id="listHeading">@messages("anyCompanyBenefits.listHeading")</p>
-
-            @components.list(
+            @playComponents.list(
                 pageKey = Some("selectCompanyBenefits"),
                 addCssClass = None,
                 bulletList = CompanyBenefits.sortedCompanyBenefits.dropRight(1).map(_.toString)
             )
 
-            @components.input_yes_no(
-                InputViewModel("value", form),
-                label = messages("anyCompanyBenefits.heading", taxYear.asString),
-                labelClass = Some("visually-hidden")
+            @inputYesOrNo(
+                viewModel = InputViewModel("value", form),
+                label = messages("anyCompanyBenefits.heading"),
+                labelClass = Some("govuk-visually-hidden"),
+                field = form("value")
             )
 
-            @components.submit_button()
+            @submitButton()
         }
     }
