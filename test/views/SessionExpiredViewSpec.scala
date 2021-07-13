@@ -24,7 +24,7 @@ class SessionExpiredViewSpec extends ViewBehaviours with GuiceOneAppPerSuite {
 
   val sessionExpired: session_expired = fakeApplication.injector.instanceOf[session_expired]
 
-  def view = () => sessionExpired(frontendAppConfig)(fakeRequest, messages)
+  def view = () => sessionExpired(frontendAppConfig)(fakeRequest, messages, templateRenderer, ec)
 
   "Session Expired view" must {
 

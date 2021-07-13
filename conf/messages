@@ -1,5 +1,3 @@
-service.name = Claim a tax refund
-
 error.boolean = Please give an answer
 error.invalid_date = Give a correct date
 error.date.day_blank = Enter a day
@@ -291,11 +289,11 @@ selectBenefits.title = Which taxable benefits did you get?
 selectBenefits.heading = Which taxable benefits did you get?
 selectBenefits.changeLabel = Change Change which taxable benefits you got
 selectBenefits.blank = Select the taxable benefits you got
-selectBenefits.jobseekers-allowance = Contribution-based Jobseeker’s Allowance
+selectBenefits.jobseekers-allowance = contribution-based Jobseeker’s Allowance
 selectBenefits.incapacity-benefit = Incapacity Benefit
 selectBenefits.employment-and-support-allowance = Employment and Support Allowance
 selectBenefits.state-pension = State Pension
-selectBenefits.other-taxable-benefit = Other taxable benefit
+selectBenefits.other-taxable-benefit = other taxable benefit
 selectBenefits.bereavement-allowance = Bereavement Allowance
 selectBenefits.carers-allowance = Carer’s Allowance
 

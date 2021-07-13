@@ -18,16 +18,11 @@
 @import controllers.routes._
 @import models.Mode
 @import viewmodels.InputViewModel
-@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.play.views.html.helpers.FormWithCSRF
+@import uk.gov.hmrc.renderer.TemplateRenderer
+@import scala.concurrent.ExecutionContext
 
-@this(
-        formWithCSRF: FormWithCSRF,
-        heading: playComponents.headingWithCaption,
-        inputRadio: playComponents.input_radio,
-        submitButton: playComponents.submit_button,
-        errorSummary: playComponents.error_summary,
-        layout: Layout
-)
+@this(main_template: main_template, formWithCSRF: FormWithCSRF)
 
 @(
         appConfig: FrontendAppConfig,
@@ -36,34 +31,34 @@
 )(
         implicit
         request: Request[_],
-        messages: Messages)
+        messages: Messages,
+templateRenderer: TemplateRenderer,
+ec: ExecutionContext)
 
 @title = @{
     if(form.errors.nonEmpty) messages("site.title.error", messages("selectTaxYear.title")) else messages("selectTaxYear.title")
 }
 
-@layout(
-    pageTitle = title
+@main_template(
+    title = title,
+    appConfig = appConfig,
+    bodyClasses = None
 ) {
     @formWithCSRF(action = SelectTaxYearController.onSubmit(mode), 'autoComplete -> "off") {
 
-        @errorSummary(form.errors)
+        @components.back_link()
 
-        @inputRadio(
+        @components.error_summary(form.errors)
+
+        @components.heading(messages("selectTaxYear.heading"))
+
+        @components.input_radio(
             viewModel = InputViewModel("value", form),
-            legend = heading(messages("selectTaxYear.heading")),
-            legendClass = None,
-            inputs = SelectTaxYear.options map { radioOption =>
-                RadioItem(
-                    id = Some(radioOption.id),
-                    value = Some(radioOption.value),
-                    content = HtmlContent(radioOption.message.html)
-                )
-            },
-            field = form("value")
+            legend = messages("selectTaxYear.heading"),
+            legendClass = Some("visually-hidden"),
+            inputs = SelectTaxYear.options
         )
 
-        @submitButton()
+        @components.submit_button()
     }
 }
-

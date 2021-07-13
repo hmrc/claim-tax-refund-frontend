@@ -47,7 +47,7 @@ class HowMuchBereavementAllowanceControllerSpec extends ControllerSpecBase with 
   private val taxYear = CustomTaxYear(2017)
   val form = new HowMuchBereavementAllowanceForm(frontendAppConfig)()
 
-  def viewAsString(form: Form[_] = form): String = howMuchBereavementAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
+  def viewAsString(form: Form[_] = form): String = howMuchBereavementAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec).toString
 
   "HowMuchBereavementAllowance Controller" must {
 

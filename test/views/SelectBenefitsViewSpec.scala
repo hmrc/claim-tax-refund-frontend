@@ -22,10 +22,10 @@ import models.{Benefits, NormalMode}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import play.twirl.api.Html
-import views.behaviours.{NewCheckboxViewBehaviours, ViewBehaviours}
+import views.behaviours.{CheckboxViewBehaviours, ViewBehaviours}
 import views.html.selectBenefits
 
-class SelectBenefitsViewSpec extends ViewBehaviours with NewCheckboxViewBehaviours[Benefits.Value] with GuiceOneAppPerSuite {
+class SelectBenefitsViewSpec extends ViewBehaviours with CheckboxViewBehaviours[Benefits.Value] with GuiceOneAppPerSuite {
 
   val messageKeyPrefix = "selectBenefits"
   val fieldKey = "value"
@@ -41,9 +41,9 @@ class SelectBenefitsViewSpec extends ViewBehaviours with NewCheckboxViewBehaviou
   override def createView(): Html = createView(form)
 
   def createView(form: Form[Seq[Benefits.Value]]): Html =
-    selectBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+    selectBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
 
-  def createViewUsingForm = (form: Form[_]) => selectBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[_]) => selectBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
 
   "SelectBenefits view" must {
     behave like normalPage(createView, messageKeyPrefix, None)

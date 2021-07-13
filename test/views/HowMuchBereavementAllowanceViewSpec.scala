@@ -23,10 +23,10 @@ import models.SelectTaxYear.CustomTaxYear
 import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
-import views.behaviours.NewStringViewBehaviours
+import views.behaviours.StringViewBehaviours
 import views.html.howMuchBereavementAllowance
 
-class HowMuchBereavementAllowanceViewSpec extends NewStringViewBehaviours with MockitoSugar with GuiceOneAppPerSuite {
+class HowMuchBereavementAllowanceViewSpec extends StringViewBehaviours with MockitoSugar with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "howMuchBereavementAllowance"
   private val taxYear = CustomTaxYear(2017)
@@ -34,9 +34,9 @@ class HowMuchBereavementAllowanceViewSpec extends NewStringViewBehaviours with M
   override val form: Form[String] = new HowMuchBereavementAllowanceForm(frontendAppConfig)()
   val howMuchBereavementAllowance: howMuchBereavementAllowance = fakeApplication.injector.instanceOf[howMuchBereavementAllowance]
 
-  def createView = () => howMuchBereavementAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createView = () => howMuchBereavementAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
 
-  def createViewUsingForm = (form: Form[String]) => howMuchBereavementAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[String]) => howMuchBereavementAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
 
   "HowMuchBereavementAllowance view" must {
 

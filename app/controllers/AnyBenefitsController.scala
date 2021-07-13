@@ -61,7 +61,7 @@ cc: MessagesControllerComponents,
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
           val taxYear = selectedTaxYear
-          Ok(anyBenefits(preparedForm, mode, taxYear))
+          Ok(anyBenefits(appConfig, preparedForm, mode, taxYear))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
@@ -76,7 +76,7 @@ cc: MessagesControllerComponents,
           val taxYear = selectedTaxYear
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(anyBenefits(formWithErrors, mode, taxYear))),
+              Future.successful(BadRequest(anyBenefits(appConfig, formWithErrors, mode, taxYear))),
             value =>
               dataCacheConnector.save[Boolean](request.externalId, AnyBenefitsId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(AnyBenefitsId, mode)(new UserAnswers(cacheMap))))

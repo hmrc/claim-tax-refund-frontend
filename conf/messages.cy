@@ -1,5 +1,3 @@
-service.name=Hawlio ad-daliad treth
-
 language-switcher.english=English
 language-switcher.english.hover=Use this account in English
 language-switcher.welsh=Cymraeg
@@ -185,7 +183,7 @@ RemoveOtherSelectedOption.heading=A oes angen i chi roi gwybod i ni am unrhyw {0
 RemoveOtherSelectedOption.otherBenefits=buddiant trethadwy
 
 selectBenefits.blank=Dewiswch y buddiannau trethadwy eraill a gawsoch
-selectBenefits.other-taxable-benefit=Buddiannau trethadwy arall
+selectBenefits.other-taxable-benefit=buddiannau trethadwy arall
 
 selectCompanyBenefits.fuel-benefit=buddiant tanwydd
 

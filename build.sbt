@@ -17,7 +17,6 @@ lazy val playSettings: Seq[Setting[_]] = Seq.empty
 val compile = Seq(
   ws,
   "uk.gov.hmrc"           %% "bootstrap-frontend-play-28"     % "5.3.0",
-  "uk.gov.hmrc"           %% "play-frontend-hmrc"             % "0.82.0-play-28",
   "uk.gov.hmrc"           %% "simple-reactivemongo"           % "8.0.0-play-28",
   "uk.gov.hmrc"           %% "local-template-renderer"        % "2.15.0-play-28" excludeAll(ExclusionRule(organization="org.scalactic")),
   "uk.gov.hmrc"           %% "govuk-template"                 % "5.68.0-play-28",
@@ -29,7 +28,7 @@ val compile = Seq(
   "uk.gov.hmrc"           %% "tax-year"                       % "1.3.0",
   "org.scalatra.scalate"  %% "play-scalate"                   % "0.6.0",
   "org.scalatra.scalate"  %% "scalate-core"                   % "1.9.6",
-  "uk.gov.hmrc"           %% "domain"                         % "5.11.0-play-27"
+  "uk.gov.hmrc"           %% "domain"                         % "5.11.0-play-27",
 )
 
 def test(scope: String = "test"): Seq[ModuleID] = Seq(
@@ -96,15 +95,6 @@ lazy val microservice = Project(appName, file("."))
   )
   .settings(majorVersion := 0)
   .settings(scalaVersion := "2.12.12")
-  .settings(
-    TwirlKeys.templateImports ++= Seq(
-      "uk.gov.hmrc.govukfrontend.views.html.components._",
-      "uk.gov.hmrc.govukfrontend.views.html.helpers._",
-      "uk.gov.hmrc.hmrcfrontend.views.html.components._",
-      "uk.gov.hmrc.hmrcfrontend.views.html.helpers._",
-      "uk.gov.hmrc.govukfrontend.views.html.components.implicits._"
-    )
-  )
 // ***************
 // Use the silencer plugin to suppress warnings from unused imports in compiled twirl templates
 scalacOptions += "-P:silencer:pathFilters=routes"
@@ -114,5 +104,3 @@ libraryDependencies ++= Seq(
   "com.github.ghik" % "silencer-lib" % "1.7.1" % Provided cross CrossVersion.full
 )
 // ***************
-
-
