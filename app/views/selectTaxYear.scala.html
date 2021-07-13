@@ -18,8 +18,6 @@
 @import controllers.routes._
 @import models.Mode
 @import viewmodels.InputViewModel
-@import uk.gov.hmrc.renderer.TemplateRenderer
-@import scala.concurrent.ExecutionContext
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 
 @this(
@@ -51,12 +49,10 @@
 
         @errorSummary(form.errors)
 
-        @heading(messages("selectTaxYear.heading"))
-
         @inputRadio(
             viewModel = InputViewModel("value", form),
-            legend = messages("selectTaxYear.heading"),
-            legendClass = Some("visually-hidden"),
+            legend = heading(messages("selectTaxYear.heading")),
+            legendClass = None,
             inputs = SelectTaxYear.options map { radioOption =>
                 RadioItem(
                     id = Some(radioOption.id),
@@ -71,28 +67,3 @@
     }
 }
 
-@*
-@main_template(
-    title = title,
-    appConfig = appConfig,
-    bodyClasses = None
-) {
-    @formWithCSRF(action = SelectTaxYearController.onSubmit(mode), 'autoComplete -> "off") {
-
-        @components.back_link()
-
-        @components.error_summary(form.errors)
-
-        @components.heading(messages("selectTaxYear.heading"))
-
-        @components.input_radio(
-            viewModel = InputViewModel("value", form),
-            legend = messages("selectTaxYear.heading"),
-            legendClass = Some("visually-hidden"),
-            inputs = SelectTaxYear.options
-        )
-
-        @components.submit_button()
-    }
-}
-*@
