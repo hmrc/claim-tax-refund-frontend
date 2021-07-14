@@ -24,8 +24,8 @@
     formWithCSRF: FormWithCSRF,
     layout: Layout,
     errorSummary: playComponents.error_summary,
-    heading: playComponents.heading,
-    govukInput : GovukInput,
+    headingWithCaption: playComponents.headingWithCaption,
+    input_text: playComponents.input_text,
     submitButton: playComponents.submit_button
 )
 
@@ -52,21 +52,10 @@
 
         @errorSummary(form.errors)
 
-        @heading(messages("howMuchEmploymentAndSupportAllowance.heading"), taxYear = Some(taxYear.asString))
-
-        @govukInput(
-            Input(
-                label = Label(
-                    isPageHeading = true,
-                    classes = "govuk-label--xl",
-                    content = Text(messages("howMuchEmploymentAndSupportAllowance.heading", taxYear.asString))
-                ),
-                classes = "govuk-input--width-10",
-                spellcheck = Some(false),
-                prefix = Some(PrefixOrSuffix(
-                    content = Text("£")
-                ))
-            ).withFormField(form("value"))
+        @input_text(
+            label = headingWithCaption(messages("howMuchEmploymentAndSupportAllowance.heading"), taxYear = Some(taxYear.asString)),
+            currency = true,
+            field = form("value")
         )
 
         @submitButton()
