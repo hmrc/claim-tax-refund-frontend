@@ -16,7 +16,7 @@
 
 package views.behaviours
 
-import org.jsoup.nodes.Document
+import org.jsoup.nodes.{Document, Element}
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 
@@ -55,7 +55,13 @@ trait NewStringViewBehaviours extends NewQuestionViewBehaviours[String] {
       "rendered with a valid form" must {
         "include the form's value in the value input" in {
           val doc = asDocument(createView(form.fill(answer)))
-          doc.getElementById("value").attr("value") mustBe answer
+
+          doc.getElementById("value").tagName() match {
+            case "textarea" =>
+              doc.getElementById("value").text mustBe answer
+            case _ =>
+              doc.getElementById("value").attr("value") mustBe answer
+          }
         }
       }
 
@@ -83,7 +89,7 @@ trait NewStringViewBehaviours extends NewQuestionViewBehaviours[String] {
     assert(label.text.contains(expectedText), s"\n\nLabel for $forElement was not $expectedText")
 
     if (expectedHintTextLine1.isDefined) {
-      assert(label.getElementsByClass("form-hint").first.text == expectedHintTextLine1.get,
+      assert(doc.getElementsByClass("govuk-hint").first.text == expectedHintTextLine1.get,
         s"\n\nLabel for $forElement did not contain hint text $expectedHintTextLine1")
     }
 
