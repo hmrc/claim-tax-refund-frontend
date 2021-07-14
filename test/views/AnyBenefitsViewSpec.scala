@@ -36,11 +36,11 @@ class AnyBenefitsViewSpec extends NewYesNoViewBehaviours with GuiceOneAppPerSuit
   override val form = new BooleanForm()()
 
   def createView: () => HtmlFormat.Appendable = () =>
-    anyBenefits(form, NormalMode, taxYear)(fakeRequest, messages, ec)
+    anyBenefits(form, NormalMode, taxYear)(fakeRequest, messages)
 
   def createViewUsingForm: Form[_] =>
 		HtmlFormat.Appendable = (form: Form[_]) =>
-			anyBenefits(form, NormalMode, taxYear)(fakeRequest, messages, ec)
+			anyBenefits(form, NormalMode, taxYear)(fakeRequest, messages)
 
   "AnyBenefits view" must {
 

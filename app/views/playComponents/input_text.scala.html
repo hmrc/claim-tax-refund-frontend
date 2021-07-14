@@ -1,84 +1,52 @@
 @*
- * Copyright 2021 HM Revenue & Customs
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *@
+* Copyright 2021 HM Revenue & Customs
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*@
 
-@import viewmodels.InputViewModelBase
-
-@this(
-        govukInput : GovukInput
-)
+@this(govukInput : GovukInput)
 
 @(
-        viewModel: InputViewModelBase,
         label: Html,
-        divClass: Option[String] = None,
-        inputClass: Option[String] = None,
         hintLine1: Option[String] = None,
         hintLine2: Option[String] = None,
         labelClass: Option[String] = None,
         currency: Boolean = false,
-        inputType: Option[String] = Some("text"),
-        valueError: Boolean = false,
-        autoComplete: Boolean = false,
-        field: Field)(implicit messages: Messages)
+        inputType: String = "text",
+        autoComplete: Option[String] = None,
+        isPageHeading: Boolean = true,
+        field: Field
+)(implicit messages: Messages)
+@hint = @{
+    (Seq(hintLine1, hintLine2).flatten.mkString(" ")) match {
+        case ""           => None
+        case (hintString) => Some(hintString)
+    }
+}
+
+@govukInput(Input(
+    label = Label(
+        isPageHeading = false,
+        classes = "govuk-label--xl",
+        content = HtmlContent(label)
+    ),
+    hint = hint.map(hintString => Hint(content = Text(hintString))),
+    classes = "govuk-input--width-10",
+    spellcheck = Some(!currency),
+    autocomplete = autoComplete,
+    inputType = inputType,
+    prefix = if(currency) Some(PrefixOrSuffix(content = Text("£"))) else None
+).withFormField(field))
 
 
-@govukInput(
-    Input(
-        label = Label(
-            isPageHeading = false,
-            classes = "govuk-label--xl",
-            content = HtmlContent(label)
-        ),
-        classes = "govuk-input--width-10",
-        spellcheck = Some(false),
-        prefix = if (currency) Some(PrefixOrSuffix(content = Text("£"))) else None
-    ).withFormField(field)
-)
 
-
-@*
-<div class="form-group @if(divClass.nonEmpty){@divClass} @if(viewModel.errorKey.nonEmpty){form-field--error}">
-    <label class="form-label" for="@{viewModel.id}">
-        <span class="bold @if(labelClass.nonEmpty){@labelClass}">@label</span>
-        @if(hintLine1.nonEmpty){
-        <span class="form-hint">@hintLine1</span>
-        }
-        @if(hintLine2.nonEmpty){
-        <span id="hint-line-2" class="form-hint">@hintLine2</span>
-        }
-        @if(viewModel.errorKey.nonEmpty && !valueError){
-        <span class="error-notification" id="error-message-@{viewModel.id}-input">@messages(viewModel.errorKey)</span>
-        }
-        @if(viewModel.errorKey.nonEmpty && valueError){
-        <span class="error-notification" id="error-message-@{viewModel.id}-input">@messages(viewModel.errorKey, viewModel.value.getOrElse(""))</span>
-        }
-    </label>
-    <div class="form-control-wrapper">
-        @if(currency){
-            <span class="govuk-currency-input__inner__unit">£</span>
-        }
-        <input
-            class="form-control @if(currency){govuk-currency-input__inner__input} @inputClass"
-            type=@inputType
-            id="@{viewModel.id}"
-            name="@{viewModel.id}"
-            value="@{viewModel.value}"
-            @if(autoComplete){autocomplete="tel"}
-            @if(viewModel.errorKey.nonEmpty){aria-describedby="error-message-@{viewModel.id}-input"}
-        />
-    </div>
-</div>
-*@

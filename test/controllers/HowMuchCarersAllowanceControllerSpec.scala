@@ -44,7 +44,7 @@ class HowMuchCarersAllowanceControllerSpec extends ControllerSpecBase with Guice
   val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
   val howMuchCarersAllowance: howMuchCarersAllowance = fakeApplication.injector.instanceOf[howMuchCarersAllowance]
 
-  def viewAsString(form: Form[_] = form) = howMuchCarersAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec).toString
+  def viewAsString(form: Form[_] = form) = howMuchCarersAllowance(form, NormalMode, taxYear)(fakeRequest, messages).toString
 
   "HowMuchCarersAllowance Controller" must {
 

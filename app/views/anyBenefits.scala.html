@@ -14,22 +14,16 @@
  * limitations under the License.
  *@
 
-@import config.FrontendAppConfig
 @import controllers.routes._
 @import models.Mode
 @import viewmodels.InputViewModel
-@import uk.gov.hmrc.play.views.html.helpers.FormWithCSRF
-@import uk.gov.hmrc.renderer.TemplateRenderer
-@import scala.concurrent.ExecutionContext
 
 @this(
     layout: Layout,
     pageHeading: hmrcPageHeading,
-    radioButtons: govukRadios,
     submitButton: playComponents.submit_button,
     errorSummary: playComponents.error_summary,
     formWithCSRF: FormWithCSRF,
-    inputRadio: playComponents.input_radio,
     inputYesNo: playComponents.input_yes_no
 )
 
@@ -38,10 +32,10 @@
         mode: Mode,
         taxYear: SelectTaxYear
 )(
-        implicit
-        request: Request[_],
-        messages: Messages,
-ec: ExecutionContext)
+    implicit
+    request: Request[_],
+    messages: Messages
+)
 
 @title = @{
     if(form.errors.nonEmpty) messages("site.title.error", messages("anyBenefits.heading")) else messages("anyBenefits.heading")
@@ -65,6 +59,7 @@ ec: ExecutionContext)
                          bulletList = Benefits.sortedBenefits.dropRight(1).map(_.toString))
 
         @inputYesNo(
+            isPageHeading = false,
             viewModel = InputViewModel("value", form),
             label = messages("anyBenefits.heading"),
             labelClass = Some("govuk-visually-hidden"),
