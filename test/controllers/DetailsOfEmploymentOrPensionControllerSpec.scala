@@ -48,7 +48,7 @@ class DetailsOfEmploymentOrPensionControllerSpec extends ControllerSpecBase with
 
 
   def viewAsString(form: Form[_] = form): String =
-    detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages, templateRenderer, ec).toString
+    detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages).toString
 
   "DetailsOfEmploymentOrPension Controller" must {
 

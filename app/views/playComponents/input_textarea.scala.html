@@ -16,33 +16,31 @@
 
 @import viewmodels.InputViewModelBase
 
+@this(
+        govukTextarea : GovukTextarea
+)
+
 @(
-viewModel: InputViewModelBase,
-label: String,
-secondaryLabel: Option[String] = None,
-inputClass: Option[String] = None,
-hint: Option[String] = None,
-charLimit: Option[Int] = None,
-labelClass: Option[String] = None
+    viewModel: InputViewModelBase,
+    label: Html,
+    secondaryLabel: Option[String] = None,
+    inputClass: Option[String] = None,
+    hint: Option[String] = None,
+    charLimit: Option[Int] = None,
+    labelClass: Option[String] = None,
+    field: Field
 )(implicit messages: Messages)
 
-<div class="form-group @if(viewModel.errorKey != ""){form-field--error}">
-    <label class="form-label" for="@{viewModel.id}">
-        <span class="bold @if(labelClass.nonEmpty){@labelClass}">@label</span>
-        @if(hint.get != ""){
-        <span class="form-hint">@hint</span>
-        }
-        @if(viewModel.errorKey != ""){
-        <span class="error-notification" id="error-message-@{viewModel.id}-input">@messages(viewModel.errorKey)</span>
-        }
-    </label>
-        <textarea
-                class="form-control form-control--full-width @inputClass"
-                id="@{viewModel.id}"
-                name="@{viewModel.id}"
-                value="@{viewModel.value}"
-                @if(viewModel.errorKey.nonEmpty){aria-describedby="error-message-@{viewModel.id}-input"}
-                rows="5"
-        >@{viewModel.value}</textarea>
-</div>
 
+@govukTextarea(Textarea(
+    label = Label(
+        isPageHeading = false,
+        classes = "govuk-label--xl",
+        content = HtmlContent(label)
+    ),
+    hint = if (hint.isDefined) {
+        Some(Hint(
+            content = Text(hint.get)
+        ))
+    } else None
+).withFormField(field))
