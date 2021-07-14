@@ -43,7 +43,7 @@ class HowMuchStatePensionControllerSpec extends ControllerSpecBase {
     new HowMuchStatePensionController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
       dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), howMuchStatePension, messagesControllerComponents, new HowMuchStatePensionForm(frontendAppConfig), templateRenderer)
 
-  def viewAsString(form: Form[_] = form) = howMuchStatePension(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec).toString
+  def viewAsString(form: Form[_] = form) = howMuchStatePension(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
 
   "HowMuchStatePension Controller" must {
 

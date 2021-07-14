@@ -22,7 +22,14 @@
 @import uk.gov.hmrc.renderer.TemplateRenderer
 @import scala.concurrent.ExecutionContext
 
-@this(main_template: main_template, formWithCSRF: FormWithCSRF)
+@this(
+        layout: Layout,
+        formWithCSRF: FormWithCSRF,
+        errorSummary: playComponents.error_summary,
+        headingWithCaption: playComponents.headingWithCaption,
+        input_text: playComponents.input_text,
+        submitButton: playComponents.submit_button
+)
 
 @(
         appConfig: FrontendAppConfig,
@@ -32,33 +39,24 @@
 )(
         implicit
         request: Request[_],
-        messages: Messages,
-templateRenderer: TemplateRenderer,
-ec: ExecutionContext)
+        messages: Messages
+)
 
-    @title = @{
-        if(form.errors.nonEmpty) messages("site.title.error", messages("howMuchStatePension.title")) else messages("howMuchStatePension.title")
+@title = @{
+    if(form.errors.nonEmpty) messages("site.title.error", messages("howMuchStatePension.title")) else messages("howMuchStatePension.title")
+}
+
+@layout( pageTitle = title) {
+    @formWithCSRF(action = HowMuchStatePensionController.onSubmit(mode), 'autoComplete -> "off") {
+        @errorSummary(form.errors)
+
+        @input_text(
+            InputViewModel("value", form),
+            label = headingWithCaption(messages("howMuchStatePension.heading"), taxYear = Some(taxYear.asString)),
+            currency = true,
+            field = form("value")
+        )
+
+        @submitButton()
     }
-
-    @main_template(
-        title = title,
-        appConfig = appConfig,
-        bodyClasses = None
-    ) {
-
-        @formWithCSRF(action = HowMuchStatePensionController.onSubmit(mode), 'autoComplete -> "off") {
-
-            @components.back_link()
-
-            @components.error_summary(form.errors)
-
-            @components.heading(messages("howMuchStatePension.heading"), taxYear = Some(taxYear.asString))
-
-            @components.input_text(InputViewModel("value", form),
-                label = messages("howMuchStatePension.heading", taxYear.asString),
-                labelClass = Some("visually-hidden"),
-                currency = true
-            )
-            @components.submit_button()
-        }
-    }
+}
