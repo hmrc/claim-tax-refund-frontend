@@ -24,10 +24,10 @@ import org.jsoup.nodes.Document
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
-import views.behaviours.YesNoViewBehaviours
+import views.behaviours.{NewYesNoViewBehaviours, YesNoViewBehaviours}
 import views.html.anyOtherTaxableIncome
 
-class AnyOtherTaxableIncomeViewSpec extends YesNoViewBehaviours with GuiceOneAppPerSuite {
+class AnyOtherTaxableIncomeViewSpec extends NewYesNoViewBehaviours with GuiceOneAppPerSuite {
 
 	private val messageKeyPrefix = "anyOtherTaxableIncome"
 	private val taxYear = CustomTaxYear(2017)
@@ -55,6 +55,12 @@ class AnyOtherTaxableIncomeViewSpec extends YesNoViewBehaviours with GuiceOneApp
 			complete,
 			incomplete)(fakeRequest, messages, templateRenderer, ec
 		)
+
+	override def assertPageTitleEqualsMessage(doc: Document, expectedMessageKey: String, args: Any*) = {
+		val headers = doc.getElementsByClass("govuk-caption-xl heading-secondary")
+		headers.size mustBe 1
+		headers.first.text.replaceAll("\u00a0", " ") mustBe messages("site.service_name.with_tax_year", args: _*).replaceAll("&nbsp;", " ")
+	}
 
 	"AnyOtherTaxableIncome view" must {
 
@@ -95,7 +101,7 @@ class AnyOtherTaxableIncomeViewSpec extends YesNoViewBehaviours with GuiceOneApp
 		}
 
 		"show the continue message" in {
-			doc.getElementById("submit").text.contains(messages("site.continue")) mustBe true
+			doc.getElementsByClass("govuk-button").text.contains(messages("site.continue")) mustBe true
 		}
 	}
 
