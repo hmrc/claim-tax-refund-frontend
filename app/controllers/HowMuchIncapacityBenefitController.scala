@@ -58,7 +58,7 @@ cc: MessagesControllerComponents,
 
       request.userAnswers.selectTaxYear.map {
         taxYear =>
-          Ok(howMuchIncapacityBenefit(appConfig, preparedForm, mode, taxYear))
+          Ok(howMuchIncapacityBenefit(preparedForm, mode, taxYear))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
@@ -71,7 +71,7 @@ cc: MessagesControllerComponents,
         taxYear =>
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(howMuchIncapacityBenefit(appConfig, formWithErrors, mode, taxYear))),
+              Future.successful(BadRequest(howMuchIncapacityBenefit(formWithErrors, mode, taxYear))),
             (value) =>
               dataCacheConnector.save[String](request.externalId, HowMuchIncapacityBenefitId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(HowMuchIncapacityBenefitId, mode)(new UserAnswers(cacheMap))))

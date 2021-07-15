@@ -22,44 +22,44 @@
 @import uk.gov.hmrc.renderer.TemplateRenderer
 @import scala.concurrent.ExecutionContext
 
-@this(main_template: main_template, formWithCSRF: FormWithCSRF)
+@this(
+        layout: Layout,
+        headingWithCaption: playComponents.headingWithCaption,
+        submitButton: playComponents.submit_button,
+        errorSummary: playComponents.error_summary,
+        formWithCSRF: FormWithCSRF,
+        inputText: playComponents.input_text
+)
 
 @(
-        appConfig: FrontendAppConfig,
         form: Form[_],
         mode: Mode,
         taxYear: SelectTaxYear
 )(
         implicit
         request: Request[_],
-        messages: Messages,
-templateRenderer: TemplateRenderer,
-ec: ExecutionContext)
+        messages: Messages
+)
 
     @title = @{
         if(form.errors.nonEmpty) messages("site.title.error", messages("howMuchIncapacityBenefit.title")) else messages("howMuchIncapacityBenefit.title")
     }
 
-    @main_template(
-        title = title,
-        appConfig = appConfig,
-        bodyClasses = None
+    @layout(
+        pageTitle = title
     ) {
 
-        @formWithCSRF(action = HowMuchIncapacityBenefitController.onSubmit(mode), 'autoComplete -> "off") {
+            @formWithCSRF(action = HowMuchIncapacityBenefitController.onSubmit(mode), 'autoComplete -> "off") {
 
-            @components.back_link()
+            @errorSummary(form.errors)
 
-            @components.error_summary(form.errors)
 
-            @components.heading(messages("howMuchIncapacityBenefit.heading"), taxYear = Some(taxYear.asString))
-
-            @components.input_text(InputViewModel("value", form),
-                label = messages("howMuchIncapacityBenefit.heading", taxYear.asString),
-                labelClass = Some("visually-hidden"),
-                currency = true
+            @inputText(
+                label = headingWithCaption(messages("howMuchIncapacityBenefit.heading"), taxYear = Some(taxYear.asString)),
+                currency = true,
+                field = form("value")
             )
 
-            @components.submit_button()
+            @submitButton()
         }
     }
