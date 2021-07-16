@@ -47,7 +47,7 @@ class OtherCompanyBenefitControllerSpec extends ControllerSpecBase with MockitoS
       dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), otherCompanyBenefit, messagesControllerComponents, sequenceUtil, new OtherCompanyBenefitForm(messagesApi, frontendAppConfig), templateRenderer)
 
   def viewAsString(form: Form[OtherCompanyBenefit], index: Index): String =
-    otherCompanyBenefit(frontendAppConfig, form, NormalMode, index, taxYear)(fakeRequest, messages, templateRenderer, ec).toString
+    otherCompanyBenefit(frontendAppConfig, form, NormalMode, index, taxYear)(fakeRequest, messages).toString
 
   "OtherBenefit Controller" must {
 
