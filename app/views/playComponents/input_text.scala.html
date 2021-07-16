@@ -25,6 +25,7 @@
         inputType: String = "text",
         autoComplete: Option[String] = None,
         isPageHeading: Boolean = true,
+        largeText: Boolean = true,
         field: Field
 )(implicit messages: Messages)
 @hint = @{
@@ -37,7 +38,7 @@
 @govukInput(Input(
     label = Label(
         isPageHeading = false,
-        classes = "govuk-label--xl",
+        classes = if(largeText) "govuk-label--xl" else "govuk-label--m",
         content = HtmlContent(label)
     ),
     hint = hint.map(hintString => Hint(content = Text(hintString))),

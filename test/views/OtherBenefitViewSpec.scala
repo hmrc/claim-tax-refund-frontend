@@ -24,10 +24,10 @@ import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
-import views.behaviours.QuestionViewBehaviours
+import views.behaviours.NewQuestionViewBehaviours
 import views.html.otherBenefit
 
-class OtherBenefitViewSpec extends QuestionViewBehaviours[OtherBenefit] with MockitoSugar with GuiceOneAppPerSuite {
+class OtherBenefitViewSpec extends NewQuestionViewBehaviours[OtherBenefit] with MockitoSugar with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "otherBenefit"
   private val taxYear = CustomTaxYear(2017)
@@ -37,10 +37,10 @@ class OtherBenefitViewSpec extends QuestionViewBehaviours[OtherBenefit] with Moc
 
   def createView: () =>
     HtmlFormat.Appendable = () =>
-    otherBenefit(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages, templateRenderer, ec)
+    otherBenefit(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages)
 
   def createViewUsingForm: Form[OtherBenefit] => HtmlFormat.Appendable = (form: Form[OtherBenefit]) =>
-    otherBenefit(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages, templateRenderer, ec)
+    otherBenefit(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages)
 
   "OtherBenefit view" must {
     behave like normalPage(createView, messageKeyPrefix, None, "1", taxYear.asString(messages))
