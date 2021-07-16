@@ -16,13 +16,19 @@
 
 @import config.FrontendAppConfig
 @import controllers.routes._
-@import forms.SelectCompanyBenefitsForm
 @import models.Mode
 @import uk.gov.hmrc.play.views.html.helpers.FormWithCSRF
-@import uk.gov.hmrc.renderer.TemplateRenderer
-@import scala.concurrent.ExecutionContext
+@import viewmodels.InputViewModel
 
-@this(main_template: main_template, formWithCSRF: FormWithCSRF)
+@this(
+    main_template: main_template,
+    formWithCSRF: FormWithCSRF,
+    layout: Layout,
+    errorSummary: playComponents.error_summary,
+    heading: playComponents.heading,
+    inputCheckbox: playComponents.input_check_box,
+    submitButton: playComponents.submit_button
+)
 
 @(
         appConfig: FrontendAppConfig,
@@ -32,35 +38,38 @@
 )(
         implicit
         request: Request[_],
-        messages: Messages,
-templateRenderer: TemplateRenderer,
-ec: ExecutionContext)
+        messages: Messages
+)
 
 @title = @{
     if(form.errors.nonEmpty) messages("site.title.error", messages("selectCompanyBenefits.title")) else messages("selectCompanyBenefits.title")
 }
 
-@main_template(
-    title = title,
-    appConfig = appConfig,
-    bodyClasses = None
-) {
+@layout(pageTitle = title) {
 
     @formWithCSRF(action = SelectCompanyBenefitsController.onSubmit(mode), 'autoComplete -> "off") {
 
-        @components.back_link()
+        @errorSummary(form.errors)
 
-        @components.error_summary(form.errors)
+        @heading(messages("selectCompanyBenefits.heading"), taxYear = Some(taxYear.asString))
 
-        @components.heading(messages("selectCompanyBenefits.heading"), taxYear = Some(taxYear.asString))
-
-        @components.input_check_box(
-            form("value"),
+        @inputCheckbox(
+            viewModel = InputViewModel("value", form),
             legend = messages("selectCompanyBenefits.heading", taxYear.asString),
             legendClass = Some("visually-hidden"),
-            inputs = SelectCompanyBenefitsForm.options
+            inputs = CompanyBenefits.sortedCompanyBenefits.map { checkboxOption =>
+                CheckboxItem(
+                    content = HtmlContent(messages(s"selectCompanyBenefits.$checkboxOption")),
+                    value = checkboxOption.toString
+                )
+            },
+            field = form("value")
         )
 
-        @components.submit_button()
+        @submitButton()
+
     }
+
 }
+
+

@@ -187,7 +187,7 @@ RemoveOtherSelectedOption.otherBenefits=buddiant trethadwy
 selectBenefits.blank=Dewiswch y buddiannau trethadwy eraill a gawsoch
 selectBenefits.other-taxable-benefit=Buddiannau trethadwy arall
 
-selectCompanyBenefits.fuel-benefit=buddiant tanwydd
+selectCompanyBenefits.fuel-benefit=Buddiant tanwydd
 
 selectTaxableIncome.foreign-income=incwm tramor
 
@@ -437,9 +437,9 @@ selectBenefits.title=Pa fuddiannau trethadwy a gawsoch?
 
 selectCompanyBenefits.blank=Dewiswch y buddiannau cwmni trethadwy a gawsoch
 selectCompanyBenefits.changeLabel=Newid pa fuddiannau cwmni trethadwy a gawsoch
-selectCompanyBenefits.company-car-benefit=buddiant car cwmni
+selectCompanyBenefits.company-car-benefit=Buddiant car cwmni
 selectCompanyBenefits.heading=Pa fuddiannau cwmni trethadwy a gawsoch?
-selectCompanyBenefits.medical-benefit=buddiant meddygol
+selectCompanyBenefits.medical-benefit=Buddiant meddygol
 selectCompanyBenefits.other-company-benefit=Buddiannau cwmni trethadwy eraill
 selectCompanyBenefits.title=Pa fuddiannau cwmni trethadwy a gawsoch?
 

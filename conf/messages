@@ -257,9 +257,9 @@ selectCompanyBenefits.title = Which taxable company benefits did you get?
 selectCompanyBenefits.heading = Which taxable company benefits did you get?
 selectCompanyBenefits.blank = Select the taxable company benefits you got
 selectCompanyBenefits.changeLabel = Change which taxable company benefits you got
-selectCompanyBenefits.company-car-benefit = company car benefit
-selectCompanyBenefits.fuel-benefit = fuel benefit
-selectCompanyBenefits.medical-benefit = medical benefit
+selectCompanyBenefits.company-car-benefit = Company car benefit
+selectCompanyBenefits.fuel-benefit = Fuel benefit
+selectCompanyBenefits.medical-benefit = Medical benefit
 selectCompanyBenefits.other-company-benefit = Other taxable company benefits
 
 anyCompanyBenefits.title = Did you get any taxable company benefits from your employer?
