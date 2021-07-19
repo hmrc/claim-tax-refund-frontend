@@ -26,10 +26,10 @@ import play.api.data.Form
 import play.twirl.api.Html
 import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, MockUserAnswers}
 import viewmodels.AnswerSection
-import views.behaviours.YesNoViewBehaviours
+import views.behaviours.NewYesNoViewBehaviours
 import views.html.anyOtherBenefits
 
-class AnyOtherBenefitsViewSpec extends YesNoViewBehaviours with GuiceOneAppPerSuite {
+class AnyOtherBenefitsViewSpec extends NewYesNoViewBehaviours with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "anyOtherBenefits"
   private val taxYear = CustomTaxYear(2017)
@@ -41,10 +41,10 @@ class AnyOtherBenefitsViewSpec extends YesNoViewBehaviours with GuiceOneAppPerSu
   val anyOtherBenefits: anyOtherBenefits = fakeApplication.injector.instanceOf[anyOtherBenefits]
 
   def createView: () => Html = () =>
-    anyOtherBenefits(frontendAppConfig, form, NormalMode, taxYear, otherBenefits)(fakeRequest, messages, templateRenderer, ec)
+    anyOtherBenefits(frontendAppConfig, form, NormalMode, taxYear, otherBenefits)(fakeRequest, messages)
 
   def createViewUsingForm: Form[_] => Html = (form: Form[_]) =>
-    anyOtherBenefits(frontendAppConfig, form, NormalMode, taxYear, otherBenefits)(fakeRequest, messages, templateRenderer, ec)
+    anyOtherBenefits(frontendAppConfig, form, NormalMode, taxYear, otherBenefits)(fakeRequest, messages)
 
   "AnyOtherBenefits view" must {
 
@@ -64,15 +64,15 @@ class AnyOtherBenefitsViewSpec extends YesNoViewBehaviours with GuiceOneAppPerSu
 		"any benefits list" must {
       val doc: Document = asDocument(createView())
       "display list of created benefits" in {
-        doc.getElementById("component-answer-list").text.contains("qwerty") mustBe true
+        doc.getElementsByClass("govuk-summary-list").text.contains("qwerty") mustBe true
       }
 
       "list item must have change buttons" in {
-        doc.getElementById("component-answer-list").text.contains("Change qwerty") mustBe true
+        doc.getElementsByClass("govuk-summary-list__actions-list-item").text.contains("Change qwerty") mustBe true
       }
 
 			"list item must have a remove button" in {
-				doc.getElementById("component-answer-list").text.contains("Remove qwerty") mustBe true
+				doc.getElementsByClass("govuk-summary-list__actions-list-item").text.contains("Remove qwerty") mustBe true
 			}
 		}
   }

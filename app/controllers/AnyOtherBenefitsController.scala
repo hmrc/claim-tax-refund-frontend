@@ -43,8 +43,7 @@ class AnyOtherBenefitsController @Inject()(appConfig: FrontendAppConfig,
                                            requireData: DataRequiredAction,
                                            formProvider: BooleanForm,
                                            anyOtherBenefits: anyOtherBenefits,
-                                           cc: MessagesControllerComponents,
-                                           implicit val templateRenderer: LocalTemplateRenderer
+                                           cc: MessagesControllerComponents
                                           )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   private val errorKey = "anyOtherBenefits.blank"
