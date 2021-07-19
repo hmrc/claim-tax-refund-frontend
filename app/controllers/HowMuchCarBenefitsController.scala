@@ -42,7 +42,7 @@ class HowMuchCarBenefitsController @Inject()(
                                               getData: DataRetrievalAction,
                                               requireData: DataRequiredAction,
                                               howMuchCarBenefits: howMuchCarBenefits,
-cc: MessagesControllerComponents,
+                                              cc: MessagesControllerComponents,
                                               formBuilder: HowMuchCarBenefitsForm,
                                               implicit val templateRenderer: LocalTemplateRenderer
                                             )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {

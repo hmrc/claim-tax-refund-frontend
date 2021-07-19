@@ -23,10 +23,10 @@ import models.SelectTaxYear.CustomTaxYear
 import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
-import views.behaviours.StringViewBehaviours
+import views.behaviours.NewStringViewBehaviours
 import views.html.howMuchCarBenefits
 
-class HowMuchCarBenefitsViewSpec extends StringViewBehaviours with MockitoSugar with GuiceOneAppPerSuite {
+class HowMuchCarBenefitsViewSpec extends NewStringViewBehaviours with MockitoSugar with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "howMuchCarBenefits"
   private val taxYear = CustomTaxYear(2017)
@@ -34,9 +34,9 @@ class HowMuchCarBenefitsViewSpec extends StringViewBehaviours with MockitoSugar 
   override val form: Form[String] = new HowMuchCarBenefitsForm(frontendAppConfig)()
   val howMuchCarBenefits: howMuchCarBenefits = fakeApplication.injector.instanceOf[howMuchCarBenefits]
 
-  def createView = () => howMuchCarBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
+  def createView = () => howMuchCarBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) => howMuchCarBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
+  def createViewUsingForm = (form: Form[String]) => howMuchCarBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "HowMuchCarBenefits view" must {
     behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))
@@ -52,6 +52,5 @@ class HowMuchCarBenefitsViewSpec extends StringViewBehaviours with MockitoSugar 
       expectedHintKeyLine1 = None,
       expectedHintKeyLine2 = None
     )
-
   }
 }
