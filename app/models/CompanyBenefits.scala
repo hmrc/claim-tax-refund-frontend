@@ -22,10 +22,10 @@ import utils.EnumUtils
 
 object CompanyBenefits extends Enumeration {
 
-  val COMPANY_CAR_BENEFIT = Value("company-car-benefit")
-  val FUEL_BENEFIT = Value("fuel-benefit")
-  val MEDICAL_BENEFIT = Value("medical-benefit")
-  val OTHER_COMPANY_BENEFIT = Value("other-company-benefit")
+  val COMPANY_CAR_BENEFIT: CompanyBenefits.Value = Value("company-car-benefit")
+  val FUEL_BENEFIT: CompanyBenefits.Value = Value("fuel-benefit")
+  val MEDICAL_BENEFIT: CompanyBenefits.Value = Value("medical-benefit")
+  val OTHER_COMPANY_BENEFIT: CompanyBenefits.Value = Value("other-company-benefit")
 
   val reads: Reads[Value] = EnumUtils.enumReads(CompanyBenefits)
   val writes: Writes[Value] = EnumUtils.enumWrites

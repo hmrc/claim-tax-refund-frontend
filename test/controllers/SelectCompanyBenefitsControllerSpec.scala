@@ -44,7 +44,7 @@ class SelectCompanyBenefitsControllerSpec extends ControllerSpecBase with Mockit
       dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), selectCompanyBenefits, messagesControllerComponents, templateRenderer)
 
   def viewAsString(form: Form[_] = SelectCompanyBenefitsForm()) =
-    selectCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec).toString
+    selectCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
 
   "SelectCompanyBenefits Controller" must {
 
