@@ -45,7 +45,7 @@ class HowMuchFuelBenefitControllerSpec extends ControllerSpecBase with MockitoSu
     new HowMuchFuelBenefitController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
       dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), howMuchFuelBenefit, messagesControllerComponents, new HowMuchFuelBenefitForm(frontendAppConfig), templateRenderer)
 
-  def viewAsString(form: Form[_] = form) = howMuchFuelBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec).toString
+  def viewAsString(form: Form[_] = form) = howMuchFuelBenefit(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
 
   "HowMuchFuelBenefit Controller" must {
 
