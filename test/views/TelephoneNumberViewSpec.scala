@@ -23,10 +23,10 @@ import models.{NormalMode, TelephoneOption}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.{Form, FormError}
 import play.twirl.api.HtmlFormat
-import views.behaviours.QuestionViewBehaviours
+import views.behaviours.{NewQuestionViewBehaviours, QuestionViewBehaviours}
 import views.html.telephoneNumber
 
-class TelephoneNumberViewSpec extends QuestionViewBehaviours[TelephoneOption] with GuiceOneAppPerSuite {
+class TelephoneNumberViewSpec extends NewQuestionViewBehaviours[TelephoneOption] with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "telephoneNumber"
   private val testPhoneNumber = "0191 1111 111"
@@ -37,10 +37,10 @@ class TelephoneNumberViewSpec extends QuestionViewBehaviours[TelephoneOption] wi
   val telephoneNumber: telephoneNumber = fakeApplication.injector.instanceOf[telephoneNumber]
 
   def createView = () =>
-    telephoneNumber(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
+    telephoneNumber(form, NormalMode, taxYear)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[_]) =>
-    telephoneNumber(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
+    telephoneNumber(form, NormalMode, taxYear)(fakeRequest, messages)
 
   "TelephoneNumber view" must {
     behave like normalPage(createView, messageKeyPrefix, None)
@@ -95,8 +95,8 @@ class TelephoneNumberViewSpec extends QuestionViewBehaviours[TelephoneOption] wi
           "contain 2 radioButtons" in {
             val doc = asDocument(createView(form))
             assert(doc.select("input[type=\"radio\"]").size == 2)
-            assertRenderedById(doc, "anyTelephoneNumber-yes")
-            assertRenderedById(doc, "anyTelephoneNumber-no")
+            assertRenderedById(doc, "anyTelephoneNumber")
+            assertRenderedById(doc, "anyTelephoneNumber-2")
           }
 
           "contain a conditionally-revealing text input" which {
@@ -115,8 +115,8 @@ class TelephoneNumberViewSpec extends QuestionViewBehaviours[TelephoneOption] wi
 
           "have no values checked when rendered with no form" in {
             val doc = asDocument(createView(form))
-            assert(!doc.getElementById("anyTelephoneNumber-yes").hasAttr("checked"))
-            assert(!doc.getElementById("anyTelephoneNumber-no").hasAttr("checked"))
+            assert(!doc.getElementById("anyTelephoneNumber").hasAttr("checked"))
+            assert(!doc.getElementById("anyTelephoneNumber-2").hasAttr("checked"))
           }
 
 
@@ -127,7 +127,7 @@ class TelephoneNumberViewSpec extends QuestionViewBehaviours[TelephoneOption] wi
 
           "not render an error summary" in {
             val doc = asDocument(createView(form))
-            assertNotRenderedById(doc, "error-summary_header")
+            assertNotRenderedById(doc, "error-summary-title")
           }
         }
 
@@ -142,13 +142,13 @@ class TelephoneNumberViewSpec extends QuestionViewBehaviours[TelephoneOption] wi
         "rendered with an error" must {
           "show an error summary" in {
             val doc = asDocument(createView(form.withError(error)))
-            assertRenderedById(doc, "error-summary-heading")
+            assertRenderedById(doc, "error-summary-title")
           }
 
           "show an error in the value field's label" in {
             val doc = asDocument(createView(form.withError(FormError("anyTelephoneNumber", "Please enter a valid number"))))
-            val errorSpan = doc.getElementsByClass("error-notification").first
-            errorSpan.text mustBe messages(errorMessage)
+            val errorSpan = doc.getElementsByClass("govuk-error-message").first
+            errorSpan.text mustBe s"Error: ${messages(errorMessage)}"
           }
         }
       }
@@ -159,19 +159,19 @@ class TelephoneNumberViewSpec extends QuestionViewBehaviours[TelephoneOption] wi
 
       "have only the correct value checked when yes selected" in {
         val doc = asDocument(createView(form.fill(TelephoneOption.Yes(testPhoneNumber))))
-        assert(doc.getElementById("anyTelephoneNumber-yes").hasAttr("checked"))
-        assert(!doc.getElementById("anyTelephoneNumber-no").hasAttr("checked"))
+        assert(doc.getElementById("anyTelephoneNumber").hasAttr("checked"))
+        assert(!doc.getElementById("anyTelephoneNumber-2").hasAttr("checked"))
       }
 
       "have only the correct value checked when no selected" in {
         val doc = asDocument(createView(form.fill(TelephoneOption.No)))
-        assert(!doc.getElementById("anyTelephoneNumber-yes").hasAttr("checked"))
-        assert(doc.getElementById("anyTelephoneNumber-no").hasAttr("checked"))
+        assert(!doc.getElementById("anyTelephoneNumber").hasAttr("checked"))
+        assert(doc.getElementById("anyTelephoneNumber-2").hasAttr("checked"))
       }
 
       "not render an error summary" in {
         val doc = asDocument(createView(form.fill(TelephoneOption.Yes(testPhoneNumber))))
-        assertNotRenderedById(doc, "error-summary_header")
+        assertNotRenderedById(doc, "error-summary-title")
       }
     }
   }

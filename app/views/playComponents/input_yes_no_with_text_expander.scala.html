@@ -14,62 +14,58 @@
  * limitations under the License.
  *@
 
-@import viewmodels.{InputViewModelBase, InputViewModel}
-
+@this(
+    govukRadios : GovukRadios,
+    govukInput : GovukInput,
+    govukErrorSummary : GovukErrorSummary
+)
 @(
-viewModel: InputViewModelBase,
-form: Form[_],
-label: String,
-textFieldLabel: String,
-textFieldLabelId: String = "yesAnyTaxPaid",
-textFieldId: String = "taxPaidAmount",
-secondaryLabel: Option[String] = None,
-inputClass: Option[String] = None,
-hint: Option[String] = None,
-yesAssoc: Option[String] = None,
-noAssoc: Option[String] = None,
-labelClass: Option[String] = None,
-textHintLine1: Option[String] = None,
-textHintLine2: Option[String] = None,
-currency: Boolean = false,
-inputType: Option[String] = Some("text"),
-autoComplete: Boolean = false
+    label: Html,
+    textLabel: String,
+    hint: Option[String] = None,
+    textHintLine1: Option[String] = None,
+    textHintLine2: Option[String] = None,
+    labelClass: Option[String] = None,
+    currency: Boolean = false,
+    inputType: String = "text",
+    autoComplete: Boolean = false,
+    yesNoField: Field,
+    textField: Field
 )(implicit messages: Messages)
 
+@textHint = @{
+    (Seq(textHintLine1, textHintLine2).flatten.mkString(" ")) match {
+        case ""           => None
+        case (hintString) => Some(hintString)
+    }
+}
 
-<div class="form-group @if(viewModel.errorKey.nonEmpty){form-field--error}">
-    <fieldset class="inline" id="@{viewModel.id}">
+@textHtml = {
+    @govukInput(Input(
+        inputType = inputType,
+        label = Label(
+            content = Text(textLabel)
+        ),
+        hint = textHint.map(hintString => Hint(content = Text(hintString))),
+        spellcheck = Some(!currency),
+        prefix = if(currency) Some(PrefixOrSuffix(content = Text("£"))) else None,
+        autocomplete = if(autoComplete) Some(inputType) else None,
+    ).withFormField(textField))
+}
 
-        <legend>
-          <span @if(labelClass.nonEmpty){class="@labelClass"}>@label</span>
-          @if(hint.nonEmpty){
-            <span class="form-hint">@hint</span>
-          }
-          @if(viewModel.errorKey.nonEmpty){
-            <span class="error-notification" id="error-message-@{viewModel.id}-input">@messages(viewModel.errorKey)</span>
-          }
-        </legend>
-        <div class="multiple-choice" data-target="@if(yesAssoc.nonEmpty){@yesAssoc}">
-            <input id="@{viewModel.id}-yes" type="radio" name="@{viewModel.id}" value="true" @if(viewModel.value.contains("true")){checked="checked"} />
-            <label for="@{viewModel.id}-yes" > @messages("site.yes") </label>
-        </div>
-        <div class="multiple-choice" data-target="@if(noAssoc.nonEmpty){@noAssoc}">
-            <input id="@{viewModel.id}-no" type="radio" name="@{viewModel.id}" value="false" @if(viewModel.value.contains("false")){checked="checked"} />
-            <label for="@{viewModel.id}-no" > @messages("site.no") </label>
-        </div>
-
-        <div id="@textFieldLabelId" class="js-hidden">
-            @components.input_text(InputViewModel(textFieldId, form),
-            textFieldLabel,
-            Some("panel panel-border-narrow"),
-            hintLine1 = textHintLine1,
-            hintLine2 = textHintLine2,
-            currency = currency,
-            inputType = inputType,
-            autoComplete = autoComplete
-            )
-        </div>
-
-    </fieldset>
-
-</div>
+@govukRadios(Radios(
+    fieldset = Some(Fieldset(
+        legend = Some(Legend(
+            classes = labelClass.getOrElse("govuk-fieldset__legend--xl"),
+            content = HtmlContent(label),
+            isPageHeading = false,
+        ))
+    )),
+    hint = hint.map(hintString => Hint(content = Text(hintString))),
+    items = Seq("yes", "no").map(answer =>
+        RadioItem(value = Some((answer == "yes").toString),
+            content = Text(messages(s"site.$answer")),
+            conditionalHtml = if(answer == "yes") Some(textHtml) else None
+        ))
+    ).withFormField(yesNoField)
+)
