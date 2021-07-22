@@ -16,6 +16,7 @@
 
 package views
 
+import org.jsoup.select.NodeFilter
 import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.twirl.api.HtmlFormat
@@ -31,22 +32,22 @@ class ConfirmationViewSpec extends ViewBehaviours with MockitoSugar with GuiceOn
 
   def createView: () =>
 		HtmlFormat.Appendable = () =>
-			confirmation(frontendAppConfig, submissionReference)(fakeRequest, messages, templateRenderer, ec)
+			confirmation(frontendAppConfig, submissionReference)(fakeRequest, messages)
 
   "Confirmation view" must {
     behave like normalPage(createView, messageKeyPrefix, None)
 
-    "have its title in a highlight box" in {
+    "have its title in a confirmation govuk panel" in {
       val doc = asDocument(createView())
       val h1 = doc.getElementsByTag("h1").first
-      h1.parent.hasClass("govuk-box-highlight") mustBe true
+      h1.parent.hasClass("govuk-panel--confirmation") mustBe true
     }
 
     "have a reference with non-breaking hyphen in a highlight box" in {
       val doc = asDocument(createView())
       val referenceText = doc.getElementById("reference")
       referenceText.text mustBe messages("confirmation.reference") + formattedSubmissionReference
-      referenceText.parent.hasClass("govuk-box-highlight") mustBe true
+      referenceText.parent.hasClass("govuk-panel--confirmation") mustBe true
     }
 
     "have what happens next header and text" in {
@@ -57,9 +58,9 @@ class ConfirmationViewSpec extends ViewBehaviours with MockitoSugar with GuiceOn
 
     "have a link to an exit survey" in {
       val doc = asDocument(createView())
-      val link = doc.getElementById("survey-link")
-      link.text mustBe messages("confirmation.survey.linkText")
-      link.attr("href") must include("/feedback/CTR")
+      val feedback = doc.select("a[href*=/feedback/CTR]")
+      feedback.isEmpty mustBe false
+      feedback.text.contains(messages("confirmation.survey.linkText")) mustBe true
     }
   }
 }
