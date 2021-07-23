@@ -25,7 +25,7 @@
         title       = Text(messages("error.summary.title")),
         errorList   = for(error <- errors) yield {
             ErrorLink(
-                href    = Some("#value"),
+                href    = Some(s"#${error.key}"),
                 content = Text(messages(error.message, error.args:_*))
             )
         }

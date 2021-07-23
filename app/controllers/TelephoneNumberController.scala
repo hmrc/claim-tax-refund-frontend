@@ -35,7 +35,6 @@ import views.html.telephoneNumber
 import scala.concurrent.{ExecutionContext, Future}
 
 class TelephoneNumberController @Inject()(
-                                           appConfig: FrontendAppConfig,
                                            override val messagesApi: MessagesApi,
                                            dataCacheConnector: DataCacheConnector,
                                            navigator: Navigator,
@@ -45,7 +44,6 @@ class TelephoneNumberController @Inject()(
                                            telephoneNumber: telephoneNumber,
 cc: MessagesControllerComponents,
                                            formBuilder: TelephoneNumberForm,
-                                           implicit val templateRenderer: LocalTemplateRenderer
                                          )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
 
@@ -60,7 +58,7 @@ cc: MessagesControllerComponents,
 
       request.userAnswers.selectTaxYear.map {
         taxYear =>
-          Ok(telephoneNumber(appConfig, preparedForm, mode, taxYear))
+          Ok(telephoneNumber(preparedForm, mode, taxYear))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
@@ -73,7 +71,7 @@ cc: MessagesControllerComponents,
         taxYear =>
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(telephoneNumber(appConfig, formWithErrors, mode, taxYear))),
+              Future.successful(BadRequest(telephoneNumber(formWithErrors, mode, taxYear))),
             value =>
               dataCacheConnector.save[TelephoneOption](request.externalId, AnyTelephoneId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(TelephoneNumberId, mode)(new UserAnswers(cacheMap))))
