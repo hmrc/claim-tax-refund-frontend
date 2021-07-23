@@ -19,10 +19,16 @@
 @import forms.SelectTaxableIncomeForm
 @import models.Mode
 @import uk.gov.hmrc.play.views.html.helpers.FormWithCSRF
-@import uk.gov.hmrc.renderer.TemplateRenderer
-@import scala.concurrent.ExecutionContext
+@import viewmodels.InputViewModel
 
-@this(main_template: main_template, formWithCSRF: FormWithCSRF)
+@this(
+        formWithCSRF: FormWithCSRF,
+        layout: Layout,
+        errorSummary: playComponents.error_summary,
+        heading: playComponents.heading,
+        inputCheckBox: playComponents.input_check_box,
+        submitButton: playComponents.submit_button
+)
 
 @(
         appConfig: FrontendAppConfig,
@@ -32,35 +38,37 @@
 )(
         implicit
         request: Request[_],
-        messages: Messages,
-templateRenderer: TemplateRenderer,
-ec: ExecutionContext)
+        messages: Messages
+)
 
     @title = @{
         if(form.errors.nonEmpty) messages("site.title.error", messages("selectTaxableIncome.title")) else messages("selectTaxableIncome.title")
     }
 
-    @main_template(
-        title = messages(title, taxYear.asString),
-        appConfig = appConfig,
-        bodyClasses = None
+    @layout(
+        pageTitle = messages(title, taxYear.asString)
     ) {
 
         @formWithCSRF(action = SelectTaxableIncomeController.onSubmit(mode), 'autoComplete -> "off") {
 
-            @components.back_link()
+            @errorSummary(form.errors)
 
-            @components.error_summary(form.errors)
+            @heading(messages("selectBenefits.heading"), taxYear = Some(taxYear.asString))
 
-            @components.heading(messages("selectTaxableIncome.heading"), taxYear = Some(taxYear.asString))
-
-            @components.input_check_box(
-                form("value"),
+            @inputCheckBox(
+                viewModel = InputViewModel("value", form),
                 legend = messages("selectTaxableIncome.heading", taxYear.asString),
                 legendClass = Some("visually-hidden"),
-                inputs = SelectTaxableIncomeForm.options
+                inputs = SelectTaxableIncomeForm.options.map { checkboxOption =>
+                    CheckboxItem(
+                        content = HtmlContent(messages(checkboxOption._1).capitalize),
+                        value = checkboxOption._2
+                    )
+                },
+                field = form("value")
             )
 
-            @components.submit_button()
+
+            @submitButton()
         }
     }
