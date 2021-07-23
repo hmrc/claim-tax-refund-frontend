@@ -22,10 +22,10 @@ import models.{NormalMode, TaxableIncome}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import play.twirl.api.Html
-import views.behaviours.{CheckboxViewBehaviours, ViewBehaviours}
+import views.behaviours.{NewCheckboxViewBehaviours, ViewBehaviours}
 import views.html.selectTaxableIncome
 
-class SelectTaxableIncomeViewSpec extends ViewBehaviours with CheckboxViewBehaviours[TaxableIncome.Value] with GuiceOneAppPerSuite {
+class SelectTaxableIncomeViewSpec extends ViewBehaviours with NewCheckboxViewBehaviours[TaxableIncome.Value] with GuiceOneAppPerSuite {
 
   val messageKeyPrefix = "selectTaxableIncome"
   val fieldKey = "value"
@@ -41,9 +41,9 @@ class SelectTaxableIncomeViewSpec extends ViewBehaviours with CheckboxViewBehavi
   override def createView(): Html = createView(form)
 
   def createView(form: Form[Seq[TaxableIncome.Value]]): Html =
-    selectTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
+    selectTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[_]) => selectTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
+  def createViewUsingForm = (form: Form[_]) => selectTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "SelectTaxableIncome view" must {
     behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))

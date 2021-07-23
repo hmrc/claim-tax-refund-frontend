@@ -43,7 +43,7 @@ class SelectTaxableIncomeControllerSpec extends ControllerSpecBase with GuiceOne
       dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), selectTaxableIncome, messagesControllerComponents, templateRenderer)
 
   def viewAsString(form: Form[_] = SelectTaxableIncomeForm()) =
-    selectTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec).toString
+    selectTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
 
   "SelectTaxableIncome Controller" must {
 
