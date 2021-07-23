@@ -23,10 +23,10 @@ import models.SelectTaxYear.CustomTaxYear
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
-import views.behaviours.YesNoViewBehaviours
+import views.behaviours.NewYesNoViewBehaviours
 import views.html.anyTaxableIncome
 
-class AnyTaxableIncomeViewSpec extends YesNoViewBehaviours with GuiceOneAppPerSuite {
+class AnyTaxableIncomeViewSpec extends NewYesNoViewBehaviours with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "anyTaxableIncome"
   private val listMessageKeyPrefix = "selectTaxableIncome"
@@ -37,11 +37,11 @@ class AnyTaxableIncomeViewSpec extends YesNoViewBehaviours with GuiceOneAppPerSu
 
   def createView: () =>
     HtmlFormat.Appendable = () =>
-      anyTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
+      anyTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   def createViewUsingForm: Form[_] =>
     HtmlFormat.Appendable = (form: Form[_]) =>
-      anyTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
+      anyTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "AnyTaxableIncome view" must {
 
