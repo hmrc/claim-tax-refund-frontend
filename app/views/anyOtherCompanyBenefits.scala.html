@@ -22,7 +22,16 @@
 @import uk.gov.hmrc.renderer.TemplateRenderer
 @import scala.concurrent.ExecutionContext
 
-@this(main_template: main_template, formWithCSRF: FormWithCSRF)
+@this(
+    main_template: main_template,
+    formWithCSRF: FormWithCSRF,
+    layout: Layout,
+    errorSummary: playComponents.error_summary,
+    pageHeading: hmrcPageHeading,
+    otherSummary: playComponents.other_summary,
+    inputYesNo: playComponents.input_yes_no,
+    submitButton: playComponents.submit_button
+)
 
 @(
         appConfig: FrontendAppConfig,
@@ -33,38 +42,36 @@
 )(
         implicit
         request: Request[_],
-        messages: Messages,
-templateRenderer: TemplateRenderer,
-ec: ExecutionContext)
+        messages: Messages
+)
 
     @title = @{
         if(form.errors.nonEmpty) messages("site.title.error", messages("anyOtherCompanyBenefits.title")) else messages("anyOtherCompanyBenefits.title")
     }
 
-    @main_template(
-        title = title,
-        appConfig = appConfig,
-        bodyClasses = None
+    @layout(
+        pageTitle = title
     ) {
 
         @formWithCSRF(action = AnyOtherCompanyBenefitsController.onSubmit(mode), 'autoComplete -> "off") {
 
-            @components.back_link()
+            @errorSummary(form.errors)
 
-            @components.error_summary(form.errors)
+            @pageHeading(PageHeading(
+                text = messages("anyOtherCompanyBenefits.heading"),
+                section = Some(messages("site.service_name.with_tax_year", taxYear.asString))
+            ))
 
-            @components.heading(messages(s"anyOtherCompanyBenefits.heading"), taxYear = Some(taxYear.asString))
-
-            @components.other_summary(
+            @otherSummary(
                 answers = otherCompanyBenefits.rows
             )
 
-            @components.input_yes_no(
-                InputViewModel("value", form),
+            @inputYesNo(
+                viewModel = InputViewModel("value", form),
                 label = messages("anyOtherCompanyBenefits.addAnotherCompanyBenefit"),
-                labelClass = Some("heading-medium")
+                field = form("value")
             )
 
-            @components.submit_button()
+            @submitButton()
         }
     }
