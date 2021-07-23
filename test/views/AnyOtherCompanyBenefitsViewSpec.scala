@@ -26,10 +26,10 @@ import play.api.data.Form
 import play.twirl.api.Html
 import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, MockUserAnswers}
 import viewmodels.AnswerSection
-import views.behaviours.YesNoViewBehaviours
+import views.behaviours.NewYesNoViewBehaviours
 import views.html.anyOtherCompanyBenefits
 
-class AnyOtherCompanyBenefitsViewSpec extends YesNoViewBehaviours with GuiceOneAppPerSuite {
+class AnyOtherCompanyBenefitsViewSpec extends NewYesNoViewBehaviours with GuiceOneAppPerSuite {
 
 	private val messageKeyPrefix = "anyOtherCompanyBenefits"
 	private val taxYear = CustomTaxYear(2017)
@@ -41,10 +41,10 @@ class AnyOtherCompanyBenefitsViewSpec extends YesNoViewBehaviours with GuiceOneA
 	val anyOtherCompanyBenefits: anyOtherCompanyBenefits = fakeApplication.injector.instanceOf[anyOtherCompanyBenefits]
 
 	def createView: () => Html = () =>
-		anyOtherCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear, otherCompanyBenefits)(fakeRequest, messages, templateRenderer, ec)
+		anyOtherCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear, otherCompanyBenefits)(fakeRequest, messages)
 
 	def createViewUsingForm: Form[_] => Html = (form: Form[_]) =>
-		anyOtherCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear, otherCompanyBenefits)(fakeRequest, messages, templateRenderer, ec)
+		anyOtherCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear, otherCompanyBenefits)(fakeRequest, messages)
 
 	"AnyOtherCompanyBenefits view" must {
 
@@ -65,15 +65,15 @@ class AnyOtherCompanyBenefitsViewSpec extends YesNoViewBehaviours with GuiceOneA
 	"display 'You have told us about:' section" must {
 		val doc: Document = asDocument(createView())
 		"display list of created company benefits" in {
-			doc.getElementById("component-answer-list").text.contains("qwerty") mustBe true
+			doc.getElementsByClass("govuk-summary-list").text.contains("qwerty") mustBe true
 		}
 
 		"list item must have change buttons" in {
-			doc.getElementById("component-answer-list").text.contains("Change") mustBe true
+			doc.getElementsByClass("govuk-summary-list__actions-list-item").text.contains("Change") mustBe true
 		}
 
 		"list item must have a remove button" in {
-			doc.getElementById("component-answer-list").text.contains("Remove") mustBe true
+			doc.getElementsByClass("govuk-summary-list__actions-list-item").text.contains("Remove") mustBe true
 		}
 	}
 

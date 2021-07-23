@@ -49,7 +49,7 @@ class AnyOtherCompanyBenefitsControllerSpec extends ControllerSpecBase with Guic
       dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), anyOtherCompanyBenefits, messagesControllerComponents, formProvider, templateRenderer)
 
   def viewAsString(form: Form[_] = form, mode: Mode = NormalMode): String =
-    anyOtherCompanyBenefits(frontendAppConfig, form, mode, taxYear, otherCompanyBenefits)(fakeRequest, messages, templateRenderer, ec).toString
+    anyOtherCompanyBenefits(frontendAppConfig, form, mode, taxYear, otherCompanyBenefits)(fakeRequest, messages).toString
 
   "AnyOtherCompanyBenefits Controller" must {
 
