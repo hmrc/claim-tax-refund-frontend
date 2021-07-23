@@ -45,7 +45,7 @@ class HowMuchInvestmentOrDividendControllerSpec extends ControllerSpecBase with 
   val form = new HowMuchInvestmentOrDividendForm(frontendAppConfig)()
   val howMuchInvestmentOrDividend: howMuchInvestmentOrDividend = fakeApplication.injector.instanceOf[howMuchInvestmentOrDividend]
 
-  def viewAsString(form: Form[_] = form) = howMuchInvestmentOrDividend(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec).toString
+  def viewAsString(form: Form[_] = form) = howMuchInvestmentOrDividend(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
 
   "HowMuchInvestmentOrDividend Controller" must {
 
