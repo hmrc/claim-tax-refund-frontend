@@ -64,6 +64,7 @@
     hint = hint.map(hintString => Hint(content = Text(hintString))),
     items = Seq("yes", "no").map(answer =>
         RadioItem(value = Some((answer == "yes").toString),
+            id = Some(s"${yesNoField.name}-$answer"),
             content = Text(messages(s"site.$answer")),
             conditionalHtml = if(answer == "yes") Some(textHtml) else None
         ))
