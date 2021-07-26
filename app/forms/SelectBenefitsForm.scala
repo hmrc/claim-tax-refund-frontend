@@ -35,8 +35,6 @@ object SelectBenefitsForm extends FormErrorHelper {
     def unbind(key: String, value: Benefits.Value) = Map(key -> value.toString)
   }
 
-  ErrorLink
-
   private def optionIsValid(value: String): Boolean = Benefits.sortedBenefits.map(_.toString).contains(value)
 
   private def constraint: Constraint[Seq[Benefits.Value]] = Constraint {
