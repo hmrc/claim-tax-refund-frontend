@@ -45,7 +45,7 @@ class HowMuchBankInterestControllerSpec extends ControllerSpecBase with GuiceOne
     new HowMuchBankInterestController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
       dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), howMuchBankInterest, messagesControllerComponents, new HowMuchBankInterestForm(frontendAppConfig), templateRenderer)
 
-  def viewAsString(form: Form[_] = form): String = howMuchBankInterest(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec).toString
+  def viewAsString(form: Form[_] = form): String = howMuchBankInterest(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
 
   "HowMuchBankInterest Controller" must {
 
