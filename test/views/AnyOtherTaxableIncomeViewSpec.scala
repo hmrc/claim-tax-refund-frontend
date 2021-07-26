@@ -24,7 +24,7 @@ import org.jsoup.nodes.Document
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
-import views.behaviours.{NewYesNoViewBehaviours, YesNoViewBehaviours}
+import views.behaviours.NewYesNoViewBehaviours
 import views.html.anyOtherTaxableIncome
 
 class AnyOtherTaxableIncomeViewSpec extends NewYesNoViewBehaviours with GuiceOneAppPerSuite {
@@ -44,7 +44,7 @@ class AnyOtherTaxableIncomeViewSpec extends NewYesNoViewBehaviours with GuiceOne
 			NormalMode,
 			taxYear,
 			completeSeq,
-			incompleteSeq)(fakeRequest, messages, templateRenderer, ec)
+			incompleteSeq)(fakeRequest, messages)
 
 	def createViewUsingForm(complete: Seq[(OtherTaxableIncome, Int)], incomplete: Seq[(OtherTaxableIncome, Int)]): Form[_] =>
 		HtmlFormat.Appendable = (form: Form[_]) =>
@@ -53,14 +53,8 @@ class AnyOtherTaxableIncomeViewSpec extends NewYesNoViewBehaviours with GuiceOne
 			NormalMode,
 			taxYear,
 			complete,
-			incomplete)(fakeRequest, messages, templateRenderer, ec
+			incomplete)(fakeRequest, messages
 		)
-
-	override def assertPageTitleEqualsMessage(doc: Document, expectedMessageKey: String, args: Any*) = {
-		val headers = doc.getElementsByClass("govuk-caption-xl heading-secondary")
-		headers.size mustBe 1
-		headers.first.text.replaceAll("\u00a0", " ") mustBe messages("site.service_name.with_tax_year", args: _*).replaceAll("&nbsp;", " ")
-	}
 
 	"AnyOtherTaxableIncome view" must {
 
@@ -77,17 +71,7 @@ class AnyOtherTaxableIncomeViewSpec extends NewYesNoViewBehaviours with GuiceOne
 			expectedHintTextKey = None
 		)
 	}
-
-	"complete and incomplete lists are passed" must {
-		val doc = asDocument(createViewUsingForm(completeSeq, incompleteSeq)(form))
-		"show the complete list heading and incomplete heading and contain lists" in {
-			doc.getElementById("add-to-list-complete-h2").text.contains(messages("global.addToList.complete")) mustBe true
-			doc.getElementById("add-to-list-incomplete-h2").text.contains(messages("global.addToList.incomplete")) mustBe true
-			doc.getElementById("complete-component-answer-list") != null
-			doc.getElementById("incomplete-component-answer-list") != null
-		}
-	}
-
+	
 	"complete list is passed" must {
 		val doc = asDocument(createViewUsingForm(completeSeq, Seq.empty)(form))
 		"show the complete list and hide the complete heading" in {
@@ -121,15 +105,15 @@ class AnyOtherTaxableIncomeViewSpec extends NewYesNoViewBehaviours with GuiceOne
 	"display 'You have told us about:' section" must {
 		val doc: Document = asDocument(createView())
 		"display list of created taxable benefits" in {
-			doc.getElementById("add-list-0-answer").text.contains("qwerty") mustBe true
+			doc.getElementsByClass("govuk-summary-list__row").text.contains("qwerty") mustBe true
 		}
 
 		"list item must have change buttons" in {
-			doc.getElementById("add-list-0-change").text.contains("Change") mustBe true
+			doc.getElementsByClass("govuk-summary-list__actions-list-item").text.contains("Change") mustBe true
 		}
 
 		"list item must have a remove button" in {
-			doc.getElementById("add-list-0-remove").text.contains("Remove") mustBe true
+			doc.getElementsByClass("govuk-summary-list__actions-list-item").text.contains("Remove") mustBe true
 		}
 	}
 }
