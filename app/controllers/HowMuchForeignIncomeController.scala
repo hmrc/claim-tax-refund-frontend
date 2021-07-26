@@ -59,7 +59,7 @@ cc: MessagesControllerComponents,
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
           val taxYear = selectedTaxYear
-          Ok(howMuchForeignIncome(appConfig, preparedForm, mode, taxYear))
+          Ok(howMuchForeignIncome(preparedForm, mode, taxYear))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
@@ -72,7 +72,7 @@ cc: MessagesControllerComponents,
           val taxYear = selectedTaxYear
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(howMuchForeignIncome(appConfig, formWithErrors, mode, taxYear))),
+              Future.successful(BadRequest(howMuchForeignIncome(formWithErrors, mode, taxYear))),
             (value) =>
               dataCacheConnector.save[String](request.externalId, HowMuchForeignIncomeId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(HowMuchForeignIncomeId, mode)(new UserAnswers(cacheMap))))
