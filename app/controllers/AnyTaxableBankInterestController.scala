@@ -28,14 +28,12 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import play.api.mvc.MessagesControllerComponents
-import uk.gov.hmrc.play.partials.FormPartialRetriever
 import utils.{Navigator, UserAnswers}
 import views.html.anyTaxableBankInterest
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class AnyTaxableBankInterestController @Inject()(appConfig: FrontendAppConfig,
-                                                 override val messagesApi: MessagesApi,
+class AnyTaxableBankInterestController @Inject()(override val messagesApi: MessagesApi,
                                                  dataCacheConnector: DataCacheConnector,
                                                  navigator: Navigator,
                                                  authenticate: AuthAction,
@@ -43,8 +41,7 @@ class AnyTaxableBankInterestController @Inject()(appConfig: FrontendAppConfig,
                                                  requireData: DataRequiredAction,
                                                  anyTaxableBankInterest: anyTaxableBankInterest,
                                                  cc: MessagesControllerComponents,
-                                                 formProvider: AnyTaxPaidForm,
-                                                 implicit val templateRenderer: LocalTemplateRenderer
+                                                 formProvider: AnyTaxPaidForm
                                                 )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   private val notSelectedKey = "anyTaxableBankInterest.notSelected"
@@ -62,7 +59,7 @@ class AnyTaxableBankInterestController @Inject()(appConfig: FrontendAppConfig,
 
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
-          Ok(anyTaxableBankInterest(appConfig, preparedForm, mode, selectedTaxYear))
+          Ok(anyTaxableBankInterest(preparedForm, mode, selectedTaxYear))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
@@ -74,7 +71,7 @@ class AnyTaxableBankInterestController @Inject()(appConfig: FrontendAppConfig,
         selectedTaxYear =>
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(anyTaxableBankInterest(appConfig, formWithErrors, mode, selectedTaxYear))),
+              Future.successful(BadRequest(anyTaxableBankInterest(formWithErrors, mode, selectedTaxYear))),
             (value) =>
               dataCacheConnector.save[AnyTaxPaid](request.externalId, AnyTaxableBankInterestId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(AnyTaxableBankInterestId, mode)(new UserAnswers(cacheMap)))))

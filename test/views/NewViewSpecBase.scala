@@ -98,7 +98,7 @@ trait NewViewSpecBase extends SpecBase {
   }
 
   def assertYesNoHint(doc: Document, expectedText: Option[String]) = {
-    val hint = doc.getElementsByClass("form-hint")
+    val hint = doc.getElementsByClass("govuk-hint")
     assert(hint != null , "\n\nhint was rendered on the page.\n")
     assert(hint.text.contains(messages(expectedText.get)))
   }

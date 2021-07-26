@@ -51,10 +51,10 @@ class AnyTaxableBankInterestControllerSpec extends ControllerSpecBase with Guice
   private val form = formProvider(notSelectedKey, blankKey, invalidKey)
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new AnyTaxableBankInterestController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), anyTaxableBankInterest, messagesControllerComponents, formProvider, templateRenderer)
+    new AnyTaxableBankInterestController(messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), anyTaxableBankInterest, messagesControllerComponents, formProvider)
 
-  def viewAsString(form: Form[_] = form) = anyTaxableBankInterest(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec).toString
+  def viewAsString(form: Form[_] = form) = anyTaxableBankInterest(form, NormalMode, taxYear)(fakeRequest, messages).toString
 
   "AnyTaxableBankInterest Controller" must {
 
