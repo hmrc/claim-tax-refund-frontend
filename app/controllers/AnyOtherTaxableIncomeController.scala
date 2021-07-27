@@ -42,9 +42,8 @@ class AnyOtherTaxableIncomeController @Inject()(appConfig: FrontendAppConfig,
                                                 getData: DataRetrievalAction,
                                                 requireData: DataRequiredAction,
                                                 anyOtherTaxableIncome: anyOtherTaxableIncome,
-cc: MessagesControllerComponents,
-                                                formProvider: BooleanForm,
-                                                implicit val templateRenderer: LocalTemplateRenderer
+                                                cc: MessagesControllerComponents,
+                                                formProvider: BooleanForm
 
                                                )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 

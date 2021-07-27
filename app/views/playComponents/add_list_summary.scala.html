@@ -16,7 +16,9 @@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 
-@this(addListRow: playComponents.add_list_row)
+@this(
+    govukSummaryList : GovukSummaryList
+)
 
 @(
         complete: Seq[(OtherTaxableIncome, Int)],
@@ -24,27 +26,60 @@
         mode: Mode
 )(implicit messages: Messages)
 
-@if(complete.nonEmpty && incomplete.nonEmpty) {
-    <h2 id="add-to-list-complete-h2">@messages("global.addToList.complete")</h2>
-}
-
 @if(complete.nonEmpty) {
-    <div class="form-group" id="component-answer-list">
-        <ul role="list" class="tabular-data tabular-data--list">
-        @for((otherTaxableIncome, index) <- complete) {
-            @addListRow(otherTaxableIncome.name, index, mode)
+    @govukSummaryList(SummaryList(
+        rows = complete map { value =>
+                val otherTaxableIncome: models.OtherTaxableIncome = value._1
+                val index: Int = value._2
+                SummaryListRow(
+                    key = Key(
+                        content = Text(otherTaxableIncome.name)
+                ),
+                actions = Some(Actions(
+                    items = Seq(
+                        ActionItem(
+                            href = routes.OtherTaxableIncomeController.onPageLoad(mode, index).toString,
+                            content = Text(messages("site.edit")),
+                            visuallyHiddenText = Some(messages("site.hidden-edit", otherTaxableIncome.name))
+                        ),
+                        ActionItem(
+                            href = routes.DeleteOtherController.onPageLoad(mode, Index(index), otherTaxableIncome.name, OtherTaxableIncome.collectionId).toString,
+                            content = Text(messages("site.delete")),
+                            visuallyHiddenText = Some(messages("site.hidden-delete", otherTaxableIncome.name))
+                        )
+                    ),
+                    classes = "govuk-!-width-one-third"
+                    )
+                ))
         }
-        </ul>
-    </div>
+    ))
 }
 
 @if(incomplete.nonEmpty) {
-    <h2 id="add-to-list-incomplete-h2">@messages("global.addToList.incomplete")</h2>
-    <div class="form-group" id="incomplete-component-answer-list">
-        <ul role="list" class="tabular-data tabular-data--list">
-        @for((otherTaxableIncome, index) <- incomplete) {
-            @addListRow(otherTaxableIncome.name, index, mode)
+    @govukSummaryList(SummaryList(
+        rows = incomplete map { value =>
+            val otherTaxableIncome: models.OtherTaxableIncome = value._1
+            val index: Int = value._2
+            SummaryListRow(
+                key = Key(
+                    content = Text(otherTaxableIncome.name)
+                ),
+                actions = Some(Actions(
+                    items = Seq(
+                        ActionItem(
+                            href = routes.OtherTaxableIncomeController.onPageLoad(mode, index).toString,
+                            content = Text(messages("site.edit")),
+                            visuallyHiddenText = Some(messages("site.hidden-edit", otherTaxableIncome.name))
+                        ),
+                        ActionItem(
+                            href = routes.DeleteOtherController.onPageLoad(mode, Index(index), otherTaxableIncome.name, OtherTaxableIncome.collectionId).toString,
+                            content = Text(messages("site.delete")),
+                            visuallyHiddenText = Some(messages("site.hidden-delete", otherTaxableIncome.name))
+                        )
+                    ),
+                    classes = "govuk-!-width-one-third"
+                ))
+            )
         }
-        </ul>
-    </div>
+    ))
 }
