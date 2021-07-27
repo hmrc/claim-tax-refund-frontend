@@ -54,9 +54,9 @@ class AnyTaxableInvestmentsControllerSpec extends ControllerSpecBase with GuiceO
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyTaxableInvestmentsController(frontendAppConfig, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), anyTaxableInvestments, messagesControllerComponents, formProvider, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), anyTaxableInvestments, messagesControllerComponents, formProvider)
 
-  def viewAsString(form: Form[_] = form) = anyTaxableInvestments(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec).toString
+  def viewAsString(form: Form[_] = form) = anyTaxableInvestments(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
 
   "AnyTaxableInvestments Controller" must {
 
