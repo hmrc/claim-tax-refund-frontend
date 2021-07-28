@@ -62,7 +62,7 @@ cc: MessagesControllerComponents,
 
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
-          Ok(anyTaxableForeignIncome(appConfig, preparedForm, mode, selectedTaxYear))
+          Ok(anyTaxableForeignIncome(preparedForm, mode, selectedTaxYear))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
@@ -74,7 +74,7 @@ cc: MessagesControllerComponents,
         selectedTaxYear =>
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(anyTaxableForeignIncome(appConfig, formWithErrors, mode, selectedTaxYear))),
+              Future.successful(BadRequest(anyTaxableForeignIncome(formWithErrors, mode, selectedTaxYear))),
             value =>
               dataCacheConnector.save[AnyTaxPaid](request.externalId, AnyTaxableForeignIncomeId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(AnyTaxableForeignIncomeId, mode)(new UserAnswers(cacheMap))))
