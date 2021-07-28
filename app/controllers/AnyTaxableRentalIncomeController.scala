@@ -28,7 +28,6 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import play.api.mvc.MessagesControllerComponents
-import uk.gov.hmrc.play.partials.FormPartialRetriever
 import utils.{Navigator, UserAnswers}
 import views.html.anyTaxableRentalIncome
 
@@ -62,7 +61,7 @@ cc: MessagesControllerComponents,
 
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
-          Ok(anyTaxableRentalIncome(appConfig, preparedForm, mode, selectedTaxYear))
+          Ok(anyTaxableRentalIncome(preparedForm, mode, selectedTaxYear))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
@@ -74,7 +73,7 @@ cc: MessagesControllerComponents,
         selectedTaxYear =>
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(anyTaxableRentalIncome(appConfig, formWithErrors, mode, selectedTaxYear))),
+              Future.successful(BadRequest(anyTaxableRentalIncome(formWithErrors, mode, selectedTaxYear))),
             (value) =>
               dataCacheConnector.save[AnyTaxPaid](request.externalId, AnyTaxableRentalIncomeId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(AnyTaxableRentalIncomeId, mode)(new UserAnswers(cacheMap)))))
