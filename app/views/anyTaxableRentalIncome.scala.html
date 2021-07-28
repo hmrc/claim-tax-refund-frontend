@@ -14,53 +14,49 @@
  * limitations under the License.
  *@
 
-@import config.FrontendAppConfig
 @import controllers.routes._
 @import models.Mode
-@import viewmodels.InputViewModel
 @import uk.gov.hmrc.play.views.html.helpers.FormWithCSRF
-@import uk.gov.hmrc.renderer.TemplateRenderer
-@import scala.concurrent.ExecutionContext
 
-@this(main_template: main_template, formWithCSRF: FormWithCSRF)
+
+@this(
+        formWithCSRF: FormWithCSRF,
+        headingWithCaption: playComponents.headingWithCaption,
+        submitButton: playComponents.submit_button,
+        errorSummary: playComponents.error_summary,
+        addListSummary: playComponents.add_list_summary,
+        backLink: playComponents.back_link,
+        inputYesNoWithTextExpander: playComponents.input_yes_no_with_text_expander,
+        layout: Layout
+)
 
 @(
-    appConfig: FrontendAppConfig,
     form: Form[_],
     mode: Mode,
     taxYear: SelectTaxYear
 )(
     implicit
     request: Request[_],
-    messages: Messages,
-templateRenderer: TemplateRenderer,
-ec: ExecutionContext)
+    messages: Messages
+)
 
-@main_template(
-    title = messages("anyTaxableRentalIncome.title", taxYear.asString),
-    appConfig = appConfig,
-    bodyClasses = None) {
-
+@layout(
+    pageTitle = messages("anyTaxableRentalIncome.title", taxYear.asString)
+) {
     @formWithCSRF(action = AnyTaxableRentalIncomeController.onSubmit(mode), 'autoComplete -> "off") {
 
-        @components.back_link()
+        @errorSummary(form.errors)
 
-        @components.error_summary(form.errors)
-
-        @components.heading(messages("anyTaxableRentalIncome.heading"), taxYear = Some(taxYear.asString))
-
-
-        @components.input_yes_no_with_text_expander(
-            InputViewModel("anyTaxPaid", form),
-            label = messages("anyTaxableRentalIncome.heading", taxYear.asString),
-            labelClass = Some("visually-hidden"),
-            form = form,
-            textFieldLabel = messages("anyTaxableRentalIncome.anyTaxPaidAmountField"),
+        @inputYesNoWithTextExpander(
+            hint = None,
+            label = headingWithCaption(messages("anyTaxableRentalIncome.heading"), taxYear = Some(taxYear.asString)),
+            textLabel = messages("anyTaxableRentalIncome.anyTaxPaidAmountField"),
             currency = true,
-            yesAssoc = Some("yesAnyTaxPaid"),
-            noAssoc = Some("noAnyTaxPaid")
+            autoComplete = true,
+            yesNoField = form("anyTaxPaid"),
+            textField = form("taxPaidAmount"),
         )
 
-        @components.submit_button()
+        @submitButton()
     }
 }
