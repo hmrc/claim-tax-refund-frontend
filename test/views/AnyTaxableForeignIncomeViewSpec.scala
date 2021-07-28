@@ -23,10 +23,10 @@ import models.{AnyTaxPaid, NormalMode}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.{Form, FormError}
 import play.twirl.api.HtmlFormat
-import views.behaviours.QuestionViewBehaviours
+import views.behaviours.NewQuestionViewBehaviours
 import views.html.anyTaxableForeignIncome
 
-class AnyTaxableForeignIncomeViewSpec extends QuestionViewBehaviours[AnyTaxPaid] with GuiceOneAppPerSuite {
+class AnyTaxableForeignIncomeViewSpec extends NewQuestionViewBehaviours[AnyTaxPaid] with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "anyTaxableForeignIncome"
   private val testAmount = "9,999.00"
@@ -39,9 +39,9 @@ class AnyTaxableForeignIncomeViewSpec extends QuestionViewBehaviours[AnyTaxPaid]
   val form = formProvider(notSelectedKey, blankKey, invalidKey)
   val anyTaxableForeignIncome: anyTaxableForeignIncome = fakeApplication.injector.instanceOf[anyTaxableForeignIncome]
 
-  def createView = () => anyTaxableForeignIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
+  def createView = () => anyTaxableForeignIncome(form, NormalMode, taxYear)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[_]) => anyTaxableForeignIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
+  def createViewUsingForm = (form: Form[_]) => anyTaxableForeignIncome(form, NormalMode, taxYear)(fakeRequest, messages)
 
   "AnyTaxableForeignIncome view" must {
 
@@ -124,13 +124,13 @@ class AnyTaxableForeignIncomeViewSpec extends QuestionViewBehaviours[AnyTaxPaid]
         "rendered with an error" must {
           "show an error summary" in {
             val doc = asDocument(createView(form.withError(error)))
-            assertRenderedById(doc, "error-summary-heading")
+            assertRenderedById(doc, "error-summary-title")
           }
 
           "show an error in the value field's label" in {
             val doc = asDocument(createView(form.withError(FormError("anyTaxPaid", "Please enter a valid number"))))
-            val errorSpan = doc.getElementsByClass("error-notification").first
-            errorSpan.text mustBe messages(errorMessage)
+            val errorSpan = doc.getElementsByClass("govuk-error-message").first
+            errorSpan.text mustBe s"Error: ${messages(errorMessage)}"
           }
         }
       }
