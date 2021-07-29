@@ -34,7 +34,7 @@ import views.html.anyAgentRef
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class AnyAgentRefController @Inject()(appConfig: FrontendAppConfig,
+class AnyAgentRefController @Inject()(
                                       override val messagesApi: MessagesApi,
                                       dataCacheConnector: DataCacheConnector,
                                       navigator: Navigator,
@@ -43,8 +43,7 @@ class AnyAgentRefController @Inject()(appConfig: FrontendAppConfig,
                                       requireData: DataRequiredAction,
                                       anyAgentRef: anyAgentRef,
                                       cc: MessagesControllerComponents,
-                                      formProvider: AnyAgentReferenceForm,
-                                      implicit val templateRenderer: LocalTemplateRenderer
+                                      formProvider: AnyAgentReferenceForm
                                      )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   val requiredKey = "anyAgentRef.blank"
@@ -64,7 +63,7 @@ class AnyAgentRefController @Inject()(appConfig: FrontendAppConfig,
           case None => form
           case Some(value) => form.fill(value)
         }
-        Ok(anyAgentRef(appConfig, preparedForm, mode, nomineeName, taxYear))
+        Ok(anyAgentRef(preparedForm, mode, nomineeName, taxYear))
       }
 
       result.getOrElse {
@@ -84,7 +83,7 @@ class AnyAgentRefController @Inject()(appConfig: FrontendAppConfig,
         )
         form.bindFromRequest().fold(
           (formWithErrors: Form[_]) =>
-            Future.successful(BadRequest(anyAgentRef(appConfig, formWithErrors, mode, nomineeName, taxYear))),
+            Future.successful(BadRequest(anyAgentRef(formWithErrors, mode, nomineeName, taxYear))),
           value =>
             dataCacheConnector.save[AnyAgentRef](request.externalId, AnyAgentRefId.toString, value).map(cacheMap =>
               Redirect(navigator.nextPage(AnyAgentRefId, mode)(new UserAnswers(cacheMap))))
