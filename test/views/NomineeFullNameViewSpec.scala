@@ -23,10 +23,10 @@ import models.SelectTaxYear.CYMinus1
 import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
-import views.behaviours.StringViewBehaviours
+import views.behaviours.NewStringViewBehaviours
 import views.html.nomineeFullName
 
-class NomineeFullNameViewSpec extends StringViewBehaviours with MockitoSugar with GuiceOneAppPerSuite {
+class NomineeFullNameViewSpec extends NewStringViewBehaviours with MockitoSugar with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "nomineeFullName"
   private val taxYear = CYMinus1
@@ -35,10 +35,10 @@ class NomineeFullNameViewSpec extends StringViewBehaviours with MockitoSugar wit
   val nomineeFullName: nomineeFullName = fakeApplication.injector.instanceOf[nomineeFullName]
 
   def createView = () =>
-    nomineeFullName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
+    nomineeFullName(form, NormalMode, taxYear)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[String]) =>
-    nomineeFullName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
+    nomineeFullName(form, NormalMode, taxYear)(fakeRequest, messages)
 
   "NomineeFullName view" must {
     behave like normalPage(createView, messageKeyPrefix, None)

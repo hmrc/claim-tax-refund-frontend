@@ -36,8 +36,8 @@ class NomineeFullNameControllerSpec extends ControllerSpecBase with GuiceOneAppP
   def onwardRoute: Call = routes.IndexController.onPageLoad()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new NomineeFullNameController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), nomineeFullName, messagesControllerComponents, new NomineeFullNameForm(frontendAppConfig), templateRenderer)
+    new NomineeFullNameController(messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), nomineeFullName, messagesControllerComponents, new NomineeFullNameForm(frontendAppConfig))
 
   private val testAnswer = "answer"
   private val testTooLongAnswer = "A" * (frontendAppConfig.nomineeFullNameMaxLength + 1)
@@ -47,7 +47,7 @@ class NomineeFullNameControllerSpec extends ControllerSpecBase with GuiceOneAppP
   val nomineeFullName: nomineeFullName = fakeApplication.injector.instanceOf[nomineeFullName]
 
   def viewAsString(form: Form[_] = form) =
-    nomineeFullName(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec).toString
+    nomineeFullName(form, NormalMode, taxYear)(fakeRequest, messages).toString
 
   "NomineeFullName Controller" must {
 
