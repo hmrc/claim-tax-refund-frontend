@@ -33,7 +33,7 @@ class CheckYourAnswersViewSpec extends SpecBase with ViewBehaviours with Mockito
   private val sections = cyaSection.sections
   private val checkYourAnswers: check_your_answers = fakeApplication.injector.instanceOf[check_your_answers]
 
-  def view = () => checkYourAnswers(frontendAppConfig, sections)(fakeRequest, messages: Messages, templateRenderer, ec)
+  def view = () => checkYourAnswers(frontendAppConfig, sections)(fakeRequest, messages: Messages)
 
   "Check your answers view" must {
     behave like normalPage(view, messageKeyPrefix, None)
