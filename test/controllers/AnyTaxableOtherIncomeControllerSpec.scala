@@ -58,7 +58,7 @@ class AnyTaxableOtherIncomeControllerSpec extends ControllerSpecBase with GuiceO
       dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), anyTaxableOtherIncome, messagesControllerComponents, sequenceUtil, formProvider, taxPaidFormProvider, templateRenderer)
 
   def viewAsString(form: Form[_] = taxPaidForm): String =
-    anyTaxableOtherIncome(frontendAppConfig, form, NormalMode, 0, taxYear, incomeName)(fakeRequest, messages, templateRenderer, ec).toString
+    anyTaxableOtherIncome(form, NormalMode, 0, taxYear, incomeName)(fakeRequest, messages).toString
 
 
   "AnyTaxableOtherIncome Controller" must {

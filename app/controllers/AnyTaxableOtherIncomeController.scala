@@ -71,7 +71,7 @@ class AnyTaxableOtherIncomeController @Inject()(appConfig: FrontendAppConfig,
           case None => form
         }
 
-        Ok(anyTaxableOtherIncome(appConfig, preparedForm, mode, index, selectedTaxYear, otherTaxableIncome(index).name))
+        Ok(anyTaxableOtherIncome(preparedForm, mode, index, selectedTaxYear, otherTaxableIncome(index).name))
       }
       details.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
@@ -91,7 +91,7 @@ class AnyTaxableOtherIncomeController @Inject()(appConfig: FrontendAppConfig,
         )
         form.bindFromRequest().fold(
           (formWithErrors: Form[AnyTaxPaid]) =>
-            Future.successful(BadRequest(anyTaxableOtherIncome(appConfig, formWithErrors, mode, index, selectedTaxYear, otherTaxableIncome(index).name))),
+            Future.successful(BadRequest(anyTaxableOtherIncome(formWithErrors, mode, index, selectedTaxYear, otherTaxableIncome(index).name))),
           value => {
 
             val otherIncomeDetails = OtherTaxableIncome(otherTaxableIncome(index).name, otherTaxableIncome(index).amount, Some(value))
