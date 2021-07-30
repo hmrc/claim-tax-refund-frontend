@@ -54,8 +54,7 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with ScalaFuture
       messagesControllerComponents,
       submissionService,
       referenceGenerator,
-      robotXML,
-      templateRenderer
+      robotXML
     )
 
   "Check Your Answers Controller" must {

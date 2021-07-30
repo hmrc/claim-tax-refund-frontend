@@ -17,10 +17,13 @@
 @import config.FrontendAppConfig
 @import viewmodels.AnswerSection
 @import uk.gov.hmrc.play.views.html.helpers.FormWithCSRF
-@import uk.gov.hmrc.renderer.TemplateRenderer
-@import scala.concurrent.ExecutionContext
 
-@this(main_template: main_template, formWithCSRF: FormWithCSRF)
+@this(
+        layout: Layout,
+        formWithCSRF: FormWithCSRF,
+        submitButton: playComponents.submit_button,
+        govukSummaryList : GovukSummaryList
+)
 
 @(
         appConfig: FrontendAppConfig,
@@ -28,26 +31,51 @@
 )(
         implicit
         request: Request[_],
-        messages: Messages,
-templateRenderer: TemplateRenderer,
-ec: ExecutionContext)
+        messages: Messages)
 
-@main_template(
-    title = messages("checkYourAnswers.title"),
-    appConfig = appConfig,
-    bodyClasses = None
+@layout(
+    pageTitle = messages("checkYourAnswers.title")
 ) {
-    <h1 class="heading-xlarge">@messages("checkYourAnswers.heading")</h1>
+    <h1 class="govuk-heading-xl">@messages("checkYourAnswers.heading")</h1>
 
     @for((section, i) <- answerSections.zipWithIndex) {
-        @components.answer_section(section, i.toString)
+
+        @if(section.headingKey.isDefined){
+            <h2 class="govuk-heading-m">@messages(section.headingKey.get)</h2>
+        }
+
+        @for((row, i) <- section.rows.zipWithIndex) {
+
+            @govukSummaryList(SummaryList(
+                rows = Seq(
+                    SummaryListRow(
+                        key = Key(
+                            content = Text(row.label.print)
+                        ),
+                        value = Value(
+                            content = HtmlContent(row.answer.print)
+                        ),
+                        actions = Some(Actions(
+                            items = Seq(
+                                ActionItem(
+                                    href = row.url.getOrElse(section.addLinkUrl.getOrElse("#")),
+                                    content = Text(messages("site.edit")),
+                                    visuallyHiddenText = Some(messages(row.changeLabel))
+                                )
+                            )
+                        ))
+                    )
+                )
+            ))
+
+        }
     }
 
-    <h2>@messages("checkYourAnswers.nowSendYourApplication")</h2>
+    <h2 class="govuk-heading-l">@messages("checkYourAnswers.nowSendYourApplication")</h2>
 
-    <p>@messages("checkYourAnswers.declaration")</p>
+    <p class="govuk-body">@messages("checkYourAnswers.declaration")</p>
 
     @formWithCSRF(action = controllers.routes.CheckYourAnswersController.onSubmit) {
-        @components.submit_button("checkYourAnswers.acceptAndSend")
+        @submitButton("checkYourAnswers.acceptAndSend")
     }
 }
