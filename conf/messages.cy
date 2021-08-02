@@ -420,6 +420,7 @@ otherTaxableIncome.name.blank=Nodwch enw’r incwm trethadwy a gawsoch
 
 paymentAddressCorrect.blank=Dewiswch ‘Iawn’ os ydych am i ni anfon unrhyw daliad i’r cyfeiriad hwn
 paymentAddressCorrect.heading=Ai hwn yw’r cyfeiriad rydych am i ni anfon unrhyw daliad iddo?
+paymentAddressCorrect.checkYourAnswersLabel = Y cyfeiriad rydych am i ni anfon unrhyw daliad iddo
 paymentInternationalAddress.heading=Beth yw’r cyfeiriad rydych am i ni anfon y taliad iddo?
 paymentInternationalAddress.title=Beth yw’r cyfeiriad rydych am i ni anfon y taliad iddo?
 paymentUKAddress.changeLabel=Newid beth yw’r cyfeiriad rydych am i ni anfon y taliad iddo?
