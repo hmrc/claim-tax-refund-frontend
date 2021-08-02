@@ -23,10 +23,10 @@ import models.{AnyAgentRef, NormalMode}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.{Form, FormError}
 import play.twirl.api.HtmlFormat
-import views.behaviours.QuestionViewBehaviours
+import views.behaviours.NewQuestionViewBehaviours
 import views.html.anyAgentRef
 
-class AnyAgentRefViewSpec extends QuestionViewBehaviours[AnyAgentRef] with GuiceOneAppPerSuite {
+class AnyAgentRefViewSpec extends NewQuestionViewBehaviours[AnyAgentRef] with GuiceOneAppPerSuite {
 
   private val requiredKey = "anyAgentRef.blank"
   private val requiredAgentRefKey = "anyAgentRef.blankAgentRef"
@@ -39,10 +39,10 @@ class AnyAgentRefViewSpec extends QuestionViewBehaviours[AnyAgentRef] with Guice
   val form = formProvider(messages(requiredKey, nomineeName), messages(requiredAgentRefKey, nomineeName))
   val anyAgentRef: anyAgentRef = fakeApplication.injector.instanceOf[anyAgentRef]
 
-  def createView = () => anyAgentRef(frontendAppConfig, form, NormalMode, nomineeName, taxYear)(fakeRequest, messages, templateRenderer, ec)
+  def createView = () => anyAgentRef(form, NormalMode, nomineeName, taxYear)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[_]) =>
-    anyAgentRef(frontendAppConfig, form, NormalMode, nomineeName, taxYear)(fakeRequest, messages, templateRenderer, ec)
+    anyAgentRef(form, NormalMode, nomineeName, taxYear)(fakeRequest, messages)
 
   "AnyAgentRef view" must {
 
@@ -95,7 +95,7 @@ class AnyAgentRefViewSpec extends QuestionViewBehaviours[AnyAgentRef] with Guice
             val doc = asDocument(createView(form))
             assertRenderedById(doc, "anyAgentRef-yes")
             assertRenderedById(doc, "anyAgentRef-no")
-            assertRenderedById(doc, "yesAgentRef")
+            assertRenderedById(doc, "agentRef")
           }
 
           "have no values checked when rendered with no form" in {
@@ -127,13 +127,13 @@ class AnyAgentRefViewSpec extends QuestionViewBehaviours[AnyAgentRef] with Guice
         "rendered with an error" must {
           "show an error summary" in {
             val doc = asDocument(createView(form.withError(error)))
-            assertRenderedById(doc, "error-summary-heading")
+            assertRenderedById(doc, "error-summary-title")
           }
 
           "show an error in the value field's label" in {
             val doc = asDocument(createView(form.withError(FormError("anyAgentRef", "Please enter a valid number"))))
-            val errorSpan = doc.getElementsByClass("error-notification").first
-            errorSpan.text mustBe messages(errorMessage)
+            val errorSpan = doc.getElementsByClass("govuk-error-message").first
+            errorSpan.text mustBe s"Error: ${messages(errorMessage)}"
           }
         }
       }
