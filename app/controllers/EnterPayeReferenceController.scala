@@ -34,7 +34,6 @@ import views.html.enterPayeReference
 import scala.concurrent.{ExecutionContext, Future}
 
 class EnterPayeReferenceController @Inject()(
-                                              appConfig: FrontendAppConfig,
                                               override val messagesApi: MessagesApi,
                                               dataCacheConnector: DataCacheConnector,
                                               navigator: Navigator,
@@ -42,9 +41,8 @@ class EnterPayeReferenceController @Inject()(
                                               getData: DataRetrievalAction,
                                               requireData: DataRequiredAction,
                                               enterPayeReference: enterPayeReference,
-cc: MessagesControllerComponents,
-                                              formBuilder: EnterPayeReferenceForm,
-                                              implicit val templateRenderer: LocalTemplateRenderer
+                                              cc: MessagesControllerComponents,
+                                              formBuilder: EnterPayeReferenceForm
                                             )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   private val form: Form[String] = formBuilder()
@@ -58,7 +56,7 @@ cc: MessagesControllerComponents,
 
       request.userAnswers.selectTaxYear.map {
         taxYear =>
-          Ok(enterPayeReference(appConfig, preparedForm, mode, taxYear))
+          Ok(enterPayeReference(preparedForm, mode, taxYear))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
@@ -70,7 +68,7 @@ cc: MessagesControllerComponents,
         taxYear =>
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(enterPayeReference(appConfig, formWithErrors, mode, taxYear))),
+              Future.successful(BadRequest(enterPayeReference(formWithErrors, mode, taxYear))),
             value =>
               dataCacheConnector.save[String](request.externalId, EnterPayeReferenceId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(EnterPayeReferenceId, mode)(new UserAnswers(cacheMap))))
