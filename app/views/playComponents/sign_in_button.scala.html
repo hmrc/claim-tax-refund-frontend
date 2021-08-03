@@ -12,37 +12,15 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+*@
 
-@import config.FrontendAppConfig
+@import uk.gov.hmrc.govukfrontend.views.html.components._
 
-@this(
-    layout: Layout,
-    heading: playComponents.heading,
-    signInButton: playComponents.sign_in_button
-)
+@this(govukButton : GovukButton)
 
-@(
-        appConfig: FrontendAppConfig
-)(
-        implicit
-        request: Request[_],
-        messages: Messages
-)
+@(submitText: String = "timedOut.button")(implicit messages: Messages)
 
-@layout(pageTitle = messages("timedOut.title")){
-
-    <h1 class="govuk-heading-xl">@messages("timedOut.heading")</h1>
-
-    <p class="govuk-body">@messages("timedOut.message")</p>
-
-    @signInButton()
-
-    <br>
-
-}
-
-
-
-
-
+@govukButton(Button(
+    href = Some("/claim-tax-refund"),
+    content = Text(messages(submitText))
+))

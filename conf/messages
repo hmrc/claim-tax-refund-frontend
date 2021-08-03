@@ -471,6 +471,7 @@ timeout.message = For your security, we will delete your answers and you will be
 timeout.continue = Get another 15 minutes
 timeout.exit = Sign out now
 
+timedOut.title = For security reasons, we signed you out
 timedOut.heading = For your security, we signed you out
 timedOut.message = We did not save your answers.
 timedOut.button = Sign in
