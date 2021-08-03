@@ -17,14 +17,14 @@
 package views
 
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
-import views.behaviours.ViewBehaviours
+import views.behaviours.NewViewBehaviours
 import views.html.unauthorised
 
-class UnauthorisedViewSpec extends ViewBehaviours with GuiceOneAppPerSuite {
+class UnauthorisedViewSpec extends NewViewBehaviours with GuiceOneAppPerSuite {
 
   val unauthorised: unauthorised = fakeApplication.injector.instanceOf[unauthorised]
 
-  def view = () => unauthorised(frontendAppConfig)(fakeRequest, messages, templateRenderer, ec)
+  def view = () => unauthorised(frontendAppConfig)(fakeRequest, messages)
 
   "Unauthorised view" must {
 
