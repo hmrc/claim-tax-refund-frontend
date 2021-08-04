@@ -103,7 +103,7 @@ class PaymentAddressCorrectControllerSpec extends ControllerSpecBase with GuiceO
       form,
       NormalMode,
       itmpAddress,
-      taxYear)(fakeRequest, messages, templateRenderer, ec).toString
+      taxYear)(fakeRequest, messages).toString
 
   "PaymentAddressCorrect Controller" must {
 
