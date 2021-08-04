@@ -1,4 +1,4 @@
-@*
+/*
  * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,37 +12,23 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@import config.FrontendAppConfig
+package views
 
-@this(
-    layout: Layout,
-    heading: playComponents.heading,
-    signInButton: playComponents.sign_in_button
-)
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import views.behaviours.NewViewBehaviours
+import views.html.sessionTimedout
 
-@(
-        appConfig: FrontendAppConfig
-)(
-        implicit
-        request: Request[_],
-        messages: Messages
-)
+class SessionTimedOutViewSpec extends NewViewBehaviours with GuiceOneAppPerSuite {
 
-@layout(pageTitle = messages("timedOut.title")){
+  val sessionTimedOut: sessionTimedout = fakeApplication.injector.instanceOf[sessionTimedout]
 
-    <h1 class="govuk-heading-xl">@messages("timedOut.heading")</h1>
+  def view = () => sessionTimedOut(frontendAppConfig)(fakeRequest, messages)
 
-    <p class="govuk-body">@messages("timedOut.message")</p>
+  "Session Timed Out View" must {
 
-    @signInButton()
-
-    <br>
+    behave like normalPage(view, "timedOut", Some("button"))
+  }
 
 }
-
-
-
-
-
