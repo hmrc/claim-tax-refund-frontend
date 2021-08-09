@@ -23,10 +23,10 @@ import models.{AnyTaxPaid, NormalMode}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.{Form, FormError}
 import play.twirl.api.HtmlFormat
-import views.behaviours.QuestionViewBehaviours
+import views.behaviours.NewQuestionViewBehaviours
 import views.html.anyTaxableOtherIncome
 
-class AnyTaxableOtherIncomeViewSpec extends QuestionViewBehaviours[AnyTaxPaid] with GuiceOneAppPerSuite {
+class AnyTaxableOtherIncomeViewSpec extends NewQuestionViewBehaviours[AnyTaxPaid] with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "anyTaxableOtherIncome"
   private val testAmount = "9,999.00"
@@ -40,9 +40,9 @@ class AnyTaxableOtherIncomeViewSpec extends QuestionViewBehaviours[AnyTaxPaid] w
   val form = formProvider(notSelectedKey, blankKey, invalidKey)
   val anyTaxableOtherIncome: anyTaxableOtherIncome = fakeApplication.injector.instanceOf[anyTaxableOtherIncome]
 
-  def createView = () => anyTaxableOtherIncome(frontendAppConfig, form, NormalMode, 0, taxYear, incomeName)(fakeRequest, messages, templateRenderer, ec)
+  def createView = () => anyTaxableOtherIncome(form, NormalMode, 0, taxYear, incomeName)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[_]) => anyTaxableOtherIncome(frontendAppConfig, form, NormalMode, 0, taxYear, incomeName)(fakeRequest, messages, templateRenderer, ec)
+  def createViewUsingForm = (form: Form[_]) => anyTaxableOtherIncome(form, NormalMode, 0, taxYear, incomeName)(fakeRequest, messages)
 
   "AnyTaxableOtherIncome view" must {
 
@@ -111,7 +111,7 @@ class AnyTaxableOtherIncomeViewSpec extends QuestionViewBehaviours[AnyTaxPaid] w
 
           "not render an error summary" in {
             val doc = asDocument(createView(form))
-            assertNotRenderedById(doc, "error-summary_header")
+            assertNotRenderedById(doc, "error-summary-title")
           }
         }
 
@@ -126,13 +126,13 @@ class AnyTaxableOtherIncomeViewSpec extends QuestionViewBehaviours[AnyTaxPaid] w
         "rendered with an error" must {
           "show an error summary" in {
             val doc = asDocument(createView(form.withError(error)))
-            assertRenderedById(doc, "error-summary-heading")
+            assertRenderedById(doc, "error-summary-title")
           }
 
           "show an error in the value field's label" in {
             val doc = asDocument(createView(form.withError(FormError("anyTaxPaid", "Please enter a valid number"))))
-            val errorSpan = doc.getElementsByClass("error-notification").first
-            errorSpan.text mustBe messages(errorMessage)
+            val errorSpan = doc.getElementsByClass("govuk-error-message").first
+            errorSpan.text mustBe s"Error: ${messages(errorMessage)}"
           }
         }
       }
