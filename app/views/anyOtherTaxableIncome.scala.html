@@ -77,7 +77,6 @@
 
             @if(incomplete.isEmpty) {
                 @inputYesNo(
-                    InputViewModel("value", form),
                     label = messages("anyOtherTaxableIncome.add"),
                     labelClass = Some("heading-medium"),
                     field = form("value")

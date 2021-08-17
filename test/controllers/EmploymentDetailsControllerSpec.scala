@@ -48,11 +48,11 @@ class EmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSug
 
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new EmploymentDetailsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), employmentDetails, messagesControllerComponents, formProvider, mockTaiConnector, templateRenderer)
+    new EmploymentDetailsController(messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), employmentDetails, messagesControllerComponents, formProvider, mockTaiConnector)
 
-  def viewAsString(form: Form[_] = form): String = employmentDetails(frontendAppConfig, form, NormalMode,
-    Seq(Employment("AVIVA PENSIONS", "754", "AZ00070")), taxYear)(fakeRequest, messages, templateRenderer, ec).toString
+  def viewAsString(form: Form[_] = form): String = employmentDetails(form, NormalMode,
+    Seq(Employment("AVIVA PENSIONS", "754", "AZ00070")), taxYear)(fakeRequest, messages).toString
 
   "EmploymentDetails Controller" must {
 
