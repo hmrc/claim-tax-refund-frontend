@@ -22,10 +22,10 @@ import models.SelectTaxYear.CustomTaxYear
 import models.{Employment, NormalMode}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
-import views.behaviours.YesNoViewBehaviours
+import views.behaviours.{NewYesNoViewBehaviours, YesNoViewBehaviours}
 import views.html.employmentDetails
 
-class EmploymentDetailsViewSpec extends YesNoViewBehaviours with GuiceOneAppPerSuite {
+class EmploymentDetailsViewSpec extends NewYesNoViewBehaviours with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "employmentDetails"
   private val hintTextKey = "employmentDetails.hintText"
@@ -35,9 +35,9 @@ class EmploymentDetailsViewSpec extends YesNoViewBehaviours with GuiceOneAppPerS
   override val form = new BooleanForm()()
   val employmentDetails: employmentDetails = fakeApplication.injector.instanceOf[employmentDetails]
 
-  def createViewUsingForm = (form: Form[_]) => employmentDetails(frontendAppConfig, form, NormalMode, fakeEmployments, taxYear)(fakeRequest, messages, templateRenderer, ec)
+  def createViewUsingForm = (form: Form[_]) => employmentDetails(form, NormalMode, fakeEmployments, taxYear)(fakeRequest, messages)
 
-  def createView = () => employmentDetails(frontendAppConfig, form, NormalMode, fakeEmployments, taxYear)(fakeRequest, messages, templateRenderer, ec)
+  def createView = () => employmentDetails(form, NormalMode, fakeEmployments, taxYear)(fakeRequest, messages)
 
   "EmploymentDetails view" must {
 
@@ -62,7 +62,7 @@ class EmploymentDetailsViewSpec extends YesNoViewBehaviours with GuiceOneAppPerS
 
     "contains correct employer name inside of table" in {
       val doc = asDocument(createViewUsingForm(form))
-      val employerName = doc.getElementsByTag("th").eachText.contains("AVIVA PENSIONS")
+      val employerName = doc.getElementsByTag("td").eachText.contains("AVIVA PENSIONS")
       employerName mustBe true
     }
 
