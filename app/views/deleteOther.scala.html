@@ -22,10 +22,17 @@
 @import uk.gov.hmrc.renderer.TemplateRenderer
 @import scala.concurrent.ExecutionContext
 
-@this(main_template: main_template, formWithCSRF: FormWithCSRF)
+@this(
+    layout: Layout,
+    formWithCSRF: FormWithCSRF,
+    errorSummary: playComponents.error_summary,
+    heading: hmrcPageHeading,
+    inputYesOrNo: playComponents.input_yes_no,
+    submitButton: playComponents.submit_button
+
+)
 
 @(
-    appConfig: FrontendAppConfig,
     form: Form[_],
     mode: Mode,
     index: Index,
@@ -34,34 +41,34 @@
     taxYear: SelectTaxYear
 )(
     implicit request: Request[_],
-    messages: Messages,
-templateRenderer: TemplateRenderer,
-ec: ExecutionContext)
+    messages: Messages
+)
 
 @title = @{
     if(form.errors.nonEmpty) messages("site.title.error", messages("deleteOther.title", itemName)) else messages("deleteOther.title", itemName)
 }
 
-@main_template(
-    title = title,
-    appConfig = appConfig,
-    bodyClasses = None
+@layout(
+    pageTitle = title
 ) {
 
     @formWithCSRF(action = DeleteOtherController.onSubmit(mode, index, itemName, collectionId), 'autoComplete -> "off") {
 
-        @components.back_link()
+        @errorSummary(form.errors)
 
-        @components.error_summary(form.errors)
+        @heading(PageHeading(
+            text = messages("deleteOther.heading", itemName),
+            section = Some(messages("site.service_name.with_tax_year", taxYear.asString))
+        ))
 
-        @components.heading(messages("deleteOther.heading", itemName), taxYear = Some(taxYear.asString))
-
-        @components.input_yes_no(
-            InputViewModel("value", form),
-            label = messages("deleteOther.heading"),
-            labelClass = Some("visually-hidden")
+        @inputYesOrNo(
+            isPageHeading = false,
+            viewModel = InputViewModel("value", form),
+            label = messages("deleteOther.heading", itemName),
+            labelClass = Some("govuk-visually-hidden"),
+            field = form("value")
         )
 
-        @components.submit_button()
+        @submitButton()
     }
 }
