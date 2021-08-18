@@ -54,7 +54,7 @@ class IsPaymentAddressInTheUKControllerSpec extends ControllerSpecBase with Mock
     form,
     NormalMode,
     taxYear
-  )(fakeRequest, messages, templateRenderer, ec).toString
+  )(fakeRequest, messages).toString
 
   "IsPaymentAddressInTheUK Controller" must {
 
