@@ -45,11 +45,11 @@ class RemoveOtherSelectedOptionControllerSpec extends ControllerSpecBase with Mo
   private val collectionId = OtherBenefit.collectionId
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new RemoveOtherSelectedOptionController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), removeOtherSelectedOption, messagesControllerComponents, formProvider, templateRenderer)
+    new RemoveOtherSelectedOptionController(messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), removeOtherSelectedOption, messagesControllerComponents, formProvider)
 
   def viewAsString(form: Form[_] = form): String =
-    removeOtherSelectedOption(frontendAppConfig, form, NormalMode, taxYear, collectionId)(fakeRequest, messages, templateRenderer, ec).toString
+    removeOtherSelectedOption(form, NormalMode, taxYear, collectionId)(fakeRequest, messages).toString
 
   "RemoveOtherSelectedOption Controller" must {
 

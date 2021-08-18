@@ -54,7 +54,6 @@
         @heading(messages("isPaymentAddressInTheUK.heading"), taxYear = Some(taxYear.asString))
 
         @inputYesNo(
-            viewModel = InputViewModel("value", form),
             label = messages("isPaymentAddressInTheUK.heading"),
             field = form("value")
         )

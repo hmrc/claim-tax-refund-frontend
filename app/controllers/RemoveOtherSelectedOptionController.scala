@@ -32,8 +32,7 @@ import views.html.removeOtherSelectedOption
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class RemoveOtherSelectedOptionController @Inject()(appConfig: FrontendAppConfig,
-                                                    override val messagesApi: MessagesApi,
+class RemoveOtherSelectedOptionController @Inject()(override val messagesApi: MessagesApi,
                                                     dataCacheConnector: DataCacheConnector,
                                                     navigator: Navigator,
                                                     authenticate: AuthAction,
@@ -41,8 +40,7 @@ class RemoveOtherSelectedOptionController @Inject()(appConfig: FrontendAppConfig
                                                     requireData: DataRequiredAction,
                                                     removeOtherSelectedOption: removeOtherSelectedOption,
                                                     cc: MessagesControllerComponents,
-                                                    formProvider: BooleanForm,
-                                                    implicit val templateRenderer: LocalTemplateRenderer
+                                                    formProvider: BooleanForm
                                                    )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   private val errorKey = "RemoveOtherSelectedOption.blank"
@@ -63,7 +61,7 @@ class RemoveOtherSelectedOptionController @Inject()(appConfig: FrontendAppConfig
             case OtherTaxableIncome.collectionId => otherTaxableIncomeKey
           }
           val form: Form[Boolean] = formProvider(cc.messagesApi.preferred(request).messages(errorKey, collectionName))
-          Ok(removeOtherSelectedOption(appConfig, form, mode, selectedTaxYear, collectionId))
+          Ok(removeOtherSelectedOption(form, mode, selectedTaxYear, collectionId))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
@@ -83,7 +81,7 @@ class RemoveOtherSelectedOptionController @Inject()(appConfig: FrontendAppConfig
 
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(removeOtherSelectedOption(appConfig, formWithErrors, mode, taxYear, collectionId))),
+              Future.successful(BadRequest(removeOtherSelectedOption(formWithErrors, mode, taxYear, collectionId))),
             (value: Boolean) => {
               dataCacheConnector.save[Boolean](request.externalId, collectionId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPageWithCollectionId(collectionId, mode)(new UserAnswers(cacheMap))))
