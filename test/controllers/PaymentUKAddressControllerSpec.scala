@@ -44,7 +44,7 @@ class PaymentUKAddressControllerSpec extends ControllerSpecBase with GuiceOneApp
   private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers()
 
   def viewAsString(form: Form[UkAddress] = form) =
-    paymentUKAddress(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec).toString
+    paymentUKAddress(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
 
   "PaymentUKAddress Controller" must {
 
