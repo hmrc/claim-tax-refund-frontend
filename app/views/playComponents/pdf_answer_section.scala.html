@@ -17,20 +17,15 @@
 @import viewmodels.AnswerSection
 @import views.html._
 
-@(
-    answerSection: AnswerSection
-)(
-    implicit messages: Messages
-)
+@(answerSection: AnswerSection)(implicit messages: Messages)
 
 @if(answerSection.headingKey.isDefined){
     <h2>@messages(answerSection.headingKey.get)</h2>
 }
 @if(answerSection.rows.nonEmpty) {
     <ul>
-
-        @for((row, i) <- answerSection.rows.zipWithIndex) {
-            @components.pdf_answer_row(row)
+       @for((row, i) <- answerSection.rows.zipWithIndex) {
+            @playComponents.pdf_answer_row(row)
         }
     </ul>
 }

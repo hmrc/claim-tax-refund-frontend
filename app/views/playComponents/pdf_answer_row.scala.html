@@ -16,20 +16,17 @@
 
 @import viewmodels.AnswerRow
 
-@(
-        row: AnswerRow
-)(
-        implicit messages: Messages
-)
+@(row: AnswerRow)(implicit messages: Messages)
+
 @if(row.isHeadingRow) {
-<li>
-    <h3>@row.label.print</h3>
-</li>
+    <li>
+        <h3>@row.label.print</h3>
+    </li>
 }
 @if(!row.isHeadingRow) {
-<li>
-    <div>@Html(row.label.print)</div>
-    <div>@Html(row.answer.print)</div>
-</li>
+    <li>
+        <div>@Html(row.label.print)</div>
+        <div>@Html(row.answer.print)</div>
+    </li>
 }
 
