@@ -49,7 +49,6 @@ class ErrorHandler @Inject()(
           pageTitle = "error.generic.title",
           heading = "error.generic.title",
           errorMessages = Seq("error.generic.message1", "error.generic.message2"),
-          appConfig = appConfig
         ))
 
         Future.successful(body)
