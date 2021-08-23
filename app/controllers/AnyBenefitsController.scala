@@ -16,7 +16,7 @@
 
 package controllers
 
-import config.{FrontendAppConfig, LocalTemplateRenderer}
+import config.FrontendAppConfig
 import connectors.{DataCacheConnector, TaiConnector}
 import controllers.actions._
 import forms.BooleanForm
@@ -43,8 +43,7 @@ class AnyBenefitsController @Inject()(appConfig: FrontendAppConfig,
                                       requireData: DataRequiredAction,
                                       anyBenefits: anyBenefits,
 cc: MessagesControllerComponents,
-                                      formProvider: BooleanForm,
-                                      implicit val templateRenderer: LocalTemplateRenderer
+                                      formProvider: BooleanForm
                                      )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   private val errorKey = "anyBenefits.blank"

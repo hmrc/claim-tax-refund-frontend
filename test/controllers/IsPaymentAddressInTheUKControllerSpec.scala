@@ -47,7 +47,7 @@ class IsPaymentAddressInTheUKControllerSpec extends ControllerSpecBase with Mock
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new IsPaymentAddressInTheUKController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), isPaymentAddressInTheUK, messagesControllerComponents, formProvider, mockAddressLookup, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), isPaymentAddressInTheUK, messagesControllerComponents, formProvider, mockAddressLookup)
 
   def viewAsString(form: Form[_] = form) : String = isPaymentAddressInTheUK(
     frontendAppConfig,

@@ -36,7 +36,7 @@ class HowMuchCarersAllowanceControllerSpec extends ControllerSpecBase with Guice
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new HowMuchCarersAllowanceController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), howMuchCarersAllowance, messagesControllerComponents, new HowMuchCarersAllowanceForm(frontendAppConfig), templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), howMuchCarersAllowance, messagesControllerComponents, new HowMuchCarersAllowanceForm(frontendAppConfig))
 
   val testAnswer = "9,999.99"
   private val taxYear = CustomTaxYear(2017)

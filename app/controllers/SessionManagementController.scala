@@ -16,7 +16,7 @@
 
 package controllers
 
-import config.{FrontendAppConfig, LocalTemplateRenderer}
+import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions.{AuthAction, DataRequiredAction, DataRetrievalAction}
 import javax.inject.Inject
@@ -35,7 +35,6 @@ class SessionManagementController @Inject()(val appConfig: FrontendAppConfig,
                                             dataCacheConnector: DataCacheConnector,
                                             getData: DataRetrievalAction,
                                             requireData: DataRequiredAction,
-                                            implicit val templateRenderer: LocalTemplateRenderer,
                                             implicit val executionContext: ExecutionContext) extends FrontendController(cc) with I18nSupport{
 
   def extendSession: Action[AnyContent] = Action.async {

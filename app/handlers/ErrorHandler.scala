@@ -16,7 +16,7 @@
 
 package handlers
 
-import config.{FrontendAppConfig, LocalTemplateRenderer}
+import config.FrontendAppConfig
 
 import javax.inject.{Inject, Singleton}
 import play.api.http.Status.{BAD_REQUEST, FORBIDDEN}
@@ -37,7 +37,6 @@ class ErrorHandler @Inject()(
                               unauthorised_error_template: unauthorised_error_template,
                               val messagesApi: MessagesApi,
                               implicit val formPartialRetriever: FormPartialRetriever,
-                              implicit val templateRenderer: LocalTemplateRenderer,
                               implicit val ec: ExecutionContext
                             ) extends FrontendErrorHandler {
 
