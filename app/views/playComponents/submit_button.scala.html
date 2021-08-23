@@ -21,5 +21,8 @@
 @(submitText: String = "site.continue")(implicit messages: Messages)
 
 @govukButton(Button(
- content = Text(messages(submitText))
+ content = Text(messages(submitText)),
+ attributes = Map(
+  "id" -> "submit"
+ )
 ))
