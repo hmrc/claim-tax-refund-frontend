@@ -16,7 +16,7 @@
 
 package controllers
 
-import config.{FrontendAppConfig, LocalTemplateRenderer}
+import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.DetailsOfEmploymentOrPensionForm
@@ -43,8 +43,7 @@ class DetailsOfEmploymentOrPensionController @Inject()(
                                                         requireData: DataRequiredAction,
                                                         detailsOfEmploymentOrPension: detailsOfEmploymentOrPension,
 cc: MessagesControllerComponents,
-                                                        formBuilder: DetailsOfEmploymentOrPensionForm,
-                                                        implicit val templateRenderer: LocalTemplateRenderer
+                                                        formBuilder: DetailsOfEmploymentOrPensionForm
                                                       )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   private val form: Form[String] = formBuilder()

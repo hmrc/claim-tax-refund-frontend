@@ -16,7 +16,7 @@
 
 package controllers
 
-import config.{FrontendAppConfig, LocalTemplateRenderer}
+import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.HowMuchMedicalBenefitsForm
@@ -43,8 +43,7 @@ class HowMuchMedicalBenefitsController @Inject()(
                                                   requireData: DataRequiredAction,
                                                   howMuchMedicalBenefits: howMuchMedicalBenefits,
 cc: MessagesControllerComponents,
-                                                  formBuilder: HowMuchMedicalBenefitsForm,
-                                                  implicit val templateRenderer: LocalTemplateRenderer
+                                                  formBuilder: HowMuchMedicalBenefitsForm
                                                 )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   private val form: Form[String] = formBuilder()

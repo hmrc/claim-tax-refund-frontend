@@ -42,7 +42,7 @@ class HowMuchIncapacityBenefitControllerSpec extends ControllerSpecBase with Gui
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new HowMuchIncapacityBenefitController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), howMuchIncapacityBenefit, messagesControllerComponents, new HowMuchIncapacityBenefitForm(frontendAppConfig), templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), howMuchIncapacityBenefit, messagesControllerComponents, new HowMuchIncapacityBenefitForm(frontendAppConfig))
 
   def viewAsString(form: Form[_] = form) = howMuchIncapacityBenefit(form, NormalMode, taxYear)(fakeRequest, messages).toString
 

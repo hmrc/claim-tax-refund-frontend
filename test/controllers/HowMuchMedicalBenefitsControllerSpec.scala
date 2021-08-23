@@ -42,7 +42,7 @@ class HowMuchMedicalBenefitsControllerSpec extends ControllerSpecBase with Guice
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new HowMuchMedicalBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), howMuchMedicalBenefits, messagesControllerComponents, new HowMuchMedicalBenefitsForm(frontendAppConfig), templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), howMuchMedicalBenefits, messagesControllerComponents, new HowMuchMedicalBenefitsForm(frontendAppConfig))
 
   def viewAsString(form: Form[_] = form) = howMuchMedicalBenefits( form, NormalMode, taxYear)(fakeRequest, messages).toString
 

@@ -16,7 +16,7 @@
 
 package controllers
 
-import config.{FrontendAppConfig, LocalTemplateRenderer}
+import config.FrontendAppConfig
 import connectors.{AddressLookupConnector, DataCacheConnector}
 import controllers.actions._
 import forms.BooleanForm
@@ -45,8 +45,7 @@ class IsPaymentAddressInTheUKController @Inject()(appConfig: FrontendAppConfig,
                                                   isPaymentAddressInTheUK: isPaymentAddressInTheUK,
 cc: MessagesControllerComponents,
                                                   formProvider: BooleanForm,
-                                                  addressLookup: AddressLookupConnector,
-                                                  implicit val templateRenderer: LocalTemplateRenderer
+                                                  addressLookup: AddressLookupConnector
                                                  )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   private val errorKey = "isPaymentAddressInTheUK.blank"
