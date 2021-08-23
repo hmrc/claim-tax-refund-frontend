@@ -55,7 +55,7 @@ class AnyTaxableOtherIncomeControllerSpec extends ControllerSpecBase with GuiceO
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyTaxableOtherIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), anyTaxableOtherIncome, messagesControllerComponents, sequenceUtil, formProvider, taxPaidFormProvider, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), anyTaxableOtherIncome, messagesControllerComponents, sequenceUtil, formProvider, taxPaidFormProvider)
 
   def viewAsString(form: Form[_] = taxPaidForm): String =
     anyTaxableOtherIncome(form, NormalMode, 0, taxYear, incomeName)(fakeRequest, messages).toString

@@ -17,7 +17,7 @@
 package controllers
 
 import com.google.inject.Inject
-import config.{FrontendAppConfig, LocalTemplateRenderer}
+import config.FrontendAppConfig
 import connectors.{CasConnector, DataCacheConnector}
 import controllers.actions.{AuthAction, DataRequiredAction, DataRetrievalAction}
 import models.templates.RobotXML

@@ -16,7 +16,7 @@
 
 package controllers
 
-import config.{FrontendAppConfig, LocalTemplateRenderer}
+import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.HowMuchInvestmentOrDividendForm
@@ -42,8 +42,7 @@ class HowMuchInvestmentOrDividendController @Inject()(appConfig: FrontendAppConf
                                                       requireData: DataRequiredAction,
                                                       howMuchInvestmentOrDividend: howMuchInvestmentOrDividend,
 cc: MessagesControllerComponents,
-                                                      formBuilder: HowMuchInvestmentOrDividendForm,
-                                                      implicit val templateRenderer: LocalTemplateRenderer
+                                                      formBuilder: HowMuchInvestmentOrDividendForm
                                                      )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   private val form: Form[String] = formBuilder()

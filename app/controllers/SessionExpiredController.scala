@@ -16,7 +16,7 @@
 
 package controllers
 
-import config.{FrontendAppConfig, LocalTemplateRenderer}
+import config.FrontendAppConfig
 
 import javax.inject.{Inject, Singleton}
 import play.api.i18n.I18nSupport

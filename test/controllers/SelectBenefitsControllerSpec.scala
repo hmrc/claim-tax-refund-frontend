@@ -41,7 +41,7 @@ class SelectBenefitsControllerSpec extends ControllerSpecBase with MockitoSugar 
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new SelectBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), selectBenefits, messagesControllerComponents, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), selectBenefits, messagesControllerComponents)
 
   def viewAsString(form: Form[_] = SelectBenefitsForm()) = selectBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
 

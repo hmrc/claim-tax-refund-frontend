@@ -16,7 +16,7 @@
 
 package controllers
 
-import config.{FrontendAppConfig, LocalTemplateRenderer}
+import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions.{AuthAction, DataRequiredAction, DataRetrievalAction}
 import forms.AnyTaxPaidForm
@@ -43,8 +43,7 @@ class AnyTaxableForeignIncomeController @Inject()(appConfig: FrontendAppConfig,
                                                   requireData: DataRequiredAction,
                                                   anyTaxableForeignIncome: anyTaxableForeignIncome,
 cc: MessagesControllerComponents,
-                                                  formProvider: AnyTaxPaidForm,
-                                                  implicit val templateRenderer: LocalTemplateRenderer
+                                                  formProvider: AnyTaxPaidForm
                                                  )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   private val notSelectedKey = "anyTaxableForeignIncome.notSelected"

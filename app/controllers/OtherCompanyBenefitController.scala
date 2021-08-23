@@ -16,7 +16,7 @@
 
 package controllers
 
-import config.{FrontendAppConfig, LocalTemplateRenderer}
+import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.OtherCompanyBenefitForm
@@ -44,8 +44,7 @@ class OtherCompanyBenefitController @Inject()(appConfig: FrontendAppConfig,
                                               otherCompanyBenefit: otherCompanyBenefit,
 cc: MessagesControllerComponents,
                                               sequenceUtil: SequenceUtil[OtherCompanyBenefit],
-                                              formBuilder: OtherCompanyBenefitForm,
-                                              implicit val templateRenderer: LocalTemplateRenderer
+                                              formBuilder: OtherCompanyBenefitForm
                                              )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
 

@@ -16,7 +16,7 @@
 
 package controllers
 
-import config.{FrontendAppConfig, LocalTemplateRenderer}
+import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.HowMuchRentalIncomeForm
@@ -43,8 +43,7 @@ class HowMuchRentalIncomeController @Inject()(
                                                requireData: DataRequiredAction,
                                                howMuchRentalIncome: howMuchRentalIncome,
 cc: MessagesControllerComponents,
-                                               formBuilder: HowMuchRentalIncomeForm,
-                                               implicit val templateRenderer: LocalTemplateRenderer
+                                               formBuilder: HowMuchRentalIncomeForm
                                              )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   private val form: Form[String] = formBuilder()
