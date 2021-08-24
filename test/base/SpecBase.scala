@@ -38,8 +38,6 @@ trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with MockitoSugar {
 
   override lazy val app: Application = {
 
-    import play.api.inject._
-
     new GuiceApplicationBuilder().build()
   }
 
