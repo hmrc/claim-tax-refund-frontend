@@ -2,9 +2,7 @@
 @import uk.gov.hmrc.play.views.html._
 @import controllers.routes._
 @import utils.FormHelpers
-@import models.{Mode, $className$}
-@import viewmodels.InputViewModel
-
+@import models.{Mode, $className$}@import viewmodels.InputViewModel
 @(appConfig: FrontendAppConfig, form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @main_template(

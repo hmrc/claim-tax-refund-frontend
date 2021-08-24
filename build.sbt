@@ -20,7 +20,6 @@ val compile = Seq(
   "uk.gov.hmrc"           %% "play-frontend-hmrc"             % "0.82.0-play-28",
   "uk.gov.hmrc"           %% "simple-reactivemongo"           % "8.0.0-play-28",
   "uk.gov.hmrc"           %% "govuk-template"                 % "5.68.0-play-28",
-  "uk.gov.hmrc"           %% "play-ui"                        % "9.5.0-play-28",
   "uk.gov.hmrc"           %% "http-caching-client"            % "9.5.0-play-28",
   "uk.gov.hmrc"           %% "play-conditional-form-mapping"  % "1.9.0-play-28",
   "uk.gov.hmrc"           %% "play-partials"                  % "8.1.0-play-28",
