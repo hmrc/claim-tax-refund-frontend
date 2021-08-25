@@ -79,11 +79,6 @@
     @hmrcReportTechnicalIssueHelper()
 }
 
-@scripts = {
-    @hmrcScripts()
-    <script src='@routes.Assets.versioned("javascripts/claimtaxrefundfrontend.js")'></script>
-}
-
 @govukLayout(
     pageTitle = Some(pageTitle),
     headBlock = Some(hmrcHead(
@@ -93,6 +88,6 @@
         serviceUrl = Some(controllers.routes.IndexController.onPageLoad().url)
     )),
     beforeContentBlock = Some(accountMenu),
-    scriptsBlock = Some(scripts),
+    scriptsBlock = Some(hmrcScripts()),
     footerBlock = Some(hmrcStandardFooter())
 )(mainContent)

@@ -16,14 +16,11 @@ $(document).ready(function() {
   // =====================================================
   // Back link mimics browser back functionality
   // =====================================================
-  $('#govuk-back-link').on('click', function(e){
-    e.preventDefault();
-    window.history.back();
-  })
   $('#back-link').on('click', function(e){
     e.preventDefault();
     window.history.back();
   })
+
 
   //======================================================
   // Move immediate forcus to any error summary
