@@ -16,7 +16,7 @@
 
 @import config.FrontendAppConfig
 
-@this(govuk_wrapper: govuk_wrapper)
+@this()
 
 @(pageTitle: String, heading: String, message: String, appConfig: FrontendAppConfig)(implicit messages: Messages, request: Request[_])
 
@@ -27,5 +27,3 @@
 @mainContent = {
 <p>@message</p>
 }
-
-@govuk_wrapper(appConfig = appConfig, title = pageTitle, contentHeader = Some(contentHeader), mainContent = mainContent)
