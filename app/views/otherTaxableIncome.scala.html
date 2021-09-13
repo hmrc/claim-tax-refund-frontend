@@ -23,7 +23,7 @@
     layout: Layout,
     formWithCSRF: FormWithCSRF,
     errorSummary: playComponents.error_summary,
-    pageHeading: hmrcPageHeading,
+    pageHeading: playComponents.headingWithCaption,
     inputText: playComponents.input_text,
     submitButton: playComponents.submit_button
 )
@@ -51,20 +51,18 @@
 
         @errorSummary(form.errors)
 
-        @pageHeading(PageHeading(
-            text = messages("otherTaxableIncome.heading", index.id + 1),
-            section = Some(messages("site.service_name.with_tax_year", taxYear.asString))
-        ))
+        @pageHeading(messages("otherTaxableIncome.heading", index.id + 1),
+            taxYear = Some(taxYear.asString))
 
         @inputText(
-            label = Html(messages("otherTaxableIncome.name")),
+            label = messages("otherTaxableIncome.name"),
             isPageHeading = false,
             largeText = false,
             field = form("name")
         )
 
         @inputText(
-            label = Html(messages("otherTaxableIncome.amount")),
+            label = messages("otherTaxableIncome.amount"),
             currency = true,
             isPageHeading = false,
             largeText = false,

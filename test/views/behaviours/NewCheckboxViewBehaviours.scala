@@ -18,9 +18,9 @@ package views.behaviours
 
 import play.api.data.{Form, FormError}
 import play.twirl.api.Html
-import views.ViewSpecBase
+import views.{NewViewSpecBase, ViewSpecBase}
 
-trait NewCheckboxViewBehaviours[A] extends ViewSpecBase {
+trait NewCheckboxViewBehaviours[A] extends NewViewSpecBase {
 
   def form: Form[Seq[A]]
   def createView(form: Form[Seq[A]]): Html

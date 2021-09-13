@@ -22,7 +22,7 @@
 
 @(
     viewModel: InputViewModelBase,
-    label: Html,
+    label: String,
     secondaryLabel: Option[String] = None,
     inputClass: Option[String] = None,
     hint: Option[String] = None,
@@ -35,8 +35,8 @@
 @govukTextarea(Textarea(
     label = Label(
         isPageHeading = false,
-        classes = "govuk-label--xl",
-        content = HtmlContent(label)
+        classes = s"""govuk-label--xl ${labelClass.getOrElse("")}""",
+        content = Text(label)
     ),
     hint = if (hint.isDefined) {
         Some(Hint(

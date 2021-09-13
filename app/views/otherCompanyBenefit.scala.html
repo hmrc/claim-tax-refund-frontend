@@ -25,7 +25,7 @@
     headingWithCaption: playComponents.headingWithCaption,
     errorSummary: playComponents.error_summary,
     inputText: playComponents.input_text,
-    pageHeading: hmrcPageHeading,
+    pageHeading: playComponents.headingWithCaption,
     submitButton: playComponents.submit_button
 )
 
@@ -54,20 +54,18 @@
 
         @errorSummary(form.errors)
 
-        @pageHeading(PageHeading(
-            text = messages("otherCompanyBenefit.heading", index.id + 1),
-            section = Some(messages("site.service_name.with_tax_year", taxYear.asString)))
-        )
+        @pageHeading(messages("otherCompanyBenefit.heading", index.id + 1),
+            taxYear = Some(taxYear.asString))
 
         @inputText(
-            label = Html(messages("otherCompanyBenefit.name")),
+            label = messages("otherCompanyBenefit.name"),
             isPageHeading = false,
             largeText = false,
             field = form("name")
         )
 
         @inputText(
-            label = Html(messages("otherCompanyBenefit.amount")),
+            label = messages("otherCompanyBenefit.amount"),
             currency = true,
             isPageHeading = false,
             largeText = false,

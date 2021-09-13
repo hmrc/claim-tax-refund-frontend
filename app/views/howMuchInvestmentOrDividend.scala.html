@@ -22,7 +22,7 @@
         formWithCSRF: FormWithCSRF,
         layout: Layout,
         errorSummary: playComponents.error_summary,
-        heading: playComponents.heading,
+        caption: playComponents.caption,
         govukInput: GovukInput,
         submitButton: playComponents.submit_button
 )
@@ -48,7 +48,7 @@
 
             @errorSummary(form.errors)
 
-            @heading(messages("howMuchInvestmentOrDividend.heading"), taxYear = Some(taxYear.asString))
+            @caption(taxYear = Some(taxYear.asString))
 
             @govukInput(
 

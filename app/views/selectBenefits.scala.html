@@ -23,7 +23,7 @@
     formWithCSRF: FormWithCSRF,
     layout: Layout,
     errorSummary: playComponents.error_summary,
-    heading: playComponents.heading,
+    heading: playComponents.headingWithCaption,
     inputCheckBox: playComponents.input_check_box,
     submitButton: playComponents.submit_button
 )
@@ -56,7 +56,7 @@
         @inputCheckBox(
             viewModel = InputViewModel("value", form),
             legend = messages("selectBenefits.heading", taxYear.asString),
-            legendClass = Some("visually-hidden"),
+            legendClass = Some("govuk-visually-hidden"),
             inputs = Benefits.sortedBenefits.map { checkboxOption =>
                 CheckboxItem(
                     content = HtmlContent(messages(s"selectBenefits.$checkboxOption")),

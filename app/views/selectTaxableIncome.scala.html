@@ -23,7 +23,7 @@
         formWithCSRF: FormWithCSRF,
         layout: Layout,
         errorSummary: playComponents.error_summary,
-        heading: playComponents.heading,
+        heading: playComponents.headingWithCaption,
         inputCheckBox: playComponents.input_check_box,
         submitButton: playComponents.submit_button
 )
@@ -51,12 +51,13 @@
 
             @errorSummary(form.errors)
 
-            @heading(messages("selectBenefits.heading"), taxYear = Some(taxYear.asString))
+            @heading(messages("selectTaxableIncome.heading"), taxYear = Some(taxYear.asString))
 
             @inputCheckBox(
+                isPageHeading = false,
                 viewModel = InputViewModel("value", form),
                 legend = messages("selectTaxableIncome.heading", taxYear.asString),
-                legendClass = Some("visually-hidden"),
+                legendClass = Some("govuk-visually-hidden"),
                 inputs = SelectTaxableIncomeForm.options.map { checkboxOption =>
                     CheckboxItem(
                         content = HtmlContent(messages(checkboxOption._1).capitalize),

@@ -52,8 +52,11 @@
 
         @errorSummary(form.errors)
 
+        @headingWithCaption(messages("howMuchEmploymentAndSupportAllowance.heading"), taxYear = Some(taxYear.asString))
+
         @input_text(
-            label = headingWithCaption(messages("howMuchEmploymentAndSupportAllowance.heading"), taxYear = Some(taxYear.asString)),
+            label = messages("howMuchEmploymentAndSupportAllowance.heading"),
+            labelClass = Some("govuk-visually-hidden"),
             currency = true,
             field = form("value")
         )

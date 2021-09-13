@@ -22,7 +22,7 @@
     formWithCSRF: FormWithCSRF,
     layout: Layout,
     errorSummary: playComponents.error_summary,
-    heading: playComponents.heading,
+    caption: playComponents.caption,
     inputCheckbox: playComponents.input_check_box,
     submitButton: playComponents.submit_button
 )
@@ -48,12 +48,11 @@
 
         @errorSummary(form.errors)
 
-        @heading(messages("selectCompanyBenefits.heading"), taxYear = Some(taxYear.asString))
+        @caption(taxYear = Some(taxYear.asString))
 
         @inputCheckbox(
             viewModel = InputViewModel("value", form),
             legend = messages("selectCompanyBenefits.heading", taxYear.asString),
-            legendClass = Some("visually-hidden"),
             inputs = CompanyBenefits.sortedCompanyBenefits.map { checkboxOption =>
                 CheckboxItem(
                     content = HtmlContent(messages(s"selectCompanyBenefits.$checkboxOption")),

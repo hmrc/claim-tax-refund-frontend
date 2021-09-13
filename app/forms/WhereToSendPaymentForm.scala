@@ -29,10 +29,10 @@ object WhereToSendPaymentForm extends FormErrorHelper {
   def apply(): Form[WhereToSendPayment] =
     Form(single("value" -> of(whereToSendPaymentFormatter)))
 
-  def options: Set[RadioOption] = WhereToSendPayment.values.map {
-    value =>
+  def options: Set[RadioOption] = WhereToSendPayment.values.zip(Seq("value", "value-2")).map {
+    case (value, govukId) =>
       RadioOption(
-        id = s"whereToSendPayment.$value",
+        id = govukId,
         value = value.toString,
         message = Message(s"whereToSendPayment.$value")
       )

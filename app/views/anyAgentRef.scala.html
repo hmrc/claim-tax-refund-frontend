@@ -45,9 +45,10 @@
         @formWithCSRF(action = AnyAgentRefController.onSubmit(mode), 'autoComplete -> "off") {
 
             @errorSummary(form.errors)
-
+            @headingWithCaption(messages("anyAgentRef.heading", nomineeName), taxYear = Some(taxYear.asString))
             @inputYesNoWithTextExpander(
-                label = headingWithCaption(messages("anyAgentRef.heading", nomineeName), taxYear = Some(taxYear.asString)),
+                label = messages("anyAgentRef.heading", nomineeName),
+                labelClass = Some("govuk-visually-hidden"),
                 textLabel = messages("anyAgentRef.agentRefField"),
                 yesNoField = form("anyAgentRef"),
                 textField = form("agentRef"),

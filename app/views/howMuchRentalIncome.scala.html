@@ -46,9 +46,10 @@
         @formWithCSRF(action = HowMuchRentalIncomeController.onSubmit(mode), 'autoComplete -> "off") {
 
             @errorSummary(form.errors)
-
+            @headingWithCaption(messages("howMuchRentalIncome.heading"), taxYear = Some(taxYear.asString))
             @inputText(
-                label = headingWithCaption(messages("howMuchRentalIncome.heading"), taxYear = Some(taxYear.asString)),
+                label = messages("howMuchRentalIncome.heading"),
+                labelClass = Some("govuk-visually-hidden"),
                 currency = true,
                 field = form("value")
             )

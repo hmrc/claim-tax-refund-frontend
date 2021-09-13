@@ -27,7 +27,7 @@
     heading: playComponents.heading,
     submitButton: playComponents.submit_button,
     errorSummary: playComponents.error_summary,
-    pageHeading: hmrcPageHeading,
+    pageHeading: playComponents.headingWithCaption,
     addListSummary: playComponents.add_list_summary,
     backLink: playComponents.back_link,
     inputYesNo: playComponents.input_yes_no,
@@ -65,10 +65,8 @@
 
             @errorSummary(form.errors)
 
-            @pageHeading(PageHeading(
-                text = messages("anyOtherTaxableIncome.heading"),
-                section = Some(messages("site.service_name.with_tax_year", taxYear.asString))
-            ))
+            @pageHeading(heading = messages("anyOtherTaxableIncome.heading"),
+                taxYear = Some(taxYear.asString))
 
             @addListSummary(
                 complete, incomplete, mode

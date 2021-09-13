@@ -23,7 +23,7 @@
         layout: Layout,
         formWithCSRF: FormWithCSRF,
         errorSummary: playComponents.error_summary,
-        heading: hmrcPageHeading,
+        heading: playComponents.headingWithCaption,
         govukInput: GovukInput,
         submitButton: playComponents.submit_button,
         inputYesOrNo: playComponents.input_yes_no
@@ -49,10 +49,8 @@
 
             @errorSummary(form.errors)
 
-            @heading(PageHeading(
-                text = messages("anyCompanyBenefits.heading"),
-                section = Some(messages("site.service_name.with_tax_year", taxYear.asString))
-            ))
+            @heading(heading = messages("anyCompanyBenefits.heading"),
+                taxYear = Some(taxYear.asString))
 
             <p class="govuk-body" id="listHeading">@messages("anyCompanyBenefits.listHeading")</p>
 
@@ -63,6 +61,7 @@
             )
 
             @inputYesOrNo(
+                isPageHeading = false,
                 label = messages("anyCompanyBenefits.heading"),
                 labelClass = Some("govuk-visually-hidden"),
                 field = form("value")

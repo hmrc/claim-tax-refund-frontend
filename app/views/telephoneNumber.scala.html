@@ -46,10 +46,11 @@
     @formWithCSRF(action = TelephoneNumberController.onSubmit(mode), 'autoComplete -> "off") {
 
         @errorSummary(form.errors)
-
+        @headingWithCaption(messages("telephoneNumber.heading"), taxYear = Some(taxYear.asString))
         @inputYesNoWithTextExpander(
             hint = Some(messages("telephoneNumber.hintPara1")),
-            label = headingWithCaption(messages("telephoneNumber.heading"), taxYear = Some(taxYear.asString)),
+            label = messages("telephoneNumber.heading"),
+            labelClass = Some("govuk-visually-hidden"),
             textLabel = messages("telephoneNumber.telephoneNumberField"),
             inputType = "tel",
             autoComplete = true,

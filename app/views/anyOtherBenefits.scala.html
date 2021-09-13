@@ -22,7 +22,7 @@
     formWithCSRF: FormWithCSRF,
     layout: Layout,
     errorSummary: playComponents.error_summary,
-    pageHeading: hmrcPageHeading,
+    pageHeading: playComponents.headingWithCaption,
     inputYesNo: playComponents.input_yes_no,
     govukTable : GovukTable,
     submitButton: playComponents.submit_button,
@@ -54,10 +54,8 @@
 
             @errorSummary(form.errors)
 
-            @pageHeading(PageHeading(
-                text = messages("anyOtherBenefits.heading"),
-                section = Some(messages("site.service_name.with_tax_year", taxYear.asString))
-            ))
+            @pageHeading(heading = messages("anyOtherBenefits.heading"),
+                taxYear = Some(taxYear.asString))
 
             @otherSummary(
                 answers = otherBenefits.rows

@@ -128,25 +128,25 @@ class CheckYourAnswersSectionsSpec extends SpecBase with MockitoSugar with Befor
 
       rows(2).label.key mustBe "howMuchBankInterest.heading"
       rows(3).label.key mustBe "anyTaxableBankInterestOption.checkYourAnswersLabel"
-      rows(3).url mustBe Some(routes.AnyTaxableBankInterestController.onPageLoad(CheckMode).url + "/#anyTaxPaid-yes")
+      rows(3).url mustBe Some(routes.AnyTaxableBankInterestController.onPageLoad(CheckMode).url + "/#anyTaxPaid")
       rows(4).label.key mustBe "anyTaxableBankInterest.checkYourAnswersLabel"
       rows(4).url mustBe Some(routes.AnyTaxableBankInterestController.onPageLoad(CheckMode).url + "/#taxPaidAmount")
 
       rows(5).label.key mustBe "howMuchForeignIncome.heading"
       rows(6).label.key mustBe "anyTaxableForeignIncomeOption.checkYourAnswersLabel"
-      rows(6).url mustBe Some(routes.AnyTaxableForeignIncomeController.onPageLoad(CheckMode).url + "/#anyTaxPaid-yes")
+      rows(6).url mustBe Some(routes.AnyTaxableForeignIncomeController.onPageLoad(CheckMode).url + "/#anyTaxPaid")
       rows(7).label.key mustBe "anyTaxableForeignIncome.checkYourAnswersLabel"
       rows(7).url mustBe Some(routes.AnyTaxableForeignIncomeController.onPageLoad(CheckMode).url + "/#taxPaidAmount")
 
       rows(8).label.key mustBe "howMuchInvestmentOrDividend.heading"
       rows(9).label.key mustBe "anyTaxableInvestmentsOption.checkYourAnswersLabel"
-      rows(9).url mustBe Some(routes.AnyTaxableInvestmentsController.onPageLoad(CheckMode).url + "/#anyTaxPaid-yes")
+      rows(9).url mustBe Some(routes.AnyTaxableInvestmentsController.onPageLoad(CheckMode).url + "/#anyTaxPaid")
       rows(10).label.key mustBe "anyTaxableInvestments.checkYourAnswersLabel"
       rows(10).url mustBe Some(routes.AnyTaxableInvestmentsController.onPageLoad(CheckMode).url + "/#taxPaidAmount")
 
       rows(11).label.key mustBe "howMuchRentalIncome.heading"
       rows(12).label.key mustBe "anyTaxableRentalIncomeOption.checkYourAnswersLabel"
-      rows(12).url mustBe Some(routes.AnyTaxableRentalIncomeController.onPageLoad(CheckMode).url + "/#anyTaxPaid-yes")
+      rows(12).url mustBe Some(routes.AnyTaxableRentalIncomeController.onPageLoad(CheckMode).url + "/#anyTaxPaid")
       rows(13).label.key mustBe "anyTaxableRentalIncome.checkYourAnswersLabel"
       rows(13).url mustBe Some(routes.AnyTaxableRentalIncomeController.onPageLoad(CheckMode).url + "/#taxPaidAmount")
 

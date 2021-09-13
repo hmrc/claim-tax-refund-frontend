@@ -23,7 +23,7 @@
     formWithCSRF: FormWithCSRF,
     layout: Layout,
     errorSummary: playComponents.error_summary,
-    heading: playComponents.heading,
+    heading: playComponents.headingWithCaption,
     inputYesNo: playComponents.input_yes_no,
     submitButton: playComponents.submit_button
 )
@@ -53,6 +53,7 @@
 
         @inputYesNo(
             label = messages("isPaymentAddressInTheUK.heading"),
+            labelClass = Some("govuk-visually-hidden"),
             field = form("value")
         )
 
