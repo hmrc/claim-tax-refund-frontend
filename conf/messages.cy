@@ -607,3 +607,7 @@ accessibility.subheading09 = Diffyg cydymffurfio â rheoliadau hygyrchedd
 accessibility.par24.before = Adeiladwyd y gwasanaeth gan ddefnyddio rhannau a brofwyd gan y
 accessibility.par24.linkText = Ganolfan Hygyrchedd Digidol (Digital Accessibility Centre)
 accessibility.par24.after = Profwyd y gwasanaeth llawn gan CThEM, ac roedd y gwaith o brofi’r gwasanaeth yn cynnwys defnyddwyr anabl
+
+global.error.InternalServerError500.title=Mae''n ddrwg gennym, rydym yn profi anawsterau technegol – 500
+global.error.InternalServerError500.heading=Mae''n ddrwg gennym, rydym yn profi anawsterau technegol
+global.error.InternalServerError500.message=Rhowch gynnig arall arni mewn ychydig o funudau.
