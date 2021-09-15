@@ -22,7 +22,7 @@
     layout: Layout,
     formWithCSRF: FormWithCSRF,
     errorSummary: playComponents.error_summary,
-    heading: hmrcPageHeading,
+    heading: playComponents.headingWithCaption,
     inputText: playComponents.input_text,
     submitButton: playComponents.submit_button
 )
@@ -50,48 +50,46 @@
 
             @errorSummary(form.errors)
 
-            @heading(PageHeading(
-                text = messages("paymentInternationalAddress.heading"),
-                section = Some(messages("site.service_name.with_tax_year", taxYear.asString))
-            ))
+            @heading(messages("paymentInternationalAddress.heading"),
+                taxYear = Some(taxYear.asString))
 
             @inputText(
-                label = Html(messages("global.addressLine1")),
+                label = messages("global.addressLine1"),
                 isPageHeading = false,
                 largeText = false,
                 field = form("addressLine1")
             )
 
             @inputText(
-                label = Html(messages("global.addressLine2")),
+                label = messages("global.addressLine2"),
                 isPageHeading = false,
                 largeText = false,
                 field = form("addressLine2")
             )
 
             @inputText(
-                label = Html(messages("global.addressLine3")),
+                label = messages("global.addressLine3"),
                 isPageHeading = false,
                 largeText = false,
                 field = form("addressLine3")
             )
 
             @inputText(
-                label = Html(messages("global.addressLine4")),
+                label = messages("global.addressLine4"),
                 isPageHeading = false,
                 largeText = false,
                 field = form("addressLine4")
             )
 
             @inputText(
-                label = Html(messages("global.addressLine5")),
+                label = messages("global.addressLine5"),
                 isPageHeading = false,
                 largeText = false,
                 field = form("addressLine5")
             )
 
             @inputText(
-                label = Html(messages("global.country")),
+                label = messages("global.country"),
                 isPageHeading = false,
                 largeText = false,
                 field = form("country")

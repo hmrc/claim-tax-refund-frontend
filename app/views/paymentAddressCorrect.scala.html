@@ -21,7 +21,7 @@
     layout: Layout,
     formWithCSRF: FormWithCSRF,
     errorSummary: playComponents.error_summary,
-    pageHeading: hmrcPageHeading,
+    pageHeading: playComponents.headingWithCaption,
     inputYesNo: playComponents.input_yes_no,
     submitButton: playComponents.submit_button
 )
@@ -49,10 +49,8 @@
 
         @errorSummary(form.errors)
 
-        @pageHeading(PageHeading(
-            text = messages("paymentAddressCorrect.heading"),
-            section = Some(messages("site.service_name.with_tax_year", taxYear.asString))
-        ))
+        @pageHeading(messages("paymentAddressCorrect.heading"),
+            taxYear = Some(taxYear.asString))
 
         <ul class="govuk-list govuk-list" id="usersAddress">
             @if(address.line1.exists(_.trim.nonEmpty)) {<li>@address.line1</li>}

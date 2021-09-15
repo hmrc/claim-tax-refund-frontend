@@ -22,6 +22,7 @@
 @(
 viewModel: InputViewModelBase,
 legend: String,
+isPageHeading: Boolean = true,
 legendClass: Option[String] = None,
 hint: Option[String] = None,
 trackGa: Boolean = false,
@@ -33,8 +34,8 @@ field: Field)(implicit messages: Messages)
                 fieldset = Some(Fieldset(
                   legend = Some(Legend(
                     content = Text(legend),
-                    classes = "govuk-fieldset__legend--xl",
-                    isPageHeading = true
+                    classes = s"""govuk-fieldset__legend--xl ${legendClass.getOrElse("")}""",
+                    isPageHeading = isPageHeading
                   ))
                 )),
         items = inputs,

@@ -24,7 +24,7 @@
     layout: Layout,
     formWithCSRF: FormWithCSRF,
     errorSummary: playComponents.error_summary,
-    heading: hmrcPageHeading,
+    heading: playComponents.headingWithCaption,
     inputYesOrNo: playComponents.input_yes_no,
     submitButton: playComponents.submit_button
 
@@ -54,10 +54,8 @@
 
         @errorSummary(form.errors)
 
-        @heading(PageHeading(
-            text = messages("deleteOther.heading", itemName),
-            section = Some(messages("site.service_name.with_tax_year", taxYear.asString))
-        ))
+        @heading(messages("deleteOther.heading", itemName),
+            taxYear = Some(taxYear.asString))
 
         @inputYesOrNo(
             isPageHeading = false,

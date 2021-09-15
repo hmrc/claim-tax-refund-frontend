@@ -44,10 +44,11 @@
     @formWithCSRF(action = AnyTaxableRentalIncomeController.onSubmit(mode), 'autoComplete -> "off") {
 
         @errorSummary(form.errors)
-
+        @headingWithCaption(messages("anyTaxableRentalIncome.heading"), taxYear = Some(taxYear.asString))
         @inputYesNoWithTextExpander(
             hint = None,
-            label = headingWithCaption(messages("anyTaxableRentalIncome.heading"), taxYear = Some(taxYear.asString)),
+            label = messages("anyTaxableRentalIncome.heading"),
+            labelClass = Some("govuk-visually-hidden"),
             textLabel = messages("anyTaxableRentalIncome.anyTaxPaidAmountField"),
             currency = true,
             autoComplete = true,

@@ -95,8 +95,8 @@ class TelephoneNumberViewSpec extends NewQuestionViewBehaviours[TelephoneOption]
           "contain 2 radioButtons" in {
             val doc = asDocument(createView(form))
             assert(doc.select("input[type=\"radio\"]").size == 2)
-            assertRenderedById(doc, "anyTelephoneNumber-no")
-            assertRenderedById(doc, "anyTelephoneNumber-yes")
+            assertRenderedById(doc, "anyTelephoneNumber-2")
+            assertRenderedById(doc, "anyTelephoneNumber")
           }
 
           "contain a conditionally-revealing text input" which {
@@ -115,8 +115,8 @@ class TelephoneNumberViewSpec extends NewQuestionViewBehaviours[TelephoneOption]
 
           "have no values checked when rendered with no form" in {
             val doc = asDocument(createView(form))
-            assert(!doc.getElementById("anyTelephoneNumber-no").hasAttr("checked"))
-            assert(!doc.getElementById("anyTelephoneNumber-yes").hasAttr("checked"))
+            assert(!doc.getElementById("anyTelephoneNumber-2").hasAttr("checked"))
+            assert(!doc.getElementById("anyTelephoneNumber").hasAttr("checked"))
           }
 
 
@@ -159,14 +159,14 @@ class TelephoneNumberViewSpec extends NewQuestionViewBehaviours[TelephoneOption]
 
       "have only the correct value checked when yes selected" in {
         val doc = asDocument(createView(form.fill(TelephoneOption.Yes(testPhoneNumber))))
-        assert(doc.getElementById("anyTelephoneNumber-yes").hasAttr("checked"))
-        assert(!doc.getElementById("anyTelephoneNumber-no").hasAttr("checked"))
+        assert(doc.getElementById("anyTelephoneNumber").hasAttr("checked"))
+        assert(!doc.getElementById("anyTelephoneNumber-2").hasAttr("checked"))
       }
 
       "have only the correct value checked when no selected" in {
         val doc = asDocument(createView(form.fill(TelephoneOption.No)))
-        assert(!doc.getElementById("anyTelephoneNumber-yes").hasAttr("checked"))
-        assert(doc.getElementById("anyTelephoneNumber-no").hasAttr("checked"))
+        assert(!doc.getElementById("anyTelephoneNumber").hasAttr("checked"))
+        assert(doc.getElementById("anyTelephoneNumber-2").hasAttr("checked"))
       }
 
       "not render an error summary" in {

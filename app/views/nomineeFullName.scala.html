@@ -48,10 +48,10 @@
         @formWithCSRF(action = NomineeFullNameController.onSubmit(mode), 'autoComplete -> "off") {
 
             @errorSummary(form.errors)
-
+            @headingWithCaption(messages("nomineeFullName.heading"), taxYear = Some(taxYear.asString))
             @inputText(
-                label = headingWithCaption(messages("nomineeFullName.heading"), taxYear = Some(taxYear.asString)),
-                labelClass = Some("visually-hidden"),
+                label = messages("nomineeFullName.heading"),
+                labelClass = Some("govuk-visually-hidden"),
                 field = form("value")
             )
 

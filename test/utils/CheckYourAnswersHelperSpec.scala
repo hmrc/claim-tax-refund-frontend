@@ -533,7 +533,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
       when(answers.anyAgentRef) thenReturn Some(AnyAgentRef.Yes(agentRef))
 
       helper.anyAgentRef.get.label.key mustBe messages("anyAgentRef.heading", "Test name")
-      helper.anyAgentRef.get.url mustBe Some(routes.AnyAgentRefController.onPageLoad(CheckMode).url + "/#anyAgentRef-yes")
+      helper.anyAgentRef.get.url mustBe Some(routes.AnyAgentRefController.onPageLoad(CheckMode).url + "/#anyAgentRef")
       helper.anyAgentRef.get.answer.key mustBe yes
       helper.agentReferenceNumber.get.label.key mustBe "anyAgentRef.agentRefField"
       helper.agentReferenceNumber.get.url mustBe Some(routes.AnyAgentRefController.onPageLoad(CheckMode).url + "/#agentRef")
@@ -591,7 +591,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
       val telNo = "0191123123"
       when(answers.anyTelephoneNumber) thenReturn Some(TelephoneOption.Yes(telNo))
       helper.anyTelephoneNumber.get.label.key mustBe "telephoneNumber.heading"
-      helper.anyTelephoneNumber.get.url mustBe Some(routes.TelephoneNumberController.onPageLoad(CheckMode).url + "/#anyTelephoneNumber-yes")
+      helper.anyTelephoneNumber.get.url mustBe Some(routes.TelephoneNumberController.onPageLoad(CheckMode).url + "/#anyTelephoneNumber")
       helper.telephoneNumber.get.label.key mustBe "telephoneNumber.telephoneNumberField"
       helper.telephoneNumber.get.url mustBe Some(routes.TelephoneNumberController.onPageLoad(CheckMode).url + "/#telephoneNumber")
       helper.anyTelephoneNumber.get.answer.key mustBe yes

@@ -14,7 +14,10 @@
  * limitations under the License.
  *@
 
-@this()
+@this(
+    caption: playComponents.caption,
+    headingComponent: playComponents.heading
+)
 
 @(
     heading: String,
@@ -22,10 +25,5 @@
     taxYear: Option[String] = None
 )(implicit messages: Messages)
 
-@secondaryHeaderText = @{
-    if (taxYear.isDefined) messages("site.service_name.with_tax_year", taxYear.get) else messages("site.service_name")
-}
-
-<span class="govuk-caption-xl heading-secondary">@secondaryHeaderText</span>
-<h1 class="govuk-fieldset__heading">@heading</h1>
-
+@caption(taxYear)
+@headingComponent(heading)

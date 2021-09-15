@@ -55,7 +55,6 @@
             legendClass = None,
             inputs = SelectTaxYear.options map { radioOption =>
                 RadioItem(
-                    id = Some(radioOption.id),
                     value = Some(radioOption.value),
                     content = HtmlContent(radioOption.message.html)
                 )

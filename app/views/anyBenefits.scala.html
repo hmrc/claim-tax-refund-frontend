@@ -19,7 +19,7 @@
 
 @this(
     layout: Layout,
-    pageHeading: hmrcPageHeading,
+    pageHeading: playComponents.headingWithCaption,
     submitButton: playComponents.submit_button,
     errorSummary: playComponents.error_summary,
     formWithCSRF: FormWithCSRF,
@@ -47,10 +47,7 @@
 
         @errorSummary(form.errors)
 
-        @pageHeading(PageHeading(
-            text = messages("anyBenefits.heading"),
-            section = Some(messages("site.service_name.with_tax_year", taxYear.asString))
-        ))
+        @pageHeading(heading = messages("anyBenefits.heading"), taxYear = Some(taxYear.asString))
 
         <p class="govuk-body" id="listHeading">@messages("anyBenefits.listHeading")</p>
 

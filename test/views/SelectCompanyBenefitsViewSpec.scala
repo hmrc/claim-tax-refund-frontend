@@ -22,10 +22,10 @@ import models.{CompanyBenefits, NormalMode}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import play.twirl.api.Html
-import views.behaviours.{NewCheckboxViewBehaviours, ViewBehaviours}
+import views.behaviours.{NewCheckboxViewBehaviours, NewViewBehaviours}
 import views.html.selectCompanyBenefits
 
-class SelectCompanyBenefitsViewSpec extends ViewBehaviours with NewCheckboxViewBehaviours[CompanyBenefits.Value] with GuiceOneAppPerSuite {
+class SelectCompanyBenefitsViewSpec extends NewViewBehaviours with NewCheckboxViewBehaviours[CompanyBenefits.Value] with GuiceOneAppPerSuite {
 
   val messageKeyPrefix = "selectCompanyBenefits"
   val fieldKey = "value"

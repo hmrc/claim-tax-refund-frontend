@@ -449,7 +449,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
         case AnyAgentRef.Yes(agentRef) => "site.yes"
         case AnyAgentRef.No => "site.no"
       },
-			url = Some(routes.AnyAgentRefController.onPageLoad(CheckMode).url + "/#anyAgentRef-yes"),
+			url = Some(routes.AnyAgentRefController.onPageLoad(CheckMode).url + "/#anyAgentRef"),
 			changeLabel = messages("anyAgentRef.changeLabel", userAnswers.nomineeFullName.getOrElse("your nominee"))
 		)
   }
@@ -532,7 +532,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
           case TelephoneOption.Yes(number) => "site.yes"
           case TelephoneOption.No => "site.no"
         },
-        url = Some(routes.TelephoneNumberController.onPageLoad(CheckMode).url + "/#anyTelephoneNumber-yes"),
+        url = Some(routes.TelephoneNumberController.onPageLoad(CheckMode).url + "/#anyTelephoneNumber"),
 				changeLabel = "telephoneNumber.changeLabel"
       )
   }

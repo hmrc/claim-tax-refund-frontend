@@ -47,8 +47,11 @@ pageTitle = title
 
         @errorSummary(form.errors)
 
+        @headingWithCaption(messages("howMuchMedicalBenefits.heading"), taxYear = Some(taxYear.asString))
+
         @inputText(
-            label = headingWithCaption(messages("howMuchMedicalBenefits.heading"), taxYear = Some(taxYear.asString)),
+            label = messages("howMuchMedicalBenefits.heading"),
+            labelClass = Some("govuk-visually-hidden"),
             currency = true,
             field = form("value")
         )

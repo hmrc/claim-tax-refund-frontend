@@ -49,11 +49,11 @@
     @formWithCSRF(action = DetailsOfEmploymentOrPensionController.onSubmit(mode), 'autoComplete -> "off") {
 
         @errorSummary(form.errors)
-
+        @headingWithCaption(messages("detailsOfEmploymentOrPension.heading"), taxYear = Some(taxYear.asString))
         @inputTextArea(
             InputViewModel("value", form),
-            label = headingWithCaption(messages("detailsOfEmploymentOrPension.heading"), taxYear = Some(taxYear.asString)),
-            labelClass = None,
+            label = messages("detailsOfEmploymentOrPension.heading"),
+            labelClass = Some("govuk-visually-hidden"),
             hint = Some(messages("detailsOfEmploymentOrPension.hintText")),
             charLimit = Some(characterLimit),
             field = form("value")

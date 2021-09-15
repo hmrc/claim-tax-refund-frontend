@@ -22,7 +22,7 @@
         layout: Layout,
         formWithCSRF: FormWithCSRF,
         errorSummary: playComponents.error_summary,
-        heading: playComponents.heading,
+        caption: playComponents.caption,
         govukInput : GovukInput,
         submitButton: playComponents.submit_button
 )
@@ -47,7 +47,7 @@
     @formWithCSRF(action = HowMuchBereavementAllowanceController.onSubmit(mode), 'autoComplete -> "off") {
         @errorSummary(form.errors)
 
-        @heading(messages("howMuchBereavementAllowance.heading"), taxYear = Some(taxYear.asString))
+        @caption(taxYear = Some(taxYear.asString))
 
         @govukInput(
             Input(

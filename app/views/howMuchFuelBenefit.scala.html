@@ -50,9 +50,10 @@
         @formWithCSRF(action = HowMuchFuelBenefitController.onSubmit(mode), 'autoComplete -> "off") {
 
         @errorSummary(form.errors)
-
+        @headingWithCaption(messages("howMuchFuelBenefit.heading"), taxYear = Some(taxYear.asString))
         @inputText(
-        label = headingWithCaption(messages("howMuchFuelBenefit.heading"), taxYear = Some(taxYear.asString)),
+        label = messages("howMuchFuelBenefit.heading"),
+        labelClass = Some("govuk-visually-hidden"),
         currency = true,
         field = form("value")
         )

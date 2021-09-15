@@ -150,7 +150,7 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
 		cyaHelper.anyTaxPaid(
 			"anyTaxableBankInterestOption.checkYourAnswersLabel",
 			userAnswers.anyTaxableBankInterest,
-			Some(routes.AnyTaxableBankInterestController.onPageLoad(CheckMode).url + "/#anyTaxPaid-yes")
+			Some(routes.AnyTaxableBankInterestController.onPageLoad(CheckMode).url + "/#anyTaxPaid")
 		),
 		cyaHelper.taxPaid(
 			"anyTaxableBankInterest.checkYourAnswersLabel",
@@ -162,7 +162,7 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
 		cyaHelper.anyTaxPaid(
 			"anyTaxableForeignIncomeOption.checkYourAnswersLabel",
 			userAnswers.anyTaxableForeignIncome,
-			Some(routes.AnyTaxableForeignIncomeController.onPageLoad(CheckMode).url + "/#anyTaxPaid-yes")
+			Some(routes.AnyTaxableForeignIncomeController.onPageLoad(CheckMode).url + "/#anyTaxPaid")
 		),
 		cyaHelper.taxPaid(
 			"anyTaxableForeignIncome.checkYourAnswersLabel",
@@ -174,7 +174,7 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
 		cyaHelper.anyTaxPaid(
 			"anyTaxableInvestmentsOption.checkYourAnswersLabel",
 			userAnswers.anyTaxableInvestments,
-			Some(routes.AnyTaxableInvestmentsController.onPageLoad(CheckMode).url + "/#anyTaxPaid-yes")
+			Some(routes.AnyTaxableInvestmentsController.onPageLoad(CheckMode).url + "/#anyTaxPaid")
 		),
 		cyaHelper.taxPaid(
 			"anyTaxableInvestments.checkYourAnswersLabel",
@@ -186,7 +186,7 @@ class CheckYourAnswersSections(cyaHelper: CheckYourAnswersHelper, userAnswers: U
     cyaHelper.anyTaxPaid(
       "anyTaxableRentalIncomeOption.checkYourAnswersLabel",
       userAnswers.anyTaxableRentalIncome,
-      Some(routes.AnyTaxableRentalIncomeController.onPageLoad(CheckMode).url + "/#anyTaxPaid-yes")
+      Some(routes.AnyTaxableRentalIncomeController.onPageLoad(CheckMode).url + "/#anyTaxPaid")
     ),
     cyaHelper.taxPaid(
       "anyTaxableRentalIncome.checkYourAnswersLabel",

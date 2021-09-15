@@ -25,7 +25,7 @@
     formWithCSRF: FormWithCSRF,
     layout: Layout,
     errorSummary: playComponents.error_summary,
-    pageHeading: hmrcPageHeading,
+    pageHeading: playComponents.headingWithCaption,
     otherSummary: playComponents.other_summary,
     inputYesNo: playComponents.input_yes_no,
     submitButton: playComponents.submit_button
@@ -55,10 +55,8 @@
 
             @errorSummary(form.errors)
 
-            @pageHeading(PageHeading(
-                text = messages("anyOtherCompanyBenefits.heading"),
-                section = Some(messages("site.service_name.with_tax_year", taxYear.asString))
-            ))
+            @pageHeading(heading = messages("anyOtherCompanyBenefits.heading"),
+                taxYear = Some(taxYear.asString))
 
             @otherSummary(
                 answers = otherCompanyBenefits.rows

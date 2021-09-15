@@ -91,15 +91,15 @@ class AnyTaxableBankInterestViewSpec extends NewQuestionViewBehaviours[AnyTaxPai
 
           "contain an input for the value" in {
             val doc = asDocument(createView(form))
-            assertRenderedById(doc, "anyTaxPaid-no")
-            assertRenderedById(doc, "anyTaxPaid-yes")
+            assertRenderedById(doc, "anyTaxPaid-2")
+            assertRenderedById(doc, "anyTaxPaid")
             assertRenderedById(doc, "taxPaidAmount")
           }
 
           "have no values checked when rendered with no form" in {
             val doc = asDocument(createView(form))
-            assert(!doc.getElementById("anyTaxPaid-yes").hasAttr("checked"))
-            assert(!doc.getElementById("anyTaxPaid-no").hasAttr("checked"))
+            assert(!doc.getElementById("anyTaxPaid").hasAttr("checked"))
+            assert(!doc.getElementById("anyTaxPaid-2").hasAttr("checked"))
           }
 
           "include the form's value in the value input" in {
@@ -141,14 +141,14 @@ class AnyTaxableBankInterestViewSpec extends NewQuestionViewBehaviours[AnyTaxPai
 
       "have only the correct value checked when yes selected" in {
         val doc = asDocument(createView(form.fill(AnyTaxPaid.Yes(testAmount))))
-        assert(doc.getElementById("anyTaxPaid-yes").hasAttr("checked"))
-        assert(!doc.getElementById("anyTaxPaid-no").hasAttr("checked"))
+        assert(doc.getElementById("anyTaxPaid").hasAttr("checked"))
+        assert(!doc.getElementById("anyTaxPaid-2").hasAttr("checked"))
       }
 
       "have only the correct value checked when no selected" in {
         val doc = asDocument(createView(form.fill(AnyTaxPaid.No)))
-        assert(!doc.getElementById("anyTaxPaid-yes").hasAttr("checked"))
-        assert(doc.getElementById("anyTaxPaid-no").hasAttr("checked"))
+        assert(!doc.getElementById("anyTaxPaid").hasAttr("checked"))
+        assert(doc.getElementById("anyTaxPaid-2").hasAttr("checked"))
       }
 
       "not render an error summary" in {

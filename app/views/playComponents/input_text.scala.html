@@ -17,14 +17,14 @@
 @this(govukInput : GovukInput)
 
 @(
-        label: Html,
+        label: String,
         hintLine1: Option[String] = None,
         hintLine2: Option[String] = None,
         labelClass: Option[String] = None,
         currency: Boolean = false,
         inputType: String = "text",
         autoComplete: Option[String] = None,
-        isPageHeading: Boolean = true,
+        isPageHeading: Boolean = false,
         largeText: Boolean = true,
         field: Field
 )(implicit messages: Messages)
@@ -37,9 +37,9 @@
 
 @govukInput(Input(
     label = Label(
-        isPageHeading = false,
-        classes = if(largeText) "govuk-label--xl" else "govuk-label--m",
-        content = HtmlContent(label)
+        isPageHeading = isPageHeading,
+        classes = s"""${if(largeText) "govuk-label--xl" else "govuk-label--m"} ${labelClass.getOrElse("")}""",
+        content = Text(label)
     ),
     hint = hint.map(hintString => Hint(content = Text(hintString))),
     classes = "govuk-input--width-10",

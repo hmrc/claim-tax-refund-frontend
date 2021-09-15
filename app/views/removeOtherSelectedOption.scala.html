@@ -21,7 +21,7 @@
     formWithCSRF: FormWithCSRF,
     errorSummary: playComponents.error_summary,
     inputYesOrNo: playComponents.input_yes_no,
-    heading: hmrcPageHeading,
+    heading: playComponents.headingWithCaption,
     submitButton: playComponents.submit_button
 )
 
@@ -48,10 +48,8 @@
 
         @errorSummary(form.errors)
 
-        @heading(PageHeading(
-            text = messages("RemoveOtherSelectedOption.heading", messages(collectionId)),
-            section = Some(messages("site.service_name.with_tax_year", taxYear.asString))
-        ))
+        @heading(heading = messages("RemoveOtherSelectedOption.heading", messages(collectionId)),
+            taxYear = Some(taxYear.asString))
 
         @inputYesOrNo(
             isPageHeading = false,

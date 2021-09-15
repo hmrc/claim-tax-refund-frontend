@@ -19,7 +19,7 @@
 
 @this(
     layout: Layout,
-    pageHeading: hmrcPageHeading,
+    pageHeading: playComponents.headingWithCaption,
     submitButton: playComponents.submit_button,
     errorSummary: playComponents.error_summary,
     formWithCSRF: FormWithCSRF,
@@ -47,11 +47,7 @@
 
 @errorSummary(form.errors)
 
-        @pageHeading(PageHeading(
-            text = messages("employmentDetails.heading"),
-            section = Some(messages("site.service_name.with_tax_year", taxYear.asString))
-        ))
-
+        @pageHeading(heading = messages("employmentDetails.heading"), taxYear = Some(taxYear.asString))
         @govukTable(Table(
             head = Some(Seq(
                 HeadCell(content = Text(Messages("employmentDetails.employer"))),

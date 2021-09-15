@@ -93,15 +93,15 @@ class AnyAgentRefViewSpec extends NewQuestionViewBehaviours[AnyAgentRef] with Gu
 
           "contain an input for the value" in {
             val doc = asDocument(createView(form))
-            assertRenderedById(doc, "anyAgentRef-yes")
-            assertRenderedById(doc, "anyAgentRef-no")
+            assertRenderedById(doc, "anyAgentRef")
+            assertRenderedById(doc, "anyAgentRef-2")
             assertRenderedById(doc, "agentRef")
           }
 
           "have no values checked when rendered with no form" in {
             val doc = asDocument(createView(form))
-            assert(!doc.getElementById("anyAgentRef-yes").hasAttr("checked"))
-            assert(!doc.getElementById("anyAgentRef-no").hasAttr("checked"))
+            assert(!doc.getElementById("anyAgentRef").hasAttr("checked"))
+            assert(!doc.getElementById("anyAgentRef-2").hasAttr("checked"))
           }
 
 
@@ -144,14 +144,14 @@ class AnyAgentRefViewSpec extends NewQuestionViewBehaviours[AnyAgentRef] with Gu
 
       "have only the correct value checked when yes selected" in {
         val doc = asDocument(createView(form.fill(AnyAgentRef.Yes(testAgentRef))))
-        assert(doc.getElementById("anyAgentRef-yes").hasAttr("checked"))
-        assert(!doc.getElementById("anyAgentRef-no").hasAttr("checked"))
+        assert(doc.getElementById("anyAgentRef").hasAttr("checked"))
+        assert(!doc.getElementById("anyAgentRef-2").hasAttr("checked"))
       }
 
       "have only the correct value checked when no selected" in {
         val doc = asDocument(createView(form.fill(AnyAgentRef.No)))
-        assert(!doc.getElementById("anyAgentRef-yes").hasAttr("checked"))
-        assert(doc.getElementById("anyAgentRef-no").hasAttr("checked"))
+        assert(!doc.getElementById("anyAgentRef").hasAttr("checked"))
+        assert(doc.getElementById("anyAgentRef-2").hasAttr("checked"))
       }
 
 
