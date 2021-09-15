@@ -543,3 +543,7 @@ accessibility.subheading09 = Non-compliance with the accessibility regulations
 accessibility.par24.before = The service was built using parts that were tested by the
 accessibility.par24.linkText = Digital Accessibility Centre
 accessibility.par24.after = The full service was tested by HMRC and included disabled users
+
+global.error.InternalServerError500.title=Sorry, we are experiencing technical difficulties - 500
+global.error.InternalServerError500.heading=Sorry, we’re experiencing technical difficulties
+global.error.InternalServerError500.message=Please try again in a few minutes.
