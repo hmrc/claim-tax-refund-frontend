@@ -265,7 +265,7 @@ checkYourAnswers.userSection=Manylion defnyddiwr
 
 confirmation.heading=Hawliad wedi’i anfon
 confirmation.reference=Eich cyfeirnod yw
-confirmation.survey.linkText=Beth oedd eich barn am y gwasanaeth hwn?
+confirmation.survey.linkText=Beth oedd eich barn am y gwasanaeth hwn? (yn agor mewn tab newydd)
 confirmation.whatHappensNext.line1=Byddwn yn prosesu’ch hawliad cyn pen 15 diwrnod ac yn cysylltu â chi drwy lythyr.
 
 date.day=Diwrnod
@@ -474,7 +474,7 @@ site.hidden-delete=Dileu {0}
 site.hidden-edit=Newid {0}
 site.no=Na
 site.service_name=Hawlio ad-daliad treth
-site.service_name.with_tax_year=Hawlio ad-daliad treth: {0}
+site.service_name.with_tax_year={0}
 site.title.error=Gwall: {0}
 site.yes=Iawn
 
