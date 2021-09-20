@@ -30,7 +30,7 @@
         messages: Messages
 )
 
-@layout(pageTitle = messages("timedOut.title")){
+@layout(pageTitle = messages("timedOut.title"), timeoutEnabled = false, backLinkEnabled = false){
 
     @heading(messages("timedOut.heading"))
 
