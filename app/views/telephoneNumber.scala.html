@@ -47,8 +47,8 @@
 
         @errorSummary(form.errors)
         @headingWithCaption(messages("telephoneNumber.heading"), taxYear = Some(taxYear.asString))
+        <p class="govuk-hint">@messages("telephoneNumber.hintPara1")</p>
         @inputYesNoWithTextExpander(
-            hint = Some(messages("telephoneNumber.hintPara1")),
             label = messages("telephoneNumber.heading"),
             labelClass = Some("govuk-visually-hidden"),
             textLabel = messages("telephoneNumber.telephoneNumberField"),

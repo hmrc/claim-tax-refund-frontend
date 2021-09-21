@@ -61,7 +61,11 @@ trait NewCheckboxViewBehaviours[A] extends NewViewSpecBase {
         val doc = asDocument(createView())
         for { ((label, value), i) <- values.zipWithIndex } yield {
          val id = fieldId(i)
-          doc.select(s"label[for=$id]").text mustEqual messages(label).capitalize
+          if (label.contains("selectCompanyBenefits")) {
+            doc.select(s"label[for=$id]").text mustEqual messages(label)
+          } else {
+            doc.select(s"label[for=$id]").text mustEqual messages(label).capitalize
+          }
         }
       }
 

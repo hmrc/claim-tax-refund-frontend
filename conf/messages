@@ -90,7 +90,7 @@ site.no = No
 site.yes = Yes
 site.continue = Continue
 site.service_name = Claim a tax refund
-site.service_name.with_tax_year = Claim a tax refund: {0}
+site.service_name.with_tax_year = {0}
 site.textarea.char_limit = (Limit is {0} characters)
 site.title.error = Error: {0}
 
@@ -257,9 +257,9 @@ selectCompanyBenefits.title = Which taxable company benefits did you get?
 selectCompanyBenefits.heading = Which taxable company benefits did you get?
 selectCompanyBenefits.blank = Select the taxable company benefits you got
 selectCompanyBenefits.changeLabel = Change which taxable company benefits you got
-selectCompanyBenefits.company-car-benefit = Company car benefit
-selectCompanyBenefits.fuel-benefit = Fuel benefit
-selectCompanyBenefits.medical-benefit = Medical benefit
+selectCompanyBenefits.company-car-benefit = company car benefit
+selectCompanyBenefits.fuel-benefit = fuel benefit
+selectCompanyBenefits.medical-benefit = medical benefit
 selectCompanyBenefits.other-company-benefit = Other taxable company benefits
 
 anyCompanyBenefits.title = Did you get any taxable company benefits from your employer?
@@ -454,7 +454,7 @@ confirmation.heading = Claim sent
 confirmation.reference = Your reference number is
 confirmation.whatHappensNext.title = What happens next
 confirmation.whatHappensNext.line1 = We will process your claim within 15 days and contact you by letter.
-confirmation.survey.linkText = What did you think of this service?
+confirmation.survey.linkText = What did you think of this service? (opens in new tab)
 confirmation.survey.time = (takes 30 seconds)
 
 itmpAddress.heading = Is this the address you want us to send any payment to?

@@ -49,11 +49,6 @@
         <p class="govuk-body">@messages("confirmation.whatHappensNext.line1")</p>
 
         <p class="govuk-body">
-            @hmrcNewTabLink(NewTabLink(
-                text = messages("confirmation.survey.linkText"),
-                href = Some(appConfig.feedbackSurveyUrl),
-                language = if(messages.lang.code == "cy") Some(Cy.code) else Some(En.code),
-                classList = Some("")
-            ))
-    </p>
+            <a href="@appConfig.feedbackSurveyUrl" class="govuk-link">@messages("confirmation.survey.linkText")</a>
+        </p>
 }
