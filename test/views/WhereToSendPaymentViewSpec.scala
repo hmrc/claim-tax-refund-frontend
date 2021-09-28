@@ -21,10 +21,10 @@ import models.NormalMode
 import models.SelectTaxYear.CYMinus1
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
-import views.behaviours.ViewBehaviours
+import views.behaviours.NewViewBehaviours
 import views.html.whereToSendPayment
 
-class WhereToSendPaymentViewSpec extends ViewBehaviours with GuiceOneAppPerSuite {
+class WhereToSendPaymentViewSpec extends NewViewBehaviours with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "whereToSendPayment"
   private val taxYear = CYMinus1
@@ -32,10 +32,10 @@ class WhereToSendPaymentViewSpec extends ViewBehaviours with GuiceOneAppPerSuite
   val whereToSendPayment: whereToSendPayment = fakeApplication.injector.instanceOf[whereToSendPayment]
 
   def createView = () =>
-    whereToSendPayment(frontendAppConfig, WhereToSendPaymentForm(), NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
+    whereToSendPayment(WhereToSendPaymentForm(), NormalMode, taxYear)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[_]) =>
-    whereToSendPayment(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
+    whereToSendPayment(form, NormalMode, taxYear)(fakeRequest, messages)
 
   "WhereToSendPayment view" must {
     behave like normalPage(createView, messageKeyPrefix, None)

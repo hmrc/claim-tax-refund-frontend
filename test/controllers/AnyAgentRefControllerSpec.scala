@@ -48,10 +48,10 @@ class AnyAgentRefControllerSpec extends ControllerSpecBase with GuiceOneAppPerSu
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new AnyAgentRefController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), anyAgentRef, messagesControllerComponents, formProvider, templateRenderer)
+    new AnyAgentRefController(messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), anyAgentRef, messagesControllerComponents, formProvider)
 
-  def viewAsString(form: Form[_] = form) = anyAgentRef(frontendAppConfig, form, NormalMode, nomineeName, taxYear)(fakeRequest, messages, templateRenderer, ec).toString
+  def viewAsString(form: Form[_] = form) = anyAgentRef(form, NormalMode, nomineeName, taxYear)(fakeRequest, messages).toString
 
   "AnyAgentRef Controller" must {
 

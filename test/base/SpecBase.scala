@@ -16,7 +16,7 @@
 
 package base
 
-import config.{AddressLookupConfig, FrontendAppConfig, LocalTemplateRenderer}
+import config.{AddressLookupConfig, FrontendAppConfig}
 import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice._
@@ -30,8 +30,7 @@ import play.api.test.FakeRequest
 import uk.gov.hmrc.auth.core.AuthConnector
 import uk.gov.hmrc.auth.core.retrieve.ItmpAddress
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.renderer.TemplateRenderer
-import utils.{MockTemplateRenderer, SequenceUtil}
+import utils.SequenceUtil
 
 import scala.concurrent.ExecutionContext
 
@@ -39,19 +38,13 @@ trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with MockitoSugar {
 
   override lazy val app: Application = {
 
-    import play.api.inject._
-
-    new GuiceApplicationBuilder()
-      .overrides(
-        bind[TemplateRenderer].to[LocalTemplateRenderer],
-      ).build()
+    new GuiceApplicationBuilder().build()
   }
 
   def injector: Injector = app.injector
 
   def frontendAppConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
 
-  def templateRenderer: LocalTemplateRenderer = MockTemplateRenderer.renderer
   val ec: ExecutionContext = mock[ExecutionContext]
   def addressLookupConfig: AddressLookupConfig = injector.instanceOf[AddressLookupConfig]
   def messagesControllerComponents: MessagesControllerComponents = injector.instanceOf[MessagesControllerComponents]

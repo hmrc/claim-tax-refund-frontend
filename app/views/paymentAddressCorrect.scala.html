@@ -17,12 +17,14 @@
 @import config.FrontendAppConfig
 @import models.Mode
 @import uk.gov.hmrc.auth.core.retrieve.ItmpAddress
-@import viewmodels.InputViewModel
-@import uk.gov.hmrc.play.views.html.helpers.FormWithCSRF
-@import uk.gov.hmrc.renderer.TemplateRenderer
-@import scala.concurrent.ExecutionContext
-
-@this(main_template: main_template, formWithCSRF: FormWithCSRF)
+@this(
+    layout: Layout,
+    formWithCSRF: FormWithCSRF,
+    errorSummary: playComponents.error_summary,
+    pageHeading: playComponents.headingWithCaption,
+    inputYesNo: playComponents.input_yes_no,
+    submitButton: playComponents.submit_button
+)
 
 @(
         appConfig: FrontendAppConfig,
@@ -33,45 +35,40 @@
 )(
         implicit
         request: Request[_],
-        messages: Messages,
-templateRenderer: TemplateRenderer,
-ec: ExecutionContext)
+        messages: Messages)
 
 @title = @{
     if(form.errors.nonEmpty) messages("site.title.error", messages("paymentAddressCorrect.title")) else messages("paymentAddressCorrect.title")
 }
 
-@main_template(
-    title = title,
-    appConfig = appConfig,
-    bodyClasses = None
+@layout(
+    pageTitle = title,
 ) {
 
     @formWithCSRF(action = controllers.routes.PaymentAddressCorrectController.onSubmit(mode), 'autoComplete -> "off") {
 
-        @components.back_link()
+        @errorSummary(form.errors)
 
-        @components.error_summary(form.errors)
+        @pageHeading(messages("paymentAddressCorrect.heading"),
+            taxYear = Some(taxYear.asString))
 
-        @components.heading(messages("paymentAddressCorrect.heading"), taxYear = Some(taxYear.asString))
+        <ul class="govuk-list govuk-list" id="usersAddress">
+            @if(address.line1.exists(_.trim.nonEmpty)) {<li>@address.line1</li>}
+            @if(address.line2.exists(_.trim.nonEmpty)) {<li>@address.line2</li>}
+            @if(address.line3.exists(_.trim.nonEmpty)) {<li>@address.line3</li>}
+            @if(address.line4.exists(_.trim.nonEmpty)) {<li>@address.line4</li>}
+            @if(address.line5.exists(_.trim.nonEmpty)) {<li>@address.line5</li>}
+            @if(address.postCode.exists(_.trim.nonEmpty)) {<li>@address.postCode</li>}
+            @if(address.countryName.exists(_.trim.nonEmpty)) {<li>@address.countryName</li>}
+            @if(address.countryCode.exists(_.trim.nonEmpty)) {<li>@address.countryCode</li>}
+        </ul>
 
-        <div class="form-group panel panel-border-wide" id="usersAddress">
-            @if(address.line1.exists(_.trim.nonEmpty)) {@address.line1<br>}
-            @if(address.line2.exists(_.trim.nonEmpty)) {@address.line2<br>}
-            @if(address.line3.exists(_.trim.nonEmpty)) {@address.line3<br>}
-            @if(address.line4.exists(_.trim.nonEmpty)) {@address.line4<br>}
-            @if(address.line5.exists(_.trim.nonEmpty)) {@address.line5<br>}
-            @if(address.postCode.exists(_.trim.nonEmpty)) {@address.postCode<br>}
-            @if(address.countryName.exists(_.trim.nonEmpty)) {@address.countryName<br>}
-            @if(address.countryCode.exists(_.trim.nonEmpty)) {@address.countryCode<br>}
-        </div>
-
-        @components.input_yes_no(
-            InputViewModel("value", form),
+        @inputYesNo(
+            isPageHeading = false,
             label = messages("paymentAddressCorrect.heading"),
-            labelClass = Some("visually-hidden")
+            labelClass = Some("govuk-visually-hidden"),
+            field = form("value")
         )
-
-        @components.submit_button()
+        @submitButton()
     }
 }

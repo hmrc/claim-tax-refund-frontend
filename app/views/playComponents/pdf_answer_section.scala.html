@@ -14,19 +14,18 @@
  * limitations under the License.
  *@
 
-@(
-    heading: String,
-    headingSize: String = "heading-xlarge",
-    taxYear: Option[String] = None
-)(implicit messages: Messages)
+@import viewmodels.AnswerSection
+@import views.html._
 
-@secondaryHeaderText = @{
-    if (taxYear.isDefined) messages("site.service_name.with_tax_year", taxYear.get) else messages("site.service_name")
+@(answerSection: AnswerSection)(implicit messages: Messages)
+
+@if(answerSection.headingKey.isDefined){
+    <h2>@messages(answerSection.headingKey.get)</h2>
 }
-
-<header class="page-header">
-    <h1 class="@headingSize">@heading</h1>
-        <p class="heading-secondary">
-            <span class="visuallyhidden">This section is: </span>@secondaryHeaderText
-        </p>
-</header>
+@if(answerSection.rows.nonEmpty) {
+    <ul>
+       @for((row, i) <- answerSection.rows.zipWithIndex) {
+            @playComponents.pdf_answer_row(row)
+        }
+    </ul>
+}

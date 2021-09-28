@@ -1,3 +1,5 @@
+service.name=Hawlio ad-daliad treth
+
 language-switcher.english=English
 language-switcher.english.hover=Use this account in English
 language-switcher.welsh=Cymraeg
@@ -183,9 +185,9 @@ RemoveOtherSelectedOption.heading=A oes angen i chi roi gwybod i ni am unrhyw {0
 RemoveOtherSelectedOption.otherBenefits=buddiant trethadwy
 
 selectBenefits.blank=Dewiswch y buddiannau trethadwy eraill a gawsoch
-selectBenefits.other-taxable-benefit=buddiannau trethadwy arall
+selectBenefits.other-taxable-benefit=Buddiannau trethadwy arall
 
-selectCompanyBenefits.fuel-benefit=buddiant tanwydd
+selectCompanyBenefits.fuel-benefit=Buddiant tanwydd
 
 selectTaxableIncome.foreign-income=incwm tramor
 
@@ -263,7 +265,7 @@ checkYourAnswers.userSection=Manylion defnyddiwr
 
 confirmation.heading=Hawliad wedi’i anfon
 confirmation.reference=Eich cyfeirnod yw
-confirmation.survey.linkText=Beth oedd eich barn am y gwasanaeth hwn?
+confirmation.survey.linkText=Beth oedd eich barn am y gwasanaeth hwn? (yn agor mewn tab newydd)
 confirmation.whatHappensNext.line1=Byddwn yn prosesu’ch hawliad cyn pen 15 diwrnod ac yn cysylltu â chi drwy lythyr.
 
 date.day=Diwrnod
@@ -381,11 +383,11 @@ nomineeFullName.tooLong=Mae’n rhaid i enw llawn y person rydych am i ni anfon 
 otherBenefit.title=Buddiant trethadwy arall {0}
 otherBenefit.heading=Buddiant trethadwy arall {0}
 otherBenefit.add=Ychwanegu budd-dal trethadwy arall
-otherBenefit.amount.invalid=Mae’n rhaid i swm y buddiant trethadwy hwn a gawsoch fod yn swm o arian, megis 199 neu 234.56
+otherBenefit.amount.invalid=Mae’n rhaid i faint o'r buddiant trethadwy a gawsoch fod yn swm o arian, megis 199 neu 234.56
 otherBenefit.change=Newidiwch fuddiannau trethadwy eraill
 otherBenefit.checkYourAnswersLabel=Manylion buddiannau trethadwy arall
 otherBenefit.duplicate=Nodwch enw buddiant trethadwy gwahanol – rydych eisoes wedi nodi {0}
-otherBenefit.amount=Faint o’r buddiant trethadwy hwn a gawsoch
+otherBenefit.amount=Faint o’r buddiant trethadwy hwn a gawsoch?
 otherBenefit.amount.blank=Nodwch faint o’r buddiant trethadwy hwn a gawsoch
 otherBenefit.name.blank=Nodwch enw’r buddiant trethadwy a gawsoch
 otherBenefit.name=Enw’r buddiant trethadwy
@@ -395,9 +397,9 @@ otherBenefits=buddiant trethadwy
 otherCompanyBenefit.title=Buddiant cwmni trethadwy arall {0}
 otherCompanyBenefit.heading=Buddiant cwmni trethadwy arall {0}
 otherCompanyBenefit.add=Ychwanegu buddiant cwmni
-otherCompanyBenefit.amount=Faint o’r buddiant cwmni trethadwy hwn a gawsoch
+otherCompanyBenefit.amount=Faint o’r buddiant cwmni trethadwy hwn a gawsoch?
 otherCompanyBenefit.amount.blank=Nodwch faint o’r buddiant cwmni trethadwy hwn a gawsoch
-otherCompanyBenefit.amount.invalid=Mae’n rhaid i swm y buddiant cwmni trethadwy a gawsoch fod yn swm o arian, megis 199 neu 234.56
+otherCompanyBenefit.amount.invalid=Mae’n rhaid i faint o'r buddiant cwmni trethadwy a gawsoch fod yn swm o arian, megis 199 neu 234.56
 otherCompanyBenefit.change=Newidiwch fuddiannau cwmni eraill
 otherCompanyBenefit.name=Enw’r buddiant cwmni trethadwy
 otherCompanyBenefit.name.blank=Nodwch enw’r buddiant cwmni trethadwy a gawsoch
@@ -408,9 +410,9 @@ otherTaxableIncome.heading=Incwm trethadwy arall {0}
 otherTaxableIncome=incwm trethadwy
 otherTaxableIncome.duplicate=Nodwch enw incwm tretadwy gwahanol - rydych eisoes wedi nodi {0}
 otherTaxableIncome.add=Ychwanegu incwm trethadwy arall
-otherTaxableIncome.amount=Faint o’r incwm trethadwy hwn a gawsoch
+otherTaxableIncome.amount=Faint o’r incwm trethadwy hwn a gawsoch?
 otherTaxableIncome.amount.blank=Nodwch faint o’r incwm trethadwy hwn a gawsoch
-otherTaxableIncome.amount.invalid=Mae’n rhaid i swm yr incwm trethadwy hwn a gawsoch fod yn swm o arian, megis 199 neu 234.56
+otherTaxableIncome.amount.invalid=Mae’n rhaid i swm yr incwm trethadwy a gawsoch fod yn swm o arian, megis 199 neu 234.56
 otherTaxableIncome.change=Newidiwch incymau trethadwy eraill
 otherTaxableIncome.checkYourAnswersLabel=Manylion incwm trethadwy arall
 otherTaxableIncome.name=Enw’r incwm trethadwy
@@ -418,6 +420,7 @@ otherTaxableIncome.name.blank=Nodwch enw’r incwm trethadwy a gawsoch
 
 paymentAddressCorrect.blank=Dewiswch ‘Iawn’ os ydych am i ni anfon unrhyw daliad i’r cyfeiriad hwn
 paymentAddressCorrect.heading=Ai hwn yw’r cyfeiriad rydych am i ni anfon unrhyw daliad iddo?
+paymentAddressCorrect.checkYourAnswersLabel = Y cyfeiriad rydych am i ni anfon unrhyw daliad iddo
 paymentInternationalAddress.heading=Beth yw’r cyfeiriad rydych am i ni anfon y taliad iddo?
 paymentInternationalAddress.title=Beth yw’r cyfeiriad rydych am i ni anfon y taliad iddo?
 paymentUKAddress.changeLabel=Newid beth yw’r cyfeiriad rydych am i ni anfon y taliad iddo?
@@ -435,9 +438,9 @@ selectBenefits.title=Pa fuddiannau trethadwy a gawsoch?
 
 selectCompanyBenefits.blank=Dewiswch y buddiannau cwmni trethadwy a gawsoch
 selectCompanyBenefits.changeLabel=Newid pa fuddiannau cwmni trethadwy a gawsoch
-selectCompanyBenefits.company-car-benefit=buddiant car cwmni
+selectCompanyBenefits.company-car-benefit=Buddiant car cwmni
 selectCompanyBenefits.heading=Pa fuddiannau cwmni trethadwy a gawsoch?
-selectCompanyBenefits.medical-benefit=buddiant meddygol
+selectCompanyBenefits.medical-benefit=Buddiant meddygol
 selectCompanyBenefits.other-company-benefit=Buddiannau cwmni trethadwy eraill
 selectCompanyBenefits.title=Pa fuddiannau cwmni trethadwy a gawsoch?
 
@@ -471,7 +474,7 @@ site.hidden-delete=Dileu {0}
 site.hidden-edit=Newid {0}
 site.no=Na
 site.service_name=Hawlio ad-daliad treth
-site.service_name.with_tax_year=Hawlio ad-daliad treth: {0}
+site.service_name.with_tax_year={0}
 site.title.error=Gwall: {0}
 site.yes=Iawn
 
@@ -604,3 +607,7 @@ accessibility.subheading09 = Diffyg cydymffurfio â rheoliadau hygyrchedd
 accessibility.par24.before = Adeiladwyd y gwasanaeth gan ddefnyddio rhannau a brofwyd gan y
 accessibility.par24.linkText = Ganolfan Hygyrchedd Digidol (Digital Accessibility Centre)
 accessibility.par24.after = Profwyd y gwasanaeth llawn gan CThEM, ac roedd y gwaith o brofi’r gwasanaeth yn cynnwys defnyddwyr anabl
+
+global.error.InternalServerError500.title=Mae''n ddrwg gennym, rydym yn profi anawsterau technegol – 500
+global.error.InternalServerError500.heading=Mae''n ddrwg gennym, rydym yn profi anawsterau technegol
+global.error.InternalServerError500.message=Rhowch gynnig arall arni mewn ychydig o funudau.

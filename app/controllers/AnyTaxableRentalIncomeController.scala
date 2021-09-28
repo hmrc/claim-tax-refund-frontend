@@ -16,7 +16,7 @@
 
 package controllers
 
-import config.{FrontendAppConfig, LocalTemplateRenderer}
+import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.AnyTaxPaidForm
@@ -28,7 +28,6 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import play.api.mvc.MessagesControllerComponents
-import uk.gov.hmrc.play.partials.FormPartialRetriever
 import utils.{Navigator, UserAnswers}
 import views.html.anyTaxableRentalIncome
 
@@ -43,8 +42,7 @@ class AnyTaxableRentalIncomeController @Inject()(appConfig: FrontendAppConfig,
                                                  requireData: DataRequiredAction,
                                                  anyTaxableRentalIncome: anyTaxableRentalIncome,
 cc: MessagesControllerComponents,
-                                                 formProvider: AnyTaxPaidForm,
-                                                 implicit val templateRenderer: LocalTemplateRenderer
+                                                 formProvider: AnyTaxPaidForm
                                                 )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   private val notSelectedKey = "anyTaxableRentalIncome.notSelected"
@@ -62,7 +60,7 @@ cc: MessagesControllerComponents,
 
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
-          Ok(anyTaxableRentalIncome(appConfig, preparedForm, mode, selectedTaxYear))
+          Ok(anyTaxableRentalIncome(preparedForm, mode, selectedTaxYear))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
@@ -74,7 +72,7 @@ cc: MessagesControllerComponents,
         selectedTaxYear =>
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(anyTaxableRentalIncome(appConfig, formWithErrors, mode, selectedTaxYear))),
+              Future.successful(BadRequest(anyTaxableRentalIncome(formWithErrors, mode, selectedTaxYear))),
             (value) =>
               dataCacheConnector.save[AnyTaxPaid](request.externalId, AnyTaxableRentalIncomeId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(AnyTaxableRentalIncomeId, mode)(new UserAnswers(cacheMap)))))

@@ -14,60 +14,54 @@
  * limitations under the License.
  *@
 
-@import config.FrontendAppConfig
 @import controllers.routes._
 @import models.Mode
-@import viewmodels.InputViewModel
-@import uk.gov.hmrc.play.views.html.helpers.FormWithCSRF
-@import uk.gov.hmrc.renderer.TemplateRenderer
-@import scala.concurrent.ExecutionContext
 
-@this(main_template: main_template, formWithCSRF: FormWithCSRF)
+@this(
+    layout: Layout,
+    pageHeading: playComponents.headingWithCaption,
+    submitButton: playComponents.submit_button,
+    errorSummary: playComponents.error_summary,
+    formWithCSRF: FormWithCSRF,
+    inputYesNo: playComponents.input_yes_no
+)
 
 @(
-        appConfig: FrontendAppConfig,
         form: Form[_],
         mode: Mode,
         taxYear: SelectTaxYear
 )(
-        implicit
-        request: Request[_],
-        messages: Messages,
-templateRenderer: TemplateRenderer,
-ec: ExecutionContext)
+    implicit
+    request: Request[_],
+    messages: Messages
+)
 
-    @title = @{
-        if(form.errors.nonEmpty) messages("site.title.error", messages("anyBenefits.title")) else messages("anyBenefits.title")
+@title = @{
+    if(form.errors.nonEmpty) messages("site.title.error", messages("anyBenefits.heading")) else messages("anyBenefits.heading")
+}
+
+@layout(
+    pageTitle = title
+) {
+    @formWithCSRF(action = AnyBenefitsController.onSubmit(mode), 'autoComplete -> "off") {
+
+        @errorSummary(form.errors)
+
+        @pageHeading(heading = messages("anyBenefits.heading"), taxYear = Some(taxYear.asString))
+
+        <p class="govuk-body" id="listHeading">@messages("anyBenefits.listHeading")</p>
+
+        @playComponents.list(pageKey = Some("selectBenefits"),
+                         bulletList = Benefits.sortedBenefits.dropRight(1).map(_.toString))
+
+        @inputYesNo(
+            isPageHeading = false,
+            label = messages("anyBenefits.heading"),
+            labelClass = Some("govuk-visually-hidden"),
+            field = form("value")
+        )
+
+        @submitButton()
     }
+}
 
-    @main_template(
-        title = title,
-        appConfig = appConfig,
-        bodyClasses = None
-    ) {
-
-        @formWithCSRF(action = AnyBenefitsController.onSubmit(mode), 'autoComplete -> "off") {
-
-            @components.back_link()
-
-            @components.error_summary(form.errors)
-
-            @components.heading(messages("anyBenefits.heading"), taxYear = Some(taxYear.asString))
-
-            <p id="listHeading">@messages("anyBenefits.listHeading")</p>
-
-            @components.list(
-                pageKey = Some("selectBenefits"),
-                addCssClass = None,
-                bulletList = Benefits.sortedBenefits.dropRight(1).map(_.toString)
-            )
-
-            @components.input_yes_no(
-                InputViewModel("value", form),
-                label = messages("anyBenefits.heading", taxYear.asString),
-                labelClass = Some("visually-hidden")
-            )
-
-            @components.submit_button()
-        }
-    }

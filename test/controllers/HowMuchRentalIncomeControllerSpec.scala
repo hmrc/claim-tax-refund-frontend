@@ -42,9 +42,9 @@ class HowMuchRentalIncomeControllerSpec extends ControllerSpecBase with GuiceOne
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new HowMuchRentalIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), howMuchRentalIncome, messagesControllerComponents, new HowMuchRentalIncomeForm(frontendAppConfig), templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), howMuchRentalIncome, messagesControllerComponents, new HowMuchRentalIncomeForm(frontendAppConfig))
 
-  def viewAsString(form: Form[_] = form) = howMuchRentalIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec).toString
+  def viewAsString(form: Form[_] = form) = howMuchRentalIncome(form, NormalMode, taxYear)(fakeRequest, messages).toString
 
   "HowMuchRentalIncome Controller" must {
 

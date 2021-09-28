@@ -16,7 +16,7 @@
 
 package controllers
 
-import config.{FrontendAppConfig, LocalTemplateRenderer}
+import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.WhereToSendPaymentForm
@@ -34,7 +34,6 @@ import views.html.whereToSendPayment
 import scala.concurrent.{ExecutionContext, Future}
 
 class WhereToSendPaymentController @Inject()(
-                                              appConfig: FrontendAppConfig,
                                               override val messagesApi: MessagesApi,
                                               dataCacheConnector: DataCacheConnector,
                                               navigator: Navigator,
@@ -42,8 +41,7 @@ class WhereToSendPaymentController @Inject()(
                                               getData: DataRetrievalAction,
                                               requireData: DataRequiredAction,
                                               whereToSendPayment: whereToSendPayment,
-cc: MessagesControllerComponents,
-                                              implicit val templateRenderer: LocalTemplateRenderer
+                                              cc: MessagesControllerComponents
                                             )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
@@ -55,7 +53,7 @@ cc: MessagesControllerComponents,
 
       request.userAnswers.selectTaxYear.map {
         taxYear =>
-          Ok(whereToSendPayment(appConfig, preparedForm, mode, taxYear))
+          Ok(whereToSendPayment(preparedForm, mode, taxYear))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
@@ -67,7 +65,7 @@ cc: MessagesControllerComponents,
         taxYear =>
           WhereToSendPaymentForm().bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(whereToSendPayment(appConfig, formWithErrors, mode, taxYear))),
+              Future.successful(BadRequest(whereToSendPayment(formWithErrors, mode, taxYear))),
             value =>
               dataCacheConnector.save[WhereToSendPayment](request.externalId, WhereToSendPaymentId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(WhereToSendPaymentId, mode)(new UserAnswers(cacheMap))))

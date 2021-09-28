@@ -16,7 +16,6 @@
 
 package controllers
 
-import config.{FrontendAppConfig, LocalTemplateRenderer}
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.OtherTaxableIncomeForm
@@ -28,14 +27,12 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import play.api.mvc.MessagesControllerComponents
-import uk.gov.hmrc.play.partials.FormPartialRetriever
 import utils.{Navigator, SequenceUtil, UserAnswers}
 import views.html.otherTaxableIncome
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class OtherTaxableIncomeController @Inject()(
-                                              appConfig: FrontendAppConfig,
                                               override val messagesApi: MessagesApi,
                                               dataCacheConnector: DataCacheConnector,
                                               navigator: Navigator,
@@ -43,10 +40,9 @@ class OtherTaxableIncomeController @Inject()(
                                               getData: DataRetrievalAction,
                                               requireData: DataRequiredAction,
                                               otherTaxableIncome: otherTaxableIncome,
-cc: MessagesControllerComponents,
+                                              cc: MessagesControllerComponents,
                                               sequenceUtil: SequenceUtil[OtherTaxableIncome],
-                                              formBuilder: OtherTaxableIncomeForm,
-                                              implicit val templateRenderer: LocalTemplateRenderer
+                                              formBuilder: OtherTaxableIncomeForm
                                             )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   def onPageLoad(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
@@ -62,7 +58,7 @@ cc: MessagesControllerComponents,
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
           val taxYear = selectedTaxYear
-          Ok(otherTaxableIncome(appConfig, preparedForm, mode, index, taxYear))
+          Ok(otherTaxableIncome(preparedForm, mode, index, taxYear))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
@@ -77,7 +73,7 @@ cc: MessagesControllerComponents,
           val taxYear = selectedTaxYear
           form.bindFromRequest().fold(
             (formWithErrors: Form[OtherTaxableIncome]) =>
-              Future.successful(BadRequest(otherTaxableIncome(appConfig, formWithErrors, mode, index, taxYear))),
+              Future.successful(BadRequest(otherTaxableIncome(formWithErrors, mode, index, taxYear))),
             value => {
               val otherTaxableIncome: OtherTaxableIncome = request.userAnswers.otherTaxableIncome match {
                 case Some(otherTaxableIncomes) =>

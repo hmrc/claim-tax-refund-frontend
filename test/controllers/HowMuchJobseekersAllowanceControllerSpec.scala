@@ -42,9 +42,9 @@ class HowMuchJobseekersAllowanceControllerSpec extends ControllerSpecBase with G
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new HowMuchJobseekersAllowanceController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), howMuchJobseekersAllowance, messagesControllerComponents, new HowMuchJobseekersAllowanceForm(frontendAppConfig), templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), howMuchJobseekersAllowance, messagesControllerComponents, new HowMuchJobseekersAllowanceForm(frontendAppConfig))
 
-  def viewAsString(form: Form[_] = form) = howMuchJobseekersAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec).toString
+  def viewAsString(form: Form[_] = form) = howMuchJobseekersAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
 
   "HowMuchJobseekersAllowance Controller" must {
 

@@ -16,7 +16,7 @@
 
 package controllers
 
-import config.{FrontendAppConfig, LocalTemplateRenderer}
+import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.OtherBenefitForm
@@ -28,7 +28,6 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import play.api.mvc.MessagesControllerComponents
-import uk.gov.hmrc.play.partials.FormPartialRetriever
 import utils.{Navigator, SequenceUtil, UserAnswers}
 import views.html.otherBenefit
 
@@ -42,10 +41,9 @@ class OtherBenefitController @Inject()(appConfig: FrontendAppConfig,
                                        getData: DataRetrievalAction,
                                        requireData: DataRequiredAction,
                                        otherBenefit: otherBenefit,
-cc: MessagesControllerComponents,
+                                       cc: MessagesControllerComponents,
                                        sequenceUtil: SequenceUtil[OtherBenefit],
-                                       formBuilder: OtherBenefitForm,
-                                       implicit val templateRenderer: LocalTemplateRenderer
+                                       formBuilder: OtherBenefitForm
                                       )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   def onPageLoad(mode: Mode, index: Index): Action[AnyContent] = (authenticate andThen getData andThen requireData) {

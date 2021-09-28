@@ -18,11 +18,15 @@
 @import controllers.routes._
 @import models.Mode
 @import viewmodels.InputViewModel
-@import uk.gov.hmrc.play.views.html.helpers.FormWithCSRF
-@import uk.gov.hmrc.renderer.TemplateRenderer
-@import scala.concurrent.ExecutionContext
 
-@this(main_template: main_template, formWithCSRF: FormWithCSRF)
+@this(
+    layout: Layout,
+    formWithCSRF: FormWithCSRF,
+    errorSummary: playComponents.error_summary,
+    inputYesNoWithTextExpander: playComponents.input_yes_no_with_text_expander,
+    headingWithCaption: playComponents.headingWithCaption,
+    submitButton: playComponents.submit_button
+)
 
 @(
     appConfig: FrontendAppConfig,
@@ -32,35 +36,27 @@
 )(
     implicit
     request: Request[_],
-    messages: Messages,
-templateRenderer: TemplateRenderer,
-ec: ExecutionContext)
+    messages: Messages
+)
 
-@main_template(
-    title = messages("anyTaxableInvestments.title", taxYear.asString),
-    appConfig = appConfig,
-    bodyClasses = None) {
+@layout(
+    pageTitle = messages("anyTaxableInvestments.title", taxYear.asString)
+) {
 
     @formWithCSRF(action = AnyTaxableInvestmentsController.onSubmit(mode), 'autoComplete -> "off") {
 
-        @components.back_link()
-
-        @components.error_summary(form.errors)
-
-        @components.heading(messages("anyTaxableInvestments.heading"), taxYear = Some(taxYear.asString))
-
-
-        @components.input_yes_no_with_text_expander(
-            InputViewModel("anyTaxPaid", form),
-            label = messages("anyTaxableInvestments.heading", taxYear.asString),
-            labelClass = Some("visually-hidden"),
-            form = form,
-            textFieldLabel = messages("anyTaxableInvestments.anyTaxPaidAmountField"),
+        @errorSummary(form.errors)
+        @headingWithCaption(messages("anyTaxableInvestments.heading"), taxYear = Some(taxYear.asString))
+        @inputYesNoWithTextExpander(
+            label = messages("anyTaxableInvestments.heading"),
+            labelClass = Some("govuk-visually-hidden"),
+            textLabel = messages("anyTaxableInvestments.anyTaxPaidAmountField"),
+            hint = None,
             currency = true,
-            yesAssoc = Some("yesAnyTaxPaid"),
-            noAssoc = Some("noAnyTaxPaid")
+            yesNoField = form("anyTaxPaid"),
+            textField = form("taxPaidAmount")
         )
 
-        @components.submit_button()
+        @submitButton()
     }
 }

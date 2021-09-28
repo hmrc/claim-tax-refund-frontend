@@ -14,23 +14,15 @@
  * limitations under the License.
  *@
 
-@import viewmodels.AnswerSection
-@import views.html._
+@import uk.gov.hmrc.govukfrontend.views.html.components._
 
-@(
-    answerSection: AnswerSection
-)(
-    implicit messages: Messages
-)
+@this(govukButton : GovukButton)
 
-@if(answerSection.headingKey.isDefined){
-    <h2>@messages(answerSection.headingKey.get)</h2>
-}
-@if(answerSection.rows.nonEmpty) {
-    <ul>
+@(submitText: String = "site.continue")(implicit messages: Messages)
 
-        @for((row, i) <- answerSection.rows.zipWithIndex) {
-            @components.pdf_answer_row(row)
-        }
-    </ul>
-}
+@govukButton(Button(
+ content = Text(messages(submitText)),
+ attributes = Map(
+  "id" -> "submit"
+ )
+))

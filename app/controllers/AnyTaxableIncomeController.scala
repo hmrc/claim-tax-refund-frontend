@@ -16,7 +16,7 @@
 
 package controllers
 
-import config.{FrontendAppConfig, LocalTemplateRenderer}
+import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.BooleanForm
@@ -43,8 +43,7 @@ class AnyTaxableIncomeController @Inject()(appConfig: FrontendAppConfig,
                                            requireData: DataRequiredAction,
                                            anyTaxableIncome: anyTaxableIncome,
 cc: MessagesControllerComponents,
-                                           formProvider: BooleanForm,
-                                           implicit val templateRenderer: LocalTemplateRenderer
+                                           formProvider: BooleanForm
                                           )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   private val errorKey = "anyTaxableIncome.blank"

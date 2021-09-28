@@ -24,10 +24,10 @@ import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
-import views.behaviours.QuestionViewBehaviours
+import views.behaviours.NewQuestionViewBehaviours
 import views.html.otherTaxableIncome
 
-class OtherTaxableIncomeViewSpec extends QuestionViewBehaviours[OtherTaxableIncome] with MockitoSugar with GuiceOneAppPerSuite {
+class OtherTaxableIncomeViewSpec extends NewQuestionViewBehaviours[OtherTaxableIncome] with MockitoSugar with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "otherTaxableIncome"
   private val taxYear = CustomTaxYear(2017)
@@ -37,10 +37,10 @@ class OtherTaxableIncomeViewSpec extends QuestionViewBehaviours[OtherTaxableInco
 
   def createView: () =>
     HtmlFormat.Appendable = () =>
-      otherTaxableIncome(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages, templateRenderer, ec)
+      otherTaxableIncome(form, NormalMode, 0, taxYear)(fakeRequest, messages)
 
   def createViewUsingForm: Form[OtherTaxableIncome] => HtmlFormat.Appendable = (form: Form[OtherTaxableIncome]) =>
-    otherTaxableIncome(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages, templateRenderer, ec)
+    otherTaxableIncome(form, NormalMode, 0, taxYear)(fakeRequest, messages)
 
   "OtherTaxableIncome view" must {
     behave like normalPage(createView, messageKeyPrefix, None, "1", taxYear.asString(messages))

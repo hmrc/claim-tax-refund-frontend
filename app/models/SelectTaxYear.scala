@@ -76,17 +76,17 @@ object SelectTaxYear extends Enumerable[SelectTaxYear] {
   }
 
   def options: Seq[RadioOption] = Seq(
-    taxYearRadioOption(TaxYear.current.back(1), CYMinus1),
-    taxYearRadioOption(TaxYear.current.back(2), CYMinus2),
-    taxYearRadioOption(TaxYear.current.back(3), CYMinus3),
-    taxYearRadioOption(TaxYear.current.back(4), CYMinus4)
+    taxYearRadioOption(TaxYear.current.back(1), CYMinus1, "value"),
+    taxYearRadioOption(TaxYear.current.back(2), CYMinus2, "value-2"),
+    taxYearRadioOption(TaxYear.current.back(3), CYMinus3, "value-3"),
+    taxYearRadioOption(TaxYear.current.back(4), CYMinus4, "value-4")
   )
 
-  private def taxYearRadioOption(taxYear: TaxYear, option: SelectTaxYear) =
+  private def taxYearRadioOption(taxYear: TaxYear, option: SelectTaxYear, id: String) =
     RadioOption(
-      keyPrefix   = "global",
-      option      = option.toString,
-      messageArgs = Seq(taxYear.startYear.toString.format(dateFormat), taxYear.finishYear.toString.format(dateFormat)): _*
+      id = id,
+      value = option.toString,
+      message = Message(s"global.$option", Seq(taxYear.startYear.toString.format(dateFormat), taxYear.finishYear.toString.format(dateFormat)): _*)
     )
 
   def values: Set[SelectTaxYear] = Set(

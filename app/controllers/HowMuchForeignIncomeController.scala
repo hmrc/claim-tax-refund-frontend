@@ -16,7 +16,7 @@
 
 package controllers
 
-import config.{FrontendAppConfig, LocalTemplateRenderer}
+import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.HowMuchForeignIncomeForm
@@ -43,8 +43,7 @@ class HowMuchForeignIncomeController @Inject()(
                                                 requireData: DataRequiredAction,
                                                 howMuchForeignIncome: howMuchForeignIncome,
 cc: MessagesControllerComponents,
-                                                formBuilder: HowMuchForeignIncomeForm,
-                                                implicit val templateRenderer: LocalTemplateRenderer
+                                                formBuilder: HowMuchForeignIncomeForm
                                               )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   private val form: Form[String] = formBuilder()
@@ -59,7 +58,7 @@ cc: MessagesControllerComponents,
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
           val taxYear = selectedTaxYear
-          Ok(howMuchForeignIncome(appConfig, preparedForm, mode, taxYear))
+          Ok(howMuchForeignIncome(preparedForm, mode, taxYear))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
@@ -72,7 +71,7 @@ cc: MessagesControllerComponents,
           val taxYear = selectedTaxYear
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(howMuchForeignIncome(appConfig, formWithErrors, mode, taxYear))),
+              Future.successful(BadRequest(howMuchForeignIncome(formWithErrors, mode, taxYear))),
             (value) =>
               dataCacheConnector.save[String](request.externalId, HowMuchForeignIncomeId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(HowMuchForeignIncomeId, mode)(new UserAnswers(cacheMap))))

@@ -16,7 +16,7 @@
 
 package controllers
 
-import config.{FrontendAppConfig, LocalTemplateRenderer}
+import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.HowMuchMedicalBenefitsForm
@@ -43,8 +43,7 @@ class HowMuchMedicalBenefitsController @Inject()(
                                                   requireData: DataRequiredAction,
                                                   howMuchMedicalBenefits: howMuchMedicalBenefits,
 cc: MessagesControllerComponents,
-                                                  formBuilder: HowMuchMedicalBenefitsForm,
-                                                  implicit val templateRenderer: LocalTemplateRenderer
+                                                  formBuilder: HowMuchMedicalBenefitsForm
                                                 )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   private val form: Form[String] = formBuilder()
@@ -58,7 +57,7 @@ cc: MessagesControllerComponents,
 
       request.userAnswers.selectTaxYear.map {
         taxYear =>
-          Ok(howMuchMedicalBenefits(appConfig, preparedForm, mode, taxYear))
+          Ok(howMuchMedicalBenefits(preparedForm, mode, taxYear))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
@@ -70,7 +69,7 @@ cc: MessagesControllerComponents,
         taxYear =>
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(howMuchMedicalBenefits(appConfig, formWithErrors, mode, taxYear))),
+              Future.successful(BadRequest(howMuchMedicalBenefits(formWithErrors, mode, taxYear))),
             (value) =>
               dataCacheConnector.save[String](request.externalId, HowMuchMedicalBenefitsId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(HowMuchMedicalBenefitsId, mode)(new UserAnswers(cacheMap))))

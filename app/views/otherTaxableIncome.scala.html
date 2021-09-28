@@ -14,18 +14,21 @@
  * limitations under the License.
  *@
 
-@import config.FrontendAppConfig
 @import controllers.routes._
 @import models.{Index, Mode}
 @import viewmodels.InputViewModel
-@import uk.gov.hmrc.play.views.html.helpers.FormWithCSRF
-@import uk.gov.hmrc.renderer.TemplateRenderer
 @import scala.concurrent.ExecutionContext
 
-@this(main_template: main_template, formWithCSRF: FormWithCSRF)
+@this(
+    layout: Layout,
+    formWithCSRF: FormWithCSRF,
+    errorSummary: playComponents.error_summary,
+    pageHeading: playComponents.headingWithCaption,
+    inputText: playComponents.input_text,
+    submitButton: playComponents.submit_button
+)
 
 @(
-        appConfig: FrontendAppConfig,
         form: Form[_],
         mode: Mode,
         index: Index,
@@ -34,39 +37,38 @@
         implicit
         request: Request[_],
         messages: Messages,
-templateRenderer: TemplateRenderer,
-ec: ExecutionContext)
+)
 
 @title = @{
     if(form.errors.nonEmpty) messages("site.title.error", messages("otherTaxableIncome.title", index.id + 1)) else messages("otherTaxableIncome.title", index.id + 1)
 }
 
-@main_template(
-    title = title,
-    appConfig = appConfig,
-    bodyClasses = None
+@layout(
+    pageTitle = title,
 ) {
 
     @formWithCSRF(action = OtherTaxableIncomeController.onSubmit(mode, index), 'autoComplete -> "off") {
 
-        @components.back_link()
+        @errorSummary(form.errors)
 
-        @components.error_summary(form.errors)
+        @pageHeading(messages("otherTaxableIncome.heading", index.id + 1),
+            taxYear = Some(taxYear.asString))
 
-        @components.heading(messages("otherTaxableIncome.heading", index.id + 1), taxYear = Some(taxYear.asString))
-
-        @components.input_text(
-            InputViewModel("name", form),
+        @inputText(
             label = messages("otherTaxableIncome.name"),
-            valueError = true
+            isPageHeading = false,
+            largeText = false,
+            field = form("name")
         )
 
-        @components.input_text(
-            InputViewModel("amount", form),
+        @inputText(
             label = messages("otherTaxableIncome.amount"),
-            currency = true
+            currency = true,
+            isPageHeading = false,
+            largeText = false,
+            field = form("amount")
         )
 
-        @components.submit_button()
+        @submitButton()
     }
 }

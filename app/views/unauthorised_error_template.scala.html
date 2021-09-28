@@ -16,16 +16,27 @@
 
 @import config.FrontendAppConfig
 
-@this(govuk_wrapper: govuk_wrapper)
+@this(
+    layout: Layout
+)
 
-@(pageTitle: String, heading: String, message: String, appConfig: FrontendAppConfig)(implicit messages: Messages, request: Request[_])
+@(
+    pageTitle: String,
+    heading: String,
+    message: String,
+    appConfig: FrontendAppConfig
+)(implicit messages: Messages, request: Request[_])
 
-@contentHeader = {
-<h1>@heading</h1>
+@layout(
+    pageTitle = pageTitle,
+    timeoutEnabled = false,
+    backLinkEnabled = false,
+    accountMenuEnabled = false
+) {
+
+ <h1 class="govuk-heading-xl">@heading</h1>
+
+ <p class="govuk-body">@message</p>
+
 }
 
-@mainContent = {
-<p>@message</p>
-}
-
-@govuk_wrapper(appConfig = appConfig, title = pageTitle, contentHeader = Some(contentHeader), mainContent = mainContent)

@@ -16,7 +16,7 @@
 
 package controllers
 
-import config.{FrontendAppConfig, LocalTemplateRenderer}
+import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.HowMuchEmploymentAndSupportAllowanceForm
@@ -27,7 +27,6 @@ import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import play.api.mvc.MessagesControllerComponents
-import uk.gov.hmrc.play.partials.FormPartialRetriever
 import utils.{Navigator, UserAnswers}
 import views.html.howMuchEmploymentAndSupportAllowance
 
@@ -42,9 +41,8 @@ class HowMuchEmploymentAndSupportAllowanceController @Inject()(
                                                                 getData: DataRetrievalAction,
                                                                 requireData: DataRequiredAction,
                                                                 howMuchEmploymentAndSupportAllowance: howMuchEmploymentAndSupportAllowance,
-cc: MessagesControllerComponents,
-                                                                formBuilder: HowMuchEmploymentAndSupportAllowanceForm,
-                                                                implicit val templateRenderer: LocalTemplateRenderer
+                                                                cc: MessagesControllerComponents,
+                                                                formBuilder: HowMuchEmploymentAndSupportAllowanceForm
                                                               )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   private val form: Form[String] = formBuilder()

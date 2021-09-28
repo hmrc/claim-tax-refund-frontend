@@ -16,7 +16,7 @@
 
 package controllers
 
-import config.{FrontendAppConfig, LocalTemplateRenderer}
+import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.SelectCompanyBenefitsForm
@@ -43,8 +43,7 @@ class SelectCompanyBenefitsController @Inject()(
                                                  getData: DataRetrievalAction,
                                                  requireData: DataRequiredAction,
                                                  selectCompanyBenefits: selectCompanyBenefits,
-cc: MessagesControllerComponents,
-                                                 implicit val templateRenderer: LocalTemplateRenderer
+cc: MessagesControllerComponents
                                                )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (authenticate andThen getData andThen requireData) {

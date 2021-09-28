@@ -16,7 +16,7 @@
 
 package controllers
 
-import config.{FrontendAppConfig, LocalTemplateRenderer}
+import config.FrontendAppConfig
 import connectors.{DataCacheConnector, TaiConnector}
 import controllers.actions._
 import forms.BooleanForm
@@ -36,8 +36,7 @@ import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
 
 
-class EmploymentDetailsController @Inject()(appConfig: FrontendAppConfig,
-                                            override val messagesApi: MessagesApi,
+class EmploymentDetailsController @Inject()(override val messagesApi: MessagesApi,
                                             dataCacheConnector: DataCacheConnector,
                                             navigator: Navigator,
                                             authenticate: AuthAction,
@@ -46,9 +45,8 @@ class EmploymentDetailsController @Inject()(appConfig: FrontendAppConfig,
                                             employmentDetails: employmentDetails,
 cc: MessagesControllerComponents,
                                             formProvider: BooleanForm,
-                                            taiConnector: TaiConnector,
-                                            implicit val templateRenderer: LocalTemplateRenderer
-                                           )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
+                                            taiConnector: TaiConnector)
+                                           (implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   private val errorKey = "employmentDetails.blank"
 
@@ -68,7 +66,7 @@ cc: MessagesControllerComponents,
 
           results.map(
             employments =>
-              Ok(employmentDetails(appConfig, preparedForm, mode, employments, taxYear))
+              Ok(employmentDetails(preparedForm, mode, employments, taxYear))
           ).recover {
             case NonFatal(e) =>
               Redirect(routes.EnterPayeReferenceController.onPageLoad(NormalMode).url)
@@ -91,7 +89,7 @@ cc: MessagesControllerComponents,
             employments =>
               form.bindFromRequest().fold(
                 (formWithErrors: Form[_]) =>
-                  Future.successful(BadRequest(employmentDetails(appConfig, formWithErrors, mode, employments, taxYear))),
+                  Future.successful(BadRequest(employmentDetails(formWithErrors, mode, employments, taxYear))),
                 value =>
                   dataCacheConnector.save[Boolean](request.externalId, EmploymentDetailsId.toString, value).map(cacheMap =>
                     Redirect(navigator.nextPage(EmploymentDetailsId, mode)(new UserAnswers(cacheMap))))

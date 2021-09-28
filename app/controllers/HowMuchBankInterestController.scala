@@ -16,7 +16,7 @@
 
 package controllers
 
-import config.{FrontendAppConfig, LocalTemplateRenderer}
+import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.HowMuchBankInterestForm
@@ -43,8 +43,7 @@ class HowMuchBankInterestController @Inject()(
                                                requireData: DataRequiredAction,
                                                howMuchBankInterest: howMuchBankInterest,
 cc: MessagesControllerComponents,
-                                               formBuilder: HowMuchBankInterestForm,
-                                               implicit val templateRenderer: LocalTemplateRenderer
+                                               formBuilder: HowMuchBankInterestForm
                                              )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   private val form: Form[String] = formBuilder()

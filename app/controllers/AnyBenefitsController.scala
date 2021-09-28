@@ -16,7 +16,7 @@
 
 package controllers
 
-import config.{FrontendAppConfig, LocalTemplateRenderer}
+import config.FrontendAppConfig
 import connectors.{DataCacheConnector, TaiConnector}
 import controllers.actions._
 import forms.BooleanForm
@@ -43,8 +43,7 @@ class AnyBenefitsController @Inject()(appConfig: FrontendAppConfig,
                                       requireData: DataRequiredAction,
                                       anyBenefits: anyBenefits,
 cc: MessagesControllerComponents,
-                                      formProvider: BooleanForm,
-                                      implicit val templateRenderer: LocalTemplateRenderer
+                                      formProvider: BooleanForm
                                      )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   private val errorKey = "anyBenefits.blank"
@@ -61,7 +60,7 @@ cc: MessagesControllerComponents,
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
           val taxYear = selectedTaxYear
-          Ok(anyBenefits(appConfig, preparedForm, mode, taxYear))
+          Ok(anyBenefits(preparedForm, mode, taxYear))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
@@ -76,7 +75,7 @@ cc: MessagesControllerComponents,
           val taxYear = selectedTaxYear
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(anyBenefits(appConfig, formWithErrors, mode, taxYear))),
+              Future.successful(BadRequest(anyBenefits(formWithErrors, mode, taxYear))),
             value =>
               dataCacheConnector.save[Boolean](request.externalId, AnyBenefitsId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(AnyBenefitsId, mode)(new UserAnswers(cacheMap))))

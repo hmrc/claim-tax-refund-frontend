@@ -14,48 +14,47 @@
  * limitations under the License.
  *@
 
-@import config.FrontendAppConfig
 @import controllers.routes._
 @import models.Mode
 @import viewmodels.InputViewModel
-@import uk.gov.hmrc.play.views.html.helpers.FormWithCSRF
-@import uk.gov.hmrc.renderer.TemplateRenderer
-@import scala.concurrent.ExecutionContext
 
-@this(main_template: main_template, formWithCSRF: FormWithCSRF)
+@this(
+    layout: Layout,
+    formWithCSRF: FormWithCSRF,
+    errorSummary: playComponents.error_summary,
+    inputText: playComponents.input_text,
+    headingWithCaption: playComponents.headingWithCaption,
+    submitButton: playComponents.submit_button
+)
 
 @(
-        appConfig: FrontendAppConfig,
         form: Form[_],
         mode: Mode,
         taxYear: SelectTaxYear
 )(
         implicit
         request: Request[_],
-        messages: Messages,
-templateRenderer: TemplateRenderer,
-ec: ExecutionContext)
+        messages: Messages
+)
 
     @title = @{
         if(form.errors.nonEmpty) messages("site.title.error", messages("nomineeFullName.title")) else messages("nomineeFullName.title")
     }
 
-    @main_template(
-        title = title,
-        appConfig = appConfig,
-        bodyClasses = None
+    @layout(
+        pageTitle = title
     ) {
 
         @formWithCSRF(action = NomineeFullNameController.onSubmit(mode), 'autoComplete -> "off") {
 
-            @components.back_link()
+            @errorSummary(form.errors)
+            @headingWithCaption(messages("nomineeFullName.heading"), taxYear = Some(taxYear.asString))
+            @inputText(
+                label = messages("nomineeFullName.heading"),
+                labelClass = Some("govuk-visually-hidden"),
+                field = form("value")
+            )
 
-            @components.error_summary(form.errors)
-
-            @components.heading(messages("nomineeFullName.heading"), taxYear = Some(taxYear.asString))
-
-            @components.input_text(InputViewModel("value", form), label = messages("nomineeFullName.heading"), labelClass = Some("visually-hidden"))
-
-            @components.submit_button()
+            @submitButton()
         }
     }

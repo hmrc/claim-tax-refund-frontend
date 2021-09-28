@@ -1,21 +1,25 @@
 # Claim a tax refund frontend
 
-CTR is a microservice for the tax form R39, it interacts with Digital Mail Service and Robotics. The submission is proccessed by robotics and sent to DMS where the case is add to a worklist and manually worked by back office staff.
+CTR is a microservice for the tax form R39. It interacts with Digital Mail Service and Robotics.
+<br/>A submission is sent to the Robotics service and then submitted to DMS for manual processing.
 
-## Info
+## Information
 
 This project is a Scala web application using [code scaffolds](https://github.com/hmrc/hmrc-frontend-scaffold.g8)
+<br/>Scala templates (views) use hmrc standard UI Components (https://github.com/hmrc/play-frontend-hmrc)
+<br/>CTR is build using the Play framework: https://www.playframework.com/documentation/2.8.x
 
 ## Running the service
 
 Service Manager: CTR_ALL
 
-Mandatory auth information:
+Mandatory Auth Information:
 - Nino
 - Confidence Level 200
-- Itmp name
+- Itmp Given name
 
-Itmp address is optional and will be displayed back to the user where applicable if provided.
+ITMP address information is optional and will be displayed back to the user via the frontend, but
+is required for the change of address details page.
 
 |Repositories|Link|
 |------------|----|
@@ -34,6 +38,6 @@ This service is dependant on these other services:
 
 Start the service locally by going to http://localhost:9969/claim-tax-refund
 
-Address lookup partial callsback to either
+Address lookup partial call back to either
 - /address-callback-normal-mode
 - /address-callback-check-mode

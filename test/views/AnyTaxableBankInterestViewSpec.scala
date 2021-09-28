@@ -23,10 +23,10 @@ import models.{AnyTaxPaid, NormalMode}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.{Form, FormError}
 import play.twirl.api.HtmlFormat
-import views.behaviours.QuestionViewBehaviours
+import views.behaviours.NewQuestionViewBehaviours
 import views.html.anyTaxableBankInterest
 
-class AnyTaxableBankInterestViewSpec extends QuestionViewBehaviours[AnyTaxPaid] with GuiceOneAppPerSuite {
+class AnyTaxableBankInterestViewSpec extends NewQuestionViewBehaviours[AnyTaxPaid] with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "anyTaxableBankInterest"
   private val testAmount = "9,999.00"
@@ -39,9 +39,9 @@ class AnyTaxableBankInterestViewSpec extends QuestionViewBehaviours[AnyTaxPaid] 
   val form = formProvider(notSelectedKey, blankKey, invalidKey)
   val anyTaxableBankInterest: anyTaxableBankInterest = fakeApplication.injector.instanceOf[anyTaxableBankInterest]
 
-  def createView = () => anyTaxableBankInterest(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
+  def createView = () => anyTaxableBankInterest(form, NormalMode, taxYear)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[_]) => anyTaxableBankInterest(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
+  def createViewUsingForm = (form: Form[_]) => anyTaxableBankInterest(form, NormalMode, taxYear)(fakeRequest, messages)
 
   "AnyTaxableBankInterest view" must {
 
@@ -91,15 +91,15 @@ class AnyTaxableBankInterestViewSpec extends QuestionViewBehaviours[AnyTaxPaid] 
 
           "contain an input for the value" in {
             val doc = asDocument(createView(form))
-            assertRenderedById(doc, "anyTaxPaid-no")
-            assertRenderedById(doc, "anyTaxPaid-yes")
+            assertRenderedById(doc, "anyTaxPaid-2")
+            assertRenderedById(doc, "anyTaxPaid")
             assertRenderedById(doc, "taxPaidAmount")
           }
 
           "have no values checked when rendered with no form" in {
             val doc = asDocument(createView(form))
-            assert(!doc.getElementById("anyTaxPaid-yes").hasAttr("checked"))
-            assert(!doc.getElementById("anyTaxPaid-no").hasAttr("checked"))
+            assert(!doc.getElementById("anyTaxPaid").hasAttr("checked"))
+            assert(!doc.getElementById("anyTaxPaid-2").hasAttr("checked"))
           }
 
           "include the form's value in the value input" in {
@@ -124,13 +124,13 @@ class AnyTaxableBankInterestViewSpec extends QuestionViewBehaviours[AnyTaxPaid] 
         "rendered with an error" must {
           "show an error summary" in {
             val doc = asDocument(createView(form.withError(error)))
-            assertRenderedById(doc, "error-summary-heading")
+            assertRenderedById(doc, "error-summary-title")
           }
 
           "show an error in the value field's label" in {
             val doc = asDocument(createView(form.withError(FormError("anyTaxPaid", "Please enter a valid number"))))
-            val errorSpan = doc.getElementsByClass("error-notification").first
-            errorSpan.text mustBe messages(errorMessage)
+            val errorSpan = doc.getElementsByClass("govuk-error-message").first
+            errorSpan.text mustBe s"Error: ${messages(errorMessage)}"
           }
         }
       }
@@ -141,14 +141,14 @@ class AnyTaxableBankInterestViewSpec extends QuestionViewBehaviours[AnyTaxPaid] 
 
       "have only the correct value checked when yes selected" in {
         val doc = asDocument(createView(form.fill(AnyTaxPaid.Yes(testAmount))))
-        assert(doc.getElementById("anyTaxPaid-yes").hasAttr("checked"))
-        assert(!doc.getElementById("anyTaxPaid-no").hasAttr("checked"))
+        assert(doc.getElementById("anyTaxPaid").hasAttr("checked"))
+        assert(!doc.getElementById("anyTaxPaid-2").hasAttr("checked"))
       }
 
       "have only the correct value checked when no selected" in {
         val doc = asDocument(createView(form.fill(AnyTaxPaid.No)))
-        assert(!doc.getElementById("anyTaxPaid-yes").hasAttr("checked"))
-        assert(doc.getElementById("anyTaxPaid-no").hasAttr("checked"))
+        assert(!doc.getElementById("anyTaxPaid").hasAttr("checked"))
+        assert(doc.getElementById("anyTaxPaid-2").hasAttr("checked"))
       }
 
       "not render an error summary" in {

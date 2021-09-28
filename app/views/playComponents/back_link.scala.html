@@ -14,8 +14,17 @@
  * limitations under the License.
  *@
 
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+
+@this(govukBackLink : GovukBackLink)
+
 @()(implicit messages: Messages)
 
-<div class="js-visible">
-  <p><a id="back-link" class="link-back" href="#">@messages("site.back")</a></p>
-</div>
+@govukBackLink(BackLink(
+ href = "javascript:history.back()",
+ content = Text(messages("site.back")),
+ attributes = Map(
+  "id" -> "back-link"
+ )
+))
+

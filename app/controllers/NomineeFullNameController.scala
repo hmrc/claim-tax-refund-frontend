@@ -16,7 +16,7 @@
 
 package controllers
 
-import config.{FrontendAppConfig, LocalTemplateRenderer}
+import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.NomineeFullNameForm
@@ -34,7 +34,6 @@ import views.html.nomineeFullName
 import scala.concurrent.{ExecutionContext, Future}
 
 class NomineeFullNameController @Inject()(
-                                           appConfig: FrontendAppConfig,
                                            override val messagesApi: MessagesApi,
                                            dataCacheConnector: DataCacheConnector,
                                            navigator: Navigator,
@@ -42,9 +41,8 @@ class NomineeFullNameController @Inject()(
                                            getData: DataRetrievalAction,
                                            requireData: DataRequiredAction,
                                            nomineeFullName: nomineeFullName,
-cc: MessagesControllerComponents,
-                                           formBuilder: NomineeFullNameForm,
-                                           implicit val templateRenderer: LocalTemplateRenderer
+                                            cc: MessagesControllerComponents,
+                                           formBuilder: NomineeFullNameForm
                                          )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   private val form: Form[String] = formBuilder()
@@ -58,7 +56,7 @@ cc: MessagesControllerComponents,
 
       request.userAnswers.selectTaxYear.map {
         taxYear =>
-          Ok(nomineeFullName(appConfig, preparedForm, mode, taxYear))
+          Ok(nomineeFullName(preparedForm, mode, taxYear))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
@@ -70,7 +68,7 @@ cc: MessagesControllerComponents,
         taxYear =>
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(nomineeFullName(appConfig, formWithErrors, mode, taxYear))),
+              Future.successful(BadRequest(nomineeFullName(formWithErrors, mode, taxYear))),
             value =>
               dataCacheConnector.save[String](request.externalId, NomineeFullNameId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(NomineeFullNameId, mode)(new UserAnswers(cacheMap))))

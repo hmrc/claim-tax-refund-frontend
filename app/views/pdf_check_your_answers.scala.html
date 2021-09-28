@@ -17,20 +17,17 @@
 @import config.FrontendAppConfig
 @import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
 @import viewmodels.{AnswerSection, Section}
-
 @import org.joda.time.LocalDateTime
+
 @(
-        appConfig: FrontendAppConfig,
-        answerSections: Seq[Section],
-        nino: String,
-        name: ItmpName,
-        address: ItmpAddress,
-        telephone: Option[TelephoneOption],
-        date: LocalDateTime
-)(
-    implicit
-        messages: Messages
-)
+    appConfig: FrontendAppConfig,
+    answerSections: Seq[Section],
+    nino: String,
+    name: ItmpName,
+    address: ItmpAddress,
+    telephone: Option[TelephoneOption],
+    date: LocalDateTime
+)(implicit messages: Messages)
 
 @()
 <head>
@@ -73,7 +70,7 @@
 @for((section, i) <- answerSections.zipWithIndex) {
     @{
         section match {
-            case a: AnswerSection => components.pdf_answer_section(a)
+            case a: AnswerSection => playComponents.pdf_answer_section(a)
         }
     }
 }

@@ -23,10 +23,10 @@ import models.SelectTaxYear.CustomTaxYear
 import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
-import views.behaviours.StringViewBehaviours
+import views.behaviours.NewStringViewBehaviours
 import views.html.howMuchForeignIncome
 
-class HowMuchForeignIncomeViewSpec extends StringViewBehaviours with MockitoSugar with GuiceOneAppPerSuite {
+class HowMuchForeignIncomeViewSpec extends NewStringViewBehaviours with MockitoSugar with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "howMuchForeignIncome"
   private val taxYear = CustomTaxYear(2017)
@@ -34,9 +34,9 @@ class HowMuchForeignIncomeViewSpec extends StringViewBehaviours with MockitoSuga
   override val form: Form[String] = new HowMuchForeignIncomeForm(frontendAppConfig)()
   val howMuchForeignIncome: howMuchForeignIncome = fakeApplication.injector.instanceOf[howMuchForeignIncome]
 
-  def createView = () => howMuchForeignIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
+  def createView = () => howMuchForeignIncome(form, NormalMode, taxYear)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) => howMuchForeignIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
+  def createViewUsingForm = (form: Form[String]) => howMuchForeignIncome(form, NormalMode, taxYear)(fakeRequest, messages)
 
   "HowMuchForeignIncome view" must {
     behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))

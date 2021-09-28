@@ -16,7 +16,7 @@
 
 package controllers
 
-import config.{FrontendAppConfig, LocalTemplateRenderer}
+import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.BooleanForm
@@ -36,17 +36,15 @@ import views.html.deleteOther
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class DeleteOtherController @Inject()(appConfig: FrontendAppConfig,
-                                      override val messagesApi: MessagesApi,
+class DeleteOtherController @Inject()(override val messagesApi: MessagesApi,
                                       dataCacheConnector: DataCacheConnector,
                                       navigator: Navigator,
                                       authenticate: AuthAction,
                                       getData: DataRetrievalAction,
                                       requireData: DataRequiredAction,
                                       deleteOther: deleteOther,
-cc: MessagesControllerComponents,
+                                      cc: MessagesControllerComponents,
                                       formProvider: BooleanForm,
-                                      implicit val templateRenderer: LocalTemplateRenderer
                                      )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   private val errorKey = "deleteOther.blank"
@@ -56,7 +54,7 @@ cc: MessagesControllerComponents,
       val form: Form[Boolean] = formProvider(cc.messagesApi.preferred(request).messages(errorKey, itemName))
       request.userAnswers.selectTaxYear.map {
         taxYear =>
-          Ok(deleteOther(appConfig, form, mode, index, itemName, collectionId, taxYear))
+          Ok(deleteOther(form, mode, index, itemName, collectionId, taxYear))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
@@ -70,7 +68,7 @@ cc: MessagesControllerComponents,
           taxYear =>
             form.bindFromRequest().fold(
               (formWithErrors: Form[_]) =>
-                Future.successful(BadRequest(deleteOther(appConfig, formWithErrors, mode, index, itemName, collectionId, taxYear))),
+                Future.successful(BadRequest(deleteOther(formWithErrors, mode, index, itemName, collectionId, taxYear))),
               success = (value: Boolean) =>
                 if (value) {
                   collectionId match {

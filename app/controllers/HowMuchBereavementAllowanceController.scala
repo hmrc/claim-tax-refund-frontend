@@ -16,7 +16,7 @@
 
 package controllers
 
-import config.{FrontendAppConfig, LocalTemplateRenderer}
+import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.HowMuchBereavementAllowanceForm
@@ -42,8 +42,7 @@ class HowMuchBereavementAllowanceController @Inject()(appConfig: FrontendAppConf
                                                       requireData: DataRequiredAction,
                                                       howMuchBereavementAllowance: howMuchBereavementAllowance,
 cc: MessagesControllerComponents,
-                                                      formBuilder: HowMuchBereavementAllowanceForm,
-                                                      implicit val templateRenderer: LocalTemplateRenderer
+                                                      formBuilder: HowMuchBereavementAllowanceForm
                                                      )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   private val form: Form[String] = formBuilder()

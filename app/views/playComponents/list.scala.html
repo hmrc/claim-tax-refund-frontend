@@ -14,27 +14,36 @@
  * limitations under the License.
  *@
 
-@import viewmodels.AnswerRow
-
-
 @(
+    pageKey: Option[String] = None,
     addCssClass: Option[String] = None,
-    answers: Seq[AnswerRow]
+    bulletList: Seq[String]
 )(implicit messages: Messages)
 
 @cssClass = @{
     if(addCssClass.isDefined) s"form-group ${addCssClass.get}" else "form-group"
 }
 
-<div class="@cssClass" id="component-answer-list">
-    <ul role="list" class="tabular-data tabular-data--list">
-        @for((answer, i) <- answers.zipWithIndex) {
-                @components.answer_row(
-                    row = answer,
-                    idPath = s"other_summary_$i"
-                    )
+@text(bullet: String) = @{
+    if(pageKey.isDefined) messages(s"${pageKey.get}.$bullet") else bullet
+}
+
+@list = {
+    <ul class="govuk-list govuk-list--bullet">
+        @for(bullet <- bulletList) {
+            <li id="bullet-@bullet">@text(bullet)</li>
         }
-
-
     </ul>
+}
+
+@single = {
+    <p id="bullet-@{bulletList.head}">@text(bulletList.head)</p>
+}
+
+<div class="@cssClass" id="component-bullet-list">
+    @if(bulletList.size == 1) {
+        @single
+    } else {
+        @list
+    }
 </div>
