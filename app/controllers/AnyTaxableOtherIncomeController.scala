@@ -16,7 +16,7 @@
 
 package controllers
 
-import config.{FrontendAppConfig, LocalTemplateRenderer}
+import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.{AnyTaxPaidForm, OtherTaxableIncomeForm}
@@ -45,8 +45,7 @@ class AnyTaxableOtherIncomeController @Inject()(appConfig: FrontendAppConfig,
                                                 cc: MessagesControllerComponents,
                                                 sequenceUtil: SequenceUtil[OtherTaxableIncome],
                                                 formProvider: OtherTaxableIncomeForm,
-                                                taxPaidFormProvider: AnyTaxPaidForm,
-                                                implicit val templateRenderer: LocalTemplateRenderer
+                                                taxPaidFormProvider: AnyTaxPaidForm
                                                )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   private val notSelectedKey = "anyTaxableOtherIncome.notSelected"
@@ -71,7 +70,7 @@ class AnyTaxableOtherIncomeController @Inject()(appConfig: FrontendAppConfig,
           case None => form
         }
 
-        Ok(anyTaxableOtherIncome(appConfig, preparedForm, mode, index, selectedTaxYear, otherTaxableIncome(index).name))
+        Ok(anyTaxableOtherIncome(preparedForm, mode, index, selectedTaxYear, otherTaxableIncome(index).name))
       }
       details.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
@@ -91,7 +90,7 @@ class AnyTaxableOtherIncomeController @Inject()(appConfig: FrontendAppConfig,
         )
         form.bindFromRequest().fold(
           (formWithErrors: Form[AnyTaxPaid]) =>
-            Future.successful(BadRequest(anyTaxableOtherIncome(appConfig, formWithErrors, mode, index, selectedTaxYear, otherTaxableIncome(index).name))),
+            Future.successful(BadRequest(anyTaxableOtherIncome(formWithErrors, mode, index, selectedTaxYear, otherTaxableIncome(index).name))),
           value => {
 
             val otherIncomeDetails = OtherTaxableIncome(otherTaxableIncome(index).name, otherTaxableIncome(index).amount, Some(value))

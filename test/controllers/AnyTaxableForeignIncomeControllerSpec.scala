@@ -53,9 +53,9 @@ class AnyTaxableForeignIncomeControllerSpec extends ControllerSpecBase with Guic
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyTaxableForeignIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), anyTaxableForeignIncome, messagesControllerComponents, formProvider, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), anyTaxableForeignIncome, messagesControllerComponents, formProvider)
 
-  def viewAsString(form: Form[_] = form) = anyTaxableForeignIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec).toString
+  def viewAsString(form: Form[_] = form) = anyTaxableForeignIncome(form, NormalMode, taxYear)(fakeRequest, messages).toString
 
   "AnyTaxableForeignIncome Controller" must {
 

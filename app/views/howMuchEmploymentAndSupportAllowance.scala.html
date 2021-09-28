@@ -17,12 +17,17 @@
 @import config.FrontendAppConfig
 @import controllers.routes._
 @import models.Mode
-@import viewmodels.InputViewModel
-@import uk.gov.hmrc.play.views.html.helpers.FormWithCSRF
-@import uk.gov.hmrc.renderer.TemplateRenderer
-@import scala.concurrent.ExecutionContext
 
-@this(main_template: main_template, formWithCSRF: FormWithCSRF)
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+
+@this(
+    formWithCSRF: FormWithCSRF,
+    layout: Layout,
+    errorSummary: playComponents.error_summary,
+    headingWithCaption: playComponents.headingWithCaption,
+    input_text: playComponents.input_text,
+    submitButton: playComponents.submit_button
+)
 
 @(
         appConfig: FrontendAppConfig,
@@ -32,32 +37,30 @@
 )(
         implicit
         request: Request[_],
-        messages: Messages,
-templateRenderer: TemplateRenderer,
-ec: ExecutionContext)
+        messages: Messages
+)
 
 @title = @{
     if(form.errors.nonEmpty) messages("site.title.error", messages("howMuchEmploymentAndSupportAllowance.title")) else messages("howMuchEmploymentAndSupportAllowance.title")
 }
 
-@main_template(
-    title = title,
-    appConfig = appConfig,
-    bodyClasses = None) {
+@layout(
+    pageTitle = title
+){
 
     @formWithCSRF(action = HowMuchEmploymentAndSupportAllowanceController.onSubmit(mode), 'autoComplete -> "off") {
 
-        @components.back_link()
+        @errorSummary(form.errors)
 
-        @components.error_summary(form.errors)
+        @headingWithCaption(messages("howMuchEmploymentAndSupportAllowance.heading"), taxYear = Some(taxYear.asString))
 
-        @components.heading(messages("howMuchEmploymentAndSupportAllowance.heading"), taxYear = Some(taxYear.asString))
-
-        @components.input_text(InputViewModel("value", form),
-            label = messages("howMuchEmploymentAndSupportAllowance.heading", taxYear.asString),
-            labelClass = Some("visually-hidden"),
-            currency = true
+        @input_text(
+            label = messages("howMuchEmploymentAndSupportAllowance.heading"),
+            labelClass = Some("govuk-visually-hidden"),
+            currency = true,
+            field = form("value")
         )
-        @components.submit_button()
+
+        @submitButton()
     }
 }

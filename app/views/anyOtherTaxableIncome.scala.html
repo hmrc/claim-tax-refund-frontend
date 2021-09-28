@@ -18,12 +18,21 @@
 @import controllers.routes._
 @import models.Mode
 @import viewmodels._
-@import uk.gov.hmrc.play.views.html.helpers.FormWithCSRF
-@import uk.gov.hmrc.renderer.TemplateRenderer
+
 @import scala.concurrent.ExecutionContext
+@import uk.gov.hmrc.govukfrontend.views.html.components._
 
-@this(main_template: main_template, formWithCSRF: FormWithCSRF)
-
+@this(
+    formWithCSRF: FormWithCSRF,
+    heading: playComponents.heading,
+    submitButton: playComponents.submit_button,
+    errorSummary: playComponents.error_summary,
+    pageHeading: playComponents.headingWithCaption,
+    addListSummary: playComponents.add_list_summary,
+    backLink: playComponents.back_link,
+    inputYesNo: playComponents.input_yes_no,
+    layout: Layout
+)
 @(
         appConfig: FrontendAppConfig,
         form: Form[_],
@@ -34,9 +43,8 @@
 )(
         implicit
         request: Request[_],
-        messages: Messages,
-templateRenderer: TemplateRenderer,
-ec: ExecutionContext)
+        messages: Messages
+)
 
     @formAction = @{
         if(incomplete.isEmpty) AnyOtherTaxableIncomeController.onSubmit(mode) else OtherTaxableIncomeController.onPageLoad(mode, incomplete.head._2)
@@ -50,32 +58,28 @@ ec: ExecutionContext)
         if(form.errors.nonEmpty) messages("site.title.error", messages("anyOtherTaxableIncome.title")) else messages("anyOtherTaxableIncome.title")
     }
 
-    @main_template(
-        title = title,
-        appConfig = appConfig,
-        bodyClasses = None
+    @layout(
+        pageTitle = title
     ) {
+    @formWithCSRF(action = formAction, 'autoComplete -> "off") {
 
-        @formWithCSRF(action = formAction, 'autoComplete -> "off") {
+            @errorSummary(form.errors)
 
-            @components.back_link()
+            @pageHeading(heading = messages("anyOtherTaxableIncome.heading"),
+                taxYear = Some(taxYear.asString))
 
-            @components.error_summary(form.errors)
-
-            @components.heading(messages("anyOtherTaxableIncome.heading"), taxYear = Some(taxYear.asString))
-
-            @components.add_list_summary(
+            @addListSummary(
                 complete, incomplete, mode
             )
 
             @if(incomplete.isEmpty) {
-                @components.input_yes_no(
-                    InputViewModel("value", form),
+                @inputYesNo(
                     label = messages("anyOtherTaxableIncome.add"),
-                    labelClass = Some("heading-medium")
+                    labelClass = Some("heading-medium"),
+                    field = form("value")
                 )
             }
 
-            @components.submit_button(callToAction)
+            @submitButton(callToAction)
         }
     }

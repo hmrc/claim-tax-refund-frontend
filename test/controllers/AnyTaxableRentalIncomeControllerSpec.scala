@@ -53,9 +53,9 @@ class AnyTaxableRentalIncomeControllerSpec extends ControllerSpecBase with Guice
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new AnyTaxableRentalIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), anyTaxableRentalIncome, messagesControllerComponents, formProvider, templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), anyTaxableRentalIncome, messagesControllerComponents, formProvider)
 
-  def viewAsString(form: Form[_] = form) = anyTaxableRentalIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec).toString
+  def viewAsString(form: Form[_] = form) = anyTaxableRentalIncome(form, NormalMode, taxYear)(fakeRequest, messages).toString
 
   "AnyTaxableRentalIncome Controller" must {
 

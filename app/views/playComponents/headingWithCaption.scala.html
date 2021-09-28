@@ -14,8 +14,16 @@
  * limitations under the License.
  *@
 
-@(submitText: String = "site.continue")(implicit messages: Messages)
+@this(
+    caption: playComponents.caption,
+    headingComponent: playComponents.heading
+)
 
-<div class="section">
-    <button id="submit" class="button">@messages(submitText)</button>
-</div>
+@(
+    heading: String,
+    headingSize: String = "heading-xlarge",
+    taxYear: Option[String] = None
+)(implicit messages: Messages)
+
+@caption(taxYear)
+@headingComponent(heading)

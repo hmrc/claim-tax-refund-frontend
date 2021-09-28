@@ -14,50 +14,50 @@
  * limitations under the License.
  *@
 
-@import config.FrontendAppConfig
 @import controllers.routes._
 @import forms.WhereToSendPaymentForm
 @import models.Mode
 @import viewmodels.InputViewModel
-@import uk.gov.hmrc.play.views.html.helpers.FormWithCSRF
-@import uk.gov.hmrc.renderer.TemplateRenderer
-@import scala.concurrent.ExecutionContext
 
-@this(main_template: main_template, formWithCSRF: FormWithCSRF)
+@this(
+    layout: Layout,
+    formWithCSRF: FormWithCSRF,
+    errorSummary: playComponents.error_summary,
+    inputRadio: playComponents.input_radio,
+    headingWithCaption: playComponents.headingWithCaption,
+    submitButton: playComponents.submit_button
+)
 
 @(
-        appConfig: FrontendAppConfig,
         form: Form[_],
         mode: Mode,
         taxYear: SelectTaxYear
 )(
         implicit
         request: Request[_],
-        messages: Messages,
-templateRenderer: TemplateRenderer,
-ec: ExecutionContext)
+        messages: Messages
+)
 
-    @main_template(
-        title = messages("whereToSendPayment.title"),
-        appConfig = appConfig,
-        bodyClasses = None
+    @layout(
+        pageTitle = messages("whereToSendPayment.title")
     ) {
-
         @formWithCSRF(action = WhereToSendPaymentController.onSubmit(mode), 'autoComplete -> "off") {
 
-            @components.back_link()
+            @errorSummary(form.errors)
 
-            @components.error_summary(form.errors)
-
-            @components.heading(messages("whereToSendPayment.heading"), taxYear = Some(taxYear.asString))
-
-            @components.input_radio(
+            @inputRadio(
                 viewModel = InputViewModel("value", form),
-                legend = messages("whereToSendPayment.heading"),
+                legend = headingWithCaption(messages("whereToSendPayment.heading"), taxYear = Some(taxYear.asString)),
                 legendClass = Some("visually-hidden"),
-                inputs = WhereToSendPaymentForm.options.toSeq
+                inputs = (WhereToSendPaymentForm.options map { radioOption =>
+                    RadioItem(
+                        value = Some(radioOption.value),
+                        content = HtmlContent(radioOption.message.html)
+                    )
+                }).toSeq,
+                field = form("value")
             )
 
-            @components.submit_button()
+            @submitButton()
         }
     }

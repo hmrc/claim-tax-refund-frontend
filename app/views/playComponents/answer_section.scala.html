@@ -35,7 +35,7 @@
     <ul role="list" class="tabular-data tabular-data--list">
 
         @for((row, i) <- answerSection.rows.zipWithIndex) {
-            @components.answer_row(row, idPath + "-" + i.toString, changeLink)
+            @playComponents.answer_row(row, idPath + "-" + i.toString, changeLink)
         }
 
         @if(answerSection.addLinkText.isDefined && answerSection.addLinkUrl.isDefined) {

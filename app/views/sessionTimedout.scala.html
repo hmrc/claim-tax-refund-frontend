@@ -15,28 +15,34 @@
  *@
 
 @import config.FrontendAppConfig
-@import uk.gov.hmrc.renderer.TemplateRenderer
-@import scala.concurrent.ExecutionContext
 
-@this(main_template: main_template)
+@this(
+    layout: Layout,
+    heading: playComponents.heading,
+    signInButton: playComponents.sign_in_button
+)
 
 @(
         appConfig: FrontendAppConfig
 )(
         implicit
         request: Request[_],
-        messages: Messages,
-templateRenderer: TemplateRenderer,
-ec: ExecutionContext)
+        messages: Messages
+)
 
-@main_template(
-    title = messages("session_expired.title"),
-    appConfig = appConfig,
-    bodyClasses = None,
-    timeout = false
-) {
-    <h1 class="heading-xlarge">@messages("timedOut.heading")</h1>
-    <p>@messages("timedOut.message")</p>
+@layout(pageTitle = messages("timedOut.title"), timeoutEnabled = false, backLinkEnabled = false){
 
-    <a href=/claim-tax-refund class="button" role="button">@messages("timedOut.button")</a>
+    @heading(messages("timedOut.heading"))
+
+    <p class="govuk-body">@messages("timedOut.message")</p>
+
+    @signInButton()
+
+    <br>
+
 }
+
+
+
+
+

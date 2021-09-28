@@ -18,11 +18,16 @@
 @import controllers.routes._
 @import models.{Mode, UkAddress}
 @import viewmodels.InputViewModel
-@import uk.gov.hmrc.play.views.html.helpers.FormWithCSRF
-@import uk.gov.hmrc.renderer.TemplateRenderer
-@import scala.concurrent.ExecutionContext
 
-@this(main_template: main_template, formWithCSRF: FormWithCSRF)
+@this(
+    formWithCSRF: FormWithCSRF,
+    layout: Layout,
+    headingWithCaption: playComponents.headingWithCaption,
+    errorSummary: playComponents.error_summary,
+    inputText: playComponents.input_text,
+    submitButton: playComponents.submit_button,
+    pageHeading: playComponents.headingWithCaption,
+)
 
 @(
         appConfig: FrontendAppConfig,
@@ -32,40 +37,66 @@
 )(
         implicit
         request: Request[_],
-        messages: Messages,
-templateRenderer: TemplateRenderer,
-ec: ExecutionContext)
+        messages: Messages)
 
     @title = @{
         if(form.errors.nonEmpty) messages("site.title.error", messages("paymentUKAddress.title")) else messages("paymentUKAddress.title")
     }
 
-    @main_template(
-        title = title,
-        appConfig = appConfig,
-        bodyClasses = None
-    ) {
+@layout(
+    pageTitle = title,
+) {
 
         @formWithCSRF(action = PaymentUKAddressController.onSubmit(mode), 'autoComplete -> "off") {
 
-            @components.back_link()
+            @errorSummary(form.errors)
 
-            @components.error_summary(form.errors)
+            @pageHeading(messages("paymentUKAddress.heading"),
+                taxYear = Some(taxYear.asString))
 
-            @components.heading(messages("paymentUKAddress.heading"), taxYear = Some(taxYear.asString))
+            @inputText(
+                label = messages("global.addressLine1"),
+                isPageHeading = false,
+                largeText = false,
+                field = form("addressLine1")
+            )
 
-            @components.input_text(InputViewModel[UkAddress]("addressLine1", form), label = messages("global.addressLine1"))
+            @inputText(
+                label = messages("global.addressLine2"),
+                isPageHeading = false,
+                largeText = false,
+                field = form("addressLine2")
+            )
 
-            @components.input_text(InputViewModel[UkAddress]("addressLine2", form), label = messages("global.addressLine2"))
+            @inputText(
+                label = messages("global.addressLine3"),
+                isPageHeading = false,
+                largeText = false,
+                field = form("addressLine3")
+            )
 
-            @components.input_text(InputViewModel[UkAddress]("addressLine3", form), label = messages("global.addressLine3"))
+            @inputText(
+                label = messages("global.addressLine4"),
+                isPageHeading = false,
+                largeText = false,
+                field = form("addressLine4")
+            )
 
-            @components.input_text(InputViewModel[UkAddress]("addressLine4", form), label = messages("global.addressLine4"))
+            @inputText(
+                label = messages("global.addressLine5"),
+                isPageHeading = false,
+                largeText = false,
+                field = form("addressLine5")
+            )
 
-            @components.input_text(InputViewModel[UkAddress]("addressLine5", form), label = messages("global.addressLine5"))
+            @inputText(
+                label = messages("global.postcode"),
+                isPageHeading = false,
+                largeText = false,
+                field = form("postcode")
+            )
 
-            @components.input_text(InputViewModel[UkAddress]("postcode", form), label = messages("global.postcode"))
+            @submitButton()
 
-            @components.submit_button()
         }
     }

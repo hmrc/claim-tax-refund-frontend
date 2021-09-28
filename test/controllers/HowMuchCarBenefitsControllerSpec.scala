@@ -44,9 +44,9 @@ class HowMuchCarBenefitsControllerSpec extends ControllerSpecBase with MockitoSu
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new HowMuchCarBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), howMuchCarBenefits, messagesControllerComponents, new HowMuchCarBenefitsForm(frontendAppConfig), templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), howMuchCarBenefits, messagesControllerComponents, new HowMuchCarBenefitsForm(frontendAppConfig))
 
-  def viewAsString(form: Form[_] = form): Any = howMuchCarBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec).toString
+  def viewAsString(form: Form[_] = form): Any = howMuchCarBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
 
   "HowMuchCarBenefits Controller" must {
 

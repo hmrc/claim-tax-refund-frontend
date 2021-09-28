@@ -17,12 +17,15 @@
 @import config.FrontendAppConfig
 @import controllers.routes._
 @import models.Mode
-@import uk.gov.hmrc.play.views.html.helpers.FormWithCSRF
 @import viewmodels.InputViewModel
-@import uk.gov.hmrc.renderer.TemplateRenderer
-@import scala.concurrent.ExecutionContext
-
-@this(main_template: main_template, formWithCSRF: FormWithCSRF)
+@this(
+        formWithCSRF: FormWithCSRF,
+        layout: Layout,
+        errorSummary: playComponents.error_summary,
+        caption: playComponents.caption,
+        govukInput: GovukInput,
+        submitButton: playComponents.submit_button
+)
 
 @(
         appConfig: FrontendAppConfig,
@@ -32,33 +35,40 @@
 )(
         implicit
         request: Request[_],
-        messages: Messages,
-templateRenderer: TemplateRenderer,
-ec: ExecutionContext)
+        messages: Messages
+)
 
     @title = @{
         if(form.errors.nonEmpty) messages("site.title.error", messages("howMuchInvestmentOrDividend.title")) else messages("howMuchInvestmentOrDividend.title")
     }
 
-    @main_template(
-        title = messages(title, taxYear.asString),
-        appConfig = appConfig,
-        bodyClasses = None
-    ) {
+    @layout(pageTitle = title) {
 
         @formWithCSRF(action = HowMuchInvestmentOrDividendController.onSubmit(mode), 'autoComplete -> "off") {
 
-            @components.back_link()
+            @errorSummary(form.errors)
 
-            @components.error_summary(form.errors)
+            @caption(taxYear = Some(taxYear.asString))
 
-            @components.heading(messages("howMuchInvestmentOrDividend.heading"), taxYear = Some(taxYear.asString))
+            @govukInput(
 
-            @components.input_text(InputViewModel("value", form),
-                label = messages("howMuchInvestmentOrDividend.heading", taxYear.asString),
-                labelClass = Some("visually-hidden"),
-                currency = true
+                Input(
+                    label = Label(
+                        isPageHeading = true,
+                        classes = "govuk-label--xl",
+                        content = Text(messages("howMuchInvestmentOrDividend.heading", taxYear.asString))
+                    ),
+                    classes = "govuk-input--width-10",
+                    spellcheck = Some(false),
+                    prefix = Some(PrefixOrSuffix(
+                    content = Text("£")
+                    ))
+                ).withFormField(form("value"))
             )
-            @components.submit_button()
+
+            @submitButton()
         }
+
     }
+
+

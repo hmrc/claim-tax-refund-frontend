@@ -14,18 +14,20 @@
  * limitations under the License.
  *@
 
-@import config.FrontendAppConfig
 @import controllers.routes._
 @import models.Mode
-@import viewmodels.InputViewModel
-@import uk.gov.hmrc.play.views.html.helpers.FormWithCSRF
-@import uk.gov.hmrc.renderer.TemplateRenderer
-@import scala.concurrent.ExecutionContext
 
-@this(main_template: main_template, formWithCSRF: FormWithCSRF)
+@this(
+    layout: Layout,
+    pageHeading: playComponents.headingWithCaption,
+    submitButton: playComponents.submit_button,
+    errorSummary: playComponents.error_summary,
+    formWithCSRF: FormWithCSRF,
+    govukTable : GovukTable,
+    inputYesNo : playComponents.input_yes_no
+)
 
 @(
-        appConfig: FrontendAppConfig,
         form: Form[_],
         mode: Mode,
         results: Seq[Employment],
@@ -33,56 +35,40 @@
 )(
         implicit
         request: Request[_],
-        messages: Messages,
-templateRenderer: TemplateRenderer,
-ec: ExecutionContext)
+        messages: Messages
+)
 
 @title = @{
     if(form.errors.nonEmpty) messages("site.title.error", messages("employmentDetails.title")) else messages("employmentDetails.title")
 }
 
-@main_template(
-    title = title,
-    appConfig = appConfig,
-    bodyClasses = None
-) {
-
+@layout(pageTitle = title) {
     @formWithCSRF(action = EmploymentDetailsController.onSubmit(mode), 'autoComplete -> "off") {
 
-        @components.back_link()
+@errorSummary(form.errors)
 
-        @components.error_summary(form.errors)
+        @pageHeading(heading = messages("employmentDetails.heading"), taxYear = Some(taxYear.asString))
+        @govukTable(Table(
+            head = Some(Seq(
+                HeadCell(content = Text(Messages("employmentDetails.employer"))),
+                HeadCell(content = Text(Messages("employmentDetails.staffNumber")), format = Some("numeric"))
+            )),
+            rows = results.map { employments =>
+                Seq(
+                    TableRow(content = Text(employments.name)),
+                    TableRow(content = Text(employments.payeNumber), format = Some("numeric"))
+                )
+            },
+            captionClasses = "govuk-table__caption--m"
+        ))
 
-        @components.heading(heading = messages("employmentDetails.heading"), taxYear = Some(taxYear.asString))
-
-        <table>
-            <thead>
-                <tr>
-                    <th scope="col">@Messages("employmentDetails.employer")</th>
-                    <th class="numeric" scope="col">@Messages("employmentDetails.staffNumber")</th>
-                </tr>
-            </thead>
-            <tbody>
-
-            @for(employments <- results) {
-                <tr>
-                    <th scope="row">@employments.name</th>
-                    <td class="numeric">@employments.payeNumber</td>
-                </tr>
-            }
-
-            </tbody>
-        </table>
-
-        <br>
-
-        @components.input_yes_no(
-            InputViewModel("value", form),
+        @inputYesNo(
             label = messages("employmentDetails.correctDetails"),
-            labelClass = Some("bold"),
-            hint = Some(messages("employmentDetails.hintText"))
+            labelClass = Some("govuk-label--s"),
+            hint = Some(messages("employmentDetails.hintText")),
+            field = form("value")
         )
 
-        @components.submit_button()
+        @submitButton()
     }
 }

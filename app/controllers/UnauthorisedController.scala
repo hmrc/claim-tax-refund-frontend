@@ -16,7 +16,7 @@
 
 package controllers
 
-import config.{FrontendAppConfig, LocalTemplateRenderer}
+import config.FrontendAppConfig
 
 import javax.inject.{Inject, Singleton}
 import play.api.i18n.I18nSupport
@@ -32,7 +32,6 @@ import scala.concurrent.ExecutionContext
 class UnauthorisedController @Inject()(val appConfig: FrontendAppConfig,
                                        unauthorised: unauthorised,
                                        cc: MessagesControllerComponents,
-                                       implicit val templateRenderer: LocalTemplateRenderer,
                                        implicit val ec: ExecutionContext
                                       ) extends FrontendController(cc) with I18nSupport {
 

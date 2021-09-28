@@ -21,17 +21,17 @@ import models.{NormalMode, SelectTaxYear}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import utils.RadioOption
-import views.behaviours.ViewBehaviours
+import views.behaviours.NewViewBehaviours
 import views.html.selectTaxYear
 
-class SelectTaxYearViewSpec extends ViewBehaviours with GuiceOneAppPerSuite {
+class SelectTaxYearViewSpec extends NewViewBehaviours with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "selectTaxYear"
   private val selectTaxYear: selectTaxYear = fakeApplication.injector.instanceOf[selectTaxYear]
 
-  def createView = () => selectTaxYear(frontendAppConfig, SelectTaxYearForm(), NormalMode)(fakeRequest, messages, templateRenderer, ec)
+  def createView = () => selectTaxYear(frontendAppConfig, SelectTaxYearForm(), NormalMode)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[_]) => selectTaxYear(frontendAppConfig, form, NormalMode)(fakeRequest, messages, templateRenderer, ec)
+  def createViewUsingForm = (form: Form[_]) => selectTaxYear(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
 
   def radioButtonOptions: Seq[RadioOption] = SelectTaxYear.options
 

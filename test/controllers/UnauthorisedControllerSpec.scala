@@ -26,13 +26,13 @@ class UnauthorisedControllerSpec extends ControllerSpecBase with GuiceOneAppPerS
 
   "Unauthorised Controller" must {
     "return 200 for a GET" in {
-      val result = new UnauthorisedController(frontendAppConfig, unauthorised, messagesControllerComponents, templateRenderer, ec).onPageLoad()(fakeRequest)
+      val result = new UnauthorisedController(frontendAppConfig, unauthorised, messagesControllerComponents, ec).onPageLoad()(fakeRequest)
       status(result) mustBe OK
     }
 
     "return the correct view for a GET" in {
-      val result = new UnauthorisedController(frontendAppConfig, unauthorised, messagesControllerComponents, templateRenderer, ec).onPageLoad()(fakeRequest)
-      contentAsString(result) mustBe unauthorised(frontendAppConfig)(fakeRequest, messages, templateRenderer, ec).toString
+      val result = new UnauthorisedController(frontendAppConfig, unauthorised, messagesControllerComponents, ec).onPageLoad()(fakeRequest)
+      contentAsString(result) mustBe unauthorised(frontendAppConfig)(fakeRequest, messages).toString
     }
   }
 }

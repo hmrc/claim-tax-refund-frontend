@@ -16,7 +16,7 @@
 
 package controllers
 
-import config.{FrontendAppConfig, LocalTemplateRenderer}
+import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.HowMuchCarersAllowanceForm
@@ -43,8 +43,7 @@ class HowMuchCarersAllowanceController @Inject()(
                                                   requireData: DataRequiredAction,
                                                   howMuchCarersAllowance: howMuchCarersAllowance,
 cc: MessagesControllerComponents,
-                                                  formBuilder: HowMuchCarersAllowanceForm,
-                                                  implicit val templateRenderer: LocalTemplateRenderer
+                                                  formBuilder: HowMuchCarersAllowanceForm
                                                 )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   private val form: Form[String] = formBuilder()
@@ -59,7 +58,7 @@ cc: MessagesControllerComponents,
       request.userAnswers.selectTaxYear.map {
         selectedTaxYear =>
           val taxYear = selectedTaxYear
-          Ok(howMuchCarersAllowance(appConfig, preparedForm, mode, taxYear))
+          Ok(howMuchCarersAllowance(preparedForm, mode, taxYear))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
@@ -73,7 +72,7 @@ cc: MessagesControllerComponents,
           val taxYear = selectedTaxYear
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(howMuchCarersAllowance(appConfig, formWithErrors, mode, taxYear))),
+              Future.successful(BadRequest(howMuchCarersAllowance(formWithErrors, mode, taxYear))),
             value =>
               dataCacheConnector.save[String](request.externalId, HowMuchCarersAllowanceId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(HowMuchCarersAllowanceId, mode)(new UserAnswers(cacheMap))))

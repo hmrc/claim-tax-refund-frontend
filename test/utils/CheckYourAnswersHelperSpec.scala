@@ -136,9 +136,9 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
       )
       when(answers.selectBenefits) thenReturn Some(benefits)
       helper.selectBenefits.get.label.key mustBe s"selectBenefits.heading"
-      helper.selectBenefits.get.answer.key mustBe "<ul>" + benefits.map(
-        benefit => "<li>" + messages("selectBenefits." + benefit).capitalize + "</li>"
-      ).mkString + "</ul>"
+      helper.selectBenefits.get.answer.key mustBe benefits.map(
+        benefit => messages("selectBenefits." + benefit).capitalize + "<br>"
+      ).mkString
     }
   }
 
@@ -237,9 +237,9 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
       )
       when(answers.selectCompanyBenefits) thenReturn Some(companyBenefits)
       helper.selectCompanyBenefits.get.label.key mustBe s"selectCompanyBenefits.heading"
-      helper.selectCompanyBenefits.get.answer.key mustBe "<ul>" + companyBenefits.map(
-        companyBenefit => "<li>" + messages("selectCompanyBenefits." + companyBenefit).capitalize + "</li>"
-      ).mkString + "</ul>"
+      helper.selectCompanyBenefits.get.answer.key mustBe companyBenefits.map(
+        companyBenefit => messages("selectCompanyBenefits." + companyBenefit).capitalize + "<br>"
+      ).mkString
     }
   }
 
@@ -318,9 +318,9 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
       )
       when(answers.selectTaxableIncome) thenReturn Some(taxableIncomes)
       helper.selectTaxableIncome.get.label.key mustBe s"selectTaxableIncome.heading"
-      helper.selectTaxableIncome.get.answer.key mustBe "<ul>" + taxableIncomes.map(
-        income => "<li>" +  messages("selectTaxableIncome." + income).capitalize + "</li>"
-      ).mkString + "</ul>"
+      helper.selectTaxableIncome.get.answer.key mustBe taxableIncomes.map(
+        income => messages("selectTaxableIncome." + income).capitalize + "<br>"
+      ).mkString
     }
   }
 
@@ -533,7 +533,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
       when(answers.anyAgentRef) thenReturn Some(AnyAgentRef.Yes(agentRef))
 
       helper.anyAgentRef.get.label.key mustBe messages("anyAgentRef.heading", "Test name")
-      helper.anyAgentRef.get.url mustBe Some(routes.AnyAgentRefController.onPageLoad(CheckMode).url + "/#anyAgentRef-yes")
+      helper.anyAgentRef.get.url mustBe Some(routes.AnyAgentRefController.onPageLoad(CheckMode).url + "/#anyAgentRef")
       helper.anyAgentRef.get.answer.key mustBe yes
       helper.agentReferenceNumber.get.label.key mustBe "anyAgentRef.agentRefField"
       helper.agentReferenceNumber.get.url mustBe Some(routes.AnyAgentRefController.onPageLoad(CheckMode).url + "/#agentRef")
@@ -591,7 +591,7 @@ class CheckYourAnswersHelperSpec extends SpecBase with MockitoSugar with BeforeA
       val telNo = "0191123123"
       when(answers.anyTelephoneNumber) thenReturn Some(TelephoneOption.Yes(telNo))
       helper.anyTelephoneNumber.get.label.key mustBe "telephoneNumber.heading"
-      helper.anyTelephoneNumber.get.url mustBe Some(routes.TelephoneNumberController.onPageLoad(CheckMode).url + "/#anyTelephoneNumber-yes")
+      helper.anyTelephoneNumber.get.url mustBe Some(routes.TelephoneNumberController.onPageLoad(CheckMode).url + "/#anyTelephoneNumber")
       helper.telephoneNumber.get.label.key mustBe "telephoneNumber.telephoneNumberField"
       helper.telephoneNumber.get.url mustBe Some(routes.TelephoneNumberController.onPageLoad(CheckMode).url + "/#telephoneNumber")
       helper.anyTelephoneNumber.get.answer.key mustBe yes

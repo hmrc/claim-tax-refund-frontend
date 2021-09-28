@@ -38,7 +38,7 @@ class HowMuchBereavementAllowanceControllerSpec extends ControllerSpecBase with 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new HowMuchBereavementAllowanceController(
       frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
-      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), howMuchBereavementAllowance, messagesControllerComponents, new HowMuchBereavementAllowanceForm(frontendAppConfig), templateRenderer)
+      dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), howMuchBereavementAllowance, messagesControllerComponents, new HowMuchBereavementAllowanceForm(frontendAppConfig))
 
   val mockUserAnswers: UserAnswers = MockUserAnswers.claimDetailsUserAnswers()
   val howMuchBereavementAllowance: howMuchBereavementAllowance = fakeApplication.injector.instanceOf[howMuchBereavementAllowance]
@@ -47,7 +47,7 @@ class HowMuchBereavementAllowanceControllerSpec extends ControllerSpecBase with 
   private val taxYear = CustomTaxYear(2017)
   val form = new HowMuchBereavementAllowanceForm(frontendAppConfig)()
 
-  def viewAsString(form: Form[_] = form): String = howMuchBereavementAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec).toString
+  def viewAsString(form: Form[_] = form): String = howMuchBereavementAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages).toString
 
   "HowMuchBereavementAllowance Controller" must {
 

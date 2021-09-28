@@ -16,7 +16,7 @@
 
 package controllers
 
-import config.{FrontendAppConfig, LocalTemplateRenderer}
+import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.HowMuchFuelBenefitForm
@@ -43,8 +43,7 @@ class HowMuchFuelBenefitController @Inject()(
                                               requireData: DataRequiredAction,
                                               howMuchFuelBenefit: howMuchFuelBenefit,
 cc: MessagesControllerComponents,
-                                              formBuilder: HowMuchFuelBenefitForm,
-                                              implicit val templateRenderer: LocalTemplateRenderer
+                                              formBuilder: HowMuchFuelBenefitForm
                                             )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   private val form: Form[String] = formBuilder()

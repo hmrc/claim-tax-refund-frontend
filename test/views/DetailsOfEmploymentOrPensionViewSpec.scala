@@ -23,10 +23,10 @@ import models.SelectTaxYear.CustomTaxYear
 import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
-import views.behaviours.StringViewBehaviours
+import views.behaviours.NewStringViewBehaviours
 import views.html.detailsOfEmploymentOrPension
 
-class DetailsOfEmploymentOrPensionViewSpec extends StringViewBehaviours with MockitoSugar with GuiceOneAppPerSuite {
+class DetailsOfEmploymentOrPensionViewSpec extends NewStringViewBehaviours with MockitoSugar with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "detailsOfEmploymentOrPension"
   private val taxYear = CustomTaxYear(2017)
@@ -36,10 +36,10 @@ class DetailsOfEmploymentOrPensionViewSpec extends StringViewBehaviours with Moc
   val detailsOfEmploymentOrPension: detailsOfEmploymentOrPension = fakeApplication.injector.instanceOf[detailsOfEmploymentOrPension]
 
   def createView = () =>
-    detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages, templateRenderer, ec)
+    detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[String]) =>
-    detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages, templateRenderer, ec)
+    detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages)
 
   "DetailsOfEmploymentOrPension view" must {
     behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))

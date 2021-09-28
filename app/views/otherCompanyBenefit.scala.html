@@ -18,11 +18,16 @@
 @import controllers.routes._
 @import models.Mode
 @import viewmodels.InputViewModel
-@import uk.gov.hmrc.play.views.html.helpers.FormWithCSRF
-@import uk.gov.hmrc.renderer.TemplateRenderer
-@import scala.concurrent.ExecutionContext
 
-@this(main_template: main_template, formWithCSRF: FormWithCSRF)
+@this(
+    formWithCSRF: FormWithCSRF,
+    layout: Layout,
+    headingWithCaption: playComponents.headingWithCaption,
+    errorSummary: playComponents.error_summary,
+    inputText: playComponents.input_text,
+    pageHeading: playComponents.headingWithCaption,
+    submitButton: playComponents.submit_button
+)
 
 @(
         appConfig: FrontendAppConfig,
@@ -33,40 +38,40 @@
 )(
         implicit
         request: Request[_],
-        messages: Messages,
-templateRenderer: TemplateRenderer,
-ec: ExecutionContext)
+        messages: Messages
+)
 
 @title = @{
+
     if(form.errors.nonEmpty) messages("site.title.error", messages("otherCompanyBenefit.title", index.id + 1)) else messages("otherCompanyBenefit.title", index.id + 1)
 }
 
-@main_template(
-    title = title,
-    appConfig = appConfig,
-    bodyClasses = None
+@layout(
+    pageTitle = title,
 ) {
 
     @formWithCSRF(action = OtherCompanyBenefitController.onSubmit(mode, index), 'autoComplete -> "off") {
 
-        @components.back_link()
+        @errorSummary(form.errors)
 
-        @components.error_summary(form.errors)
+        @pageHeading(messages("otherCompanyBenefit.heading", index.id + 1),
+            taxYear = Some(taxYear.asString))
 
-        @components.heading(messages("otherCompanyBenefit.heading", index.id + 1), taxYear = Some(taxYear.asString))
-
-        @components.input_text(
-            InputViewModel("name", form),
+        @inputText(
             label = messages("otherCompanyBenefit.name"),
-            valueError = true
+            isPageHeading = false,
+            largeText = false,
+            field = form("name")
         )
 
-        @components.input_text(
-            InputViewModel("amount", form),
+        @inputText(
             label = messages("otherCompanyBenefit.amount"),
-            currency = true
+            currency = true,
+            isPageHeading = false,
+            largeText = false,
+            field = form("amount")
         )
 
-        @components.submit_button()
+        @submitButton()
     }
 }

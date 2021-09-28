@@ -16,7 +16,7 @@
 
 package controllers
 
-import config.{FrontendAppConfig, LocalTemplateRenderer}
+import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.PaymentInternationalAddressForm
@@ -33,8 +33,7 @@ import views.html.paymentInternationalAddress
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class PaymentInternationalAddressController @Inject()(appConfig: FrontendAppConfig,
-                                                      override val messagesApi: MessagesApi,
+class PaymentInternationalAddressController @Inject()(override val messagesApi: MessagesApi,
                                                       dataCacheConnector: DataCacheConnector,
                                                       navigator: Navigator,
                                                       authenticate: AuthAction,
@@ -42,8 +41,7 @@ class PaymentInternationalAddressController @Inject()(appConfig: FrontendAppConf
                                                       requireData: DataRequiredAction,
                                                       paymentInternationalAddress: paymentInternationalAddress,
 cc: MessagesControllerComponents,
-                                                      formBuilder: PaymentInternationalAddressForm,
-                                                      implicit val templateRenderer: LocalTemplateRenderer
+                                                      formBuilder: PaymentInternationalAddressForm
                                                      )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   private val form: Form[InternationalAddress] = formBuilder()
@@ -57,7 +55,7 @@ cc: MessagesControllerComponents,
 
       request.userAnswers.selectTaxYear.map {
         taxYear =>
-          Ok(paymentInternationalAddress(appConfig, preparedForm, mode, taxYear))
+          Ok(paymentInternationalAddress(preparedForm, mode, taxYear))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
@@ -69,7 +67,7 @@ cc: MessagesControllerComponents,
         taxYear =>
           form.bindFromRequest().fold(
             (formWithErrors: Form[InternationalAddress]) =>
-              Future.successful(BadRequest(paymentInternationalAddress(appConfig, formWithErrors, mode, taxYear))),
+              Future.successful(BadRequest(paymentInternationalAddress(formWithErrors, mode, taxYear))),
             value =>
               dataCacheConnector.save[InternationalAddress](request.externalId, PaymentInternationalAddressId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(PaymentInternationalAddressId, mode)(new UserAnswers(cacheMap))))

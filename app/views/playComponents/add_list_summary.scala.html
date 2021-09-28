@@ -1,0 +1,85 @@
+@*
+ * Copyright 2021 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+
+@this(
+    govukSummaryList : GovukSummaryList
+)
+
+@(
+        complete: Seq[(OtherTaxableIncome, Int)],
+        incomplete: Seq[(OtherTaxableIncome, Int)],
+        mode: Mode
+)(implicit messages: Messages)
+
+@if(complete.nonEmpty) {
+    @govukSummaryList(SummaryList(
+        rows = complete map { value =>
+                val otherTaxableIncome: models.OtherTaxableIncome = value._1
+                val index: Int = value._2
+                SummaryListRow(
+                    key = Key(
+                        content = Text(otherTaxableIncome.name)
+                ),
+                actions = Some(Actions(
+                    items = Seq(
+                        ActionItem(
+                            href = routes.OtherTaxableIncomeController.onPageLoad(mode, index).toString,
+                            content = Text(messages("site.edit")),
+                            visuallyHiddenText = Some(messages("site.hidden-edit", otherTaxableIncome.name))
+                        ),
+                        ActionItem(
+                            href = routes.DeleteOtherController.onPageLoad(mode, Index(index), otherTaxableIncome.name, OtherTaxableIncome.collectionId).toString,
+                            content = Text(messages("site.delete")),
+                            visuallyHiddenText = Some(messages("site.hidden-delete", otherTaxableIncome.name))
+                        )
+                    ),
+                    classes = "govuk-!-width-one-third"
+                    )
+                ))
+        }
+    ))
+}
+
+@if(incomplete.nonEmpty) {
+    @govukSummaryList(SummaryList(
+        rows = incomplete map { value =>
+            val otherTaxableIncome: models.OtherTaxableIncome = value._1
+            val index: Int = value._2
+            SummaryListRow(
+                key = Key(
+                    content = Text(otherTaxableIncome.name)
+                ),
+                actions = Some(Actions(
+                    items = Seq(
+                        ActionItem(
+                            href = routes.OtherTaxableIncomeController.onPageLoad(mode, index).toString,
+                            content = Text(messages("site.edit")),
+                            visuallyHiddenText = Some(messages("site.hidden-edit", otherTaxableIncome.name))
+                        ),
+                        ActionItem(
+                            href = routes.DeleteOtherController.onPageLoad(mode, Index(index), otherTaxableIncome.name, OtherTaxableIncome.collectionId).toString,
+                            content = Text(messages("site.delete")),
+                            visuallyHiddenText = Some(messages("site.hidden-delete", otherTaxableIncome.name))
+                        )
+                    ),
+                    classes = "govuk-!-width-one-third"
+                ))
+            )
+        }
+    ))
+}

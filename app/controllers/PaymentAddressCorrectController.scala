@@ -16,7 +16,7 @@
 
 package controllers
 
-import config.{FrontendAppConfig, LocalTemplateRenderer}
+import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.BooleanForm
@@ -44,8 +44,7 @@ class PaymentAddressCorrectController @Inject()(appConfig: FrontendAppConfig,
                                                 requireData: DataRequiredAction,
                                                 paymentAddressCorrect: paymentAddressCorrect,
 cc: MessagesControllerComponents,
-                                                formProvider: BooleanForm,
-                                                implicit val templateRenderer: LocalTemplateRenderer
+                                                formProvider: BooleanForm
                                                )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   private val errorKey = "paymentAddressCorrect.blank"

@@ -23,10 +23,10 @@ import models.SelectTaxYear.CYMinus1
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import uk.gov.hmrc.auth.core.retrieve.ItmpAddress
-import views.behaviours.YesNoViewBehaviours
+import views.behaviours.NewYesNoViewBehaviours
 import views.html.paymentAddressCorrect
 
-class PaymentAddressCorrectViewSpec extends YesNoViewBehaviours with GuiceOneAppPerSuite {
+class PaymentAddressCorrectViewSpec extends NewYesNoViewBehaviours with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "paymentAddressCorrect"
   private val taxYear = CYMinus1
@@ -45,10 +45,10 @@ class PaymentAddressCorrectViewSpec extends YesNoViewBehaviours with GuiceOneApp
   val paymentAddressCorrect: paymentAddressCorrect = fakeApplication.injector.instanceOf[paymentAddressCorrect]
 
   def createView = () =>
-    paymentAddressCorrect(frontendAppConfig, form, NormalMode, testAddress, taxYear)(fakeRequest, messages, templateRenderer, ec)
+    paymentAddressCorrect(frontendAppConfig, form, NormalMode, testAddress, taxYear)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[_]) =>
-    paymentAddressCorrect(frontendAppConfig, form, NormalMode, testAddress, taxYear)(fakeRequest, messages, templateRenderer, ec)
+    paymentAddressCorrect(frontendAppConfig, form, NormalMode, testAddress, taxYear)(fakeRequest, messages)
 
   "PaymentAddressCorrect view" must {
 

@@ -22,10 +22,10 @@ import models.NormalMode
 import models.SelectTaxYear.CustomTaxYear
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
-import views.behaviours.YesNoViewBehaviours
+import views.behaviours.{NewYesNoViewBehaviours}
 import views.html.anyCompanyBenefits
 
-class AnyCompanyBenefitsViewSpec extends YesNoViewBehaviours with GuiceOneAppPerSuite {
+class AnyCompanyBenefitsViewSpec extends NewYesNoViewBehaviours with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "anyCompanyBenefits"
   private val listMessageKeyPrefix = "selectCompanyBenefits"
@@ -34,9 +34,9 @@ class AnyCompanyBenefitsViewSpec extends YesNoViewBehaviours with GuiceOneAppPer
 
   override val form = new BooleanForm()()
 
-  def createView = () => anyCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
+  def createView = () => anyCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[_]) => anyCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages, templateRenderer, ec)
+  def createViewUsingForm = (form: Form[_]) => anyCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "AnyCompanyBenefits view" must {
 

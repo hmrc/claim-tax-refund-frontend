@@ -20,12 +20,12 @@ import play.api.data.Form
 import controllers.routes
 import forms.BooleanForm
 import models.SelectTaxYear.CYMinus3
-import views.behaviours.YesNoViewBehaviours
 import models.{Index, NormalMode}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import views.behaviours.NewYesNoViewBehaviours
 import views.html.deleteOther
 
-class DeleteOtherViewSpec extends YesNoViewBehaviours with GuiceOneAppPerSuite {
+class DeleteOtherViewSpec extends NewYesNoViewBehaviours with GuiceOneAppPerSuite {
 
   val messageKeyPrefix = "deleteOther"
   val itemName = "qwerty"
@@ -38,23 +38,21 @@ class DeleteOtherViewSpec extends YesNoViewBehaviours with GuiceOneAppPerSuite {
 
   def createView = () =>
     deleteOther(
-      appConfig = frontendAppConfig,
       form = form,
       mode = NormalMode,
       index = index,
       itemName = itemName,
       collectionId = benefitCollectionId,
-      taxYear = taxYear)(fakeRequest, messages, templateRenderer, ec)
+      taxYear = taxYear)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[_]) =>
     deleteOther(
-      appConfig = frontendAppConfig,
       form = form,
       mode = NormalMode,
       index = index,
       itemName = itemName,
       collectionId = benefitCollectionId,
-      taxYear = taxYear)(fakeRequest, messages, templateRenderer, ec)
+      taxYear = taxYear)(fakeRequest, messages)
 
   "DeleteOther view" must {
 
@@ -62,6 +60,12 @@ class DeleteOtherViewSpec extends YesNoViewBehaviours with GuiceOneAppPerSuite {
 
     behave like pageWithBackLink(createView)
 
-    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.DeleteOtherController.onSubmit(NormalMode, index, itemName, benefitCollectionId).url, None)
+    behave like yesNoPage(
+      createView = createViewUsingForm,
+      messageKeyPrefix = messageKeyPrefix,
+      expectedFormAction = routes.DeleteOtherController.onSubmit(NormalMode, index, itemName, benefitCollectionId).url,
+      expectedHintTextKey = None,
+      args = "qwerty"
+    )
   }
 }

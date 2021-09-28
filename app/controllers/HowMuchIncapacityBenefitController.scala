@@ -16,7 +16,7 @@
 
 package controllers
 
-import config.{FrontendAppConfig, LocalTemplateRenderer}
+import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.HowMuchIncapacityBenefitForm
@@ -43,8 +43,7 @@ class HowMuchIncapacityBenefitController @Inject()(
                                                     requireData: DataRequiredAction,
                                                     howMuchIncapacityBenefit: howMuchIncapacityBenefit,
 cc: MessagesControllerComponents,
-                                                    formBuilder: HowMuchIncapacityBenefitForm,
-                                                    implicit val templateRenderer: LocalTemplateRenderer
+                                                    formBuilder: HowMuchIncapacityBenefitForm
                                                   )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   private val form: Form[String] = formBuilder()
@@ -58,7 +57,7 @@ cc: MessagesControllerComponents,
 
       request.userAnswers.selectTaxYear.map {
         taxYear =>
-          Ok(howMuchIncapacityBenefit(appConfig, preparedForm, mode, taxYear))
+          Ok(howMuchIncapacityBenefit(preparedForm, mode, taxYear))
       }.getOrElse {
         Redirect(routes.SessionExpiredController.onPageLoad())
       }
@@ -71,7 +70,7 @@ cc: MessagesControllerComponents,
         taxYear =>
           form.bindFromRequest().fold(
             (formWithErrors: Form[_]) =>
-              Future.successful(BadRequest(howMuchIncapacityBenefit(appConfig, formWithErrors, mode, taxYear))),
+              Future.successful(BadRequest(howMuchIncapacityBenefit(formWithErrors, mode, taxYear))),
             (value) =>
               dataCacheConnector.save[String](request.externalId, HowMuchIncapacityBenefitId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(HowMuchIncapacityBenefitId, mode)(new UserAnswers(cacheMap))))

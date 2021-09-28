@@ -16,7 +16,7 @@
 
 package controllers
 
-import config.{FrontendAppConfig, LocalTemplateRenderer}
+import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.SelectTaxableIncomeForm
@@ -27,7 +27,6 @@ import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import play.api.mvc.MessagesControllerComponents
-import uk.gov.hmrc.play.partials.FormPartialRetriever
 import utils.{Navigator, UserAnswers}
 import views.html.selectTaxableIncome
 
@@ -41,8 +40,7 @@ class SelectTaxableIncomeController @Inject()(appConfig: FrontendAppConfig,
                                               getData: DataRetrievalAction,
                                               requireData: DataRequiredAction,
                                               selectTaxableIncome: selectTaxableIncome,
-cc: MessagesControllerComponents,
-                                              implicit val templateRenderer: LocalTemplateRenderer
+cc: MessagesControllerComponents
                                              )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {

@@ -84,15 +84,15 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
     x =>
 			AnswerRow(
 				label = keyPrefix + "heading",
-				answer = "<ul>" + x.map {
-					case Benefits.BEREAVEMENT_ALLOWANCE => "<li>" + messages(keyPrefix + "bereavement-allowance").capitalize + "</li>"
-					case Benefits.CARERS_ALLOWANCE => "<li>" + messages(keyPrefix + "carers-allowance").capitalize + "</li>"
-					case Benefits.JOBSEEKERS_ALLOWANCE => "<li>" + messages(keyPrefix + "jobseekers-allowance").capitalize + "</li>"
-					case Benefits.INCAPACITY_BENEFIT => "<li>" + messages(keyPrefix + "incapacity-benefit").capitalize + "</li>"
-					case Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE => "<li>" + messages(keyPrefix + "employment-and-support-allowance").capitalize + "</li>"
-					case Benefits.STATE_PENSION => "<li>" + messages(keyPrefix + "state-pension").capitalize + "</li>"
-					case Benefits.OTHER_TAXABLE_BENEFIT => "<li>" + messages(keyPrefix + "other-taxable-benefit").capitalize + "</li>"
-				}.mkString + "</ul>",
+				answer = x.map {
+					case Benefits.BEREAVEMENT_ALLOWANCE => messages(keyPrefix + "bereavement-allowance").capitalize + "<br>"
+					case Benefits.CARERS_ALLOWANCE => messages(keyPrefix + "carers-allowance").capitalize + "<br>"
+					case Benefits.JOBSEEKERS_ALLOWANCE => messages(keyPrefix + "jobseekers-allowance").capitalize + "<br>"
+					case Benefits.INCAPACITY_BENEFIT => messages(keyPrefix + "incapacity-benefit").capitalize + "<br>"
+					case Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE => messages(keyPrefix + "employment-and-support-allowance").capitalize + "<br>"
+					case Benefits.STATE_PENSION => messages(keyPrefix + "state-pension").capitalize + "<br>"
+					case Benefits.OTHER_TAXABLE_BENEFIT => messages(keyPrefix + "other-taxable-benefit").capitalize + "<br>"
+				}.mkString,
 				url = Some(routes.SelectBenefitsController.onPageLoad(CheckMode).url),
 				changeLabel = keyPrefix + "changeLabel"
 			)
@@ -192,12 +192,12 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
     val keyPrefix = "selectCompanyBenefits."
     x => AnswerRow(
 			label = keyPrefix + "heading",
-			answer = "<ul>" + x.map {
-      	case CompanyBenefits.COMPANY_CAR_BENEFIT => "<li>" + messages(keyPrefix + "company-car-benefit").capitalize + "</li>"
-      	case CompanyBenefits.FUEL_BENEFIT => "<li>" + messages(keyPrefix + "fuel-benefit").capitalize + "</li>"
-      	case CompanyBenefits.MEDICAL_BENEFIT => "<li>" + messages(keyPrefix + "medical-benefit").capitalize + "</li>"
-      	case CompanyBenefits.OTHER_COMPANY_BENEFIT => "<li>" + messages(keyPrefix + "other-company-benefit").capitalize + "</li>"
-    	}.mkString + "</ul>",
+			answer = x.map {
+      	case CompanyBenefits.COMPANY_CAR_BENEFIT =>  messages(keyPrefix + "company-car-benefit").capitalize + "<br>"
+      	case CompanyBenefits.FUEL_BENEFIT => messages(keyPrefix + "fuel-benefit").capitalize + "<br>"
+      	case CompanyBenefits.MEDICAL_BENEFIT => messages(keyPrefix + "medical-benefit").capitalize + "<br>"
+      	case CompanyBenefits.OTHER_COMPANY_BENEFIT => messages(keyPrefix + "other-company-benefit").capitalize + "<br>"
+    	}.mkString,
 			url = Some(routes.SelectCompanyBenefitsController.onPageLoad(CheckMode).url),
 			changeLabel = keyPrefix + "changeLabel"
 		)
@@ -298,13 +298,13 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
     val keyPrefix = "selectTaxableIncome."
     x => AnswerRow(
 			label = keyPrefix + "heading",
-			answer = "<ul>" + x.map {
-      	case TaxableIncome.RENTAL_INCOME => "<li>" + messages(keyPrefix + "rental-income").capitalize + "</li>"
-      	case TaxableIncome.BANK_OR_BUILDING_SOCIETY_INTEREST => "<li>" + messages(keyPrefix + "bank-or-building-society-interest").capitalize + "</li>"
-      	case TaxableIncome.INVESTMENT_OR_DIVIDENDS => "<li>" + messages(keyPrefix + "investment-or-dividends").capitalize + "</li>"
-      	case TaxableIncome.FOREIGN_INCOME => "<li>" + messages(keyPrefix + "foreign-income").capitalize + "</li>"
-      	case TaxableIncome.OTHER_TAXABLE_INCOME => "<li>" + messages(keyPrefix + "other-taxable-income").capitalize + "</li>"
-    	}.mkString + "</ul>",
+			answer = x.map {
+      	case TaxableIncome.RENTAL_INCOME => messages(keyPrefix + "rental-income").capitalize + "<br>"
+      	case TaxableIncome.BANK_OR_BUILDING_SOCIETY_INTEREST => messages(keyPrefix + "bank-or-building-society-interest").capitalize + "<br>"
+      	case TaxableIncome.INVESTMENT_OR_DIVIDENDS => messages(keyPrefix + "investment-or-dividends").capitalize + "<br>"
+      	case TaxableIncome.FOREIGN_INCOME => messages(keyPrefix + "foreign-income").capitalize + "<br>"
+      	case TaxableIncome.OTHER_TAXABLE_INCOME => messages(keyPrefix + "other-taxable-income").capitalize + "<br>"
+    	}.mkString,
 			url = Some(routes.SelectTaxableIncomeController.onPageLoad(CheckMode).url),
 			changeLabel = keyPrefix + "changeLabel"
 		)
@@ -449,7 +449,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
         case AnyAgentRef.Yes(agentRef) => "site.yes"
         case AnyAgentRef.No => "site.no"
       },
-			url = Some(routes.AnyAgentRefController.onPageLoad(CheckMode).url + "/#anyAgentRef-yes"),
+			url = Some(routes.AnyAgentRefController.onPageLoad(CheckMode).url + "/#anyAgentRef"),
 			changeLabel = messages("anyAgentRef.changeLabel", userAnswers.nomineeFullName.getOrElse("your nominee"))
 		)
   }
@@ -532,7 +532,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
           case TelephoneOption.Yes(number) => "site.yes"
           case TelephoneOption.No => "site.no"
         },
-        url = Some(routes.TelephoneNumberController.onPageLoad(CheckMode).url + "/#anyTelephoneNumber-yes"),
+        url = Some(routes.TelephoneNumberController.onPageLoad(CheckMode).url + "/#anyTelephoneNumber"),
 				changeLabel = "telephoneNumber.changeLabel"
       )
   }
