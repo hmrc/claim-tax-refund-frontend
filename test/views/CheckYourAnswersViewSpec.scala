@@ -21,10 +21,10 @@ import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.i18n.Messages
 import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, MockUserAnswers}
-import views.behaviours.ViewBehaviours
+import views.behaviours.{NewViewBehaviours, ViewBehaviours}
 import views.html.check_your_answers
 
-class CheckYourAnswersViewSpec extends SpecBase with ViewBehaviours with MockitoSugar with GuiceOneAppPerSuite {
+class CheckYourAnswersViewSpec extends SpecBase with NewViewBehaviours with MockitoSugar with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "checkYourAnswers"
   private val answers = MockUserAnswers.fullValidUserAnswers()

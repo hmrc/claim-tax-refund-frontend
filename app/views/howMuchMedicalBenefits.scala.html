@@ -43,11 +43,11 @@
 @layout(
 pageTitle = title
 ) {
+    @errorSummary(form.errors)
+
+    @headingWithCaption(messages("howMuchMedicalBenefits.heading"), taxYear = Some(taxYear.asString))
+
     @formWithCSRF(action = HowMuchMedicalBenefitsController.onSubmit(mode), 'autoComplete -> "off") {
-
-        @errorSummary(form.errors)
-
-        @headingWithCaption(messages("howMuchMedicalBenefits.heading"), taxYear = Some(taxYear.asString))
 
         @inputText(
             label = messages("howMuchMedicalBenefits.heading"),

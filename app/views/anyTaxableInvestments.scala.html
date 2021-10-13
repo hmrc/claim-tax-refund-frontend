@@ -43,10 +43,10 @@
     pageTitle = messages("anyTaxableInvestments.title", taxYear.asString)
 ) {
 
+    @errorSummary(form.errors)
+    @headingWithCaption(messages("anyTaxableInvestments.heading"), taxYear = Some(taxYear.asString))
     @formWithCSRF(action = AnyTaxableInvestmentsController.onSubmit(mode), 'autoComplete -> "off") {
 
-        @errorSummary(form.errors)
-        @headingWithCaption(messages("anyTaxableInvestments.heading"), taxYear = Some(taxYear.asString))
         @inputYesNoWithTextExpander(
             label = messages("anyTaxableInvestments.heading"),
             labelClass = Some("govuk-visually-hidden"),

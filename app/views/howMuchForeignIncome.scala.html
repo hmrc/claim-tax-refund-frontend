@@ -45,11 +45,12 @@
     pageTitle = title
 ) {
 
-    @formWithCSRF(action = HowMuchForeignIncomeController.onSubmit(mode), 'autoComplete -> "off") {
 
         @errorSummary(form.errors)
 
         @headingWithCaption(messages("howMuchForeignIncome.heading"), taxYear = Some(taxYear.asString))
+
+        @formWithCSRF(action = HowMuchForeignIncomeController.onSubmit(mode), 'autoComplete -> "off") {
 
         @inputText(
             label = messages("howMuchForeignIncome.heading"),

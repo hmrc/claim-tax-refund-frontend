@@ -45,20 +45,19 @@
     }
 
     @layout( pageTitle = title) {
+        @errorSummary(form.errors)
+
+        @heading(heading = messages("anyCompanyBenefits.heading"), taxYear = Some(taxYear.asString))
+
+        <p class="govuk-body" id="listHeading">@messages("anyCompanyBenefits.listHeading")</p>
+
+        @playComponents.list(
+            pageKey = Some("selectCompanyBenefits"),
+            addCssClass = None,
+            bulletList = CompanyBenefits.sortedCompanyBenefits.dropRight(1).map(_.toString)
+        )
+
         @formWithCSRF(action = AnyCompanyBenefitsController.onSubmit(mode), 'autoComplete -> "off") {
-
-            @errorSummary(form.errors)
-
-            @heading(heading = messages("anyCompanyBenefits.heading"),
-                taxYear = Some(taxYear.asString))
-
-            <p class="govuk-body" id="listHeading">@messages("anyCompanyBenefits.listHeading")</p>
-
-            @playComponents.list(
-                pageKey = Some("selectCompanyBenefits"),
-                addCssClass = None,
-                bulletList = CompanyBenefits.sortedCompanyBenefits.dropRight(1).map(_.toString)
-            )
 
             @inputYesOrNo(
                 isPageHeading = false,

@@ -42,10 +42,10 @@
     pageTitle = messages("anyTaxableForeignIncome.title", taxYear.asString)
 ) {
 
+    @errorSummary(form.errors)
+    @headingWithCaption(messages("anyTaxableForeignIncome.heading"), taxYear = Some(taxYear.asString))
     @formWithCSRF(action = AnyTaxableForeignIncomeController.onSubmit(mode), 'autoComplete -> "off") {
 
-        @errorSummary(form.errors)
-        @headingWithCaption(messages("anyTaxableForeignIncome.heading"), taxYear = Some(taxYear.asString))
         @inputYesNoWithTextExpander(
             hint = None,
             label = messages("anyTaxableForeignIncome.heading"),

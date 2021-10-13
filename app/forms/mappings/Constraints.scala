@@ -19,6 +19,9 @@ package forms.mappings
 import play.api.data.format.Formatter
 import play.api.data.validation.{Constraint, Invalid, Valid}
 import play.api.data.{Form, FormError}
+import com.google.i18n.phonenumbers.{NumberParseException, PhoneNumberUtil}
+
+import scala.util.{Success, Try}
 
 trait Constraints {
 
@@ -79,6 +82,16 @@ trait Constraints {
         Invalid(errorMessage)
       case _ =>
         Valid
+    }
+
+  def telephoneNumberValidation(errorMessage: String = "error.invalid"): Constraint[String] =
+    Constraint {
+      str =>
+        val phoneNumberUtil = PhoneNumberUtil.getInstance()
+        Try(phoneNumberUtil.isPossibleNumber(phoneNumberUtil.parse(str, "GB"))) match {
+          case Success(true) => Valid
+          case _ => Invalid(errorMessage)
+        }
     }
 
   def opt[A](implicit f: Formatter[A]): Formatter[Option[A]] =

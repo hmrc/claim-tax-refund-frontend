@@ -46,16 +46,14 @@
 }
 
 @layout(
-    pageTitle = title,
+    pageTitle = title
 ) {
 
+    @errorSummary(form.errors)
+
+    @pageHeading(heading = messages("otherBenefit.heading", index.id + 1), taxYear = Some(taxYear.asString))
+
     @formWithCSRF(action = OtherBenefitController.onSubmit(mode, index), 'autoComplete -> "off") {
-
-        @errorSummary(form.errors)
-
-        @pageHeading(heading = messages("otherBenefit.heading", index.id + 1),
-            taxYear = Some(taxYear.asString))
-
         @inputText(
             label = messages("otherBenefit.name"),
             isPageHeading = false,

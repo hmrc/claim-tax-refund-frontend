@@ -44,15 +44,13 @@
     }
 
 @layout(
-    pageTitle = title,
+    pageTitle = title
 ) {
+        @errorSummary(form.errors)
+
+        @pageHeading(messages("paymentUKAddress.heading"), taxYear = Some(taxYear.asString))
 
         @formWithCSRF(action = PaymentUKAddressController.onSubmit(mode), 'autoComplete -> "off") {
-
-            @errorSummary(form.errors)
-
-            @pageHeading(messages("paymentUKAddress.heading"),
-                taxYear = Some(taxYear.asString))
 
             @inputText(
                 label = messages("global.addressLine1"),

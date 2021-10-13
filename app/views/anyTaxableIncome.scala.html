@@ -44,20 +44,18 @@
 }
 
 @layout( pageTitle = title) {
+    @errorSummary(form.errors)
+
+    @heading(messages("anyTaxableIncome.heading"), taxYear = Some(taxYear.asString))
+
+    <p class="govuk-body" id="listHeading">@messages("anyTaxableIncome.listHeading")</p>
+
+    @playComponents.list(
+        pageKey = Some("selectTaxableIncome"),
+        addCssClass = None,
+        bulletList = TaxableIncome.sortedTaxableIncome.dropRight(1).map(_.toString)
+    )
     @formWithCSRF(action = AnyTaxableIncomeController.onSubmit(mode), 'autoComplete -> "off") {
-
-        @errorSummary(form.errors)
-
-        @heading(messages("anyTaxableIncome.heading"),
-            taxYear = Some(taxYear.asString))
-
-        <p class="govuk-body" id="listHeading">@messages("anyTaxableIncome.listHeading")</p>
-
-        @playComponents.list(
-            pageKey = Some("selectTaxableIncome"),
-            addCssClass = None,
-            bulletList = TaxableIncome.sortedTaxableIncome.dropRight(1).map(_.toString)
-        )
 
         @inputYesOrNo(
             label = messages("anyTaxableIncome.heading"),

@@ -48,11 +48,12 @@
     pageTitle = title
 ){
 
-    @formWithCSRF(action = HowMuchEmploymentAndSupportAllowanceController.onSubmit(mode), 'autoComplete -> "off") {
 
         @errorSummary(form.errors)
 
         @headingWithCaption(messages("howMuchEmploymentAndSupportAllowance.heading"), taxYear = Some(taxYear.asString))
+
+        @formWithCSRF(action = HowMuchEmploymentAndSupportAllowanceController.onSubmit(mode), 'autoComplete -> "off") {
 
         @input_text(
             label = messages("howMuchEmploymentAndSupportAllowance.heading"),

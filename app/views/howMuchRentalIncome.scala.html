@@ -43,10 +43,10 @@
     pageTitle = title
     ) {
 
-        @formWithCSRF(action = HowMuchRentalIncomeController.onSubmit(mode), 'autoComplete -> "off") {
+        @errorSummary(form.errors)
+        @headingWithCaption(messages("howMuchRentalIncome.heading"), taxYear = Some(taxYear.asString))
 
-            @errorSummary(form.errors)
-            @headingWithCaption(messages("howMuchRentalIncome.heading"), taxYear = Some(taxYear.asString))
+        @formWithCSRF(action = HowMuchRentalIncomeController.onSubmit(mode), 'autoComplete -> "off") {
             @inputText(
                 label = messages("howMuchRentalIncome.heading"),
                 labelClass = Some("govuk-visually-hidden"),

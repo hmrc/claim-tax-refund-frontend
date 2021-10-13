@@ -50,17 +50,13 @@
     @layout(
         pageTitle = title
     ) {
+        @errorSummary(form.errors)
+
+        @pageHeading(heading = messages("anyOtherCompanyBenefits.heading"), taxYear = Some(taxYear.asString))
+
+        @otherSummary(answers = otherCompanyBenefits.rows)
 
         @formWithCSRF(action = AnyOtherCompanyBenefitsController.onSubmit(mode), 'autoComplete -> "off") {
-
-            @errorSummary(form.errors)
-
-            @pageHeading(heading = messages("anyOtherCompanyBenefits.heading"),
-                taxYear = Some(taxYear.asString))
-
-            @otherSummary(
-                answers = otherCompanyBenefits.rows
-            )
 
             @inputYesNo(
                 label = messages("anyOtherCompanyBenefits.addAnotherCompanyBenefit"),

@@ -42,10 +42,11 @@
         pageTitle = messages("anyAgentRef.title", nomineeName),
     ) {
 
+        @errorSummary(form.errors)
+        @headingWithCaption(messages("anyAgentRef.heading", nomineeName), taxYear = Some(taxYear.asString))
+
         @formWithCSRF(action = AnyAgentRefController.onSubmit(mode), 'autoComplete -> "off") {
 
-            @errorSummary(form.errors)
-            @headingWithCaption(messages("anyAgentRef.heading", nomineeName), taxYear = Some(taxYear.asString))
             @inputYesNoWithTextExpander(
                 label = messages("anyAgentRef.heading", nomineeName),
                 labelClass = Some("govuk-visually-hidden"),

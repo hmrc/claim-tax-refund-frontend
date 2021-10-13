@@ -44,12 +44,12 @@ if(addCssClass.isDefined) s"form-group ${addCssClass.get}" else "form-group"
                     ActionItem(
                         href = answer.url.get,
                         content = Text(messages("site.edit")),
-                        visuallyHiddenText = Some(messages(answer.changeLabel))
+                        visuallyHiddenText = Some(answer.label.print)
                     ),
                     ActionItem(
                         href = answer.deleteUrl.get,
                         content = Text(messages("site.delete")),
-                        visuallyHiddenText = Some(messages("site.hidden-delete", answer.label.print))
+                        visuallyHiddenText = Some(answer.label.print)
                     )
                 ),
                 classes = "govuk-!-width-one-third"

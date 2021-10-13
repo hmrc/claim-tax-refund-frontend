@@ -43,10 +43,12 @@
 @layout(
     pageTitle = title
 ) {
-    @formWithCSRF(action = HowMuchCarersAllowanceController.onSubmit(mode), 'autoComplete -> "off") {
 
         @errorSummary(form.errors)
+
         @headingWithCaption(messages("howMuchCarersAllowance.heading"), taxYear = Some(taxYear.asString))
+
+        @formWithCSRF(action = HowMuchCarersAllowanceController.onSubmit(mode), 'autoComplete -> "off") {
         @inputText(
             label = messages("howMuchCarersAllowance.heading"),
             labelClass = Some("govuk-visually-hidden"),

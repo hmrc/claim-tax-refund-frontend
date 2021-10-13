@@ -39,6 +39,7 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar
   def onwardRoute: Call = routes.IndexController.onPageLoad()
 
   private val testAnswer = "0191 111 1111"
+  private val badTestAnswer = "1"
   private val formProvider = new TelephoneNumberForm()
   private val form = formProvider()
   private val taxYear = CustomTaxYear(2017)
@@ -79,6 +80,13 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar
 
       status(result) mustBe SEE_OTHER
       redirectLocation(result) mustBe Some(onwardRoute.url)
+    }
+
+    "return a Bad Request and errors when invalid YES data is submitted" in {
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("anyTelephoneNumber", "true"),("telephoneNumber", badTestAnswer))
+      val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(postRequest)
+
+      status(result) mustBe BAD_REQUEST
     }
 
     "redirect to the next page when valid NO data is submitted" in {

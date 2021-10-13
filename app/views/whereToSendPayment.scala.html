@@ -17,7 +17,6 @@
 @import controllers.routes._
 @import forms.WhereToSendPaymentForm
 @import models.Mode
-@import viewmodels.InputViewModel
 
 @this(
     layout: Layout,
@@ -41,14 +40,13 @@
     @layout(
         pageTitle = messages("whereToSendPayment.title")
     ) {
+        @errorSummary(form.errors)
+        @headingWithCaption(messages("whereToSendPayment.heading"), taxYear = Some(taxYear.asString))
         @formWithCSRF(action = WhereToSendPaymentController.onSubmit(mode), 'autoComplete -> "off") {
 
-            @errorSummary(form.errors)
-
             @inputRadio(
-                viewModel = InputViewModel("value", form),
-                legend = headingWithCaption(messages("whereToSendPayment.heading"), taxYear = Some(taxYear.asString)),
-                legendClass = Some("visually-hidden"),
+                legend = Text(messages("whereToSendPayment.heading")),
+                legendClass = Some("govuk-visually-hidden"),
                 inputs = (WhereToSendPaymentForm.options map { radioOption =>
                     RadioItem(
                         value = Some(radioOption.value),

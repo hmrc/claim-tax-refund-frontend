@@ -43,24 +43,28 @@
 }
 
 @layout(pageTitle = title) {
+
+    @errorSummary(form.errors)
+
+    @pageHeading(heading = messages("employmentDetails.heading"), taxYear = Some(taxYear.asString))
+
+    @govukTable(Table(
+        head = Some(Seq(
+            HeadCell(content = Text(Messages("employmentDetails.employer"))),
+            HeadCell(content = Text(Messages("employmentDetails.staffNumber")), format = Some("numeric"))
+        )),
+        rows = results.map { employments =>
+            Seq(
+                TableRow(content = Text(employments.name)),
+                TableRow(content = Text(employments.payeNumber), format = Some("numeric"))
+            )
+        },
+        captionClasses = "govuk-table__caption--m"
+    ))
+
     @formWithCSRF(action = EmploymentDetailsController.onSubmit(mode), 'autoComplete -> "off") {
 
-@errorSummary(form.errors)
 
-        @pageHeading(heading = messages("employmentDetails.heading"), taxYear = Some(taxYear.asString))
-        @govukTable(Table(
-            head = Some(Seq(
-                HeadCell(content = Text(Messages("employmentDetails.employer"))),
-                HeadCell(content = Text(Messages("employmentDetails.staffNumber")), format = Some("numeric"))
-            )),
-            rows = results.map { employments =>
-                Seq(
-                    TableRow(content = Text(employments.name)),
-                    TableRow(content = Text(employments.payeNumber), format = Some("numeric"))
-                )
-            },
-            captionClasses = "govuk-table__caption--m"
-        ))
 
         @inputYesNo(
             label = messages("employmentDetails.correctDetails"),

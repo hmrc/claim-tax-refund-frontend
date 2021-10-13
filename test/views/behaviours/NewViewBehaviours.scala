@@ -31,7 +31,7 @@ trait NewViewBehaviours extends NewViewSpecBase {
       "rendered" must {
         "display the correct browser title" in {
           val doc = asDocument(view())
-          assertEqualsMessage(doc, "title", s"$messageKeyPrefix.title", args: _*)
+          assertBrowserTitleEqualsMessage(doc, s"$messageKeyPrefix.title", args: _*)
         }
 
         "display the correct page title" in {
