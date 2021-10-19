@@ -46,10 +46,11 @@
 @layout(
     pageTitle = title) {
 
+    @errorSummary(form.errors)
+    @headingWithCaption(messages("detailsOfEmploymentOrPension.heading"), taxYear = Some(taxYear.asString))
+
     @formWithCSRF(action = DetailsOfEmploymentOrPensionController.onSubmit(mode), 'autoComplete -> "off") {
 
-        @errorSummary(form.errors)
-        @headingWithCaption(messages("detailsOfEmploymentOrPension.heading"), taxYear = Some(taxYear.asString))
         @inputTextArea(
             InputViewModel("value", form),
             label = messages("detailsOfEmploymentOrPension.heading"),

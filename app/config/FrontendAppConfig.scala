@@ -16,6 +16,8 @@
 
 package config
 
+import java.net.URLEncoder
+
 import com.google.inject.{Inject, Singleton}
 import play.api.Configuration
 import controllers.routes
@@ -85,7 +87,11 @@ class FrontendAppConfig @Inject()(val servicesConfig: ServicesConfig, val config
 
   lazy val accessibilityStatementPath: String = loadConfig("accessibility-statement.service-path")
 
-  def accessibilityFooterUrl(): String = accessibilityStatementPath
+  lazy val accessibilityStatementFrontendBaseUrl: String = configuration.getOptional[String]("accessibility-statement.host").getOrElse("")
+  def accessibilityFooterUrl(referrerUrl: Option[String] = None): String = {
+    val referrerString = referrerUrl.map (url => s"""?referrerUrl=${URLEncoder.encode(url, "UTF-8")}""").getOrElse("")
+    s"$accessibilityStatementFrontendBaseUrl/accessibility-statement$accessibilityStatementPath$referrerString"
+  }
 
   def languageMap: Map[String, Lang] = Map("english" -> Lang("en"), "cymraeg" -> Lang("cy"))
 

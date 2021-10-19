@@ -22,7 +22,7 @@
         formWithCSRF: FormWithCSRF,
         layout: Layout,
         errorSummary: playComponents.error_summary,
-        caption: playComponents.caption,
+        headingWithCaption: playComponents.headingWithCaption,
         govukInput: GovukInput,
         submitButton: playComponents.submit_button
 )
@@ -44,18 +44,18 @@
 
     @layout(pageTitle = title) {
 
+        @errorSummary(form.errors)
+
+        @headingWithCaption(messages("howMuchInvestmentOrDividend.heading"), taxYear = Some(taxYear.asString))
+
         @formWithCSRF(action = HowMuchInvestmentOrDividendController.onSubmit(mode), 'autoComplete -> "off") {
-
-            @errorSummary(form.errors)
-
-            @caption(taxYear = Some(taxYear.asString))
 
             @govukInput(
 
                 Input(
                     label = Label(
-                        isPageHeading = true,
-                        classes = "govuk-label--xl",
+                        isPageHeading = false,
+                        classes = "govuk-visually-hidden",
                         content = Text(messages("howMuchInvestmentOrDividend.heading", taxYear.asString))
                     ),
                     classes = "govuk-input--width-10",

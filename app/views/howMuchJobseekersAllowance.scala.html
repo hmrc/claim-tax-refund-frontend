@@ -21,7 +21,7 @@
         formWithCSRF: FormWithCSRF,
         layout: Layout,
         errorSummary: playComponents.error_summary,
-        caption: playComponents.caption,
+        headingWithCaption: playComponents.headingWithCaption,
         govukInput: GovukInput,
         submitButton: playComponents.submit_button
 )
@@ -42,19 +42,20 @@
 
     @layout(pageTitle = title) {
 
-        @formWithCSRF(action = HowMuchJobseekersAllowanceController.onSubmit(mode), 'autoComplete -> "off") {
 
             @errorSummary(form.errors)
 
-            @caption(taxYear = Some(taxYear.asString))
+            @headingWithCaption(messages("howMuchJobseekersAllowance.heading"), taxYear = Some(taxYear.asString))
+
+            @formWithCSRF(action = HowMuchJobseekersAllowanceController.onSubmit(mode), 'autoComplete -> "off") {
 
             @govukInput(
 
                 Input(
                     label = Label(
-                        isPageHeading = true,
-                        classes = "govuk-label--xl",
-                        content = Text(messages("howMuchJobseekersAllowance.heading", taxYear.asString))
+                        isPageHeading = false,
+                        classes = "govuk-visually-hidden",
+                        content = Text(messages("howMuchJobseekersAllowance.heading"))
                     ),
                     classes = "govuk-input--width-10",
                     spellcheck = Some(false),

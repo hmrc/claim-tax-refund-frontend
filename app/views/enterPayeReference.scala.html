@@ -46,17 +46,17 @@
 @layout(
     pageTitle = title
 ) {
-
-    @formWithCSRF(action = EnterPayeReferenceController.onSubmit(mode), 'autoComplete -> "off") {
-
         @errorSummary(form.errors)
         @headingWithCaption(messages("enterPayeReference.heading"), taxYear = Some(taxYear.asString))
-        @inputText(
-            label = messages("enterPayeReference.heading"),
-            labelClass = Some("govuk-visually-hidden"),
-            hintLine1 = Some(messages("enterPayeReference.hint")),
-            field = form("value")
-        )
+
+        @formWithCSRF(action = EnterPayeReferenceController.onSubmit(mode), 'autoComplete -> "off") {
+
+            @inputText(
+                label = messages("enterPayeReference.heading"),
+                labelClass = Some("govuk-visually-hidden"),
+                hintLine1 = Some(messages("enterPayeReference.hint")),
+                field = form("value")
+            )
 
         @submitButton()
     }

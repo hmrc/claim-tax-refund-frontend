@@ -40,10 +40,11 @@
     pageTitle = messages("anyTaxableBankInterest.title", taxYear.asString)
 ) {
 
+    @errorSummary(form.errors)
+    @headingWithCaption(messages("anyTaxableBankInterest.heading"), taxYear = Some(taxYear.asString))
+
     @formWithCSRF(action = AnyTaxableBankInterestController.onSubmit(mode), 'autoComplete -> "off") {
 
-        @errorSummary(form.errors)
-        @headingWithCaption(messages("anyTaxableBankInterest.heading"), taxYear = Some(taxYear.asString))
         @inputYesNoWithTextExpander(
             hint = None,
             label = messages("anyTaxableBankInterest.heading"),

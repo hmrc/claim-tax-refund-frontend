@@ -44,13 +44,11 @@
     pageTitle = title
 ) {
 
+    @errorSummary(form.errors)
+
+    @heading(heading = messages("RemoveOtherSelectedOption.heading", messages(collectionId)), taxYear = Some(taxYear.asString))
+
     @formWithCSRF(action = RemoveOtherSelectedOptionController.onSubmit(mode, collectionId), 'autoComplete -> "off") {
-
-        @errorSummary(form.errors)
-
-        @heading(heading = messages("RemoveOtherSelectedOption.heading", messages(collectionId)),
-            taxYear = Some(taxYear.asString))
-
         @inputYesOrNo(
             isPageHeading = false,
             label = messages("RemoveOtherSelectedOption.heading", messages(collectionId)),

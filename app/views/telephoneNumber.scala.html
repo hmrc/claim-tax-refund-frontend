@@ -43,11 +43,11 @@
 @layout(
     pageTitle = title
 ) {
-    @formWithCSRF(action = TelephoneNumberController.onSubmit(mode), 'autoComplete -> "off") {
 
-        @errorSummary(form.errors)
-        @headingWithCaption(messages("telephoneNumber.heading"), taxYear = Some(taxYear.asString))
-        <p class="govuk-hint">@messages("telephoneNumber.hintPara1")</p>
+    @errorSummary(form.errors)
+    @headingWithCaption(messages("telephoneNumber.heading"), taxYear = Some(taxYear.asString))
+    <p class="govuk-hint">@messages("telephoneNumber.hintPara1")</p>
+    @formWithCSRF(action = TelephoneNumberController.onSubmit(mode), 'autoComplete -> "off") {
         @inputYesNoWithTextExpander(
             label = messages("telephoneNumber.heading"),
             labelClass = Some("govuk-visually-hidden"),

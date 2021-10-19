@@ -45,12 +45,12 @@
 }
 
 @layout( pageTitle = title) {
+
+    @errorSummary(form.errors)
+
+    @headingWithCaption(messages("howMuchStatePension.heading"), taxYear = Some(taxYear.asString))
+
     @formWithCSRF(action = HowMuchStatePensionController.onSubmit(mode), 'autoComplete -> "off") {
-
-        @errorSummary(form.errors)
-
-        @headingWithCaption(messages("howMuchStatePension.heading"), taxYear = Some(taxYear.asString))
-
         @input_text(
             label = messages("howMuchStatePension.heading"),
             labelClass = Some("govuk-visually-hidden"),

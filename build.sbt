@@ -27,7 +27,8 @@ val compile = Seq(
   "uk.gov.hmrc"           %% "tax-year"                       % "1.3.0",
   "org.scalatra.scalate"  %% "play-scalate"                   % "0.6.0",
   "org.scalatra.scalate"  %% "scalate-core"                   % "1.9.6",
-  "uk.gov.hmrc"           %% "domain"                         % "5.11.0-play-27"
+  "uk.gov.hmrc"           %% "domain"                         % "5.11.0-play-27",
+  "com.googlecode.libphonenumber" % "libphonenumber"          % "8.12.35"
 )
 
 def test(scope: String = "test"): Seq[ModuleID] = Seq(

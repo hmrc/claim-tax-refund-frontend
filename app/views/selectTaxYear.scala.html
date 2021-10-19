@@ -17,7 +17,6 @@
 @import config.FrontendAppConfig
 @import controllers.routes._
 @import models.Mode
-@import viewmodels.InputViewModel
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 
 @this(
@@ -48,11 +47,10 @@
     @formWithCSRF(action = SelectTaxYearController.onSubmit(mode), 'autoComplete -> "off") {
 
         @errorSummary(form.errors)
-
+        @heading(messages("selectTaxYear.heading"))
         @inputRadio(
-            viewModel = InputViewModel("value", form),
-            legend = heading(messages("selectTaxYear.heading")),
-            legendClass = None,
+            legend = Text(messages("selectTaxYear.heading")),
+            legendClass = Some("govuk-visually-hidden"),
             inputs = SelectTaxYear.options map { radioOption =>
                 RadioItem(
                     value = Some(radioOption.value),

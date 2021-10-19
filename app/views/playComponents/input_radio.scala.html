@@ -19,8 +19,7 @@
 @this(govukRadios : GovukRadios)
 
 @(
-    viewModel: InputViewModelBase,
-    legend: Html,
+    legend: Content,
     legendClass: Option[String] = None,
     hint: Option[String] = None,
     trackGa: Boolean = false,
@@ -32,8 +31,8 @@
     Radios(
         fieldset = Some(Fieldset(
             legend = Some(Legend(
-                classes = "govuk-fieldset__legend--xl",
-                content = HtmlContent(legend),
+                classes = s"""govuk-fieldset__legend--xl ${legendClass.getOrElse("")}""",
+                content = legend,
                 isPageHeading = false
             ))
         )),

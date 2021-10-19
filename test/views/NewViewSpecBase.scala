@@ -42,6 +42,11 @@ trait NewViewSpecBase extends SpecBase {
     headers.first.text.replaceAll("\u00a0", " ") mustBe messages(expectedMessageKey, args: _*).replaceAll("&nbsp;", " ")
   }
 
+  def assertBrowserTitleEqualsMessage(doc: Document, expectedMessageKey: String, args: Any*) = {
+    val title = doc.getElementsByTag("title")
+    title.text mustBe s"""${messages(expectedMessageKey, args: _*)} - ${messages("service.name")} - GOV.UK"""
+  }
+
   def assertContainsText(doc: Document, text: String) = assert(doc.toString.contains(text), "\n\ntext " + text + " was not rendered on the page.\n")
 
   def assertContainsMessages(doc: Document, expectedMessageKeys: String*) = {

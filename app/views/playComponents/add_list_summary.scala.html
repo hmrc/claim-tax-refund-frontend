@@ -40,12 +40,12 @@
                         ActionItem(
                             href = routes.OtherTaxableIncomeController.onPageLoad(mode, index).toString,
                             content = Text(messages("site.edit")),
-                            visuallyHiddenText = Some(messages("site.hidden-edit", otherTaxableIncome.name))
+                            visuallyHiddenText = Some(otherTaxableIncome.name)
                         ),
                         ActionItem(
                             href = routes.DeleteOtherController.onPageLoad(mode, Index(index), otherTaxableIncome.name, OtherTaxableIncome.collectionId).toString,
                             content = Text(messages("site.delete")),
-                            visuallyHiddenText = Some(messages("site.hidden-delete", otherTaxableIncome.name))
+                            visuallyHiddenText = Some(otherTaxableIncome.name)
                         )
                     ),
                     classes = "govuk-!-width-one-third"
@@ -69,12 +69,12 @@
                         ActionItem(
                             href = routes.OtherTaxableIncomeController.onPageLoad(mode, index).toString,
                             content = Text(messages("site.edit")),
-                            visuallyHiddenText = Some(messages("site.hidden-edit", otherTaxableIncome.name))
+                            visuallyHiddenText = Some(otherTaxableIncome.name)
                         ),
                         ActionItem(
                             href = routes.DeleteOtherController.onPageLoad(mode, Index(index), otherTaxableIncome.name, OtherTaxableIncome.collectionId).toString,
                             content = Text(messages("site.delete")),
-                            visuallyHiddenText = Some(messages("site.hidden-delete", otherTaxableIncome.name))
+                            visuallyHiddenText = Some(otherTaxableIncome.name)
                         )
                     ),
                     classes = "govuk-!-width-one-third"

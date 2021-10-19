@@ -32,6 +32,7 @@ import play.api.mvc.MessagesControllerComponents
 import uk.gov.hmrc.play.partials.FormPartialRetriever
 import utils.{Navigator, UserAnswers}
 import views.html.isPaymentAddressInTheUK
+import java.net.URLEncoder
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -69,7 +70,7 @@ cc: MessagesControllerComponents,
 
           val addressInit = for {
             result: Option[String] <- addressLookup.initialise(continueUrl = continueUrl,
-              accessibilityFooterUrl = appConfig.accessibilityFooterUrl)(hc: HeaderCarrier, language)
+              accessibilityFooterUrl = appConfig.accessibilityFooterUrl())(hc: HeaderCarrier, language)
           } yield {
             result map (
               url => Redirect(url)

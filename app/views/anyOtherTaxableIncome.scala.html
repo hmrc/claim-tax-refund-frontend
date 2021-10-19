@@ -61,16 +61,15 @@
     @layout(
         pageTitle = title
     ) {
+    @errorSummary(form.errors)
+
+    @pageHeading(heading = messages("anyOtherTaxableIncome.heading"), taxYear = Some(taxYear.asString))
+
+    @addListSummary(
+        complete, incomplete, mode
+    )
+
     @formWithCSRF(action = formAction, 'autoComplete -> "off") {
-
-            @errorSummary(form.errors)
-
-            @pageHeading(heading = messages("anyOtherTaxableIncome.heading"),
-                taxYear = Some(taxYear.asString))
-
-            @addListSummary(
-                complete, incomplete, mode
-            )
 
             @if(incomplete.isEmpty) {
                 @inputYesNo(

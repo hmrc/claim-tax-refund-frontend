@@ -42,27 +42,26 @@
 }
 
 @layout(
-    pageTitle = title,
+    pageTitle = title
 ) {
 
+    @errorSummary(form.errors)
+
+    @pageHeading(messages("paymentAddressCorrect.heading"),
+        taxYear = Some(taxYear.asString))
+
+    <ul class="govuk-list govuk-list" id="usersAddress">
+        @if(address.line1.exists(_.trim.nonEmpty)) {<li>@address.line1</li>}
+        @if(address.line2.exists(_.trim.nonEmpty)) {<li>@address.line2</li>}
+        @if(address.line3.exists(_.trim.nonEmpty)) {<li>@address.line3</li>}
+        @if(address.line4.exists(_.trim.nonEmpty)) {<li>@address.line4</li>}
+        @if(address.line5.exists(_.trim.nonEmpty)) {<li>@address.line5</li>}
+        @if(address.postCode.exists(_.trim.nonEmpty)) {<li>@address.postCode</li>}
+        @if(address.countryName.exists(_.trim.nonEmpty)) {<li>@address.countryName</li>}
+        @if(address.countryCode.exists(_.trim.nonEmpty)) {<li>@address.countryCode</li>}
+    </ul>
+
     @formWithCSRF(action = controllers.routes.PaymentAddressCorrectController.onSubmit(mode), 'autoComplete -> "off") {
-
-        @errorSummary(form.errors)
-
-        @pageHeading(messages("paymentAddressCorrect.heading"),
-            taxYear = Some(taxYear.asString))
-
-        <ul class="govuk-list govuk-list" id="usersAddress">
-            @if(address.line1.exists(_.trim.nonEmpty)) {<li>@address.line1</li>}
-            @if(address.line2.exists(_.trim.nonEmpty)) {<li>@address.line2</li>}
-            @if(address.line3.exists(_.trim.nonEmpty)) {<li>@address.line3</li>}
-            @if(address.line4.exists(_.trim.nonEmpty)) {<li>@address.line4</li>}
-            @if(address.line5.exists(_.trim.nonEmpty)) {<li>@address.line5</li>}
-            @if(address.postCode.exists(_.trim.nonEmpty)) {<li>@address.postCode</li>}
-            @if(address.countryName.exists(_.trim.nonEmpty)) {<li>@address.countryName</li>}
-            @if(address.countryCode.exists(_.trim.nonEmpty)) {<li>@address.countryCode</li>}
-        </ul>
-
         @inputYesNo(
             isPageHeading = false,
             label = messages("paymentAddressCorrect.heading"),

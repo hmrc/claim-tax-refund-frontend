@@ -50,12 +50,11 @@
     pageTitle = title
 ) {
 
+    @errorSummary(form.errors)
+
+    @heading(messages("deleteOther.heading", itemName), taxYear = Some(taxYear.asString))
+
     @formWithCSRF(action = DeleteOtherController.onSubmit(mode, index, itemName, collectionId), 'autoComplete -> "off") {
-
-        @errorSummary(form.errors)
-
-        @heading(messages("deleteOther.heading", itemName),
-            taxYear = Some(taxYear.asString))
 
         @inputYesOrNo(
             isPageHeading = false,

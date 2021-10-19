@@ -45,10 +45,10 @@
 @layout(
     pageTitle = title
 ){
+    @errorSummary(form.errors)
+    @headingWithCaption(messages("anyTaxableOtherIncome.heading", incomeName), taxYear = Some(taxYear.asString))
     @formWithCSRF(action = AnyTaxableOtherIncomeController.onSubmit(mode, index), 'autoComplete -> "off") {
 
-        @errorSummary(form.errors)
-        @headingWithCaption(messages("anyTaxableOtherIncome.heading", incomeName), taxYear = Some(taxYear.asString))
         @inputYesNoWithTextExpander(
             hint = None,
             label = messages("anyTaxableOtherIncome.heading", incomeName),

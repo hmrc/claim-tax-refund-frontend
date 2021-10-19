@@ -47,11 +47,11 @@
         pageTitle = messages(title, taxYear.asString)
     ) {
 
-        @formWithCSRF(action = SelectTaxableIncomeController.onSubmit(mode), 'autoComplete -> "off") {
-
             @errorSummary(form.errors)
 
             @heading(messages("selectTaxableIncome.heading"), taxYear = Some(taxYear.asString))
+
+            @formWithCSRF(action = SelectTaxableIncomeController.onSubmit(mode), 'autoComplete -> "off") {
 
             @inputCheckBox(
                 isPageHeading = false,

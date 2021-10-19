@@ -170,7 +170,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
               answer = s"£${benefits.amount}",
               url = if(cya) None else Some(routes.OtherBenefitController.onPageLoad(mode, Index(index)).url),
               deleteUrl = if(cya) None else Some(routes.DeleteOtherController.onPageLoad(mode, Index(index), benefits.name, OtherBenefit.collectionId).url),
-							changeLabel = messages("site.hidden-edit", benefits.name)
+							changeLabel = s" ${benefits.name}"
             )
            )
           )
@@ -252,7 +252,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
               url = if(cya) None else Some(routes.OtherCompanyBenefitController.onPageLoad(mode, Index(index)).url),
               deleteUrl = if(cya) {None}
 								else {Some(routes.DeleteOtherController.onPageLoad(mode, Index(index), companyBenefits.name, OtherCompanyBenefit.collectionId).url)},
-							changeLabel = messages("site.hidden-edit", companyBenefits.name)
+							changeLabel = s" ${companyBenefits.name}"
             ))
           )
       }
@@ -272,7 +272,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
           case AnyTaxPaid.No => "site.no"
         },
 				url = route,
-				changeLabel = messages("site.hidden-edit", label)
+				changeLabel = label
       )
   }
 
@@ -282,7 +282,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
         label = label,
         answer = s"£$amount",
 				url = route,
-				changeLabel = messages("site.hidden-edit", label)
+				changeLabel = label
       ))
     case _ => None
   }
@@ -366,13 +366,13 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
               label = taxableIncome.name,
               answer = s"${taxableIncome.name}",
               isHeadingRow = true,
-							changeLabel = messages("site.hidden-edit", taxableIncome.name)
+							changeLabel = s" ${taxableIncome.name}"
             )),
             Some(AnswerRow(
               label = messages("checkYourAnswers.otherTaxableIncome.label", taxableIncome.name),
               answer = s"£${taxableIncome.amount}",
               url = if(cya) None else Some(routes.OtherTaxableIncomeController.onPageLoad(mode, Index(index)).url),
-							changeLabel = messages("site.hidden-edit", messages("checkYourAnswers.otherTaxableIncome.label", taxableIncome.name))
+							changeLabel = s" ${messages("checkYourAnswers.otherTaxableIncome.label", taxableIncome.name)}"
             )),
             anyTaxPaid(
               label = messages("anyTaxableOtherIncome.heading", taxableIncome.name),
@@ -390,7 +390,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
                 answer = s"${taxableIncome.name}",
                 isDeleteLinkRow = true,
                 deleteUrl = Some(routes.DeleteOtherController.onPageLoad(mode, Index(index), taxableIncome.name, OtherTaxableIncome.collectionId).url),
-								changeLabel = messages("site.hidden-edit", taxableIncome.name)
+								changeLabel = s" ${taxableIncome.name}"
 								))
             }
           )

@@ -47,17 +47,18 @@
     pageTitle = title,
 ) {
 
-    @formWithCSRF(action = HowMuchBankInterestController.onSubmit(mode), 'autoComplete -> "off") {
 
         @errorSummary(form.errors)
 
         @headingWithCaption(messages("howMuchBankInterest.heading"), taxYear = Some(taxYear.asString))
 
+        @formWithCSRF(action = HowMuchBankInterestController.onSubmit(mode), 'autoComplete -> "off") {
+
         @inputText(
-        label = messages("howMuchBankInterest.heading"),
-        labelClass = Some("govuk-visually-hidden"),
-        currency = true,
-        field = form("value")
+            label = messages("howMuchBankInterest.heading"),
+            labelClass = Some("govuk-visually-hidden"),
+            currency = true,
+            field = form("value")
         )
 
         @submitButton()
