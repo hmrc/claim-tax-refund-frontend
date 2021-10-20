@@ -28,7 +28,7 @@
     labelClass: Option[String] = None,
     currency: Boolean = false,
     inputType: String = "text",
-    autoComplete: Boolean = false,
+    autoComplete: Option[String] = None,
     yesNoField: Field,
     textField: Field
 )(implicit messages: Messages)
@@ -49,7 +49,7 @@
         hint = textHint.map(hintString => Hint(content = Text(hintString))),
         spellcheck = Some(!currency),
         prefix = if(currency) Some(PrefixOrSuffix(content = Text("£"))) else None,
-        autocomplete = if(autoComplete) Some(inputType) else None,
+        autocomplete = autoComplete,
     ).withFormField(textField))
 }
 
