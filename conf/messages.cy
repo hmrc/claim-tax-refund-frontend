@@ -277,6 +277,7 @@ detailsOfEmploymentOrPension.title=Beth yw manylion eich cyflogaeth neu’ch pen
 detailsOfEmploymentOrPension.tooLong=Mae’n rhaid i fanylion eich cyflogaeth neu bensiwn fod yn 500 o gymeriadau neu’n llai
 
 employmentDetails.heading=Eich cyflogaethau neu’ch pensiynau
+employmentDetails.title=Eich cyflogaethau neu’ch pensiynau
 employmentDetails.correctDetails=A yw’r manylion hyn yn gywir?
 employmentDetails.employer=Enw’r cyflogwr neu’r darparwr pensiwn
 employmentDetails.hintText=Os nad yw’r manylion hyn yn gyfarwydd i chi, gwiriwch gyda’ch cyflogwr neu’ch darparwr pensiwn. Mae’n bosibl bod yr enw cofrestredig yn wahanol i’r enw masnachu.
