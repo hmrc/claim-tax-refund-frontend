@@ -48,7 +48,7 @@ class AddressLookupConfig @Inject()(messagesApi: MessagesApi) {
                       |    },
                       |    "timeoutConfig": {
                       |      "timeoutAmount": 890,
-                      |      "timeoutUrl": "http://tax.service.gov.uk/claim-tax-refund/sign-out"
+                      |      "timeoutUrl": "${controllers.routes.SessionManagementController.clearSessionData().url}"
                       |    }
                       |},
                       |    "labels": {

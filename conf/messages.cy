@@ -538,6 +538,7 @@ timeout.continue = Hoffwn gael 15 munud arall
 timeout.exit = Allgofnodi nawr
 
 timedOut.heading = Er eich diogelwch, gwnaethom eich allgofnodi
+timedOut.title = Er eich diogelwch, gwnaethom eich allgofnodi
 timedOut.message = Ni wnaethom gadw’ch atebion.
 timedOut.button = Mewngofnodi
 
