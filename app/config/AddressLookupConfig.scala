@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,7 +48,7 @@ class AddressLookupConfig @Inject()(messagesApi: MessagesApi) {
                       |    },
                       |    "timeoutConfig": {
                       |      "timeoutAmount": 890,
-                      |      "timeoutUrl": "http://tax.service.gov.uk/claim-tax-refund/sign-out"
+                      |      "timeoutUrl": "${controllers.routes.SessionManagementController.clearSessionData().url}"
                       |    }
                       |},
                       |    "labels": {
