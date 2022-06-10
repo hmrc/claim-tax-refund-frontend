@@ -59,7 +59,7 @@ cc: MessagesControllerComponents,
         selectedTaxYear =>
           Ok(howMuchRentalIncome(preparedForm, mode, selectedTaxYear))
       }.getOrElse {
-        Redirect(routes.SessionExpiredController.onPageLoad())
+        Redirect(routes.SessionExpiredController.onPageLoad)
       }
   }
 
@@ -75,7 +75,7 @@ cc: MessagesControllerComponents,
                 Redirect(navigator.nextPage(HowMuchRentalIncomeId, mode)(new UserAnswers(cacheMap))))
           )
       }.getOrElse {
-        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad))
       }
   }
 }

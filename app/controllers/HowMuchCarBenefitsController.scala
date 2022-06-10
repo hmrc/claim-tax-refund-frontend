@@ -60,7 +60,7 @@ class HowMuchCarBenefitsController @Inject()(
           val taxYear = selectedTaxYear
           Ok(howMuchCarBenefits(appConfig, preparedForm, mode, taxYear))
       }.getOrElse {
-        Redirect(routes.SessionExpiredController.onPageLoad())
+        Redirect(routes.SessionExpiredController.onPageLoad)
       }
   }
 
@@ -77,7 +77,7 @@ class HowMuchCarBenefitsController @Inject()(
                 Redirect(navigator.nextPage(HowMuchCarBenefitsId, mode)(new UserAnswers(cacheMap))))
           )
       }.getOrElse {
-        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad))
       }
   }
 }

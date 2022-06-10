@@ -58,7 +58,7 @@ class NomineeFullNameController @Inject()(
         taxYear =>
           Ok(nomineeFullName(preparedForm, mode, taxYear))
       }.getOrElse {
-        Redirect(routes.SessionExpiredController.onPageLoad())
+        Redirect(routes.SessionExpiredController.onPageLoad)
       }
   }
 
@@ -74,7 +74,7 @@ class NomineeFullNameController @Inject()(
                 Redirect(navigator.nextPage(NomineeFullNameId, mode)(new UserAnswers(cacheMap))))
           )
       }.getOrElse {
-        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad))
       }
   }
 }

@@ -36,7 +36,7 @@ import scala.concurrent.Future
 
 class EmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSugar with GuiceOneAppPerSuite {
 
-  def onwardRoute: Call = routes.IndexController.onPageLoad()
+  def onwardRoute: Call = routes.IndexController.onPageLoad
   def noTaiRoute: Call = routes.EnterPayeReferenceController.onPageLoad(NormalMode)
 
   val formProvider = new BooleanForm()
@@ -82,7 +82,7 @@ class EmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSug
       when(mockTaiConnector.taiEmployments(Matchers.eq("AB123456A"), Matchers.eq(2017))(Matchers.any(), Matchers.any()))
         .thenReturn(Future.successful(Seq(Employment("AVIVA PENSIONS", "754", "AZ00070"))))
 
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true")).withMethod("POST")
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
@@ -94,7 +94,7 @@ class EmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSug
       when(mockTaiConnector.taiEmployments(Matchers.eq("AB123456A"), Matchers.eq(2017))(Matchers.any(), Matchers.any()))
         .thenReturn(Future.successful(Seq(Employment("AVIVA PENSIONS", "754", "AZ00070"))))
 
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value")).withMethod("POST")
       val boundForm = form.bind(Map("value" -> "invalid value"))
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(postRequest)
 
@@ -106,15 +106,15 @@ class EmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSug
       val result = controller(dontGetAnyData).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)
     }
 
     "redirect to Session Expired for a POST if no existing data is found" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true")).withMethod("POST")
       val result = controller(dontGetAnyData).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)
     }
 
     "redirect to paye reference page when call to tai returns nothing" in {
@@ -136,7 +136,7 @@ class EmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSug
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)
     }
 
     "redirect to Session Expired if no taxYears have been selected on submit" in {
@@ -146,7 +146,7 @@ class EmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSug
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)
     }
   }
 }

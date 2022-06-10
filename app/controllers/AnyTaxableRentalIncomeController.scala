@@ -62,7 +62,7 @@ cc: MessagesControllerComponents,
         selectedTaxYear =>
           Ok(anyTaxableRentalIncome(preparedForm, mode, selectedTaxYear))
       }.getOrElse {
-        Redirect(routes.SessionExpiredController.onPageLoad())
+        Redirect(routes.SessionExpiredController.onPageLoad)
       }
   }
 
@@ -77,7 +77,7 @@ cc: MessagesControllerComponents,
               dataCacheConnector.save[AnyTaxPaid](request.externalId, AnyTaxableRentalIncomeId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(AnyTaxableRentalIncomeId, mode)(new UserAnswers(cacheMap)))))
       }.getOrElse {
-        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad))
       }
   }
 }

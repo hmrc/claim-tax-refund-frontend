@@ -63,7 +63,7 @@ class RemoveOtherSelectedOptionController @Inject()(override val messagesApi: Me
           val form: Form[Boolean] = formProvider(cc.messagesApi.preferred(request).messages(errorKey, collectionName))
           Ok(removeOtherSelectedOption(form, mode, selectedTaxYear, collectionId))
       }.getOrElse {
-        Redirect(routes.SessionExpiredController.onPageLoad())
+        Redirect(routes.SessionExpiredController.onPageLoad)
       }
   }
 
@@ -88,7 +88,7 @@ class RemoveOtherSelectedOptionController @Inject()(override val messagesApi: Me
             }
           )
       }.getOrElse {
-        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad))
       }
   }
 }

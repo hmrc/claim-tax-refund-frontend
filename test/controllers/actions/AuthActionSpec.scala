@@ -33,7 +33,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class AuthActionSpec extends SpecBase {
 
   class Harness(authAction: AuthAction) extends InjectedController {
-    def onPageLoad() = authAction { request => Ok }
+    def onPageLoad = authAction { request => Ok }
   }
 
   val ivUrl: String = s"${frontendAppConfig.ivUpliftUrl}?origin=CTR&" +
@@ -47,7 +47,7 @@ class AuthActionSpec extends SpecBase {
       "redirect the user to log in " in {
         val authAction = new AuthActionImpl(new FakeFailingAuthConnector(new MissingBearerToken), frontendAppConfig, messagesControllerComponents)(FakeDataCacheConnector)
         val controller = new Harness(authAction)
-        val result = controller.onPageLoad()(fakeRequest)
+        val result = controller.onPageLoad(fakeRequest)
         status(result) mustBe SEE_OTHER
         redirectLocation(result).get must startWith(frontendAppConfig.loginUrl)
       }
@@ -57,7 +57,7 @@ class AuthActionSpec extends SpecBase {
       "redirect the user to log in " in {
         val authAction = new AuthActionImpl(new FakeFailingAuthConnector(new BearerTokenExpired), frontendAppConfig, messagesControllerComponents)(FakeDataCacheConnector)
         val controller = new Harness(authAction)
-        val result = controller.onPageLoad()(fakeRequest)
+        val result = controller.onPageLoad(fakeRequest)
         status(result) mustBe SEE_OTHER
         redirectLocation(result).get must startWith(frontendAppConfig.loginUrl)
       }
@@ -67,9 +67,9 @@ class AuthActionSpec extends SpecBase {
       "redirect the user to the unauthorised page" in {
         val authAction = new AuthActionImpl(new FakeFailingAuthConnector(new InsufficientEnrolments), frontendAppConfig, messagesControllerComponents)(FakeDataCacheConnector)
         val controller = new Harness(authAction)
-        val result = controller.onPageLoad()(fakeRequest)
+        val result = controller.onPageLoad(fakeRequest)
         status(result) mustBe SEE_OTHER
-        redirectLocation(result) mustBe Some(routes.UnauthorisedController.onPageLoad().url)
+        redirectLocation(result) mustBe Some(routes.UnauthorisedController.onPageLoad.url)
       }
     }
 
@@ -77,7 +77,7 @@ class AuthActionSpec extends SpecBase {
       "redirect the user to the unauthorised page" in {
         val authAction = new AuthActionImpl(new FakeFailingAuthConnector(new InsufficientConfidenceLevel), frontendAppConfig, messagesControllerComponents)(FakeDataCacheConnector)
         val controller = new Harness(authAction)
-        val result = controller.onPageLoad()(fakeRequest)
+        val result = controller.onPageLoad(fakeRequest)
         status(result) mustBe SEE_OTHER
         redirectLocation(result) mustBe Some(ivUrl)
       }
@@ -87,9 +87,9 @@ class AuthActionSpec extends SpecBase {
       "redirect the user to the unauthorised page" in {
         val authAction = new AuthActionImpl(new FakeFailingAuthConnector(new UnsupportedAuthProvider), frontendAppConfig, messagesControllerComponents)(FakeDataCacheConnector)
         val controller = new Harness(authAction)
-        val result = controller.onPageLoad()(fakeRequest)
+        val result = controller.onPageLoad(fakeRequest)
         status(result) mustBe SEE_OTHER
-        redirectLocation(result) mustBe Some(routes.UnauthorisedController.onPageLoad().url)
+        redirectLocation(result) mustBe Some(routes.UnauthorisedController.onPageLoad.url)
       }
     }
 
@@ -97,9 +97,9 @@ class AuthActionSpec extends SpecBase {
       "redirect the user to the unauthorised page" in {
         val authAction = new AuthActionImpl(new FakeFailingAuthConnector(new UnsupportedAffinityGroup), frontendAppConfig, messagesControllerComponents)(FakeDataCacheConnector)
         val controller = new Harness(authAction)
-        val result = controller.onPageLoad()(fakeRequest)
+        val result = controller.onPageLoad(fakeRequest)
         status(result) mustBe SEE_OTHER
-        redirectLocation(result) mustBe Some(routes.UnauthorisedController.onPageLoad().url)
+        redirectLocation(result) mustBe Some(routes.UnauthorisedController.onPageLoad.url)
       }
     }
 
@@ -107,9 +107,9 @@ class AuthActionSpec extends SpecBase {
       "redirect the user to the unauthorised page" in {
         val authAction = new AuthActionImpl(new FakeFailingAuthConnector(new UnsupportedCredentialRole), frontendAppConfig, messagesControllerComponents)(FakeDataCacheConnector)
         val controller = new Harness(authAction)
-        val result = controller.onPageLoad()(fakeRequest)
+        val result = controller.onPageLoad(fakeRequest)
         status(result) mustBe SEE_OTHER
-        redirectLocation(result) mustBe Some(routes.UnauthorisedController.onPageLoad().url)
+        redirectLocation(result) mustBe Some(routes.UnauthorisedController.onPageLoad.url)
       }
     }
   }

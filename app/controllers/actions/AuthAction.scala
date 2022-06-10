@@ -64,7 +64,7 @@ trait AuthAction extends ActionBuilder[AuthenticatedRequest, AnyContent] with Ac
       case _: NoActiveSession =>
         Redirect(config.loginUrl, Map("continue" -> Seq(config.loginContinueUrl)))
       case _: InsufficientEnrolments =>
-        Redirect(routes.UnauthorisedController.onPageLoad())
+        Redirect(routes.UnauthorisedController.onPageLoad)
       case _: InsufficientConfidenceLevel =>
         Redirect(s"${config.ivUpliftUrl}?origin=CTR&" +
           s"confidenceLevel=200&" +
@@ -72,11 +72,11 @@ trait AuthAction extends ActionBuilder[AuthenticatedRequest, AnyContent] with Ac
           s"failureURL=${config.unauthorisedCallback}"
         )
       case _: UnsupportedAuthProvider =>
-        Redirect(routes.UnauthorisedController.onPageLoad())
+        Redirect(routes.UnauthorisedController.onPageLoad)
       case _: UnsupportedAffinityGroup =>
-        Redirect(routes.UnauthorisedController.onPageLoad())
+        Redirect(routes.UnauthorisedController.onPageLoad)
       case _: UnsupportedCredentialRole =>
-        Redirect(routes.UnauthorisedController.onPageLoad())
+        Redirect(routes.UnauthorisedController.onPageLoad)
     }
   }
 }

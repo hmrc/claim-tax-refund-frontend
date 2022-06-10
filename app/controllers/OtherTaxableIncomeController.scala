@@ -60,7 +60,7 @@ class OtherTaxableIncomeController @Inject()(
           val taxYear = selectedTaxYear
           Ok(otherTaxableIncome(preparedForm, mode, index, taxYear))
       }.getOrElse {
-        Redirect(routes.SessionExpiredController.onPageLoad())
+        Redirect(routes.SessionExpiredController.onPageLoad)
       }
   }
 
@@ -96,7 +96,7 @@ class OtherTaxableIncomeController @Inject()(
             }
           )
       }.getOrElse {
-        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad))
       }
   }
 }

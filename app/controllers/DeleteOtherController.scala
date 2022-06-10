@@ -56,7 +56,7 @@ class DeleteOtherController @Inject()(override val messagesApi: MessagesApi,
         taxYear =>
           Ok(deleteOther(form, mode, index, itemName, collectionId, taxYear))
       }.getOrElse {
-        Redirect(routes.SessionExpiredController.onPageLoad())
+        Redirect(routes.SessionExpiredController.onPageLoad)
       }
   }
 
@@ -79,7 +79,7 @@ class DeleteOtherController @Inject()(override val messagesApi: MessagesApi,
                     case OtherTaxableIncome.collectionId =>
                       deleteOtherTaxableIncome(request, mode, index, collectionId)
                     case _ =>
-                      Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+                      Future.successful(Redirect(routes.SessionExpiredController.onPageLoad))
                   }
                 } else {
                   collectionId match {
@@ -90,12 +90,12 @@ class DeleteOtherController @Inject()(override val messagesApi: MessagesApi,
                     case OtherTaxableIncome.collectionId =>
                       Future.successful(Redirect(routes.AnyOtherTaxableIncomeController.onPageLoad(mode)))
                     case _ =>
-                      Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+                      Future.successful(Redirect(routes.SessionExpiredController.onPageLoad))
                   }
                 }
             )
         }.getOrElse {
-          Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+          Future.successful(Redirect(routes.SessionExpiredController.onPageLoad))
         }
     }
 
@@ -115,7 +115,7 @@ class DeleteOtherController @Inject()(override val messagesApi: MessagesApi,
     }
 
     result.getOrElse {
-      Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+      Future.successful(Redirect(routes.SessionExpiredController.onPageLoad))
     }
   }
 
@@ -135,7 +135,7 @@ class DeleteOtherController @Inject()(override val messagesApi: MessagesApi,
     }
 
     result.getOrElse {
-      Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+      Future.successful(Redirect(routes.SessionExpiredController.onPageLoad))
     }
   }
 
@@ -157,7 +157,7 @@ class DeleteOtherController @Inject()(override val messagesApi: MessagesApi,
     }
 
     result.getOrElse {
-      Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+      Future.successful(Redirect(routes.SessionExpiredController.onPageLoad))
     }
   }
 }

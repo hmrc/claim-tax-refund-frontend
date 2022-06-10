@@ -61,7 +61,7 @@ class AnyTaxableBankInterestController @Inject()(override val messagesApi: Messa
         selectedTaxYear =>
           Ok(anyTaxableBankInterest(preparedForm, mode, selectedTaxYear))
       }.getOrElse {
-        Redirect(routes.SessionExpiredController.onPageLoad())
+        Redirect(routes.SessionExpiredController.onPageLoad)
       }
   }
 
@@ -76,7 +76,7 @@ class AnyTaxableBankInterestController @Inject()(override val messagesApi: Messa
               dataCacheConnector.save[AnyTaxPaid](request.externalId, AnyTaxableBankInterestId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(AnyTaxableBankInterestId, mode)(new UserAnswers(cacheMap)))))
       }.getOrElse {
-        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad))
       }
   }
 }

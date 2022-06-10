@@ -67,7 +67,7 @@ class AnyAgentRefController @Inject()(
       }
 
       result.getOrElse {
-        Redirect(routes.SessionExpiredController.onPageLoad())
+        Redirect(routes.SessionExpiredController.onPageLoad)
       }
   }
 
@@ -91,7 +91,7 @@ class AnyAgentRefController @Inject()(
       }
 
       result.getOrElse {
-        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad))
       }
   }
 }

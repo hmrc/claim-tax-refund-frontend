@@ -35,7 +35,7 @@ class ConfirmationControllerSpec extends ControllerSpecBase with ScalaFutures wi
 	val mockDataCacheConnector: DataCacheConnector = mock[DataCacheConnector]
   val confirmation: confirmation = fakeApplication.injector.instanceOf[confirmation]
 
-  def onwardRoute: Call = routes.IndexController.onPageLoad()
+  def onwardRoute: Call = routes.IndexController.onPageLoad
 
   def controller(dataRetrievalAction: DataRetrievalAction = someData()) =
     new ConfirmationController(frontendAppConfig, messagesApi, FakeAuthAction(authConnector, frontendAppConfig),
@@ -59,7 +59,7 @@ class ConfirmationControllerSpec extends ControllerSpecBase with ScalaFutures wi
     "redirect to Session Expired for a GET if no existing data is found" in {
       val result = controller(dontGetAnyData).onPageLoad(NormalMode)(fakeRequest)
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)
 
       whenReady(result) {
         _ =>

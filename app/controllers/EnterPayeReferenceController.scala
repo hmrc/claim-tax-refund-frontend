@@ -58,7 +58,7 @@ class EnterPayeReferenceController @Inject()(
         taxYear =>
           Ok(enterPayeReference(preparedForm, mode, taxYear))
       }.getOrElse {
-        Redirect(routes.SessionExpiredController.onPageLoad())
+        Redirect(routes.SessionExpiredController.onPageLoad)
       }
   }
 
@@ -74,7 +74,7 @@ class EnterPayeReferenceController @Inject()(
                 Redirect(navigator.nextPage(EnterPayeReferenceId, mode)(new UserAnswers(cacheMap))))
           )
       }.getOrElse {
-        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad))
       }
   }
 }

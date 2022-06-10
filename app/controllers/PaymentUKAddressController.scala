@@ -57,7 +57,7 @@ cc: MessagesControllerComponents,
         taxYear =>
           Ok(paymentUKAddress(appConfig, preparedForm, mode, taxYear))
       }.getOrElse {
-        Redirect(routes.SessionExpiredController.onPageLoad())
+        Redirect(routes.SessionExpiredController.onPageLoad)
       }
   }
 
@@ -73,7 +73,7 @@ cc: MessagesControllerComponents,
                 Redirect(navigator.nextPage(PaymentUKAddressId, mode)(new UserAnswers(cacheMap))))
           )
       }.getOrElse {
-        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad))
       }
   }
 }

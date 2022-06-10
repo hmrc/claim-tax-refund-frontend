@@ -31,7 +31,7 @@ class IndexControllerSpec extends ControllerSpecBase with GuiceOneAppPerSuite {
 
   "Index Controller" must {
     "return redirect for a GET and redirect to select tax year" in {
-      val result = new IndexController(frontendAppConfig, messagesControllerComponents).onPageLoad()(fakeRequest)
+      val result = new IndexController(frontendAppConfig, messagesControllerComponents).onPageLoad(fakeRequest)
       status(result) mustBe TEMPORARY_REDIRECT
       redirectLocation(result) mustBe Some(routes.SelectTaxYearController.onPageLoad(NormalMode).url)
     }

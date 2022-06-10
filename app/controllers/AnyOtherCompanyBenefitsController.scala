@@ -65,7 +65,7 @@ cc: MessagesControllerComponents,
       }
 
       result.getOrElse {
-        Redirect(routes.SessionExpiredController.onPageLoad())
+        Redirect(routes.SessionExpiredController.onPageLoad)
       }
   }
 
@@ -91,7 +91,7 @@ cc: MessagesControllerComponents,
       }
 
       result.getOrElse {
-        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad))
       }
   }
 }

@@ -73,7 +73,7 @@ class AnyTaxableOtherIncomeController @Inject()(appConfig: FrontendAppConfig,
         Ok(anyTaxableOtherIncome(preparedForm, mode, index, selectedTaxYear, otherTaxableIncome(index).name))
       }
       details.getOrElse {
-        Redirect(routes.SessionExpiredController.onPageLoad())
+        Redirect(routes.SessionExpiredController.onPageLoad)
       }
   }
 
@@ -103,7 +103,7 @@ class AnyTaxableOtherIncomeController @Inject()(appConfig: FrontendAppConfig,
         )
       }
       details.getOrElse {
-        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad))
       }
   }
 }

@@ -62,7 +62,7 @@ class AnyTaxableInvestmentsController @Inject()(appConfig: FrontendAppConfig,
         selectedTaxYear =>
           Ok(anyTaxableInvestments(appConfig, preparedForm, mode, selectedTaxYear))
       }.getOrElse {
-        Redirect(routes.SessionExpiredController.onPageLoad())
+        Redirect(routes.SessionExpiredController.onPageLoad)
       }
   }
 
@@ -77,7 +77,7 @@ class AnyTaxableInvestmentsController @Inject()(appConfig: FrontendAppConfig,
               dataCacheConnector.save[AnyTaxPaid](request.externalId, AnyTaxableInvestmentsId.toString, value).map(cacheMap =>
                 Redirect(navigator.nextPage(AnyTaxableInvestmentsId, mode)(new UserAnswers(cacheMap)))))
       }.getOrElse {
-        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad))
       }
   }
 }

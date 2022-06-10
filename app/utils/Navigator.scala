@@ -50,7 +50,7 @@ class Navigator @Inject()() {
     userAnswers.removeOtherSelectedOption match {
       case Some(true) => otherSectionYes(mode, collectionId)
       case Some(false) => otherSectionNo(mode, collectionId)(userAnswers)
-      case _ => routes.SessionExpiredController.onPageLoad()
+      case _ => routes.SessionExpiredController.onPageLoad
     }
   }
 
@@ -59,7 +59,7 @@ class Navigator @Inject()() {
       case OtherBenefit.collectionId => routes.OtherBenefitController.onPageLoad(mode, 0)
       case OtherCompanyBenefit.collectionId => routes.OtherCompanyBenefitController.onPageLoad(mode, 0)
       case OtherTaxableIncome.collectionId => routes.OtherTaxableIncomeController.onPageLoad(mode, 0)
-      case _ => routes.SessionExpiredController.onPageLoad()
+      case _ => routes.SessionExpiredController.onPageLoad
     }
   }
 
@@ -69,10 +69,10 @@ class Navigator @Inject()() {
         case OtherBenefit.collectionId => routes.AnyCompanyBenefitsController.onPageLoad(mode)
         case OtherCompanyBenefit.collectionId => routes.AnyTaxableIncomeController.onPageLoad(mode)
         case OtherTaxableIncome.collectionId => routes.WhereToSendPaymentController.onPageLoad(mode)
-        case _ => routes.SessionExpiredController.onPageLoad()
+        case _ => routes.SessionExpiredController.onPageLoad
       }
     } else {
-      routes.CheckYourAnswersController.onPageLoad()
+      routes.CheckYourAnswersController.onPageLoad
     }
   }
 
@@ -123,7 +123,7 @@ class Navigator @Inject()() {
     PaymentUKAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
     PaymentInternationalAddressId -> (_ => routes.TelephoneNumberController.onPageLoad(NormalMode)),
     PaymentLookupAddressId -> addressLookup(NormalMode),
-    TelephoneNumberId -> (_ => routes.CheckYourAnswersController.onPageLoad()),
+    TelephoneNumberId -> (_ => routes.CheckYourAnswersController.onPageLoad),
     DeleteOtherBenefitId -> deleteOtherBenefit,
     DeleteOtherCompanyBenefitId -> deleteOtherCompanyBenefit,
     DeleteOtherTaxableIncomeId -> (_ => routes.AnyOtherTaxableIncomeController.onPageLoad(NormalMode))
@@ -183,7 +183,7 @@ class Navigator @Inject()() {
     case NormalMode => routes.EmploymentDetailsController.onPageLoad(NormalMode)
     case CheckMode =>
       if (userAnswers.employmentDetails.isDefined) {
-        routes.CheckYourAnswersController.onPageLoad()
+        routes.CheckYourAnswersController.onPageLoad
       } else {
         routes.EmploymentDetailsController.onPageLoad(CheckMode)
     }
@@ -192,21 +192,21 @@ class Navigator @Inject()() {
   private def employmentDetails(userAnswers: UserAnswers): Call = userAnswers.employmentDetails match {
     case Some(true) => routes.AnyBenefitsController.onPageLoad(NormalMode)
     case Some(false) => routes.EnterPayeReferenceController.onPageLoad(NormalMode)
-    case None => routes.SessionExpiredController.onPageLoad()
+    case None => routes.SessionExpiredController.onPageLoad
   }
 
   private def employmentDetailsCheck(userAnswers: UserAnswers): Call = userAnswers.employmentDetails match {
-    case Some(true) => routes.CheckYourAnswersController.onPageLoad()
+    case Some(true) => routes.CheckYourAnswersController.onPageLoad
     case Some(false) => userAnswers.enterPayeReference match {
       case None => routes.EnterPayeReferenceController.onPageLoad(CheckMode)
-      case _ => routes.CheckYourAnswersController.onPageLoad()
+      case _ => routes.CheckYourAnswersController.onPageLoad
     }
-    case None => routes.SessionExpiredController.onPageLoad()
+    case None => routes.SessionExpiredController.onPageLoad
   }
 
   private def detailsOfEmploymentCheck(userAnswers: UserAnswers): Call = userAnswers.detailsOfEmploymentOrPension match {
     case None => routes.DetailsOfEmploymentOrPensionController.onPageLoad(CheckMode)
-    case _ => routes.CheckYourAnswersController.onPageLoad()
+    case _ => routes.CheckYourAnswersController.onPageLoad
   }
 
 
@@ -224,9 +224,9 @@ class Navigator @Inject()() {
           }
       }
     case Some(false) =>
-      if (mode == NormalMode) routes.AnyCompanyBenefitsController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
+      if (mode == NormalMode) routes.AnyCompanyBenefitsController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad
     case None =>
-      routes.SessionExpiredController.onPageLoad()
+      routes.SessionExpiredController.onPageLoad
   }
 
   def getNextBenefitId(id: Identifier, mode: Mode)(userAnswers: UserAnswers): Call = {
@@ -243,7 +243,7 @@ class Navigator @Inject()() {
         } else {
           routes.AnyCompanyBenefitsController.onPageLoad(mode)
         }
-      case _ => routes.SessionExpiredController.onPageLoad()
+      case _ => routes.SessionExpiredController.onPageLoad
     }
   }
 
@@ -256,7 +256,7 @@ class Navigator @Inject()() {
       case HowMuchEmploymentAndSupportAllowanceId => routes.HowMuchEmploymentAndSupportAllowanceController.onPageLoad(mode)
       case HowMuchStatePensionId => routes.HowMuchStatePensionController.onPageLoad(mode)
       case OtherBenefitId => routes.OtherBenefitController.onPageLoad(mode, 0)
-      case _ => routes.SessionExpiredController.onPageLoad()
+      case _ => routes.SessionExpiredController.onPageLoad
     }
   }
 
@@ -280,17 +280,17 @@ class Navigator @Inject()() {
         routes.AnyOtherBenefitsController.onPageLoad(mode)
       } else if (mode == NormalMode) {
         routes.AnyCompanyBenefitsController.onPageLoad(mode)
-      } else routes.CheckYourAnswersController.onPageLoad()
-    case None => routes.SessionExpiredController.onPageLoad()
+      } else routes.CheckYourAnswersController.onPageLoad
+    case None => routes.SessionExpiredController.onPageLoad
   }
 
   private def anyOtherBenefits(mode: Mode)(userAnswers: UserAnswers): Call = userAnswers.anyOtherBenefits match {
     case Some(true) => routes.OtherBenefitController.onPageLoad(mode, Index(userAnswers.otherBenefit.get.length))
     case Some(false) => mode match {
       case NormalMode => routes.AnyCompanyBenefitsController.onPageLoad(NormalMode)
-      case CheckMode => routes.CheckYourAnswersController.onPageLoad()
+      case CheckMode => routes.CheckYourAnswersController.onPageLoad
     }
-    case None => routes.SessionExpiredController.onPageLoad()
+    case None => routes.SessionExpiredController.onPageLoad
   }
 
   private def deleteOtherBenefit(userAnswers: UserAnswers): Call = {
@@ -302,7 +302,7 @@ class Navigator @Inject()() {
     } else if (otherBenefits.isEmpty && selectBenefits.length > 1) {
       routes.SelectBenefitsController.onPageLoad(CheckMode)
     } else {
-      routes.CheckYourAnswersController.onPageLoad()
+      routes.CheckYourAnswersController.onPageLoad
     }
   }
 
@@ -321,9 +321,9 @@ class Navigator @Inject()() {
           }
       }
     case Some(false) =>
-      if (mode == NormalMode) routes.AnyTaxableIncomeController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad()
+      if (mode == NormalMode) routes.AnyTaxableIncomeController.onPageLoad(mode) else routes.CheckYourAnswersController.onPageLoad
     case None =>
-      routes.SessionExpiredController.onPageLoad()
+      routes.SessionExpiredController.onPageLoad
   }
 
   def getNextCompanyBenefitId(id: Identifier, mode: Mode)(userAnswers: UserAnswers): Call = {
@@ -340,7 +340,7 @@ class Navigator @Inject()() {
         } else {
           routes.AnyTaxableIncomeController.onPageLoad(mode)
         }
-      case _ => routes.SessionExpiredController.onPageLoad()
+      case _ => routes.SessionExpiredController.onPageLoad
     }
   }
 
@@ -350,7 +350,7 @@ class Navigator @Inject()() {
       case HowMuchFuelBenefitId => routes.HowMuchFuelBenefitController.onPageLoad(mode)
       case HowMuchMedicalBenefitsId => routes.HowMuchMedicalBenefitsController.onPageLoad(mode)
       case OtherCompanyBenefitId => routes.OtherCompanyBenefitController.onPageLoad(mode, 0)
-      case _ => routes.SessionExpiredController.onPageLoad()
+      case _ => routes.SessionExpiredController.onPageLoad
     }
   }
 
@@ -366,18 +366,18 @@ class Navigator @Inject()() {
         routes.OtherCompanyBenefitController.onPageLoad(mode, Index(0))
       } else if (mode == NormalMode) {
         routes.AnyTaxableIncomeController.onPageLoad(mode)
-      } else routes.CheckYourAnswersController.onPageLoad()
+      } else routes.CheckYourAnswersController.onPageLoad
     case None =>
-      routes.SessionExpiredController.onPageLoad()
+      routes.SessionExpiredController.onPageLoad
   }
 
   private def anyOtherCompanyBenefits(mode: Mode)(userAnswers: UserAnswers): Call = userAnswers.anyOtherCompanyBenefits match {
     case Some(true) => routes.OtherCompanyBenefitController.onPageLoad(mode, Index(userAnswers.otherCompanyBenefit.get.length))
     case Some(false) => mode match {
       case NormalMode => routes.AnyTaxableIncomeController.onPageLoad(NormalMode)
-      case CheckMode => routes.CheckYourAnswersController.onPageLoad()
+      case CheckMode => routes.CheckYourAnswersController.onPageLoad
     }
-    case None => routes.SessionExpiredController.onPageLoad()
+    case None => routes.SessionExpiredController.onPageLoad
   }
 
   private def deleteOtherCompanyBenefit(userAnswers: UserAnswers): Call = {
@@ -389,7 +389,7 @@ class Navigator @Inject()() {
     } else if (otherCompanyBenefits.isEmpty && selectCompanyBenefits.length > 1) {
       routes.SelectCompanyBenefitsController.onPageLoad(CheckMode)
     } else {
-      routes.CheckYourAnswersController.onPageLoad()
+      routes.CheckYourAnswersController.onPageLoad
     }
   }
 
@@ -407,9 +407,9 @@ class Navigator @Inject()() {
           }
       }
     case Some(false) =>
-      if (mode == NormalMode) routes.WhereToSendPaymentController.onPageLoad(NormalMode) else routes.CheckYourAnswersController.onPageLoad()
+      if (mode == NormalMode) routes.WhereToSendPaymentController.onPageLoad(NormalMode) else routes.CheckYourAnswersController.onPageLoad
     case None =>
-      routes.SessionExpiredController.onPageLoad()
+      routes.SessionExpiredController.onPageLoad
   }
 
   def getNextTaxableIncomeId(id: Identifier, mode: Mode)(userAnswers: UserAnswers): Call = {
@@ -426,7 +426,7 @@ class Navigator @Inject()() {
         } else {
           routes.WhereToSendPaymentController.onPageLoad(mode)
         }
-      case _ => routes.SessionExpiredController.onPageLoad()
+      case _ => routes.SessionExpiredController.onPageLoad
     }
   }
 
@@ -437,7 +437,7 @@ class Navigator @Inject()() {
       case HowMuchInvestmentsId => routes.HowMuchInvestmentOrDividendController.onPageLoad(mode)
       case HowMuchForeignIncomeId => routes.HowMuchForeignIncomeController.onPageLoad(mode)
       case OtherTaxableIncomeId(Index(0)) => routes.OtherTaxableIncomeController.onPageLoad(mode, 0)
-      case _ => routes.SessionExpiredController.onPageLoad()
+      case _ => routes.SessionExpiredController.onPageLoad
     }
   }
 
@@ -455,16 +455,16 @@ class Navigator @Inject()() {
         routes.OtherTaxableIncomeController.onPageLoad(mode, Index(0))
       } else if (mode == NormalMode) {
         routes.WhereToSendPaymentController.onPageLoad(mode)
-      } else routes.CheckYourAnswersController.onPageLoad()
+      } else routes.CheckYourAnswersController.onPageLoad
     case None =>
-      routes.SessionExpiredController.onPageLoad()
+      routes.SessionExpiredController.onPageLoad
   }
 
   private def howMuchRentalIncomeCheck(userAnswers: UserAnswers): Call = userAnswers.howMuchRentalIncome match {
     case None => routes.HowMuchRentalIncomeController.onPageLoad(CheckMode)
     case _ => userAnswers.anyTaxableRentalIncome match {
       case None => routes.AnyTaxableRentalIncomeController.onPageLoad(CheckMode)
-      case _ => routes.CheckYourAnswersController.onPageLoad()
+      case _ => routes.CheckYourAnswersController.onPageLoad
     }
   }
 
@@ -472,7 +472,7 @@ class Navigator @Inject()() {
     case None => routes.HowMuchBankInterestController.onPageLoad(CheckMode)
     case _ => userAnswers.anyTaxableBankInterest match {
       case None => routes.AnyTaxableBankInterestController.onPageLoad(CheckMode)
-      case _ => routes.CheckYourAnswersController.onPageLoad()
+      case _ => routes.CheckYourAnswersController.onPageLoad
     }
   }
 
@@ -480,7 +480,7 @@ class Navigator @Inject()() {
     case None => routes.HowMuchInvestmentOrDividendController.onPageLoad(CheckMode)
     case _ => userAnswers.anyTaxableInvestments match {
       case None => routes.AnyTaxableInvestmentsController.onPageLoad(CheckMode)
-      case _ => routes.CheckYourAnswersController.onPageLoad()
+      case _ => routes.CheckYourAnswersController.onPageLoad
     }
   }
 
@@ -488,7 +488,7 @@ class Navigator @Inject()() {
     case None => routes.HowMuchForeignIncomeController.onPageLoad(CheckMode)
     case _ => userAnswers.anyTaxableForeignIncome match {
       case None => routes.AnyTaxableForeignIncomeController.onPageLoad(CheckMode)
-      case _ => routes.CheckYourAnswersController.onPageLoad()
+      case _ => routes.CheckYourAnswersController.onPageLoad
     }
   }
 
@@ -496,9 +496,9 @@ class Navigator @Inject()() {
     case Some(true) => routes.OtherTaxableIncomeController.onPageLoad(mode, Index(userAnswers.otherTaxableIncome.get.length))
     case Some(false) => mode match {
       case NormalMode => routes.WhereToSendPaymentController.onPageLoad(mode)
-      case _ => routes.CheckYourAnswersController.onPageLoad()
+      case _ => routes.CheckYourAnswersController.onPageLoad
     }
-    case None => routes.SessionExpiredController.onPageLoad()
+    case None => routes.SessionExpiredController.onPageLoad
   }
 
   def otherTaxableIncome(mode: Mode, index: Index)(userAnswers: UserAnswers): Call = {
@@ -510,63 +510,63 @@ class Navigator @Inject()() {
   private def whereToSendPayment(userAnswers: UserAnswers): Call = userAnswers.whereToSendPayment match {
     case Some(Nominee) => routes.NomineeFullNameController.onPageLoad(NormalMode)
     case Some(Myself) => routes.PaymentAddressCorrectController.onPageLoad(NormalMode)
-    case None => routes.SessionExpiredController.onPageLoad()
+    case None => routes.SessionExpiredController.onPageLoad
   }
 
   private def whereToSendPaymentCheck(userAnswers: UserAnswers): Call = userAnswers.whereToSendPayment match {
     case Some(Nominee) =>
-      if (userAnswers.nomineeFullName.isEmpty) routes.NomineeFullNameController.onPageLoad(CheckMode) else routes.CheckYourAnswersController.onPageLoad()
+      if (userAnswers.nomineeFullName.isEmpty) routes.NomineeFullNameController.onPageLoad(CheckMode) else routes.CheckYourAnswersController.onPageLoad
     case Some(Myself) =>
       if ((userAnswers.isPaymentAddressInTheUK.isDefined && userAnswers.isPaymentAddressInTheUK.isEmpty) || (userAnswers.paymentAddressCorrect.isDefined && userAnswers.paymentAddressCorrect.isEmpty)){
         routes.PaymentAddressCorrectController.onPageLoad(CheckMode)
       } else {
-        routes.CheckYourAnswersController.onPageLoad()
+        routes.CheckYourAnswersController.onPageLoad
       }
-    case None => routes.SessionExpiredController.onPageLoad()
+    case None => routes.SessionExpiredController.onPageLoad
   }
 
   private def paymentAddressCorrect(userAnswers: UserAnswers): Call = userAnswers.paymentAddressCorrect match {
     case Some(true) => routes.TelephoneNumberController.onPageLoad(NormalMode)
     case Some(false) => routes.IsPaymentAddressInTheUKController.onPageLoad(NormalMode)
-    case None => routes.SessionExpiredController.onPageLoad()
+    case None => routes.SessionExpiredController.onPageLoad
   }
 
   private def paymentAddressCorrectCheck(userAnswers: UserAnswers): Call = userAnswers.paymentAddressCorrect match {
-    case Some(true) => routes.CheckYourAnswersController.onPageLoad()
+    case Some(true) => routes.CheckYourAnswersController.onPageLoad
     case Some(false) => routes.IsPaymentAddressInTheUKController.onPageLoad(CheckMode)
-    case None => routes.SessionExpiredController.onPageLoad()
+    case None => routes.SessionExpiredController.onPageLoad
   }
 
   private def anyAgentRefCheck(userAnswers: UserAnswers): Call = userAnswers.anyAgentRef match {
     case None => routes.AnyAgentRefController.onPageLoad(CheckMode)
-    case _ => routes.CheckYourAnswersController.onPageLoad()
+    case _ => routes.CheckYourAnswersController.onPageLoad
   }
 
   private def isPaymentAddressInUk(userAnswers: UserAnswers): Call = userAnswers.isPaymentAddressInTheUK match {
     case Some(true) => routes.PaymentUKAddressController.onPageLoad(NormalMode)
     case Some(false) => routes.PaymentInternationalAddressController.onPageLoad(NormalMode)
-    case None => routes.SessionExpiredController.onPageLoad()
+    case None => routes.SessionExpiredController.onPageLoad
   }
 
   private def isPaymentAddressInUkCheck(userAnswers: UserAnswers): Call = userAnswers.isPaymentAddressInTheUK match {
     case None => routes.IsPaymentAddressInTheUKController.onPageLoad(CheckMode)
-    case _ => routes.CheckYourAnswersController.onPageLoad()
+    case _ => routes.CheckYourAnswersController.onPageLoad
   }
 
   private def paymentAddressCheck(userAnswers: UserAnswers): Call = userAnswers.isPaymentAddressInTheUK match {
     case Some(true) => userAnswers.paymentUKAddress match {
       case None => routes.PaymentUKAddressController.onPageLoad(CheckMode)
-      case _ => routes.CheckYourAnswersController.onPageLoad()
+      case _ => routes.CheckYourAnswersController.onPageLoad
     }
     case Some(false) => userAnswers.paymentInternationalAddress match {
       case None => routes.PaymentInternationalAddressController.onPageLoad(CheckMode)
-      case _ => routes.CheckYourAnswersController.onPageLoad()
+      case _ => routes.CheckYourAnswersController.onPageLoad
     }
-    case None => routes.SessionExpiredController.onPageLoad()
+    case None => routes.SessionExpiredController.onPageLoad
   }
 
   private def addressLookup(mode: Mode)(userAnswers: UserAnswers): Call = mode match {
-    case CheckMode => routes.CheckYourAnswersController.onPageLoad()
+    case CheckMode => routes.CheckYourAnswersController.onPageLoad
     case NormalMode => routes.TelephoneNumberController.onPageLoad(mode)
   }
 
@@ -574,23 +574,23 @@ class Navigator @Inject()() {
 
   def nextPage(id: Identifier, mode: Mode): UserAnswers => Call = mode match {
     case NormalMode =>
-      routeMap.getOrElse(id, _ => routes.IndexController.onPageLoad())
+      routeMap.getOrElse(id, _ => routes.IndexController.onPageLoad)
     case CheckMode =>
-      editRouteMap.getOrElse(id, _ => routes.CheckYourAnswersController.onPageLoad())
+      editRouteMap.getOrElse(id, _ => routes.CheckYourAnswersController.onPageLoad)
   }
 
   def nextPageWithIndex(id: Identifier, mode: Mode): UserAnswers => Call = mode match {
     case NormalMode =>
-      routeMapWithIndex.lift(id).getOrElse(_ => routes.IndexController.onPageLoad())
+      routeMapWithIndex.lift(id).getOrElse(_ => routes.IndexController.onPageLoad)
     case CheckMode =>
-      editRouteMapWithIndex.lift(id).getOrElse(_ => routes.CheckYourAnswersController.onPageLoad())
+      editRouteMapWithIndex.lift(id).getOrElse(_ => routes.CheckYourAnswersController.onPageLoad)
   }
 
   def nextPageWithCollectionId(collectionId: String, mode: Mode): UserAnswers => Call = mode match {
     case NormalMode =>
-      routeMapWithCollectionId.lift(collectionId).getOrElse(_ => routes.IndexController.onPageLoad())
+      routeMapWithCollectionId.lift(collectionId).getOrElse(_ => routes.IndexController.onPageLoad)
     case CheckMode =>
-      editRouteMapWithCollectionId.lift(collectionId).getOrElse(_ => routes.CheckYourAnswersController.onPageLoad())
+      editRouteMapWithCollectionId.lift(collectionId).getOrElse(_ => routes.CheckYourAnswersController.onPageLoad)
   }
 
 }

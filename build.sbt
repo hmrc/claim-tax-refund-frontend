@@ -16,30 +16,29 @@ lazy val playSettings: Seq[Setting[_]] = Seq.empty
 
 val compile = Seq(
   ws,
-  "uk.gov.hmrc"           %% "bootstrap-frontend-play-28"     % "5.3.0",
-  "uk.gov.hmrc"           %% "play-frontend-hmrc"             % "0.82.0-play-28",
+  "uk.gov.hmrc"           %% "bootstrap-frontend-play-28"     % "5.24.0",
+  "uk.gov.hmrc"           %% "play-frontend-hmrc"             % "0.94.0-play-28",
   "uk.gov.hmrc"           %% "simple-reactivemongo"           % "8.0.0-play-28",
-  "uk.gov.hmrc"           %% "govuk-template"                 % "5.68.0-play-28",
   "uk.gov.hmrc"           %% "http-caching-client"            % "9.5.0-play-28",
-  "uk.gov.hmrc"           %% "play-conditional-form-mapping"  % "1.9.0-play-28",
-  "uk.gov.hmrc"           %% "play-partials"                  % "8.1.0-play-28",
+  "uk.gov.hmrc"           %% "play-conditional-form-mapping"  % "1.11.0-play-28",
+  "uk.gov.hmrc"           %% "play-partials"                  % "8.3.0-play-28",
   "uk.gov.hmrc"           %% "play-language"                  % "5.1.0-play-28",
-  "uk.gov.hmrc"           %% "tax-year"                       % "1.3.0",
+  "uk.gov.hmrc"           %% "tax-year"                       % "1.7.0",
   "org.scalatra.scalate"  %% "play-scalate"                   % "0.6.0",
   "org.scalatra.scalate"  %% "scalate-core"                   % "1.9.6",
   "uk.gov.hmrc"           %% "domain"                         % "5.11.0-play-27",
-  "com.googlecode.libphonenumber" % "libphonenumber"          % "8.12.35"
+  "com.googlecode.libphonenumber" % "libphonenumber"          % "8.12.50"
 )
 
 def test(scope: String = "test"): Seq[ModuleID] = Seq(
   "com.github.tomakehurst"  %   "wiremock"                  % "2.26.3" % scope,
   "com.github.tomakehurst"  %   "wiremock-jre8"             % "2.26.3" % scope,
-  "com.vladsch.flexmark"    %   "flexmark-all"              % "0.35.10",
-  "org.scalatestplus"       %%  "scalatestplus-mockito"     % "1.0.0-M2",
-  "org.scalatestplus.play"  %%  "scalatestplus-play"        % "5.1.0",
-  "org.scalatestplus"       %%  "scalatestplus-scalacheck"  % "3.1.0.0-RC2",
+  "com.vladsch.flexmark"    %   "flexmark-all"              % "0.35.10" % scope,
+  "org.scalatestplus"       %%  "scalatestplus-mockito"     % "1.0.0-M2" % scope,
+  "org.scalatestplus.play"  %%  "scalatestplus-play"        % "5.1.0" % scope,
+  "org.scalatestplus"       %%  "scalatestplus-scalacheck"  % "3.1.0.0-RC2" % scope,
   "org.pegdown"             %   "pegdown"                   % "1.6.0" % scope,
-  "org.jsoup"               %   "jsoup"                     % "1.14.1" % scope,
+  "org.jsoup"               %   "jsoup"                     % "1.14.3" % scope,
   "com.typesafe.play"       %%  "play-test"                 % PlayVersion.current % scope,
   "org.mockito"             %   "mockito-all"               % "1.10.19" % scope
 )
@@ -75,8 +74,8 @@ lazy val microservice = Project(appName, file("."))
     PlayKeys.devSettings += "play.server.http.port" -> "9969"
   )
   .settings(
-    Keys.fork in Test := true,
-    javaOptions in Test += "-Dconfig.file=conf/test.application.conf")
+    Keys.fork in Test := true
+  )
   .settings(resolvers ++= Seq(
     Resolver.jcenterRepo,
   ))

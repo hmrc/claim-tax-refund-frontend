@@ -52,7 +52,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
                                            robotXML: RobotXML
                                           )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport with Logging {
 
-  def onPageLoad(): Action[AnyContent] = (authenticate andThen getData andThen requireData) {
+  def onPageLoad: Action[AnyContent] = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val cyaHelper = new CheckYourAnswersHelper(request.userAnswers)
       val cyaSections = new CheckYourAnswersSections(cyaHelper, request.userAnswers)
@@ -61,7 +61,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
         _ =>
           Ok(checkYourAnswers(appConfig, cyaSections.sections))
       }.getOrElse {
-        Redirect(routes.SessionExpiredController.onPageLoad())
+        Redirect(routes.SessionExpiredController.onPageLoad)
       }
   }
 
@@ -131,7 +131,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
         submission =>
           submissionService.ctrSubmission(submission) map {
             case SubmissionSuccessful =>
-              Redirect(routes.ConfirmationController.onPageLoad())
+              Redirect(routes.ConfirmationController.onPageLoad)
             case _ =>
               throw new Exception("[Check your answers][Submission failed]")
           }
