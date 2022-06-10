@@ -60,15 +60,15 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with ScalaFuture
   "Check Your Answers Controller" must {
 
     "return 200 and the correct view for a GET" in {
-      val result = controller(someData()).onPageLoad()(fakeRequest)
+      val result = controller(someData()).onPageLoad(fakeRequest)
       status(result) mustBe OK
     }
 
     "redirect to Session Expired for a GET if not existing data is found" in {
-      val result = controller(dontGetAnyData).onPageLoad()(fakeRequest)
+      val result = controller(dontGetAnyData).onPageLoad(fakeRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)
     }
 
     "return RuntimeException" in {
@@ -88,7 +88,7 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with ScalaFuture
       val result: Future[Result] = controller().onSubmit()(fakeRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.ConfirmationController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(routes.ConfirmationController.onPageLoad.url)
     }
 
     "throw an exception when a submission fails" in {

@@ -30,7 +30,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 class AddressLookupRoutingControllerSpec extends ControllerSpecBase with MockitoSugar {
 
-  def onwardRoute = routes.IndexController.onPageLoad()
+  def onwardRoute = routes.IndexController.onPageLoad
 
   private val mockAddressLookup: AddressLookupConnector = mock[AddressLookupConnector]
   private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers()

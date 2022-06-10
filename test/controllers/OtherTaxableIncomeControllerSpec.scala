@@ -65,7 +65,7 @@ class OtherTaxableIncomeControllerSpec extends ControllerSpecBase with GuiceOneA
     }
 
     "redirect to the next page when valid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("name", "qwerty"), ("amount", "123"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("name", "qwerty"), ("amount", "123")).withMethod("POST")
       val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode, 0)(postRequest)
 
       status(result) mustBe SEE_OTHER
@@ -73,7 +73,7 @@ class OtherTaxableIncomeControllerSpec extends ControllerSpecBase with GuiceOneA
     }
 
     "return a Bad Request and errors when invalid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", ""))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "")).withMethod("POST")
       val boundForm = form.bind(Map("value" -> ""))
 
       val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode, 0)(postRequest)
@@ -86,15 +86,15 @@ class OtherTaxableIncomeControllerSpec extends ControllerSpecBase with GuiceOneA
       val result = controller(dontGetAnyData).onPageLoad(NormalMode, 0)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)
     }
 
     "redirect to Session Expired for a POST if no existing data is found" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("name", "qwerty"), ("amount", "123"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("name", "qwerty"), ("amount", "123")).withMethod("POST")
       val result = controller(dontGetAnyData).onSubmit(NormalMode, 0)(postRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)
     }
 
     "redirect to Session Expired if no taxYears have been selected" in {
@@ -103,7 +103,7 @@ class OtherTaxableIncomeControllerSpec extends ControllerSpecBase with GuiceOneA
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode, 0)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)
     }
 
     "redirect to Session Expired if no taxYears have been selected on submit" in {
@@ -112,7 +112,7 @@ class OtherTaxableIncomeControllerSpec extends ControllerSpecBase with GuiceOneA
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode, 0)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)
     }
   }
 }

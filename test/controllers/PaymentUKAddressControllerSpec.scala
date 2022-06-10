@@ -32,7 +32,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 class PaymentUKAddressControllerSpec extends ControllerSpecBase with GuiceOneAppPerSuite {
 
-  def onwardRoute = routes.IndexController.onPageLoad()
+  def onwardRoute = routes.IndexController.onPageLoad
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new PaymentUKAddressController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
@@ -63,7 +63,7 @@ class PaymentUKAddressControllerSpec extends ControllerSpecBase with GuiceOneApp
     }
 
     "redirect to the next page when valid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("addressLine1", "line 1"), ("addressLine2", "line 2"), ("postcode", "NE2 7RF"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("addressLine1", "line 1"), ("addressLine2", "line 2"), ("postcode", "NE2 7RF")).withMethod("POST")
 
       val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode)(postRequest)
 
@@ -72,7 +72,7 @@ class PaymentUKAddressControllerSpec extends ControllerSpecBase with GuiceOneApp
     }
 
     "return a Bad Request and errors when invalid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value")).withMethod("POST")
       val boundForm = form.bind(Map("value" -> "invalid value"))
 
       val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode)(postRequest)
@@ -85,15 +85,15 @@ class PaymentUKAddressControllerSpec extends ControllerSpecBase with GuiceOneApp
       val result = controller(dontGetAnyData).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)
     }
 
     "redirect to Session Expired for a POST if no existing data is found" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("addressLine1", "line 1"), ("addressLine2", "line 2"), ("postcode", "NE1 6RF"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("addressLine1", "line 1"), ("addressLine2", "line 2"), ("postcode", "NE1 6RF")).withMethod("POST")
       val result = controller(dontGetAnyData).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)
     }
   }
 }

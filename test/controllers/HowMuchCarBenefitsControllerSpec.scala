@@ -34,7 +34,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 class HowMuchCarBenefitsControllerSpec extends ControllerSpecBase with MockitoSugar with GuiceOneAppPerSuite {
 
-  def onwardRoute: Call = routes.IndexController.onPageLoad()
+  def onwardRoute: Call = routes.IndexController.onPageLoad
 
   val testAnswer = "9,999.99"
   val form = new HowMuchCarBenefitsForm(frontendAppConfig)()
@@ -65,7 +65,7 @@ class HowMuchCarBenefitsControllerSpec extends ControllerSpecBase with MockitoSu
     }
 
     "redirect to the next page when valid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", testAnswer))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", testAnswer)).withMethod("POST")
       val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
@@ -73,7 +73,7 @@ class HowMuchCarBenefitsControllerSpec extends ControllerSpecBase with MockitoSu
     }
 
     "return a Bad Request and errors when invalid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", ""))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "")).withMethod("POST")
       val boundForm = form.bind(Map("value" -> ""))
 
       val result = controller(fakeDataRetrievalAction()).onSubmit(NormalMode)(postRequest)
@@ -86,15 +86,15 @@ class HowMuchCarBenefitsControllerSpec extends ControllerSpecBase with MockitoSu
       val result = controller(dontGetAnyData).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)
     }
 
     "redirect to Session Expired for a POST if no existing data is found" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", testAnswer))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", testAnswer)).withMethod("POST")
       val result = controller(dontGetAnyData).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)
     }
 
     "redirect to Session Expired if no taxYears have been selected" in {
@@ -103,7 +103,7 @@ class HowMuchCarBenefitsControllerSpec extends ControllerSpecBase with MockitoSu
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)
     }
 
     "redirect to Session Expired if no taxYears have been selected on submit" in {
@@ -112,7 +112,7 @@ class HowMuchCarBenefitsControllerSpec extends ControllerSpecBase with MockitoSu
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)
     }
   }
 }

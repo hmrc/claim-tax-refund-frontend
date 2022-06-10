@@ -35,7 +35,7 @@ class SelectTaxYearControllerSpec extends ControllerSpecBase with GuiceOneAppPer
 
   val selectTaxYear: selectTaxYear = fakeApplication.injector.instanceOf[selectTaxYear]
 
-  def onwardRoute = routes.IndexController.onPageLoad()
+  def onwardRoute = routes.IndexController.onPageLoad
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new SelectTaxYearController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
@@ -64,7 +64,7 @@ class SelectTaxYearControllerSpec extends ControllerSpecBase with GuiceOneAppPer
     }
 
     "redirect to the next page when valid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", radioButtonOptions))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", radioButtonOptions)).withMethod("POST")
 
       val result = controller().onSubmit(NormalMode)(postRequest)
 
@@ -73,7 +73,7 @@ class SelectTaxYearControllerSpec extends ControllerSpecBase with GuiceOneAppPer
     }
 
     "return a Bad Request and errors when invalid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value")).withMethod("POST")
       val boundForm = SelectTaxYearForm().bind(Map("value" -> "invalid value"))
 
       val result = controller().onSubmit(NormalMode)(postRequest)

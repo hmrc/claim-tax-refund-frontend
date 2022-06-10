@@ -241,13 +241,13 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
       "go to SessionExpired if answers.selectBenefits is None on SelectBenefits page" in {
         val answers = mock[UserAnswers]
         when(answers.selectBenefits) thenReturn None
-        navigator.nextPage(SelectBenefitsId, NormalMode)(answers) mustBe routes.SessionExpiredController.onPageLoad()
+        navigator.nextPage(SelectBenefitsId, NormalMode)(answers) mustBe routes.SessionExpiredController.onPageLoad
       }
 
       "go to SessionExpired if answers.selectBenefits is None on other benefit pages" in {
         val answers = mock[UserAnswers]
         when(answers.selectBenefits) thenReturn None
-        navigator.nextPage(HowMuchBereavementAllowanceId, NormalMode)(answers) mustBe routes.SessionExpiredController.onPageLoad()
+        navigator.nextPage(HowMuchBereavementAllowanceId, NormalMode)(answers) mustBe routes.SessionExpiredController.onPageLoad
       }
 
       // onwards route from OtherBenefitsName always follows the same pattern
@@ -282,7 +282,7 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
         "take you to 'CheckYourAnswers' then selecting 'No'" in {
           val answers = MockUserAnswers.nothingAnswered
           when (answers.anyBenefits) thenReturn Some(false)
-          navigator.nextPage(AnyBenefitsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+          navigator.nextPage(AnyBenefitsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad
         }
 
         "take you to 'CheckYourAnswers' when not changing your answer" in {
@@ -292,7 +292,7 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
             Benefits.CARERS_ALLOWANCE
           ))
           when(answers.howMuchCarersAllowance) thenReturn Some ("112.44")
-          navigator.nextPage(HowMuchCarersAllowanceId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+          navigator.nextPage(HowMuchCarersAllowanceId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad
         }
 
         "take you to SelectBenefits from AnyBenefits when Yes is selected and no company benefits selected" in {
@@ -311,7 +311,7 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
           ))
           navigator.nextPage(SelectBenefitsId, CheckMode)(answers) mustBe routes.HowMuchBereavementAllowanceController.onPageLoad(CheckMode)
           when (answers.howMuchBereavementAllowance) thenReturn Some("112.44")
-          navigator.nextPage(SelectBenefitsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+          navigator.nextPage(SelectBenefitsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad
         }
 
         "go to 'CheckYourAnswers' when 'BEREAVEMENT_ALLOWANCE' selected and HowMuch is not empty" in {
@@ -320,7 +320,7 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
             Benefits.BEREAVEMENT_ALLOWANCE
           ))
           when (answers.howMuchBereavementAllowance) thenReturn Some("112.44")
-          navigator.nextPage(SelectBenefitsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+          navigator.nextPage(SelectBenefitsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad
         }
 
         "go to 'HowMuchCareers when 'BEREAVEMENT_ALLOWANCE' and 'CARERS_ALLOWANCE' but CAREERS is empty" in {
@@ -363,7 +363,7 @@ class BenefitsNavigatorSpec extends SpecBase with MockitoSugar {
         "in CheckMode go to CheckYourAnswersController when amount stored and add another benefit is false" in {
           val answers = MockUserAnswers.benefitsUserAnswers()
           when(answers.anyOtherBenefits) thenReturn Some(false)
-          navigator.nextPage(AnyOtherBenefitsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad()
+          navigator.nextPage(AnyOtherBenefitsId, CheckMode)(answers) mustBe routes.CheckYourAnswersController.onPageLoad
         }
 
         "in CheckMode go to OtherBenefits when add another benefit is true" in {

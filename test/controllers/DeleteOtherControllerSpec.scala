@@ -33,7 +33,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 class DeleteOtherControllerSpec  extends ControllerSpecBase with GuiceOneAppPerSuite {
 
-  def onwardRoute: Call = routes.IndexController.onPageLoad()
+  def onwardRoute: Call = routes.IndexController.onPageLoad
 
   val formProvider = new BooleanForm()
   val form: Form[Boolean] = formProvider()
@@ -70,7 +70,7 @@ class DeleteOtherControllerSpec  extends ControllerSpecBase with GuiceOneAppPerS
     }
 
     "redirect to AnyOtherBenefit when value is true and valid benefit submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true")).withMethod("POST")
 
       val result = controller(fakeDataRetrievalAction(mockUserAnswers.benefitsUserAnswers()))
         .onSubmit(CheckMode, index, itemName, benefitCollectionId)(postRequest)
@@ -80,7 +80,7 @@ class DeleteOtherControllerSpec  extends ControllerSpecBase with GuiceOneAppPerS
     }
 
     "redirect to RemoveOtherSelectedOption when value is true and no other benefits are available" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true")).withMethod("POST")
       val answers = mockUserAnswers.benefitsUserAnswers()
 
       when(answers.otherBenefit) thenReturn Some(Seq.empty)
@@ -94,7 +94,7 @@ class DeleteOtherControllerSpec  extends ControllerSpecBase with GuiceOneAppPerS
 
 
     "redirect to AnyOtherCompanyBenefits when value is true and valid companyBenefit submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true")).withMethod("POST")
 
       val result = controller(fakeDataRetrievalAction(mockUserAnswers.companyBenefitsUserAnswers))
         .onSubmit(NormalMode, index, itemName, companyBenefitCollectionId)(postRequest)
@@ -104,7 +104,7 @@ class DeleteOtherControllerSpec  extends ControllerSpecBase with GuiceOneAppPerS
     }
 
     "redirect to RemoveOtherSelectedOption when value is true and no other companyBenefits are available" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true")).withMethod("POST")
       val answers = mockUserAnswers.companyBenefitsUserAnswers
 
       when(answers.otherCompanyBenefit) thenReturn Some(Seq.empty)
@@ -118,7 +118,7 @@ class DeleteOtherControllerSpec  extends ControllerSpecBase with GuiceOneAppPerS
 
 
     "redirect to CheckYourAnswers when value is true and valid otherTaxableIncome submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true")).withMethod("POST")
 
       val result = controller(fakeDataRetrievalAction(mockUserAnswers.taxableIncomeUserAnswers))
         .onSubmit(NormalMode, index, itemName, taxableIncomeCollectionId)(postRequest)
@@ -128,7 +128,7 @@ class DeleteOtherControllerSpec  extends ControllerSpecBase with GuiceOneAppPerS
     }
 
     "redirect to RemoveOtherSelectedOption when value is true and no other otherTaxableIncome are available" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true")).withMethod("POST")
       val answers = mockUserAnswers.taxableIncomeUserAnswers
 
       when(answers.otherTaxableIncome) thenReturn Some(Seq.empty)
@@ -142,48 +142,48 @@ class DeleteOtherControllerSpec  extends ControllerSpecBase with GuiceOneAppPerS
 
 
     "redirect to SessionExpired when value is true and no otherBenefit userAnswer is found" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true")).withMethod("POST")
 
       val result = controller(fakeDataRetrievalAction())
         .onSubmit(NormalMode, index, itemName, benefitCollectionId)(postRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)
     }
 
     "redirect to SessionExpired when value is true and no otherCompanyBenefit userAnswer is found" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true")).withMethod("POST")
 
       val result = controller(fakeDataRetrievalAction())
         .onSubmit(NormalMode, index, itemName, companyBenefitCollectionId)(postRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)
     }
 
 
     "redirect to SessionExpired when value is true and no otherTaxableIncome userAnswer is found" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true")).withMethod("POST")
 
       val result = controller(fakeDataRetrievalAction())
         .onSubmit(NormalMode, index, itemName, taxableIncomeCollectionId)(postRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)
     }
 
     "redirect to SessionExpired when id is not valid" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true")).withMethod("POST")
 
       val result = controller(fakeDataRetrievalAction())
         .onSubmit(NormalMode, index, itemName, invalidCollectionId)(postRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)
     }
 
     "redirect to AnyOtherBenefit when valid data is submitted and value is false" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "false"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "false")).withMethod("POST")
 
       val result = controller(fakeDataRetrievalAction())
         .onSubmit(NormalMode, index, itemName, benefitCollectionId)(postRequest)
@@ -193,7 +193,7 @@ class DeleteOtherControllerSpec  extends ControllerSpecBase with GuiceOneAppPerS
     }
 
     "redirect to AnyOtherCompanyBenefits when valid data is submitted and value is false" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "false"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "false")).withMethod("POST")
 
       val result = controller(fakeDataRetrievalAction())
         .onSubmit(NormalMode, index, itemName, companyBenefitCollectionId)(postRequest)
@@ -203,7 +203,7 @@ class DeleteOtherControllerSpec  extends ControllerSpecBase with GuiceOneAppPerS
     }
 
     "redirect to AnyOtherTaxableIncome when valid data is submitted and value is false" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "false"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "false")).withMethod("POST")
 
       val result = controller(fakeDataRetrievalAction())
         .onSubmit(NormalMode, index, itemName, taxableIncomeCollectionId)(postRequest)
@@ -213,27 +213,27 @@ class DeleteOtherControllerSpec  extends ControllerSpecBase with GuiceOneAppPerS
     }
 
     "redirect to SessionExpired when invalid id provided and value is true" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true")).withMethod("POST")
 
       val result = controller(fakeDataRetrievalAction(mockUserAnswers.taxableIncomeUserAnswers))
         .onSubmit(NormalMode, index, itemName, invalidCollectionId)(postRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)
     }
 
     "redirect to SessionExpired when invalid id provided and value is false" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "false"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "false")).withMethod("POST")
 
       val result = controller(fakeDataRetrievalAction(mockUserAnswers.taxableIncomeUserAnswers))
         .onSubmit(NormalMode, index, itemName, invalidCollectionId)(postRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)
     }
 
     "return a Bad Request and errors when invalid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value")).withMethod("POST")
       val boundForm = form.bind(Map("value" -> "invalid value"))
 
       val result = controller(fakeDataRetrievalAction())
@@ -248,7 +248,7 @@ class DeleteOtherControllerSpec  extends ControllerSpecBase with GuiceOneAppPerS
         .onPageLoad(NormalMode, index, itemName, benefitCollectionId)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)
     }
 
     "redirect to Session Expired for a GET if no taxYear is available" in {
@@ -260,16 +260,16 @@ class DeleteOtherControllerSpec  extends ControllerSpecBase with GuiceOneAppPerS
         .onPageLoad(NormalMode, index, itemName, benefitCollectionId)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)
     }
 
     "redirect to Session Expired for a POST if no existing data is found" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true")).withMethod("POST")
       val result = controller(dontGetAnyData)
         .onSubmit(NormalMode, index, itemName, benefitCollectionId)(postRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)
     }
   }
 }

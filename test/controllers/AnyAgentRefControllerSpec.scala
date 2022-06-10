@@ -34,7 +34,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 class AnyAgentRefControllerSpec extends ControllerSpecBase with GuiceOneAppPerSuite {
 
-  def onwardRoute = routes.IndexController.onPageLoad()
+  def onwardRoute = routes.IndexController.onPageLoad
 
   val requiredKey = "anyAgentRef.blank"
   val requiredAgentRefKey = "anyAgentRef.blankAgentRef"
@@ -80,7 +80,7 @@ class AnyAgentRefControllerSpec extends ControllerSpecBase with GuiceOneAppPerSu
     }
 
     "redirect to the next page when valid YES data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("anyAgentRef", "true"),("agentRef", "AB1234"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("anyAgentRef", "true"),("agentRef", "AB1234")).withMethod("POST")
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
@@ -88,7 +88,7 @@ class AnyAgentRefControllerSpec extends ControllerSpecBase with GuiceOneAppPerSu
     }
 
     "redirect to the next page when valid NO data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("anyAgentRef", "false"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("anyAgentRef", "false")).withMethod("POST")
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
@@ -96,7 +96,7 @@ class AnyAgentRefControllerSpec extends ControllerSpecBase with GuiceOneAppPerSu
     }
 
     "return a Bad Request and errors when invalid data is submitted" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "invalid value")).withMethod("POST")
       val boundForm = form.bind(Map("value" -> "invalid value"))
 
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(postRequest)
@@ -109,15 +109,15 @@ class AnyAgentRefControllerSpec extends ControllerSpecBase with GuiceOneAppPerSu
       val result = controller(dontGetAnyData).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)
     }
 
     "redirect to Session Expired for a POST if no existing data is found" in {
-      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true"))
+      val postRequest = fakeRequest.withFormUrlEncodedBody(("value", "true")).withMethod("POST")
       val result = controller(dontGetAnyData).onSubmit(NormalMode)(postRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)
     }
 
     "redirect to Session Expired if no taxYears have been selected" in {
@@ -126,7 +126,7 @@ class AnyAgentRefControllerSpec extends ControllerSpecBase with GuiceOneAppPerSu
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onPageLoad(NormalMode)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)
     }
 
     "redirect to Session Expired if no taxYears have been selected on submit" in {
@@ -135,7 +135,7 @@ class AnyAgentRefControllerSpec extends ControllerSpecBase with GuiceOneAppPerSu
       val result = controller(fakeDataRetrievalAction(mockUserAnswers)).onSubmit(NormalMode)(fakeRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad.url)
     }
   }
 }
