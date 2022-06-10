@@ -64,7 +64,7 @@ class AnyOtherTaxableIncomeController @Inject()(appConfig: FrontendAppConfig,
       }
 
       result.getOrElse {
-        Redirect(routes.SessionExpiredController.onPageLoad())
+        Redirect(routes.SessionExpiredController.onPageLoad)
       }
   }
 
@@ -89,7 +89,7 @@ class AnyOtherTaxableIncomeController @Inject()(appConfig: FrontendAppConfig,
       }
 
       result.getOrElse {
-        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad))
       }
   }
 }

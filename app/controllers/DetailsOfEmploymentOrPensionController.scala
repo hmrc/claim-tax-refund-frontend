@@ -61,7 +61,7 @@ cc: MessagesControllerComponents,
           val taxYear = selectedTaxYear
           Ok(detailsOfEmploymentOrPension(appConfig, preparedForm, mode, taxYear, characterLimit))
       }.getOrElse {
-        Redirect(routes.SessionExpiredController.onPageLoad())
+        Redirect(routes.SessionExpiredController.onPageLoad)
       }
   }
 
@@ -78,7 +78,7 @@ cc: MessagesControllerComponents,
                 Redirect(navigator.nextPage(DetailsOfEmploymentOrPensionId, mode)(new UserAnswers(cacheMap))))
           )
       }.getOrElse {
-        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad))
       }
   }
 }

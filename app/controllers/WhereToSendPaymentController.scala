@@ -55,7 +55,7 @@ class WhereToSendPaymentController @Inject()(
         taxYear =>
           Ok(whereToSendPayment(preparedForm, mode, taxYear))
       }.getOrElse {
-        Redirect(routes.SessionExpiredController.onPageLoad())
+        Redirect(routes.SessionExpiredController.onPageLoad)
       }
   }
 
@@ -71,7 +71,7 @@ class WhereToSendPaymentController @Inject()(
                 Redirect(navigator.nextPage(WhereToSendPaymentId, mode)(new UserAnswers(cacheMap))))
           )
       }.getOrElse {
-        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad))
       }
   }
 }

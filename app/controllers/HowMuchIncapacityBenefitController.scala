@@ -59,7 +59,7 @@ cc: MessagesControllerComponents,
         taxYear =>
           Ok(howMuchIncapacityBenefit(preparedForm, mode, taxYear))
       }.getOrElse {
-        Redirect(routes.SessionExpiredController.onPageLoad())
+        Redirect(routes.SessionExpiredController.onPageLoad)
       }
   }
 
@@ -76,7 +76,7 @@ cc: MessagesControllerComponents,
                 Redirect(navigator.nextPage(HowMuchIncapacityBenefitId, mode)(new UserAnswers(cacheMap))))
           )
       }.getOrElse {
-        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad))
       }
   }
 }

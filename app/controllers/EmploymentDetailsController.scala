@@ -72,7 +72,7 @@ cc: MessagesControllerComponents,
               Redirect(routes.EnterPayeReferenceController.onPageLoad(NormalMode).url)
           }
       }.getOrElse {
-        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad))
       }
   }
 
@@ -96,7 +96,7 @@ cc: MessagesControllerComponents,
               )
           }
       }.getOrElse {
-        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad))
       }
   }
 }

@@ -60,7 +60,7 @@ class OtherBenefitController @Inject()(appConfig: FrontendAppConfig,
         selectedTaxYear =>
           Ok(otherBenefit(appConfig, preparedForm, mode, index, selectedTaxYear))
       }.getOrElse {
-        Redirect(routes.SessionExpiredController.onPageLoad())
+        Redirect(routes.SessionExpiredController.onPageLoad)
       }
   }
 
@@ -85,7 +85,7 @@ class OtherBenefitController @Inject()(appConfig: FrontendAppConfig,
 
           )
       }.getOrElse {
-        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad))
       }
   }
 

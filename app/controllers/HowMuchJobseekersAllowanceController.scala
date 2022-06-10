@@ -58,7 +58,7 @@ cc: MessagesControllerComponents,
         taxYear =>
           Ok(howMuchJobseekersAllowance(appConfig, preparedForm, mode, taxYear))
       }.getOrElse {
-        Redirect(routes.SessionExpiredController.onPageLoad())
+        Redirect(routes.SessionExpiredController.onPageLoad)
       }
   }
 
@@ -74,7 +74,7 @@ cc: MessagesControllerComponents,
                 Redirect(navigator.nextPage(HowMuchJobseekersAllowanceId, mode)(new UserAnswers(cacheMap))))
           )
       }.getOrElse {
-        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad))
       }
   }
 }

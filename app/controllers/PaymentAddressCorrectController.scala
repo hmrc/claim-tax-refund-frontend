@@ -70,7 +70,7 @@ cc: MessagesControllerComponents,
               Redirect(routes.IsPaymentAddressInTheUKController.onPageLoad(mode))
           }
       }.getOrElse {
-        Redirect(routes.SessionExpiredController.onPageLoad())
+        Redirect(routes.SessionExpiredController.onPageLoad)
       }
 
   }
@@ -99,7 +99,7 @@ cc: MessagesControllerComponents,
             }
           )
       }.getOrElse {
-        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad))
       }
   }
 }

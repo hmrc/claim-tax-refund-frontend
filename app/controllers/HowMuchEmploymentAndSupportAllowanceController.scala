@@ -58,7 +58,7 @@ class HowMuchEmploymentAndSupportAllowanceController @Inject()(
         taxYear =>
           Ok(howMuchEmploymentAndSupportAllowance(appConfig, preparedForm, mode, taxYear))
       }.getOrElse {
-        Redirect(routes.SessionExpiredController.onPageLoad())
+        Redirect(routes.SessionExpiredController.onPageLoad)
       }
   }
 
@@ -75,7 +75,7 @@ class HowMuchEmploymentAndSupportAllowanceController @Inject()(
                 Redirect(navigator.nextPage(HowMuchEmploymentAndSupportAllowanceId, mode)(new UserAnswers(cacheMap))))
           )
       }.getOrElse {
-        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
+        Future.successful(Redirect(routes.SessionExpiredController.onPageLoad))
       }
   }
 }

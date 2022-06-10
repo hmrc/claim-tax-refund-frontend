@@ -48,7 +48,7 @@ class AddressLookupConfig @Inject()(messagesApi: MessagesApi) {
                       |    },
                       |    "timeoutConfig": {
                       |      "timeoutAmount": 890,
-                      |      "timeoutUrl": "${controllers.routes.SessionExpiredController.onPageLoad().url}"
+                      |      "timeoutUrl": "${controllers.routes.SessionExpiredController.onPageLoad.url}"
                       |    }
                       |},
                       |    "labels": {
