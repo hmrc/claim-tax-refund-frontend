@@ -1,5 +1,5 @@
 @*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 @import controllers.routes._
 @import forms.SelectTaxableIncomeForm
 @import models.Mode
-@import viewmodels.InputViewModel
+
 @this(
         formWithCSRF: FormWithCSRF,
         layout: Layout,
@@ -55,7 +55,6 @@
 
             @inputCheckBox(
                 isPageHeading = false,
-                viewModel = InputViewModel("value", form),
                 legend = messages("selectTaxableIncome.heading", taxYear.asString),
                 legendClass = Some("govuk-visually-hidden"),
                 inputs = SelectTaxableIncomeForm.options.map { checkboxOption =>
