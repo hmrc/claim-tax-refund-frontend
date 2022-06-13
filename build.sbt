@@ -31,8 +31,8 @@ val compile = Seq(
 )
 
 def test(scope: String = "test"): Seq[ModuleID] = Seq(
-  "com.github.tomakehurst"  %   "wiremock"                  % "2.26.3" % scope,
-  "com.github.tomakehurst"  %   "wiremock-jre8"             % "2.26.3" % scope,
+  "com.github.tomakehurst"  %   "wiremock"                  % "2.27.2" % scope,
+  "com.github.tomakehurst"  %   "wiremock-jre8"             % "2.28.1" % scope,
   "com.vladsch.flexmark"    %   "flexmark-all"              % "0.35.10" % scope,
   "org.scalatestplus"       %%  "scalatestplus-mockito"     % "1.0.0-M2" % scope,
   "org.scalatestplus.play"  %%  "scalatestplus-play"        % "5.1.0" % scope,

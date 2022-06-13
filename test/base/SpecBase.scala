@@ -36,10 +36,7 @@ import scala.concurrent.ExecutionContext
 
 trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with MockitoSugar {
 
-  override lazy val app: Application = {
-
-    new GuiceApplicationBuilder().build()
-  }
+  implicit override lazy val app: Application = new GuiceApplicationBuilder().disable[com.kenshoo.play.metrics.PlayModule].build()
 
   def injector: Injector = app.injector
 
