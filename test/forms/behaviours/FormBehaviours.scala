@@ -25,10 +25,17 @@ import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.Injector
 import play.api.test.FakeRequest
 import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
+import play.api.Application
+import play.api.inject.guice.GuiceApplicationBuilder
 
 trait FormBehaviours extends FormSpec with GuiceOneAppPerSuite {
 
   val validData: Map[String, String]
+
+  override lazy val app: Application = {
+
+    new GuiceApplicationBuilder().disable[com.kenshoo.play.metrics.Metrics].build()
+  }
 
   val form: Form[_]
 

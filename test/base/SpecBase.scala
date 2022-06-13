@@ -38,8 +38,10 @@ trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with MockitoSugar {
 
   override lazy val app: Application = {
 
-    new GuiceApplicationBuilder().build()
+    new GuiceApplicationBuilder().disable[com.kenshoo.play.metrics.Metrics].build()
   }
+
+  override def fakeApplication(): Application = app
 
   def injector: Injector = app.injector
 
