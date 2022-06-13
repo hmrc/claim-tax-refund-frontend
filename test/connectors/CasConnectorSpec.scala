@@ -36,7 +36,6 @@ class CasConnectorSpec extends SpecBase with MockitoSugar with WireMockHelper wi
       .configure(
         conf = "microservice.services.claim-tax-refund.port" -> server.port
       )
-      .disable[com.kenshoo.play.metrics.Metrics]
       .build()
 
   implicit val referenceGenerator: ReferenceGenerator = new ReferenceGenerator()
