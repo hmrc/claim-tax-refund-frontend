@@ -50,7 +50,7 @@
         @formWithCSRF(action = NomineeFullNameController.onSubmit(mode), 'autoComplete -> "off") {
             @inputText(
                 label = messages("nomineeFullName.heading"),
-                labelClass = Some("govuk-visually-hidden"),
+                labelClass = Some("visually-hidden"),
                 field = form("value")
             )
 

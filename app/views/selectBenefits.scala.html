@@ -53,7 +53,7 @@
     @formWithCSRF(action = SelectBenefitsController.onSubmit(mode), 'autoComplete -> "off") {
         @inputCheckBox(
             legend = messages("selectBenefits.heading", taxYear.asString),
-            legendClass = Some("govuk-visually-hidden"),
+            legendClass = Some("visually-hidden"),
             isPageHeading = false,
             inputs = Benefits.sortedBenefits.map { checkboxOption =>
                 CheckboxItem(

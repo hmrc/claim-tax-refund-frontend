@@ -51,7 +51,7 @@
         @formWithCSRF(action = HowMuchCarersAllowanceController.onSubmit(mode), 'autoComplete -> "off") {
         @inputText(
             label = messages("howMuchCarersAllowance.heading"),
-            labelClass = Some("govuk-visually-hidden"),
+            labelClass = Some("visually-hidden"),
             currency = true,
             field = form("value")
         )

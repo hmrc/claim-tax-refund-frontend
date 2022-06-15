@@ -63,6 +63,7 @@
 }
 
 @head = {
+    <link rel="stylesheet" type="text/css" href ='@routes.Assets.versioned("stylesheets/ctr.css")'>
     @if(timeoutEnabled) {
         @hmrcTimeoutDialogHelper(
             signOutUrl = controllers.routes.SessionExpiredController.onPageLoad.url,
