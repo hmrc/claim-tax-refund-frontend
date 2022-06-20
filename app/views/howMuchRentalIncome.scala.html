@@ -49,7 +49,7 @@
         @formWithCSRF(action = HowMuchRentalIncomeController.onSubmit(mode), 'autoComplete -> "off") {
             @inputText(
                 label = messages("howMuchRentalIncome.heading"),
-                labelClass = Some("govuk-visually-hidden"),
+                labelClass = Some("visually-hidden"),
                 currency = true,
                 field = form("value")
             )

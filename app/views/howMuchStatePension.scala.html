@@ -51,7 +51,7 @@
     @formWithCSRF(action = HowMuchStatePensionController.onSubmit(mode), 'autoComplete -> "off") {
         @input_text(
             label = messages("howMuchStatePension.heading"),
-            labelClass = Some("govuk-visually-hidden"),
+            labelClass = Some("visually-hidden"),
             currency = true,
             field = form("value")
         )

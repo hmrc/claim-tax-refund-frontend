@@ -50,7 +50,7 @@
     @formWithCSRF(action = TelephoneNumberController.onSubmit(mode), 'autoComplete -> "off") {
         @inputYesNoWithTextExpander(
             label = messages("telephoneNumber.heading"),
-            labelClass = Some("govuk-visually-hidden"),
+            labelClass = Some("visually-hidden"),
             textLabel = messages("telephoneNumber.telephoneNumberField"),
             inputType = "tel",
             autoComplete = Some("tel"),

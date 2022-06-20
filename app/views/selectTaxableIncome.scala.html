@@ -56,7 +56,7 @@
             @inputCheckBox(
                 isPageHeading = false,
                 legend = messages("selectTaxableIncome.heading", taxYear.asString),
-                legendClass = Some("govuk-visually-hidden"),
+                legendClass = Some("visually-hidden"),
                 inputs = SelectTaxableIncomeForm.options.map { checkboxOption =>
                     CheckboxItem(
                         content = HtmlContent(messages(checkboxOption._1).capitalize),

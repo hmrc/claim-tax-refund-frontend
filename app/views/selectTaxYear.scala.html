@@ -50,7 +50,7 @@
         @heading(messages("selectTaxYear.heading"))
         @inputRadio(
             legend = Text(messages("selectTaxYear.heading")),
-            legendClass = Some("govuk-visually-hidden"),
+            legendClass = Some("visually-hidden"),
             inputs = SelectTaxYear.options map { radioOption =>
                 RadioItem(
                     value = Some(radioOption.value),
