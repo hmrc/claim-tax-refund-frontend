@@ -33,7 +33,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 class SelectTaxYearControllerSpec extends ControllerSpecBase with GuiceOneAppPerSuite {
 
-  val selectTaxYear: selectTaxYear = fakeApplication.injector.instanceOf[selectTaxYear]
+  val selectTaxYear: selectTaxYear = fakeApplication().injector.instanceOf[selectTaxYear]
 
   def onwardRoute = routes.IndexController.onPageLoad
 

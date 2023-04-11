@@ -49,7 +49,7 @@
 
             @headingWithCaption(messages("howMuchIncapacityBenefit.heading"), taxYear = Some(taxYear.asString))
 
-            @formWithCSRF(action = HowMuchIncapacityBenefitController.onSubmit(mode), 'autoComplete -> "off") {
+            @formWithCSRF(action = HowMuchIncapacityBenefitController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
             @inputText(
                 label = messages("howMuchIncapacityBenefit.heading"),

@@ -33,7 +33,7 @@ class DetailsOfEmploymentOrPensionViewSpec extends NewStringViewBehaviours with 
   private val characterLimit = 500
 
   override val form: Form[String] = new DetailsOfEmploymentOrPensionForm(frontendAppConfig)()
-  val detailsOfEmploymentOrPension: detailsOfEmploymentOrPension = fakeApplication.injector.instanceOf[detailsOfEmploymentOrPension]
+  val detailsOfEmploymentOrPension: detailsOfEmploymentOrPension = fakeApplication().injector.instanceOf[detailsOfEmploymentOrPension]
 
   def createView = () =>
     detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages)

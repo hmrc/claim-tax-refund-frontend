@@ -33,7 +33,7 @@ class OtherTaxableIncomeViewSpec extends NewQuestionViewBehaviours[OtherTaxableI
   private val taxYear = CustomTaxYear(2017)
 
   override val form: Form[OtherTaxableIncome] = new OtherTaxableIncomeForm(frontendAppConfig)(Seq.empty, 0)
-  val otherTaxableIncome: otherTaxableIncome = fakeApplication.injector.instanceOf[otherTaxableIncome]
+  val otherTaxableIncome: otherTaxableIncome = fakeApplication().injector.instanceOf[otherTaxableIncome]
 
   def createView: () =>
     HtmlFormat.Appendable = () =>

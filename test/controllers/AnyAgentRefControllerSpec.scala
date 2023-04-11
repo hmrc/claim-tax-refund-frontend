@@ -43,7 +43,7 @@ class AnyAgentRefControllerSpec extends ControllerSpecBase with GuiceOneAppPerSu
   val form: Form[AnyAgentRef] = formProvider(messages(requiredKey, nomineeName), messages(requiredAgentRefKey, nomineeName))
   val validYesData = Map(AnyAgentRefId.toString -> Json.obj(AnyAgentRefId.toString -> JsBoolean(true), AgentRefId.toString -> JsString("AB1234")))
   val validNoData = Map(AnyAgentRefId.toString -> Json.obj(AnyAgentRefId.toString -> JsBoolean(false)))
-  val anyAgentRef: anyAgentRef = fakeApplication.injector.instanceOf[anyAgentRef]
+  val anyAgentRef: anyAgentRef = fakeApplication().injector.instanceOf[anyAgentRef]
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
 

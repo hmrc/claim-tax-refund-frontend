@@ -38,7 +38,7 @@ class RemoveOtherSelectedOptionControllerSpec extends ControllerSpecBase with Mo
 
   val formProvider = new BooleanForm()
   val form = formProvider()
-  val removeOtherSelectedOption: removeOtherSelectedOption = fakeApplication.injector.instanceOf[removeOtherSelectedOption]
+  val removeOtherSelectedOption: removeOtherSelectedOption = fakeApplication().injector.instanceOf[removeOtherSelectedOption]
 
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.benefitsUserAnswers()

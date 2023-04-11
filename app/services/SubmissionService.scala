@@ -23,14 +23,13 @@ import models._
 import play.api.Logging
 import play.api.libs.json.Json
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.play.bootstrap.audit.DefaultAuditConnector
+import uk.gov.hmrc.play.audit.DefaultAuditConnector
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class SubmissionService @Inject()(appConfig: FrontendAppConfig,
                                   ctrConnector: CtrConnector,
-                                  auditConnector: DefaultAuditConnector) extends Logging {
+                                  auditConnector: DefaultAuditConnector)(implicit executionContext: ExecutionContext) extends Logging {
 
   def ctrSubmission(submission: Submission)(implicit hc: HeaderCarrier): Future[SubmissionResult] = {
 

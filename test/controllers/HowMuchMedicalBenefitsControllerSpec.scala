@@ -36,7 +36,7 @@ class HowMuchMedicalBenefitsControllerSpec extends ControllerSpecBase with Guice
   private val form = new HowMuchMedicalBenefitsForm(frontendAppConfig)()
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
-  private val howMuchMedicalBenefits: howMuchMedicalBenefits = fakeApplication.injector.instanceOf[howMuchMedicalBenefits]
+  private val howMuchMedicalBenefits: howMuchMedicalBenefits = fakeApplication().injector.instanceOf[howMuchMedicalBenefits]
 
   def onwardRoute = routes.IndexController.onPageLoad
 

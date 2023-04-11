@@ -32,7 +32,7 @@ class PaymentUKAddressViewSpec extends NewQuestionViewBehaviours[UkAddress] with
   private val taxYear = CYMinus1
 
   override val form: Form[UkAddress] = new PaymentUKAddressForm(frontendAppConfig)()
-  val paymentUKAddress: paymentUKAddress = fakeApplication.injector.instanceOf[paymentUKAddress]
+  val paymentUKAddress: paymentUKAddress = fakeApplication().injector.instanceOf[paymentUKAddress]
 
   def createView = () =>
     paymentUKAddress(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)

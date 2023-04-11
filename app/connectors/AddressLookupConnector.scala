@@ -28,8 +28,7 @@ import uk.gov.hmrc.http.HttpReads.Implicits._
 import uk.gov.hmrc.http.HttpClient
 import utils.UserAnswers
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class AddressLookupConnector @Inject()(
                                         appConfig: FrontendAppConfig,
@@ -37,7 +36,7 @@ class AddressLookupConnector @Inject()(
                                         http: HttpClient,
                                         messagesApi: MessagesApi,
                                         dataCacheConnector: DataCacheConnector
-                                      ) extends Logging {
+                                      )(implicit executionContext: ExecutionContext) extends Logging {
 
   def initialise(continueUrl: String, accessibilityFooterUrl: String)(implicit hc: HeaderCarrier, language: Lang): Future[Option[String]] = {
     val addressLookupUrl = s"${appConfig.addressLookupUrl}/api/v2/init"

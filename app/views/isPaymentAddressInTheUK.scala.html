@@ -44,7 +44,7 @@
 
 @layout(pageTitle = title) {
 
-    @formWithCSRF(action = IsPaymentAddressInTheUKController.onSubmit(mode), 'autoComplete -> "off") {
+    @formWithCSRF(action = IsPaymentAddressInTheUKController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
         @errorSummary(form.errors)
 

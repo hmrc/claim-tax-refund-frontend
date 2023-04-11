@@ -44,7 +44,7 @@
         @errorSummary(form.errors)
         @headingWithCaption(messages("anyAgentRef.heading", nomineeName), taxYear = Some(taxYear.asString))
 
-        @formWithCSRF(action = AnyAgentRefController.onSubmit(mode), 'autoComplete -> "off") {
+        @formWithCSRF(action = AnyAgentRefController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
             @inputYesNoWithTextExpander(
                 label = messages("anyAgentRef.heading", nomineeName),

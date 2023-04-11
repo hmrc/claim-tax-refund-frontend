@@ -37,7 +37,7 @@ class AnyTaxableForeignIncomeViewSpec extends NewQuestionViewBehaviours[AnyTaxPa
 
   val formProvider = new AnyTaxPaidForm()
   val form = formProvider(notSelectedKey, blankKey, invalidKey)
-  val anyTaxableForeignIncome: anyTaxableForeignIncome = fakeApplication.injector.instanceOf[anyTaxableForeignIncome]
+  val anyTaxableForeignIncome: anyTaxableForeignIncome = fakeApplication().injector.instanceOf[anyTaxableForeignIncome]
 
   def createView = () => anyTaxableForeignIncome(form, NormalMode, taxYear)(fakeRequest, messages)
 
@@ -124,7 +124,7 @@ class AnyTaxableForeignIncomeViewSpec extends NewQuestionViewBehaviours[AnyTaxPa
         "rendered with an error" must {
           "show an error summary" in {
             val doc = asDocument(createView(form.withError(error)))
-            assertRenderedById(doc, "error-summary-title")
+            assertRenderedByCssSelector(doc, ".govuk-error-summary__title")
           }
 
           "show an error in the value field's label" in {

@@ -50,7 +50,7 @@
 
         @headingWithCaption(messages("howMuchCarBenefits.heading"), taxYear = Some(taxYear.asString))
 
-        @formWithCSRF(action = HowMuchCarBenefitsController.onSubmit(mode), 'autoComplete -> "off") {
+        @formWithCSRF(action = HowMuchCarBenefitsController.onSubmit(mode), Symbol("autoComplete") -> "off") {
         @inputText(
             label = messages("howMuchCarBenefits.heading"),
             labelClass = Some("visually-hidden"),

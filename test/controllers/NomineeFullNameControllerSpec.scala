@@ -44,7 +44,7 @@ class NomineeFullNameControllerSpec extends ControllerSpecBase with GuiceOneAppP
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers()
   val form = new NomineeFullNameForm(frontendAppConfig)()
-  val nomineeFullName: nomineeFullName = fakeApplication.injector.instanceOf[nomineeFullName]
+  val nomineeFullName: nomineeFullName = fakeApplication().injector.instanceOf[nomineeFullName]
 
   def viewAsString(form: Form[_] = form) =
     nomineeFullName(form, NormalMode, taxYear)(fakeRequest, messages).toString

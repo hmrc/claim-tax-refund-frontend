@@ -44,7 +44,7 @@ class DetailsOfEmploymentOrPensionControllerSpec extends ControllerSpecBase with
   private val taxYear = CustomTaxYear(2017)
   private val characterLimit = 500
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
-  private val detailsOfEmploymentOrPension: detailsOfEmploymentOrPension = fakeApplication.injector.instanceOf[detailsOfEmploymentOrPension]
+  private val detailsOfEmploymentOrPension: detailsOfEmploymentOrPension = fakeApplication().injector.instanceOf[detailsOfEmploymentOrPension]
 
 
   def viewAsString(form: Form[_] = form): String =

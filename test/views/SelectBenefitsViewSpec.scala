@@ -34,7 +34,7 @@ class SelectBenefitsViewSpec extends NewViewBehaviours with NewCheckboxViewBehav
 
   val values: Seq[(String, String)] = SelectBenefitsForm.options
 
-  val selectBenefits: selectBenefits = fakeApplication.injector.instanceOf[selectBenefits]
+  val selectBenefits: selectBenefits = fakeApplication().injector.instanceOf[selectBenefits]
 
   def form: Form[Seq[Benefits.Value]] = SelectBenefitsForm()
 

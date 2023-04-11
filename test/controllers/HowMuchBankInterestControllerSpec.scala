@@ -39,7 +39,7 @@ class HowMuchBankInterestControllerSpec extends ControllerSpecBase with GuiceOne
   private val form = new HowMuchBankInterestForm(frontendAppConfig)()
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
-  private val howMuchBankInterest: howMuchBankInterest = fakeApplication.injector.instanceOf[howMuchBankInterest]
+  private val howMuchBankInterest: howMuchBankInterest = fakeApplication().injector.instanceOf[howMuchBankInterest]
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new HowMuchBankInterestController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),

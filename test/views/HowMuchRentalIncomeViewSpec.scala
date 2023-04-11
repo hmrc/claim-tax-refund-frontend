@@ -32,7 +32,7 @@ class HowMuchRentalIncomeViewSpec extends NewStringViewBehaviours with MockitoSu
   private val taxYear = CustomTaxYear(2017)
 
   override val form: Form[String] = new HowMuchRentalIncomeForm(frontendAppConfig)()
-  val howMuchRentalIncome: howMuchRentalIncome = fakeApplication.injector.instanceOf[howMuchRentalIncome]
+  val howMuchRentalIncome: howMuchRentalIncome = fakeApplication().injector.instanceOf[howMuchRentalIncome]
 
   def createView = () => howMuchRentalIncome(form, NormalMode, taxYear)(fakeRequest, messages)
 

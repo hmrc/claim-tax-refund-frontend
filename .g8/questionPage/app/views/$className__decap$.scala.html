@@ -12,7 +12,7 @@
     appConfig = appConfig,
     bodyClasses = None) {
 
-    @helpers.form(action = $className;format="cap"$Controller.onSubmit(mode), 'autoComplete -> "off") {
+    @helpers.form(action = $className;format="cap"$Controller.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
         @components.back_link()
 

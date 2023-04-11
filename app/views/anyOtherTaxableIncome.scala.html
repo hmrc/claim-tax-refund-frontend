@@ -17,9 +17,6 @@
 @import config.FrontendAppConfig
 @import controllers.routes._
 @import models.Mode
-@import viewmodels._
-
-@import scala.concurrent.ExecutionContext
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 
 @this(
@@ -69,7 +66,7 @@
         complete, incomplete, mode
     )
 
-    @formWithCSRF(action = formAction, 'autoComplete -> "off") {
+    @formWithCSRF(action = formAction, Symbol("autoComplete") -> "off") {
 
             @if(incomplete.isEmpty) {
                 @inputYesNo(

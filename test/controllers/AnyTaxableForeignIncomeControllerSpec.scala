@@ -43,7 +43,7 @@ class AnyTaxableForeignIncomeControllerSpec extends ControllerSpecBase with Guic
   val testAnswer = "9,999.00"
   val validYesData = Map(AnyTaxPaidId.toString -> Json.obj(AnyTaxPaidId.toString -> JsBoolean(true), TaxPaidAmountId.toString -> JsString(testAnswer)))
   val validNoData = Map(AnyTaxPaidId.toString -> Json.obj(AnyTaxPaidId.toString -> JsBoolean(false)))
-  val anyTaxableForeignIncome: anyTaxableForeignIncome = fakeApplication.injector.instanceOf[anyTaxableForeignIncome]
+  val anyTaxableForeignIncome: anyTaxableForeignIncome = fakeApplication().injector.instanceOf[anyTaxableForeignIncome]
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
   private val taxYear = CustomTaxYear(2017)
 

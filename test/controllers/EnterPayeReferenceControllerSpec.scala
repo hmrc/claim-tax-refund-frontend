@@ -41,7 +41,7 @@ class EnterPayeReferenceControllerSpec extends ControllerSpecBase with GuiceOneA
 
   val testAnswer = "123/AB1234"
   val form = new EnterPayeReferenceForm(frontendAppConfig)()
-  val enterPayeReference: enterPayeReference = fakeApplication.injector.instanceOf[enterPayeReference]
+  val enterPayeReference: enterPayeReference = fakeApplication().injector.instanceOf[enterPayeReference]
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers()
 

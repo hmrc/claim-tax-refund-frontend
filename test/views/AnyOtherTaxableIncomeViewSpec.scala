@@ -36,7 +36,7 @@ class AnyOtherTaxableIncomeViewSpec extends NewYesNoViewBehaviours with GuiceOne
 	val incompleteSeq: Seq[(OtherTaxableIncome, Int)] = Seq((OtherTaxableIncome("qwerty2", "1234", None), 1))
 
 	override val form = new BooleanForm()()
-	val anyOtherTaxableIncome: anyOtherTaxableIncome = fakeApplication.injector.instanceOf[anyOtherTaxableIncome]
+	val anyOtherTaxableIncome: anyOtherTaxableIncome = fakeApplication().injector.instanceOf[anyOtherTaxableIncome]
 
 	def createView: () => HtmlFormat.Appendable = () =>
 		anyOtherTaxableIncome(frontendAppConfig,

@@ -38,7 +38,7 @@ class OtherCompanyBenefitControllerSpec extends ControllerSpecBase with MockitoS
   val testAnswer = OtherCompanyBenefit("qwerty", "123")
   val form = new OtherCompanyBenefitForm(messagesApi, frontendAppConfig)(Seq.empty, 0)
   val formFilled = new OtherCompanyBenefitForm(messagesApi, frontendAppConfig)(Seq.empty, 1)
-  val otherCompanyBenefit: otherCompanyBenefit = fakeApplication.injector.instanceOf[otherCompanyBenefit]
+  val otherCompanyBenefit: otherCompanyBenefit = fakeApplication().injector.instanceOf[otherCompanyBenefit]
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
 

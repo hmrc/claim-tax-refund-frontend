@@ -32,7 +32,7 @@ class HowMuchBereavementAllowanceViewSpec extends NewStringViewBehaviours with M
   private val taxYear = CustomTaxYear(2017)
 
   override val form: Form[String] = new HowMuchBereavementAllowanceForm(frontendAppConfig)()
-  val howMuchBereavementAllowance: howMuchBereavementAllowance = fakeApplication.injector.instanceOf[howMuchBereavementAllowance]
+  val howMuchBereavementAllowance: howMuchBereavementAllowance = fakeApplication().injector.instanceOf[howMuchBereavementAllowance]
 
   def createView = () => howMuchBereavementAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 

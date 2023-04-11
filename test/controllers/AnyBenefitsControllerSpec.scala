@@ -39,7 +39,7 @@ class AnyBenefitsControllerSpec extends ControllerSpecBase with MockitoSugar wit
   val formProvider = new BooleanForm()
   val form = formProvider()
   val mockTai: TaiConnector = mock[TaiConnector]
-  val anyBenefits: anyBenefits = fakeApplication.injector.instanceOf[anyBenefits]
+  val anyBenefits: anyBenefits = fakeApplication().injector.instanceOf[anyBenefits]
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
 

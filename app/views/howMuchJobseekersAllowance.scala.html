@@ -47,7 +47,7 @@
 
             @headingWithCaption(messages("howMuchJobseekersAllowance.heading"), taxYear = Some(taxYear.asString))
 
-            @formWithCSRF(action = HowMuchJobseekersAllowanceController.onSubmit(mode), 'autoComplete -> "off") {
+            @formWithCSRF(action = HowMuchJobseekersAllowanceController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
             @govukInput(
 

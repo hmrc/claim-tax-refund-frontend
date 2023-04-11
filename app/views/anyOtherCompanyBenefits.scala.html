@@ -19,8 +19,6 @@
 @import models.Mode
 @import viewmodels._
 
-@import scala.concurrent.ExecutionContext
-
 @this(
     formWithCSRF: FormWithCSRF,
     layout: Layout,
@@ -56,7 +54,7 @@
 
         @otherSummary(answers = otherCompanyBenefits.rows)
 
-        @formWithCSRF(action = AnyOtherCompanyBenefitsController.onSubmit(mode), 'autoComplete -> "off") {
+        @formWithCSRF(action = AnyOtherCompanyBenefitsController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
             @inputYesNo(
                 label = messages("anyOtherCompanyBenefits.addAnotherCompanyBenefit"),

@@ -51,7 +51,7 @@
 
             @heading(messages("selectTaxableIncome.heading"), taxYear = Some(taxYear.asString))
 
-            @formWithCSRF(action = SelectTaxableIncomeController.onSubmit(mode), 'autoComplete -> "off") {
+            @formWithCSRF(action = SelectTaxableIncomeController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
             @inputCheckBox(
                 isPageHeading = false,

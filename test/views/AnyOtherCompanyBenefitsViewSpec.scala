@@ -38,7 +38,7 @@ class AnyOtherCompanyBenefitsViewSpec extends NewYesNoViewBehaviours with GuiceO
 	private val otherCompanyBenefits: AnswerSection = new CheckYourAnswersSections(cya, MockUserAnswers.fullValidUserAnswers()).otherCompanyBenefitsAddToListNormalMode
 
 	override val form = new BooleanForm()()
-	val anyOtherCompanyBenefits: anyOtherCompanyBenefits = fakeApplication.injector.instanceOf[anyOtherCompanyBenefits]
+	val anyOtherCompanyBenefits: anyOtherCompanyBenefits = fakeApplication().injector.instanceOf[anyOtherCompanyBenefits]
 
 	def createView: () => Html = () =>
 		anyOtherCompanyBenefits(frontendAppConfig, form, NormalMode, taxYear, otherCompanyBenefits)(fakeRequest, messages)

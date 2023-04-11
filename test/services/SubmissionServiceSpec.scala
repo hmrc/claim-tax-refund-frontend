@@ -25,11 +25,11 @@ import org.mockito.Mockito._
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatestplus.mockito.MockitoSugar
-import uk.gov.hmrc.play.bootstrap.audit.DefaultAuditConnector
+import uk.gov.hmrc.play.audit.DefaultAuditConnector
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
-class SubmissionServiceSpec extends SpecBase with MockitoSugar with ScalaFutures with BeforeAndAfterEach {
+class SubmissionServiceSpec(implicit override val ec: ExecutionContext) extends SpecBase with MockitoSugar with ScalaFutures with BeforeAndAfterEach {
 
   private val submission = Submission("pdf", "metadata", "xml")
   private val mockAuditConnector = mock[DefaultAuditConnector]

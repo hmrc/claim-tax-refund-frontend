@@ -51,7 +51,7 @@
 
     @heading(messages("deleteOther.heading", itemName), taxYear = Some(taxYear.asString))
 
-    @formWithCSRF(action = DeleteOtherController.onSubmit(mode, index, itemName, collectionId), 'autoComplete -> "off") {
+    @formWithCSRF(action = DeleteOtherController.onSubmit(mode, index, itemName, collectionId), Symbol("autoComplete") -> "off") {
 
         @inputYesOrNo(
             isPageHeading = false,

@@ -38,7 +38,7 @@ class AnyOtherBenefitsControllerSpec  extends ControllerSpecBase with GuiceOneAp
 
   val formProvider = new BooleanForm()
   val form: Form[Boolean] = formProvider()
-  val anyOtherBenefits: anyOtherBenefits = fakeApplication.injector.instanceOf[anyOtherBenefits]
+  val anyOtherBenefits: anyOtherBenefits = fakeApplication().injector.instanceOf[anyOtherBenefits]
   private val taxYear: SelectTaxYear = CustomTaxYear(2017)
   private val mockUserAnswers: UserAnswers = MockUserAnswers.claimDetailsUserAnswers()
 

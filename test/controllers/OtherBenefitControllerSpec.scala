@@ -38,7 +38,7 @@ class OtherBenefitControllerSpec extends ControllerSpecBase with GuiceOneAppPerS
   val testAnswer = OtherBenefit("qwerty", "123")
   val form = new OtherBenefitForm(frontendAppConfig)(Seq.empty, 0)
   val formFilled = new OtherBenefitForm(frontendAppConfig)(Seq.empty, 1)
-  val otherBenefit: otherBenefit = fakeApplication.injector.instanceOf[otherBenefit]
+  val otherBenefit: otherBenefit = fakeApplication().injector.instanceOf[otherBenefit]
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
 

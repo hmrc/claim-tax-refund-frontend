@@ -49,7 +49,7 @@
 
         @heading(messages("paymentInternationalAddress.heading"), taxYear = Some(taxYear.asString))
 
-        @formWithCSRF(action = PaymentInternationalAddressController.onSubmit(mode), 'autoComplete -> "off") {
+        @formWithCSRF(action = PaymentInternationalAddressController.onSubmit(mode), Symbol("autoComplete") -> "off") {
             @inputText(
                 label = messages("global.addressLine1"),
                 isPageHeading = false,

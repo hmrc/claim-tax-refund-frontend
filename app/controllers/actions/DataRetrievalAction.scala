@@ -23,11 +23,10 @@ import models.requests.{AuthenticatedRequest, OptionalDataRequest}
 import play.api.mvc.{ActionTransformer, AnyContent, BodyParser, MessagesControllerComponents}
 import utils.UserAnswers
 
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{ExecutionContext, Future}
 
 class DataRetrievalActionImpl @Inject()(val dataCacheConnector: DataCacheConnector,
-                                        val cc: MessagesControllerComponents) extends DataRetrievalAction {
+                                        val cc: MessagesControllerComponents)(implicit ec: ExecutionContext) extends DataRetrievalAction {
 
   override protected def executionContext: ExecutionContext = cc.executionContext
   def parser: BodyParser[AnyContent] = cc.parsers.defaultBodyParser

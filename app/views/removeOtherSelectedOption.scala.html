@@ -48,7 +48,7 @@
 
     @heading(heading = messages("RemoveOtherSelectedOption.heading", messages(collectionId)), taxYear = Some(taxYear.asString))
 
-    @formWithCSRF(action = RemoveOtherSelectedOptionController.onSubmit(mode, collectionId), 'autoComplete -> "off") {
+    @formWithCSRF(action = RemoveOtherSelectedOptionController.onSubmit(mode, collectionId), Symbol("autoComplete") -> "off") {
         @inputYesOrNo(
             isPageHeading = false,
             label = messages("RemoveOtherSelectedOption.heading", messages(collectionId)),

@@ -32,7 +32,7 @@ class NomineeFullNameViewSpec extends NewStringViewBehaviours with MockitoSugar 
   private val taxYear = CYMinus1
 
   override val form: Form[String] = new NomineeFullNameForm(frontendAppConfig)()
-  val nomineeFullName: nomineeFullName = fakeApplication.injector.instanceOf[nomineeFullName]
+  val nomineeFullName: nomineeFullName = fakeApplication().injector.instanceOf[nomineeFullName]
 
   def createView = () =>
     nomineeFullName(form, NormalMode, taxYear)(fakeRequest, messages)

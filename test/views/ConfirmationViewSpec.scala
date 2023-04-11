@@ -28,7 +28,7 @@ class ConfirmationViewSpec extends NewViewBehaviours with MockitoSugar with Guic
   private val messageKeyPrefix = "confirmation"
   private val submissionReference = " ABC-1234-DEF"  //this contains normal hyphens
   private val formattedSubmissionReference = " ABC‑1234‑DEF" //this contains non-breaking hyphens "‑"
-  private val confirmation: confirmation = fakeApplication.injector.instanceOf[confirmation]
+  private val confirmation: confirmation = fakeApplication().injector.instanceOf[confirmation]
 
   def createView: () =>
 		HtmlFormat.Appendable = () =>

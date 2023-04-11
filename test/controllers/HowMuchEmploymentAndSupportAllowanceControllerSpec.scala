@@ -36,7 +36,7 @@ class HowMuchEmploymentAndSupportAllowanceControllerSpec extends ControllerSpecB
   private val form = new HowMuchEmploymentAndSupportAllowanceForm(frontendAppConfig)()
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
-  private val howMuchEmploymentAndSupportAllowance: howMuchEmploymentAndSupportAllowance = fakeApplication.injector.instanceOf[howMuchEmploymentAndSupportAllowance]
+  private val howMuchEmploymentAndSupportAllowance: howMuchEmploymentAndSupportAllowance = fakeApplication().injector.instanceOf[howMuchEmploymentAndSupportAllowance]
 
   def onwardRoute = routes.IndexController.onPageLoad
 

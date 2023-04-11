@@ -37,7 +37,7 @@ class HowMuchForeignIncomeControllerSpec extends ControllerSpecBase with Mockito
 
   val testAnswer = "9,999.99"
   val form = new HowMuchForeignIncomeForm(frontendAppConfig)()
-  val howMuchForeignIncome: howMuchForeignIncome = fakeApplication.injector.instanceOf[howMuchForeignIncome]
+  val howMuchForeignIncome: howMuchForeignIncome = fakeApplication().injector.instanceOf[howMuchForeignIncome]
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
 

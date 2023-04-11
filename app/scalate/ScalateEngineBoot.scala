@@ -21,5 +21,5 @@ import javax.inject._
 
 @Singleton
 class ScalateEngineBoot @Inject()(scalate: Scalate) {
-  scalate.engine.boot
+  scalate.engine.boot()
 }

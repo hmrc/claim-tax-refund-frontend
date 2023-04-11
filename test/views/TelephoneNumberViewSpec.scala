@@ -34,7 +34,7 @@ class TelephoneNumberViewSpec extends NewQuestionViewBehaviours[TelephoneOption]
 
   val formProvider = new TelephoneNumberForm()
   val form = formProvider()
-  val telephoneNumber: telephoneNumber = fakeApplication.injector.instanceOf[telephoneNumber]
+  val telephoneNumber: telephoneNumber = fakeApplication().injector.instanceOf[telephoneNumber]
 
   def createView = () =>
     telephoneNumber(form, NormalMode, taxYear)(fakeRequest, messages)
@@ -127,7 +127,7 @@ class TelephoneNumberViewSpec extends NewQuestionViewBehaviours[TelephoneOption]
 
           "not render an error summary" in {
             val doc = asDocument(createView(form))
-            assertNotRenderedById(doc, "error-summary-title")
+            assertNotRenderedByCssSelector(doc, ".govuk-error-summary__title")
           }
         }
 
@@ -142,7 +142,7 @@ class TelephoneNumberViewSpec extends NewQuestionViewBehaviours[TelephoneOption]
         "rendered with an error" must {
           "show an error summary" in {
             val doc = asDocument(createView(form.withError(error)))
-            assertRenderedById(doc, "error-summary-title")
+            assertRenderedByCssSelector(doc, ".govuk-error-summary__title")
           }
 
           "show an error in the value field's label" in {
@@ -171,7 +171,7 @@ class TelephoneNumberViewSpec extends NewQuestionViewBehaviours[TelephoneOption]
 
       "not render an error summary" in {
         val doc = asDocument(createView(form.fill(TelephoneOption.Yes(testPhoneNumber))))
-        assertNotRenderedById(doc, "error-summary-title")
+        assertNotRenderedByCssSelector(doc, ".govuk-error-summary__title")
       }
     }
   }

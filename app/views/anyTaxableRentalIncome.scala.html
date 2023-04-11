@@ -43,7 +43,7 @@
 ) {
     @errorSummary(form.errors)
     @headingWithCaption(messages("anyTaxableRentalIncome.heading"), taxYear = Some(taxYear.asString))
-    @formWithCSRF(action = AnyTaxableRentalIncomeController.onSubmit(mode), 'autoComplete -> "off") {
+    @formWithCSRF(action = AnyTaxableRentalIncomeController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
         @inputYesNoWithTextExpander(
             hint = None,

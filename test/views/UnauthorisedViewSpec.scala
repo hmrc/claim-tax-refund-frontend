@@ -22,7 +22,7 @@ import views.html.unauthorised
 
 class UnauthorisedViewSpec extends NewViewBehaviours with GuiceOneAppPerSuite {
 
-  val unauthorised: unauthorised = fakeApplication.injector.instanceOf[unauthorised]
+  val unauthorised: unauthorised = fakeApplication().injector.instanceOf[unauthorised]
 
   def view = () => unauthorised(frontendAppConfig)(fakeRequest, messages)
 

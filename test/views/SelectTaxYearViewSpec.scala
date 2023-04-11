@@ -27,7 +27,7 @@ import views.html.selectTaxYear
 class SelectTaxYearViewSpec extends NewViewBehaviours with GuiceOneAppPerSuite {
 
   private val messageKeyPrefix = "selectTaxYear"
-  private val selectTaxYear: selectTaxYear = fakeApplication.injector.instanceOf[selectTaxYear]
+  private val selectTaxYear: selectTaxYear = fakeApplication().injector.instanceOf[selectTaxYear]
 
   def createView = () => selectTaxYear(frontendAppConfig, SelectTaxYearForm(), NormalMode)(fakeRequest, messages)
 

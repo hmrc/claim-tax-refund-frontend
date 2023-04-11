@@ -52,7 +52,7 @@
 
     @pageHeading(heading = messages("otherBenefit.heading", index.id + 1), taxYear = Some(taxYear.asString))
 
-    @formWithCSRF(action = OtherBenefitController.onSubmit(mode, index), 'autoComplete -> "off") {
+    @formWithCSRF(action = OtherBenefitController.onSubmit(mode, index), Symbol("autoComplete") -> "off") {
         @inputText(
             label = messages("otherBenefit.name"),
             isPageHeading = false,

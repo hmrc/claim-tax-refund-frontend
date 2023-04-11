@@ -37,7 +37,7 @@ class SelectBenefitsControllerSpec extends ControllerSpecBase with MockitoSugar 
 
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
-  private val selectBenefits: selectBenefits = fakeApplication.injector.instanceOf[selectBenefits]
+  private val selectBenefits: selectBenefits = fakeApplication().injector.instanceOf[selectBenefits]
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new SelectBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),

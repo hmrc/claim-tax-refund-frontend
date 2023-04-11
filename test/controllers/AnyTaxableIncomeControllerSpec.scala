@@ -36,7 +36,7 @@ class AnyTaxableIncomeControllerSpec extends ControllerSpecBase with GuiceOneApp
 
   val formProvider = new BooleanForm()
   val form: Form[Boolean] = formProvider()
-  val anyTaxableIncome: anyTaxableIncome = fakeApplication.injector.instanceOf[anyTaxableIncome]
+  val anyTaxableIncome: anyTaxableIncome = fakeApplication().injector.instanceOf[anyTaxableIncome]
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
 

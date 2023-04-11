@@ -33,7 +33,7 @@ class OtherBenefitViewSpec extends NewQuestionViewBehaviours[OtherBenefit] with 
   private val taxYear = CustomTaxYear(2017)
 
   override val form: Form[OtherBenefit] = new OtherBenefitForm(frontendAppConfig)(Seq.empty, 0)
-  val otherBenefit: otherBenefit = fakeApplication.injector.instanceOf[otherBenefit]
+  val otherBenefit: otherBenefit = fakeApplication().injector.instanceOf[otherBenefit]
 
   def createView: () =>
     HtmlFormat.Appendable = () =>

@@ -44,7 +44,7 @@ class TelephoneNumberControllerSpec extends ControllerSpecBase with MockitoSugar
   private val form = formProvider()
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers()
-  private val telephoneNumber: telephoneNumber = fakeApplication.injector.instanceOf[telephoneNumber]
+  private val telephoneNumber: telephoneNumber = fakeApplication().injector.instanceOf[telephoneNumber]
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new TelephoneNumberController(messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
