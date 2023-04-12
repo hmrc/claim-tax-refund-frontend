@@ -34,7 +34,7 @@ class WhereToSendPaymentControllerSpec extends ControllerSpecBase with GuiceOneA
 
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers()
-  private val whereToSendPayment: whereToSendPayment = fakeApplication.injector.instanceOf[whereToSendPayment]
+  private val whereToSendPayment: whereToSendPayment = fakeApplication().injector.instanceOf[whereToSendPayment]
 
   def onwardRoute = routes.IndexController.onPageLoad
 

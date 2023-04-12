@@ -33,7 +33,7 @@ import utils.{MockUserAnswers, UserAnswers}
 class ConfirmationControllerSpec extends ControllerSpecBase with ScalaFutures with GuiceOneAppPerSuite {
 
 	val mockDataCacheConnector: DataCacheConnector = mock[DataCacheConnector]
-  val confirmation: confirmation = fakeApplication.injector.instanceOf[confirmation]
+  val confirmation: confirmation = fakeApplication().injector.instanceOf[confirmation]
 
   def onwardRoute: Call = routes.IndexController.onPageLoad
 

@@ -33,7 +33,7 @@ class AnyTaxableIncomeViewSpec extends NewYesNoViewBehaviours with GuiceOneAppPe
   private val taxYear = CustomTaxYear(2017)
 
   override val form = new BooleanForm()()
-  val anyTaxableIncome: anyTaxableIncome = fakeApplication.injector.instanceOf[anyTaxableIncome]
+  val anyTaxableIncome: anyTaxableIncome = fakeApplication().injector.instanceOf[anyTaxableIncome]
 
   def createView: () =>
     HtmlFormat.Appendable = () =>

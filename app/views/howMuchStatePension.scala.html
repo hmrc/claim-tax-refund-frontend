@@ -48,7 +48,7 @@
 
     @headingWithCaption(messages("howMuchStatePension.heading"), taxYear = Some(taxYear.asString))
 
-    @formWithCSRF(action = HowMuchStatePensionController.onSubmit(mode), 'autoComplete -> "off") {
+    @formWithCSRF(action = HowMuchStatePensionController.onSubmit(mode), Symbol("autoComplete") -> "off") {
         @input_text(
             label = messages("howMuchStatePension.heading"),
             labelClass = Some("visually-hidden"),

@@ -47,7 +47,7 @@
     @errorSummary(form.errors)
     @headingWithCaption(messages("telephoneNumber.heading"), taxYear = Some(taxYear.asString))
     <p class="govuk-hint">@messages("telephoneNumber.hintPara1")</p>
-    @formWithCSRF(action = TelephoneNumberController.onSubmit(mode), 'autoComplete -> "off") {
+    @formWithCSRF(action = TelephoneNumberController.onSubmit(mode), Symbol("autoComplete") -> "off") {
         @inputYesNoWithTextExpander(
             label = messages("telephoneNumber.heading"),
             labelClass = Some("visually-hidden"),

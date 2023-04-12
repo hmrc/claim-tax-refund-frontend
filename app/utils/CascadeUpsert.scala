@@ -178,7 +178,7 @@ class CascadeUpsert {
       DetailsOfEmploymentOrPensionId.toString
     )
     val mapToStore = value match {
-      case JsBoolean(true) => cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemove.contains(s)))
+      case JsBoolean(true) => cacheMap copy (data = cacheMap.data.view.filterKeys(s => !keysToRemove.contains(s)).toMap)
       case _ => cacheMap
     }
     store(EmploymentDetailsId.toString, value, mapToStore)
@@ -221,7 +221,7 @@ class CascadeUpsert {
       PaymentInternationalAddressId.toString
     )
     val mapToStore = value match {
-      case JsBoolean(true) => cacheMap copy (data = cacheMap.data.filterKeys(s => !keysToRemoveYes.contains(s)))
+      case JsBoolean(true) => cacheMap copy (data = cacheMap.data.view.filterKeys(s => !keysToRemoveYes.contains(s)).toMap)
       case _ => cacheMap
     }
     store(PaymentAddressCorrectId.toString, value, mapToStore)
@@ -229,8 +229,8 @@ class CascadeUpsert {
 
   private def isPaymentAddressInTheUK(value: JsValue, cacheMap: CacheMap): CacheMap = {
     val mapToStore = value match {
-      case JsBoolean(true) => cacheMap copy (data = cacheMap.data.filterKeys(s => !PaymentInternationalAddressId.toString.contains(s)))
-      case JsBoolean(false) => cacheMap copy (data = cacheMap.data.filterKeys(s => !PaymentUKAddressId.toString.contains(s)))
+      case JsBoolean(true) => cacheMap copy (data = cacheMap.data.view.filterKeys(s => !PaymentInternationalAddressId.toString.contains(s)).toMap)
+      case JsBoolean(false) => cacheMap copy (data = cacheMap.data.view.filterKeys(s => !PaymentUKAddressId.toString.contains(s)).toMap)
       case _ => cacheMap
     }
     store(IsPaymentAddressInTheUKId.toString, value, mapToStore)

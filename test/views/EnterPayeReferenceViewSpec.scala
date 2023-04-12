@@ -34,7 +34,7 @@ class EnterPayeReferenceViewSpec extends NewStringViewBehaviours with MockitoSug
   private val taxYear = CYMinus4
 
   override val form: Form[String] = new EnterPayeReferenceForm(appConfig)()
-  val enterPayeReference: enterPayeReference = fakeApplication.injector.instanceOf[enterPayeReference]
+  val enterPayeReference: enterPayeReference = fakeApplication().injector.instanceOf[enterPayeReference]
 
   def createView = () => enterPayeReference(form, NormalMode, taxYear)(fakeRequest, messages)
 

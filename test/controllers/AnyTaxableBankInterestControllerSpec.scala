@@ -43,7 +43,7 @@ class AnyTaxableBankInterestControllerSpec extends ControllerSpecBase with Guice
   val testAnswer = "9,999.00"
   val validYesData = Map(AnyTaxPaidId.toString -> Json.obj(AnyTaxPaidId.toString -> JsBoolean(true), TaxPaidAmountId.toString -> JsString(testAnswer)))
   val validNoData = Map(AnyTaxPaidId.toString -> Json.obj(AnyTaxPaidId.toString -> JsBoolean(false)))
-  val anyTaxableBankInterest: anyTaxableBankInterest = fakeApplication.injector.instanceOf[anyTaxableBankInterest]
+  val anyTaxableBankInterest: anyTaxableBankInterest = fakeApplication().injector.instanceOf[anyTaxableBankInterest]
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
   private val taxYear = CustomTaxYear(2017)
 

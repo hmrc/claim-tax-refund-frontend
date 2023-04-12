@@ -39,7 +39,7 @@ class PaymentInternationalAddressControllerSpec extends ControllerSpecBase with 
       dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), paymentInternationalAddress, messagesControllerComponents, new PaymentInternationalAddressForm(frontendAppConfig))
 
   val form = new PaymentInternationalAddressForm(frontendAppConfig)()
-  val paymentInternationalAddress: paymentInternationalAddress = fakeApplication.injector.instanceOf[paymentInternationalAddress]
+  val paymentInternationalAddress: paymentInternationalAddress = fakeApplication().injector.instanceOf[paymentInternationalAddress]
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers()
 

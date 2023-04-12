@@ -36,7 +36,7 @@ class HowMuchJobseekersAllowanceControllerSpec extends ControllerSpecBase with G
   private val form = new HowMuchJobseekersAllowanceForm(frontendAppConfig)()
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
-  private val howMuchJobseekersAllowance: howMuchJobseekersAllowance = fakeApplication.injector.instanceOf[howMuchJobseekersAllowance]
+  private val howMuchJobseekersAllowance: howMuchJobseekersAllowance = fakeApplication().injector.instanceOf[howMuchJobseekersAllowance]
 
   def onwardRoute = routes.IndexController.onPageLoad
 

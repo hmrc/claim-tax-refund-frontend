@@ -41,7 +41,7 @@ class HowMuchBereavementAllowanceControllerSpec extends ControllerSpecBase with 
       dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), howMuchBereavementAllowance, messagesControllerComponents, new HowMuchBereavementAllowanceForm(frontendAppConfig))
 
   val mockUserAnswers: UserAnswers = MockUserAnswers.claimDetailsUserAnswers()
-  val howMuchBereavementAllowance: howMuchBereavementAllowance = fakeApplication.injector.instanceOf[howMuchBereavementAllowance]
+  val howMuchBereavementAllowance: howMuchBereavementAllowance = fakeApplication().injector.instanceOf[howMuchBereavementAllowance]
 
   val testAnswer = "9,999.99"
   private val taxYear = CustomTaxYear(2017)

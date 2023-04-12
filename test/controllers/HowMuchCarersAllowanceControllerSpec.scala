@@ -42,7 +42,7 @@ class HowMuchCarersAllowanceControllerSpec extends ControllerSpecBase with Guice
   private val taxYear = CustomTaxYear(2017)
   val form = new HowMuchCarersAllowanceForm(frontendAppConfig)()
   val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
-  val howMuchCarersAllowance: howMuchCarersAllowance = fakeApplication.injector.instanceOf[howMuchCarersAllowance]
+  val howMuchCarersAllowance: howMuchCarersAllowance = fakeApplication().injector.instanceOf[howMuchCarersAllowance]
 
   def viewAsString(form: Form[_] = form) = howMuchCarersAllowance(form, NormalMode, taxYear)(fakeRequest, messages).toString
 

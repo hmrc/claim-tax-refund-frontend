@@ -36,7 +36,7 @@ class HowMuchIncapacityBenefitControllerSpec extends ControllerSpecBase with Gui
   private val form = new HowMuchIncapacityBenefitForm(frontendAppConfig)()
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
-  private val howMuchIncapacityBenefit: howMuchIncapacityBenefit = fakeApplication.injector.instanceOf[howMuchIncapacityBenefit]
+  private val howMuchIncapacityBenefit: howMuchIncapacityBenefit = fakeApplication().injector.instanceOf[howMuchIncapacityBenefit]
 
   def onwardRoute = routes.IndexController.onPageLoad
 

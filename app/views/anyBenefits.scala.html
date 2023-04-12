@@ -51,7 +51,7 @@
     @playComponents.list(pageKey = Some("selectBenefits"),
     bulletList = Benefits.sortedBenefits.dropRight(1).map(_.toString))
 
-    @formWithCSRF(action = AnyBenefitsController.onSubmit(mode), 'autoComplete -> "off") {
+    @formWithCSRF(action = AnyBenefitsController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
         @inputYesNo(
             isPageHeading = false,

@@ -37,7 +37,7 @@ class SelectCompanyBenefitsControllerSpec extends ControllerSpecBase with Mockit
 
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
-  private val selectCompanyBenefits: selectCompanyBenefits = fakeApplication.injector.instanceOf[selectCompanyBenefits]
+  private val selectCompanyBenefits: selectCompanyBenefits = fakeApplication().injector.instanceOf[selectCompanyBenefits]
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new SelectCompanyBenefitsController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),

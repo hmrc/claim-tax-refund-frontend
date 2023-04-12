@@ -25,7 +25,7 @@ import views.html.selectTaxYear
 
 class IndexControllerSpec extends ControllerSpecBase with GuiceOneAppPerSuite {
 
-  val selectTaxYear = fakeApplication.injector.instanceOf[selectTaxYear]
+  val selectTaxYear = fakeApplication().injector.instanceOf[selectTaxYear]
 
   def viewAsString(form: Form[_] = SelectTaxYearForm()) = selectTaxYear(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
 

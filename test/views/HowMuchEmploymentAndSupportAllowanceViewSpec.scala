@@ -32,7 +32,7 @@ class HowMuchEmploymentAndSupportAllowanceViewSpec extends NewStringViewBehaviou
   private val taxYear = CustomTaxYear(2017)
 
   override val form: Form[String] = new HowMuchEmploymentAndSupportAllowanceForm(frontendAppConfig)()
-  val howMuchEmploymentAndSupportAllowance: howMuchEmploymentAndSupportAllowance = fakeApplication.injector.instanceOf[howMuchEmploymentAndSupportAllowance]
+  val howMuchEmploymentAndSupportAllowance: howMuchEmploymentAndSupportAllowance = fakeApplication().injector.instanceOf[howMuchEmploymentAndSupportAllowance]
 
   def createView = () => howMuchEmploymentAndSupportAllowance(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 

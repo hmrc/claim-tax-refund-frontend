@@ -34,7 +34,7 @@ class SelectTaxableIncomeViewSpec extends NewViewBehaviours with NewCheckboxView
 
   val values: Seq[(String, String)] = SelectTaxableIncomeForm.options
 
-  val selectTaxableIncome: selectTaxableIncome = fakeApplication.injector.instanceOf[selectTaxableIncome]
+  val selectTaxableIncome: selectTaxableIncome = fakeApplication().injector.instanceOf[selectTaxableIncome]
 
   def form: Form[Seq[TaxableIncome.Value]] = SelectTaxableIncomeForm()
 

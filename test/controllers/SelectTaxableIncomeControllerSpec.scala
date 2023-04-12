@@ -36,7 +36,7 @@ class SelectTaxableIncomeControllerSpec extends ControllerSpecBase with GuiceOne
 
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
-  private val selectTaxableIncome: selectTaxableIncome = fakeApplication.injector.instanceOf[selectTaxableIncome]
+  private val selectTaxableIncome: selectTaxableIncome = fakeApplication().injector.instanceOf[selectTaxableIncome]
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
     new SelectTaxableIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),

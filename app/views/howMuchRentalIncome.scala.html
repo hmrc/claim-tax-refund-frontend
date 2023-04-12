@@ -46,7 +46,7 @@
         @errorSummary(form.errors)
         @headingWithCaption(messages("howMuchRentalIncome.heading"), taxYear = Some(taxYear.asString))
 
-        @formWithCSRF(action = HowMuchRentalIncomeController.onSubmit(mode), 'autoComplete -> "off") {
+        @formWithCSRF(action = HowMuchRentalIncomeController.onSubmit(mode), Symbol("autoComplete") -> "off") {
             @inputText(
                 label = messages("howMuchRentalIncome.heading"),
                 labelClass = Some("visually-hidden"),

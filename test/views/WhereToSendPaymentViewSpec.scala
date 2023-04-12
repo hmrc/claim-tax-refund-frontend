@@ -29,7 +29,7 @@ class WhereToSendPaymentViewSpec extends NewViewBehaviours with GuiceOneAppPerSu
   private val messageKeyPrefix = "whereToSendPayment"
   private val taxYear = CYMinus1
 
-  val whereToSendPayment: whereToSendPayment = fakeApplication.injector.instanceOf[whereToSendPayment]
+  val whereToSendPayment: whereToSendPayment = fakeApplication().injector.instanceOf[whereToSendPayment]
 
   def createView = () =>
     whereToSendPayment(WhereToSendPaymentForm(), NormalMode, taxYear)(fakeRequest, messages)

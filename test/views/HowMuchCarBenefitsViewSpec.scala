@@ -32,7 +32,7 @@ class HowMuchCarBenefitsViewSpec extends NewStringViewBehaviours with MockitoSug
   private val taxYear = CustomTaxYear(2017)
 
   override val form: Form[String] = new HowMuchCarBenefitsForm(frontendAppConfig)()
-  val howMuchCarBenefits: howMuchCarBenefits = fakeApplication.injector.instanceOf[howMuchCarBenefits]
+  val howMuchCarBenefits: howMuchCarBenefits = fakeApplication().injector.instanceOf[howMuchCarBenefits]
 
   def createView = () => howMuchCarBenefits(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 

@@ -62,7 +62,7 @@
         captionClasses = "govuk-table__caption--m"
     ))
 
-    @formWithCSRF(action = EmploymentDetailsController.onSubmit(mode), 'autoComplete -> "off") {
+    @formWithCSRF(action = EmploymentDetailsController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
 
 

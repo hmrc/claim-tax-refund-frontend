@@ -61,7 +61,7 @@
         @if(address.countryCode.exists(_.trim.nonEmpty)) {<li>@address.countryCode</li>}
     </ul>
 
-    @formWithCSRF(action = controllers.routes.PaymentAddressCorrectController.onSubmit(mode), 'autoComplete -> "off") {
+    @formWithCSRF(action = controllers.routes.PaymentAddressCorrectController.onSubmit(mode), Symbol("autoComplete") -> "off") {
         @inputYesNo(
             isPageHeading = false,
             label = messages("paymentAddressCorrect.heading"),

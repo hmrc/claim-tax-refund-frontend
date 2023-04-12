@@ -47,7 +47,7 @@
         @errorSummary(form.errors)
         @headingWithCaption(messages("nomineeFullName.heading"), taxYear = Some(taxYear.asString))
 
-        @formWithCSRF(action = NomineeFullNameController.onSubmit(mode), 'autoComplete -> "off") {
+        @formWithCSRF(action = NomineeFullNameController.onSubmit(mode), Symbol("autoComplete") -> "off") {
             @inputText(
                 label = messages("nomineeFullName.heading"),
                 labelClass = Some("visually-hidden"),

@@ -47,7 +47,7 @@
     @errorSummary(form.errors)
     @headingWithCaption(messages("detailsOfEmploymentOrPension.heading"), taxYear = Some(taxYear.asString))
 
-    @formWithCSRF(action = DetailsOfEmploymentOrPensionController.onSubmit(mode), 'autoComplete -> "off") {
+    @formWithCSRF(action = DetailsOfEmploymentOrPensionController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
         @inputTextArea(
             label = messages("detailsOfEmploymentOrPension.heading"),

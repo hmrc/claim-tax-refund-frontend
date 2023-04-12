@@ -42,7 +42,7 @@ class PaymentAddressCorrectViewSpec extends NewYesNoViewBehaviours with GuiceOne
   )
 
   override val form = new BooleanForm()()
-  val paymentAddressCorrect: paymentAddressCorrect = fakeApplication.injector.instanceOf[paymentAddressCorrect]
+  val paymentAddressCorrect: paymentAddressCorrect = fakeApplication().injector.instanceOf[paymentAddressCorrect]
 
   def createView = () =>
     paymentAddressCorrect(frontendAppConfig, form, NormalMode, testAddress, taxYear)(fakeRequest, messages)

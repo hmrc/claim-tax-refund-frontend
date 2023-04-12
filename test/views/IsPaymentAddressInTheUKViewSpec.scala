@@ -31,7 +31,7 @@ class IsPaymentAddressInTheUKViewSpec extends NewYesNoViewBehaviours with GuiceO
   private val taxYear = CustomTaxYear(2017)
 
   override val form = new BooleanForm()()
-  val isPaymentAddressInTheUK: isPaymentAddressInTheUK = fakeApplication.injector.instanceOf[isPaymentAddressInTheUK]
+  val isPaymentAddressInTheUK: isPaymentAddressInTheUK = fakeApplication().injector.instanceOf[isPaymentAddressInTheUK]
 
   def createView = () => isPaymentAddressInTheUK(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 

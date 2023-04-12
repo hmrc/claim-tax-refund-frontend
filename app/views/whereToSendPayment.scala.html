@@ -42,7 +42,7 @@
     ) {
         @errorSummary(form.errors)
         @headingWithCaption(messages("whereToSendPayment.heading"), taxYear = Some(taxYear.asString))
-        @formWithCSRF(action = WhereToSendPaymentController.onSubmit(mode), 'autoComplete -> "off") {
+        @formWithCSRF(action = WhereToSendPaymentController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
             @inputRadio(
                 legend = Text(messages("whereToSendPayment.heading")),

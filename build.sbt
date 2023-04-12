@@ -14,32 +14,34 @@ lazy val appDependencies: Seq[ModuleID] = compile ++ test()
 lazy val plugins: Seq[Plugins] = Seq.empty
 lazy val playSettings: Seq[Setting[_]] = Seq.empty
 
+val bootstrapVersion = "7.15.0"
+
 val compile = Seq(
   ws,
-  "uk.gov.hmrc"           %% "bootstrap-frontend-play-28"     % "5.24.0",
-  "uk.gov.hmrc"           %% "play-frontend-hmrc"             % "0.94.0-play-28",
-  "uk.gov.hmrc.mongo"     %% "hmrc-mongo-play-28"             % "0.74.0",
-  "uk.gov.hmrc"           %% "http-caching-client"            % "9.5.0-play-28",
-  "uk.gov.hmrc"           %% "play-conditional-form-mapping"  % "1.11.0-play-28",
-  "uk.gov.hmrc"           %% "play-partials"                  % "8.3.0-play-28",
-  "uk.gov.hmrc"           %% "play-language"                  % "5.1.0-play-28",
-  "uk.gov.hmrc"           %% "tax-year"                       % "1.7.0",
+  "uk.gov.hmrc"           %% "bootstrap-frontend-play-28"     % bootstrapVersion,
+  "uk.gov.hmrc"           %% "play-frontend-hmrc"             % "7.3.0-play-28",
+  "uk.gov.hmrc.mongo"     %% "hmrc-mongo-play-28"             % "1.1.0",
+  "uk.gov.hmrc"           %% "http-caching-client"            % "10.0.0-play-28",
+  "uk.gov.hmrc"           %% "play-conditional-form-mapping"  % "1.13.0-play-28",
+  "uk.gov.hmrc"           %% "play-partials"                  % "8.4.0-play-28",
+  "uk.gov.hmrc"           %% "play-language"                  % "6.2.0-play-28",
+  "uk.gov.hmrc"           %% "tax-year"                       % "3.1.0",
   "org.scalatra.scalate"  %% "play-scalate"                   % "0.6.0",
-  "org.scalatra.scalate"  %% "scalate-core"                   % "1.9.6",
-  "uk.gov.hmrc"           %% "domain"                         % "5.11.0-play-27",
-  "com.googlecode.libphonenumber" % "libphonenumber"          % "8.12.50"
+  "org.scalatra.scalate"  %% "scalate-core"                   % "1.9.8",
+  "uk.gov.hmrc"           %% "domain"                         % "8.2.0-play-28",
+  "com.googlecode.libphonenumber" % "libphonenumber"          % "8.13.9"
 )
 
 def test(scope: String = "test"): Seq[ModuleID] = Seq(
-  "com.github.tomakehurst"  %   "wiremock"                  % "2.27.2" % scope,
-  "com.github.tomakehurst"  %   "wiremock-jre8"             % "2.28.1" % scope,
+  "uk.gov.hmrc"             %%  "bootstrap-test-play-28"    % bootstrapVersion % scope,
+  "com.github.tomakehurst"  %   "wiremock-standalone"       % "2.27.2" % scope,
   "com.vladsch.flexmark"    %   "flexmark-all"              % "0.35.10" % scope,
   "org.scalatestplus"       %%  "scalatestplus-mockito"     % "1.0.0-M2" % scope,
   "org.scalatestplus.play"  %%  "scalatestplus-play"        % "5.1.0" % scope,
   "org.scalatestplus"       %%  "scalatestplus-scalacheck"  % "3.1.0.0-RC2" % scope,
-  "uk.gov.hmrc.mongo"       %% "hmrc-mongo-test-play-28"    % "0.74.0",
+  "uk.gov.hmrc.mongo"       %%  "hmrc-mongo-test-play-28"    % "1.1.0" % scope,
   "org.pegdown"             %   "pegdown"                   % "1.6.0" % scope,
-  "org.jsoup"               %   "jsoup"                     % "1.14.3" % scope,
+  "org.jsoup"               %   "jsoup"                     % "1.15.4" % scope,
   "com.typesafe.play"       %%  "play-test"                 % PlayVersion.current % scope,
   "org.mockito"             %   "mockito-all"               % "1.10.19" % scope
 )
@@ -94,11 +96,10 @@ lazy val microservice = Project(appName, file("."))
     includeFilter in uglify := GlobFilter("claimtaxrefundfrontend-*.js")
   )
   .settings(majorVersion := 0)
-  .settings(scalaVersion := "2.12.12")
+  .settings(scalaVersion := "2.13.8")
   .settings(
     TwirlKeys.templateImports ++= Seq(
       "uk.gov.hmrc.govukfrontend.views.html.components._",
-      "uk.gov.hmrc.govukfrontend.views.html.helpers._",
       "uk.gov.hmrc.hmrcfrontend.views.html.components._",
       "uk.gov.hmrc.hmrcfrontend.views.html.helpers._",
       "uk.gov.hmrc.govukfrontend.views.html.components.implicits._"
@@ -109,8 +110,8 @@ lazy val microservice = Project(appName, file("."))
 scalacOptions += "-P:silencer:pathFilters=routes"
 scalacOptions += "-P:silencer:lineContentFilters=^\\w"
 libraryDependencies ++= Seq(
-  compilerPlugin("com.github.ghik" % "silencer-plugin" % "1.7.1" cross CrossVersion.full),
-  "com.github.ghik" % "silencer-lib" % "1.7.1" % Provided cross CrossVersion.full
+  compilerPlugin("com.github.ghik" % "silencer-plugin" % "1.7.12" cross CrossVersion.full),
+  "com.github.ghik" % "silencer-lib" % "1.7.12" % Provided cross CrossVersion.full
 )
 // ***************
 

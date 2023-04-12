@@ -48,7 +48,7 @@
 
         @headingWithCaption(messages("howMuchBereavementAllowance.heading"), taxYear = Some(taxYear.asString))
 
-        @formWithCSRF(action = HowMuchBereavementAllowanceController.onSubmit(mode), 'autoComplete -> "off") {
+        @formWithCSRF(action = HowMuchBereavementAllowanceController.onSubmit(mode), Symbol("autoComplete") -> "off") {
         @govukInput(
             Input(
                 label = Label(

@@ -53,7 +53,7 @@
 
         @headingWithCaption(messages("howMuchEmploymentAndSupportAllowance.heading"), taxYear = Some(taxYear.asString))
 
-        @formWithCSRF(action = HowMuchEmploymentAndSupportAllowanceController.onSubmit(mode), 'autoComplete -> "off") {
+        @formWithCSRF(action = HowMuchEmploymentAndSupportAllowanceController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
         @input_text(
             label = messages("howMuchEmploymentAndSupportAllowance.heading"),

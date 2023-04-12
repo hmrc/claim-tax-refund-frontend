@@ -38,7 +38,7 @@ class AnyTaxableOtherIncomeViewSpec extends NewQuestionViewBehaviours[AnyTaxPaid
 
   val formProvider = new AnyTaxPaidForm()
   val form = formProvider(notSelectedKey, blankKey, invalidKey)
-  val anyTaxableOtherIncome: anyTaxableOtherIncome = fakeApplication.injector.instanceOf[anyTaxableOtherIncome]
+  val anyTaxableOtherIncome: anyTaxableOtherIncome = fakeApplication().injector.instanceOf[anyTaxableOtherIncome]
 
   def createView = () => anyTaxableOtherIncome(form, NormalMode, 0, taxYear, incomeName)(fakeRequest, messages)
 
@@ -111,7 +111,7 @@ class AnyTaxableOtherIncomeViewSpec extends NewQuestionViewBehaviours[AnyTaxPaid
 
           "not render an error summary" in {
             val doc = asDocument(createView(form))
-            assertNotRenderedById(doc, "error-summary-title")
+            assertNotRenderedByCssSelector(doc, ".govuk-error-summary__title")
           }
         }
 
@@ -126,7 +126,7 @@ class AnyTaxableOtherIncomeViewSpec extends NewQuestionViewBehaviours[AnyTaxPaid
         "rendered with an error" must {
           "show an error summary" in {
             val doc = asDocument(createView(form.withError(error)))
-            assertRenderedById(doc, "error-summary-title")
+            assertRenderedByCssSelector(doc, ".govuk-error-summary__title")
           }
 
           "show an error in the value field's label" in {

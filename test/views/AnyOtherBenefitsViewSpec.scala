@@ -38,7 +38,7 @@ class AnyOtherBenefitsViewSpec extends NewYesNoViewBehaviours with GuiceOneAppPe
 	private val otherBenefits: AnswerSection = new CheckYourAnswersSections(cya, MockUserAnswers.fullValidUserAnswers()).otherBenefitsAddToListNormalMode
 
   override val form = new BooleanForm()()
-  val anyOtherBenefits: anyOtherBenefits = fakeApplication.injector.instanceOf[anyOtherBenefits]
+  val anyOtherBenefits: anyOtherBenefits = fakeApplication().injector.instanceOf[anyOtherBenefits]
 
   def createView: () => Html = () =>
     anyOtherBenefits(frontendAppConfig, form, NormalMode, taxYear, otherBenefits)(fakeRequest, messages)

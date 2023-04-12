@@ -31,7 +31,7 @@ class CheckYourAnswersViewSpec extends SpecBase with NewViewBehaviours with Mock
   private val helper = new CheckYourAnswersHelper(answers)(messages: Messages)
   private val cyaSection = new CheckYourAnswersSections(helper, answers)
   private val sections = cyaSection.sections
-  private val checkYourAnswers: check_your_answers = fakeApplication.injector.instanceOf[check_your_answers]
+  private val checkYourAnswers: check_your_answers = fakeApplication().injector.instanceOf[check_your_answers]
 
   def view = () => checkYourAnswers(frontendAppConfig, sections)(fakeRequest, messages: Messages)
 

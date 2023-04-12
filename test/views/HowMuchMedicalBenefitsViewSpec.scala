@@ -32,7 +32,7 @@ class HowMuchMedicalBenefitsViewSpec extends NewStringViewBehaviours with Mockit
   private val taxYear = CustomTaxYear(2017)
 
   override val form: Form[String] = new HowMuchMedicalBenefitsForm(frontendAppConfig)()
-  val howMuchMedicalBenefits: howMuchMedicalBenefits = fakeApplication.injector.instanceOf[howMuchMedicalBenefits]
+  val howMuchMedicalBenefits: howMuchMedicalBenefits = fakeApplication().injector.instanceOf[howMuchMedicalBenefits]
 
   def createView = () => howMuchMedicalBenefits( form, NormalMode, taxYear)(fakeRequest, messages)
 

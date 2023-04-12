@@ -37,7 +37,7 @@ class AnyAgentRefViewSpec extends NewQuestionViewBehaviours[AnyAgentRef] with Gu
 
   val formProvider = new AnyAgentReferenceForm()
   val form = formProvider(messages(requiredKey, nomineeName), messages(requiredAgentRefKey, nomineeName))
-  val anyAgentRef: anyAgentRef = fakeApplication.injector.instanceOf[anyAgentRef]
+  val anyAgentRef: anyAgentRef = fakeApplication().injector.instanceOf[anyAgentRef]
 
   def createView = () => anyAgentRef(form, NormalMode, nomineeName, taxYear)(fakeRequest, messages)
 
@@ -127,7 +127,7 @@ class AnyAgentRefViewSpec extends NewQuestionViewBehaviours[AnyAgentRef] with Gu
         "rendered with an error" must {
           "show an error summary" in {
             val doc = asDocument(createView(form.withError(error)))
-            assertRenderedById(doc, "error-summary-title")
+            assertRenderedByCssSelector(doc, ".govuk-error-summary__title")
           }
 
           "show an error in the value field's label" in {

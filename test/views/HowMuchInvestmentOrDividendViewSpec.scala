@@ -32,7 +32,7 @@ class HowMuchInvestmentOrDividendViewSpec extends NewStringViewBehaviours with M
   private val taxYear = CustomTaxYear(2017)
 
   override val form: Form[String] = new HowMuchInvestmentOrDividendForm(frontendAppConfig)()
-  val howMuchInvestmentOrDividend: howMuchInvestmentOrDividend = fakeApplication.injector.instanceOf[howMuchInvestmentOrDividend]
+  val howMuchInvestmentOrDividend: howMuchInvestmentOrDividend = fakeApplication().injector.instanceOf[howMuchInvestmentOrDividend]
 
   def createView = () => howMuchInvestmentOrDividend(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 

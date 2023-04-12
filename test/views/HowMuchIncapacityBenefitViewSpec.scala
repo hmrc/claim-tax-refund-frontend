@@ -32,7 +32,7 @@ class HowMuchIncapacityBenefitViewSpec extends NewStringViewBehaviours with Mock
   private val taxYear = CustomTaxYear(2017)
 
   override val form: Form[String] = new HowMuchIncapacityBenefitForm(frontendAppConfig)()
-  val howMuchIncapacityBenefit: howMuchIncapacityBenefit = fakeApplication.injector.instanceOf[howMuchIncapacityBenefit]
+  val howMuchIncapacityBenefit: howMuchIncapacityBenefit = fakeApplication().injector.instanceOf[howMuchIncapacityBenefit]
 
   def createView = () => howMuchIncapacityBenefit(form, NormalMode, taxYear)(fakeRequest, messages)
 

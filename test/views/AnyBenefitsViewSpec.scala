@@ -31,7 +31,7 @@ class AnyBenefitsViewSpec extends NewYesNoViewBehaviours with GuiceOneAppPerSuit
   private val messageKeyPrefix = "anyBenefits"
   private val listMessageKeyPrefix = "selectBenefits"
   private val taxYear = CustomTaxYear(2017)
-  private val anyBenefits: anyBenefits = fakeApplication.injector.instanceOf[anyBenefits]
+  private val anyBenefits: anyBenefits = fakeApplication().injector.instanceOf[anyBenefits]
 
   override val form = new BooleanForm()()
 

@@ -100,7 +100,7 @@ trait Constraints {
       override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], Option[A]] = {
         data.get(key) match {
           case Some("") | None => Right(None)
-          case _ => f.bind(key, data).right.map(Some.apply)
+          case _ => f.bind(key, data).map(Some.apply)
         }
       }
 

@@ -32,7 +32,7 @@ class HowMuchBankInterestViewSpec extends NewStringViewBehaviours with MockitoSu
   private val taxYear = CustomTaxYear(2017)
 
   override val form: Form[String] = new HowMuchBankInterestForm(frontendAppConfig)()
-  val howMuchBankInterest: howMuchBankInterest = fakeApplication.injector.instanceOf[howMuchBankInterest]
+  val howMuchBankInterest: howMuchBankInterest = fakeApplication().injector.instanceOf[howMuchBankInterest]
 
   def createView = () => howMuchBankInterest(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 

@@ -43,7 +43,7 @@ class AnyTaxableOtherIncomeControllerSpec extends ControllerSpecBase with GuiceO
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
   private val taxYear = CustomTaxYear(2017)
   private val incomeName = "test income"
-  private val anyTaxableOtherIncome: anyTaxableOtherIncome = fakeApplication.injector.instanceOf[anyTaxableOtherIncome]
+  private val anyTaxableOtherIncome: anyTaxableOtherIncome = fakeApplication().injector.instanceOf[anyTaxableOtherIncome]
 
   private val formProvider = new OtherTaxableIncomeForm(frontendAppConfig)
   private val taxPaidFormProvider = new AnyTaxPaidForm

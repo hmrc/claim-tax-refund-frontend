@@ -15,6 +15,7 @@
  *@
 
 @import config.FrontendAppConfig
+@import uk.gov.hmrc.hmrcfrontend.views.viewmodels.accountmenu.YourProfile
 
 @this(
         govukLayout: GovukLayout,
@@ -50,8 +51,7 @@
             checkProgress = CheckProgress(
                 href = appConfig.trackingHomeUrl
             ),
-            paperlessSettings = PaperlessSettings(appConfig.paperlessSettingsUrl),
-            personalDetails = PersonalDetails(appConfig.personalDetailsUrl),
+            yourProfile = YourProfile(appConfig.personalDetailsUrl),
             signOut = SignOut(appConfig.signOutUrl),
             language = if(messages.lang.code == "cy") Cy else En
         ))

@@ -33,7 +33,7 @@ class RemoveOtherSelectedOptionViewSpec extends NewYesNoViewBehaviours with Guic
   private val collectionId = OtherBenefit.collectionId
 
   override val form = new BooleanForm()()
-  val removeOtherSelectedOption: removeOtherSelectedOption = fakeApplication.injector.instanceOf[removeOtherSelectedOption]
+  val removeOtherSelectedOption: removeOtherSelectedOption = fakeApplication().injector.instanceOf[removeOtherSelectedOption]
 
   def createView: () => Html = () =>
     removeOtherSelectedOption(form, NormalMode, taxYear, collectionId)(fakeRequest, messages)

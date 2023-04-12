@@ -33,7 +33,7 @@ class EmploymentDetailsViewSpec extends NewYesNoViewBehaviours with GuiceOneAppP
   private val taxYear = CustomTaxYear(2017)
 
   override val form = new BooleanForm()()
-  val employmentDetails: employmentDetails = fakeApplication.injector.instanceOf[employmentDetails]
+  val employmentDetails: employmentDetails = fakeApplication().injector.instanceOf[employmentDetails]
 
   def createViewUsingForm = (form: Form[_]) => employmentDetails(form, NormalMode, fakeEmployments, taxYear)(fakeRequest, messages)
 

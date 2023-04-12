@@ -40,7 +40,7 @@ class PaymentAddressCorrectControllerSpec extends ControllerSpecBase with GuiceO
 
   val formProvider = new BooleanForm()
   val form = formProvider()
-  val paymentAddressCorrect: paymentAddressCorrect = fakeApplication.injector.instanceOf[paymentAddressCorrect]
+  val paymentAddressCorrect: paymentAddressCorrect = fakeApplication().injector.instanceOf[paymentAddressCorrect]
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers()
 

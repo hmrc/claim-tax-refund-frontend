@@ -50,7 +50,7 @@
 
     @heading(messages("selectBenefits.heading"), taxYear = Some(taxYear.asString))
 
-    @formWithCSRF(action = SelectBenefitsController.onSubmit(mode), 'autoComplete -> "off") {
+    @formWithCSRF(action = SelectBenefitsController.onSubmit(mode), Symbol("autoComplete") -> "off") {
         @inputCheckBox(
             legend = messages("selectBenefits.heading", taxYear.asString),
             legendClass = Some("visually-hidden"),

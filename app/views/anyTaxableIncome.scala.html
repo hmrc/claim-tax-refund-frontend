@@ -55,7 +55,7 @@
         addCssClass = None,
         bulletList = TaxableIncome.sortedTaxableIncome.dropRight(1).map(_.toString)
     )
-    @formWithCSRF(action = AnyTaxableIncomeController.onSubmit(mode), 'autoComplete -> "off") {
+    @formWithCSRF(action = AnyTaxableIncomeController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
         @inputYesOrNo(
             label = messages("anyTaxableIncome.heading"),

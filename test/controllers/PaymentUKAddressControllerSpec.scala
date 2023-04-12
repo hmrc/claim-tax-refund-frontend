@@ -39,7 +39,7 @@ class PaymentUKAddressControllerSpec extends ControllerSpecBase with GuiceOneApp
       dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), paymentUKAddress, messagesControllerComponents, new PaymentUKAddressForm(frontendAppConfig))
 
   val form = new PaymentUKAddressForm(frontendAppConfig)()
-  val paymentUKAddress: paymentUKAddress = fakeApplication.injector.instanceOf[paymentUKAddress]
+  val paymentUKAddress: paymentUKAddress = fakeApplication().injector.instanceOf[paymentUKAddress]
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers()
 

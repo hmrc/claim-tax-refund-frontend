@@ -36,7 +36,7 @@ class HowMuchRentalIncomeControllerSpec extends ControllerSpecBase with GuiceOne
 
   val testAnswer = "9,999.99"
   val form = new HowMuchRentalIncomeForm(frontendAppConfig)()
-  val howMuchRentalIncome: howMuchRentalIncome = fakeApplication.injector.instanceOf[howMuchRentalIncome]
+  val howMuchRentalIncome: howMuchRentalIncome = fakeApplication().injector.instanceOf[howMuchRentalIncome]
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
 

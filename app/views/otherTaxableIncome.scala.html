@@ -49,7 +49,7 @@
 
     @pageHeading(messages("otherTaxableIncome.heading", index.id + 1), taxYear = Some(taxYear.asString))
 
-    @formWithCSRF(action = OtherTaxableIncomeController.onSubmit(mode, index), 'autoComplete -> "off") {
+    @formWithCSRF(action = OtherTaxableIncomeController.onSubmit(mode, index), Symbol("autoComplete") -> "off") {
         @inputText(
             label = messages("otherTaxableIncome.name"),
             isPageHeading = false,

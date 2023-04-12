@@ -40,7 +40,7 @@ class IsPaymentAddressInTheUKControllerSpec extends ControllerSpecBase with Mock
 
   val formProvider = new BooleanForm()
   val form = formProvider()
-  val isPaymentAddressInTheUK: isPaymentAddressInTheUK = fakeApplication.injector.instanceOf[isPaymentAddressInTheUK]
+  val isPaymentAddressInTheUK: isPaymentAddressInTheUK = fakeApplication().injector.instanceOf[isPaymentAddressInTheUK]
   private val mockAddressLookup = mock[AddressLookupConnector]
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.minimalValidUserAnswers()

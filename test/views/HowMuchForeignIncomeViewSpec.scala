@@ -32,7 +32,7 @@ class HowMuchForeignIncomeViewSpec extends NewStringViewBehaviours with MockitoS
   private val taxYear = CustomTaxYear(2017)
 
   override val form: Form[String] = new HowMuchForeignIncomeForm(frontendAppConfig)()
-  val howMuchForeignIncome: howMuchForeignIncome = fakeApplication.injector.instanceOf[howMuchForeignIncome]
+  val howMuchForeignIncome: howMuchForeignIncome = fakeApplication().injector.instanceOf[howMuchForeignIncome]
 
   def createView = () => howMuchForeignIncome(form, NormalMode, taxYear)(fakeRequest, messages)
 

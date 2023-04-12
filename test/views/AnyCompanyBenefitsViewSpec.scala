@@ -30,7 +30,7 @@ class AnyCompanyBenefitsViewSpec extends NewYesNoViewBehaviours with GuiceOneApp
   private val messageKeyPrefix = "anyCompanyBenefits"
   private val listMessageKeyPrefix = "selectCompanyBenefits"
   private val taxYear = CustomTaxYear(2017)
-  private val anyCompanyBenefits: anyCompanyBenefits = fakeApplication.injector.instanceOf[anyCompanyBenefits]
+  private val anyCompanyBenefits: anyCompanyBenefits = fakeApplication().injector.instanceOf[anyCompanyBenefits]
 
   override val form = new BooleanForm()()
 

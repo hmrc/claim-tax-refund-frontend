@@ -22,7 +22,7 @@ import views.html.sessionTimedout
 
 class SessionTimedOutViewSpec extends NewViewBehaviours with GuiceOneAppPerSuite {
 
-  val sessionTimedOut: sessionTimedout = fakeApplication.injector.instanceOf[sessionTimedout]
+  val sessionTimedOut: sessionTimedout = fakeApplication().injector.instanceOf[sessionTimedout]
 
   def view = () => sessionTimedOut(frontendAppConfig)(fakeRequest, messages)
 

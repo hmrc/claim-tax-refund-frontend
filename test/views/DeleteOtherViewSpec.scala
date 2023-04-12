@@ -34,7 +34,7 @@ class DeleteOtherViewSpec extends NewYesNoViewBehaviours with GuiceOneAppPerSuit
   private val taxYear = CYMinus3
 
   override val form = new BooleanForm()()
-  val deleteOther: deleteOther = fakeApplication.injector.instanceOf[deleteOther]
+  val deleteOther: deleteOther = fakeApplication().injector.instanceOf[deleteOther]
 
   def createView = () =>
     deleteOther(

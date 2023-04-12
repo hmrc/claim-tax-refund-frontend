@@ -37,7 +37,7 @@ class OtherTaxableIncomeControllerSpec extends ControllerSpecBase with GuiceOneA
 
   val testAnswer = OtherTaxableIncome("answer", "123", Some(AnyTaxPaid.Yes("123")))
   val form = new OtherTaxableIncomeForm(frontendAppConfig)(Seq.empty, 0)
-  val otherTaxableIncome: otherTaxableIncome = fakeApplication.injector.instanceOf[otherTaxableIncome]
+  val otherTaxableIncome: otherTaxableIncome = fakeApplication().injector.instanceOf[otherTaxableIncome]
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
 

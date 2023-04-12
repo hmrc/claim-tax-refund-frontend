@@ -44,7 +44,7 @@
 @layout(
     pageTitle = title
 ) {
-    @formWithCSRF(action = SelectTaxYearController.onSubmit(mode), 'autoComplete -> "off") {
+    @formWithCSRF(action = SelectTaxYearController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
         @errorSummary(form.errors)
         @heading(messages("selectTaxYear.heading"))

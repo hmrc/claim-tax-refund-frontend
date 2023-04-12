@@ -37,7 +37,7 @@ class DeleteOtherControllerSpec  extends ControllerSpecBase with GuiceOneAppPerS
 
   val formProvider = new BooleanForm()
   val form: Form[Boolean] = formProvider()
-  val deleteOther: deleteOther = fakeApplication.injector.instanceOf[deleteOther]
+  val deleteOther: deleteOther = fakeApplication().injector.instanceOf[deleteOther]
   private val mockUserAnswers = MockUserAnswers
   private val taxYear = CustomTaxYear(2017)
 

@@ -22,7 +22,6 @@ import connectors.{CasConnector, DataCacheConnector}
 import controllers.actions.{AuthAction, DataRequiredAction, DataRetrievalAction}
 import models.templates.RobotXML
 import models.{Metadata, SubmissionSuccessful, _}
-import org.apache.commons.codec.digest.DigestUtils
 import org.joda.time.LocalDateTime
 import play.api.Logging
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -31,7 +30,7 @@ import services.SubmissionService
 import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import play.api.mvc.MessagesControllerComponents
-import uk.gov.hmrc.play.partials.FormPartialRetriever
+import play.shaded.oauth.org.apache.commons.codec.digest.DigestUtils
 import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, ReferenceGenerator, SubmissionMark}
 import views.html.{check_your_answers, pdf_check_your_answers}
 import uk.gov.hmrc.domain.Nino
@@ -101,7 +100,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
       val submissionMark = SubmissionMark.getSfMark(xmlDeclaration + submissionXml)
 
       val submissionArchiveRequest = SubmissionArchiveRequest(
-        checksum = DigestUtils.sha1Hex(submissionXml.getBytes("UTF-8")),
+        checksum = DigestUtils.shaHex(submissionXml.getBytes("UTF-8")),
         submissionRef = submissionReference,
         submissionMark = submissionMark,
         submissionData = submissionXml
@@ -131,7 +130,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
         submission =>
           submissionService.ctrSubmission(submission) map {
             case SubmissionSuccessful =>
-              Redirect(routes.ConfirmationController.onPageLoad)
+              Redirect(routes.ConfirmationController.onPageLoad())
             case _ =>
               throw new Exception("[Check your answers][Submission failed]")
           }

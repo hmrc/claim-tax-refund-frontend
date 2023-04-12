@@ -22,7 +22,7 @@ import views.html.unauthorised
 
 class UnauthorisedControllerSpec extends ControllerSpecBase with GuiceOneAppPerSuite {
 
-  val unauthorised: unauthorised = fakeApplication.injector.instanceOf[unauthorised]
+  val unauthorised: unauthorised = fakeApplication().injector.instanceOf[unauthorised]
 
   "Unauthorised Controller" must {
     "return 200 for a GET" in {

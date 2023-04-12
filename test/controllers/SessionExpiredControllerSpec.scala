@@ -22,7 +22,7 @@ import views.html.session_expired
 
 class SessionExpiredControllerSpec extends ControllerSpecBase with GuiceOneAppPerSuite {
 
-  val sessionExpired: session_expired = fakeApplication.injector.instanceOf[session_expired]
+  val sessionExpired: session_expired = fakeApplication().injector.instanceOf[session_expired]
 
   "SessionExpired Controller" must {
     "return 200 for a GET" in {

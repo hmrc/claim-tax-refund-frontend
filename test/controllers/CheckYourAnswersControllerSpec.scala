@@ -39,7 +39,7 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with ScalaFuture
   implicit val referenceGenerator: ReferenceGenerator = mock[ReferenceGenerator]
   implicit val robotXML: RobotXML = mock[RobotXML]
   private val mockSubmissionService: SubmissionService = mock[SubmissionService]
-  private val checkYourAnswers = fakeApplication.injector.instanceOf[check_your_answers]
+  private val checkYourAnswers = fakeApplication().injector.instanceOf[check_your_answers]
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap, submissionService: SubmissionService = mockSubmissionService) =
     new CheckYourAnswersController(
@@ -88,7 +88,7 @@ class CheckYourAnswersControllerSpec extends ControllerSpecBase with ScalaFuture
       val result: Future[Result] = controller().onSubmit()(fakeRequest)
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.ConfirmationController.onPageLoad.url)
+      redirectLocation(result) mustBe Some(routes.ConfirmationController.onPageLoad().url)
     }
 
     "throw an exception when a submission fails" in {

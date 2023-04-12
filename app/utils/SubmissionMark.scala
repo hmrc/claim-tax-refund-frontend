@@ -16,11 +16,13 @@
 
 package utils
 
-import org.apache.commons.codec.binary.Base64
 import java.io.{ByteArrayInputStream, InputStream}
+
 import javax.xml.parsers.{DocumentBuilder, DocumentBuilderFactory}
 import org.w3c.dom.Document
 import java.security.MessageDigest
+
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64
 import com.sun.org.apache.xml.internal.security.transforms.Transforms
 import com.sun.org.apache.xml.internal.security.signature.XMLSignatureInput
 import com.sun.org.apache.xml.internal.security.Init
@@ -64,7 +66,7 @@ trait SubmissionMark {
     "</dsig:Transforms>"
 
   private def toBase64(irMarkBytes: Array[Byte]): String = {
-    new String(Base64.encodeBase64(irMarkBytes))
+    new String(Base64.encode(irMarkBytes))
   }
 }
 

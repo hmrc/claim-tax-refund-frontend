@@ -32,7 +32,7 @@ class PaymentInternationalAddressViewSpec extends NewQuestionViewBehaviours[Inte
   private val taxYear = CYMinus1
 
   override val form: Form[InternationalAddress] = new PaymentInternationalAddressForm(frontendAppConfig)()
-  val paymentInternationalAddress: paymentInternationalAddress = fakeApplication.injector.instanceOf[paymentInternationalAddress]
+  val paymentInternationalAddress: paymentInternationalAddress = fakeApplication().injector.instanceOf[paymentInternationalAddress]
 
   def createView = () =>
     paymentInternationalAddress(form, NormalMode, taxYear)(fakeRequest, messages)

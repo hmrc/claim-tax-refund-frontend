@@ -56,7 +56,7 @@
             bulletList = CompanyBenefits.sortedCompanyBenefits.dropRight(1).map(_.toString)
         )
 
-        @formWithCSRF(action = AnyCompanyBenefitsController.onSubmit(mode), 'autoComplete -> "off") {
+        @formWithCSRF(action = AnyCompanyBenefitsController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
             @inputYesOrNo(
                 isPageHeading = false,

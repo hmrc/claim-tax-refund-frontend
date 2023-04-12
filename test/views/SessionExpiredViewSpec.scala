@@ -22,7 +22,7 @@ import views.html.session_expired
 
 class SessionExpiredViewSpec extends NewViewBehaviours with GuiceOneAppPerSuite {
 
-  val sessionExpired: session_expired = fakeApplication.injector.instanceOf[session_expired]
+  val sessionExpired: session_expired = fakeApplication().injector.instanceOf[session_expired]
 
   def view = () => sessionExpired(frontendAppConfig)(fakeRequest, messages)
 

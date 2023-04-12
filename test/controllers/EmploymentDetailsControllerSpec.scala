@@ -42,7 +42,7 @@ class EmploymentDetailsControllerSpec extends ControllerSpecBase with MockitoSug
   val formProvider = new BooleanForm()
   val form: Form[Boolean] = formProvider()
   val mockTaiConnector: TaiConnector = mock[TaiConnector]
-  val employmentDetails: employmentDetails = fakeApplication.injector.instanceOf[employmentDetails]
+  val employmentDetails: employmentDetails = fakeApplication().injector.instanceOf[employmentDetails]
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
 

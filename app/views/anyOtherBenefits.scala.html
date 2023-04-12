@@ -55,7 +55,7 @@
 
         @otherSummary(answers = otherBenefits.rows)
 
-        @formWithCSRF(action = AnyOtherBenefitsController.onSubmit(mode), 'autoComplete -> "off") {
+        @formWithCSRF(action = AnyOtherBenefitsController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
             @inputYesNo(
                 label = messages("anyOtherBenefits.addAnotherBenefit"),

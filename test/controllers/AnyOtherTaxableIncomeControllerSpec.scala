@@ -40,7 +40,7 @@ class AnyOtherTaxableIncomeControllerSpec  extends ControllerSpecBase with Guice
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
 
-  val anyOtherTaxableIncome: anyOtherTaxableIncome = fakeApplication.injector.instanceOf[anyOtherTaxableIncome]
+  val anyOtherTaxableIncome: anyOtherTaxableIncome = fakeApplication().injector.instanceOf[anyOtherTaxableIncome]
 
   val complete: Seq[(OtherTaxableIncome, Int)] = Seq((OtherTaxableIncome("qwerty", "123", Some(AnyTaxPaid.Yes("1234"))),0))
   val incomplete: Seq[(OtherTaxableIncome, Int)] = Seq((OtherTaxableIncome("qwerty", "123", None),1))

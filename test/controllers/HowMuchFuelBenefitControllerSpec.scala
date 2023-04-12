@@ -37,7 +37,7 @@ class HowMuchFuelBenefitControllerSpec extends ControllerSpecBase with MockitoSu
 
   val testAnswer = "9,999.99"
   val form = new HowMuchFuelBenefitForm(frontendAppConfig)()
-  val howMuchFuelBenefit: howMuchFuelBenefit = fakeApplication.injector.instanceOf[howMuchFuelBenefit]
+  val howMuchFuelBenefit: howMuchFuelBenefit = fakeApplication().injector.instanceOf[howMuchFuelBenefit]
   private val taxYear = CustomTaxYear(2017)
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
 

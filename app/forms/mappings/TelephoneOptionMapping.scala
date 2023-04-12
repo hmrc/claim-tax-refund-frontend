@@ -27,8 +27,6 @@ trait TelephoneOptionMapping extends Mappings {
                       requiredTelephoneKey: String,
                       telephoneInvalidKey: String):
   Mapping[TelephoneOption] = {
-    val telephoneRegex = """^\+?[0-9\s\(\)]{1,20}$"""
-
     def fromTelephone(telephone: TelephoneOption): (Boolean, Option[String]) = {
       telephone match {
         case TelephoneOption.Yes(number) => (true, Some(number))

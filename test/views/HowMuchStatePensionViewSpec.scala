@@ -32,7 +32,7 @@ class HowMuchStatePensionViewSpec extends NewStringViewBehaviours with MockitoSu
   private val taxYear = CustomTaxYear(2017)
 
   override val form: Form[String] = new HowMuchStatePensionForm(frontendAppConfig)()
-  val howMuchStatePension: howMuchStatePension = fakeApplication.injector.instanceOf[howMuchStatePension]
+  val howMuchStatePension: howMuchStatePension = fakeApplication().injector.instanceOf[howMuchStatePension]
 
   def createView = () => howMuchStatePension(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
