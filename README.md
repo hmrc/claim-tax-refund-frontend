@@ -34,6 +34,11 @@ This service is dependant on these other services:
 - [Address lookup frontend](https://github.com/hmrc/address-lookup-frontend)
 - [Tai](https://github.com/hmrc/tai)
 
+### Running locally
+
+To run the service locally: (run on port 9969)
+`sbt run`
+
 ### Routes
 
 Start the service locally by going to http://localhost:9969/claim-tax-refund
@@ -41,3 +46,10 @@ Start the service locally by going to http://localhost:9969/claim-tax-refund
 Address lookup partial call back to either
 - /address-callback-normal-mode
 - /address-callback-check-mode
+
+
+#### Test Coverage
+
+To run the test coverage suite
+
+`sbt clean coverage test coverageReport`
