@@ -36,7 +36,7 @@ class CheckYourAnswersViewSpec extends SpecBase with NewViewBehaviours with Mock
   def view = () => checkYourAnswers(frontendAppConfig, sections)(fakeRequest, messages: Messages)
 
   "Check your answers view" must {
-    behave like normalPage(view, messageKeyPrefix, None)
+    behave like normalPage(view(), messageKeyPrefix, None)
   }
 
   "Page should display correct sections" in {

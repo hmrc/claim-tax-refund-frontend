@@ -56,9 +56,9 @@ class DeleteOtherViewSpec extends NewYesNoViewBehaviours with GuiceOneAppPerSuit
 
   "DeleteOther view" must {
 
-    behave like normalPage(createView, messageKeyPrefix, None, "qwerty")
+    behave like normalPage(createView(), messageKeyPrefix, None, "qwerty")
 
-    behave like pageWithBackLink(createView)
+    behave like pageWithBackLink(createView())
 
     behave like yesNoPage(
       createView = createViewUsingForm,

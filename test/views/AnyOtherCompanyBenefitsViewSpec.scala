@@ -48,11 +48,11 @@ class AnyOtherCompanyBenefitsViewSpec extends NewYesNoViewBehaviours with GuiceO
 
 	"AnyOtherCompanyBenefits view" must {
 
-		behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))
+		behave like normalPage(createView(), messageKeyPrefix, None, taxYear.asString(messages))
 
-		behave like pageWithBackLink(createView)
+		behave like pageWithBackLink(createView())
 
-		behave like pageWithSecondaryHeader(createView, messages("site.service_name.with_tax_year", taxYear.asString(messages)))
+		behave like pageWithSecondaryHeader(createView(), messages("site.service_name.with_tax_year", taxYear.asString(messages)))
 
 		behave like yesNoPage(
 			createView = createViewUsingForm,

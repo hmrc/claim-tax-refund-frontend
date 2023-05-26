@@ -43,6 +43,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
             CYMinus4.asString
           case year @ CustomTaxYear(y) =>
             year.asString
+          case _ => ""
         },
 				url = Some(routes.SelectTaxYearController.onPageLoad(CheckMode).url),
 				changeLabel = "selectTaxYear.changeLabel")
@@ -92,6 +93,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
 					case Benefits.EMPLOYMENT_AND_SUPPORT_ALLOWANCE => messages(keyPrefix + "employment-and-support-allowance").capitalize + "<br>"
 					case Benefits.STATE_PENSION => messages(keyPrefix + "state-pension").capitalize + "<br>"
 					case Benefits.OTHER_TAXABLE_BENEFIT => messages(keyPrefix + "other-taxable-benefit").capitalize + "<br>"
+          case _ => ""
 				}.mkString,
 				url = Some(routes.SelectBenefitsController.onPageLoad(CheckMode).url),
 				changeLabel = keyPrefix + "changeLabel"
@@ -197,6 +199,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
       	case CompanyBenefits.FUEL_BENEFIT => messages(keyPrefix + "fuel-benefit").capitalize + "<br>"
       	case CompanyBenefits.MEDICAL_BENEFIT => messages(keyPrefix + "medical-benefit").capitalize + "<br>"
       	case CompanyBenefits.OTHER_COMPANY_BENEFIT => messages(keyPrefix + "other-company-benefit").capitalize + "<br>"
+        case _ => ""
     	}.mkString,
 			url = Some(routes.SelectCompanyBenefitsController.onPageLoad(CheckMode).url),
 			changeLabel = keyPrefix + "changeLabel"
@@ -270,6 +273,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
         answer = x match {
           case AnyTaxPaid.Yes(amount) => "site.yes"
           case AnyTaxPaid.No => "site.no"
+          case _ => ""
         },
 				url = route,
 				changeLabel = label
@@ -304,6 +308,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
       	case TaxableIncome.INVESTMENT_OR_DIVIDENDS => messages(keyPrefix + "investment-or-dividends").capitalize + "<br>"
       	case TaxableIncome.FOREIGN_INCOME => messages(keyPrefix + "foreign-income").capitalize + "<br>"
       	case TaxableIncome.OTHER_TAXABLE_INCOME => messages(keyPrefix + "other-taxable-income").capitalize + "<br>"
+        case _ => ""
     	}.mkString,
 			url = Some(routes.SelectTaxableIncomeController.onPageLoad(CheckMode).url),
 			changeLabel = keyPrefix + "changeLabel"
@@ -448,6 +453,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
       answer = x match {
         case AnyAgentRef.Yes(agentRef) => "site.yes"
         case AnyAgentRef.No => "site.no"
+        case _ => ""
       },
 			url = Some(routes.AnyAgentRefController.onPageLoad(CheckMode).url + "/#anyAgentRef"),
 			changeLabel = messages("anyAgentRef.changeLabel", userAnswers.nomineeFullName.getOrElse("your nominee"))
@@ -531,6 +537,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
         answer = x match {
           case TelephoneOption.Yes(number) => "site.yes"
           case TelephoneOption.No => "site.no"
+          case _ => ""
         },
         url = Some(routes.TelephoneNumberController.onPageLoad(CheckMode).url + "/#anyTelephoneNumber"),
 				changeLabel = "telephoneNumber.changeLabel"

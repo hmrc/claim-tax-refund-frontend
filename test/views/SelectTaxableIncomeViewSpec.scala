@@ -46,11 +46,11 @@ class SelectTaxableIncomeViewSpec extends NewViewBehaviours with NewCheckboxView
   def createViewUsingForm = (form: Form[_]) => selectTaxableIncome(frontendAppConfig, form, NormalMode, taxYear)(fakeRequest, messages)
 
   "SelectTaxableIncome view" must {
-    behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))
+    behave like normalPage(createView(), messageKeyPrefix, None, taxYear.asString(messages))
 
-    behave like pageWithBackLink(createView)
+    behave like pageWithBackLink(createView())
 
-    behave like pageWithSecondaryHeader(createView, messages("site.service_name.with_tax_year", taxYear.asString(messages)))
+    behave like pageWithSecondaryHeader(createView(), messages("site.service_name.with_tax_year", taxYear.asString(messages)))
 
     behave like checkboxPage(legend = Some(messages(s"$messageKeyPrefix.heading", taxYear.asString(messages))))
 

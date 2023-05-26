@@ -42,11 +42,11 @@ class DetailsOfEmploymentOrPensionViewSpec extends NewStringViewBehaviours with 
     detailsOfEmploymentOrPension(frontendAppConfig, form, NormalMode, taxYear, characterLimit)(fakeRequest, messages)
 
   "DetailsOfEmploymentOrPension view" must {
-    behave like normalPage(createView, messageKeyPrefix, None, taxYear.asString(messages))
+    behave like normalPage(createView(), messageKeyPrefix, None, taxYear.asString(messages))
 
-    behave like pageWithBackLink(createView)
+    behave like pageWithBackLink(createView())
 
-    behave like pageWithSecondaryHeader(createView, messages("site.service_name.with_tax_year", taxYear.asString(messages)))
+    behave like pageWithSecondaryHeader(createView(), messages("site.service_name.with_tax_year", taxYear.asString(messages)))
 
     behave like stringPage(
       createView = createViewUsingForm,

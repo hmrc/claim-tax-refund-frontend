@@ -19,17 +19,17 @@ val bootstrapVersion = "7.15.0"
 val compile = Seq(
   ws,
   "uk.gov.hmrc"           %% "bootstrap-frontend-play-28"     % bootstrapVersion,
-  "uk.gov.hmrc"           %% "play-frontend-hmrc"             % "7.3.0-play-28",
-  "uk.gov.hmrc.mongo"     %% "hmrc-mongo-play-28"             % "1.1.0",
+  "uk.gov.hmrc"           %% "play-frontend-hmrc"             % "7.7.0-play-28",
+  "uk.gov.hmrc.mongo"     %% "hmrc-mongo-play-28"             % "1.2.0",
   "uk.gov.hmrc"           %% "http-caching-client"            % "10.0.0-play-28",
   "uk.gov.hmrc"           %% "play-conditional-form-mapping"  % "1.13.0-play-28",
   "uk.gov.hmrc"           %% "play-partials"                  % "8.4.0-play-28",
   "uk.gov.hmrc"           %% "play-language"                  % "6.2.0-play-28",
-  "uk.gov.hmrc"           %% "tax-year"                       % "3.1.0",
+  "uk.gov.hmrc"           %% "tax-year"                       % "3.2.0",
   "org.scalatra.scalate"  %% "play-scalate"                   % "0.6.0",
   "org.scalatra.scalate"  %% "scalate-core"                   % "1.9.8",
-  "uk.gov.hmrc"           %% "domain"                         % "8.2.0-play-28",
-  "com.googlecode.libphonenumber" % "libphonenumber"          % "8.13.9"
+  "uk.gov.hmrc"           %% "domain"                         % "8.3.0-play-28",
+  "com.googlecode.libphonenumber" % "libphonenumber"          % "8.13.13"
 )
 
 def test(scope: String = "test"): Seq[ModuleID] = Seq(
@@ -39,9 +39,9 @@ def test(scope: String = "test"): Seq[ModuleID] = Seq(
   "org.scalatestplus"       %%  "scalatestplus-mockito"     % "1.0.0-M2" % scope,
   "org.scalatestplus.play"  %%  "scalatestplus-play"        % "5.1.0" % scope,
   "org.scalatestplus"       %%  "scalatestplus-scalacheck"  % "3.1.0.0-RC2" % scope,
-  "uk.gov.hmrc.mongo"       %%  "hmrc-mongo-test-play-28"    % "1.1.0" % scope,
+  "uk.gov.hmrc.mongo"       %%  "hmrc-mongo-test-play-28"    % "1.2.0" % scope,
   "org.pegdown"             %   "pegdown"                   % "1.6.0" % scope,
-  "org.jsoup"               %   "jsoup"                     % "1.15.4" % scope,
+  "org.jsoup"               %   "jsoup"                     % "1.16.1" % scope,
   "com.typesafe.play"       %%  "play-test"                 % PlayVersion.current % scope,
   "org.mockito"             %   "mockito-all"               % "1.10.19" % scope
 )
@@ -66,7 +66,6 @@ lazy val microservice = Project(appName, file("."))
     parallelExecution in Test := false
   )
   .settings(scalaSettings: _*)
-  .settings(publishingSettings: _*)
   .settings(isPublicArtefact := true)
   .settings(defaultSettings(): _*)
   .settings(
@@ -109,6 +108,7 @@ lazy val microservice = Project(appName, file("."))
 // Use the silencer plugin to suppress warnings from unused imports in compiled twirl templates
 scalacOptions += "-P:silencer:pathFilters=routes"
 scalacOptions += "-P:silencer:lineContentFilters=^\\w"
+scalacOptions += "-Wconf:cat=lint-multiarg-infix:silent"
 libraryDependencies ++= Seq(
   compilerPlugin("com.github.ghik" % "silencer-plugin" % "1.7.12" cross CrossVersion.full),
   "com.github.ghik" % "silencer-lib" % "1.7.12" % Provided cross CrossVersion.full

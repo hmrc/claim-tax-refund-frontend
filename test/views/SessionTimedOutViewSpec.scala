@@ -28,7 +28,7 @@ class SessionTimedOutViewSpec extends NewViewBehaviours with GuiceOneAppPerSuite
 
   "Session Timed Out View" must {
 
-    behave like normalPage(view, "timedOut", Some("button"))
+    behave like normalPage(view(), "timedOut", Some("button"))
   }
 
 }

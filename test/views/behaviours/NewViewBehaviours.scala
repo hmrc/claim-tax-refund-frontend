@@ -17,12 +17,12 @@
 package views.behaviours
 
 import org.jsoup.Jsoup
-import play.twirl.api.HtmlFormat
+import play.twirl.api.{Html, HtmlFormat}
 import views.{NewViewSpecBase, ViewSpecBase}
 
 trait NewViewBehaviours extends NewViewSpecBase {
 
-  def normalPage(view: () => HtmlFormat.Appendable,
+  def normalPage(view: Html,
                  messageKeyPrefix: String,
                  expectedGuidanceKeys: Option[String],
                  args: Any*) = {
@@ -30,38 +30,38 @@ trait NewViewBehaviours extends NewViewSpecBase {
     "behave like a normal page" when {
       "rendered" must {
         "display the correct browser title" in {
-          val doc = asDocument(view())
+          val doc = asDocument(view)
           assertBrowserTitleEqualsMessage(doc, s"$messageKeyPrefix.title", args: _*)
         }
 
         "display the correct page title" in {
-          val doc = asDocument(view())
+          val doc = asDocument(view)
           assertPageTitleEqualsMessage(doc, s"$messageKeyPrefix.heading", args: _*)
         }
 
         "display the correct guidance" in {
-          val doc = asDocument(view())
+          val doc = asDocument(view)
           for (key <- expectedGuidanceKeys) assertContainsText(doc, messages(s"$messageKeyPrefix.$key"))
         }
       }
     }
   }
 
-  def pageWithBackLink(view: () => HtmlFormat.Appendable) = {
+  def pageWithBackLink(view: Html) = {
 
     "behave like a page with a back link" must {
       "have a back link" in {
-        val doc = asDocument(view())
+        val doc = asDocument(view)
         assertRenderedById(doc, "back-link")
       }
     }
   }
 
-  def pageWithSecondaryHeader(view: () => HtmlFormat.Appendable,
+  def pageWithSecondaryHeader(view: Html,
                               heading: String) = {
 
     "behave like a page with a secondary header" in {
-      Jsoup.parse(view().toString()).getElementsByClass("govuk-caption-xl").text() must include(heading)
+      Jsoup.parse(view.toString()).getElementsByClass("govuk-caption-xl").text() must include(heading)
     }
   }
 

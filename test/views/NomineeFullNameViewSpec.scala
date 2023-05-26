@@ -41,11 +41,11 @@ class NomineeFullNameViewSpec extends NewStringViewBehaviours with MockitoSugar 
     nomineeFullName(form, NormalMode, taxYear)(fakeRequest, messages)
 
   "NomineeFullName view" must {
-    behave like normalPage(createView, messageKeyPrefix, None)
+    behave like normalPage(createView(), messageKeyPrefix, None)
 
-    behave like pageWithBackLink(createView)
+    behave like pageWithBackLink(createView())
 
-    behave like pageWithSecondaryHeader(createView, messages("site.service_name.with_tax_year", taxYear.asString(messages)))
+    behave like pageWithSecondaryHeader(createView(), messages("site.service_name.with_tax_year", taxYear.asString(messages)))
 
     behave like stringPage(
       createView = createViewUsingForm,

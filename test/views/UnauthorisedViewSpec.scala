@@ -28,6 +28,6 @@ class UnauthorisedViewSpec extends NewViewBehaviours with GuiceOneAppPerSuite {
 
   "Unauthorised view" must {
 
-    behave like normalPage(view, "unauthorised", None)
+    behave like normalPage(view(), "unauthorised", None)
   }
 }

@@ -59,6 +59,7 @@ class RemoveOtherSelectedOptionController @Inject()(override val messagesApi: Me
             case OtherBenefit.collectionId => otherBenefitsKey
             case OtherCompanyBenefit.collectionId => otherCompanyBenefitsKey
             case OtherTaxableIncome.collectionId => otherTaxableIncomeKey
+            case _ => None
           }
           val form: Form[Boolean] = formProvider(cc.messagesApi.preferred(request).messages(errorKey, collectionName))
           Ok(removeOtherSelectedOption(form, mode, selectedTaxYear, collectionId))
@@ -76,6 +77,7 @@ class RemoveOtherSelectedOptionController @Inject()(override val messagesApi: Me
             case OtherBenefit.collectionId => otherBenefitsKey
             case OtherCompanyBenefit.collectionId => otherCompanyBenefitsKey
             case OtherTaxableIncome.collectionId => otherTaxableIncomeKey
+            case _ => None
           }
           val form: Form[Boolean] = formProvider(cc.messagesApi.preferred(request).messages(errorKey, collectionName))
 

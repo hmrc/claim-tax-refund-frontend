@@ -17,7 +17,7 @@
 package views.behaviours
 
 import org.jsoup.Jsoup
-import play.twirl.api.HtmlFormat
+import play.twirl.api.{Html, HtmlFormat}
 import views.ViewSpecBase
 
 trait ViewBehaviours extends ViewSpecBase {
@@ -57,11 +57,11 @@ trait ViewBehaviours extends ViewSpecBase {
     }
   }
 
-  def pageWithSecondaryHeader(view: () => HtmlFormat.Appendable,
+  def pageWithSecondaryHeader(view: Html,
                               heading: String) = {
 
     "behave like a page with a secondary header" in {
-      Jsoup.parse(view().toString()).getElementsByClass("heading-secondary").text() must include(heading)
+      Jsoup.parse(view.toString()).getElementsByClass("heading-secondary").text() must include(heading)
     }
   }
 

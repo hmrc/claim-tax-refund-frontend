@@ -28,6 +28,6 @@ class SessionExpiredViewSpec extends NewViewBehaviours with GuiceOneAppPerSuite 
 
   "Session Expired view" must {
 
-    behave like normalPage(view, "session_expired", Some("button"))
+    behave like normalPage(view(), "session_expired", Some("button"))
   }
 }
