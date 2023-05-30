@@ -37,11 +37,11 @@ class SelectTaxYearViewSpec extends NewViewBehaviours with GuiceOneAppPerSuite {
 
 
   "SelectTaxYear view" must {
-    behave like normalPage(createView, messageKeyPrefix, None)
+    behave like normalPage(createView(), messageKeyPrefix, None)
 
-    behave like pageWithBackLink(createView)
+    behave like pageWithBackLink(createView())
 
-    behave like pageWithSecondaryHeader(createView, messages("index.title"))
+    behave like pageWithSecondaryHeader(createView(), messages("index.title"))
   }
 
   "SelectTaxYear view" when {

@@ -58,7 +58,7 @@ class CascadeUpsert {
     val mapToStore = cacheMap.data.get(SelectTaxYearId.toString).map {
       cachedTaxYear =>
         if(cachedTaxYear != newTaxYear){
-          cacheMap copy (data = cacheMap.data - (EmploymentDetailsId.toString, EnterPayeReferenceId.toString, DetailsOfEmploymentOrPensionId.toString))
+          cacheMap copy (data = cacheMap.data -- Iterable(EmploymentDetailsId.toString, EnterPayeReferenceId.toString, DetailsOfEmploymentOrPensionId.toString))
         } else {
           cacheMap
         }
@@ -71,7 +71,7 @@ class CascadeUpsert {
     if (value.as[Boolean]) {
       store(AnyBenefitsId.toString, value, cacheMap)
     } else {
-      store(AnyBenefitsId.toString, value, cacheMap.copy(data = cacheMap.data - (
+      store(AnyBenefitsId.toString, value, cacheMap.copy(data = cacheMap.data -- Iterable(
         SelectBenefitsId.toString,
         HowMuchBereavementAllowanceId.toString,
         HowMuchCarersAllowanceId.toString,
@@ -88,7 +88,7 @@ class CascadeUpsert {
     if (value.as[Boolean]) {
       store(AnyCompanyBenefitsId.toString, value, cacheMap)
     } else {
-      store(AnyCompanyBenefitsId.toString, value, cacheMap.copy(data = cacheMap.data - (
+      store(AnyCompanyBenefitsId.toString, value, cacheMap.copy(data = cacheMap.data -- Iterable(
         SelectCompanyBenefitsId.toString,
         HowMuchCarBenefitsId.toString,
         HowMuchFuelBenefitId.toString,
@@ -102,7 +102,7 @@ class CascadeUpsert {
     if (value.as[Boolean]) {
       store(AnyTaxableIncomeId.toString, value, cacheMap)
     } else {
-      store(AnyTaxableIncomeId.toString, value, cacheMap.copy(data = cacheMap.data - (
+      store(AnyTaxableIncomeId.toString, value, cacheMap.copy(data = cacheMap.data -- Iterable(
         SelectTaxableIncomeId.toString,
         HowMuchRentalIncomeId.toString,
         AnyTaxableRentalIncomeId.toString,
@@ -126,7 +126,7 @@ class CascadeUpsert {
           if (!selectedBenefits.as[JsArray].value.contains(benefit) && benefit != JsString(Benefits.OTHER_TAXABLE_BENEFIT.toString)) {
             cm copy (data = cm.data - Benefits.getId(benefit.as[String]).toString)
           } else if (!selectedBenefits.as[JsArray].value.contains(JsString(Benefits.OTHER_TAXABLE_BENEFIT.toString))) {
-            cm copy (data = cm.data - (OtherBenefitId.toString, AnyOtherBenefitsId.toString))
+            cm copy (data = cm.data -- Iterable(OtherBenefitId.toString, AnyOtherBenefitsId.toString))
           } else {
             cm
           }
@@ -144,7 +144,7 @@ class CascadeUpsert {
           if (!selectedBenefits.as[JsArray].value.contains(benefit) && benefit != JsString(CompanyBenefits.OTHER_COMPANY_BENEFIT.toString)) {
             cm copy (data = cm.data - CompanyBenefits.getId(benefit.as[String]).toString)
           } else if (!selectedBenefits.as[JsArray].value.contains(JsString(CompanyBenefits.OTHER_COMPANY_BENEFIT.toString))) {
-            cm copy (data = cm.data - (OtherCompanyBenefitId.toString, AnyOtherCompanyBenefitsId.toString))
+            cm copy (data = cm.data -- Iterable(OtherCompanyBenefitId.toString, AnyOtherCompanyBenefitsId.toString))
           } else {
             cm
           }
@@ -160,9 +160,9 @@ class CascadeUpsert {
       _.as[JsArray].value.foldLeft(cacheMap) {
         (cm, benefit) =>
           if (!selectedBenefits.as[JsArray].value.contains(benefit) && benefit != JsString(TaxableIncome.OTHER_TAXABLE_INCOME.toString)) {
-            cm copy (data = cm.data - (TaxableIncome.getId(benefit.as[String])._1.toString, TaxableIncome.getId(benefit.as[String])._2.toString))
+            cm copy (data = cm.data -- Iterable(TaxableIncome.getId(benefit.as[String])._1.toString, TaxableIncome.getId(benefit.as[String])._2.toString))
           } else if (!selectedBenefits.as[JsArray].value.contains(JsString(TaxableIncome.OTHER_TAXABLE_INCOME.toString))) {
-            cm copy (data = cm.data - (OtherTaxableIncomeId.toString, AnyTaxableOtherIncomeId.toString, AnyOtherTaxableIncomeId.toString))
+            cm copy (data = cm.data -- Iterable(OtherTaxableIncomeId.toString, AnyTaxableOtherIncomeId.toString, AnyOtherTaxableIncomeId.toString))
           } else {
             cm
           }
@@ -190,7 +190,7 @@ class CascadeUpsert {
     if (cacheMap.data.contains(WhereToSendPaymentId.toString) && value != cacheMap.data(WhereToSendPaymentId.toString)) {
       val mapToStore = value match {
         case JsString("myself") =>
-          cacheMap copy (data = cacheMap.data - (NomineeFullNameId.toString,
+          cacheMap copy (data = cacheMap.data -- Iterable(NomineeFullNameId.toString,
             AnyAgentRefId.toString,
             AgentRefId.toString,
             IsPaymentAddressInTheUKId.toString,
@@ -199,7 +199,7 @@ class CascadeUpsert {
             PaymentInternationalAddressId.toString,
             PaymentAddressCorrectId.toString))
         case JsString("nominee") =>
-          cacheMap copy (data = cacheMap.data - (PaymentAddressCorrectId.toString,
+          cacheMap copy (data = cacheMap.data -- Iterable(PaymentAddressCorrectId.toString,
             IsPaymentAddressInTheUKId.toString,
             PaymentUKAddressId.toString,
             PaymentInternationalAddressId.toString,
@@ -241,10 +241,10 @@ class CascadeUpsert {
       case JsBoolean(false) =>
         val cm = cacheMap.data(SelectBenefitsId.toString).as[Seq[JsValue]].dropRight(1)
         if(cm.isEmpty){
-          val newCacheMap = cacheMap copy (data = cacheMap.data - (SelectBenefitsId.toString, OtherBenefitId.toString, AnyBenefitsId.toString, AnyOtherBenefitsId.toString))
+          val newCacheMap = cacheMap copy (data = cacheMap.data -- Iterable(SelectBenefitsId.toString, OtherBenefitId.toString, AnyBenefitsId.toString, AnyOtherBenefitsId.toString))
           store(AnyBenefitsId.toString, false, newCacheMap)
         } else {
-          val newCacheMap = cacheMap copy (data = cacheMap.data - (OtherBenefitId.toString, AnyOtherBenefitsId.toString))
+          val newCacheMap = cacheMap copy (data = cacheMap.data -- Iterable(OtherBenefitId.toString, AnyOtherBenefitsId.toString))
           store(SelectBenefitsId.toString, cm, newCacheMap)
         }
       case _ => cacheMap
@@ -257,10 +257,10 @@ class CascadeUpsert {
       case JsBoolean(false) =>
         val cm = cacheMap.data(SelectCompanyBenefitsId.toString).as[Seq[JsValue]].dropRight(1)
         if(cm.isEmpty){
-          val newCacheMap = cacheMap copy (data = cacheMap.data - (SelectCompanyBenefitsId.toString, OtherCompanyBenefitId.toString, AnyCompanyBenefitsId.toString, AnyOtherCompanyBenefitsId.toString))
+          val newCacheMap = cacheMap copy (data = cacheMap.data -- Iterable(SelectCompanyBenefitsId.toString, OtherCompanyBenefitId.toString, AnyCompanyBenefitsId.toString, AnyOtherCompanyBenefitsId.toString))
           store(AnyCompanyBenefitsId.toString, false, newCacheMap)
         } else {
-          val newCacheMap = cacheMap copy (data = cacheMap.data - (OtherCompanyBenefitId.toString, AnyOtherCompanyBenefitsId.toString))
+          val newCacheMap = cacheMap copy (data = cacheMap.data -- Iterable(OtherCompanyBenefitId.toString, AnyOtherCompanyBenefitsId.toString))
           store(SelectCompanyBenefitsId.toString, cm, newCacheMap)
         }
       case _ => cacheMap
@@ -273,10 +273,10 @@ class CascadeUpsert {
       case JsBoolean(false) =>
         val cm = cacheMap.data(SelectTaxableIncomeId.toString).as[Seq[JsValue]].dropRight(1)
         if(cm.isEmpty){
-          val newCacheMap = cacheMap copy (data = cacheMap.data - (SelectTaxableIncomeId.toString, OtherTaxableIncomeId.toString, AnyTaxableIncomeId.toString, AnyOtherTaxableIncomeId.toString))
+          val newCacheMap = cacheMap copy (data = cacheMap.data -- Iterable(SelectTaxableIncomeId.toString, OtherTaxableIncomeId.toString, AnyTaxableIncomeId.toString, AnyOtherTaxableIncomeId.toString))
           store(AnyTaxableIncomeId.toString, false, newCacheMap)
         } else {
-          val newCacheMap = cacheMap copy (data = cacheMap.data - (OtherTaxableIncomeId.toString, AnyOtherTaxableIncomeId.toString))
+          val newCacheMap = cacheMap copy (data = cacheMap.data -- Iterable(OtherTaxableIncomeId.toString, AnyOtherTaxableIncomeId.toString))
           store(SelectTaxableIncomeId.toString, cm, newCacheMap)
         }
       case _ => cacheMap

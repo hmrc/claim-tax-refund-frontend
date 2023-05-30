@@ -46,11 +46,11 @@ class AnyAgentRefViewSpec extends NewQuestionViewBehaviours[AnyAgentRef] with Gu
 
   "AnyAgentRef view" must {
 
-    behave like normalPage(createView, messageKeyPrefix, None, nomineeName)
+    behave like normalPage(createView(), messageKeyPrefix, None, nomineeName)
 
-    behave like pageWithBackLink(createView)
+    behave like pageWithBackLink(createView())
 
-    behave like pageWithSecondaryHeader(createView, messages("site.service_name.with_tax_year", taxYear.asString(messages)))
+    behave like pageWithSecondaryHeader(createView(), messages("site.service_name.with_tax_year", taxYear.asString(messages)))
 
     yesNoPage(
       createView = createViewUsingForm,

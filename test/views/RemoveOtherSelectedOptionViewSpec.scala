@@ -43,9 +43,9 @@ class RemoveOtherSelectedOptionViewSpec extends NewYesNoViewBehaviours with Guic
 
   "RemoveOtherSelectedOption view" must {
 
-    behave like normalPage(createView, messageKeyPrefix, None, messages(collectionId))
+    behave like normalPage(createView(), messageKeyPrefix, None, messages(collectionId))
 
-    behave like pageWithBackLink(createView)
+    behave like pageWithBackLink(createView())
 
     behave like yesNoPage(
       createViewUsingForm,

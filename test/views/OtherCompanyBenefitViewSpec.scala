@@ -41,11 +41,11 @@ class OtherCompanyBenefitViewSpec  extends NewQuestionViewBehaviours[OtherCompan
     otherCompanyBenefit(frontendAppConfig, form, NormalMode, 0, taxYear)(fakeRequest, messages)
 
   "OtherCompanyBenefit view" must {
-    behave like normalPage(createView, messageKeyPrefix, None, "1", "bob")
+    behave like normalPage(createView(), messageKeyPrefix, None, "1", "bob")
 
-    behave like pageWithBackLink(createView)
+    behave like pageWithBackLink(createView())
 
-    behave like pageWithSecondaryHeader(createView, messages("site.service_name.with_tax_year", taxYear.asString(messages)))
+    behave like pageWithSecondaryHeader(createView(), messages("site.service_name.with_tax_year", taxYear.asString(messages)))
 
     behave like pageWithTextFields(
       createViewUsingForm, messageKeyPrefix, routes.OtherCompanyBenefitController.onSubmit(NormalMode, 0).url, "name", "amount"

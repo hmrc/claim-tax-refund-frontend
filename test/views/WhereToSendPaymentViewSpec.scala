@@ -38,11 +38,11 @@ class WhereToSendPaymentViewSpec extends NewViewBehaviours with GuiceOneAppPerSu
     whereToSendPayment(form, NormalMode, taxYear)(fakeRequest, messages)
 
   "WhereToSendPayment view" must {
-    behave like normalPage(createView, messageKeyPrefix, None)
+    behave like normalPage(createView(), messageKeyPrefix, None)
 
-    behave like pageWithBackLink(createView)
+    behave like pageWithBackLink(createView())
 
-    behave like pageWithSecondaryHeader(createView, messages("site.service_name.with_tax_year", taxYear.asString(messages)))
+    behave like pageWithSecondaryHeader(createView(), messages("site.service_name.with_tax_year", taxYear.asString(messages)))
   }
 
   "WhereToSendPayment view" when {

@@ -35,7 +35,7 @@ class ConfirmationViewSpec extends NewViewBehaviours with MockitoSugar with Guic
 			confirmation(frontendAppConfig, submissionReference)(fakeRequest, messages)
 
   "Confirmation view" must {
-    behave like normalPage(createView, messageKeyPrefix, None)
+    behave like normalPage(createView(), messageKeyPrefix, None)
 
     "have its title in a confirmation govuk panel" in {
       val doc = asDocument(createView())
