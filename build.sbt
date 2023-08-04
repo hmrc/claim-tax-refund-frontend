@@ -5,7 +5,6 @@ import sbt.Tests.{Group, SubProcess}
 import scoverage.ScoverageKeys
 import uk.gov.hmrc.DefaultBuildSettings.{defaultSettings, scalaSettings}
 import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin
-import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin.publishingSettings
 
 
 val appName = "claim-tax-refund-frontend"
@@ -14,22 +13,22 @@ lazy val appDependencies: Seq[ModuleID] = compile ++ test()
 lazy val plugins: Seq[Plugins] = Seq.empty
 lazy val playSettings: Seq[Setting[_]] = Seq.empty
 
-val bootstrapVersion = "7.15.0"
+val bootstrapVersion = "7.21.0"
+val mongoVersion = "1.3.0"
 
 val compile = Seq(
   ws,
   "uk.gov.hmrc"           %% "bootstrap-frontend-play-28"     % bootstrapVersion,
-  "uk.gov.hmrc"           %% "play-frontend-hmrc"             % "7.7.0-play-28",
-  "uk.gov.hmrc.mongo"     %% "hmrc-mongo-play-28"             % "1.2.0",
+  "uk.gov.hmrc"           %% "play-frontend-hmrc"             % "7.17.0-play-28",
+  "uk.gov.hmrc.mongo"     %% "hmrc-mongo-play-28"             % mongoVersion,
   "uk.gov.hmrc"           %% "http-caching-client"            % "10.0.0-play-28",
   "uk.gov.hmrc"           %% "play-conditional-form-mapping"  % "1.13.0-play-28",
-  "uk.gov.hmrc"           %% "play-partials"                  % "8.4.0-play-28",
-  "uk.gov.hmrc"           %% "play-language"                  % "6.2.0-play-28",
-  "uk.gov.hmrc"           %% "tax-year"                       % "3.2.0",
+  "uk.gov.hmrc"           %% "tax-year"                       % "3.3.0",
   "org.scalatra.scalate"  %% "play-scalate"                   % "0.6.0",
   "org.scalatra.scalate"  %% "scalate-core"                   % "1.9.8",
   "uk.gov.hmrc"           %% "domain"                         % "8.3.0-play-28",
-  "com.googlecode.libphonenumber" % "libphonenumber"          % "8.13.13"
+  "com.googlecode.libphonenumber" % "libphonenumber"          % "8.13.18",
+  "uk.gov.hmrc"           %% "sca-wrapper"                    % "1.0.39"
 )
 
 def test(scope: String = "test"): Seq[ModuleID] = Seq(
@@ -39,7 +38,7 @@ def test(scope: String = "test"): Seq[ModuleID] = Seq(
   "org.scalatestplus"       %%  "scalatestplus-mockito"     % "1.0.0-M2" % scope,
   "org.scalatestplus.play"  %%  "scalatestplus-play"        % "5.1.0" % scope,
   "org.scalatestplus"       %%  "scalatestplus-scalacheck"  % "3.1.0.0-RC2" % scope,
-  "uk.gov.hmrc.mongo"       %%  "hmrc-mongo-test-play-28"    % "1.2.0" % scope,
+  "uk.gov.hmrc.mongo"       %%  "hmrc-mongo-test-play-28"   % mongoVersion % scope,
   "org.pegdown"             %   "pegdown"                   % "1.6.0" % scope,
   "org.jsoup"               %   "jsoup"                     % "1.16.1" % scope,
   "com.typesafe.play"       %%  "play-test"                 % PlayVersion.current % scope,
@@ -110,8 +109,8 @@ scalacOptions += "-P:silencer:pathFilters=routes"
 scalacOptions += "-P:silencer:lineContentFilters=^\\w"
 scalacOptions += "-Wconf:cat=lint-multiarg-infix:silent"
 libraryDependencies ++= Seq(
-  compilerPlugin("com.github.ghik" % "silencer-plugin" % "1.7.12" cross CrossVersion.full),
-  "com.github.ghik" % "silencer-lib" % "1.7.12" % Provided cross CrossVersion.full
+  compilerPlugin("com.github.ghik" % "silencer-plugin" % "1.17.13" cross CrossVersion.full),
+  "com.github.ghik" % "silencer-lib" % "1.17.13" % Provided cross CrossVersion.full
 )
 // ***************
 

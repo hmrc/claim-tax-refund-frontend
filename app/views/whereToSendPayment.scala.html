@@ -19,7 +19,7 @@
 @import models.Mode
 
 @this(
-    layout: Layout,
+    layout: views.LayoutProvider,
     formWithCSRF: FormWithCSRF,
     errorSummary: playComponents.error_summary,
     inputRadio: playComponents.input_radio,
@@ -46,7 +46,7 @@
 
             @inputRadio(
                 legend = Text(messages("whereToSendPayment.heading")),
-                legendClass = Some("visually-hidden"),
+                legendClass = Some("govuk-visually-hidden"),
                 inputs = (WhereToSendPaymentForm.options map { radioOption =>
                     RadioItem(
                         value = Some(radioOption.value),

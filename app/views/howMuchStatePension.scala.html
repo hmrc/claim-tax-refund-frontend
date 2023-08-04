@@ -19,7 +19,7 @@
 @import models.Mode
 
 @this(
-        layout: Layout,
+        layout: views.LayoutProvider,
         formWithCSRF: FormWithCSRF,
         errorSummary: playComponents.error_summary,
         headingWithCaption: playComponents.headingWithCaption,
@@ -51,7 +51,7 @@
     @formWithCSRF(action = HowMuchStatePensionController.onSubmit(mode), Symbol("autoComplete") -> "off") {
         @input_text(
             label = messages("howMuchStatePension.heading"),
-            labelClass = Some("visually-hidden"),
+            labelClass = Some("govuk-visually-hidden"),
             currency = true,
             field = form("value")
         )

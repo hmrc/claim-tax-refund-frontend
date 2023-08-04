@@ -43,13 +43,13 @@ class SessionManagementController @Inject()(val appConfig: FrontendAppConfig,
 
   def signedOut: Action[AnyContent] = Action {
     implicit request =>
-    Ok(sessionTimedout(appConfig)).withNewSession
+    Ok(sessionTimedout(appConfig))
   }
 
   def clearSessionData: Action[AnyContent] = authenticate.async {
     implicit request =>
       dataCacheConnector.removeAll(request.externalId).map { cacheMap =>
-        Redirect(routes.SessionManagementController.signedOut)
+        Redirect(routes.SessionManagementController.signedOut).withNewSession
       }
   }
 }

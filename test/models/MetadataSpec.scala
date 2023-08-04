@@ -16,16 +16,19 @@
 
 package models
 
-import org.joda.time.LocalDateTime
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
+import org.scalatest.matchers.must.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
-import org.scalatest.{MustMatchers, OptionValues, WordSpec}
+import org.scalatest.OptionValues
 import play.api.libs.json.{JsValue, Json}
 
 import scala.xml._
 import scala.xml.Utility._
 
-class
-MetadataSpec extends WordSpec with MustMatchers with OptionValues with ScalaCheckPropertyChecks {
+class MetadataSpec extends AnyWordSpec with Matchers with OptionValues with ScalaCheckPropertyChecks {
 
   private val localDT = LocalDateTime.now()
   private val testMetadata: Metadata = new Metadata("AB123456", "123", "123", localDT, "", "en")
@@ -41,7 +44,7 @@ MetadataSpec extends WordSpec with MustMatchers with OptionValues with ScalaChec
       testXml \ "document" \ "header" \ "store" must contain(<store>{true}</store>)
       testXml \ "document" \ "header" \ "source" must contain(<source>R39_EN</source>)
       testXml \ "document" \ "header" \ "target" must contain(<target>DMS</target>)
-      testXml \ "document" \ "header" \ "reconciliation_id" must contain(<reconciliation_id>{testMetadata.submissionRef + "-" + localDT.toString("ssMMyyddmmHH")}</reconciliation_id>)
+      testXml \ "document" \ "header" \ "reconciliation_id" must contain(<reconciliation_id>{testMetadata.submissionRef + "-" + DateTimeFormatter.ofPattern("ssMMyyddmmHH").format(localDT)}</reconciliation_id>)
     }
 
     "contain correct metadata xml for hmrc_time_of_receipt" in {
@@ -51,7 +54,7 @@ MetadataSpec extends WordSpec with MustMatchers with OptionValues with ScalaChec
             <attribute_name>hmrc_time_of_receipt</attribute_name>
             <attribute_type>time</attribute_type>
             <attribute_values>
-              <attribute_value>{testMetadata.timeStamp.toString("dd/MM/yyyy HH:mm:ss")}</attribute_value>
+              <attribute_value>{DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").format(testMetadata.timeStamp)}</attribute_value>
             </attribute_values>
           </attribute>
         )
@@ -65,7 +68,7 @@ MetadataSpec extends WordSpec with MustMatchers with OptionValues with ScalaChec
             <attribute_name>time_xml_created</attribute_name>
             <attribute_type>time</attribute_type>
             <attribute_values>
-              <attribute_value>{testMetadata.timeStamp.toString("dd/MM/yyyy HH:mm:ss")}</attribute_value>
+              <attribute_value>{DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").format(testMetadata.timeStamp)}</attribute_value>
             </attribute_values>
           </attribute>
         )
@@ -269,7 +272,7 @@ MetadataSpec extends WordSpec with MustMatchers with OptionValues with ScalaChec
       "hmrcReceivedAt" -> localDT.toString,
       "xmlCreatedAt" -> localDT.toString,
       "submissionReference" -> testMetadata.submissionRef,
-      "reconciliationId" -> localDT.toString("ssMMyyddmmHH"),
+      "reconciliationId" -> DateTimeFormatter.ofPattern("ssMMyyddmmHH").format(localDT),
       "fileFormat" -> "pdf",
       "mimeType" -> "application/pdf",
       "casKey" -> "",

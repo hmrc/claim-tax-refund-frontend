@@ -17,7 +17,7 @@
 @import config.FrontendAppConfig
 
 @this(
-    layout: Layout
+    layout: views.LayoutProvider
 )
 
 @(
@@ -32,7 +32,7 @@
 @formattedSubmissionReference = @{submissionReference.replaceAll("-", "‑")}
 
 @layout(
-    pageTitle = messages("confirmation.title"), backLinkEnabled=false) {
+    pageTitle = messages("confirmation.title"), showBackLink=false) {
 
         <div class="govuk-panel govuk-panel--confirmation">
             <h1 class="govuk-panel__title">

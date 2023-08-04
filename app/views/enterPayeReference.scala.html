@@ -18,7 +18,7 @@
 @import models.Mode
 
 @this(
-    layout: Layout,
+    layout: views.LayoutProvider,
     formWithCSRF: FormWithCSRF,
     errorSummary: playComponents.error_summary,
     inputText: playComponents.input_text,
@@ -50,7 +50,7 @@
 
             @inputText(
                 label = messages("enterPayeReference.heading"),
-                labelClass = Some("visually-hidden"),
+                labelClass = Some("govuk-visually-hidden"),
                 hintLine1 = Some(messages("enterPayeReference.hint")),
                 field = form("value")
             )

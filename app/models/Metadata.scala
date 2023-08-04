@@ -16,7 +16,9 @@
 
 package models
 
-import org.joda.time.LocalDateTime
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
 
@@ -31,7 +33,7 @@ case class Metadata(customerId: String,
                     language: String
 									 ) {
 
-	val formattedTimeStamp: String = timeStamp.toString("ssMMyyddmmHH")
+	val formattedTimeStamp: String = DateTimeFormatter.ofPattern("ssMMyyddmmHH").format(timeStamp)
 	val fileFormat: String = "pdf"
 	val mimeType: String = "application/pdf"
 
@@ -65,8 +67,8 @@ object Metadata {
 						<reconciliation_id>{metadata.submissionRef + "-" + metadata.reconciliationId}</reconciliation_id>
 					</header>
 					<metadata>
-						{attributeXml("hmrc_time_of_receipt", "time", metadata.timeStamp.toString("dd/MM/yyyy HH:mm:ss"))}
-						{attributeXml("time_xml_created", "time", metadata.timeStamp.toString("dd/MM/yyyy HH:mm:ss"))}
+						{attributeXml("hmrc_time_of_receipt", "time", DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").format(metadata.timeStamp))}
+						{attributeXml("time_xml_created", "time", DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").format(metadata.timeStamp))}
 						{attributeXml("submission_reference", "string", metadata.submissionRef)}
 						{attributeXml("form_id", "string", metadata.formId)}
 						{attributeXml("number_pages", "integer", metadata.numberOfPages.toString)}

@@ -18,7 +18,7 @@
 @import models.Mode
 
 @this(
-    layout: Layout,
+    layout: views.LayoutProvider,
     formWithCSRF: FormWithCSRF,
     errorSummary: playComponents.error_summary,
     inputText: playComponents.input_text,
@@ -50,7 +50,7 @@
         @formWithCSRF(action = NomineeFullNameController.onSubmit(mode), Symbol("autoComplete") -> "off") {
             @inputText(
                 label = messages("nomineeFullName.heading"),
-                labelClass = Some("visually-hidden"),
+                labelClass = Some("govuk-visually-hidden"),
                 field = form("value")
             )
 

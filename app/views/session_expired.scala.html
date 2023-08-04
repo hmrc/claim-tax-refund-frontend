@@ -16,7 +16,7 @@
 
 @import config.FrontendAppConfig
 @this(
-        layout: Layout,
+        layout: views.LayoutProvider,
         govukButton : GovukButton
 )
 
@@ -30,9 +30,9 @@
 
 @layout(
     pageTitle=messages("session_expired.title"),
-    timeoutEnabled = false,
-    backLinkEnabled = false,
-    accountMenuEnabled = false
+    timeout = false,
+    showBackLink = false,
+    showAccountMenu = false
 ) {
     <h1 class="govuk-heading-xl">@messages("session_expired.heading")</h1>
 

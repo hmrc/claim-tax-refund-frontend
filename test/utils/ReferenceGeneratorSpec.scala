@@ -16,10 +16,11 @@
 
 package utils
 
-import org.scalatest.{MustMatchers, WordSpec}
+import org.scalatest.matchers.must.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
 import org.scalatestplus.mockito.MockitoSugar
 
-class ReferenceGeneratorSpec extends WordSpec with MustMatchers with MockitoSugar {
+class ReferenceGeneratorSpec extends AnyWordSpecLike with Matchers with MockitoSugar {
 
   val referenceGenerator = new ReferenceGenerator
 

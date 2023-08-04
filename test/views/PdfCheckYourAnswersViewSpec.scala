@@ -16,18 +16,20 @@
 
 package views
 
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
 import base.SpecBase
 import models.TelephoneOption
-import org.joda.time.LocalDateTime
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.i18n.Messages
 import play.twirl.api.Html
 import uk.gov.hmrc.auth.core.retrieve.ItmpName
 import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, MockUserAnswers}
-import views.behaviours.ViewBehaviours
+import views.behaviours.NewViewBehaviours
 import views.html.pdf_check_your_answers
 
-class PdfCheckYourAnswersViewSpec extends SpecBase with ViewBehaviours with MockitoSugar {
+class PdfCheckYourAnswersViewSpec extends SpecBase with NewViewBehaviours with MockitoSugar {
 
   private val answers = MockUserAnswers.minimalValidUserAnswers()
   private val helper = new CheckYourAnswersHelper(answers)(messages: Messages)
@@ -66,7 +68,7 @@ class PdfCheckYourAnswersViewSpec extends SpecBase with ViewBehaviours with Mock
 
     "display date" in {
       val doc = asDocument(view())
-      assertContainsText(doc, date.toString("dd/MM/yyyy HH:mm:ss"))
+      assertContainsText(doc, DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").format(date))
     }
 
     "display nino" in {

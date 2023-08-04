@@ -1,4 +1,4 @@
-/*
+@*
  * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,17 +12,11 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *@
 
-package config
+@this()
 
-import play.api.inject.{Binding, Module}
-import play.api.{Configuration, Environment}
-import scalate.ScalateEngineBoot
-import uk.gov.hmrc.play.partials.FormPartialRetriever
-
-class HmrcModule extends Module {
-  override def bindings(environment: Environment, configuration: Configuration): Seq[Binding[_]] = Seq(
-    bind[ScalateEngineBoot].toSelf.eagerly()
-  )
-}
+@*
+*Add css elements you want to be included in the layout here
+*eg: <link href='@routes.Assets.versioned("stylesheets/application.css")' media="all" rel="stylesheet" type="text/css" />
+*@

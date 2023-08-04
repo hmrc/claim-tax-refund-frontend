@@ -22,7 +22,7 @@ import models.{NormalMode, TaxableIncome}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import play.twirl.api.Html
-import views.behaviours.{NewCheckboxViewBehaviours, NewViewBehaviours, ViewBehaviours}
+import views.behaviours.{NewCheckboxViewBehaviours, NewViewBehaviours}
 import views.html.selectTaxableIncome
 
 class SelectTaxableIncomeViewSpec extends NewViewBehaviours with NewCheckboxViewBehaviours[TaxableIncome.Value] with GuiceOneAppPerSuite {

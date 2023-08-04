@@ -17,7 +17,7 @@
 @import config.FrontendAppConfig
 @import viewmodels.AnswerSection
 @this(
-        layout: Layout,
+        layout: views.LayoutProvider,
         formWithCSRF: FormWithCSRF,
         submitButton: playComponents.submit_button,
         govukSummaryList : GovukSummaryList
@@ -32,7 +32,8 @@
         messages: Messages)
 
 @layout(
-    pageTitle = messages("checkYourAnswers.title"), backLinkEnabled = false
+    pageTitle = messages("checkYourAnswers.title"),
+    showBackLink = false
 ) {
     <h1 class="govuk-heading-xl">@messages("checkYourAnswers.heading")</h1>
 

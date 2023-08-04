@@ -14,28 +14,10 @@
  * limitations under the License.
  *@
 
-@this(
-        layout: views.LayoutProvider,
-        pageHeading: playComponents.heading
-)
+@this()
+@()(implicit request: RequestHeader)
 
-@(
-        pageTitle: String,
-        heading: String,
-        errorMessages: Seq[String],
-)(
-        implicit request: Request[_],
-        messages: Messages
-)
-
-@layout(
-    pageTitle = pageTitle,
-    showBackLink = false
-) {
-
-    @pageHeading(messages(heading))
-
-    @for(errorMessage <- errorMessages) {
-        <p class="govuk-body">@messages(errorMessage)</p>
-    }
-}
+@*
+*Add script elements you want to be included in the layout here
+*eg: <script src='@controllers.routes.Assets.versioned("javascripts/app.js")'></script>
+*@

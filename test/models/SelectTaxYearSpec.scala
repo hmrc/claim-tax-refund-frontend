@@ -18,12 +18,13 @@ package models
 
 import models.SelectTaxYear._
 import org.scalatestplus.mockito.MockitoSugar
-import org.scalatest.{MustMatchers, WordSpec}
+import org.scalatest.matchers.must.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
 import play.api.i18n.Messages
 import uk.gov.hmrc.time.TaxYear
 
 
-class SelectTaxYearSpec(implicit messages: Messages) extends WordSpec with MustMatchers with MockitoSugar {
+class SelectTaxYearSpec(implicit messages: Messages) extends AnyWordSpecLike with Matchers with MockitoSugar {
 
   "SelectTaxYear model" must {
     "return the currect tax year for CYMinus1" in {

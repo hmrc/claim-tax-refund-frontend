@@ -20,7 +20,7 @@
 
 @this(
     formWithCSRF: FormWithCSRF,
-    layout: Layout,
+    layout: views.LayoutProvider,
     headingWithCaption: playComponents.headingWithCaption,
     errorSummary: playComponents.error_summary,
     inputText: playComponents.input_text,
@@ -53,7 +53,7 @@
         @formWithCSRF(action = HowMuchCarBenefitsController.onSubmit(mode), Symbol("autoComplete") -> "off") {
         @inputText(
             label = messages("howMuchCarBenefits.heading"),
-            labelClass = Some("visually-hidden"),
+            labelClass = Some("govuk-visually-hidden"),
             currency = true,
             field = form("value")
         )

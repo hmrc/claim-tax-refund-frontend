@@ -23,7 +23,7 @@ import models.SelectTaxYear.CustomTaxYear
 import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
-import views.behaviours.{NewStringViewBehaviours, StringViewBehaviours}
+import views.behaviours.NewStringViewBehaviours
 import views.html.howMuchFuelBenefit
 
 class HowMuchFuelBenefitViewSpec extends NewStringViewBehaviours with MockitoSugar with GuiceOneAppPerSuite {

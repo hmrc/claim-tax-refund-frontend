@@ -17,7 +17,7 @@
 @import controllers.routes._
 @import models.Mode
 @this(
-    layout: Layout,
+    layout: views.LayoutProvider,
     formWithCSRF: FormWithCSRF,
     errorSummary: playComponents.error_summary,
     inputYesOrNo: playComponents.input_yes_no,
@@ -52,7 +52,7 @@
         @inputYesOrNo(
             isPageHeading = false,
             label = messages("RemoveOtherSelectedOption.heading", messages(collectionId)),
-            labelClass = Some("visually-hidden"),
+            labelClass = Some("govuk-visually-hidden"),
             field = form("value")
         )
 

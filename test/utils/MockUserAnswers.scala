@@ -16,10 +16,11 @@
 
 package utils
 
+import java.time.LocalDateTime
+
 import models.SelectTaxYear.{CYMinus2, CustomTaxYear}
 import models.WhereToSendPayment.{Myself, Nominee}
 import models.{Metadata, _}
-import org.joda.time.LocalDateTime
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}

@@ -16,10 +16,11 @@
 
 package models
 
-import org.scalatest.{MustMatchers, WordSpec}
+import org.scalatest.matchers.must.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
 import org.scalatestplus.mockito.MockitoSugar
 
-class TaxableIncomeSpec extends WordSpec with MustMatchers with MockitoSugar {
+class TaxableIncomeSpec extends AnyWordSpecLike with Matchers with MockitoSugar {
 
   "TaxableIncome model" must {
     "Return map in correct order" in {

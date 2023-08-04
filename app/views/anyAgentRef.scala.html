@@ -18,7 +18,7 @@
 @import models.Mode
 
 @this(
-    layout: Layout,
+    layout: views.LayoutProvider,
     formWithCSRF: FormWithCSRF,
     errorSummary: playComponents.error_summary,
     inputYesNoWithTextExpander: playComponents.input_yes_no_with_text_expander,
@@ -48,7 +48,7 @@
 
             @inputYesNoWithTextExpander(
                 label = messages("anyAgentRef.heading", nomineeName),
-                labelClass = Some("visually-hidden"),
+                labelClass = Some("govuk-visually-hidden"),
                 textLabel = messages("anyAgentRef.agentRefField"),
                 yesNoField = form("anyAgentRef"),
                 textField = form("agentRef"),

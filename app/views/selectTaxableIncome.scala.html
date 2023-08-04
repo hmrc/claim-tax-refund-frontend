@@ -21,7 +21,7 @@
 
 @this(
         formWithCSRF: FormWithCSRF,
-        layout: Layout,
+        layout: views.LayoutProvider,
         errorSummary: playComponents.error_summary,
         heading: playComponents.headingWithCaption,
         inputCheckBox: playComponents.input_check_box,
@@ -56,7 +56,7 @@
             @inputCheckBox(
                 isPageHeading = false,
                 legend = messages("selectTaxableIncome.heading", taxYear.asString),
-                legendClass = Some("visually-hidden"),
+                legendClass = Some("govuk-visually-hidden"),
                 inputs = SelectTaxableIncomeForm.options.map { checkboxOption =>
                     CheckboxItem(
                         content = HtmlContent(messages(checkboxOption._1).capitalize),
