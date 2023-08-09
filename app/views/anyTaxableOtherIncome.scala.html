@@ -23,7 +23,7 @@
         errorSummary: playComponents.error_summary,
         backLink: playComponents.back_link,
         inputYesNoWithTextExpander: playComponents.input_yes_no_with_text_expander,
-        layout: Layout
+        layout: views.LayoutProvider
 )
 
 @(
@@ -52,7 +52,7 @@
         @inputYesNoWithTextExpander(
             hint = None,
             label = messages("anyTaxableOtherIncome.heading", incomeName),
-            labelClass = Some("visually-hidden"),
+            labelClass = Some("govuk-visually-hidden"),
             textLabel = messages("anyTaxableOtherIncome.anyTaxPaidAmountField", incomeName),
             currency = true,
             yesNoField = form("anyTaxPaid"),

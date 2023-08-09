@@ -17,7 +17,7 @@
 @import config.FrontendAppConfig
 
 @this(
-    layout: Layout
+    layout: views.LayoutProvider
 )
 
 @(
@@ -29,9 +29,9 @@
 
 @layout(
     pageTitle = pageTitle,
-    timeoutEnabled = false,
-    backLinkEnabled = false,
-    accountMenuEnabled = false
+    timeout = false,
+    showBackLink = false,
+    showAccountMenu = false
 ) {
 
  <h1 class="govuk-heading-xl">@heading</h1>

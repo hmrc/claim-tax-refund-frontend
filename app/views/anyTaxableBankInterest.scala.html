@@ -24,7 +24,7 @@
         addListSummary: playComponents.add_list_summary,
         backLink: playComponents.back_link,
         inputYesNoWithTextExpander: playComponents.input_yes_no_with_text_expander,
-        layout: Layout
+        layout: views.LayoutProvider
 )
 
 @(
@@ -48,7 +48,7 @@
         @inputYesNoWithTextExpander(
             hint = None,
             label = messages("anyTaxableBankInterest.heading"),
-            labelClass = Some("visually-hidden"),
+            labelClass = Some("govuk-visually-hidden"),
             textLabel = messages("anyTaxableBankInterest.anyTaxPaidAmountField"),
             currency = true,
             yesNoField = form("anyTaxPaid"),

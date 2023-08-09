@@ -23,7 +23,7 @@ import models.{NormalMode, TelephoneOption}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.{Form, FormError}
 import play.twirl.api.HtmlFormat
-import views.behaviours.{NewQuestionViewBehaviours, QuestionViewBehaviours}
+import views.behaviours.NewQuestionViewBehaviours
 import views.html.telephoneNumber
 
 class TelephoneNumberViewSpec extends NewQuestionViewBehaviours[TelephoneOption] with GuiceOneAppPerSuite {

@@ -20,7 +20,7 @@ import org.jsoup.select.NodeFilter
 import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.twirl.api.HtmlFormat
-import views.behaviours.{NewViewBehaviours, ViewBehaviours}
+import views.behaviours.NewViewBehaviours
 import views.html.confirmation
 
 class ConfirmationViewSpec extends NewViewBehaviours with MockitoSugar with GuiceOneAppPerSuite {

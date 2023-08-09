@@ -16,8 +16,9 @@
 
 package repositories
 
+import java.time.Instant
+
 import javax.inject.{Inject, Singleton}
-import org.joda.time.{DateTime, DateTimeZone}
 import org.mongodb.scala.model.{IndexModel, IndexOptions, UpdateOptions}
 import org.mongodb.scala.model.Filters._
 import org.mongodb.scala.model.Indexes._
@@ -27,7 +28,6 @@ import play.api.libs.json.{JsValue, Json}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.mongo.MongoComponent
 import uk.gov.hmrc.mongo.play.json.{Codecs, PlayMongoRepository}
-import uk.gov.hmrc.mongo.play.json.formats.MongoJodaFormats.Implicits._
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration.SECONDS
@@ -35,7 +35,7 @@ import scala.concurrent.duration.SECONDS
 
 case class DatedCacheMap(id: String,
                          data: Map[String, JsValue],
-                         lastUpdated: DateTime = DateTime.now(DateTimeZone.UTC))
+                         lastUpdated: Instant = Instant.now())
 
 object DatedCacheMap {
   implicit val formats = Json.format[DatedCacheMap]

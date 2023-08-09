@@ -24,7 +24,7 @@ import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
-import views.behaviours.{NewQuestionViewBehaviours, QuestionViewBehaviours}
+import views.behaviours.NewQuestionViewBehaviours
 import views.html.otherCompanyBenefit
 
 class OtherCompanyBenefitViewSpec  extends NewQuestionViewBehaviours[OtherCompanyBenefit] with MockitoSugar with GuiceOneAppPerSuite {

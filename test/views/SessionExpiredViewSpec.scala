@@ -17,7 +17,7 @@
 package views
 
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
-import views.behaviours.{NewViewBehaviours, ViewBehaviours}
+import views.behaviours.NewViewBehaviours
 import views.html.session_expired
 
 class SessionExpiredViewSpec extends NewViewBehaviours with GuiceOneAppPerSuite {

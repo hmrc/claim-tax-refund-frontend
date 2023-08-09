@@ -96,4 +96,6 @@ class FrontendAppConfig @Inject()(val servicesConfig: ServicesConfig, val config
   def languageMap: Map[String, Lang] = Map("english" -> Lang("en"), "cymraeg" -> Lang("cy"))
 
   def routeToSwitchLanguage: String => Call = (lang: String) => routes.LanguageSwitchController.switchToLanguage(lang)
+
+  lazy val scaWrapperEnabled: Boolean = Try(servicesConfig.getBoolean("microservice.services.features.sca-wrapper")).getOrElse(true)
 }

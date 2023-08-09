@@ -22,7 +22,7 @@ import models.SelectTaxYear.CustomTaxYear
 import models.{Employment, NormalMode}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
-import views.behaviours.{NewYesNoViewBehaviours, YesNoViewBehaviours}
+import views.behaviours.NewYesNoViewBehaviours
 import views.html.employmentDetails
 
 class EmploymentDetailsViewSpec extends NewYesNoViewBehaviours with GuiceOneAppPerSuite {

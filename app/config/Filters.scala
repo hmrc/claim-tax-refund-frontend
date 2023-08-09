@@ -14,18 +14,23 @@
  * limitations under the License.
  */
 
-package utils
+package config
 
-import org.scalatest.matchers.must.Matchers
-import org.scalatest.wordspec.AnyWordSpecLike
+import javax.inject.{Inject, Singleton}
+import play.api.http.{EnabledFilters, HttpFilters}
+import play.api.mvc.EssentialFilter
+import uk.gov.hmrc.sca.filters.WrapperDataFilter
 
-class WithNameSpec extends AnyWordSpecLike with Matchers {
+@Singleton
+class Filters @Inject()(
+                         defaultFilters: EnabledFilters,
+                         wrapperDataFilter: WrapperDataFilter,
+                         appConfig: FrontendAppConfig
+                       ) extends HttpFilters {
 
-  object Foo extends WithName("bar")
 
-  ".toString" must {
-    "return the correct string" in {
-      Foo.toString mustEqual "bar"
-    }
+  override val filters: Seq[EssentialFilter] = {
+    defaultFilters.filters ++
+      Option.when(appConfig.scaWrapperEnabled)(wrapperDataFilter)
   }
 }

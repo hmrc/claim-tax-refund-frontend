@@ -27,13 +27,13 @@
     <div class="tabular-data__data tabular-data__data--2-12 u-align--tablet-right">
         <a id="add-list-@index-change" href=@routes.OtherTaxableIncomeController.onPageLoad(mode, index)>
             <span aria-hidden="true">@messages("site.edit")</span>
-            <span class="visually-hidden">@messages("site.hidden-edit", name)</span>
+            <span class="govuk-visually-hidden">@messages("site.hidden-edit", name)</span>
         </a>
     </div>
     <div class="tabular-data__data tabular-data__data--2-12 u-align--tablet-right">
         <a id="add-list-@index-remove" href=@routes.DeleteOtherController.onPageLoad(mode, Index(index), name, OtherTaxableIncome.collectionId)>
             <span aria-hidden="true">@messages("site.delete")</span>
-            <span class="visually-hidden">@messages("site.hidden-delete", name)</span>
+            <span class="govuk-visually-hidden">@messages("site.hidden-delete", name)</span>
         </a>
     </div>
 </li>

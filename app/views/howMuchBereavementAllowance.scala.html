@@ -19,7 +19,7 @@
 @import models.Mode
 
 @this(
-        layout: Layout,
+        layout: views.LayoutProvider,
         formWithCSRF: FormWithCSRF,
         errorSummary: playComponents.error_summary,
         headingWithCaption: playComponents.headingWithCaption,
@@ -53,7 +53,7 @@
             Input(
                 label = Label(
                     isPageHeading = false,
-                    classes = "visually-hidden",
+                    classes = "govuk-visually-hidden",
                     content = Text(messages("howMuchBereavementAllowance.heading", taxYear.asString))
                 ),
                 classes = "govuk-input--width-10",

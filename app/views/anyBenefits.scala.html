@@ -18,7 +18,7 @@
 @import models.Mode
 
 @this(
-    layout: Layout,
+    layout: views.LayoutProvider,
     pageHeading: playComponents.headingWithCaption,
     submitButton: playComponents.submit_button,
     errorSummary: playComponents.error_summary,
@@ -56,7 +56,7 @@
         @inputYesNo(
             isPageHeading = false,
             label = messages("anyBenefits.heading"),
-            labelClass = Some("visually-hidden"),
+            labelClass = Some("govuk-visually-hidden"),
             field = form("value")
         )
 

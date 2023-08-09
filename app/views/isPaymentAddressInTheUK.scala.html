@@ -20,7 +20,7 @@
 
 @this(
     formWithCSRF: FormWithCSRF,
-    layout: Layout,
+    layout: views.LayoutProvider,
     errorSummary: playComponents.error_summary,
     heading: playComponents.headingWithCaption,
     inputYesNo: playComponents.input_yes_no,
@@ -53,7 +53,7 @@
         @inputYesNo(
             label = messages("isPaymentAddressInTheUK.heading"),
             isPageHeading = false,
-            labelClass = Some("visually-hidden"),
+            labelClass = Some("govuk-visually-hidden"),
             field = form("value")
         )
 

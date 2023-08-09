@@ -22,7 +22,7 @@
 
 @this(
     formWithCSRF: FormWithCSRF,
-    layout: Layout,
+    layout: views.LayoutProvider,
     errorSummary: playComponents.error_summary,
     headingWithCaption: playComponents.headingWithCaption,
     input_text: playComponents.input_text,
@@ -57,7 +57,7 @@
 
         @input_text(
             label = messages("howMuchEmploymentAndSupportAllowance.heading"),
-            labelClass = Some("visually-hidden"),
+            labelClass = Some("govuk-visually-hidden"),
             currency = true,
             field = form("value")
         )

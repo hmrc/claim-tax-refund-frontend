@@ -16,13 +16,15 @@
 
 package controllers
 
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
 import com.google.inject.Inject
 import config.FrontendAppConfig
 import connectors.{CasConnector, DataCacheConnector}
 import controllers.actions.{AuthAction, DataRequiredAction, DataRetrievalAction}
 import models.templates.RobotXML
 import models.{Metadata, SubmissionSuccessful, _}
-import org.joda.time.LocalDateTime
 import play.api.Logging
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
@@ -91,7 +93,7 @@ class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
       val submissionXml = robotXML.generateXml(
         userAnswers = request.userAnswers,
         submissionReference = submissionReference,
-        dateCreated = timeStamp.toString("dd/MM/yyyy HH:mm:ss"),
+        dateCreated = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").format(timeStamp),
         nino = nino,
         itmpName = itmpName,
         itmpAddress = itmpAddress

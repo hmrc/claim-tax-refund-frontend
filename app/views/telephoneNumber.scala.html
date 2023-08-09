@@ -18,7 +18,7 @@
 @import models.Mode
 
 @this(
-    layout: Layout,
+    layout: views.LayoutProvider,
     headingWithCaption: playComponents.headingWithCaption,
     submitButton: playComponents.submit_button,
     errorSummary : playComponents.error_summary,
@@ -50,7 +50,7 @@
     @formWithCSRF(action = TelephoneNumberController.onSubmit(mode), Symbol("autoComplete") -> "off") {
         @inputYesNoWithTextExpander(
             label = messages("telephoneNumber.heading"),
-            labelClass = Some("visually-hidden"),
+            labelClass = Some("govuk-visually-hidden"),
             textLabel = messages("telephoneNumber.telephoneNumberField"),
             inputType = "tel",
             autoComplete = Some("tel"),

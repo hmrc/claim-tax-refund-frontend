@@ -17,7 +17,7 @@
 @import config.FrontendAppConfig
 
 @this(
-    layout: Layout
+    layout: views.LayoutProvider
 )
 
 @(
@@ -28,7 +28,10 @@
         messages: Messages
 )
 
-@layout(pageTitle = messages("unauthorised.title"), backLinkEnabled = false) {
+@layout(
+    pageTitle = messages("unauthorised.title"),
+    showBackLink = false
+){
 
     <h1 class="govuk-heading-xl">@messages("unauthorised.heading")</h1>
 

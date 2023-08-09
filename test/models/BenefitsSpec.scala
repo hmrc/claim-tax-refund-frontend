@@ -16,10 +16,11 @@
 
 package models
 
-import org.scalatest.{MustMatchers, WordSpec}
+import org.scalatest.matchers.must.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
 import org.scalatestplus.mockito.MockitoSugar
 
-class BenefitsSpec extends WordSpec with MustMatchers with MockitoSugar {
+class BenefitsSpec extends AnyWordSpecLike with Matchers with MockitoSugar {
 
     "Benefits model" must {
       "Return map in correct order" in {

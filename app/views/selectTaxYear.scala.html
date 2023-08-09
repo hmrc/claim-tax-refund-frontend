@@ -25,7 +25,7 @@
         inputRadio: playComponents.input_radio,
         submitButton: playComponents.submit_button,
         errorSummary: playComponents.error_summary,
-        layout: Layout
+        layout: views.LayoutProvider
 )
 
 @(
@@ -50,7 +50,7 @@
         @heading(messages("selectTaxYear.heading"))
         @inputRadio(
             legend = Text(messages("selectTaxYear.heading")),
-            legendClass = Some("visually-hidden"),
+            legendClass = Some("govuk-visually-hidden"),
             inputs = SelectTaxYear.options map { radioOption =>
                 RadioItem(
                     value = Some(radioOption.value),

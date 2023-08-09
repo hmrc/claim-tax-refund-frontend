@@ -19,7 +19,7 @@
 @import models.Mode
 @this(
         formWithCSRF: FormWithCSRF,
-        layout: Layout,
+        layout: views.LayoutProvider,
         errorSummary: playComponents.error_summary,
         headingWithCaption: playComponents.headingWithCaption,
         govukInput: GovukInput,
@@ -54,7 +54,7 @@
                 Input(
                     label = Label(
                         isPageHeading = false,
-                        classes = "visually-hidden",
+                        classes = "govuk-visually-hidden",
                         content = Text(messages("howMuchJobseekersAllowance.heading"))
                     ),
                     classes = "govuk-input--width-10",

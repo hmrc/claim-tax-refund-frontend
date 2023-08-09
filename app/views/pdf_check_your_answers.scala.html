@@ -17,7 +17,8 @@
 @import config.FrontendAppConfig
 @import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
 @import viewmodels.{AnswerSection, Section}
-@import org.joda.time.LocalDateTime
+@import java.time.LocalDateTime
+@import java.time.format.DateTimeFormatter
 
 @(
     appConfig: FrontendAppConfig,
@@ -41,7 +42,7 @@
 <ul>
     <li>
         @messages("userDetails.checkYourAnswersLabel.date")<br>
-        @date.toString("dd/MM/yyyy HH:mm:ss")
+        @DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").format(date)
     </li>
     <li>
         @messages("userDetails.checkYourAnswersLabel.nino")<br>

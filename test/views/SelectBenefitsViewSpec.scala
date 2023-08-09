@@ -22,7 +22,7 @@ import models.{Benefits, NormalMode}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
 import play.twirl.api.Html
-import views.behaviours.{NewCheckboxViewBehaviours, NewViewBehaviours, ViewBehaviours}
+import views.behaviours.{NewCheckboxViewBehaviours, NewViewBehaviours}
 import views.html.selectBenefits
 
 class SelectBenefitsViewSpec extends NewViewBehaviours with NewCheckboxViewBehaviours[Benefits.Value] with GuiceOneAppPerSuite {

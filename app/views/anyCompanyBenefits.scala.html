@@ -19,7 +19,7 @@
 @import models.Mode
 
 @this(
-        layout: Layout,
+        layout: views.LayoutProvider,
         formWithCSRF: FormWithCSRF,
         errorSummary: playComponents.error_summary,
         heading: playComponents.headingWithCaption,
@@ -61,7 +61,7 @@
             @inputYesOrNo(
                 isPageHeading = false,
                 label = messages("anyCompanyBenefits.heading"),
-                labelClass = Some("visually-hidden"),
+                labelClass = Some("govuk-visually-hidden"),
                 field = form("value")
             )
 

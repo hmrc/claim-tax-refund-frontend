@@ -17,10 +17,12 @@
 package forms
 
 import forms.mappings.Constraints
-import org.scalatest.{EitherValues, MustMatchers, OptionValues, WordSpec}
+import org.scalatest.matchers.must.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
+import org.scalatest.{EitherValues, OptionValues}
 import play.api.data.validation.{Invalid, Valid}
 
-class ConstraintsSpec extends WordSpec with MustMatchers with EitherValues with OptionValues with Constraints {
+class ConstraintsSpec extends AnyWordSpecLike with Matchers with EitherValues with OptionValues with Constraints {
 
   ".firstError" must {
 

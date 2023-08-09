@@ -17,7 +17,7 @@
 @import controllers.routes._
 @import models.Mode
 @this(
-        layout: Layout,
+        layout: views.LayoutProvider,
         headingWithCaption: playComponents.headingWithCaption,
         submitButton: playComponents.submit_button,
         errorSummary: playComponents.error_summary,
@@ -49,7 +49,7 @@
         @formWithCSRF(action = HowMuchRentalIncomeController.onSubmit(mode), Symbol("autoComplete") -> "off") {
             @inputText(
                 label = messages("howMuchRentalIncome.heading"),
-                labelClass = Some("visually-hidden"),
+                labelClass = Some("govuk-visually-hidden"),
                 currency = true,
                 field = form("value")
             )

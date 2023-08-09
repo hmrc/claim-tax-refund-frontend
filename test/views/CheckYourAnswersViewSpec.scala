@@ -21,7 +21,7 @@ import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.i18n.Messages
 import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, MockUserAnswers}
-import views.behaviours.{NewViewBehaviours, ViewBehaviours}
+import views.behaviours.NewViewBehaviours
 import views.html.check_your_answers
 
 class CheckYourAnswersViewSpec extends SpecBase with NewViewBehaviours with MockitoSugar with GuiceOneAppPerSuite {

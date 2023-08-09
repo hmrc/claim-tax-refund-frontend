@@ -19,7 +19,7 @@
 @import models.Mode
 
 @this(
-        layout: Layout,
+        layout: views.LayoutProvider,
         formWithCSRF: FormWithCSRF,
         errorSummary: playComponents.error_summary,
         submitButton: playComponents.submit_button,
@@ -51,7 +51,7 @@
 
         @inputTextArea(
             label = messages("detailsOfEmploymentOrPension.heading"),
-            labelClass = Some("visually-hidden"),
+            labelClass = Some("govuk-visually-hidden"),
             hint = Some(messages("detailsOfEmploymentOrPension.hintText")),
             charLimit = Some(characterLimit),
             field = form("value")

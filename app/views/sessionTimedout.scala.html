@@ -17,7 +17,7 @@
 @import config.FrontendAppConfig
 
 @this(
-    layout: Layout,
+    layout: views.LayoutProvider,
     heading: playComponents.heading,
     signInButton: playComponents.sign_in_button
 )
@@ -30,7 +30,12 @@
         messages: Messages
 )
 
-@layout(pageTitle = messages("timedOut.title"), timeoutEnabled = false, backLinkEnabled = false){
+@layout(
+    pageTitle = messages("timedOut.title"),
+    timeout = false,
+    showBackLink = false,
+    showAccountMenu = false
+){
 
     @heading(messages("timedOut.heading"))
 

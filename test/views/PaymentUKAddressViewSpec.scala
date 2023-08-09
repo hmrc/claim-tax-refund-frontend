@@ -23,7 +23,7 @@ import models.{NormalMode, UkAddress}
 import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.Form
-import views.behaviours.{NewQuestionViewBehaviours, QuestionViewBehaviours}
+import views.behaviours.NewQuestionViewBehaviours
 import views.html.paymentUKAddress
 
 class PaymentUKAddressViewSpec extends NewQuestionViewBehaviours[UkAddress] with MockitoSugar with GuiceOneAppPerSuite {
