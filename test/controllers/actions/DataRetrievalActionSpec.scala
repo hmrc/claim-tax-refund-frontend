@@ -23,7 +23,7 @@ import org.mockito.Mockito._
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatestplus.mockito.MockitoSugar
 import uk.gov.hmrc.auth.core.retrieve.ItmpName
-import uk.gov.hmrc.http.cache.client.CacheMap
+import models.CacheMap
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future

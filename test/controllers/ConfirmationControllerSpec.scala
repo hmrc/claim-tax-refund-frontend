@@ -26,7 +26,7 @@ import org.mockito.Mockito._
 import org.mockito.Matchers._
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.mvc.Call
-import uk.gov.hmrc.http.cache.client.CacheMap
+import models.CacheMap
 import utils.{MockUserAnswers, UserAnswers}
 
 

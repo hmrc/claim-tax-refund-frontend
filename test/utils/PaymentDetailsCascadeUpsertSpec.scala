@@ -20,7 +20,7 @@ import base.SpecBase
 import identifiers._
 import models.{AnyAgentRef, InternationalAddress, UkAddress, WhereToSendPayment}
 import play.api.libs.json._
-import uk.gov.hmrc.http.cache.client.CacheMap
+import models.CacheMap
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 
 class PaymentDetailsCascadeUpsertSpec extends SpecBase with ScalaCheckPropertyChecks {

@@ -16,8 +16,9 @@
 
 package repositories
 
-import java.time.Instant
+import models.CacheMap
 
+import java.time.Instant
 import javax.inject.{Inject, Singleton}
 import org.mongodb.scala.model.{IndexModel, IndexOptions, UpdateOptions}
 import org.mongodb.scala.model.Filters._
@@ -25,7 +26,6 @@ import org.mongodb.scala.model.Indexes._
 import org.mongodb.scala.model.Updates._
 import play.api.Configuration
 import play.api.libs.json.{JsValue, Json}
-import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.mongo.MongoComponent
 import uk.gov.hmrc.mongo.play.json.{Codecs, PlayMongoRepository}
 

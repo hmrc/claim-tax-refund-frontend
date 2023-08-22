@@ -19,7 +19,7 @@ package utils
 import base.SpecBase
 import identifiers._
 import play.api.libs.json._
-import uk.gov.hmrc.http.cache.client.CacheMap
+import models.CacheMap
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 
 class CascadeUpsertSpec extends SpecBase with ScalaCheckPropertyChecks {

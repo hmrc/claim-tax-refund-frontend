@@ -21,7 +21,6 @@ val compile = Seq(
   "uk.gov.hmrc"           %% "bootstrap-frontend-play-28"     % bootstrapVersion,
   "uk.gov.hmrc"           %% "play-frontend-hmrc"             % "7.17.0-play-28",
   "uk.gov.hmrc.mongo"     %% "hmrc-mongo-play-28"             % mongoVersion,
-  "uk.gov.hmrc"           %% "http-caching-client"            % "10.0.0-play-28",
   "uk.gov.hmrc"           %% "play-conditional-form-mapping"  % "1.13.0-play-28",
   "uk.gov.hmrc"           %% "tax-year"                       % "3.3.0",
   "org.scalatra.scalate"  %% "play-scalate"                   % "0.6.0",

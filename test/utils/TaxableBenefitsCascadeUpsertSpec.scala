@@ -21,7 +21,7 @@ import identifiers._
 import models.{AnyTaxPaid, TaxableIncome}
 import org.scalacheck.{Gen, Shrink}
 import play.api.libs.json._
-import uk.gov.hmrc.http.cache.client.CacheMap
+import models.CacheMap
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 
 class TaxableBenefitsCascadeUpsertSpec extends SpecBase with ScalaCheckPropertyChecks {
