@@ -37,3 +37,4 @@ bin
 /*.ipr
 /.classpath
 *.iws
+.bsp
