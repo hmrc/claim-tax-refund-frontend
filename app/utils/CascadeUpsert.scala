@@ -20,7 +20,6 @@ import identifiers._
 import javax.inject.Singleton
 import models._
 import play.api.libs.json._
-import uk.gov.hmrc.http.cache.client.CacheMap
 
 @Singleton
 class CascadeUpsert {

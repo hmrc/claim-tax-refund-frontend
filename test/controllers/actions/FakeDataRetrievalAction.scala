@@ -17,7 +17,7 @@
 package controllers.actions
 
 import models.requests.{AuthenticatedRequest, OptionalDataRequest}
-import uk.gov.hmrc.http.cache.client.CacheMap
+import models.CacheMap
 import utils.UserAnswers
 
 import scala.concurrent.ExecutionContext.Implicits.global

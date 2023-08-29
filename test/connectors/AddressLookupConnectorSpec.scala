@@ -29,7 +29,7 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.Format
 import play.api.i18n.Lang
 import play.api.mvc.Request
-import uk.gov.hmrc.http.cache.client.CacheMap
+import models.CacheMap
 import utils.{UserAnswers, WireMockHelper}
 
 import scala.concurrent.duration._

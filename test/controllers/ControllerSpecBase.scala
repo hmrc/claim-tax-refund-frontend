@@ -25,7 +25,7 @@ import models.requests.{AuthenticatedRequest, OptionalDataRequest}
 import play.api.libs.json.Json
 import play.api.mvc.MessagesControllerComponents
 import uk.gov.hmrc.auth.core.retrieve.ItmpName
-import uk.gov.hmrc.http.cache.client.CacheMap
+import models.CacheMap
 import utils.{MockUserAnswers, UserAnswers}
 
 import scala.concurrent.{ExecutionContext, Future}

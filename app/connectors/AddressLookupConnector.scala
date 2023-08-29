@@ -23,7 +23,7 @@ import play.api.Logging
 import play.api.i18n.{Lang, MessagesApi}
 import play.api.libs.json.{JsValue, Json}
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
-import uk.gov.hmrc.http.cache.client.CacheMap
+import models.CacheMap
 import uk.gov.hmrc.http.HttpReads.Implicits._
 import uk.gov.hmrc.http.HttpClient
 import utils.UserAnswers

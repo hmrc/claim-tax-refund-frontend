@@ -19,7 +19,7 @@ package utils
 import identifiers._
 import models.{Metadata, _}
 import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
-import uk.gov.hmrc.http.cache.client.CacheMap
+import models.CacheMap
 
 class UserAnswers(val cacheMap: CacheMap) {
 
