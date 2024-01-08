@@ -24,7 +24,7 @@ case class OtherTaxableIncome(name: String, amount: String, anyTaxPaid: Option[A
 
 object OtherTaxableIncome {
   implicit val format: Format[OtherTaxableIncome] = Json.format[OtherTaxableIncome]
-  implicit val collectionId = "otherTaxableIncome"
+  implicit val collectionId: String = "otherTaxableIncome"
 
 
   def toXml(userAnswer: Seq[OtherTaxableIncome]): Seq[Elem] = userAnswer.map {

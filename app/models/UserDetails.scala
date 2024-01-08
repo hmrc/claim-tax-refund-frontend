@@ -23,5 +23,5 @@ case class UserDetails(name: String,
                        address: UkAddress)
 
 object UserDetails {
-  implicit val format = Json.format[UserDetails]
+  implicit val format: OFormat[UserDetails] = Json.format[UserDetails]
 }
