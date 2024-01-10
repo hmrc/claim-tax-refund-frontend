@@ -77,8 +77,8 @@ scalacOptions += "-P:silencer:pathFilters=routes"
 scalacOptions += "-P:silencer:lineContentFilters=^\\w"
 scalacOptions += "-Wconf:cat=lint-multiarg-infix:silent"
 libraryDependencies ++= Seq(
-  compilerPlugin("com.github.ghik" % "silencer-plugin" % "1.17.13" cross CrossVersion.full),
-  "com.github.ghik" % "silencer-lib" % "1.17.13" % Provided cross CrossVersion.full
+  compilerPlugin("com.github.ghik" % "silencer-plugin" % "1.7.14" cross CrossVersion.full),
+  "com.github.ghik" % "silencer-lib" % "1.7.14" % Provided cross CrossVersion.full
 )
 // ***************
 

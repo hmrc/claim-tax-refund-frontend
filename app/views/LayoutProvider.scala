@@ -71,11 +71,10 @@ class NewLayoutProvider @Inject()(wrapperService: WrapperService,
                     (implicit request: Request[_], messages: Messages): HtmlFormat.Appendable = {
     val hideAccountMenu = request.session.get("authToken").isEmpty
 
-    wrapperService.layout(
+    wrapperService.standardScaLayout(
       disableSessionExpired = !timeout,
       content = contentBlock,
       pageTitle = Some(s"$pageTitle - ${messages("service.name")} - GOV.UK"),
-      serviceNameUrl = Some(controllers.routes.IndexController.onPageLoad.url),
       timeOutUrl = Some(controllers.routes.SessionManagementController.clearSessionData.url),
       keepAliveUrl = controllers.routes.SessionManagementController.extendSession.url,
       showBackLinkJS = showBackLink,
