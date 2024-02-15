@@ -11,7 +11,7 @@ object AppDependencies {
     "uk.gov.hmrc"                  %% "play-conditional-form-mapping" % "1.13.0-play-28",
     "uk.gov.hmrc"                  %% "tax-year"                      % "4.0.0",
     "com.googlecode.libphonenumber" % "libphonenumber"                % "8.13.21",
-    "uk.gov.hmrc"                  %% "sca-wrapper-play-28"           % "1.1.0"
+    "uk.gov.hmrc"                  %% "sca-wrapper-play-28"           % "1.3.0"
   )
 
   def test(scope: String = "test"): Seq[ModuleID] = Seq(
