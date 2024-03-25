@@ -12,7 +12,6 @@ This project is a Scala web application using [code scaffolds](https://github.co
 ## Running the service
 
 Service Manager: CTR_ALL
-
 Mandatory Auth Information:
 - Nino
 - Confidence Level 200

@@ -32,7 +32,7 @@ import services.SubmissionService
 import uk.gov.hmrc.auth.core.retrieve.{ItmpAddress, ItmpName}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import play.api.mvc.MessagesControllerComponents
-import play.shaded.oauth.org.apache.commons.codec.digest.DigestUtils
+import org.apache.commons.codec.digest.DigestUtils
 import utils.{CheckYourAnswersHelper, CheckYourAnswersSections, ReferenceGenerator, SubmissionMark}
 import views.html.{check_your_answers, pdf_check_your_answers}
 import uk.gov.hmrc.domain.Nino
