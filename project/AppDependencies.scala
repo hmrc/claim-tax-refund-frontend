@@ -19,7 +19,7 @@ object AppDependencies {
   def test(scope: String = "test"): Seq[ModuleID] = Seq(
     "uk.gov.hmrc" %% "bootstrap-test-play-30" % boostrapVersion % scope,
     "uk.gov.hmrc.mongo" %% "hmrc-mongo-test-play-30" % mongoVersion % scope,
-    "org.scalatestplus" %% "scalacheck-1-17" % "3.2.16.0"
+    "org.scalatestplus" %% "scalacheck-1-17" % "3.2.16.0" % scope
   )
 
   def apply(): Seq[ModuleID] = compile ++ test()
