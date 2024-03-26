@@ -23,7 +23,7 @@ import org.scalatest.concurrent.ScalaFutures
 import play.api.test.Helpers._
 import views.html.confirmation
 import org.mockito.Mockito._
-import org.mockito.Matchers._
+import org.mockito.ArgumentMatchers.any
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.mvc.Call
 import models.CacheMap
