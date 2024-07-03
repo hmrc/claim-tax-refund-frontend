@@ -72,19 +72,6 @@ class ReactiveMongoRepository(config: Configuration, mongo: MongoComponent)(impl
 
   def get(id: String): Future[Option[CacheMap]] =
     collection.find[CacheMap](and(equal("id", id))).headOption()
-
-  def resetLastUpdated(): Future[Long] = {
-    collection.updateMany(`type`("lastUpdated", BsonType.STRING), set("lastUpdated", Instant.now()))
-      .toFuture().map(_.getModifiedCount)
-  }
-
-  val actorSystem = ActorSystem()
-  actorSystem.scheduler.scheduleOnce(FiniteDuration(10, TimeUnit.SECONDS)) {
-    resetLastUpdated() map { n =>
-      logger.warn(s"Updated $n documents with a new lastUpdated timestamp")
-    }
-    actorSystem.terminate()
-  }
 }
 
 @Singleton
