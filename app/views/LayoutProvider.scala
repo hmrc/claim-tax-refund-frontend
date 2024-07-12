@@ -17,11 +17,13 @@
 package views
 
 import config.FrontendAppConfig
+
 import javax.inject.Inject
 import play.api.Logging
 import play.api.i18n.Messages
 import play.api.mvc.Request
 import play.twirl.api.{Html, HtmlFormat}
+import uk.gov.hmrc.hmrcfrontend.views.viewmodels.hmrcstandardpage.ServiceURLs
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import uk.gov.hmrc.sca.services.WrapperService
 import views.html.playComponents.{AdditionalScript, HeadBlock}
@@ -76,13 +78,17 @@ class NewLayoutProvider @Inject()(wrapperService: WrapperService,
       content = contentBlock,
       pageTitle = Some(s"$pageTitle - ${messages("service.name")} - GOV.UK"),
       timeOutUrl = Some(controllers.routes.SessionManagementController.clearSessionData.url),
+      serviceURLs = ServiceURLs(
+        signOutUrl = if(!hideAccountMenu) Some(controllers.routes.SessionManagementController.clearSessionData.url) else None,
+        serviceUrl = Some(controllers.routes.IndexController.onPageLoad.url)
+      ),
       keepAliveUrl = controllers.routes.SessionManagementController.extendSession.url,
       showBackLinkJS = showBackLink,
       scripts = scripts.toSeq :+ additionalScript(),
       styleSheets = stylesheets.toSeq :+ headBlock(),
       fullWidth = false,
       hideMenuBar = hideAccountMenu,
-    )(messages, HeaderCarrierConverter.fromRequest(request), request)
+    )(messages, request)
   }
 }
 
