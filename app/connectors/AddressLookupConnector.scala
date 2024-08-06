@@ -17,31 +17,32 @@
 package connectors
 
 import config.{AddressLookupConfig, FrontendAppConfig}
+
 import javax.inject.Inject
 import models.AddressLookup
 import play.api.Logging
-import play.api.i18n.{Lang, MessagesApi}
-import play.api.libs.json.{JsValue, Json}
+import play.api.i18n.Lang
+import play.api.libs.json.Json
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 import models.CacheMap
 import uk.gov.hmrc.http.HttpReads.Implicits._
-import uk.gov.hmrc.http.HttpClient
+import uk.gov.hmrc.http.client.HttpClientV2
 import utils.UserAnswers
 
+import java.net.URL
 import scala.concurrent.{ExecutionContext, Future}
 
 class AddressLookupConnector @Inject()(
                                         appConfig: FrontendAppConfig,
                                         addressLookupConfig: AddressLookupConfig,
-                                        http: HttpClient,
-                                        messagesApi: MessagesApi,
+                                        http: HttpClientV2,
                                         dataCacheConnector: DataCacheConnector
                                       )(implicit executionContext: ExecutionContext) extends Logging {
 
   def initialise(continueUrl: String, accessibilityFooterUrl: String)(implicit hc: HeaderCarrier, language: Lang): Future[Option[String]] = {
     val addressLookupUrl = s"${appConfig.addressLookupUrl}/api/v2/init"
     val addressConfig = Json.toJson(addressLookupConfig.config(continueUrl = s"$continueUrl", accessibilityFooterUrl))
-    http.POST[JsValue, HttpResponse](addressLookupUrl, body = addressConfig).map {
+    http.post(new URL(addressLookupUrl)).withBody(addressConfig).execute[HttpResponse].map {
       response =>
         response.status match {
           case 202 =>
@@ -62,7 +63,7 @@ class AddressLookupConnector @Inject()(
     val getAddressUrl = s"${appConfig.addressLookupUrl}/api/confirmed?id=$id"
 
     for {
-      address: AddressLookup <- http.GET[AddressLookup](getAddressUrl)
+      address: AddressLookup <- http.get(new URL(getAddressUrl)).execute[AddressLookup]
       cacheMap: CacheMap <- dataCacheConnector.save(cacheId, saveKey, address)
     } yield new UserAnswers(cacheMap)
   }

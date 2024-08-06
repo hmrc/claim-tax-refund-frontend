@@ -72,17 +72,17 @@ class ConstraintsSpec extends AnyWordSpecLike with Matchers with EitherValues wi
 
       "return None for an empty string" in {
         val result = opt[String].bind("foo", Map("foo" -> ""))
-        result.right.value mustBe None
+        result.value mustBe None
       }
 
       "return None for a missing key" in {
         val result = opt[String].bind("foo", Map.empty)
-        result.right.value mustBe None
+        result.value mustBe None
       }
 
       "return Some for a valid string" in {
         val result = opt[String].bind("foo", Map("foo" -> "bar"))
-        result.right.value.value mustEqual "bar"
+        result.value.value mustEqual "bar"
       }
     }
 

@@ -16,7 +16,6 @@
 
 package controllers
 
-import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.WhereToSendPaymentForm
@@ -27,7 +26,6 @@ import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.play.partials.FormPartialRetriever
 import utils.{Navigator, UserAnswers}
 import views.html.whereToSendPayment
 

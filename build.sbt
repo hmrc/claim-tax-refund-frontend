@@ -1,7 +1,5 @@
-import play.core.PlayVersion
-import play.sbt.PlayImport._
+import play.sbt.PlayImport.*
 import play.sbt.routes.RoutesKeys
-import sbt.Tests.{Group, SubProcess}
 import scoverage.ScoverageKeys
 import uk.gov.hmrc.DefaultBuildSettings.{defaultSettings, scalaSettings}
 import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin
@@ -11,12 +9,12 @@ val appName = "claim-tax-refund-frontend"
 
 lazy val appDependencies: Seq[ModuleID] = AppDependencies()
 lazy val plugins: Seq[Plugins] = Seq.empty
-lazy val playSettings: Seq[Setting[_]] = Seq.empty
+lazy val playSettings: Seq[Setting[?]] = Seq.empty
 
 lazy val microservice = Project(appName, file("."))
-  .enablePlugins(Seq(play.sbt.PlayScala, PlayNettyServer, SbtDistributablesPlugin) ++ plugins: _*)
+  .enablePlugins((Seq(play.sbt.PlayScala, PlayNettyServer, SbtDistributablesPlugin) ++ plugins) *)
   .disablePlugins(JUnitXmlReportPlugin) // Required to prevent https://github.com/scalatest/scalatest/issues/1427
-  .settings(playSettings: _*)
+  .settings(playSettings *)
   .settings(RoutesKeys.routesImport ++= Seq("models._"))
   .settings(
     ScoverageKeys.coverageExcludedFiles := "<empty>;Reverse.*;.*filters.*;.*handlers.*;.*components.*;.*repositories.*;" +
@@ -27,9 +25,9 @@ lazy val microservice = Project(appName, file("."))
     ScoverageKeys.coverageHighlighting := true,
     Test / parallelExecution  := false
   )
-  .settings(scalaSettings: _*)
+  .settings(scalaSettings *)
   .settings(isPublicArtefact := true)
-  .settings(defaultSettings(): _*)
+  .settings(defaultSettings() *)
   .settings(
     scalacOptions ++= Seq("-feature"),
     libraryDependencies ++= appDependencies,

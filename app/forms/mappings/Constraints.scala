@@ -19,7 +19,7 @@ package forms.mappings
 import play.api.data.format.Formatter
 import play.api.data.validation.{Constraint, Invalid, Valid}
 import play.api.data.{Form, FormError}
-import com.google.i18n.phonenumbers.{NumberParseException, PhoneNumberUtil}
+import com.google.i18n.phonenumbers.PhoneNumberUtil
 
 import scala.util.{Success, Try}
 

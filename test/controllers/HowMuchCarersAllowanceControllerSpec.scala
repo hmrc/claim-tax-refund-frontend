@@ -35,7 +35,7 @@ class HowMuchCarersAllowanceControllerSpec extends ControllerSpecBase with Guice
   def onwardRoute = routes.IndexController.onPageLoad
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new HowMuchCarersAllowanceController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
+    new HowMuchCarersAllowanceController(messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
       dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), howMuchCarersAllowance, messagesControllerComponents, new HowMuchCarersAllowanceForm(frontendAppConfig))
 
   val testAnswer = "9,999.99"

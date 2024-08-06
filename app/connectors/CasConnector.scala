@@ -21,20 +21,22 @@ import com.google.inject.{ImplementedBy, Inject}
 import config.FrontendAppConfig
 import models.{SubmissionArchiveRequest, SubmissionArchiveResponse}
 import play.api.Logging
+import play.api.libs.json.Json
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.http.HttpClient
 import uk.gov.hmrc.http.HttpReads.Implicits._
+import uk.gov.hmrc.http.client.HttpClientV2
 
+import java.net.URL
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class CasConnectorImpl @Inject()(appConfig: FrontendAppConfig, val http: HttpClient) extends CasConnector with Logging {
+class CasConnectorImpl @Inject()(appConfig: FrontendAppConfig, val http: HttpClientV2) extends CasConnector with Logging {
 
     def archiveSubmission(submissionRef: String, data: SubmissionArchiveRequest)(implicit hc: HeaderCarrier, ec:ExecutionContext): Future[SubmissionArchiveResponse] = {
       logger.debug(s"Sending submission $submissionRef to CAS via DMS API")
 
     val url: String = s"${appConfig.ctrUrl}/claim-tax-refund/archive-submission/"
-    http.POST[SubmissionArchiveRequest, SubmissionArchiveResponse](url, data)
+      http.post(new URL(url)).withBody(Json.toJson(data)).execute[SubmissionArchiveResponse]
   }
 }
 

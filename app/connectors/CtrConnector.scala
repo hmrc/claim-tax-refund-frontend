@@ -17,6 +17,7 @@
 package connectors
 
 import config.FrontendAppConfig
+
 import javax.inject.Inject
 import models.SubmissionResponse
 import play.api.Logging
@@ -24,16 +25,17 @@ import play.api.http.Status._
 import play.api.libs.json.JsValue
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.http.HttpReads.Implicits._
-import uk.gov.hmrc.http.HttpClient
+import uk.gov.hmrc.http.client.HttpClientV2
 
+import java.net.URL
 import scala.concurrent.{ExecutionContext, Future}
 
-class CtrConnector @Inject()(appConfig: FrontendAppConfig, http: HttpClient) extends Logging {
+class CtrConnector @Inject()(appConfig: FrontendAppConfig, http: HttpClientV2) extends Logging {
 
   def ctrSubmission(submissionJson: JsValue)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[Option[SubmissionResponse]] = {
 
     val submissionUrl = s"${appConfig.ctrUrl}/claim-tax-refund/submit"
-    val postRequest: Future[Option[SubmissionResponse]] = http.POST[JsValue, HttpResponse](submissionUrl, submissionJson).map {
+    val postRequest = http.post(new URL(submissionUrl)).withBody(submissionJson).execute[HttpResponse].map {
       response =>
         response.status match {
           case OK =>

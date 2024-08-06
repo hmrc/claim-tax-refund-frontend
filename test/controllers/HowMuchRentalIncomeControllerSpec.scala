@@ -41,7 +41,7 @@ class HowMuchRentalIncomeControllerSpec extends ControllerSpecBase with GuiceOne
   private val mockUserAnswers = MockUserAnswers.claimDetailsUserAnswers()
 
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new HowMuchRentalIncomeController(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
+    new HowMuchRentalIncomeController(messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeAuthAction(authConnector, frontendAppConfig),
       dataRetrievalAction, new DataRequiredActionImpl(messagesControllerComponents), howMuchRentalIncome, messagesControllerComponents, new HowMuchRentalIncomeForm(frontendAppConfig))
 
   def viewAsString(form: Form[_] = form) = howMuchRentalIncome(form, NormalMode, taxYear)(fakeRequest, messages).toString

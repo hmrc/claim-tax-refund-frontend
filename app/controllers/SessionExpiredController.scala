@@ -23,10 +23,7 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import play.api.mvc.MessagesControllerComponents
-import uk.gov.hmrc.play.partials.FormPartialRetriever
 import views.html.session_expired
-
-import scala.concurrent.ExecutionContext
 
 @Singleton
 class SessionExpiredController @Inject()(val appConfig: FrontendAppConfig,

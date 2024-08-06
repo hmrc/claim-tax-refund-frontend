@@ -16,8 +16,7 @@
 
 package controllers
 
-import config.FrontendAppConfig
-import connectors.{DataCacheConnector, TaiConnector}
+import connectors.DataCacheConnector
 import controllers.actions._
 import forms.BooleanForm
 import identifiers.AnyBenefitsId
@@ -27,22 +26,20 @@ import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import uk.gov.hmrc.play.partials.FormPartialRetriever
 import utils.{Navigator, UserAnswers}
 import views.html.anyBenefits
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class AnyBenefitsController @Inject()(appConfig: FrontendAppConfig,
+class AnyBenefitsController @Inject()(
                                       override val messagesApi: MessagesApi,
                                       dataCacheConnector: DataCacheConnector,
-                                      taiConnector: TaiConnector,
                                       navigator: Navigator,
                                       authenticate: AuthAction,
                                       getData: DataRetrievalAction,
                                       requireData: DataRequiredAction,
                                       anyBenefits: anyBenefits,
-cc: MessagesControllerComponents,
+                                      cc: MessagesControllerComponents,
                                       formProvider: BooleanForm
                                      )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 

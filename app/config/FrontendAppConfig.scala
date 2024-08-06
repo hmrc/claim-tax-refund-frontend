@@ -22,7 +22,7 @@ import com.google.inject.{Inject, Singleton}
 import play.api.Configuration
 import controllers.routes
 import play.api.i18n.Lang
-import play.api.mvc.{Call, Request}
+import play.api.mvc.Call
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
 import scala.util.Try

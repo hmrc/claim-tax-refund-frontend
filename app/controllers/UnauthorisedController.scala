@@ -23,7 +23,6 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import play.api.mvc.MessagesControllerComponents
-import uk.gov.hmrc.play.partials.FormPartialRetriever
 import views.html.unauthorised
 
 import scala.concurrent.ExecutionContext

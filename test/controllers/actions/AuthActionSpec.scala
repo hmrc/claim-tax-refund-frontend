@@ -19,7 +19,7 @@ package controllers.actions
 import base.SpecBase
 import connectors.FakeDataCacheConnector
 import controllers.routes
-import play.api.mvc.{InjectedController, MessagesControllerComponents}
+import play.api.mvc.InjectedController
 import play.api.test.Helpers._
 import uk.gov.hmrc.auth.core._
 import uk.gov.hmrc.auth.core.authorise.Predicate

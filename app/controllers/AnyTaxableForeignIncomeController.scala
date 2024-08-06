@@ -16,7 +16,6 @@
 
 package controllers
 
-import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions.{AuthAction, DataRequiredAction, DataRetrievalAction}
 import forms.AnyTaxPaidForm
@@ -28,13 +27,12 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import play.api.mvc.MessagesControllerComponents
-import uk.gov.hmrc.play.partials.FormPartialRetriever
 import utils.{Navigator, UserAnswers}
 import views.html.anyTaxableForeignIncome
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class AnyTaxableForeignIncomeController @Inject()(appConfig: FrontendAppConfig,
+class AnyTaxableForeignIncomeController @Inject()(
                                                   override val messagesApi: MessagesApi,
                                                   dataCacheConnector: DataCacheConnector,
                                                   navigator: Navigator,
@@ -42,7 +40,7 @@ class AnyTaxableForeignIncomeController @Inject()(appConfig: FrontendAppConfig,
                                                   getData: DataRetrievalAction,
                                                   requireData: DataRequiredAction,
                                                   anyTaxableForeignIncome: anyTaxableForeignIncome,
-cc: MessagesControllerComponents,
+                                                  cc: MessagesControllerComponents,
                                                   formProvider: AnyTaxPaidForm
                                                  )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 

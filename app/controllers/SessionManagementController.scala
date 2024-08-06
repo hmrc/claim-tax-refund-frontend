@@ -18,12 +18,11 @@ package controllers
 
 import config.FrontendAppConfig
 import connectors.DataCacheConnector
-import controllers.actions.{AuthAction, DataRequiredAction, DataRetrievalAction}
+import controllers.actions.AuthAction
 import javax.inject.Inject
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import uk.gov.hmrc.play.partials.FormPartialRetriever
 import views.html.sessionTimedout
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -33,8 +32,6 @@ class SessionManagementController @Inject()(val appConfig: FrontendAppConfig,
                                             cc: MessagesControllerComponents,
                                             authenticate: AuthAction,
                                             dataCacheConnector: DataCacheConnector,
-                                            getData: DataRetrievalAction,
-                                            requireData: DataRequiredAction,
                                             implicit val executionContext: ExecutionContext) extends FrontendController(cc) with I18nSupport{
 
   def extendSession: Action[AnyContent] = Action.async {
