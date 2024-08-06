@@ -16,7 +16,7 @@
 
 package views.behaviours
 
-import org.jsoup.nodes.{Document, Element}
+import org.jsoup.nodes.Document
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 

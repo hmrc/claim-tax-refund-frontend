@@ -23,12 +23,13 @@ import models.Employment
 import play.api.libs.json._
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.http.HttpReads.Implicits._
-import uk.gov.hmrc.http.HttpClient
+import uk.gov.hmrc.http.client.HttpClientV2
 
+import java.net.URL
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class TaiConnectorImpl @Inject()(appConfig: FrontendAppConfig, http: HttpClient) extends TaiConnector {
+class TaiConnectorImpl @Inject()(appConfig: FrontendAppConfig, http: HttpClientV2) extends TaiConnector {
 
   override def taiEmployments(nino: String, year: Int)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[Seq[Employment]] = {
 
@@ -36,7 +37,7 @@ class TaiConnectorImpl @Inject()(appConfig: FrontendAppConfig, http: HttpClient)
 
     implicit val employmentsReads: Reads[Seq[Employment]] = Employment.employmentsReads
 
-    http.GET[Seq[Employment]](submissionUrl)
+    http.get(new URL(submissionUrl)).execute[Seq[Employment]]
   }
 }
 

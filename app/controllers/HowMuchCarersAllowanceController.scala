@@ -16,7 +16,6 @@
 
 package controllers
 
-import config.FrontendAppConfig
 import connectors.DataCacheConnector
 import controllers.actions._
 import forms.HowMuchCarersAllowanceForm
@@ -27,14 +26,12 @@ import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import play.api.mvc.MessagesControllerComponents
-import uk.gov.hmrc.play.partials.FormPartialRetriever
 import utils.{Navigator, UserAnswers}
 import views.html.howMuchCarersAllowance
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class HowMuchCarersAllowanceController @Inject()(
-                                                  appConfig: FrontendAppConfig,
                                                   override val messagesApi: MessagesApi,
                                                   dataCacheConnector: DataCacheConnector,
                                                   navigator: Navigator,
@@ -42,7 +39,7 @@ class HowMuchCarersAllowanceController @Inject()(
                                                   getData: DataRetrievalAction,
                                                   requireData: DataRequiredAction,
                                                   howMuchCarersAllowance: howMuchCarersAllowance,
-cc: MessagesControllerComponents,
+                                                  cc: MessagesControllerComponents,
                                                   formBuilder: HowMuchCarersAllowanceForm
                                                 )(implicit ec: ExecutionContext) extends FrontendController(cc) with I18nSupport {
 
