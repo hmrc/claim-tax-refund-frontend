@@ -29,10 +29,8 @@ import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import play.api.mvc.MessagesControllerComponents
-import uk.gov.hmrc.play.partials.FormPartialRetriever
 import utils.{Navigator, UserAnswers}
 import views.html.isPaymentAddressInTheUK
-import java.net.URLEncoder
 
 import scala.concurrent.{ExecutionContext, Future}
 

@@ -16,7 +16,6 @@
 
 package views
 
-import org.jsoup.select.NodeFilter
 import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.twirl.api.HtmlFormat

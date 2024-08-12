@@ -17,24 +17,20 @@
 package repositories
 
 import models.CacheMap
-import org.apache.pekko.actor.ActorSystem
-import org.bson.BsonType
 
 import java.time.Instant
 import javax.inject.{Inject, Singleton}
-import org.mongodb.scala.model.{IndexModel, IndexOptions, ReplaceOptions, UpdateOptions}
+import org.mongodb.scala.model.{IndexModel, IndexOptions, ReplaceOptions}
 import org.mongodb.scala.model.Filters._
 import org.mongodb.scala.model.Indexes._
-import org.mongodb.scala.model.Updates._
 import play.api.{Configuration, Logging}
 import play.api.libs.json.{Format, JsValue, Json, OFormat}
 import uk.gov.hmrc.mongo.MongoComponent
 import uk.gov.hmrc.mongo.play.json.formats.MongoJavatimeFormats
 import uk.gov.hmrc.mongo.play.json.{Codecs, PlayMongoRepository}
 
-import java.util.concurrent.TimeUnit
 import scala.concurrent.{ExecutionContext, Future}
-import scala.concurrent.duration.{FiniteDuration, SECONDS}
+import scala.concurrent.duration.SECONDS
 
 
 case class DatedCacheMap(id: String,

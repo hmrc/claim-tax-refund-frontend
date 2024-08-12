@@ -21,13 +21,10 @@
 )
 
 @(
-addCssClass: Option[String] = None,
-answers: Seq[AnswerRow]
-)(implicit messages: Messages)
-
-@cssClass = @{
-if(addCssClass.isDefined) s"form-group ${addCssClass.get}" else "form-group"
-}
+    answers: Seq[AnswerRow]
+)(
+    implicit messages: Messages
+)
 
 @govukSummaryList(SummaryList(
     rows =

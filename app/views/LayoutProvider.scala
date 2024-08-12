@@ -21,10 +21,9 @@ import config.FrontendAppConfig
 import javax.inject.Inject
 import play.api.Logging
 import play.api.i18n.Messages
-import play.api.mvc.Request
+import play.api.mvc.RequestHeader
 import play.twirl.api.{Html, HtmlFormat}
 import uk.gov.hmrc.hmrcfrontend.views.viewmodels.hmrcstandardpage.ServiceURLs
-import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import uk.gov.hmrc.sca.services.WrapperService
 import views.html.playComponents.{AdditionalScript, HeadBlock}
 
@@ -39,7 +38,7 @@ trait LayoutProvider {
              scripts: Option[Html] = None,
              stylesheets: Option[Html] = None
            )(contentBlock: Html)(
-             implicit request: Request[_],
+             implicit request: RequestHeader,
              messages: Messages
            ): HtmlFormat.Appendable
 }
@@ -49,7 +48,7 @@ class OldLayoutProvider @Inject()(layout: views.html.Layout) extends LayoutProvi
   //noinspection ScalaStyle
   override def apply(pageTitle: String, showBackLink: Boolean, timeout: Boolean, showSignOut: Boolean, showAccountMenu: Boolean = true,
                      scripts: Option[Html], stylesheets: Option[Html])(contentBlock: Html)
-                    (implicit request: Request[_], messages: Messages): HtmlFormat.Appendable = {
+                    (implicit request: RequestHeader, messages: Messages): HtmlFormat.Appendable = {
     layout(
       pageTitle = pageTitle,
       timeoutEnabled = timeout,
@@ -70,7 +69,7 @@ class NewLayoutProvider @Inject()(wrapperService: WrapperService,
   //noinspection ScalaStyle
   override def apply(pageTitle: String, showBackLink: Boolean, timeout: Boolean, showSignOut: Boolean, showAccountMenu: Boolean = true,
                      scripts: Option[Html], stylesheets: Option[Html])(contentBlock: Html)
-                    (implicit request: Request[_], messages: Messages): HtmlFormat.Appendable = {
+                    (implicit request: RequestHeader, messages: Messages): HtmlFormat.Appendable = {
     val hideAccountMenu = request.session.get("authToken").isEmpty
 
     wrapperService.standardScaLayout(
@@ -88,7 +87,7 @@ class NewLayoutProvider @Inject()(wrapperService: WrapperService,
       styleSheets = stylesheets.toSeq :+ headBlock(),
       fullWidth = false,
       hideMenuBar = hideAccountMenu,
-    )(messages, request)
+    )(messages, request.withBody())
   }
 }
 
